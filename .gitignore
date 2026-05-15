@@ -19,6 +19,10 @@ env/
 .idea/
 *.code-workspace
 
+# Microsoft Word lock files (~$documento.docx)
+~$*.docx
+~$*.doc
+
 # Logs y temporales
 *.log
 *.tmp

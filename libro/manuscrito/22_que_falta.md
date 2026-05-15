@@ -1,4 +1,4 @@
-# Capítulo 21 — Qué falta: validación, tooling, comunidad
+# Capítulo 22 — Qué falta: validación, tooling, comunidad
 
 ## El contrato del cierre
 

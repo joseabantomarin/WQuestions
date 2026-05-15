@@ -266,7 +266,15 @@ Caso completo: consulta médica con diagnóstico, prescripción, control futuro.
 
 Fuente: prueba de Nivel 1 de historia clínica.
 
-### Capítulo 18 — Cuando el modelo se prueba: música, química, fútbol, contratos
+### Capítulo 18 — El dominio más exigente: un banco
+
+**Tesis**: el dominio bancario es donde casi todas las decisiones de diseño previas pasan de ser elegantes a ser exigencias regulatorias.
+
+Cuatro casos: transferencia con cinco agentes y dos asientos contables; ciclo de vida de un préstamo con D9 (vigente → mora → reestructurado); investigación de fraude que reconstruye el pasado; producto bancario como oferta reificada. Muestra que el modelo absorbe la complejidad industrial y evidencia que las pendientes operativas del cap 22 (persistencia industrial, motor de inferencia, bitemporalidad completa) son requisitos, no nicho.
+
+Fuente: prototipo `ejemplos/banco.py` con 11 validaciones pasadas.
+
+### Capítulo 19 — Cuando el modelo se prueba: música, química, fútbol, contratos
 
 **Tesis**: el verdadero test de un modelo universal es someterlo a dominios cualitativamente distintos.
 
@@ -284,7 +292,7 @@ Fuente: pruebas de Nivel 1 (composición musical, química, fútbol, contrato).
 
 ## PARTE VI — IMPLICACIONES Y FUTURO
 
-### Capítulo 19 — WQuestions y los modelos de lenguaje
+### Capítulo 20 — WQuestions y los modelos de lenguaje
 
 **Tesis**: el momento de WQuestions es 2026 — la era de function calling, agentes y MCP — porque resuelve el problema central de cómo conectar lenguaje natural con conocimiento estructurado.
 
@@ -299,7 +307,7 @@ Cierra con: WQuestions como infraestructura para IA conversacional.
 
 Fuente: `related/llm-function-calling.md`.
 
-### Capítulo 20 — Aplicaciones futuras
+### Capítulo 21 — Aplicaciones futuras
 
 **Tesis**: si la arquitectura funciona, ¿qué se vuelve posible que antes no?
 
@@ -313,7 +321,7 @@ Puntos clave:
 Abre con: tres escenarios futuristas plausibles a 3-5 años.
 Cierra con: el mapa de lo que falta implementar.
 
-### Capítulo 21 — Qué falta: validación, tooling, comunidad
+### Capítulo 22 — Qué falta: validación, tooling, comunidad
 
 **Tesis**: la propuesta está completa conceptualmente; falta hacerla real.
 

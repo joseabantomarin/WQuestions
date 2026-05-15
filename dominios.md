@@ -1779,3 +1779,77 @@ La cuota *"2 sesiones por semana"* es interesante: no es un valor fijo en N, es 
 **El modelo absorbe sauna sin un solo parche.** Es un dominio comercial mediano que funciona como buen ejemplo *pedagógico* — más cercano a la vida diaria del lector que la combustión del metano — pero estructuralmente no estresa el catálogo. Lo que sí confirma, una vez más, es la importancia de la capa de **reglas declarativas y evaluador** que el capítulo 11 introdujo como puente; el sauna, con su contador "7 → 1 gratis" y su cuota "2 por semana", es probablemente el ejemplo más intuitivo del libro para esa idea.
 
 ---
+
+
+# Dominio 10 — Banco / financiera (industrial, multi-producto, regulado)
+
+> **Nota de nomenclatura.** Análisis hecho el 2026-05-16. Usa la nomenclatura actual: O (qué/*objectum*), T (cuándo/*tempus*), M (cómo/*modus*). Q, L, N, K, P sin cambio.
+
+## Prompt del usuario (2026-05-16)
+
+> Donde ubicamos el caso de un banco (una financiera), que tiene miles de clientes con sus cuentas, sus tipos de cuenta, prestamos, ahorros, pagos.. Además de otros productos inherentes: billeteras digitales, prestamos a personal por planilla de pago, visa, mastercard, ajustes contables, infraestructura en varias sedes, y otras carateristicas que tu sabes pero seguro se me escapan.
+
+## Mi análisis
+
+El banco es el dominio donde casi todas las decisiones de diseño previas dejan de ser elegantes y se vuelven **exigencias regulatorias**. Es también el caso donde el costo de mantener arquitecturas tradicionales es mayor — y por ende, donde el ahorro de adoptar un modelo unificado más se nota.
+
+### Mapa por eje
+
+**Q — agentes (tres clases):**
+- Personas físicas: clientes retail, empleados, ejecutivos de cuenta.
+- Personas jurídicas: empresas clientes, corresponsales, regulador (SBS / superintendencia), Visa, Mastercard, partners.
+- Sistemas con agencia D5: motor de scoring, antifraude, autorizadores de tarjeta, robots de cobranza.
+
+**O — entidades situadas (seis familias):**
+- Cuentas (corrientes, ahorros, plazo fijo, cuenta sueldo, FX).
+- Productos crediticios (préstamo personal, hipotecario, vehicular, tarjeta, línea comercial, crédito por planilla).
+- Movimientos operativos (depósito, retiro, transferencia, pago, abono, cargo).
+- Asientos contables (cada movimiento operativo tiene su contraparte).
+- Ofertas comerciales reificadas (`tarjeta_visa_platinum_2026q1`, `pp_tasa_fija_36m_2026`).
+- Investigaciones, reclamos, gestiones de cobranza, ajustes.
+
+**L — canales y sedes:** casa matriz, sucursales urbanas/del interior, ATMs, web banking, mobile, billetera digital, POS de la red, agencias corresponsales.
+
+**T — triple registro:** momento operativo, momento contable, fecha de cierre. La diferencia entre los tres es donde la auditoría interna investiga.
+
+**N — cantidades:** importes en múltiples monedas, tasas, plazos, scores, comisiones. Unidad K obligatoria.
+
+**K — categorías densas:** tipos de cuenta, códigos de transacción, monedas (Currency:USD, Currency:EUR, Currency:PEN, ...), segmentos de cliente, grados de riesgo, niveles KYC, estados (vigente / mora_30 / mora_60 / judicializado / castigado / cancelado), códigos regulatorios.
+
+### Patrones cruzados con dominios previos
+
+| Patrón | Visto en | Aplicado en banco |
+|---|---|---|
+| Reificación de transacción n-aria | sauna, taxi | transferencia con 5 agentes y 2 asientos |
+| Cadena causal `motivado_por`+`justificado_por` | clínica, contrato | autorización tarjeta → perfil_riesgo |
+| D9 con cambios de estado | clínica (dx), contrato | préstamo: vigente → mora → reestructurado |
+| Plantilla K + instancia O | química, música, sauna | oferta comercial → tarjeta del cliente |
+| Hechos inmutables + cancela/rectifica | contrato, clínica | reverso de autorización fraudulenta |
+| Estado derivado por agregación | sauna (fidelidad), fútbol (marcador) | saldo de cuenta (suma de movimientos) |
+| Roles de dominio sobre catálogo D7 | todos | `autorizador`, `verificado_por`, `cuenta_origen`, `cuenta_destino` |
+
+### Fricciones específicas del banco
+
+| # | Fricción | Severidad | Resolución |
+|---|---|---|---|
+| 1 | Triple T (operativo / contable / cierre) | Media | Tres roles de dominio distintos sobre T; ya soportable |
+| 2 | Bitemporalidad completa (transaction time) | **Alta** | Pendiente documentada (decisión #4) — crítica para fraude y litigios |
+| 3 | Volumen industrial (millones de hechos/día) | **Alta** | Pendiente operativo — exige persistencia industrial (frente 3 cap 22) |
+| 4 | Reglas regulatorias con vigencia | **Alta** | D9 sobre las reglas + evaluador externo (frente 1 cap 22) |
+| 5 | Múltiples monedas con conversión | Baja | N+K + situación reificada de conversión cuando importa |
+| 6 | Compliance/KYC como historial | Baja | Reificar verificaciones con D9 |
+
+### Inventario de no fricciones (cosas que el modelo absorbe sin patch)
+
+- Cinco agentes simultáneos en una operación.
+- Asientos contables como sub-situaciones (parte_de).
+- Cambios de estado de un préstamo a lo largo del ciclo de vida.
+- Investigación de fraude que reconstruye el pasado.
+- Productos como ofertas reificadas (mismo patrón que sauna, clínica).
+- Cancelaciones, rectificaciones, reversos como hechos nuevos.
+
+### Conclusión preliminar
+
+**El banco no aporta fricciones conceptuales nuevas — confirma todas las anteriores con peso industrial.** Lo que el dominio bancario sí evidencia es que las pendientes operativas (frentes 1-3 del capítulo 22) **no son lujo**: persistencia industrial, motor de inferencia y bitemporalidad completa son requisitos para que el modelo sea adoptable en un banco real. Mientras tanto, el prototipo modela un subconjunto representativo (ver `prototipo/ejemplos/banco.py`) con 10/10 validaciones pasadas.
+
+---
