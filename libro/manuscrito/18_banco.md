@@ -8,6 +8,47 @@ Si el sauna era un negocio pequeño donde el modelo se entrenó liviano, y el ta
 
 Este capítulo no pretende modelar un banco completo. Pretende mostrar, sobre un puñado de casos seleccionados, cómo el modelo absorbe la complejidad específica del dominio bancario: las **operaciones con múltiples agentes y contrapartida contable**, el **ciclo de vida de un préstamo con cambios a lo largo del tiempo**, las **investigaciones de fraude que reconstruyen el pasado**, los **productos bancarios como ofertas reificadas**. Cada caso ilustra una arista; el conjunto dice si el modelo aguanta o no.
 
+## La realidad operativa: cinco islas que nadie consolida
+
+Antes de meternos en el modelado conviene describir, sin maquillaje, **cómo se ve un banco regional por dentro**. Es probable que el lector que haya trabajado en uno reconozca el cuadro; quien venga de otros sectores se sorprenda. Lo que sigue no es un escenario hipotético: es el patrón típico de financieras medianas en cualquier país de habla hispana, descrito desde la experiencia directa.
+
+**Isla 1 — La central.** Un servidor en casa matriz corre el *core bancario* sobre Linux. Una base de datos relacional grande, un montón de stored procedures, una capa de servicios que las agencias y los canales digitales consumen. Esta isla es la "verdad oficial" — cuentas, saldos, movimientos, asientos contables. Es la que el regulador audita cuando viene a inspeccionar.
+
+**Isla 2 — Las agencias.** Cada sucursal — o al menos las grandes — tiene **software propietario** para tareas que el core no resuelve bien: simuladores de tasa, motores de aprobación de créditos express, hojas de cálculo del ejecutivo de cuenta, sistemas de turnos. Algunos vienen con el ERP, otros los compró el banco a un proveedor local, otros los hizo un programador del banco hace doce años y nadie sabe quién ya. Estos sistemas **calculan**, **deciden** y **aprueban**, pero rara vez devuelven al core la trazabilidad de cómo llegaron a la decisión.
+
+**Isla 3 — Contabilidad.** Aquí el zoológico se vuelve evidente. Una parte vive en el core (los asientos automáticos generados por cada operación). Otra parte vive en **Excel** — los ajustes manuales, los movimientos extraordinarios, las correcciones de fin de mes. Otra parte vive en **sistemas hechos a medida** por el área financiera: un módulo para conciliación con corresponsales, una hoja con macros para el reporte regulatorio, un programa Visual Basic que hace el cierre mensual. Cuando hay diferencia entre lo que dice el core y lo que dice contabilidad, gana contabilidad — pero **explicar la diferencia** lleva días.
+
+**Isla 4 — Los promotores y la red comercial.** Los promotores externos que originan créditos a domicilio, los corresponsales no bancarios, los puntos de pago tercerizados — todos manejan información del cliente que **no entra al core hasta el momento del desembolso**. En el camino vive en **tablas planas**: planillas Excel, formularios PDF, archivos CSV que se cargan al final del día por lotes. La promesa de un crédito que se le hizo a un cliente el lunes, si la operación cae el viernes, generó cuatro días de información volátil que el sistema central nunca vio.
+
+**Isla 5 — Los reportes y el regulatorio.** Cada vez que alguien — un comité, un regulador, un auditor — pide un reporte que cruza dos o más islas, se activa un proyecto. Se forma un equipo, se diseña una **ETL** (extract-transform-load) que extrae de cada fuente, se construye un *data warehouse* o un *data lake* o un *data mart* según la moda del año, se consolida, se reconcilia, se publica. Dos semanas mínimo, un mes habitual, tres meses cuando se descubre que las dos fuentes no coinciden y hay que entender por qué.
+
+Este es el cuadro. **Cinco islas, gobernanzas distintas, vocabularios distintos, ritmos distintos, calidades distintas.** Ninguna isla es desechable — cada una hace algo que las demás no — y sin embargo el negocio necesita verlas como un todo. Centralizar es una pesadilla que cada banco intenta cada cinco años con resultados decepcionantes: el motor de consolidación nuevo se vuelve la sexta isla, y los proyectos de migración se prolongan tanto que cuando terminan el negocio ya cambió.
+
+**¿Por qué pasa esto?** No porque los bancos sean tontos. Pasa porque la centralización tradicional exige que **todas las islas hablen el mismo schema**, y obligar a un sistema legacy de doce años a hablar el schema del nuevo data lake es más caro que dejarlo como está y construir un puente. Multiplicado por cinco islas y cuarenta sistemas satélite, la suma se vuelve política antes que técnica.
+
+**WQuestions cambia exactamente esto.** No exige que ningún sistema cambie su schema. Exige que cada sistema **publique sus hechos** al grafo común con su propio dialecto de dominio, mapeado al catálogo D7 una sola vez. El core publica como core; las agencias publican como agencias; contabilidad publica como contabilidad; los promotores publican lo que tienen. Cada uno mantiene su vocabulario. La unificación ocurre en el catálogo, no en los sistemas:
+
+```
+ISLA 1 — core         habla: "cuenta_ahorros", "asiento"     → mapeo D7
+ISLA 2 — agencia      habla: "linea_credito", "simulacion"   → mapeo D7
+ISLA 3 — contabilidad habla: "ajuste_mensual", "partida"     → mapeo D7
+ISLA 4 — promotor     habla: "prospecto", "promesa"          → mapeo D7
+ISLA 5 — reporting    habla: "indicador", "snapshot"         → mapeo D7
+                                                                    ↓
+                                                       ┌────────────┐
+                                                       │ grafo común │
+                                                       │ WQuestions  │
+                                                       └────────────┘
+```
+
+Los reportes cross-isla — que hoy son proyectos de tres meses — se vuelven consultas. *"¿Cuántas operaciones aprobadas en agencias entre lunes y viernes terminaron asentándose en el core el lunes siguiente?"* es una pregunta directa contra el grafo: filtra por situación de tipo *aprobación* con `lugar_de: agencia` y momento operativo en una semana, hace `join` con asientos contables del lunes siguiente, devuelve el cruce.
+
+Nada de esto exige reescribir las islas. Exige que cada una publique sus hechos atómicos — los que producen sus eventos significativos — al grafo. Una capa fina de **adaptación** por sistema, escrita una vez. El resto sigue operando como está, con su propio software propietario, su Excel, su tabla plana. La diferencia es que ahora **el grafo ve todo**.
+
+![Las cinco islas típicas de un banco regional — central, agencias, contabilidad, promotores, reporting — cada una con su tecnología y su vocabulario. WQuestions no reemplaza ninguna; cada una publica sus hechos al grafo común con su dialecto mapeado al catálogo D7 una sola vez. El archipiélago se vuelve consultable sin disolverse.](../diagrams/png/43_cinco_islas_banco.png)
+
+Esta es, probablemente, la propuesta más ambiciosa del libro y la menos trivial de adoptar. Pero a diferencia de los proyectos tradicionales de centralización, **no exige que las islas se rindan**. Solo exige que digan, en el vocabulario común, lo que están haciendo. La isla sigue siendo isla; el archipiélago se vuelve consultable.
+
 ## Un mapa del dominio
 
 Lo primero al abordar un banco es resistir la urgencia de bajar a detalle. El alto nivel importa porque el banco tiene **muchas familias de entidades a la vez**:
