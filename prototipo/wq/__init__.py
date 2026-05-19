@@ -3,10 +3,10 @@
 Implementa el modelo descrito en `WQuestions.md` y discutido en el libro:
 - 8 ejes (Q, O, L, T, N, K, P, M)
 - hechos atómicos con signatura tipada
-- situaciones reificadas (D2, D5)
-- catálogo canónico de roles (D7)
-- lexicon con resolución de polisemia (D8)
-- vigencia temporal por reificación (D9)
+- situaciones reificadas (D4, D5)
+- catálogo canónico de roles (D8)
+- lexicon con resolución de polisemia (D9)
+- vigencia temporal por reificación (D6)
 - consultas como proyecciones sobre roles (preguntas-WH)
 
 Se prioriza claridad sobre rendimiento. La meta es validar la arquitectura,

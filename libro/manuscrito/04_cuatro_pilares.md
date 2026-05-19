@@ -2,168 +2,173 @@
 
 ## Una oración sencilla
 
-Empecemos por la oración más inocente que se nos pueda ocurrir:
+Empecemos este análisis por la oración más inocente y cotidiana que se nos pueda ocurrir:
 
 > *Marta le regaló un libro a su sobrino ayer en su casa.*
 
-Cualquier hablante de español entiende la oración sin esfuerzo. Pero esa comprensión, mirada de cerca, esconde un trabajo notable. La mente que lee identifica, de manera automática y casi instantánea, cuatro cosas distintas: **una persona que actúa** (Marta), **una cosa que circula** (un libro, junto con otra persona implicada, el sobrino), **un lugar donde ocurre** (la casa) y **un momento en el tiempo** (ayer). No solo las identifica: las coloca cada una en su lugar correcto. Nadie confunde la casa con el libro, ni el ayer con Marta.
+Cualquier persona que hable español entiende esta frase sin hacer el menor esfuerzo consciente. Sin embargo, esa comprensión aparentemente simple esconde un trabajo de procesamiento mental extraordinario. Al leerla, nuestro cerebro identifica de manera automática y en una fracción de segundo cuatro elementos totalmente distintos: **una persona que ejecuta la acción** (Marta), **una cosa que cambia de manos** (un libro, que involucra a un receptor, el sobrino), **un lugar físico donde todo ocurre** (la casa) y **un momento específico en el tiempo** (ayer). 
 
-Esa descomposición automática es la materia prima del modelo que este libro construye. Las cuatro preguntas que la mente respondió en una fracción de segundo — *quién*, *qué*, *dónde*, *cuándo* — son los **cuatro pilares**: las dimensiones que aparecen en cualquier descripción de un hecho del mundo, en cualquier idioma, en cualquier dominio. Si alguna falta, la descripción se siente incompleta. Si las cuatro están, tenemos al menos el esqueleto de un hecho.
+No solo identificamos estas piezas al vuelo, sino que las encajamos en su lugar exacto. Nadie con un nivel básico de comprensión lectora confundiría la casa con el libro, ni pensaría que "ayer" es el nombre de la persona que recibe el regalo. 
+
+Esa capacidad de descomposición automática que tiene nuestra mente es, literalmente, la materia prima sobre la cual se construye el modelo de este libro. Esas cuatro preguntas que nuestro cerebro acaba de responder sin que nos demos cuenta —*quién*, *qué*, *dónde*, *cuándo*— conforman los **cuatro pilares**. Son las dimensiones fundamentales que aparecen en cualquier descripción de un hecho real, sin importar el idioma que hablemos o el nivel técnico del tema. Si falta alguna de estas piezas, sentimos intuitivamente que la historia está incompleta. Si las cuatro están presentes, tenemos, como mínimo, el esqueleto funcional de un hecho.
 
 ![Cómo los cuatro pilares descomponen la oración. Cada segmento del enunciado encuentra su lugar en uno de los cuatro ejes de valor concretos.](../diagrams/png/07_oracion_marta.png)
 
-Este capítulo las recorre una por una. No las trata todavía como ejes formales — eso vendrá más adelante —, sino como **preguntas con personalidad propia**: cada una tiene sus rarezas, sus trampas, sus convenciones. Conocerlas bien ahora ahorra confusiones después.
+En este capítulo vamos a recorrer estos pilares uno por uno. Todavía no los vamos a tratar como ejes matemáticos formales —eso lo haremos más adelante cuando toquemos la arquitectura—, sino que vamos a analizarlos como **preguntas con personalidad propia**. Cada una de ellas esconde rarezas, trampas de diseño y convenciones que solemos pasar por alto. Entender a fondo cómo se comportan ahora nos va a ahorrar muchísimos dolores de cabeza cuando empecemos a modelar bases de datos.
 
 ## Q — Quién: la pregunta por la agencia
 
-La pregunta "quién" parece la más obvia de las cuatro. Quién hizo algo, quién lo recibió, quién es el responsable. La respuesta canónica es **un agente capaz de acción**: una persona, un grupo de personas, una organización.
+A simple vista, la pregunta "¿quién?" parece la más obvia e inofensiva de las cuatro. Queremos saber quién hizo algo, quién recibió la acción o sobre quién recae la responsabilidad. La respuesta estándar y canónica que esperamos encontrar aquí es **un agente capaz de ejecutar una acción**: una persona individual, un grupo de personas o una organización formal.
 
-Tres ejemplos triviales:
-
+Si lo cruzamos con nuestros cuatro ejemplos de prueba, el resultado es bastante plano:
 - *Receta*: ¿quién prepara el risotto? El cocinero.
-- *Gol*: ¿quién marca? El delantero (y, opcionalmente, quién asiste).
-- *Canción*: ¿quién compone? El autor o el compositor.
-- *Noticia política*: ¿quién anuncia la medida? El ministro.
+- *Gol*: ¿quién marca? El delantero (y si queremos más detalle, quién da la asistencia).
+- *Canción*: ¿quién compone? El autor o el músico.
+- *Noticia política*: ¿quién anuncia la nueva medida? El ministro de turno.
 
-Hasta aquí todo plano. Pero la pregunta se vuelve interesante apenas la empujamos un poco.
+Hasta aquí no hay mayor fricción. Pero esta pregunta empieza a volverse muy interesante apenas la sacamos de su zona de confort y la enfrentamos a la realidad de los datos.
 
-¿Quién marca el gol cuando el balón rebota en un defensor rival y entra al arco? Las estadísticas oficiales hablan de "gol en contra" y le adjudican el tanto al delantero que remató, no al defensor. ¿Quién es el agente entonces? El reglamento decide, pero la pregunta no es trivial.
+Pensemos en un partido de fútbol. ¿Quién marca el gol cuando el balón rebota accidentalmente en un defensor rival y entra al arco? Las estadísticas oficiales de los torneos hablan de un "gol en contra" y, para efectos de la tabla de goleadores, le adjudican el tanto al delantero que pateó originalmente, no al defensor que desvió el balón. Entonces, a nivel de datos, ¿quién es el agente real de ese evento? El reglamento deportivo toma una decisión, por supuesto, pero estructurar esa pregunta en un sistema informático no es algo trivial.
 
-¿Quién compone una canción cuando un autor escribe la letra y otro la música? La industria distingue *letrista* y *compositor*, pero algunos sistemas los meten en un solo campo `compositor`. Cuando una base le entrega a otra esa información, hay que saber qué convención usaba cada una.
+O miremos la industria musical. ¿Quién compone exactamente una canción cuando un autor escribe la letra en su casa y otro músico compone la melodía en un estudio meses después? La industria tiene muy clara la distinción legal entre *letrista* y *compositor*, pero muchísimos sistemas de software simplemente meten a ambos en un campo genérico llamado `compositor`. Cuando una base de datos intenta compartir esa información con otra, si no sabemos qué convención interna usó cada una, los datos chocan.
 
-¿Quién prepara una receta de fideos con tuco si los fideos los hizo la abuela hace dos generaciones y el tuco lo hace hoy el nieto? Hay una distinción entre *autor* (quien diseñó la receta) y *ejecutor* (quien la prepara hoy). Ambas son legítimas respuestas a "quién", pero refieren a personas y a momentos distintos.
+En el caso de una receta clásica de fideos con tuco, la situación temporal lo complica todo: ¿quién "prepara" el plato si la receta original la escribió la abuela hace cincuenta años, pero la salsa la está cocinando el nieto esta noche? Existe una distinción fundamental entre el *autor* (quien diseñó el conocimiento) y el *ejecutor* (quien materializa la acción hoy). Ambas personas son respuestas totalmente legítimas a la pregunta "¿quién?", pero pertenecen a momentos y naturalezas de acción distintas.
 
-Aparece, además, un caso que merece mención explícita. ¿Quién es el agente cuando lo que actúa no es una persona ni una organización, sino una cosa? Un horno que se enciende solo cuando alcanza una temperatura, un VAR que valida un gol, un algoritmo de recomendación que sugiere una canción. En el lenguaje cotidiano hablamos de "agentes" en sentido amplio: *el horno se encendió*, *el VAR anuló el gol*, *el algoritmo decidió*. Sin embargo, esos objetos no viven naturalmente en el eje *quién*: viven en el eje *qué*, como objetos o sistemas. Lo que pasa es que, **en ciertas situaciones, un objeto adquiere temporalmente capacidad de agencia**.
+Y aquí aparece un caso límite que merece mención explícita y cuidadosa. ¿Qué ocurre con el "quién" cuando el que ejecuta la acción no es una persona ni una empresa, sino un objeto inanimado? Un horno inteligente que se enciende solo al alcanzar cierta temperatura, el sistema VAR que interrumpe un partido para anular un gol, o un algoritmo de Spotify que decide sugerirte una canción. En nuestra forma natural de hablar, les otorgamos agencia sin pensarlo: *el horno se encendió*, *el VAR anuló la jugada*, *el algoritmo decidió*. 
 
-Esta observación va a tener importancia. La idea, anticipada ahora, es que la agencia no es una propiedad permanente de un objeto sino una **propiedad contextual**: en una situación dada, un objeto puede comportarse como agente, aunque normalmente sea un objeto pasivo. Llamaremos a este principio "agencia contextual" y lo retomaremos como decisión de diseño en la Parte III.
+Sin embargo, a nivel de arquitectura de la información, estos objetos no pertenecen naturalmente al eje *quién*; su lugar de origen es el eje *qué*, ya que son sistemas o cosas. Lo que sucede aquí es que, **en situaciones muy específicas, un objeto asume temporalmente la capacidad de agencia**. 
+
+Esta observación aparentemente menor tiene un peso enorme en el diseño de software. La idea central es que la "agencia" (la capacidad de hacer algo) no es una propiedad estática que un objeto tiene siempre, sino una **propiedad puramente contextual**. Dependiendo de la situación, un objeto pasivo puede "vestirse" de agente. A este principio lo llamaremos "agencia contextual", y será una de nuestras decisiones de diseño más fuertes cuando lleguemos a la Parte III.
 
 ## O — Qué: la pregunta por la cosa
 
-La pregunta "qué" es engañosa porque parece pedir una sola cosa y termina pidiendo varias. "¿Qué pasó?" pide un evento. "¿Qué le regaló?" pide un objeto. "¿Qué situación atraviesa el equipo?" pide una situación compleja. Las tres son válidas, las tres caen en el eje *qué*, pero refieren a cosas estructuralmente distintas.
+La pregunta "¿qué?" es profundamente engañosa porque en la gramática parece exigir una sola respuesta concreta, pero en la práctica termina abriendo la puerta a entidades completamente distintas. Si preguntas "¿Qué pasó?", esperas que te cuenten un evento. Si preguntas "¿Qué le regaló?", buscas un objeto material. Si preguntas "¿Qué situación atraviesa el equipo?", estás pidiendo un contexto complejo. Las tres preguntas son gramaticalmente correctas, las tres aterrizan en el eje *qué*, pero se refieren a estructuras de datos que no se parecen en nada.
 
-En este libro adoptaremos un criterio amplio: **el eje *qué* aloja todo lo que no es agente, lugar ni momento**, y reconoce que dentro de ese eje conviven al menos tres familias.
+Para mantener la cordura en nuestro modelo, adoptaremos un criterio funcional y amplio: **el eje *qué* va a alojar absolutamente todo lo que no sea un agente, un lugar o un momento temporal**. Y al hacerlo, debemos reconocer que dentro de este gran contenedor conviven al menos tres familias muy diferenciadas. 
 
-La primera familia son los **objetos**: el libro de Marta, el balón con el que se marcó el gol, el papel donde se anotó la receta, el documento donde se firmó el decreto. Cosas tangibles o intangibles que existen, persisten en el tiempo, y son referidas en distintas situaciones.
+La primera familia son los **objetos**. Hablamos de cosas tangibles o intangibles que existen por sí mismas, que persisten a lo largo del tiempo y que pueden ser mencionadas en muchas situaciones distintas. El libro que regaló Marta, el balón oficial del partido, el documento en PDF donde se redactó el decreto, o el papel manchado donde está anotada la receta.
 
-La segunda familia son los **eventos**: el gol, el anuncio, la firma del decreto, la preparación del plato, la grabación de la canción. Hechos que ocurren, que tienen comienzo y fin, que se pueden contar como noticias.
+La segunda familia son los **eventos**. Estos son hechos que ocurren, que tienen un punto de inicio y un punto de finalización claros, y que suelen ser la materia prima de las noticias. El remate al arco, el anuncio oficial en el micrófono, el acto de estampar la firma en el decreto, o la sesión de grabación del disco.
 
-La tercera familia son las **situaciones**: el partido en su conjunto, la conferencia de prensa, la sesión de grabación, la cena. Marcos que duran, dentro de los cuales ocurren múltiples eventos relacionados.
+La tercera familia son las **situaciones**. Se trata de marcos de referencia mucho más amplios y duraderos, dentro de los cuales ocurren múltiples eventos pequeños que están interconectados. El partido de fútbol en su totalidad, la conferencia de prensa completa, o la cena de aniversario.
 
-Hay una intuición clave aquí, sutil pero importante: las tres familias no son disjuntas. Un evento puede ser contemplado como objeto cuando otra información lo refiere ("**el gol** fue revisado por el VAR"); una situación puede ser contemplada como evento dentro de una situación más grande ("**el partido** fue suspendido por la lluvia"). El eje *qué* es flexible respecto a la granularidad: lo que en un nivel es evento, en otro nivel es objeto referido.
+Aquí hay una intuición de diseño muy sutil pero crítica: estas tres familias no están separadas por muros impenetrables. Un evento puede transformarse en un objeto cuando otro dato hace referencia a él (por ejemplo, cuando decimos "**el gol** fue revisado minuciosamente por el VAR"). Del mismo modo, una situación gigante puede ser vista como un evento simple si la miramos desde un contexto aún mayor ("**el partido** fue suspendido a causa de la lluvia torrencial"). El eje *qué* tiene una flexibilidad inherente respecto a la escala o la granularidad: lo que en un nivel de la base de datos es un evento activo, en un nivel superior es simplemente un objeto pasivo al que hacemos referencia.
 
-Esa flexibilidad es una ventaja arquitectónica enorme, porque permite tratar uniformemente cosas que la programación tradicional separa en tablas distintas. Pero también es una trampa: hay que cuidarse de no perder la identidad de un evento al reducirlo a objeto, o de no inflar un objeto trivial al estatus de evento. En la Parte III discutiremos este punto con cuidado, bajo el nombre de **reificación**.
+Esa flexibilidad es una ventaja arquitectónica masiva. Nos permite tratar de forma uniforme cosas que la programación tradicional suele obligar a separar en tablas de bases de datos distintas y difíciles de cruzar. Pero, cuidado, también es una trampa mortal para los ingenieros de datos: hay que ser muy precisos para no perder la riqueza de un evento complejo al reducirlo a un simple objeto de texto, o viceversa. En la Parte III vamos a desmenuzar este problema bajo el concepto formal de **reificación**.
 
-Por ahora, alcanza con esta intuición operativa:
+Por el momento, nos basta con asimilar esta intuición operativa usando nuestros dominios:
+- *Receta*: el texto de la receta es el objeto; el acto físico de cocinar es el evento; la cena familiar donde se come es la situación.
+- *Gol*: el balón es el objeto; el disparo a portería es el evento; los noventa minutos de partido son la situación.
+- *Canción*: la partitura musical es el objeto; la interpretación del cantante en la cabina es el evento; la gira de conciertos es la situación.
+- *Noticia política*: el papel del decreto es el objeto; la rúbrica del presidente es el evento; el mandato presidencial de cuatro años es la situación.
 
-- *Receta*: la receta misma como objeto; el acto de cocinarla como evento; la cena donde se sirve como situación.
-- *Gol*: el balón como objeto; el remate y el gol como eventos; el partido como situación.
-- *Canción*: la canción como objeto (composición); su interpretación como evento; el concierto como situación.
-- *Noticia política*: el decreto como objeto; la firma como evento; el período de gobierno como situación.
-
-Cada caso usa el eje *qué* tres veces, en tres registros distintos. El modelo no se queja: lo aloja sin más.
+En cada caso, usamos el mismo eje *qué* tres veces, pero operando en tres registros distintos. El modelo no se confunde ni se rompe; simplemente aloja la información en su nivel correspondiente.
 
 ## L — Dónde: la pregunta por el lugar
 
-"¿Dónde?" es la pregunta más concreta de las cuatro, y por eso mismo la que más fácilmente se da por sentada. Sin embargo, esconde una decisión semántica que vale la pena hacer explícita.
+La pregunta "¿dónde?" suele ser la más física y concreta de los cuatro pilares, y precisamente por esa aparente simplicidad es la que los desarrolladores dan por sentada con mayor frecuencia. Sin embargo, detrás de ella se esconde una decisión semántica que, si no se toma de forma explícita, arruina los cruces de información.
 
-Hay dos tipos de "dónde" en uso cotidiano. El primero es el **lugar físico**: una dirección, una ciudad, un país, un punto geográfico. La casa de Marta, el estadio, el estudio de grabación, el palacio de gobierno. El segundo es el **lugar organizacional**: un departamento, un ministerio, una sucursal, un club. La selección, el Ministerio de Salud, el sello discográfico, la cadena de restaurantes.
+En el uso diario del lenguaje, utilizamos dos tipos de "dónde" completamente distintos. El primero es el **lugar físico estricto**: una coordenada en un mapa, una dirección postal, una ciudad o un recinto. La casa de Marta, las gradas del estadio, la sala de grabación B, o el palacio presidencial. 
 
-Los dos comparten que responden a "¿dónde?", pero apuntan a cosas estructuralmente distintas. Una ciudad es una entidad geográfica; un ministerio es una entidad organizacional. Si los confundimos al modelar — si guardamos `Lima` y `Ministerio de Salud` en el mismo campo `ubicacion` — pierdes la capacidad de razonar por separado sobre dónde está físicamente algo y a qué organización pertenece.
+El segundo es el **lugar organizacional o administrativo**: un departamento corporativo, un ministerio del gobierno, una sucursal de una franquicia, o un club deportivo. Hablamos de la selección nacional, el Ministerio de Salud, o un sello discográfico específico.
 
-La convención que adoptaremos es **explicitar la naturaleza** del lugar: el eje *dónde* alojará lugares físicos, y los lugares organizacionales — cuando funcionen como agentes — irán al eje *quién*; cuando funcionen como contenedores administrativos podrán aparecer también en *dónde*, marcados como organización. La distinción se vuelve más clara en los capítulos posteriores; por ahora, basta con tenerla presente.
+Ambos conceptos responden con total naturalidad a la pregunta "¿dónde?", pero tecnológicamente apuntan a realidades estructuralmente distintas. Una ciudad es un polígono geográfico; un ministerio es un organigrama de personas e intenciones. Si cometemos el error de mezclarlos en el diseño —si guardamos `Lima` y `Ministerio de Salud` indiscriminadamente en una misma columna genérica llamada `ubicacion`— perdemos para siempre la capacidad matemática de separar dónde está ocurriendo algo físicamente y a qué estructura administrativa pertenece.
 
-Ejemplos en los cuatro dominios:
+La regla que vamos a adoptar para evitar este caos es **explicitar siempre la naturaleza** del lugar. El eje *dónde* se reservará de manera estricta para los lugares físicos. Los lugares organizacionales, cuando estén ejecutando una acción, se moverán al eje *quién* (actuando como agentes); y cuando funcionen meramente como contenedores administrativos, podrán aparecer en el eje *dónde*, pero irán etiquetados obligatoriamente con una marca de "organización". Esta distinción teórica tomará mucho más sentido cuando veamos el código en los próximos capítulos; por ahora, es vital tenerla mapeada.
 
-- *Receta*: ¿dónde se prepara? La cocina. ¿Dónde se sirve? El comedor. ¿Dónde nació la receta? Una región (Sicilia, el Yucatán). Tres "dóndes" con resoluciones distintas conviven sin chocar.
-- *Gol*: ¿dónde fue el remate? Fuera del área. ¿Dónde ocurrió el partido? En tal estadio, en tal ciudad. Otra vez, distintas escalas de "dónde".
-- *Canción*: ¿dónde fue grabada? Tal estudio en tal ciudad. ¿Dónde fue compuesta? A veces se sabe, a veces no.
-- *Noticia política*: ¿dónde se firmó el decreto? En la sede de gobierno. ¿Dónde se aplica? En el territorio nacional. Otra vez, dos escalas.
+Veamos cómo conviven en nuestros cuatro ejemplos:
+- *Receta*: ¿Dónde se prepara físicamente? En la cocina. ¿Dónde se sirve? En la mesa del comedor. ¿Dónde tiene su origen histórico? En una región extensa como Sicilia o Yucatán. Tenemos tres "dóndes" con escalas físicas totalmente distintas conviviendo sin problemas.
+- *Gol*: ¿Dónde se produjo el impacto del remate? A cinco metros fuera del área penal. ¿Dónde se jugó el partido? En un estadio específico, dentro de una ciudad específica. De nuevo, convivencias de escalas.
+- *Canción*: ¿Dónde se grabaron las pistas? En un estudio de Londres. ¿Dónde se escribió la letra? A veces es un dato histórico conocido, a veces es un misterio.
+- *Noticia política*: ¿Dónde se firmó el documento? En el despacho presidencial (ubicación física). ¿Dónde tiene jurisdicción la ley? En todo el territorio nacional (ubicación política). 
 
-Una observación útil: el "dónde" admite naturalmente jerarquías. La cocina está en la casa, la casa está en el barrio, el barrio está en la ciudad, la ciudad en el país. Todas son respuestas correctas a "¿dónde?" para el mismo hecho, dependiendo de la resolución que pida la consulta. El modelo tendrá que ser capaz de responder a las cuatro escalas sin ambigüedad. Volveremos a esto.
+Vale la pena dejar asentada una observación fundamental: el pilar "dónde" está diseñado por naturaleza para soportar jerarquías o anidamientos. La cocina está dentro de la casa, la casa pertenece a un barrio, el barrio está contenido en la ciudad, y la ciudad en el país. A nivel lógico, todas esas respuestas son matemáticamente correctas para la pregunta "¿dónde ocurrió?" aplicada a un mismo hecho. Todo dependerá del nivel de "zoom" que requiera la consulta del usuario. El modelo que estamos construyendo tendrá que ser capaz de navegar por esas cuatro escalas hacia arriba o hacia abajo sin generar ambigüedades.
 
 ## T — Cuándo: la pregunta por el tiempo
 
-La última de los cuatro pilares es la que más nos hemos acostumbrado a tratar como trivial, y resulta ser la más rica en sutilezas. "Cuándo" parece pedir una fecha. Pero las fechas son apenas una de las muchas formas en que el tiempo aparece en el lenguaje natural.
+Llegamos al último de los cuatro pilares base, el cual solemos tratar con mucha ligereza en informática asumiendo que se soluciona con un simple formato de fecha (`YYYY-MM-DD`). La realidad es que el "cuándo" resulta ser el eje más rico y lleno de sutilezas lógicas de todo el modelo. El lenguaje natural tiene muchísimas formas de expresar el tiempo, y las fechas de calendario son apenas una de ellas. 
 
-Considera la oración de la apertura: *Marta le regaló un libro a su sobrino ayer en su casa*. El "cuándo" es *ayer*. ¿Cómo lo guardamos en una base de datos? Si lo guardamos como `2026-05-13`, perdemos algo: el hecho de que era "ayer" relativo a la enunciación. Si lo guardamos como la cadena "ayer", no podemos hacer consultas temporales. Lo razonable es guardar la fecha absoluta y, opcionalmente, el adverbio relativo como información complementaria.
+Volvamos a la oración con la que abrimos el capítulo: *Marta le regaló un libro a su sobrino ayer en su casa*. La respuesta al "cuándo" es la palabra *ayer*. Como arquitectos de datos, ¿cómo abordamos esto? Si el sistema simplemente guarda el dato frío como `2026-05-13`, estamos destruyendo información valiosa: perdemos el contexto de que la acción ocurrió "ayer" en relación al momento exacto en que la persona habló. Por otro lado, si guardamos literalmente la cadena de texto "ayer", el motor de la base de datos se vuelve inútil, porque no puede realizar cálculos de antigüedad ni ordenar los eventos cronológicamente. La salida técnica razonable es guardar la fecha absoluta computacional y, en una capa complementaria, conservar el adverbio relativo ("ayer") como contexto asociado.
 
-Pero hay más tipos de tiempo. En música, una nota dura "una negra"; en una partitura, el tiempo no es de reloj sino **musical**, medido en compases y figuras. En narrativa, un evento ocurre "después del segundo capítulo"; el tiempo es **narrativo**, medido en posición del relato. En historia clínica, una crisis ocurre "tres horas después del inicio de los síntomas"; el tiempo es **relativo a un evento ancla**. En política, una ley entra en vigor "treinta días después de su publicación"; el tiempo es **derivado por regla**.
+Pero el problema se vuelve más profundo cuando salimos del calendario estándar. En la notación musical, una nota tiene una duración de "una negra" o "una corchea"; el tiempo aquí no lo dicta un reloj de cuarzo, es un **tiempo musical** interno que se mide en compases y ritmo. En el análisis de una obra literaria o cinematográfica, decimos que una muerte ocurre "al final del segundo acto"; estamos frente a un **tiempo narrativo**, medido por la posición estructural dentro de un relato. En un entorno hospitalario, la ficha indica que el paciente sufrió una crisis "tres horas después de la ingesta del medicamento"; este es un **tiempo relativo anclado a un evento previo**. En el ámbito jurídico, un decreto entra en vigencia "a los treinta días hábiles de su publicación en el boletín oficial"; nos topamos con un **tiempo derivado por reglas legales**.
 
-La pregunta "cuándo" admite, al menos, cinco tipos de tiempo en uso natural:
+Si prestamos atención al uso natural de la información, descubrimos que la pregunta "cuándo" exige soportar, como mínimo, cinco tipos de tiempo distintos:
 
-1. **Tiempo absoluto** — fecha y hora del calendario gregoriano.
-2. **Tiempo relativo** — antes, después, durante otro evento.
-3. **Tiempo de reloj corto** — minutos, segundos dentro de un evento (el minuto 87 del gol).
-4. **Tiempo cíclico** — cada lunes, todos los meses (recetas semanales, partidos de fin de semana).
-5. **Tiempo no-reloj** — compases musicales, número de capítulo, página, paso de un procedimiento.
+1. **Tiempo absoluto:** Las fechas y horas exactas atadas al calendario gregoriano.
+2. **Tiempo relativo:** Expresiones relacionales como "antes de", "durante" o "inmediatamente después de" otro hecho comprobable.
+3. **Tiempo de reloj corto:** Marcadores temporales internos de un evento cerrado (por ejemplo, el minuto 87 del partido de fútbol).
+4. **Tiempo cíclico:** Patrones de repetición (todos los lunes hábiles, cada inicio de mes).
+5. **Tiempo no-reloj:** Escalas abstractas como compases de una partitura, el número de página de un libro, o el paso número cuatro de un manual de instrucciones.
 
-El eje *cuándo* tiene que poder alojar los cinco, y reconocer cuál está siendo usado en cada caso. La estrategia, que retomaremos formalmente, es la de **pluralidad de tiempos**: el eje no es un solo reloj universal sino un espacio donde conviven varias escalas temporales, todas legítimas, cada una con su propio sistema de coordenadas.
+Cualquier eje *cuándo* robusto tiene que estar preparado para recibir estos cinco formatos y, más importante aún, tener la inteligencia para reconocer cuál de ellos se está utilizando en cada transacción. La estrategia que adoptaremos formalmente más adelante es la **pluralidad de tiempos**. No intentaremos forzar toda la información a pasar por un único reloj universal. En su lugar, el eje funcionará como un espacio donde conviven múltiples escalas temporales, todas válidas, operando cada una bajo su propio sistema de coordenadas.
 
-Una complicación adicional, que apenas dejaremos asomar: una propiedad puede ser **válida** en un tiempo y dejar de serlo en otro. Marta vivió en su casa entre 2010 y 2025; en 2026 vive en otro lado. El "dónde vive Marta" no es un valor fijo: es una sucesión de valores con sus respectivos rangos de validez. Esto es lo que las bases de datos llaman **bitemporalidad** y los lingüistas llaman **vigencia**. Aparecerá explícitamente más adelante.
+A esto se le suma una complicación técnica fascinante en la que no profundizaremos mucho ahora, pero que dejaremos planteada. Una propiedad o un dato puede ser completamente **válido** en un período de tiempo, y dejar de serlo en el siguiente. Marta vivió ininterrumpidamente en esa casa entre 2010 y 2025; pero si consultamos en 2026, su residencia es otra. La respuesta a "dónde vive Marta" no es un bloque de piedra inamovible; es un flujo temporal compuesto por una sucesión de valores, cada uno con su propia fecha de caducidad. Este concepto es lo que en la teoría de bases de datos avanzadas se conoce como **bitemporalidad**, y en la lingüística estructural se denomina **vigencia**. Será un componente explícito de nuestro diseño final.
 
-Ejemplos en los cuatro dominios:
-
-- *Receta*: ¿cuándo se hace? Pueden ser fechas (la cena de anoche), patrones cíclicos (cada domingo), pasos relativos ("después de hervir la pasta").
-- *Gol*: ¿cuándo? El minuto 87, el segundo tiempo, los descuentos. Es tiempo de reloj corto, relativo al inicio del partido.
-- *Canción*: ¿cuándo entra el coro? En el compás 17. ¿Cuándo se grabó? El 14 de mayo de 2026. Dos tiempos coexisten.
-- *Noticia política*: ¿cuándo se firmó el decreto? Ayer. ¿Cuándo entra en vigor? En treinta días. Dos tiempos, uno absoluto, otro derivado.
+Si aplicamos todo esto a nuestros casos de uso:
+- *Receta*: ¿Cuándo se ejecuta? Puede ser un tiempo absoluto (la preparé anoche), un patrón cíclico (es la comida de todos los domingos), o un tiempo relativo interno ("añadir la sal después de que rompa a hervir").
+- *Gol*: ¿Cuándo ocurre? En el minuto 87, en la segunda mitad, o en el tiempo de descuento. Todo esto es tiempo de reloj corto, que solo tiene sentido en relación con el pitido inicial del árbitro.
+- *Canción*: ¿Cuándo debe entrar el coro instrumental? Exactamente en el compás 17. ¿Cuándo se grabó físicamente el disco? El 14 de mayo de 2026. Aquí vemos dos líneas de tiempo conviviendo en paralelo.
+- *Noticia política*: ¿Cuándo se estampó la firma presidencial? Ayer en la tarde. ¿Cuándo entra en vigor la ley para los ciudadanos? Dentro de treinta días. Un tiempo absoluto y un tiempo derivado operando sobre el mismo objeto.
 
 ## Cuando un pilar se confunde: una anécdota de IA en estado salvaje
 
-Conviene parar un momento antes del cierre del capítulo y mirar un caso real, anecdótico pero ilustrativo, donde la confusión entre pilares de un hecho hizo trastabillar a un asistente de inteligencia artificial. La historia circuló en redes hace pocos años y se repite, en variantes, con suficiente frecuencia como para haberse vuelto un género propio.
+Antes de dar por cerrado este capítulo conceptual, resulta sumamente instructivo analizar un caso de la vida real. Es una anécdota que ilustra a la perfección qué ocurre cuando un sistema avanzado confunde los pilares fundamentales de un hecho. La historia circuló bastante en foros de tecnología hace un par de años y, debido a lo común del fallo, se ha convertido casi en un ejemplo de estudio clásico sobre las limitaciones de la inteligencia artificial sin estructura.
 
-Un usuario, terminando su jornada de trabajo, le escribe al chatbot algo así:
+Imagina a un usuario que acaba de terminar su jornada laboral. Agarra su teléfono y le dicta lo siguiente a su asistente virtual:
 
-> *Estoy en mi coche que se me ensució viniendo del trabajo. Lo tengo que llevar al autolavado, que me queda a dos cuadras. ¿Me recomiendas ir caminando o en carro?*
+> *Estoy en mi coche, que se me ensució muchísimo viniendo del trabajo. Lo tengo que llevar al autolavado, que me queda a solo dos cuadras de aquí. ¿Me recomiendas ir caminando o ir en carro?*
 
-La respuesta del modelo: *"Si te queda cerca, puedes ir caminando, es más saludable y ahorras combustible."*
+La respuesta que devolvió el modelo de lenguaje fue desconcertante: 
+*"Si te queda tan cerca, puedes ir caminando sin problemas. Es mucho más saludable y de paso ahorras combustible."*
 
-La respuesta es, por supuesto, absurda. Llevar un coche al autolavado caminando es físicamente imposible. Pero la respuesta no es absurda por estupidez — es absurda por una **mala asignación de roles a los cuatro pilares**. Veámoslo en la notación del capítulo.
+Evidentemente, el consejo es un absurdo físico. Es imposible llevar un vehículo a un centro de lavado yendo a pie. Sin embargo, el error no nace de una "estupidez" del algoritmo, sino de un problema técnico muy específico: una **mala asignación de roles semánticos a los cuatro pilares**. 
 
-Una lectura correcta del hecho identifica:
+Analicemos la situación utilizando la notación que acabamos de establecer. Una lectura humana y estructuralmente correcta del escenario identifica las siguientes variables:
 
-```
-Q (quién)             : el usuario
-O (qué, el objeto que se mueve) : el coche
-L (dónde, destino)    : el autolavado, dos cuadras
+```text
+Q (quién)             : el usuario (agente)
+O (qué, objeto que se mueve) : el coche (paciente)
+L (dónde, destino)    : el autolavado, ubicado a dos cuadras
 T (cuándo)            : ahora
 M (con_finalidad)     : lavar el coche
 ```
 
-El verbo principal de la situación es *llevar*. El usuario es el agente, pero el **paciente** del verbo *llevar* — la cosa que efectivamente se transporta — es el coche. La finalidad de toda la operación es lavar el coche; sin esa finalidad, la pregunta "caminar o en carro" no tiene sentido.
+El verbo núcleo de toda la situación es *llevar*. El usuario funciona claramente como el agente de la acción, pero el **paciente** de ese verbo (la cosa física que sufre el transporte) es el coche. La finalidad ineludible de toda esta maniobra es someter ese coche a un proceso de lavado. Si eliminamos esa finalidad de la ecuación, la pregunta "¿caminar o en carro?" pierde absolutamente todo su sentido.
 
-Lo que hizo el modelo, sospechamos, fue otra asignación de roles:
+¿Qué fue lo que entendió el modelo de IA basado puramente en cálculo estadístico? Su asignación de roles probablemente se vio así:
 
-```
-Q (quién)             : el usuario
+```text
+Q (quién)             : el usuario (agente)
 O (qué, objeto que se mueve) : el usuario (¡el mismo!)
-L (dónde, destino)    : el autolavado, dos cuadras
+L (dónde, destino)    : el autolavado, ubicado a dos cuadras
 T (cuándo)            : ahora
-M (con_finalidad)     : ir al autolavado
+M (con_finalidad)     : trasladarse al autolavado
 ```
 
-En esa lectura, el coche desaparece como paciente y queda como un mero **instrumento opcional** ("ir en carro"), intercambiable con "ir caminando". La finalidad ya no es lavar el coche; es simplemente llegar a un lugar. Y como la distancia es corta, la probabilidad estadística — el motor con el que el modelo razona — sugiere caminar.
+Bajo esta lectura errónea, el coche desaparece de su rol legítimo como paciente y es empujado conceptualmente a un rol de **instrumento opcional** ("puedes ir en carro o no"). La finalidad real (lavar el vehículo) se diluye y es reemplazada por el mero acto de llegar a unas coordenadas geográficas. Como el modelo estadístico evalúa que la distancia ("dos cuadras") es mínima, sus pesos probabilísticos sugieren que caminar es la acción más eficiente y saludable.
 
-![Las dos lecturas de la pregunta del usuario, comparadas pilar a pilar. La asignación correcta deja el coche en O como paciente; la del LLM lo desplaza a instrumento opcional.](../diagrams/png/08_coche_autolavado.png)
+El fallo no es una deficiencia matemática. Es una deficiencia de **modelado del mundo**. El sistema perdió el rastro de una asignación estructural básica: en este contexto específico, el coche **es** el objeto central en el eje `O`, no una herramienta accesoria. Apenas esa pieza se cae del tablero, toda la cadena de razonamiento posterior colapsa, y el modelo ni siquiera es consciente del error.
 
-El error no es de cálculo ni de lógica. Es de **modelado del hecho**. El modelo perdió de vista una asignación clave: que en este contexto el coche **es** el objeto en O, no un instrumento en M. Apenas se pierde esa pieza, la cadena de razonamiento se derrumba sin que el modelo lo note.
+Es aquí donde la promesa central de este libro cobra fuerza industrial. Si pudiéramos ofrecerle los hechos del mundo a los asistentes de inteligencia artificial utilizando una estructura donde los cuatro pilares fueran **explícitos** (el agente siempre en la caja `Q`, el paciente en la caja `O`, el lugar en la `L` y el momento temporal en la `T`), esta clase de absurdos lógicos desaparecerían. Y no porque hayamos creado un algoritmo más inteligente, sino porque la propia **arquitectura estructural impide que ocurra la asignación incorrecta**. 
 
-La pregunta que abre la apuesta del libro asoma con fuerza en este caso. Si los hechos del mundo se le ofrecieran a un asistente de IA con la estructura de los cuatro pilares **explícita** — el agente en Q, el paciente en O, el lugar en L, el momento en T, la finalidad como relación canónica en M —, este tipo de errores no pueden ocurrir. No porque el modelo sea más inteligente, sino porque la **estructura impide la asignación incorrecta**. El sistema sabe que un verbo como *llevar* exige un paciente; sabe que el paciente debe estar en O; sabe que sin paciente el hecho está incompleto y debe pedirlo. La probabilidad ya no manda sola: la tipa.
-
-Esta es, en miniatura, la apuesta práctica del libro. No mejorar al modelo: dar al modelo una arquitectura que **no le permita** perder el contexto que importa. WQuestions no es una promesa de "IA más inteligente". Es una promesa de "IA sostenida por estructura". Que es probablemente lo que más falta.
+Un sistema con bases firmes "sabe" por diseño que un verbo transitivo como *llevar* exige obligatoriamente la existencia de un paciente. Sabe que ese paciente tiene que estar registrado en el eje `O`. Si el paciente no está, el sistema detecta que la orden está incompleta y, en lugar de alucinar una respuesta, detiene el proceso para pedir aclaraciones. La estadística deja de gobernar a ciegas; la estructura toma el control y le da límites seguros. Esto es lo que la industria de la IA necesita con mayor urgencia en la actualidad.
 
 ## Los cuatro pilares y lo que falta
 
-Si revisamos las cuatro preguntas — *quién*, *qué*, *dónde*, *cuándo* — y volvemos a la oración de la apertura, vemos que las cuatro están y que cada una hace un trabajo distinto. Marta (quién) le regaló un libro (qué) ayer (cuándo) en su casa (dónde). El hecho queda descripto.
+Si hacemos un repaso de las cuatro preguntas exploradas —*quién*, *qué*, *dónde*, *cuándo*— y recordamos la oración sencilla del principio del capítulo, comprobamos que las cuatro piezas están ahí, ejecutando un trabajo de ordenamiento preciso. Marta (quién) le regaló un libro (qué) ayer (cuándo) en su casa (dónde). El escenario queda sólidamente descrito.
 
-¿Bastan? Para esa oración, sí. Para muchas, también. Pero pronto aparecen oraciones donde las cuatro no alcanzan.
+¿Son suficientes para modelar la realidad completa? Para frases como esa, sí lo son. Pero no pasará mucho tiempo en un entorno de producción antes de que nos topemos con registros de datos donde estas cuatro cajas se queden cortas.
+
+Imaginemos una leve expansión de nuestra oración original:
 
 > *Marta le regaló a su sobrino, por su cumpleaños, un libro de cuentos que costó treinta dólares.*
 
-Mismo hecho, más información. Apareció un **precio** (treinta dólares). Apareció un **motivo** (por su cumpleaños). Apareció una **descripción más precisa** del libro: *de cuentos*, no genérico. Y de paso quedó claro que el sobrino es una *persona*, igual que Marta — algo que los pilares todavía no nos dejan decir explícitamente, porque Q es el inventario de individuos, no de categorías. *"Persona"*, *"libro de cuentos"*, *"dólar"*: estas son **clases**, no instancias. Y no caben en ninguno de los cuatro pilares.
+El hecho base sigue siendo el mismo, pero el volumen de información ha escalado. De pronto, tenemos que procesar un **precio** (treinta dólares). Entró en juego un **motivo o finalidad** clara de la acción (por su cumpleaños). Además, tenemos una **clasificación mucho más específica** del objeto: no es un libro genérico, es un libro *de cuentos*. Y, de paso, la frase deja en claro que el sobrino pertenece a la categoría de *persona* (igual que Marta), un detalle técnico que nuestros cuatro pilares aún no nos permiten declarar explícitamente, ya que el pilar `Q` sirve para guardar individuos concretos, no para definir categorías teóricas.
 
-La intuición que se asoma es que los cuatro pilares son **necesarios pero no suficientes**. Hay al menos una quinta pregunta — *qué tipo de cosa es esto* — que reclama un eje propio: el zócalo categórico donde viven los tipos, las clases y los conceptos abstractos. Hay también una sexta — *cuánto* — que aparece transversalmente con sus propias trampas (las unidades), y una séptima y una octava — *cuál* y *cómo* — que articulan los predicados que conectan a todos los demás. Cuatro preguntas más, cuatro capítulos por delante para cerrar la Parte II.
+Conceptos como *"persona"*, *"libro de cuentos"* o *"dólar"* no son objetos palpables. Son **clases** o arquetipos. Y, por definición, no encajan limpiamente en ninguno de los cuatro pilares que acabamos de estudiar.
 
-El próximo, el capítulo 5, se ocupa del eje categórico — el más sutil del modelo y, paradójicamente, el que más trabajo hace en sistemas reales. Es el lugar donde WQuestions abraza a las ontologías existentes (Schema.org, QUDT, SNOMED, CIDOC CRM) en lugar de competir con ellas. Es donde aparece el vocabulario común que las consultas necesitan para no caer otra vez en la torre de Babel del capítulo 1.
+La intuición que comienza a emerger es que los cuatro pilares son **estrictamente necesarios, pero arquitectónicamente insuficientes**. Necesitamos incorporar, como mínimo, una quinta pregunta —*qué tipo de cosa es esto*— que exija un eje propio y exclusivo: el zócalo categórico donde habitarán los tipos, las familias y los conceptos abstractos. A esto debemos sumarle una sexta pregunta para las métricas —*cuánto*— que lidiará con sus propias trampas de conversión (como las unidades de medida); y finalmente, una séptima y octava pregunta —*cuál* y *cómo*— encargadas de articular las conexiones y atributos que amarran todo el modelo. 
 
-Veámoslo.
+Nos quedan cuatro preguntas por descubrir, y cuatro capítulos por delante para consolidar por fin la Parte II del libro.
+
+En el próximo capítulo (Capítulo 5), nos sumergiremos directamente en el eje categórico. Es, por mucho, el eje más delicado de todo el modelo y, paradójicamente, el que soporta la mayor carga de trabajo en los sistemas del mundo real. Es aquí donde la arquitectura de WQuestions se integra pacíficamente con los gigantes de la industria (como Schema.org, QUDT, SNOMED o CIDOC CRM), utilizándolos como aliados en lugar de intentar competir contra ellos. Es el momento de definir el vocabulario común para asegurarnos de no volver a construir, nunca más, la torre de Babel de los datos.

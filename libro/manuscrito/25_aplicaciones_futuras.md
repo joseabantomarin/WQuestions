@@ -4,7 +4,7 @@
 
 Imaginemos tres escenas que hoy son técnicamente plausibles pero económicamente inviables, y que con WQuestions más LLMs en su lugar maduro se vuelven asequibles para organizaciones medianas:
 
-**Escena uno — el dueño de la franquicia.** El Sauna Oasis se expandió: ahora tiene cuatro sedes en tres ciudades. El dueño, sin equipo de analytics, le pregunta por la mañana a su asistente:
+**Escena uno — el dueño de la franquicia.** El Spa Oasis se expandió: ahora tiene cuatro sedes en tres ciudades. El dueño, sin equipo de analytics, le pregunta por la mañana a su asistente:
 
 > *— ¿Qué pasó esta semana?*
 >
@@ -36,13 +36,13 @@ Las tres escenas comparten una propiedad. **No se trata de innovaciones puntuale
 
 La búsqueda corporativa hoy vive en silos. Los datos de ventas están en SAP, los de RRHH en Workday, los de marketing en Salesforce, los financieros en SAP de nuevo pero un módulo distinto, los operativos en un sistema legacy. Cada sistema tiene su schema. Para responder *"¿cuál fue el costo total de adquisición de un cliente que terminó cancelando dentro de los primeros 90 días?"* hay que cruzar cuatro sistemas, lo que en la práctica significa un proyecto de integración con presupuesto propio.
 
-WQuestions reemplaza ese cruce por un sustrato común. Las áreas siguen operando sus sistemas, pero los hechos relevantes — ventas, contactos, transacciones, churn — se publican al grafo central con su dialecto de dominio respectivo. La pregunta del CFO se vuelve una consulta sobre el grafo, ejecutada por el LLM. El **schema matching** — el cuello de botella histórico de la integración empresarial — desaparece, porque todos los dialectos ya están mapeados al catálogo canónico D7.
+WQuestions reemplaza ese cruce por un sustrato común. Las áreas siguen operando sus sistemas, pero los hechos relevantes — ventas, contactos, transacciones, churn — se publican al grafo central con su dialecto de dominio respectivo. La pregunta del CFO se vuelve una consulta sobre el grafo, ejecutada por el LLM. El **schema matching** — el cuello de botella histórico de la integración empresarial — desaparece, porque todos los dialectos ya están mapeados al catálogo canónico D8.
 
 Esta no es una promesa nueva — Tim Berners-Lee la formuló en el artículo fundacional del Semantic Web [31] hace un cuarto de siglo. Lo que faltaba era un modelo lo suficientemente simple para que las áreas lo adoptaran y un traductor lo suficientemente fluido para no exigir vocabulario técnico al usuario final. Las ocho coordenadas-pregunta cumplen el primer requisito; los LLMs el segundo.
 
 ## Familia 2 — Auditoría retrospectiva con bitemporalidad
 
-Esta es la familia que más beneficio inmediato traerá a sectores regulados — finanzas, salud, derecho — y la única donde D9 (vigencia temporal) no es solo conveniencia sino requisito legal. El principio es simple: **el sistema nunca olvida, y puede mostrar lo que sabía en cualquier momento del pasado**.
+Esta es la familia que más beneficio inmediato traerá a sectores regulados — finanzas, salud, derecho — y la única donde D6 (vigencia temporal) no es solo conveniencia sino requisito legal. El principio es simple: **el sistema nunca olvida, y puede mostrar lo que sabía en cualquier momento del pasado**.
 
 Una corte que pregunta *"¿qué políticas internas estaban vigentes el 30 de junio de 2023?"* recibe una respuesta exacta, no una reconstrucción aproximada. Un regulador financiero que pide *"¿cuál era el límite de exposición de este cliente cuando se firmó la operación?"* obtiene el valor histórico, no el actual. Un equipo médico que estudia un evento adverso reconstruye **qué se sabía del paciente al momento de prescribir** — y por ende, si la decisión fue defendible bajo el conocimiento disponible.
 
@@ -91,7 +91,7 @@ La aplicación tiene un correlato indirecto en explicabilidad de la IA. Cuando u
 
 ## La constante: identidad estable a través del tiempo
 
-Si tuviera que destilar las cinco familias en una sola observación, sería ésta. Lo que las hace posibles a todas es la misma propiedad: **el grafo preserva identidad estable de las entidades a través del tiempo**. María Gonzales es el mismo individuo en 2026 y en 2034; el Sauna Oasis es la misma persona jurídica antes y después de expandirse; la cláusula 14 del contrato es la misma cláusula con o sin enmiendas posteriores.
+Si tuviera que destilar las cinco familias en una sola observación, sería ésta. Lo que las hace posibles a todas es la misma propiedad: **el grafo preserva identidad estable de las entidades a través del tiempo**. María Gonzales es el mismo individuo en 2026 y en 2034; el Spa Oasis es la misma persona jurídica antes y después de expandirse; la cláusula 14 del contrato es la misma cláusula con o sin enmiendas posteriores.
 
 Esto suena trivial pero no lo es. En sistemas tradicionales, la identidad se reconstruye por *foreign keys* que apuntan a registros que pueden ser editados, borrados o renombrados. La identidad es **frágil**: una migración de schema, un cambio de criterio, una limpieza de datos, y la trazabilidad se rompe. WQuestions hace lo opuesto: cada individuo recibe un UUID inmutable, los hechos sobre él son acumulativos, los cambios son nuevos hechos con vigencia. La identidad se vuelve **infraestructura**, no convención.
 
@@ -109,8 +109,8 @@ Sería deshonesto cerrar este capítulo sin matizar. Los escenarios que describ�
 
 Algunas de estas condiciones se están cumpliendo solas, otras requieren empuje activo. La especulación es honesta cuando reconoce la diferencia.
 
-## Lo que falta: el puente al cap 21
+## Lo que falta: el puente al cap 25
 
 Las aplicaciones de este capítulo asumen una versión madura del proyecto. La versión actual — la que el prototipo ejecuta — está incompleta. Falta persistencia industrial, motor de inferencia, bitemporalidad completa, lexicon poblado en varios idiomas, herramientas para que las organizaciones definan sus dialectos sin asistencia de un ingeniero.
 
-El próximo capítulo — el último antes de la conclusión — enumera ese trabajo pendiente honestamente. No es un capítulo de promesas: es un **mapa de implementación**, dirigido a quien lea este libro y quiera contribuir o adoptar la propuesta como base de un proyecto propio. Las cinco familias de este capítulo viven en el futuro; el capítulo 22 vive en el presente operativo.
+El próximo capítulo — el último antes de la conclusión — enumera ese trabajo pendiente honestamente. No es un capítulo de promesas: es un **mapa de implementación**, dirigido a quien lea este libro y quiera contribuir o adoptar la propuesta como base de un proyecto propio. Las cinco familias de este capítulo viven en el futuro; el capítulo 26 vive en el presente operativo.

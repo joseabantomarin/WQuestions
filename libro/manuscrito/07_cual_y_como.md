@@ -2,224 +2,189 @@
 
 ## El universo está completo, pero las cosas siguen sueltas
 
-Si miramos el inventario que hemos construido en los capítulos previos, el modelo tiene todo lo que necesita para alojar valores. Q recibe a los agentes; O a los objetos, eventos y situaciones; L a los lugares; T a los momentos; N a las magnitudes; K a las categorías. Seis ejes, seis tipos distintos de individuos. Cualquier cosa que ocurra en el mundo, en cualquier dominio, puede ubicarse en alguno de esos seis ejes.
+Hagamos un balance de lo que hemos construido hasta ahora en los capítulos anteriores. Nuestro modelo ya cuenta con seis "cajas" gigantes (los ejes de valor) donde podemos alojar cualquier elemento del mundo: 
 
-Y sin embargo, si nos quedáramos solamente con eso, el sistema no podría todavía decir gran cosa. *"Marta"* viviría en Q. *"Buenos Aires"* en L. *"1984"* en T. *"45"* en N. *"persona"* en K. Pero ¿cómo se conectan? ¿Cómo expresamos que *Marta vive en Buenos Aires*, que *nació en 1984*, que *tiene 45 años*, que *es una persona*? Los seis ejes alojan a los individuos pero no a los **enlaces** que dicen qué tiene que ver cada uno con cada uno.
+   **Q** guarda a las personas y agentes que actúan.
+   **O** guarda los objetos físicos y los eventos.
+   **L** guarda los lugares.
+   **T** guarda las fechas y los momentos.
+   **N** guarda los números y las magnitudes.
+   **K** guarda los conceptos abstractos y las categorías.
 
-Esos enlaces son lo que faltan. Y son lo que este capítulo se ocupa de presentar.
+Seis ejes, seis tipos distintos de individuos. En teoría, cualquier cosa que exista o pase en el universo puede encontrar un lugar en alguna de estas cajas.
 
-Los enlaces — los *predicados* del modelo — viven en dos ejes distintos pero estructuralmente idénticos:
+Pero si nos quedáramos solamente con esto, nuestro sistema sería inútil. Imagina que tienes una base de datos donde *"Marta"* vive en `Q`, *"Buenos Aires"* vive en `L`, *"1984"* vive en `T`, el número *"45"* vive en `N` y el concepto *"persona"* vive en `K`. Tienes las piezas del rompecabezas, pero... ¿cómo sabe la computadora que esas piezas están conectadas? ¿Cómo le explicamos a la máquina que *Marta vive en Buenos Aires*, que *nació en 1984*, que *tiene 45 años* y que *es una persona*? 
 
-- **P** (de *Proprietas*) aloja los predicados llamados **propiedades**.
-- **M** (de *Modus*) aloja los predicados llamados **relaciones**.
+Los seis ejes que ya vimos son perfectos para alojar individuos aislados, pero no sirven para guardar los **enlaces**. Nos faltan los "cables" lógicos que le dicen a la máquina qué tiene que ver cada cosa con cada cosa.
 
-Este capítulo es el último de la Parte II. Cierra el inventario de los ocho ejes. Y plantea una pregunta que, vista de cerca, resulta más interesante de lo que parece: *¿qué diferencia hay realmente entre una propiedad y una relación?* La respuesta — la decisión de diseño **D3** — es lo que vamos a desarrollar.
+Esos enlaces son los protagonistas de este capítulo. En el mundo de la lógica y la programación se les conoce como *predicados*. Y en nuestro modelo, estos enlaces viven en dos ejes nuevos que son estructuralmente casi idénticos:
 
-## Una pregunta que parece tonta
+*   El eje **P** (de *Propiedades*), que responde a la pregunta **¿cuál?**.
+*   El eje **M** (de *Modos o Relaciones*), que responde a la pregunta **¿cómo?**.
 
-Empecemos con la pregunta más simple. Tenemos cinco hechos:
+Con estos dos ejes cerramos oficialmente el inventario de las ocho coordenadas. Pero antes de dar esto por sentado, este capítulo nos obliga a hacernos una pregunta técnica fascinante: en el fondo de una base de datos, *¿qué diferencia real hay entre una propiedad y una relación?* La respuesta a esto se convertirá en nuestra decisión de diseño **D2**, y nos ahorrará miles de horas de programación innecesaria.
 
-```
-(paciente_042, edad,             42)
-(paciente_042, fecha_nacimiento, 1984-03-17)
-(paciente_042, vive_en,          buenos_aires)
-(modelo_gpt_x, parametros,       175_000_000_000)
-(modelo_gpt_x, entrenado_con,    corpus_c4)
-```
+## Una pregunta que parece de sentido común
 
-Si pidiéramos a alguien sin entrenamiento técnico que distinguiera "propiedades" de "relaciones", probablemente diría: *edad*, *fecha de nacimiento* y *parámetros* son **propiedades** (atributos atómicos del sujeto); *vive en* y *entrenado con* son **relaciones** (enlaces con otra entidad). La intuición es: propiedad = atributo simple; relación = vínculo.
+Arranquemos con un ejemplo para calentar motores. Imagina que tenemos estos cinco datos sueltos sobre un paciente y sobre un modelo de Inteligencia Artificial:
 
-La intuición funciona en estos ejemplos, pero apenas se la empuja un poco se desordena.
-
-- *El paciente vive en Buenos Aires* parece relación. Pero también puede leerse como *"el paciente tiene ciudad de residencia = Buenos Aires"*, que se parece a propiedad.
-- *El modelo tiene 175 mil millones de parámetros* parece propiedad. Pero también puede leerse como *"el modelo se relaciona con el número 175.000.000.000 por la propiedad parámetros"*, que se parece a relación.
-- *El paciente nació en 1984* parece propiedad. Pero el "1984" es una fecha que vive en T — es un individuo, no un valor inherente al paciente. ¿Es entonces relación con un individuo de T?
-
-Si miramos las cinco con cuidado, descubrimos algo importante: la diferencia entre propiedad y relación **no es una diferencia objetiva en el mundo**. Es una diferencia en cómo nosotros las nombramos en lenguaje natural. Cuando decimos "tiene 42 años" usamos una construcción gramatical posesiva; cuando decimos "vive en Buenos Aires" usamos una construcción locativa. Pero estructuralmente, al nivel del dato que el sistema almacena, los dos hechos son lo mismo: un sujeto, una predicación, un valor.
-
-Esa observación es el punto de partida de D3. Pero antes de formularla, conviene entender la forma común que comparten los cinco hechos.
-
-## La forma común: signatura tipada
-
-Todo hecho del modelo, sea propiedad o relación, tiene la misma forma:
-
-```
-hecho = (sujeto, predicado, objeto)
+```text
+1. Al paciente_042 le corresponde la edad de 42.
+2. Al paciente_042 le corresponde la fecha_nacimiento de 1984-03-17.
+3. El paciente_042 vive_en Buenos Aires.
+4. El modelo_gpt_4 tiene parámetros por 175.000.000.000.
+5. El modelo_gpt_4 fue entrenado_con el corpus de texto C4.
 ```
 
-Y cada predicado lleva consigo una **signatura** que dice de qué eje viene su sujeto y a qué eje va su objeto. En notación de funciones:
+Si le pedimos a un programador junior que divida estos cinco enlaces en "propiedades" (atributos propios de la cosa) y "relaciones" (vínculos con otra cosa externa), lo haría sin dudar: 
+Diría que la *edad*, la *fecha de nacimiento* y la cantidad de *parámetros* son claramente **propiedades** del sujeto. Por otro lado, argumentaría que *vive en* y *entrenado con* son **relaciones**, porque conectan al sujeto con otra entidad separada. 
 
+Esta intuición suena muy lógica: *propiedad = un atributo interno*; *relación = un puente hacia afuera*.
+
+Sin embargo, esa lógica se rompe apenas la sometemos a un poco de presión arquitectónica:
+
+*   Decimos que *el paciente vive en Buenos Aires* es una relación externa. Pero ¿no podríamos diseñar la tabla diciendo que el paciente tiene un campo interno llamado `ciudad_residencia` que equivale a Buenos Aires? Bajo esa óptica, se vuelve una propiedad.
+*   Decimos que *el modelo tiene 175 mil millones de parámetros* es una propiedad interna. Pero, matemáticamente, podríamos leerlo como que el modelo "está conectado o se relaciona" con el número gigante 175.000.000.000 en el eje N. Bajo esa óptica, se vuelve una relación externa.
+*   Decimos que *la fecha de nacimiento* es una propiedad. Pero el valor "1984" es un individuo con derechos propios que vive en el eje T. El paciente, en realidad, se está relacionando con un punto en el tiempo.
+
+Si analizamos estos cinco enlaces con frialdad informática, descubrimos una verdad incómoda: **la diferencia entre propiedad y relación no existe en la realidad material**. Es solo una diferencia gramatical sobre cómo los humanos redactamos las oraciones. A veces usamos verbos posesivos ("tiene 42 años") y a veces verbos de lugar ("vive en Buenos Aires"). 
+
+Pero para el disco duro de la computadora que guarda el dato, la estructura técnica es idénticamente la misma: hay un sujeto de partida, un cable conector y un objeto de destino.
+
+Esa observación técnica es el punto de partida de nuestra regla D2. Pero antes de formalizarla, miremos cómo es esa "estructura técnica idéntica" que comparten todos los cables.
+
+## La anatomía del cable: la signatura tipada
+
+Todo enlace dentro de nuestro modelo —no importa si lo llamas propiedad o relación— obedece matemáticamente a una misma forma de tres partes:
+
+> **hecho = (sujeto, predicado, objeto)**
+
+Pero el modelo esconde un truco de seguridad brutal: cada enlace o cable (el predicado) no es un texto ciego; viene de fábrica con una **signatura**. Esta signatura es como la etiqueta de un enchufe que le indica a la computadora de qué eje tiene que venir obligatoriamente el sujeto, y a qué eje debe ir a conectarse el objeto. 
+
+Si lo vemos como funciones matemáticas, los cinco enlaces anteriores tienen estas etiquetas de seguridad:
+
+```text
+edad             : va desde Q hacia N (De Personas a Números)
+fecha_nacimiento : va desde Q hacia T (De Personas a Fechas)
+vive_en          : va desde Q hacia L (De Personas a Lugares)
+parametros       : va desde O hacia N (De Objetos a Números)
+entrenado_con    : va desde O hacia O (De Objetos a otros Objetos)
 ```
-edad             : Q → N
-fecha_nacimiento : Q → T
-vive_en          : Q → L
-parametros       : O → N      (un modelo es objeto reificado en O)
-entrenado_con    : O → O
-```
 
-La signatura es lo que convierte una tripleta opaca en un hecho **tipado y validable**. Si alguien intenta `(paciente_042, edad, "rojo")`, el sistema lo rechaza: la signatura dice que `edad : Q → N`, y `"rojo"` no está en N. Esa validación temprana es una de las ventajas operativas más concretas del modelo, y es lo que distingue a WQuestions de un grafo RDF puro donde cualquier sujeto puede ser conectado por cualquier predicado a cualquier objeto.
+La signatura es la magia que convierte un montón de datos desordenados en una estructura **predecible y validable**. Si un programador comete un error de código e intenta guardar esto: `(paciente_042, edad, "color rojo")`, el sistema lo bloquea automáticamente. ¿Por qué? Porque la signatura del cable `edad` advierte que el destino tiene que estar en la caja `N` (los números), y "color rojo" es un texto. 
 
-Esta forma común es la que se va a unificar en P y en M. Lo que las distingue no es la forma — es la **cardinalidad**.
+Esta capacidad de bloquear errores absurdos desde el momento en que se ingresan los datos es la ventaja comercial más grande de este modelo. Es lo que separa a la arquitectura sólida de WQuestions del caos que generan los grafos libres (como RDF), donde cualquiera puede conectar a un paciente con un color usando el verbo "edad" sin que el sistema detecte la falla.
 
-## La distinción real: funcional o no
+## La verdadera diferencia: ¿funcional o múltiple?
 
-Mirá las cinco signaturas otra vez. Cuatro de ellas son **funciones** en el sentido matemático: para un sujeto dado, el predicado determina un único objeto. Un paciente tiene una sola edad, una sola fecha de nacimiento, vive en una sola ciudad principal; un modelo tiene un único conteo de parámetros. La quinta — `entrenado_con` — **no** es función: un modelo puede haber sido entrenado con varios corpus distintos, todos legítimos. Para el mismo sujeto pueden coexistir muchos objetos.
+Visto que la forma del cable es siempre la misma (`sujeto - cable - objeto`), ¿existe alguna razón técnica para crear dos cajas separadas (P y M)? Sí, y la diferencia es estrictamente matemática. Se trata de la **cardinalidad**.
 
-Esta es la única diferencia matemática genuina entre lo que la intuición llama "propiedad" y "relación":
+Vuelve a mirar nuestras cinco signaturas. Cuatro de ellas se comportan como lo que en matemáticas llamamos **funciones cerradas**: dado un sujeto específico, el cable solo puede conducir a *un único* destino posible en ese instante. Un paciente solo puede tener *una* edad matemática hoy; solo puede tener *una* fecha de nacimiento y solo tiene *una* ciudad donde reside principalmente. Un modelo de IA tiene *un solo* conteo exacto de parámetros. 
 
-- Las etiquetas **funcionales** (un solo objeto por sujeto) son **propiedades** y viven en **P**.
-- Las etiquetas **no funcionales** (potencialmente varios objetos por sujeto) son **relaciones** y viven en **M**.
+El quinto cable —`entrenado_con`— rompe esa regla. Un modelo de IA puede haber sido entrenado usando el corpus C4, la Wikipedia y libros de dominio público al mismo tiempo. Es decir, un mismo sujeto puede disparar varios cables hacia múltiples objetos simultáneos, y todos son correctos.
 
-P y M son ejes distintos por una sola razón: la **lógica de actualización** que el sistema aplica al insertar un hecho nuevo difiere según el caso. Una propiedad nueva **reemplaza** a la anterior — un paciente que cumple años pasa de tener edad 42 a tener edad 43; no se acumulan los dos valores. Una relación nueva **se agrega** a las existentes — un modelo entrenado con un corpus adicional simplemente añade el hecho a los que ya había, sin reemplazar nada.
+Esta es la única y verdadera diferencia estructural en la base de datos entre lo que solemos llamar "propiedades" y "relaciones":
 
-Esa diferencia operativa justifica que P y M se mantengan como ejes separados en el catálogo. Pero **el motor de consulta los trata igual**. La consulta `(paciente_042, edad, ?)` y la consulta `(modelo_gpt_x, entrenado_con, ?)` se ejecutan con exactamente la misma operación; la primera devuelve un solo objeto, la segunda potencialmente varios.
+*   Los cables **funcionales** (los que solo admiten *un destino único* por sujeto) son los que llamaremos **propiedades**, y se guardan en el eje **P**.
+*   Los cables **no funcionales** (los que permiten que el sujeto apunte a *múltiples destinos* a la vez) son los que llamaremos **relaciones**, y se guardan en el eje **M**.
+
+La razón para mantener estas dos cajas separadas en el catálogo de nuestro sistema es puramente logística: le indica a la base de datos **cómo comportarse cuando el dato se actualice**. 
+Si el dato vive en `P` (es único) y llega información nueva, el sistema **borra y reemplaza** lo anterior. Si el paciente cumple años, borramos el 42 y ponemos un 43; no acumulamos edades. 
+En cambio, si el dato vive en `M` (es múltiple) y llega información nueva, el sistema simplemente la **agrega a la lista**. Si el modelo de IA es entrenado con una biblioteca nueva, ese texto se suma al historial de entrenamiento sin borrar a la Wikipedia.
+
+Esa diferencia en cómo se guardan los datos es lo único que justifica tener P y M separados. Pero, y aquí viene el alivio para el programador: **el motor de búsquedas del sistema no hace diferencias**. Si tú le preguntas a la base de datos *"¿Qué edad tiene el paciente 042?"* o *"¿Con qué fue entrenado el modelo X?"*, la máquina ejecuta exactamente el mismo código de búsqueda. Solo que en el primer caso te devuelve una sola respuesta, y en el segundo te devuelve una lista.
 
 ![P vs M: misma forma sujeto-predicado-objeto, distinta cardinalidad. En P el nuevo valor reemplaza al anterior; en M se acumula con los previos.](../diagrams/png/12_p_vs_m_cardinalidad.png)
 
-## D3: la unificación algebraica
+## La regla de diseño D2: La unificación matemática
 
-Esto nos lleva a la decisión de diseño que articula el capítulo:
+Esta revelación nos lleva a establecer de manera formal una de las decisiones de diseño más elegantes del modelo:
 
-> **D3 — Propiedades (P) y relaciones (M) se unifican matemáticamente como etiquetas predicativas con signatura tipada. La diferencia entre ellas es de cardinalidad — funcional vs. no funcional — y se preserva como dos ejes distintos solo por la lógica de actualización: P reemplaza, M acumula.**
+> **D2 — Las propiedades (P) y las relaciones (M) se unifican matemáticamente bajo el mismo concepto: son simplemente cables (predicados) con etiquetas de seguridad (signaturas tipadas). La única diferencia que existe entre ellas es la cardinalidad (si aceptan uno o varios destinos simultáneos). Se dividen en dos cajas distintas en el diccionario solo para indicarle a la base de datos cuándo debe "borrar y reemplazar" (P) y cuándo debe "acumular" (M) nueva información.**
 
-Vista en su forma más fuerte, D3 dice algo más que una observación gramatical. Dice que la división tradicional entre *atributo* y *vínculo* que aparece en SQL (donde los atributos son columnas y los vínculos son JOINs entre tablas), en programación orientada a objetos (donde los atributos son campos y los vínculos son referencias a otros objetos), y hasta en RDF (donde los predicados de "data property" y de "object property" se separan), es **un artefacto pedagógico**, no una propiedad esencial del modelado.
+Entender la regla D2 significa comprender que el enorme abismo técnico que se nos enseña en la universidad —donde nos obligan a tratar a los atributos internos como "columnas en una tabla" y a los vínculos externos como "tablas conectadas o JOINs"— es, en realidad, **una ilusión pedagógica**. Es una complicación innecesaria de la programación tradicional. A nivel matemático, todo es simplemente un sujeto, un cable tipado y un destino. Y esa simplicidad es la gasolina que hace que este modelo vuele.
 
-Visto desde el punto de vista del dato, todo es una tripleta con signatura. Y eso es lo que el modelo aprovecha.
+## ¿Qué gana una empresa unificando esto?
 
-## Qué se gana con la unificación
+Adoptar la regla D2 tiene cuatro beneficios gigantescos y directos en entornos de producción:
 
-D3 paga al menos cuatro veces.
+1.  **Un motor de búsqueda unificado:** El sistema ya no necesita tener un "lenguaje para consultar datos internos" y otro "lenguaje para consultar cruces de tablas". El código se reduce a una sola instrucción maestra: *"dado este sujeto y este cable, devuélveme el destino"*. Le decimos adiós a los enredados *SELECT* y *JOIN* del SQL tradicional.
+2.  **Facilita el trabajo de la IA (JSON universal):** Cuando un agente de Inteligencia Artificial (LLM) solicita datos a través de *function calling*, el sistema le devuelve todo empaquetado en exactamente la misma estructura limpia y predecible. La IA no gasta tokens tratando de averiguar si la edad viene en un formato y el listado de amistades viene en otro. La uniformidad abarata la integración corporativa.
+3.  **Extensibilidad a prueba de balas:** Si mañana la empresa quiere registrar un dato nuevo sobre sus clientes, los programadores no tienen que reunirse a debatir si crear una columna nueva en la tabla o construir una tabla intermedia entera. Simplemente añaden el nuevo "cable" al diccionario, deciden si la respuesta es única o múltiple, y el motor de la base de datos ya sabe qué hacer.
+4.  **Habilitan el procesamiento del lenguaje natural:** En capítulos posteriores comprobaremos que cada verbo que usamos los humanos (como "vender", "comer", "firmar") exige ciertos roles. Cuando le decimos al sistema: *"María le vendió un libro a Juan"*, la máquina registra al vendedor, al comprador y a la mercancía usando esta estructura uniforme. Al no hacer diferencias entre propiedades y relaciones, el sistema lee frases humanas como si leyera código de máquina.
 
-**Un solo motor de consulta.** El sistema no tiene "consultas de propiedad" y "consultas de relación" como dos lenguajes distintos. Tiene una sola operación: *dado un sujeto y un predicado, devolver objetos*. Si el predicado es funcional, devuelve a lo sumo uno. Si no, devuelve los que haya. La consulta SQL tradicional, con sus *SELECT campos* (propiedades) y sus *JOIN tablas* (relaciones), se reemplaza por una sola forma uniforme.
+## Tres dominios bajo el microscopio
 
-**Un solo formato JSON.** Cuando un agente de IA pide los datos de un sujeto vía function calling, el sistema devuelve siempre la misma estructura: una lista de pares `predicado: objeto(s)`. No hay que enseñarle al agente que "edad" se accede de un modo y "entrenado_con" de otro. Es el tipo de uniformidad que hace barata la integración con LLMs.
+Para terminar de consolidar este concepto, veamos cómo se reparten los cables de P y M cuando los aplicamos al diseño de tres mundos totalmente distintos. 
 
-**Un solo lugar para extender.** Agregar una etiqueta nueva al modelo no requiere decidir si va a ser "campo de tabla" o "tabla puente". Se declara su signatura y su cardinalidad en el catálogo de predicados, y el motor sabe qué hacer.
+### 1. El mundo de la gastronomía: Una receta
+```text
+Cables tipo P (Funcionales, con respuestas únicas):
+  tiempo_preparacion : va de O hacia N  (15 minutos)
+  tiempo_coccion     : va de O hacia N  (45 minutos)
+  porciones          : va de O hacia N  (4)
+  dificultad         : va de O hacia K  (intermedia)
 
-**Una sola conversación con el lenguaje natural.** En el capítulo del lexicon veremos que cada verbo del idioma se mapea a un conjunto de roles, y cada rol se traduce a una etiqueta de P o de M sin que el usuario tenga que distinguirlas. *"María vendió un libro a Juan por treinta dólares"* produce hechos sobre cinco roles — agente, tema, beneficiario, monto, moneda —, y al modelo le da igual si tres viven en P y dos en M, porque el formato es uniforme.
-
-## Tres dominios cruzados
-
-Veamos cómo se distribuyen las etiquetas P y M en tres dominios distintos para sentir la diversidad sin perder la uniformidad.
-
-### Una receta de cocina
-
+Cables tipo M (Múltiples, acumulan información):
+  ingrediente        : va de O hacia K  (varios ingredientes por receta)
+  paso               : va de O hacia O  (muchos pasos en la preparación)
+  utensilio          : va de O hacia K  (varios utensilios a ensuciar)
 ```
-P (funcionales):
-  tiempo_preparacion : O → N    (15 minutos)
-  tiempo_coccion     : O → N    (45 minutos)
-  porciones          : O → N    (4)
-  dificultad         : O → K    (intermedia)
+La lógica se cumple: lo que el sentido común considera "atributos estáticos" del plato va al eje P; lo que son "piezas que se suman" va a M.
 
-M (no funcionales):
-  ingrediente        : O → K    (varios ingredientes por receta)
-  paso               : O → O    (varios pasos)
-  utensilio          : O → K    (varios utensilios)
-  inspirada_en       : O → O    (puede haber varias recetas fuente)
+### 2. El mundo del software: Una llamada a la Inteligencia Artificial
+```text
+Cables tipo P (Funcionales, con respuestas únicas):
+  tokens_entrada     : va de O hacia N  (4500)
+  latencia_ms        : va de O hacia N  (2300)
+  costo_usd          : va de O hacia N  (0.018)
+  modelo_usado       : va de O hacia K  (gpt-4-turbo)
+
+Cables tipo M (Múltiples, acumulan información):
+  fuente_documento   : va de O hacia O  (la IA pudo consultar 5 PDFs distintos)
 ```
+Mismo patrón de fondo: el consumo exacto en dinero es uno solo (P), pero los documentos analizados durante la consulta pueden ser docenas (M).
 
-La intuición se valida: lo que el sentido común llamaría "atributos de la receta" cae en P; lo que llamaría "componentes" o "vínculos" cae en M.
+### 3. El mundo del deporte: Un partido de fútbol
+```text
+Cables tipo P (Funcionales, con respuestas únicas):
+  resultado_final    : va de O hacia K  (victoria_local, empate)
+  asistencia         : va de O hacia N  (52.000)
 
-### Una llamada a un modelo de lenguaje
-
-```
-P:
-  tokens_entrada     : O → N    (4500)
-  tokens_salida      : O → N    (1200)
-  latencia_ms        : O → N    (2300)
-  costo_usd          : O → N    (0.018)
-  modelo_usado       : O → K    (gpt-x-2026-05)
-  temperatura        : O → N    (0.7)
-  modo               : O → K    (streaming)
-
-M:
-  herramienta_invocada : O → O  (varias function calls por llamada)
-  fuente_documento     : O → O  (varios docs en RAG)
-  parte_de             : O → O  (la llamada es parte de una sesión, que es parte de un proyecto)
-```
-
-Misma distribución de fondo: lo que es atributo único de la llamada cae en P; lo que tiene cardinalidad arbitraria cae en M.
-
-### Un partido de fútbol
-
-```
-P:
-  resultado_final    : O → K    (victoria_local, victoria_visitante, empate)
-  duracion_minutos   : O → N    (95)
-  asistencia         : O → N    (52.000)
-  arbitro_principal  : O → Q    (juan_perez)
-
-M:
-  partes             : O → V    (los dos equipos; cardinalidad fija pero múltiple)
-  gol                : O → O    (varios goles por partido)
-  tarjeta_amarilla   : O → O    (varias tarjetas)
-  jugador_alineacion : O → Q    (22 jugadores)
+Cables tipo M (Múltiples, acumulan información):
+  partes_jugando     : va de O hacia Q  (son siempre 2 equipos, es múltiple)
+  gol_anotado        : va de O hacia O  (puede haber varios goles)
+  tarjeta_amarilla   : va de O hacia O  (puede haber docenas)
 ```
 
-La distinción no siempre es intuitiva. `partes` (los dos equipos) podría sentirse como propiedad porque la cardinalidad es siempre dos, pero es no-funcional (dos objetos para el mismo sujeto), así que vive en M. La cardinalidad fija no la convierte en funcional; lo que cuenta es si la respuesta es **única**.
+Aquí la distinción requiere una mirada afilada. El cable `partes_jugando` (los dos equipos) engaña: podrías pensar que pertenece a `P` porque el número de equipos en un partido *siempre* es exactamente dos, un número fijo. Sin embargo, pertenece a `M`. ¿Por qué? Porque la regla no trata sobre si el número es fijo o infinito, la regla dicta que `P` solo admite **una única respuesta posible**. Al haber dos respuestas legítimas para el mismo partido (el equipo A y el equipo B), matemáticamente es un cable múltiple. 
 
-## Una sutileza importante: el subobjeto contingente
+## Cierre de la Parte II: El tablero está listo
 
-Hay una distinción más fina, escondida en los casos anteriores, que conviene nombrar. Cuando una etiqueta de M apunta a algo *cuya existencia es accesoria al sujeto* — un gol existe porque hay un partido, un paso existe porque hay una receta —, lo natural es que ese objeto sea una **situación reificada** (en O) que vive *dentro* del sujeto en lugar de ser un individuo independiente. El gol no es un objeto del mundo que el partido recoja; es un objeto que el partido **crea**.
+Con la formalización de P y M, hemos terminado de construir todo el andamiaje del modelo. El inventario de las ocho coordenadas maestras está oficialmente cerrado y listo para operar:
 
-Esto se modela mediante la relación canónica `parte_de`:
+*   **Q  (Quién)**    — Las personas y agentes.
+*   **O  (Qué)**      — Los objetos físicos, eventos y situaciones.
+*   **L  (Dónde)**    — Las locaciones.
+*   **T  (Cuándo)**   — El flujo del tiempo.
+*   **N  (Cuánto)**   — Los números y magnitudes matemáticas.
+*   **K  (Clase)**    — Los conceptos abstractos y las categorías.
+*   **P  (Cuál)**     — Los cables funcionales (datos únicos, se reemplazan).
+*   **M  (Cómo)**     — Los cables de cardinalidad múltiple (se acumulan).
 
-```
-(gol_001,  agente,   messi)              ∈ M(O, Q)
-(gol_001,  minuto,   87)                 ∈ P(O, N)
-(gol_001,  parte_de, partido_arg_per)    ∈ M(O, O)
-```
-
-El gol es un individuo de O — tiene UUID propio, propiedades propias, puede ser referido — pero su existencia es **contingente** al partido. Si el partido se cancela, el gol no tiene sentido.
-
-La distinción entre "objetos del mundo" y "subobjetos contingentes" no es un eje nuevo del modelo, sino una convención de modelado que se vuelve central cuando lleguemos a las situaciones reificadas en la Parte III. Lo dejamos sembrado acá para que el lector lo reconozca cuando reaparezca.
-
-## Por qué los modelos de lenguaje encuentran D3 natural
-
-Hay un argumento práctico, no solo teórico, para la unificación que propone D3. Los modelos de lenguaje grandes, entrenados sobre texto humano, no distinguen "propiedades" de "relaciones" de manera operativa. Lo que un LLM produce cuando se le pide describir un hecho es siempre una construcción `sujeto-predicado-objeto` (o `sujeto-predicado-objeto-modificadores`). Si el modelo subyacente al sistema espera dos tipos distintos de hechos — *"los que son propiedades"* y *"los que son relaciones"* —, el LLM tiene que aprender la distinción específica del sistema, y eso introduce errores en cada nuevo dominio.
-
-Si el modelo acepta hechos uniformes y deja que la cardinalidad emerja del catálogo de etiquetas, el LLM no tiene que aprender nada nuevo. Una herramienta `agregar_hecho(sujeto, predicado, objeto)` cubre tanto *edad* como *autoría*. Dos herramientas separadas — `set_propiedad` y `agregar_relacion` — son redundantes y obligan al modelo a clasificar antes de actuar, lo cual multiplica el espacio de error sin pagar nada a cambio.
-
-Esto se vuelve operativo en function calling: un agente conectado a una base WQuestions ve una única interfaz de escritura, una única interfaz de lectura, y un catálogo de predicados con sus signaturas. Todo lo demás emerge de combinar esos elementos.
-
-## Cinco consecuencias prácticas de D3
-
-Cerramos el capítulo con las consecuencias operativas que se derivan de la unificación:
-
-1. Todo hecho tiene la forma `(sujeto, predicado, objeto)`, sea propiedad o relación.
-2. Cada etiqueta tiene una **signatura tipada** que el sistema valida automáticamente.
-3. El motor de consulta es uno solo. El formato JSON de salida es uno solo. Las herramientas para LLMs son una sola.
-4. Cuando hay duda sobre si algo es propiedad o relación, la pregunta correcta es: *¿hay un solo valor para este sujeto, o puede haber varios?* La respuesta decide el eje. La pregunta es operativa, no filosófica.
-5. El subcaso especial del *subobjeto contingente* (un gol como parte de un partido) se modela como individuo de O con relación `parte_de`, no como nuevo tipo de hecho.
-
-## Cierre de la Parte II
-
-Con P y M presentados, hemos cerrado el inventario completo de los **ocho ejes** del modelo:
-
-```
-Q  (quién)   — agentes
-O  (qué)     — objetos, eventos, situaciones
-L  (dónde)   — lugares
-T  (cuándo)  — momentos
-N  (cuánto)  — magnitudes
-K  (clase)   — tipos y categorías
-P  (cuál)    — propiedades funcionales
-M  (cómo)    — relaciones no funcionales
-```
-
-Seis ejes para valores (Q, O, L, T, N, K) y dos ejes para predicados (P, M). El universo cabe entre estos ocho. La promesa del libro hasta acá ha sido inventariar las preguntas; eso quedó hecho.
+Seis cajas gigantes para guardar "cosas", entrelazadas por dos redes de cables estructurales (P y M). Cualquier fenómeno, suceso, registro bancario o reporte médico que ocurra en el mundo cabe, sin distorsiones, dentro de esta matriz de ocho ejes. Cumplimos con la promesa inicial del libro: hemos demostrado que el universo de los datos puede ser mapeado usando únicamente las preguntas fundamentales del cerebro humano.
 
 ![Los ocho ejes de WQuestions: seis ejes de valor (Q, O, L, T, N, K) alrededor del universo V, conectados por dos ejes estructurales de predicados (P, M).](../diagrams/png/01_ocho_ejes.png)
 
-Pero el inventario es solo el comienzo. Los ejes presentados por separado no muestran todavía cómo se combinan para describir el mundo. Esa es la materia de la Parte III: cómo funcionan **juntas** las ocho preguntas.
+Pero tener el plano del motor en la mano no es lo mismo que encenderlo. Hasta aquí, hemos visto los ejes por separado, como piezas sueltas de un reloj. Lo que le da valor industrial a este modelo es observar **cómo interactúan todos juntos** a la vez para estructurar escenarios del mundo real de altísima complejidad.
 
 ## Lo que viene
 
-La Parte III construye, ahora sí, el modelo en operación. Cuatro capítulos.
+La Parte III que arrancamos a continuación marca el fin de la etapa de inventario y el comienzo de la etapa operativa. Pasamos al diseño en movimiento. En los próximos cuatro capítulos abordaremos lo siguiente:
 
-- **Capítulo 8** introduce el **hecho atómico** como unidad mínima — la tripleta tipada que combina los ejes en información concreta.
-- **Capítulo 9** muestra que los hechos atómicos, vistos en conjunto, forman un **espacio multidimensional** sobre el que se pueden hacer consultas, comparaciones, federación de dominios.
-- **Capítulo 10** se ocupa de las **situaciones reificadas** — los puntos articuladores del grafo donde múltiples hechos convergen.
-- **Capítulo 11** cierra la Parte III con el tratamiento de las relaciones de **"por qué"** — el conector argumentativo que une eventos, causas y propósitos.
+*   El **Capítulo 8** define el **"Hecho atómico"**, que no es otra cosa que la unidad mínima de información validada que viaja por nuestro sistema combinando los ejes que acabamos de conocer.
+*   El **Capítulo 9** eleva la vista para mostrar cómo esos miles de hechos atómicos se conectan formando un **espacio geométrico**, un ecosistema donde hacer consultas profundas y cruzar empresas distintas se vuelve ridículamente simple.
+*   El **Capítulo 10** entra en terreno pantanoso para resolver el problema de las **situaciones reificadas**: es decir, cómo diseñamos cruces o nodos maestros de alta densidad donde confluyen decenas de variables diferentes.
+*   Y finalmente, el **Capítulo 11** clausura la tercera parte encarando quizá la pregunta humana más ambiciosa de todas: el "por qué". Te enseñará el modelado arquitectónico de la causalidad, los propósitos y las consecuencias en una base de datos.
 
-Con la Parte III en pie, el modelo deja de ser un catálogo de ejes y se vuelve una arquitectura. Es lo que viene.
+Con la Parte III superada, esta arquitectura dejará de verse como un interesante catálogo filosófico y se perfilará como la maquinaria pesada que es. Continuemos.

@@ -1,4 +1,4 @@
-"""Catálogo canónico de roles (D7).
+"""Catálogo canónico de roles (D8).
 
 Cada rol declara una signatura tipada `dominio → rango`, ambos ejes,
 más si es **funcional** (un valor por sujeto: vive en P) o **multi-valor**
@@ -145,7 +145,7 @@ class Catalog:
             RoleSignature("calificacion", Axis.O, Axis.K, True,
                           "atributo cualitativo"),
 
-            # --- "por qué" (D6, capítulo 11) ---
+            # --- "por qué" (D7, capítulo 11) ---
             RoleSignature("causado_por", Axis.O, Axis.O, False,
                           "causalidad mecánica"),
             RoleSignature("motivado_por", Axis.O, Axis.O, False,

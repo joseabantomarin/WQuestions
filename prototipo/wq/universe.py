@@ -7,7 +7,7 @@ Diseño:
 - Se accede vía `add_individual`, `assert_fact`, `query`.
 - La validación de signatura ocurre al insertar el hecho (delegada al Catalog).
 - Los hechos son inmutables; "cambios" se modelan como nuevas situaciones
-  o como rangos de vigencia (D9).
+  o como rangos de vigencia (D6).
 
 No persiste a disco — el prototipo es en memoria. Para tests y demos basta.
 """

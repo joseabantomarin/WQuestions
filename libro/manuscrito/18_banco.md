@@ -1,288 +1,151 @@
 # Capítulo 18 — El dominio más exigente: un banco
 
-## Por qué el banco es el caso límite
+## Por qué el banco es la prueba de fuego definitiva
 
-Una empresa cualquiera tiene quizás un schema relacional con ciento cincuenta tablas, un par de sistemas legacy, un par de integraciones externas. Un banco regional típico — el tamaño de una financiera con presencia en una capital y dos o tres ciudades del interior — tiene mil quinientas tablas en el core bancario, otro tanto en los sistemas de tarjetas, otro tanto en los de seguros, otro tanto en los de prevención de fraude, más una docena de aplicaciones satélites: originación de créditos, cobranza, contabilidad, regulatorio, riesgo, *digital banking*, billeteras, agencias corresponsales. Cada sistema con su schema; cada schema con su gobierno; cada cruce entre dos sistemas con su proyecto de integración.
+Si miras una empresa promedio, probablemente tenga su información guardada en unas 150 tablas de datos, un par de sistemas viejos y un software contable. Pero si miras un banco regional típico (uno de tamaño mediano), el paisaje es aterrador: tienen 1.500 tablas solo para el corazón del banco, otras mil para las tarjetas de crédito, otras mil para los seguros y docenas de aplicaciones satélites para créditos rápidos, fraudes y la app del celular. Cada sistema tiene sus propios jefes, sus propias reglas y su propio idioma.
 
-Si el sauna era un negocio pequeño donde el modelo se entrenó liviano, y el taxi un servicio operativo con concurrencia, **el banco es el caso donde el modelo se gana o pierde su pretensión de utilidad real**. Es el dominio que más cuesta mantener en arquitecturas tradicionales, y por ende donde el ahorro de adoptar una arquitectura unificada es mayor. Es también el dominio donde la mayoría de las decisiones del libro — bitemporalidad (D9), reificación de situaciones, agencia contextual (D5), relaciones del "por qué" (D6) — pasan de ser elegantes a ser **exigencias regulatorias**.
+Si en el capítulo del Spa probamos que el modelo era ágil, y en el del Taxi probamos que soportaba la velocidad, **el banco es el campo de batalla donde WQuestions demuestra si sirve para el mundo real**. 
 
-Este capítulo no pretende modelar un banco completo. Pretende mostrar, sobre un puñado de casos seleccionados, cómo el modelo absorbe la complejidad específica del dominio bancario: las **operaciones con múltiples agentes y contrapartida contable**, el **ciclo de vida de un préstamo con cambios a lo largo del tiempo**, las **investigaciones de fraude que reconstruyen el pasado**, los **productos bancarios como ofertas reificadas**. Cada caso ilustra una arista; el conjunto dice si el modelo aguanta o no.
+Los bancos gastan fortunas intentando mantener arquitecturas tradicionales que se caen a pedazos. Es aquí donde nuestras decisiones de diseño (como no borrar nunca el pasado con la regla D6, o tratar al software como un agente más con la regla D5) dejan de ser lujos teóricos y se convierten en **exigencias de supervivencia dictadas por la ley**.
 
-## La realidad operativa: cinco islas que nadie consolida
+Este capítulo no pretende modelar un banco entero (necesitaríamos otro libro para eso). Vamos a tomar cuatro situaciones críticas —una transferencia, el ciclo de vida de un préstamo, una investigación por fraude y el catálogo de tarjetas— para demostrar que nuestro modelo aguanta el peso del dinero sin doblarse.
 
-Antes de meternos en el modelado conviene describir, sin maquillaje, **cómo se ve un banco regional por dentro**. Es probable que el lector que haya trabajado en uno reconozca el cuadro; quien venga de otros sectores se sorprenda. Lo que sigue no es un escenario hipotético: es el patrón típico de financieras medianas en cualquier país de habla hispana, descrito desde la experiencia directa.
+## La triste realidad: Cinco islas que no se hablan
 
-**Isla 1 — La central.** Un servidor en casa matriz corre el *core bancario* sobre Linux. Una base de datos relacional grande, un montón de stored procedures, una capa de servicios que las agencias y los canales digitales consumen. Esta isla es la "verdad oficial" — cuentas, saldos, movimientos, asientos contables. Es la que el regulador audita cuando viene a inspeccionar.
+Antes de empezar, seamos honestos sobre cómo funciona un banco por dentro hoy en día. Si trabajas en uno, vas a sonreír; si no, te vas a sorprender. Un banco es un archipiélago de cinco islas desconectadas:
 
-**Isla 2 — Las agencias.** Cada sucursal — o al menos las grandes — tiene **software propietario** para tareas que el core no resuelve bien: simuladores de tasa, motores de aprobación de créditos express, hojas de cálculo del ejecutivo de cuenta, sistemas de turnos. Algunos vienen con el ERP, otros los compró el banco a un proveedor local, otros los hizo un programador del banco hace doce años y nadie sabe quién ya. Estos sistemas **calculan**, **deciden** y **aprueban**, pero rara vez devuelven al core la trazabilidad de cómo llegaron a la decisión.
+*   **Isla 1 (El Cerebro Central):** Es el servidor principal (el *core bancario*). Aquí viven los saldos, los movimientos oficiales y la contabilidad pesada. Es la "verdad" que el gobierno audita.
+*   **Isla 2 (Las Agencias):** Cada sucursal tiene pequeños softwares propios para simular créditos o sacar turnos. Estos programitas toman decisiones todos los días, pero rara vez le explican al Cerebro Central cómo llegaron a esa conclusión.
+*   **Isla 3 (Contabilidad):** El zoológico oculto. Parte vive en el servidor, pero otra gran parte vive en gigantescas hojas de Excel que se ajustan a mano a fin de mes. Cuando hay diferencias entre el Cerebro y Contabilidad, suele ganar Contabilidad, pero nadie sabe explicar por qué.
+*   **Isla 4 (Los Promotores):** Los agentes de campo que venden créditos en la calle anotan datos en Excel o papeles. Toda esa valiosa información del cliente es "fantasma" hasta el día en que se aprueba el crédito y recién ahí entra al banco.
+*   **Isla 5 (Los Reportes):** Cuando el gerente pide un reporte que cruce datos de las cuatro islas anteriores, los ingenieros tardan un mes en armar un túnel temporal que junte todo en un "Data Lake". A veces, los datos no cuadran y el proyecto fracasa.
 
-**Isla 3 — Contabilidad.** Aquí el zoológico se vuelve evidente. Una parte vive en el core (los asientos automáticos generados por cada operación). Otra parte vive en **Excel** — los ajustes manuales, los movimientos extraordinarios, las correcciones de fin de mes. Otra parte vive en **sistemas hechos a medida** por el área financiera: un módulo para conciliación con corresponsales, una hoja con macros para el reporte regulatorio, un programa Visual Basic que hace el cierre mensual. Cuando hay diferencia entre lo que dice el core y lo que dice contabilidad, gana contabilidad — pero **explicar la diferencia** lleva días.
+**¿Por qué pasa esto?** Porque cuando los bancos intentan modernizarse, cometen el error de obligar a todas estas islas a hablar el mismo idioma robótico. Y reprogramar un software viejo de 15 años para que hable el idioma moderno es tan caro que los bancos prefieren dejarlo morir en paz.
 
-**Isla 4 — Los promotores y la red comercial.** Los promotores externos que originan créditos a domicilio, los corresponsales no bancarios, los puntos de pago tercerizados — todos manejan información del cliente que **no entra al core hasta el momento del desembolso**. En el camino vive en **tablas planas**: planillas Excel, formularios PDF, archivos CSV que se cargan al final del día por lotes. La promesa de un crédito que se le hizo a un cliente el lunes, si la operación cae el viernes, generó cuatro días de información volátil que el sistema central nunca vio.
+**WQuestions cambia el juego por completo.** Nuestro modelo no le exige a la sucursal o a Contabilidad que cambien su software. Solo les exige que **traduzcan** lo que están haciendo y lo envíen a nuestro mapa central (el Grafo) usando su propia jerga. 
+Contabilidad envía sus datos hablando de "partidas"; la sucursal envía datos hablando de "simulaciones". Nuestro Lexicon (Capítulo 13) se encarga de traducirlo todo al catálogo universal D8. 
 
-**Isla 5 — Los reportes y el regulatorio.** Cada vez que alguien — un comité, un regulador, un auditor — pide un reporte que cruza dos o más islas, se activa un proyecto. Se forma un equipo, se diseña una **ETL** (extract-transform-load) que extrae de cada fuente, se construye un *data warehouse* o un *data lake* o un *data mart* según la moda del año, se consolida, se reconcilia, se publica. Dos semanas mínimo, un mes habitual, tres meses cuando se descubre que las dos fuentes no coinciden y hay que entender por qué.
+![Las cinco islas típicas de un banco regional — central, agencias, contabilidad, promotores, reporting — cada una con su tecnología y su vocabulario. WQuestions no reemplaza ninguna; cada una publica sus hechos al grafo común con su dialecto mapeado al catálogo D8 una sola vez. El archipiélago se vuelve consultable sin disolverse.](../diagrams/png/43_cinco_islas_banco.png)
 
-Este es el cuadro. **Cinco islas, gobernanzas distintas, vocabularios distintos, ritmos distintos, calidades distintas.** Ninguna isla es desechable — cada una hace algo que las demás no — y sin embargo el negocio necesita verlas como un todo. Centralizar es una pesadilla que cada banco intenta cada cinco años con resultados decepcionantes: el motor de consolidación nuevo se vuelve la sexta isla, y los proyectos de migración se prolongan tanto que cuando terminan el negocio ya cambió.
+Cada isla sigue operando como siempre, pero ahora la gerencia puede hacerle una pregunta al mapa central y cruzar los datos de todas las islas en milisegundos.
 
-**¿Por qué pasa esto?** No porque los bancos sean tontos. Pasa porque la centralización tradicional exige que **todas las islas hablen el mismo schema**, y obligar a un sistema legacy de doce años a hablar el schema del nuevo data lake es más caro que dejarlo como está y construir un puente. Multiplicado por cinco islas y cuarenta sistemas satélite, la suma se vuelve política antes que técnica.
+## Mapeando el Banco en nuestras cajas maestras
 
-**WQuestions cambia exactamente esto.** No exige que ningún sistema cambie su schema. Exige que cada sistema **publique sus hechos** al grafo común con su propio dialecto de dominio, mapeado al catálogo D7 una sola vez. El core publica como core; las agencias publican como agencias; contabilidad publica como contabilidad; los promotores publican lo que tienen. Cada uno mantiene su vocabulario. La unificación ocurre en el catálogo, no en los sistemas:
+Para dominar este caos, ordenemos rápidamente las piezas del banco en nuestras cajas de valor:
 
-```
-ISLA 1 — core         habla: "cuenta_ahorros", "asiento"     → mapeo D7
-ISLA 2 — agencia      habla: "linea_credito", "simulacion"   → mapeo D7
-ISLA 3 — contabilidad habla: "ajuste_mensual", "partida"     → mapeo D7
-ISLA 4 — promotor     habla: "prospecto", "promesa"          → mapeo D7
-ISLA 5 — reporting    habla: "indicador", "snapshot"         → mapeo D7
-                                                                    ↓
-                                                       ┌────────────┐
-                                                       │ grafo común │
-                                                       │ WQuestions  │
-                                                       └────────────┘
-```
-
-Los reportes cross-isla — que hoy son proyectos de tres meses — se vuelven consultas. *"¿Cuántas operaciones aprobadas en agencias entre lunes y viernes terminaron asentándose en el core el lunes siguiente?"* es una pregunta directa contra el grafo: filtra por situación de tipo *aprobación* con `lugar_de: agencia` y momento operativo en una semana, hace `join` con asientos contables del lunes siguiente, devuelve el cruce.
-
-Nada de esto exige reescribir las islas. Exige que cada una publique sus hechos atómicos — los que producen sus eventos significativos — al grafo. Una capa fina de **adaptación** por sistema, escrita una vez. El resto sigue operando como está, con su propio software propietario, su Excel, su tabla plana. La diferencia es que ahora **el grafo ve todo**.
-
-![Las cinco islas típicas de un banco regional — central, agencias, contabilidad, promotores, reporting — cada una con su tecnología y su vocabulario. WQuestions no reemplaza ninguna; cada una publica sus hechos al grafo común con su dialecto mapeado al catálogo D7 una sola vez. El archipiélago se vuelve consultable sin disolverse.](../diagrams/png/43_cinco_islas_banco.png)
-
-Esta es, probablemente, la propuesta más ambiciosa del libro y la menos trivial de adoptar. Pero a diferencia de los proyectos tradicionales de centralización, **no exige que las islas se rindan**. Solo exige que digan, en el vocabulario común, lo que están haciendo. La isla sigue siendo isla; el archipiélago se vuelve consultable.
-
-## Un mapa del dominio
-
-Lo primero al abordar un banco es resistir la urgencia de bajar a detalle. El alto nivel importa porque el banco tiene **muchas familias de entidades a la vez**:
-
-**Q — agentes.** Tres clases bien distintas. (1) Personas físicas: clientes retail, empleados, ejecutivos de cuenta. (2) Personas jurídicas: empresas clientes, corresponsales, regulador, procesadores (Visa, Mastercard), partners. (3) Sistemas con agencia (D5): el motor de scoring, el sistema antifraude, los autorizadores de tarjeta, los robots de cobranza. Los tres tipos entran a Q sin distinción especial — el modelo trata uniformemente a un humano y a un autorizador automático.
-
-**O — entidades situadas.** Acá está el grueso del dominio. (1) Cuentas: corrientes, ahorros, plazo fijo, cuenta sueldo, cuenta corporativa, cuenta en moneda extranjera. (2) Productos crediticios: préstamos personales, hipotecarios, vehiculares, tarjetas de crédito, líneas comerciales, créditos por planilla. (3) Movimientos: cada depósito, retiro, transferencia, pago, cargo, abono. (4) Asientos contables: cada movimiento operativo tiene su contrapartida en cuentas de balance. (5) Productos como ofertas reificadas: *"Tarjeta Visa Platinum"*, *"Préstamo Hipotecario Tasa Fija 15 años"* — son entidades del catálogo comercial del banco, no categorías abstractas. (6) Investigaciones de fraude, reclamos, gestiones de cobranza, ajustes contables.
-
-**L — lugares.** Sedes (casa matriz, sucursales urbanas, agencias del interior), ATMs, canales digitales (web banking, mobile, USSD), puntos de venta (POS) de la red. Cada operación tiene un canal — y eso es L. Un préstamo desembolsado en sucursal vs uno originado por web banking son operativamente distintos.
-
-**T — momentos.** Triple registro: el momento del evento operativo (cuándo ocurrió la transacción en la realidad), el momento del registro contable (cuándo se asentó), el momento de cierre (cuándo se cerró el período). La diferencia entre los tres es lo que la auditoría interna persigue.
-
-**N — cantidades.** Importes en distintas monedas, tasas, plazos, scores de riesgo. Cada N con su unidad K — y acá las unidades son críticas: confundir USD con EUR es el equivalente bancario al *Mars Climate Orbiter* citado en el capítulo 6.
-
-**K — categorías.** El catálogo es enorme: tipos de cuenta, tipos de movimiento contable (códigos de transacción), monedas, segmentos de cliente, grados de riesgo, niveles de KYC, estados de un préstamo (vigente, mora, judicializado, castigado), códigos regulatorios. La política liberal del modelo brilla acá: cada banco extiende K con sus propias categorías sin tocar el catálogo D7.
+*   **Q (Quién - Agentes):** Aquí metemos a los clientes físicos, a las empresas (personas jurídicas) y —muy importante— a los **Sistemas**. El motor antifraude o el autorizador de Visa toman decisiones solos; por lo tanto, tienen derecho a vivir en la caja `Q` como agentes activos.
+*   **O (Qué - Eventos):** Las cuentas de ahorro, los préstamos, los movimientos de dinero, las tarjetas de crédito, los asientos contables y las investigaciones de fraude. Aquí vive el 90% del peso del banco.
+*   **L (Dónde - Lugares):** Sucursales físicas, cajeros automáticos (ATMs) y lugares virtuales como la App móvil o la web. 
+*   **T (Cuándo - Tiempos):** Ojo aquí, porque hay triple reloj: la hora a la que el cliente hizo el pago, la hora a la que el servidor lo procesó y la fecha de cierre contable. Nuestro modelo anota los tres.
+*   **N (Cuánto - Magnitudes):** Dinero, tasas de interés, plazos y puntajes de riesgo. 
+*   **K (Clase - Etiquetas):** Tipos de cuentas, monedas (Dólares, Euros), estados de mora y códigos legales.
 
 ![El dominio bancario sobre los ejes de valor: tres clases de agentes en Q, seis familias de entidades en O, multi-canal en L, tiempos triplemente registrados en T, importes y tasas en N, un catálogo K extenso. Los predicados P y M cablean todo.](../diagrams/png/41_mapa_banco.png)
 
-## Caso 1 — Una transferencia con cinco agentes y dos contrapartidas contables
+## Caso 1: Una transferencia (Cinco agentes ocultos)
 
-Una operación bancaria aparentemente trivial — *"Ana le transfiere $500 a Beto desde su cuenta de ahorros"* — es la oportunidad perfecta para ver cuántos participantes y dimensiones cruza un solo movimiento. Reificado:
+A los ojos de un humano, una transferencia es simple: *"Ana le manda $500 a Beto"*. Pero en la base de datos de un banco, este movimiento involucra a cinco agentes y genera registros espejo en contabilidad. Mira cómo lo desglosa nuestro sistema:
 
-```
+Primero, creamos el evento central de la transferencia:
+```text
 (transferencia_001) ∈ O
   instancia_de:        accion_transferir
-  agente:              ana                       ← cliente origen
-  beneficiario:        beto                      ← cliente destino
-  cuenta_origen:       cta_ana_001               ← O
-  cuenta_destino:      cta_beto_007              ← O
-  monto:               n_500_usd                 ← N
-  unidad:              Currency:USD              ← K
-  momento:             2026-06-12T14:32Z
-  lugar_de:            web_banking               ← L (canal)
-  estatus_factual:     ejecutada
-  parte_de:            sesion_web_ana_001        ← contexto operativo
+  agente:              ana                       ← Agente 1 (Inicia)
+  beneficiario:        beto                      ← Agente 2 (Recibe)
+  cuenta_origen:       cta_ana_001               
+  monto:               n_500_usd                 
+  lugar_de:            app_movil_banco           
+  autorizado_por:      sistema_web_banco         ← Agente 3 (Da el ok)
+  verificado_por:      motor_antifraude          ← Agente 4 (Revisa que no sea robo)
 ```
 
-Cinco agentes implicados aunque solo dos aparecen como roles directos:
+Pero la transferencia no se detiene ahí. Detrás del telón, el departamento de Contabilidad (Agente 5) tiene que hacer sus balances. En WQuestions, creamos dos **sub-situaciones** y las colgamos de la transferencia usando el cable `parte_de`:
 
-1. **Ana** — agente que inicia (`agente`).
-2. **El sistema web banking** — agente que autoriza la sesión y la operación (rol de dominio `autorizador`).
-3. **El motor antifraude** — agente que evaluó la operación antes de ejecutarla (rol `verificado_por`).
-4. **Beto** — beneficiario que recibe.
-5. **El banco mismo (jurídico)** — agente que asienta contablemente la operación.
-
-La transferencia es una situación; pero **genera dos asientos contables** como sub-situaciones:
-
-```
-(asiento_debito_001) ∈ O                           // débito en cta_ana_001
-  instancia_de:    asiento_contable
+```text
+(asiento_debito_001) ∈ O                           // Le quitamos plata a Ana
   parte_de:        transferencia_001
-  cuenta_contable: ahorros_ana
-  monto:           500
-  unidad:          USD
+  cuenta_contable: ahorros_ana_interna
+  monto:           500 USD
   tipo_movimiento: debito
-  momento:         2026-06-12T14:32:04Z            // momento contable
 
-(asiento_credito_001) ∈ O                          // crédito en cta_beto_007
-  instancia_de:    asiento_contable
+(asiento_credito_001) ∈ O                          // Le ponemos plata a Beto
   parte_de:        transferencia_001
-  cuenta_contable: ahorros_beto
-  monto:           500
-  unidad:          USD
+  cuenta_contable: ahorros_beto_interna
+  monto:           500 USD
   tipo_movimiento: credito
-  momento:         2026-06-12T14:32:04Z
 ```
 
-La transferencia operativa y los dos asientos contables son **tres situaciones distintas** ligadas por `parte_de`. La operativa tiene los participantes humanos; los asientos tienen las cuentas contables. **La consulta de auditoría** *"¿qué movimientos contables corresponden a esta transferencia?"* es un recorrido directo por `parte_de`:
+Si el día de mañana esta operación resulta estar mal hecha, **jamás la borramos**. Simplemente creamos una "transferencia rectificativa" que ataca a la vieja y la anula. Los bancos están obligados por ley a guardar todo el historial de errores, y nuestra base de datos lo hace por defecto.
 
-```python
-asientos = [f.subject for f in u.facts_with_role("parte_de")
-            if f.value.id == "transferencia_001"
-            and f.subject.label.startswith("asiento_")]
-# devuelve [asiento_debito_001, asiento_credito_001]
+## Caso 2: La novela de un Préstamo y la regla del tiempo
+
+Un préstamo no es un evento de un segundo; es una novela que dura años. Se aprueba, se pagan cuotas, el cliente se atrasa (entra en mora) y a veces se reestructura la deuda. En un sistema viejo, la celda "Estado" del préstamo se va borrando y reescribiendo, destruyendo el historial.
+
+Nosotros usamos la **Regla D6 (Vigencia Temporal)**. Cada vez que el préstamo de Ana cambia de estado, no borramos nada; inyectamos una línea nueva con fecha de inicio y fin:
+
+```text
+(prestamo_017, estado, vigente,          inicio=2026-01-15, fin=2026-08-10)
+(prestamo_017, estado, mora_30_dias,     inicio=2026-08-10, fin=2026-09-10)
+(prestamo_017, estado, mora_60_dias,     inicio=2026-09-10, fin=2026-10-15)
+(prestamo_017, estado, reestructurado,   inicio=2026-10-15, fin=hoy)
 ```
 
-Y si más tarde la operación se **rectifica** — porque el monto era equivocado o la cuenta destino estaba mal — se genera una nueva transferencia que `rectifica` la previa, con sus propios asientos. Nada se borra; el rastro entero se preserva. **Esto no es lujo: es exigencia regulatoria** — todo banco supervisado tiene que poder reconstruir cualquier estado pasado para una inspección.
+Cinco años después, en medio de un juicio, si el juez pregunta: *"¿En qué estado exacto estaba este préstamo el 20 de septiembre de 2026?"*, la base de datos filtra por fecha y responde implacablemente: *"Mora de 30 días"*. Sin D6, los bancos tienen que construir carísimas tablas paralelas solo para guardar estos "fantasmas del pasado".
 
-## Caso 2 — El ciclo de vida de un préstamo
+![El ciclo de vida de un préstamo: otorgamiento → cuotas → mora → reestructuración. Cada cambio de estado es un hecho nuevo con vigencia D6, cada transición tiene su motivado_por y justificado_por, el rastro entero se preserva.](../diagrams/png/42_ciclo_prestamo.png)
 
-Un préstamo personal no es un evento sino una **historia que se desenvuelve a lo largo de meses o años**. El modelo necesita capturar esa historia con tres exigencias simultáneas: estado actual, histórico completo, cambios consultables por fecha.
+## Caso 3: CSI Bancario (Investigando un fraude)
 
-El otorgamiento es una situación. La aprobación del comité es otra. Cada cuota pagada es otra. Cada mora es otra. Una reestructuración es otra. El castigo (cuando se da por incobrable) es otra. **Todas conectadas a un préstamo articulador en O**:
+Ana llama furiosa: alguien usó su tarjeta para pagar $1.840 en un casino de Las Vegas anoche. El banco tiene que abrir una investigación. Aquí es donde nuestra arquitectura aplasta a la competencia. 
 
-```
-(prestamo_personal_017) ∈ O
-  instancia_de:           prestamo_personal
-  cliente:                ana                       ← Q
-  tipo_producto:          PP_Tasa_Fija_36m          ← O (oferta reificada)
-  monto_otorgado:         n_5000_usd                ← N
-  unidad:                 USD
-  tasa_anual:             n_18_porciento            ← N
-  plazo_cuotas:           36
-  fecha_otorgamiento:     2026-01-15
-  estado:                 vigente                    ← K, pero cambia con el tiempo
-```
+El investigador no necesita ver el saldo de Ana de hoy; necesita viajar en el tiempo a la noche del fraude y preguntar: *¿Dónde creía el banco que estaba Ana anoche? ¿Qué decía el perfil de riesgo a esa hora exacta?* 
 
-El campo `estado` cambia: vigente → mora_30 → mora_60 → judicializado → castigado, o vigente → vigente → ... → cancelado. La pregunta arquitectónica obvia: ¿cómo registrar esos cambios?
-
-**Respuesta del modelo**: nunca sobreescribir. Cada cambio de estado es un hecho nuevo con su vigencia D9:
-
-```
-(prestamo_017, estado, vigente,          valid_from=2026-01-15, valid_to=2026-08-10)
-(prestamo_017, estado, mora_30,          valid_from=2026-08-10, valid_to=2026-09-10)
-(prestamo_017, estado, mora_60,          valid_from=2026-09-10, valid_to=2026-10-15)
-(prestamo_017, estado, reestructurado,   valid_from=2026-10-15)
-```
-
-La consulta *"¿qué estado tenía el préstamo en septiembre de 2026?"* es directa: `at=2026-09-20` → `mora_30` (la franja del 10-Ago al 10-Sep había cerrado, la franja siguiente estaba vigente). Cinco años después, un litigio que pregunta *"¿desde cuándo dejó de pagar este cliente?"* obtiene la respuesta exacta.
-
-Cada **cuota** es una sub-situación reificada con su pago (o falta de pago):
-
-```
-(cuota_017_03, parte_de,           prestamo_017)
-(cuota_017_03, instancia_de,       cuota_prestamo)
-(cuota_017_03, fecha_vencimiento,  2026-04-15)
-(cuota_017_03, monto_total,        n_165_usd)
-(cuota_017_03, estado,             pagada,  valid_from=2026-04-14, valid_to=null)
-
-(pago_001, instancia_de,    accion_pagar)
-(pago_001, agente,          ana)
-(pago_001, parte_de,        cuota_017_03)
-(pago_001, monto,           n_165_usd)
-(pago_001, momento,         2026-04-14)
-(pago_001, lugar_de,        web_banking)
-```
-
-Una **reestructuración** es donde el caso se pone interesante. No es modificación del préstamo original; es un préstamo nuevo que `cumple` y `cancela` el anterior con `motivado_por: mora` y `justificado_por: politica_reestructuracion_v3`:
-
-```
-(prestamo_017_re) ∈ O                              // préstamo nuevo
-  instancia_de:        prestamo_personal
-  cliente:             ana
-  monto_otorgado:      saldo_capital_017            // del original
-  tasa_anual:          n_25_porciento               // mayor por riesgo
-  plazo_cuotas:        24
-  fecha_otorgamiento:  2026-10-15
-  motivado_por:        mora_017
-  justificado_por:     politica_reestructuracion_v3
-  rectifica:           prestamo_017
-```
-
-Cinco años después, un equipo de riesgo investigando reestructuraciones recupera **toda la cadena**: el otorgamiento original, la mora, la reestructuración, la política que la autorizó (con su versión vigente en ese momento), el comité que la aprobó. Sin grafo, esa investigación es un cruce de cinco sistemas; con grafo, es un recorrido transitivo de un nodo.
-
-![El ciclo de vida de un préstamo: otorgamiento → cuotas → mora → reestructuración. Cada cambio de estado es un hecho nuevo con vigencia D9, cada transición tiene su motivado_por y justificado_por, el rastro entero se preserva.](../diagrams/png/42_ciclo_prestamo.png)
-
-## Caso 3 — Investigación de fraude: reconstruyendo el pasado
-
-Un cliente reporta que vio cargos por $1.840 en su tarjeta Visa la noche del 20 de mayo, en una ciudad donde no estuvo. El banco abre una investigación. Lo que la investigación necesita reconstruir es exactamente el tipo de pregunta que D9 + bitemporalidad responden mejor que cualquier otra arquitectura:
-
-- *¿Dónde estaba registrada la dirección del cliente esa noche?*
-- *¿Qué tarjetas activas tenía?*
-- *¿Cuál era el límite y qué saldo disponible le quedaba?*
-- *¿Se había emitido alguna alerta antifraude previa?*
-- *¿Cuáles fueron las últimas autorizaciones aprobadas y rechazadas, y por qué?*
-- *¿Qué sabía el motor antifraude sobre este cliente la noche del 20 de mayo, exactamente?*
-
-Cada pregunta es una consulta con `at=2026-05-20T22:00Z`. El sistema responde con el estado del cliente en ese momento — no el estado de hoy, no una reconstrucción aproximada, sino lo que el sistema sabía en ese instante exacto. Esa última pregunta — *¿qué sabía el sistema?* — es donde bitemporalidad completa (cap 22) se vuelve crítica: si el motor antifraude actualizó el perfil del cliente el 22 de mayo (dos días después del incidente), el investigador necesita ver el perfil **vigente la noche del 20**, no el actualizado.
-
-La cadena causal que el grafo permite construir:
-
-```
-(autorizacion_001, instancia_de, accion_autorizar_tarjeta)
-(autorizacion_001, momento, 2026-05-20T21:47Z)
-(autorizacion_001, agente, motor_autorizador_v7)        ← D5: software como Q
-(autorizacion_001, monto, 1840)
-(autorizacion_001, tarjeta, visa_ana_001)
-(autorizacion_001, comercio, "Liquor Store XX")
-(autorizacion_001, lugar_de, "Las Vegas")
-(autorizacion_001, motivado_por, transaccion_pos_001)
-(autorizacion_001, justificado_por, perfil_riesgo_ana_v3)
-
+```text
 (perfil_riesgo_ana_v3, instancia_de, perfil_antifraude,
-                       valid_from=2026-04-10, valid_to=2026-05-22)
-(perfil_riesgo_ana_v3, viajes_recientes_declarados, [...])
+                       inicio=2026-04-10, fin=2026-05-22)
 (perfil_riesgo_ana_v3, score_riesgo, 0.31)
 ```
 
-Cuando un mes después se sabe que era fraude:
+Gracias a nuestro diseño, el investigador puede ver que esa noche la tarjeta pasó porque el `score_riesgo` era bajo. Al confirmar el robo, el investigador no borra el pago del casino (el pago fue real y descontó dinero); en su lugar, crea un evento de "reverso" que ataca al original, documentando el porqué:
 
+```text
+(reverso_pago_casino, cancela,         autorizacion_original_001)
+(reverso_pago_casino, justificado_por, investigacion_fraude_001)
 ```
-(investigacion_fraude_001, instancia_de, investigacion_fraude)
-(investigacion_fraude_001, motivado_por, reclamo_ana_001)
-(investigacion_fraude_001, conclusion, fraude_confirmado)
+El historial queda intacto, el dinero vuelve y el banco tiene pruebas perfectas para el seguro.
 
-(reverso_autorizacion_001, cancela, autorizacion_001)
-(reverso_autorizacion_001, justificado_por, investigacion_fraude_001)
-```
+## Caso 4: Una Tarjeta Platinum no es una idea, es un objeto
 
-Lo que **no** ocurre: borrar la autorización original. La autorización fue real, fue ejecutada, dejó saldo descontado durante un mes. Lo que ocurre es **una nueva situación que la cancela** — el patrón de hechos inmutables que hemos visto desde el capítulo 10. El histórico queda intacto, la consulta posterior puede reconstruir lo que el cliente vio en su extracto en cualquier momento.
+Finalmente, resolvamos un error común de programación. Cuando el banco le da una "Tarjeta Visa Platinum" a Ana, muchos programadores creen que "Visa Platinum" es una categoría abstracta (Caja `K`). Falso. 
 
-Esta es la propiedad por la que los reguladores bancarios exigen sistemas auditables. Y es exactamente lo que el modelo entrega como propiedad arquitectónica, no como funcionalidad agregada.
+La "Oferta Visa Platinum de Enero 2026" es **un objeto real y reificado** (Caja `O`), que tiene anexado un contrato, unas tasas de interés y una fecha de caducidad. 
 
-## Caso 4 — El producto bancario como oferta reificada
+Cuando el banco le da el plástico a Ana, conectamos la tarjeta de Ana a la oferta específica que estaba vigente ese día:
 
-Una fricción que vimos por primera vez en el sauna y que vuelve con fuerza en el banco: el **producto comercial** como entidad. *"Tarjeta Visa Platinum"* no es una categoría abstracta (K); es una **oferta concreta** del banco con sus términos, beneficios, comisiones, fechas de vigencia. Ana no tiene "una Visa Platinum" como categoría — tiene **una instancia específica** de la oferta vigente cuando se la dieron, con sus condiciones congeladas en ese momento.
+```text
+(visa_platinum_oferta_2026_Q1) ∈ O                  ← El contrato de oferta del banco
+  cuota_manejo_mensual:   8 USD
+  vigencia:               inicio=Enero, fin=Junio
 
-```
-(visa_platinum_oferta_2026q1) ∈ O                  // la oferta comercial
-  instancia_de:           tipo_oferta_tarjeta
-  marca:                  Visa
-  segmento:               Platinum
-  cuota_manejo_mensual:   n_8_usd
-  beneficios:             [millas_aerolinea, seguro_viaje, ...]
-  comisiones:             [comision_internacional_3pct, ...]
-  vigencia:               valid_from=2026-01-01, valid_to=2026-06-30
-
-(tarjeta_ana_001) ∈ O                              // la instancia que Ana tiene
-  instancia_de:           tarjeta_credito
+(tarjeta_ana_001) ∈ O                               ← El plástico que tiene Ana
   cliente:                ana
-  cubierto_por:           visa_platinum_oferta_2026q1
-  numero_enmascarado:     "**** 4521"
-  fecha_emision:          2026-03-15
-  limite_credito:         n_3000_usd
-  estado:                 activa
+  cubierto_por:           visa_platinum_oferta_2026_Q1
 ```
 
-¿Por qué importa la distinción? Porque cuando el banco **actualiza** la Visa Platinum (digamos, sube la cuota a $10 en julio 2026), las tarjetas ya emitidas no cambian automáticamente — siguen ligadas a la **versión de la oferta vigente al momento de la emisión**. La oferta nueva (`visa_platinum_oferta_2026q3`) aplica solo a tarjetas nuevas. La consulta *"¿bajo qué condiciones se le entregó esta tarjeta?"* devuelve la oferta histórica, no la actual.
+¿Por qué es vital hacer esto? Porque si en julio el banco lanza una versión nueva de la tarjeta que cuesta 10 USD, la tarjeta de Ana no puede subir de precio mágicamente; ella firmó el contrato de la oferta de Enero. Al tratar a los productos financieros como "objetos independientes congelados en el tiempo", el banco evita demandas multimillonarias por cambiar reglas sin avisar.
 
-Esto es exactamente el patrón **plantilla + instancia con vigencia** del capítulo 18: la oferta es plantilla; la tarjeta es instancia; los términos quedan congelados. La regla del modelo es la misma que para diagnósticos clínicos, contratos legales o tarifas dinámicas: **cuando un dato cambia, lo registramos como nueva situación, no como sobreescritura**.
+## Balance: El banco no logró tumbar al modelo
 
-## Lo que el banco demuestra
+Este capítulo demostró que WQuestions no es un experimento de laboratorio. Observa todo lo que soportó sin trucos sucios:
 
-Si los capítulos 15-17 mostraban que el modelo absorbe dominios distintos, el banco muestra que **absorbe la complejidad industrial sin contorsiones**. Vale la pena enumerar lo que esta capítulo prueba:
+1.  **Múltiples agentes no humanos:** Sistemas informáticos tomando decisiones y asumiendo responsabilidades legales en el eje `Q`.
+2.  **Doble contabilidad paralela:** Eventos que se ramifican en la parte operativa y en la parte contable sin perder la conexión entre sí.
+3.  **Auditoría del pasado indestructible:** La regla de vigencia temporal (D6) permitió guardar el rastro de deudas y reglas obsoletas para blindar al banco ante juicios y auditorías.
 
-1. **Multi-agente realista**: cinco agentes (cliente, sistema, motor, contraparte, banco) en una sola operación, todos tratados uniformemente bajo D5.
-2. **Contrapartida contable como sub-situaciones**: cada movimiento operativo se conecta a sus asientos contables vía `parte_de`. La auditoría es un recorrido del grafo.
-3. **D9 industrial**: el estado de un préstamo cambia siete veces a lo largo de su vida; las siete quedan consultables por fecha exacta. Sin D9, los bancos hoy mantienen tablas de historia paralelas a las tablas operativas — un overhead enorme.
-4. **Bitemporalidad para fraude**: la investigación necesita saber no solo qué era cierto sino qué sabía el sistema. La pieza que el capítulo 22 marca como pendiente queda evidenciada acá como exigencia, no como nicho.
-5. **Productos como ofertas reificadas**: la confusión "K abstracto vs O concreto" se resuelve igual que en el sauna y la clínica. El patrón es estable a través de dominios disímiles.
-6. **Cadenas causales y normativas conviven**: un fraude tiene `motivado_por` (reclamo), `causado_por` (vulnerabilidad), `justificado_por` (política de reversos). Las cuatro relaciones de D6 operan en paralelo.
-
-La pregunta honesta — *¿qué falta para modelar un banco real?* — tiene una respuesta clara: los seis frentes del capítulo 22 (motor de inferencia, bitemporalidad completa, persistencia industrial, tooling, lexicon poblado, comunidad). Pero **la arquitectura conceptual está completa**. Un banco que adopte WQuestions no tiene que esperar a que el modelo se extienda; tiene que esperar a que la implementación industrial madure.
+A nivel conceptual, la arquitectura está lista para la guerra financiera corporativa.
 
 ## Lo que viene
 
-Cerramos con esto la **secuencia de dominios profundos**: sauna, taxi, clínica, banco. Cuatro casos cada vez más exigentes, todos modelados con el mismo catálogo D7 y el mismo lexicon (extendido por dialecto en cada caso). El próximo capítulo cambia la estrategia una última vez en Parte V: en lugar de una inmersión profunda en otro dominio, somete al modelo a **cuatro dominios cualitativamente distintos en serie corta** — música, química, fútbol, contrato — buscando explícitamente lo que el modelo todavía no resuelve bien. Es el capítulo donde el libro deja de mostrar lo que funciona y empieza a admitir lo que duele.
+Acabamos de cruzar la prueba más exigente del libro (Spa, Taxi, Clínica, Banco). El modelo aguantó la presión regulatoria, la concurrencia y la auditoría sin doblarse. Pero hay otros dominios industriales gigantescos donde la complejidad no viene del dinero sino de la **integración entre módulos de software** que tradicionalmente no se hablan entre sí.
+
+El próximo capítulo entra al mundo del **software ERP** (*Enterprise Resource Planning*) — el sistema que coordina la operación interna de una empresa mediana o grande. Recursos humanos, contabilidad, inventario, ventas, compras y manufactura conviven como módulos separados que tradicionalmente exigen proyectos millonarios de integración. Vamos a ver cómo una sola venta — cinco bicicletas a un cliente corporativo — dispara simultáneamente tres procesos cross-módulo (descuento de inventario, asiento contable, comisión del vendedor), cómo se modela un **BOM (Bill of Materials) recursivo** sin esquemas auxiliares, cómo el workflow de aprobación bitemporal de una orden de compra se vuelve trivial, y cómo el **audit trail del salario** de un empleado se preserva intacto durante años. La integración cross-módulo, que en ERPs tradicionales representa el 60-70% del esfuerzo de implementación, en WQuestions desaparece — el grafo ya es la integración.

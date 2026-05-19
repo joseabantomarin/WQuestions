@@ -1,81 +1,89 @@
 # Introducción
 
-## La pregunta que todos los niños saben hacer
+## La intuición que todos compartimos
 
-Hay seis palabras que cualquier niño de cinco años usa con maestría: **quién, qué, dónde, cuándo, cómo, por qué**. Las usa antes de saber qué es un sustantivo o un verbo. Las usa cuando todavía confunde el ayer con el mañana, cuando todavía no entiende que hay países al otro lado del mar, cuando los números mayores a diez le suenan a magia. Las usa para entender el mundo porque son, casi literalmente, los andamios con los que el mundo se vuelve entendible.
+Hay seis palabras que cualquier niño de cinco años usa como todo un experto: **quién, qué, dónde, cuándo, cómo y por qué**. Las utiliza muchísimo antes de saber qué cosa es un sustantivo o un verbo en la escuela. Las dice cuando todavía confunde el ayer con el mañana, cuando ni siquiera entiende que existen otros países al otro lado del océano, y cuando los números mayores a diez le suenan a puros cuentos de magia. El niño las usa para entender el mundo porque esas preguntas son, literalmente, las piezas con las que nuestro cerebro empieza a armar la realidad para que tenga sentido.
 
-Cuando ese niño crezca y se convierta en periodista, le enseñarán que toda noticia debe responder esas mismas seis preguntas, más una séptima — *cuánto* — que la formalidad adulta añadió para distinguir lo importante de lo trivial. En la escuela de periodismo de 1917 ya se enseñaba como "los 5W y 1H" [3]. Antes, los romanos del primer siglo se preguntaban *quis, quid, ubi, quando, cur, quomodo* [2]; antes, Aristóteles las usaba para evaluar la responsabilidad moral de las acciones humanas [1]. Las preguntas son más viejas que la lógica formal, más viejas que la escritura — son la forma en que la mente humana se ha relacionado con el mundo desde que tenemos memoria.
+## El contraste con la realidad industrial
 
-Este libro propone una idea sencilla pero con consecuencias profundas: **esas mismas preguntas pueden ser la arquitectura de toda información del mundo**, y reconocerlas como tal cambia radicalmente cómo construimos sistemas de inteligencia artificial.
+Ahora, imagínate la siguiente escena en el mundo profesional. Es un martes por la tarde, estás frente a la pantalla revisando un script en Python —pongamos que se llama `leer_sunat.py`— y tu tarea es lograr que el sistema de facturación se comunique limpiamente con una plataforma estatal de salud, como SUSALUD. Tienes la información correcta frente a ti: sabes qué servicio se prestó, a quién y cuándo. El problema es que un sistema exige los datos bajo una estructura rígida y el otro utiliza un vocabulario completamente distinto. Terminas escribiendo algoritmos, diseñando puentes y exportando *datasets* a la medida, solo para que dos bases de datos se pongan de acuerdo sobre un hecho que en la vida real (y para ese niño de cinco años) es increíblemente simple.
 
-## El problema concreto
+Ese desgaste técnico, esa necesidad constante de construir traductores manuales para conectar sistemas que deberían entenderse por simple lógica, no es un gaje del oficio. Es una falla arquitectónica profunda en cómo la industria ha modelado la información durante décadas. Y es, precisamente, la clase de frustración que te obliga a dar un paso atrás y repensar la estructura desde los cimientos.
 
-Vamos a un caso real. María vive en una gran ciudad. Hace dos años se atendió en una clínica privada por dolores de cabeza. El año pasado, en un viaje al interior del país, una caída la llevó a un hospital regional, donde le recetaron analgésicos. Este mes está embarazada y quiere atenderse en una nueva clínica.
+## De qué va este libro
 
-La nueva clínica necesita saber qué medicamentos toma María, qué alergias tiene, qué diagnósticos previos relevantes existen. La información está, pero está dispersa en tres sistemas que no se hablan. Cada uno tiene su esquema, sus nombres de columnas, su forma de codificar la información. Si la nueva clínica quiere ver la historia completa, alguien tiene que escribir un integrador. Y otro. Y otro. Y cuando el hospital regional cambie su sistema, todo se rompe.
+Este libro plantea, defiende y demuestra una sola idea. Es una idea tan simple de enunciar que resulta difícil creer en su potencia hasta que la ves ejecutándose en código: **las preguntas básicas de toda la vida —quién, qué, dónde, cuándo, cuánto, cuál, cómo y de qué clase— son estrictamente suficientes para organizar, con precisión técnica, la información de cualquier industria o dominio en el mundo.**
 
-María no es una abstracción. Es la realidad cotidiana de cualquier sistema de salud, de cualquier sistema bancario, de cualquier cadena de suministro, de cualquier organización que tenga que combinar información que vino de fuentes distintas.
+No hay trucos ocultos ni capas de complejidad innecesaria. Pero, como ocurre con los verdaderos cambios de paradigma, cuando tomas esta premisa y la llevas hasta sus últimas consecuencias lógicas, el panorama entero cambia. Cambia la forma en que diseñas una base de datos. Cambia la manera en que construyes agentes de inteligencia artificial. Cambia cómo conectas sistemas que hoy son incapaces de hablarse entre sí. Incluso cambia la forma en que le explicas un negocio nuevo a un programador junior.
 
-El problema no es nuevo. Lleva décadas intentándose resolver. Se han probado **ontologías de dominio** (cada profesión define exhaustivamente su vocabulario, como CIDOC CRM para patrimonio cultural [4] o Biolink para biomedicina [5]), **estándares de intercambio** (HL7 FHIR en salud [6], XBRL en finanzas [7]), **enfoques de grafo abierto** (RDF [8], knowledge graphs), y **canonicalización post-hoc** (técnicas para reconciliar vocabularios después del hecho).
+Lo hemos puesto a prueba. Funciona. Y el propósito de este texto es mostrarte la ingeniería exacta detrás de ese funcionamiento.
 
-Cada enfoque resuelve parte del problema. Ninguno lo cierra completamente. La razón, sospecha este libro, es que todos atacan el síntoma — la diversidad de vocabularios — sin atacar la causa: que cada dominio se permite *inventar* su vocabulario en lugar de heredar uno común.
+## Por qué escribir un libro entero
 
-¿Y si hubiera un vocabulario común, anterior a cualquier dominio, suficientemente universal para que todos los dominios sean dialectos de él?
+Si la idea central cabe en un solo párrafo, la pregunta es válida: ¿hace falta escribir un libro entero para esto? Sí, por una razón fundamental. En la ingeniería de software, entre **enunciar** una propuesta teórica y **poder usarla** en un entorno de producción hay un abismo.
 
-## Las preguntas como invariantes
+Para que una arquitectura de este tipo sea adoptada y no se quede en un mero ensayo académico, necesita cinco cosas:
 
-Aquí está la apuesta del libro. Las preguntas-W — quién, qué, dónde, cuándo, cuánto, cuál, cómo, y una octava que llamaremos "clase" (qué tipo de cosa) — no son convenciones culturales. Son **invariantes cognitivos**: aparecen en todos los idiomas indoeuropeos, en todas las tradiciones de organización del conocimiento, en todas las etapas del desarrollo lingüístico infantil. Aristóteles las llamó las "circunstancias" del acto [1]. La gramática las llama "argumentos del verbo". El periodismo las llama 5W1H [3]. La lingüística formal moderna las llama "roles temáticos" [24].
+   **Una intuición clara:** Demostrar que esta idea no es un capricho de diseño, sino que se fundamenta en cómo procesa la información la mente humana, la lingüística y la ciencia formal.
+    **Un modelo formal:** Reglas escritas con precisión matemática, cerrando cualquier margen de ambigüedad para el programador que deba implementarlo.
+    **Una batería de pruebas de estrés:** Aplicar el modelo en dominios reales y complejos —nada de ejemplos de juguete— para que el lector escéptico compruebe que el sistema no colapsa cuando la realidad del negocio se vuelve exigente.
+   **Una conexión con el ecosistema actual:** Las propuestas que ignoran su contexto están condenadas al fracaso. Este modelo debe dialogar de frente con las ontologías existentes, los estándares de la industria y las herramientas modernas de IA.
+    **Una hoja de ruta honesta:** Definir con total transparencia qué problemas están resueltos y cuáles son los desafíos pendientes para que esto se convierta en una infraestructura de uso diario.
 
-Cuatro tradiciones distintas, mismo descubrimiento.
+Cada uno de estos cinco requerimientos ocupa una sección de este libro. No hay relleno; cada capítulo cumple una función de carga en la estructura general.
 
-Si las preguntas son tan estables, tan universales, tan profundamente ligadas a cómo hablamos, ¿no sería razonable usarlas como esqueleto de cualquier sistema que pretenda almacenar y consultar información del mundo? ¿No sería razonable que la pregunta "¿quién?" tenga una única respuesta canónica en todo sistema — un eje donde viven los agentes — en lugar de inventar `vendedor`, `cliente`, `usuario`, `paciente`, `actor`, `perpetrador` en cada nuevo proyecto?
+## Qué vas a encontrar en estas páginas
 
-La apuesta es: sí. Y si funciona, las consecuencias son grandes.
+A medida que avancemos, vas a ir construyendo junto conmigo una arquitectura llamada **WQuestions**. Piensa en este modelo como un motor que toma las preguntas cotidianas y las transforma en los ejes formales de un espacio geométrico. Es como un mapa de coordenadas, pero en lugar de latitud y longitud, las coordenadas son las respuestas a estas preguntas. Cualquier hecho que ocurra en el mundo, por complejo o específico que sea, encuentra una ubicación matemática exacta en este espacio.
 
-## Lo que este libro hace
+Y este libro **no se detiene en la teoría**. Va hasta el final del proceso de ingeniería:
 
-El libro construye, paso a paso, una arquitectura llamada **WQuestions** que toma las preguntas como ejes literales de un espacio multidimensional donde se ubican los hechos del mundo. Construye el modelo desde su intuición fundacional, lo formaliza con rigor matemático, lo refina contra siete dominios distintos (transporte aéreo, comercio minorista, servicios on-demand, historia clínica, composición musical, contratos legales, reacciones químicas, partidos deportivos), y lo conecta con doce tradiciones académicas e industriales relevantes.
+-   Define las reglas del modelo con rigor (utilizando notación de teoría de conjuntos cuando la precisión lo exige, y prosa clara cuando es suficiente).
+-   Somete la arquitectura a prueba en **ocho escenarios comerciales distintos**: desde la gestión de un sauna comercial y un servicio de taxis con alta concurrencia, hasta el modelado de historias clínicas, transacciones bancarias regionales, composición musical, reacciones químicas, análisis de partidos de fútbol y la estructura de contratos legales.
+-   Se respalda en un **prototipo funcional escrito en Python**, garantizando que lo que se afirma en el texto es ejecutable: los ocho dominios pasan sus validaciones y los tests corren sin errores.
+-   Conecta la arquitectura con doce teorías y estándares fundamentales de la informática y la lingüística, asegurando que el modelo se integre al estado del arte y no nazca como un sistema aislado.
 
-Pero hace algo más, también: muestra que **el momento es 2026**. La explosión de los modelos de lenguaje grandes, el paradigma de *function calling* y la maduración de los *agentic workflows* han creado un contexto donde un esquema universal explícito ya no es una curiosidad académica. Es infraestructura necesaria.
+## Por qué este libro aparece precisamente ahora
 
-Si los agentes de IA van a comunicarse con sistemas del mundo real — leer datos, registrar hechos, consultar información — necesitan una manera estructurada de hacerlo. Function calling ya provee la mecánica (JSON, schemas, tipos). Lo que falta es el **vocabulario semántico común** sobre el cual operar. Cada API expone hoy su propio JSON Schema; el agente tiene que aprender cada uno. Si todos los APIs hablaran preguntas, el agente las aprendería una sola vez.
+Si hubiéramos propuesto esta arquitectura hace cinco años, su adopción habría sido extremadamente difícil. Faltaba una pieza clave para que el sistema fuera escalable: una capa de inteligencia capaz de traducir con fluidez entre el modelo de datos estructurado y el lenguaje natural de los usuarios.
 
-WQuestions propone que las preguntas sean ese vocabulario.
+Hoy, esa pieza de hardware semántico **ya existe**: son los Grandes Modelos de Lenguaje (LLMs). La capacidad actual que tienen estos modelos para ejecutar herramientas de forma autónoma (*function calling*) y mantener flujos de trabajo dinámicos (*agentic workflows*) ha reescrito las reglas de la integración. Cuando un agente de IA actual necesita extraer datos de un servidor hospitalario o registrar una venta, los "cables" ya están tendidos: domina los formatos JSON, valida esquemas y entiende los tipos de datos. 
 
-## Para quién es este libro
+Lo que le sigue faltando desesperadamente a la industria es un **vocabulario común** que viaje a través de esos cables. Actualmente, cada API expone sus datos en su propio dialecto privado. Como resultado, un agente de IA tiene que consumir tokens y tiempo de procesamiento intentando aprender un idioma distinto por cada herramienta a la que se conecta.
 
-Lo escribí pensando en tres lectores simultáneos. Si me sale bien, los tres encuentran lo suyo en cada capítulo.
+Si todas las aplicaciones de internet estructuraran su información basándose en los ejes de las preguntas fundamentales, un agente solo tendría que aprender a comunicarse **una sola vez**, obteniendo la capacidad inmediata de entender y operar cualquier sistema del planeta.
 
-**El lector con interés general** en cómo la IA se relaciona con el conocimiento humano encontrará en este libro una invitación a pensar más finamente lo que damos por sentado. Las preguntas son tan obvias que no las miramos. Pero cuando uno se detiene en ellas, descubre que organizar el mundo *así* en vez de *asá* tiene consecuencias enormes — para cómo aprendemos, cómo enseñamos, cómo razonamos, cómo construimos máquinas que también lo hagan.
+La tesis de este libro es que las preguntas son, por naturaleza, ese idioma universal. Y el momento tecnológico para implementar este estándar es ahora.
 
-**El profesional técnico** — arquitecto de información, ingeniero de datos, desarrollador de IA — encontrará una arquitectura concreta, validada, formalizada, con doce comparaciones rigurosas contra precedentes industriales y siete casos de aplicación detallados. Hay decisiones de diseño numeradas, convenciones explícitas, un lexicon ejemplar. Hay un camino claro de implementación.
+## Para quién está escrito este libro
 
-**El investigador o académico** — en lingüística computacional, representación del conocimiento, semántica formal — encontrará un aporte teórico verificable. Cada decisión se contrasta contra la literatura existente: Barwise & Perry [11], Davidson [12], Gärdenfors [13], Yang & Hu [9], Mahmood [10], CIDOC CRM [4], FrameNet [14], VerbNet [15], Universal Schema [16], Biolink Model [5], Snodgrass [17], QUDT [18]. No hay reinvención silenciosa; cada préstamo se cita, cada diferencia se justifica.
+Diseñé este texto apuntando a tres perfiles de lectores simultáneos. Si el balance es el correcto, cada uno encontrará valor de alto impacto en estas páginas:
 
-El texto está **estratificado**: cada capítulo abre con narrativa accesible y profundiza con rigor formal en sus segundas mitades. Si solo te interesa la idea general, lee el primer tercio de cada capítulo. Si quieres la formalización, lee los apéndices técnicos. Si quieres construir, lee los capítulos de aplicación.
+**Para el lector con curiosidad estructural:** Si te fascina entender cómo la inteligencia artificial intenta mapear el conocimiento humano, este texto te obligará a mirar con rigor analítico algo que solemos dar por sentado: la naturaleza de las preguntas. Cuando te detienes a analizarlas, descubres que la forma en que decidimos organizar la información altera radicalmente cómo aprendemos, cómo razonamos y, en última instancia, cómo diseñamos máquinas que pretenden imitar nuestra cognición.
+
+**Para el profesional técnico:** Si tu trabajo diario es ser arquitecto de software, ingeniero de datos o desarrollador de IA, aquí tienes un *framework* concreto, testeado y desmenuzado a un nivel de detalle listo para ser implementado. Encontrarás comparativas directas con las tecnologías de integración actuales, esquemas de modelado en ocho industrias diferentes, decisiones de diseño justificadas y un diccionario base (*lexicon*) para arrancar tus propios proyectos.
+
+**Para el investigador o académico:** Si tu campo de estudio es la semántica, las bases de datos o la lingüística computacional, notarás que cada propuesta está fuertemente anclada en la literatura científica. Aquí no reinventamos la rueda a escondidas: cada concepto se contrasta y se referencia con el trabajo de autores como Barwise y Perry `[11]`, Davidson `[12]`, Gärdenfors `[13]`, Yang y Hu `[9]`, y Mahmood `[10]`. Además, dialogamos directamente con estándares consolidados como CIDOC CRM `[4]`, FrameNet `[14]`, VerbNet `[15]`, Universal Schema `[16]`, Biolink Model `[5]`, Snodgrass `[17]` y QUDT `[18]`. Todo concepto heredado tiene su cita correspondiente, y toda divergencia tecnológica está argumentada lógicamente.
+
+Para optimizar la lectura, la estructura del libro está **diseñada por capas**. Cada capítulo inicia planteando un escenario o analogía de fácil comprensión, y aumenta progresivamente su densidad técnica. Si solo necesitas la visión estratégica, el primer tercio de cada capítulo es suficiente. Si buscas el sustento matemático, los apéndices están a tu disposición. Y si tu objetivo es ver código y modelado aplicado, tu lugar de enfoque debe ser la Parte V.
 
 ## El recorrido
 
-El libro tiene seis partes.
+El desarrollo del modelo se divide en seis bloques principales:
 
-**Parte I (capítulos 1–3) — Por qué las preguntas.** Establece el problema, traza la historia de las preguntas como invariantes, y revisa los intentos previos. Termina motivando por qué hace falta algo distinto.
+   **Parte I (Capítulos 1 al 3) — Por qué las preguntas:** Definimos el problema industrial que justifica este esfuerzo, repasamos cómo diversas ciencias convergieron de forma independiente en este mismo descubrimiento, y analizamos sin filtros por qué los intentos previos de la industria por resolver la interoperabilidad se quedaron a medias.
+   **Parte II (Capítulos 4 al 7) — Las ocho coordenadas:** Diseccionamos un eje por capítulo: quién, qué, dónde, cuándo, clase, cuánto, cuál y cómo. Analizamos la carga semántica de cada pregunta, las trampas lógicas al momento de programarlas y las reglas para modelarlas limpiamente.
+   **Parte III (Capítulos 8 al 11) — Cómo funcionan juntas:** Pasamos al ensamblaje. Explicamos cómo un evento del mundo real se transforma en la unidad atómica de nuestra base de datos, cómo la intersección de estos ejes crea una geometría de datos coherente, y cómo se vinculan los eventos entre sí (incluyendo el complejo modelado de la causalidad o el "por qué").
+   **Parte IV (Capítulos 12 al 14) — Del lenguaje a los hechos:** Construimos el puente entre la ambigüedad del lenguaje humano y la rigidez de los datos estructurados. Abordamos la función crítica de los verbos, el diseño del diccionario operativo del sistema (*lexicon*) y la resolución técnica de problemas lingüísticos severos (polisemia, frases compuestas y fricciones entre idiomas).
+   **Parte V (Capítulos 15 al 23) — En la práctica:** Entramos a la sala de máquinas. Ejecutamos el modelado completo de ocho dominios industriales — spa, taxi, clínica, banca, ERP, universidad, municipalidad, minera — y enfrentamos el modelo a cuatro escenarios de alto estrés técnico (música, química, fútbol y redacción de contratos). Esta es la sección donde la teoría se convierte en código.
+   **Parte VI (Capítulos 24 al 27) — IA, el futuro y el cierre:** Proyectamos cómo la arquitectura WQuestions potencia a los LLMs mediante *function calling*, exploramos las aplicaciones comerciales que se desbloquean al unirlos, definimos los retos pendientes para convertir esto en un estándar de infraestructura, y cerramos el ciclo volviendo al problema original.
 
-**Parte II (capítulos 4–7) — Las ocho coordenadas.** Presenta uno por uno los ejes del modelo: quién, qué, dónde, cuándo, cuánto, cuál, cómo, clase. Cada uno con sus particularidades, sus trampas, sus convenciones.
+## Una nota metodológica
 
-**Parte III (capítulos 8–11) — Cómo funcionan juntas.** Construye el modelo a partir de los ejes: el hecho atómico como unidad, el espacio multidimensional como geometría, las situaciones reificadas como puntos, y las relaciones de "por qué" como conectores.
+La creación de este libro siguió un proceso iterativo muy particular. Esta arquitectura no se diseñó en el vacío sobre una pizarra para luego forzar a los datos a encajar en ella. Todo lo contrario: el modelo se construyó de manera empírica, dominio tras dominio, chocando contra las fricciones reales que cada modelo de negocio exigía resolver. Ninguna regla de diseño se incluyó por puro amor a la elegancia teórica; cada decisión técnica está ahí porque un caso de uso real demandó su existencia.
 
-**Parte IV (capítulos 12–14) — Del lenguaje a los hechos.** Conecta el modelo con el lenguaje humano: el verbo como signatura, el lexicon como diccionario operativo, los casos lingüísticos difíciles (nominalización, modales, idiomas).
+Aunque suene paradójico, ese proceso empírico es la mayor garantía de robustez del sistema. La arquitectura actual emergió en el momento exacto en que comprendimos que **ocho industrias que no tenían relación alguna entre sí estaban demandando exactamente la misma solución estructural**, solo que disfrazada con vocabularios distintos. Cuando ocho problemas independientes convergen matemáticamente en la misma respuesta, esa respuesta deja de ser una simple hipótesis.
 
-**Parte V (capítulos 15–18) — En la práctica.** Modela cinco dominios en detalle: ventas, taxis, historia clínica, y los cuatro casos de validación (música, química, fútbol, contratos). Es donde el lector profesional encontrará material directamente aplicable.
+Aprovechando este punto, conviene aclarar el tono de la obra: este libro **no peca de falsa modestia ni de tibieza**. La arquitectura se expone con la contundencia de quien la ha sometido a prueba. Del mismo modo, sus vulnerabilidades y límites se declaran de frente, porque ocultar una falla en ingeniería es una irresponsabilidad. Donde encontremos un problema que la arquitectura aún no resuelve de forma óptima, lo leerás sin rodeos. Y donde la solución demostró ser superior a los estándares actuales, la defenderemos con argumentos técnicos, sin diplomacias innecesarias.
 
-**Parte VI (capítulos 19–21 y conclusión) — Implicaciones y futuro.** Conecta WQuestions con LLMs y function calling, explora aplicaciones futuras, identifica lo que falta implementar, y cierra circularmente con la pregunta del comienzo: ¿qué significa, finalmente, que las preguntas sean coordenadas?
-
-## Una nota sobre el método
-
-Este libro es resultado de un proceso particular: una conversación sostenida entre un autor humano y un asistente de IA, donde la arquitectura de WQuestions se desarrolló iterativamente, dominio por dominio, fricción por fricción. Cada decisión de diseño se tomó porque algún caso real la forzó. Ninguna se inventó "por completitud teórica".
-
-Eso debería ser, paradójicamente, una de las garantías más fuertes del libro: la arquitectura no se diseñó sobre papel y se aplicó a casos forzados; se descubrió viendo cómo siete dominios distintos pedían la misma cosa con palabras distintas.
-
-El proceso mismo ilustra la tesis: una IA suficientemente capaz, en diálogo con un humano motivado, puede explorar el espacio conceptual de un problema con una velocidad y rigor que ningún equipo humano podría replicar. WQuestions es, en parte, el producto. En parte, la demostración. En parte, el llamado: tenemos que aprender a usar estas herramientas para pensar mejor, no solo para hablar más fluido.
-
-Empezamos por la torre de Babel.
+Empecemos.

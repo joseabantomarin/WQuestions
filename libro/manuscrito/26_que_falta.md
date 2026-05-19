@@ -12,7 +12,7 @@ Lo organizo en seis frentes, cada uno con tres cosas: **qué falta**, **qué tan
 
 ## Frente 1 — El motor de inferencia
 
-Apareció seis veces a lo largo del libro: el evaluador externo que recorre el grafo y dispara reglas. La regla *"siete sesiones → una gratis"* del sauna. La verificación *"prescripción versus contraindicación"* de la clínica. El cálculo del marcador del partido. La aplicación de la cláusula de rescisión del contrato. Todas comparten la misma forma estructural: una condición declarativa sobre hechos del grafo, un consecuente que se efectúa cuando la condición se cumple.
+Apareció seis veces a lo largo del libro: el evaluador externo que recorre el grafo y dispara reglas. La regla *"siete sesiones → una gratis"* del spa. La verificación *"prescripción versus contraindicación"* de la clínica. El cálculo del marcador del partido. La aplicación de la cláusula de rescisión del contrato. Todas comparten la misma forma estructural: una condición declarativa sobre hechos del grafo, un consecuente que se efectúa cuando la condición se cumple.
 
 **Qué falta**: una capa de evaluación de reglas que opere sobre WQuestions. Hay al menos cuatro tecnologías candidatas, cada una con su fortaleza:
 
@@ -44,7 +44,7 @@ El prototipo vive en memoria. Útil para validación arquitectónica; impráctic
 - **SQLite** — para sistemas chicos y monousuario. Esquema simple: una tabla `individuals` con `(id, axis, payload_json)`, una tabla `facts` con `(subject_id, role, value_id, valid_from, valid_to, tx_start, tx_end)`. Implementación trivial sobre el universo actual.
 - **Postgres + JSONB** — para sistemas multi-usuario medianos. Aprovecha índices GIN sobre payload, FTS sobre etiquetas, partitioning por tx_time para auditoría.
 - **Kùzu o Neo4j** — para sistemas que privilegian consultas de grafo (rutas, caminos transitivos). Modelo más natural pero curva de adopción mayor.
-- **RDF/SPARQL** (Apache Jena, GraphDB) — para sistemas que quieran interoperar con la web semántica existente. Mapeo trivial: cada hecho es una tripleta RDF; D9 se mapea con grafos nombrados.
+- **RDF/SPARQL** (Apache Jena, GraphDB) — para sistemas que quieran interoperar con la web semántica existente. Mapeo trivial: cada hecho es una tripleta RDF; D6 se mapea con grafos nombrados.
 
 **Urgencia**: alta para cualquier adoptante. Sin persistencia, no hay sistema.
 
@@ -68,11 +68,11 @@ Una propuesta como WQuestions vive o muere por su tooling. Los conceptos pueden 
 
 ## Frente 5 — Lexicon poblado en varios idiomas
 
-El catálogo D7 del libro tiene 38 roles canónicos. El lexicon del prototipo registra unos diez verbos. Para un sistema productivo, el lexicon de un solo idioma necesita del orden de **dos a cinco mil entradas** — los verbos frecuentes del español, sus formas nominales, las locuciones idiomáticas.
+El catálogo D8 del libro tiene 38 roles canónicos. El lexicon del prototipo registra unos diez verbos. Para un sistema productivo, el lexicon de un solo idioma necesita del orden de **dos a cinco mil entradas** — los verbos frecuentes del español, sus formas nominales, las locuciones idiomáticas.
 
 **Qué falta**: trabajo lingüístico paciente. Por dominio o por familia semántica (transferencia, comunicación, movimiento, percepción, estados, etc.), poblar el lexicon. FrameNet español, el spanish corpus de Universal Dependencies, AnCora son fuentes legítimas para mecanizar parcialmente este trabajo.
 
-Para internacionalización: cada idioma necesita su propio lexicon. El **catálogo D7 es idiomáticamente neutral** (los nombres internos como `agente`, `paciente`, `tema` son etiquetas inglesas pero podrían ser griegas o números). Lo que cambia entre idiomas es la **capa de aliases** y los **patrones de polisemia** específicos.
+Para internacionalización: cada idioma necesita su propio lexicon. El **catálogo D8 es idiomáticamente neutral** (los nombres internos como `agente`, `paciente`, `tema` son etiquetas inglesas pero podrían ser griegas o números). Lo que cambia entre idiomas es la **capa de aliases** y los **patrones de polisemia** específicos.
 
 **Urgencia**: la cobertura del lexicon **es** la usabilidad. Sin verbos suficientes, el modelo se siente incompleto. Esfuerzo sostenido, no proyecto puntual.
 
@@ -85,7 +85,7 @@ Acá entramos en la pieza que el autor no controla. WQuestions, para volverse ú
 **Qué falta**:
 
 - **Repositorio canónico** abierto, con licencia permisiva. Una primera versión vive en GitHub mientras leés esto.
-- **Proceso de contribución**: cómo proponer nuevas entradas al catálogo D7, nuevos dominios al lexicon, parches al motor. Necesita criterios escritos.
+- **Proceso de contribución**: cómo proponer nuevas entradas al catálogo D8, nuevos dominios al lexicon, parches al motor. Necesita criterios escritos.
 - **Foro o canal de discusión**: para resolver fricciones que surjan al modelar dominios nuevos. Cada conversación cualifica el catálogo.
 - **Estandarización gradual**: una vez que varios proyectos adopten el modelo, vale la pena llevar partes del catálogo (los roles más universales) a un proceso de estandarización formal — IETF, W3C, ISO. Esto da estabilidad legal para uso empresarial.
 - **Dialectos de dominio** mantenidos por comunidades sectoriales: clínico, financiero, legal, manufactura. Cada uno con su propia gobernanza dentro de la espina común.
@@ -107,7 +107,7 @@ Además de los seis frentes mayores, hay un puñado de fricciones que el prototi
 | 3 | `tema: O → O` rechaza K (obra, medicamento) | música, clínica | Considerar `tema_categorico: O → K` | Media |
 | 4 | Patrones temporales finos (cada_mañana, recurrentes) | clínica | Reificar como O con estructura | Baja |
 | 5 | Tiempo musical (compás, pulso) | música | Reificación de compases | Muy baja |
-| 6 | Reglas de derivación versionadas | contrato | Frente 1 (motor) + D9 sobre reglas | Alta |
+| 6 | Reglas de derivación versionadas | contrato | Frente 1 (motor) + D6 sobre reglas | Alta |
 
 Ninguna bloquea el funcionamiento del modelo; varias quedan resueltas mediante roles de dominio bajo la política liberal. Pero forman la **lista de mejoras concretas al catálogo** que se acumula a medida que el modelo se prueba en territorios nuevos.
 
@@ -115,6 +115,6 @@ Ninguna bloquea el funcionamiento del modelo; varias quedan resueltas mediante r
 
 Cerremos con la idea menos técnica del capítulo. Un libro no es una propuesta terminada — es **una invitación a que alguien la termine**. Las arquitecturas duraderas — Unix, TCP/IP, HTTP, SQL, Linux, RDF — empezaron como artículos, manifiestos, RFCs, libros: textos que articulaban una idea con suficiente claridad para que otros pudieran apropiársela y empujarla adelante.
 
-WQuestions, en su forma actual, es un texto y un prototipo. El catálogo D7 está bien diseñado pero incompleto; el lexicon está bosquejado; las herramientas son embriónicas; la comunidad es nula. Lo que cualquier lector tiene en la mano al cerrar este libro no es un producto sino una **base operable**: suficiente para entender la propuesta, ejecutarla, criticarla, extenderla. Si la propuesta tiene valor, otros la perfeccionarán.
+WQuestions, en su forma actual, es un texto y un prototipo. El catálogo D8 está bien diseñado pero incompleto; el lexicon está bosquejado; las herramientas son embriónicas; la comunidad está por construirse. Lo que cualquier lector tiene en la mano al cerrar este libro no es un producto sino una **base operable**: suficiente para entender la propuesta, ejecutarla, criticarla, extenderla. La propuesta funciona — ya está demostrado en los ocho dominios del prototipo — y desde acá la tarea es perfeccionarla.
 
-La conclusión que sigue — el último capítulo del libro — no es una recapitulación de lo dicho. Es un **regreso circular** al problema con el que abrimos: el médico que no podía leer la historia del paciente porque cada hospital usaba un schema distinto. La pregunta es si la respuesta que el libro propone — las preguntas mismas como base universal — aguanta el peso que prometió aguantar. Y, más honestamente: si vale la pena el esfuerzo de construirla.
+La conclusión que sigue — el último capítulo del libro — no es una recapitulación de lo dicho. Es un **regreso circular** al problema con el que abrimos: el médico que no podía leer la historia del paciente porque cada hospital usaba un schema distinto. Ahora ya sabemos que la respuesta que el libro propone — las preguntas mismas como base universal — aguanta el peso que prometió aguantar. Lo que sigue es construirla.
