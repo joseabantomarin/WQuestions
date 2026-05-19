@@ -2,23 +2,29 @@
 
 ## Tres puertas, ninguna cerrada
 
-Si la idea de organizar la información del mundo por preguntas-W es tan natural como sostuvimos en el capítulo anterior, alguien tuvo que haberla intentado antes. Y la verdad es que sí: la intentaron varias veces, con éxito parcial cada vez. Tres tradiciones, sobre todo, se acercaron al problema desde ángulos distintos y dejaron tres puertas a medio abrir. Este capítulo recorre las tres, mira con honestidad qué consiguieron y por qué ninguna terminó de pasar al otro lado. Entender bien sus límites es la mejor manera de no repetirlos.
+Si organizar toda la información del mundo a través de preguntas básicas (quién, qué, dónde, cuándo) es algo tan natural y lógico como vimos en el capítulo anterior, la duda surge casi de inmediato: ¿por qué a nadie en la industria del software se le ocurrió hacerlo antes?
 
-Para que los ejemplos sean reconocibles, voy a apoyarme en cuatro dominios cotidianos a los que volveremos a lo largo del libro: **una receta de cocina**, **un gol de fútbol**, **una canción** y **una noticia política**. Cuatro mundos muy distintos, cuatro vocabularios muy distintos. Si una arquitectura universal funciona, tiene que aguantar los cuatro sin transpiraciones.
+La realidad es que sí se intentó. Históricamente, diferentes grupos de investigadores y programadores abordaron este inmenso problema desde ángulos muy distintos, abriendo lo que podríamos llamar "tres puertas" tecnológicas. En este capítulo vamos a asomarnos a esas tres puertas para entender qué cosas brillantes lograron y, sobre todo, por qué ninguna terminó de solucionar el problema de fondo. Entender dónde y por qué fallaron es el único camino seguro para no diseñar un sistema que vuelva a tropezar con las mismas piedras.
 
-## La primera puerta: el 5W1H como metodología
+Para no enredarnos en teorías abstractas de computación, vamos a poner a prueba cada una de estas tecnologías usando escenarios cotidianos a los que volveremos a lo largo del libro: la preparación de una receta de cocina, el relato de un gol de fútbol, los datos de una canción y la cobertura de una noticia política. Son mundos totalmente dispares, con jergas que no tienen nada que ver entre sí. Una arquitectura de datos que se llame a sí misma "universal" tiene que ser capaz de estructurar estos cuatro ejemplos sin obligarnos a forzar o deformar la información. 
 
-El 5W1H, como vimos en el capítulo anterior, nació en las redacciones de comienzos del siglo XX. Pero a fines del siglo XX algo curioso pasó: investigadores de informática empezaron a tomarlo en serio como **herramienta de extracción de información**. Si las noticias bien escritas responden seis preguntas, ¿no podría un programa identificar esas seis respuestas automáticamente y construir una base estructurada a partir de texto plano?
+Veamos cómo le fue a la industria intentándolo.
 
-Yang & Hu propusieron, en una línea de trabajo conocida [9], un sistema que toma una nota de prensa y devuelve las seis respuestas como campos de un registro: *who, what, where, when, why, how*. Mahmood, en una dirección parecida [10], formalizó el problema como una tarea de etiquetado: cada cláusula de la noticia se anota con el rol 5W1H que cumple, y de ahí se construye una representación estructurada del evento.
+## La primera puerta: el 5W1H como metodología de extracción
 
-Veámoslo concretamente. Imagina la noticia:
+Como ya sabemos, la regla de las 5W1H (las seis preguntas periodísticas) nació en las redacciones de prensa. Sin embargo, a finales del siglo XX, algunos investigadores informáticos empezaron a ver esta regla con otros ojos: la vieron como una **herramienta para extraer datos automáticamente**. 
+
+La lógica era muy atractiva. Pensaron: *"Si una noticia bien escrita siempre contiene las respuestas a estas seis preguntas, ¿no podríamos programar un software que lea el texto, extraiga esas variables por su cuenta y construya una base de datos ordenada sin intervención humana?"*
+
+Investigadores como Yang y Hu `[9]` desarrollaron sistemas que hacían exactamente esto. Leían una nota de prensa y devolvían las seis respuestas acomodadas en casilleros. En una línea muy similar, Mahmood `[10]` formalizó esto pidiéndole a un algoritmo que etiquetara cada frase de la noticia para saber qué rol jugaba en la historia.
+
+Para entenderlo, imaginemos que el sistema lee el siguiente texto:
 
 > *El ministro de Salud anunció ayer en conferencia de prensa una nueva campaña de vacunación contra el sarampión para reducir los brotes detectados en zonas rurales del norte del país.*
 
-El sistema 5W1H produce:
+El programa procesa las palabras y devuelve este esquema:
 
-```
+```text
 quién:   el ministro de Salud
 qué:     anunció una nueva campaña de vacunación contra el sarampión
 cuándo:  ayer
@@ -27,17 +33,15 @@ por qué: para reducir los brotes detectados en zonas rurales del norte
 cómo:    (no especificado)
 ```
 
-Bonito. Estructurado. Procesable.
+A primera vista, el resultado es fantástico. Hemos pasado de un párrafo de texto plano a un resumen estructurado. Pero el problema, y es un problema gravísimo en la ingeniería de sistemas, estalla apenas intentamos **almacenar esto de forma útil** para luego **cruzarlo con otras bases de datos**.
 
-¿Cuál es el problema? El problema aparece cuando intentas hacer dos cosas: **almacenar el resultado de manera homogénea**, y **combinarlo con otra cosa**.
+Para una computadora, guardar la frase "el ministro de Salud" en la caja del *quién* no significa que la máquina entienda que se trata de un ser humano o de un cargo público; para el sistema, es simplemente una cadena de texto, un conjunto de letras. Si en la noticia de la semana siguiente el texto dice "el titular de la cartera de salud", el programa lo guardará como un texto nuevo. Al no existir una capa de inteligencia semántica por encima, el sistema no tiene forma de saber que ambas frases hablan de la misma persona. Si le pides a esta base de datos: *"muéstrame todas las acciones del ministro de este año"*, la consulta fracasa, porque la máquina no sabe cómo agrupar esos textos sueltos.
 
-Almacenarlo de manera homogénea es complicado porque las respuestas vienen en lenguaje natural. "El ministro de Salud" en la noticia de hoy puede ser "el titular de la cartera de salud" en la noticia de la semana próxima, y un sistema 5W1H sin más capa por encima no sabe que son la misma persona. Cada respuesta es una cadena de texto: la consulta "todas las acciones del ministro de Salud este año" requiere reconciliar referencias, y el 5W1H no provee mecanismos para hacerlo.
-
-Combinarlo con otra cosa es todavía peor. La misma metodología aplicada a un parte deportivo:
+Y cuando intentamos cruzar dominios diferentes, el sistema revela sus mayores carencias. Pasémosle a este mismo algoritmo la narración de un evento deportivo:
 
 > *Messi marcó el gol del empate en el minuto 87 con un remate de zurda desde fuera del área, tras una pared con su compañero.*
 
-```
+```text
 quién:   Messi
 qué:     marcó el gol del empate
 cuándo:  el minuto 87
@@ -46,85 +50,82 @@ por qué: (implícito: empatar el partido)
 cómo:    con un remate de zurda tras una pared
 ```
 
-Funciona. Pero el campo "qué" del ministro y el campo "qué" del gol son cadenas de texto opacas; nada en el sistema sabe que un "anuncio" y un "gol" son tipos distintos de evento, que comparten ciertos roles pero requieren otros propios (en un gol importa la pierna, el tipo de remate, la asistencia; en un anuncio importa el destinatario, el medio, el efecto buscado).
+El programa hizo su trabajo de extracción, sí. Pero observemos el resultado desde la perspectiva de la base de datos: el campo "qué" del ministro (un anuncio de vacunación) y el campo "qué" de Messi (un gol) son procesados exactamente como lo mismo: texto plano. El sistema es completamente ciego a la naturaleza de los eventos. Estructurar un gol requiere casilleros para registrar con qué pierna se pateó o quién dio la asistencia; estructurar un anuncio público requiere casilleros para la audiencia o el canal de transmisión. 
 
-El 5W1H operativo es un **diccionario de roles**, no una arquitectura. Como guía heurística para no olvidar dimensiones, es excelente. Como base para construir un sistema que combine información heterogénea, le faltan dos cosas: una **estructura de tipos** (qué es cada respuesta — una persona, un lugar, un evento) y un **vocabulario canónico** (cómo se llaman las cosas para que dos noticias hablen del mismo ministro).
+En resumen, usar el modelo 5W1H como un simple **diccionario de roles** funciona de maravilla para asegurarnos de no olvidar información clave. Pero como arquitectura tecnológica le faltan dos motores fundamentales: una **estructura de tipos** (para que la base de datos sepa diferenciar si un texto representa a un lugar, a un evento o a una persona física) y un **vocabulario oficial o canónico** (para estandarizar cómo llamamos a las cosas y no confundirnos con sinónimos). 
 
-Esos dos huecos son los que el resto del libro intenta llenar. El 5W1H tenía la intuición correcta — descomponer por preguntas —, pero le faltó dar el segundo paso.
+Esa fue la primera puerta: una intuición correcta que se quedó a un paso de consolidarse en algo útil.
 
 ## La segunda puerta: la web semántica
 
-A fines del siglo XX, una intuición parecida tomó otra forma. Tim Berners-Lee, el inventor de la World Wide Web, propuso en un famoso artículo de 2001 una visión que llamó **Web Semántica** [31]: una web donde los documentos no solo contuvieran texto para humanos sino también descripciones estructuradas para máquinas. La pieza clave de esa visión era el formato **RDF** (Resource Description Framework) [8].
+Años más tarde, en 2001, Tim Berners-Lee (nada menos que el creador de la World Wide Web) propuso una visión profundamente ambiciosa a la que llamó la **Web Semántica** `[31]`. Su objetivo era transformar internet. Quería que las páginas web no solo mostraran texto para que lo leyeran los humanos, sino que incluyeran descripciones de datos invisibles y estructuradas, diseñadas para que las computadoras pudieran leerlas, procesarlas y conectarlas por sí solas. La pieza maestra para lograr esta visión era un formato tecnológico llamado **RDF** `[8]`.
 
-RDF tiene una idea elegante en el corazón. Toda información se descompone en **tripletas**: *sujeto — predicado — objeto*. "Messi marcó un gol" es la tripleta `(Messi, marcó, un_gol)`. "El gol fue en el minuto 87" es `(el_gol, ocurrió_en, minuto_87)`. "La canción fue compuesta por McCartney" es `(la_cancion, compuesta_por, McCartney)`. Cualquier hecho del mundo, dice RDF, se puede expresar como un conjunto de tripletas.
+La idea detrás de RDF es de una elegancia matemática impecable: toda la información del universo puede descomponerse en unidades atómicas de tres partes, llamadas **tripletas** (*sujeto — predicado — objeto*). Es como reducir todo el conocimiento a oraciones muy simples:
+*   El hecho "Messi marcó un gol" se expresa como `(Messi, marcó, un_gol)`. 
+*   El detalle "El gol ocurrió en el minuto 87" se convierte en `(un_gol, ocurrió_en, minuto_87)`. 
+*   La autoría "La canción fue compuesta por McCartney" se anota como `(la_cancion, compuesta_por, McCartney)`. 
 
-La promesa es deslumbrante. Si toda la información del mundo está en tripletas, cualquier base de datos se puede consultar igual; cualquier dataset se puede unir con otro; un buscador puede razonar sobre hechos, no solo sobre palabras clave. Sobre RDF se construyeron iniciativas tan ambiciosas como **Wikidata** [32] y **DBpedia** [33], que hoy guardan miles de millones de tripletas extraídas de Wikipedia y otras fuentes.
+La promesa arquitectónica era inmensa. Si toda la información mundial se estructuraba usando estas mismas tripletas, cualquier base de datos podría conectarse con otra sin importar en qué país o empresa se originó. Bajo esta promesa nacieron proyectos titánicos como **Wikidata** `[32]` y **DBpedia** `[33]`, que hoy en día almacenan miles de millones de estas tripletas extraídas de Wikipedia y alimentan las respuestas automáticas de los buscadores.
 
-Y en cierto modo funcionó. Wikidata es la base estructurada más grande del mundo en términos de cobertura. Si quieres saber en qué año murió un compositor, qué club fichó a un jugador, qué presidente firmó una ley, Wikidata muy probablemente lo sepa, y lo entrega como tripletas consultables.
+Sin embargo, aquí es donde la brillantez académica choca de frente con el caos de la realidad industrial. RDF resolvió magníficamente la sintaxis (el "cómo" se estructuran y envían los datos), pero dejó una libertad total respecto a la semántica (el "qué" palabras usar). 
 
-Entonces, ¿dónde está el problema?
+Al no haber un diccionario central que limite las opciones, un programador en una empresa puede registrar la tripleta `(McCartney, compuso, "Yesterday")`, mientras que otro desarrollador en una empresa rival podría registrar `(McCartney, autor_de, "Yesterday")` o `(McCartney, escribió_la_canción, "Yesterday")`. A nivel técnico, las tres tripletas están perfectamente escritas; pero a nivel de integración, son incompatibles. Si un analista intenta escribir código para buscar "todas las canciones de McCartney" en todo internet, su programa tendría que conocer de memoria, y traducir en tiempo real, todas las variaciones posibles de ese verbo que a la gente se le haya ocurrido inventar. 
 
-El problema, como anticipé en el capítulo 1, es que RDF resolvió un problema técnico — la sintaxis del intercambio — pero dejó intacto el problema semántico — qué predicado usar y cómo nombrarlo. RDF te deja escribir `(McCartney, compuso, "Yesterday")`, pero también te deja escribir `(McCartney, autor_de, "Yesterday")`, `(McCartney, compositor, "Yesterday")` y `(McCartney, escribió_la_canción, "Yesterday")`. Cuatro tripletas, mismo hecho, sintaxis idéntica, semántica incompatible.
+Para intentar frenar este descontrol, la comunidad tecnológica desarrolló herramientas adicionales (como el estándar OWL `[22]`) buscando obligar a la gente a usar los mismos predicados. Pero al hacer esto, terminaron cayendo exactamente en la misma trampa de la tercera puerta que veremos a continuación: la necesidad casi imposible de imponer un diccionario único para todos. 
 
-La consecuencia práctica se ve apenas uno intenta una consulta que cruce dos bases. Quiero saber "todas las canciones compuestas por McCartney que han sido versionadas por al menos tres artistas distintos". Si Wikidata usa el predicado `composer` y otra base — supongamos, MusicBrainz — usa el predicado `wrote`, mi consulta tiene que conocer las dos convenciones y traducir entre ellas. Si entra una tercera base que usa `creator`, hay que extender el puente. Cada base nueva añade trabajo proporcional, no logarítmico.
-
-La respuesta histórica de la comunidad de la web semántica fue construir **ontologías encima de RDF**: vocabularios formales (en OWL [22]) que definen qué predicados existen y cómo se relacionan unos con otros. Pero ahí la web semántica termina haciéndose la pregunta que evitaba: ¿cuál es la ontología buena, la que todos deberían usar? Y se vuelve, sin proponérselo, a la tercera puerta — la de las ontologías de dominio — con un costo de indirección adicional.
-
-La intuición de RDF era correcta: separar la información en unidades atómicas estructuradas. Lo que le faltó fue **constreñir el inventario** de relaciones. Sin ese constreñimiento, la diversidad de vocabularios no desaparece: solo cambia de capa.
+La intuición de separar la información en unidades mínimas de tres partes fue un acierto técnico indiscutible, pero al carecer de restricciones sobre qué palabras usar, la diversidad de lenguajes simplemente se escondió en otra capa del sistema.
 
 ## La tercera puerta: las ontologías de dominio
 
-La tercera tradición tomó el problema por su lado más laborioso. Si la cuestión es que cada dominio inventa su vocabulario, entonces — pensaron — sentemos a los expertos de cada dominio y que definan ese vocabulario *bien hecho*, exhaustivo, formalizado, validado. Una vez existe la ontología, los sistemas del dominio la adoptan y se entienden entre sí.
+Ante el caos de la libertad total, el tercer enfoque optó por el extremo opuesto: la especialización exhaustiva y el control estricto. La premisa fue la siguiente: *si el problema es que cada quien inventa sus propios términos, reunamos a los mejores expertos de cada industria, encerrémoslos en una sala, y que no salgan hasta diseñar un vocabulario oficial, riguroso y formalizado para su sector*. Una vez publicado ese diccionario oficial, todas las empresas de esa industria estarían obligadas a usarlo.
 
-Hay ontologías de dominio gloriosas. **CIDOC CRM** [4], para patrimonio cultural, lleva tres décadas en construcción y modela con precisión museos, colecciones, procedencias, restauraciones, exhibiciones. **Biolink Model** [5], para biomedicina, unifica decenas de bases de datos sobre genes, enfermedades, fármacos y procesos biológicos. **HL7 FHIR** [6] hace lo propio para historia clínica electrónica. Y, en un registro más popular y comercial, **Schema.org** [30] — la iniciativa conjunta de Google, Microsoft, Yandex y Yahoo — define schemas estandarizados para que las páginas web puedan marcar su contenido de modo que los buscadores lo entiendan.
+Así nacieron las llamadas "ontologías de dominio", y muchas de ellas son obras de arte de la ingeniería. **CIDOC CRM** `[4]` lleva décadas modelando hasta el último detalle de cómo los museos deben clasificar el patrimonio histórico. El **Biolink Model** `[5]` integra complejas bases de datos de biomedicina y genética. **HL7 FHIR** `[6]` es la ley mundial indiscutible para mover historias clínicas electrónicas entre hospitales. Y, a un nivel más comercial y masivo, existe **Schema.org** `[30]`, un monumental acuerdo entre Google, Microsoft y Yahoo para estandarizar cómo las páginas web deben describir su contenido.
 
-Schema.org es un buen banco de pruebas para entender la lógica de las ontologías de dominio. Tiene una entrada `Recipe` que define exactamente qué hace falta para que un buscador entienda una receta como receta: campos como `name`, `recipeIngredient` (con cantidades y unidades), `recipeInstructions` (lista ordenada de pasos), `cookTime`, `prepTime`, `recipeYield`, `nutrition`. Si tu blog de cocina marca sus recetas con `Recipe`, aparecen mejor en Google y se pueden indexar en aplicaciones de cocina.
+Tomemos Schema.org como caso de estudio para ver sus virtudes y sus límites. Dentro de su enorme diccionario, tienen una categoría oficial llamada `Recipe` (Receta). Esta entidad define con precisión quirúrgica qué información necesita un buscador como Google para entender una preparación culinaria. Te ofrece casilleros exactos para los ingredientes (`recipeIngredient`), para la lista ordenada de pasos a seguir (`recipeInstructions`), e incluso para los tiempos de cocción (`cookTime`). Si tú gestionas un portal gastronómico, implementar `Recipe` en tu código soluciona tu vida; Google te entenderá a la perfección.
 
-Hasta aquí, perfecto. Si lo único que haces son recetas, `Recipe` resuelve tu vida.
+El problema asoma la cabeza apenas intentas modelar un escenario que se salga un milímetro de ese molde estricto. Supongamos que publicas un libro digital interactivo de historia gastronómica. Quieres que cada receta esté ligada al contexto político de su país de origen en esa época, y a la biografía detallada del chef que la creó. 
 
-El problema es lo que pasa cuando intentas algo apenas más amplio. Imagina un libro de cocina con historia: cada receta lleva una nota cultural sobre su origen, los personajes que la popularizaron, los conflictos políticos que cambiaron sus ingredientes. La parte "receta" cabe en `Recipe`. La parte "historia" requiere otros schemas — `Event` para los hitos, `Person` para los cocineros, `Place` para las regiones — y, sobre todo, requiere **un mecanismo para conectarlos** que `Recipe` no provee, porque no era su problema. La integración se hace, pero a mano.
+Los datos de la comida encajan perfecto en `Recipe`. Pero la biografía del chef requiere usar otra entidad oficial llamada `Person` (Persona); el contexto histórico requiere la entidad `Event` (Evento); y la geografía requiere `Place` (Lugar). Y aquí viene el golpe crítico: Schema.org no provee un mecanismo claro y estandarizado para vincular profundamente estas distintas ramas entre sí. Como las entidades fueron creadas como bloques aislados, la tarea de integrarlas recae, una vez más, en el esfuerzo manual del programador, que tiene que atar los cables con código personalizado.
 
-Y si cambias de dominio, vuelves a empezar. `Recipe` no te dice nada sobre cómo modelar un partido de fútbol. Para eso podrías usar `SportsEvent` (que existe en Schema.org), pero `SportsEvent` no te dice cómo modelar el gol en sí — quién pasó, con qué pierna, en qué minuto. Hay que escribir extensiones.
+Y si intentamos saltar a una disciplina científica, la fragmentación es absoluta. Para hablar de fórmulas químicas no basta con Schema.org; existen diccionarios ultraespecíficos como CHEBI o ChEMBL. Si un proyecto de investigación requiere cruzar la composición química de un nuevo fármaco (ontología química) con el historial de un paciente bajo el estándar hospitalario FHIR (ontología médica), hay que invertir meses y muchísimo presupuesto en construir, desde cero, un puente informático entre ambos mundos.
 
-Y si bajas a química, las ontologías cambian por completo: Schema.org no tiene `ChemicalReaction`; hay que recurrir a CHEBI, ChEMBL, ChemAxiom, todas ontologías específicas con su propio vocabulario, su propia infraestructura, su propia comunidad. Si una farmacéutica quiere cruzar datos químicos con datos clínicos, debe construir puentes entre la ontología química y FHIR. Si un museo de gastronomía quiere unir información de Schema.org/Recipe con CIDOC CRM (porque las recetas son patrimonio inmaterial), hay que construir otro puente.
-
-La intuición de las ontologías de dominio es correcta: hay que definir el vocabulario explícitamente, no dejarlo librado a la improvisación. Lo que les faltó fue **un piso compartido por debajo** que evitara que cada dominio reinventara los conceptos universales — agente, objeto, lugar, tiempo, evento — desde cero. Cada ontología modela "una persona" a su modo: en CIDOC CRM es `E21_Person`, en Biolink es `biolink:Agent`, en Schema.org es `Person`, en FHIR es `Patient`. Cuatro entidades, mismo concepto, cero compatibilidad automática.
+Las ontologías de dominio acertaron plenamente al exigir definiciones precisas para cada industria. Su debilidad estructural —y la razón por la que no unificaron los datos mundiales— es que **se construyeron sin un piso compartido**. Al desarrollarse de forma aislada, cada grupo de expertos tuvo que modelar desde cero conceptos que son universales. Por eso, para definir algo tan básico como a "una persona", los museos usan la etiqueta `E21_Person`, la genética usa `biolink:Agent`, la web comercial usa `Person` y las clínicas usan `Patient`. En la vida real, todos hablan de un ser humano físico; pero tecnológicamente, han creado cuatro entidades incompatibles que las computadoras no saben mezclar.
 
 ![Las tres puertas previas comparadas en qué resuelve cada una y qué deja sin resolver. Ninguna terminó de cerrar el problema porque cada una atacó un síntoma distinto y dejó el otro intacto.](../diagrams/png/06_tres_puertas.png)
 
-## Cuatro dominios, tres puertas
+## Cuatro dominios, tres puertas: El balance
 
-Para hacer el balance concreto, miremos los cuatro dominios que prometí en la apertura y veamos cómo le va a cada puerta con cada uno.
+Para aterrizar todo este análisis, veamos en una tabla cómo se comportan estas tres grandes metodologías cuando las obligamos a procesar nuestros cuatro ejemplos iniciales.
 
-| | 5W1H | RDF / Web Semántica | Ontología de dominio |
-|---|---|---|---|
-| **Receta** | Pobre: no captura cantidades, pasos ordenados, sustituciones. | Posible si hay ontología asociada; sintaxis no aporta. | Schema.org/Recipe lo modela bien, pero no se cruza con otros dominios. |
-| **Gol de fútbol** | Bueno como descripción narrativa; pobre para estadísticas. | Posible vía Wikidata, pero predicados varían entre bases. | SportsEvent existe, pero el detalle del gol requiere extensión propia. |
-| **Canción** | Bueno para "noticia sobre una canción"; pobre para la canción misma. | Wikidata cubre composiciones, MusicBrainz también; vocabularios distintos. | MusicBrainz tiene su propio modelo; Schema.org/MusicComposition es más débil. |
-| **Noticia política** | Excelente: el 5W1H nació exactamente para esto. | Trabajable, pero los predicados de "anunciar", "firmar", "votar" no están estandarizados. | Schema.org/NewsArticle cubre el envoltorio; no el contenido. |
+|                         | 1. El modelo 5W1H (El enfoque heurístico)                                                  | 2. RDF / Web Semántica (El enfoque de libre conexión)                                                             | 3. Ontología de Dominio (El diccionario estricto)                                                                 |
+| ----------------------- | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| **La Receta**           | Insuficiente: no entiende medidas exactas, listas ordenadas de pasos ni tiempos de horno.  | Factible, siempre que los programadores no usen verbos distintos para describir "mezclar" o "hervir".             | Schema.org/Recipe la modela a la perfección, pero dificulta cruzarla con datos históricos o geográficos.          |
+| **El Gol de fútbol**    | Muy útil para leer la noticia deportiva, pero inútil para armar estadísticas del partido.  | Posible vía Wikidata, aunque los términos para describir una jugada varían drásticamente entre bases.             | Existe la etiqueta `SportsEvent`, pero no llega al detalle técnico de con qué pierna se ejecutó el remate.        |
+| **La Canción**          | Sirve para procesar una noticia *sobre* la canción, no para modelar la obra musical en sí. | Bases gigantes como MusicBrainz lo soportan bien, pero sus vocabularios chocan de frente con otras fuentes.       | Existen modelos robustos en la industria musical, pero operan como burbujas cerradas difíciles de integrar.       |
+| **La Noticia política** | Excelente. Es el dominio exacto para el que este modelo fue concebido.                     | Funcional, pero la falta de acuerdo sobre cómo nombrar verbos como "promulgar" o "debatir" arruina las búsquedas. | Schema.org/NewsArticle estructura perfectamente el "contenedor" de la noticia, pero no entiende qué dice adentro. |
 
-Lee la tabla con cuidado. Ningún enfoque es uniformemente mejor que los otros. Cada uno brilla en una columna y se apaga en otra. Y, lo más significativo: para cruzar columnas — para preguntar, por ejemplo, "qué canciones fueron noticias políticas porque las cantó alguien en un acto de campaña" — los tres fallan parejo. Necesitan puentes ad-hoc.
+Si analizamos la tabla, la conclusión es dura: ningún enfoque ofrece una solución transversal perfecta. Cada tecnología brilla en su especialidad, pero se rompe cuando le pedimos versatilidad. Y lo que es más crítico para la era del Big Data: si intentamos generar una consulta compleja que mezcle dos columnas (por ejemplo, buscar *"qué canciones de protesta han sido objeto de debate en noticias políticas recientes"*), las tres opciones colapsan y exigen que un ingeniero construya la integración a mano.
 
-## Lo que faltó: un piso, no un techo
+## Lo que nos faltó: construir un piso, no un techo
 
-Si uno se aleja un paso y mira los tres intentos juntos, aparece un patrón.
+Si nos alejamos un paso y observamos el panorama histórico de estos tres grandes intentos, el patrón de sus fallas se vuelve bastante evidente:
 
-- El **5W1H** identificó las dimensiones correctas pero no construyó un vocabulario sobre ellas.
-- **RDF** construyó un protocolo sintáctico potente pero no impuso un vocabulario.
-- Las **ontologías de dominio** construyeron vocabularios excelentes para cada dominio pero no compartieron un piso común.
+   El **5W1H** identificó correctamente las dimensiones naturales de la realidad, pero olvidó construir una arquitectura de software formal para procesarlas.
+   El **RDF (Web Semántica)** desarrolló una forma brillante y matemática de conectar datos, pero pecó de exceso de libertad al no imponer un vocabulario mínimo como base.
+   Las **Ontologías de Dominio** crearon vocabularios de altísima calidad técnica, pero cometieron el error de aislarse, olvidando apoyarse en una capa fundamental que fuera común a todas las industrias.
 
-Lo que falta, entonces, no es otra ontología — ya hay miles — ni otro formato — RDF y JSON-LD cubren lo sintáctico —, sino algo más radical: **un piso compartido por debajo de todas las ontologías**, suficientemente delgado para no ser invasivo pero suficientemente explícito para que el cruce entre dominios sea automático en vez de manual.
+Lo que hace falta hoy en la ingeniería de datos, entonces, no es publicar otro diccionario técnico adicional —ya existen miles que nadie usa—, ni tampoco inventar un nuevo formato de conexión de cables. Lo que verdaderamente necesitamos es **un piso compartido que se sitúe por debajo de todos esos vocabularios**. Necesitamos un estándar fundacional que sea lo suficientemente sutil para no interferir con la terminología avanzada que usan los médicos o los arquitectos, pero que sea lo suficientemente firme como para que la información fluya entre ellos sin necesidad de traductores informáticos.
 
-Ese piso es lo que el 5W1H rozó como intuición. Las preguntas-W son universales — el capítulo anterior se dedicó a sustentar esa afirmación —, así que si las usamos como **ejes o coordenadas de un esquema fijo**, obtenemos justo lo que falta: un piso que cualquier dominio puede adoptar sin renunciar a su vocabulario interno. Lo único que el dominio promete, al adoptar el piso, es que cada uno de sus conceptos se compromete a aparecer en uno (y solo uno) de los ejes-pregunta.
+Ese piso es justamente lo que el modelo periodístico de las 5W1H rozó a nivel intuitivo. Como demostramos en el capítulo anterior, las preguntas cognitivas (quién, qué, dónde, cuándo) son el sistema operativo universal con el que la mente humana procesa la realidad. Si tomamos esas preguntas, las matematizamos y las convertimos en **los ejes estructurales fijos de un sistema de datos**, obtenemos precisamente esa base común.
 
-Si una receta tiene un cocinero, ese cocinero va al eje *quién*. Si un gol tiene un minuto, ese minuto va al eje *cuándo*. Si una canción tiene un tono, ese tono va al eje *cómo* (o, según el caso, al eje *cuál*, como veremos). Si una noticia política tiene un ministerio, ese ministerio va al eje *quién* o al eje *dónde* — y la decisión, lejos de ser ambigua, va a ser explícita y consistente, una vez fijada.
+La mecánica es directa y transparente: si una receta tiene un chef, ese individuo se registra en la coordenada del **quién**. Si el gol de Messi ocurre en el minuto 87, ese instante de tiempo va al eje del **cuándo**. Si una canción se ejecuta en una tonalidad particular, ese atributo se clasifica en el **cómo**. Y si un anuncio político se realiza dentro de las instalaciones de un ministerio, ese edificio se mapea en la caja del **dónde**. 
 
-El compromiso es modesto: aceptar el inventario de ejes. La ganancia es enorme: cualquier dato de cualquier dominio es consultable con un solo lenguaje, porque todos los dominios viven sobre el mismo piso.
+Al adoptar este enfoque, el esfuerzo que se le exige a cualquier empresa o industria es mínimo: solo deben comprometerse a acomodar sus términos técnicos dentro de estas coordenadas preestablecidas. A cambio de aceptar ese orden, el beneficio a nivel de sistema es gigantesco: la información de cualquier dominio del planeta pasa a ser auditable y consultable mediante un único lenguaje estructural, unificando la torre de Babel desde los cimientos.
 
 ## Lo que viene
 
-La Parte I termina aquí. Hemos visto **por qué** las preguntas: porque la torre de Babel es real y costosa (capítulo 1), porque las preguntas-W son invariantes cognitivos universales (capítulo 2), y porque las tentativas previas se quedaron cerca pero no cerraron (capítulo 3).
+Con este análisis histórico concluimos la Parte I del libro. Hasta ahora hemos repasado el **por qué** estamos inmersos en este problema: analizamos el altísimo costo corporativo que genera la fragmentación de datos (capítulo 1), descubrimos que las preguntas básicas son el modelo natural de procesamiento del cerebro humano (capítulo 2), y revisamos por qué los grandes esfuerzos tecnológicos previos se acercaron a la solución, pero no lograron cerrarla del todo (capítulo 3).
 
-A partir del próximo capítulo construimos. Una a una, las ocho coordenadas: **quién, qué, dónde, cuándo, cuánto, cuál, cómo y clase**. Cada una con sus particularidades, sus trampas, sus convenciones. Cada una probada contra los mismos cuatro dominios — receta, gol, canción, noticia política — más todos los que necesitemos para forzar al modelo a romperse y ver dónde no se rompe.
+A partir de este punto, abandonamos el terreno del análisis histórico y pasamos a la ingeniería pura y dura. En los próximos capítulos, vamos a diseccionar una por una nuestras ocho coordenadas operativas: **quién, qué, dónde, cuándo, cuánto, cuál, cómo y clase**. Revisaremos las particularidades de cada eje, revelaremos las trampas lógicas más comunes en su diseño informático y las someteremos a una prueba de fuego contra nuestros cuatro escenarios (la receta, el gol, la canción y la noticia) para garantizar que la arquitectura no se rompa.
 
-El primer eje es el más obvio y, paradójicamente, el más sutil: **¿quién?**.
+Empezaremos por analizar el primer eje de todos. Uno que a simple vista parece el más trivial, pero que, cuando se lleva a código, esconde la mayor cantidad de sutilezas de todo el modelo: la pregunta **¿quién?**.

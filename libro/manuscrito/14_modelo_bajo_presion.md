@@ -1,30 +1,32 @@
 # Capítulo 14 — Cuando el lenguaje aprieta: nominalizaciones, modales e idiomas
 
-## Tres oraciones que romperían un parser ingenuo
+## Tres frases que harían explotar a un robot
 
-Tomemos tres oraciones, todas perfectamente naturales en español, que un sistema construido siguiendo solo el procedimiento del capítulo 12 procesaría mal:
+Tomemos tres oraciones que cualquier hispanohablante entiende sin esfuerzo, pero que harían cortocircuito en un sistema diseñado únicamente con las reglas mecánicas que vimos en el capítulo 12:
 
+* La llegada tardía del avión causó la cancelación de la conexión.
+* El cliente quería contratar el plan mensual pero no podía pagarlo todavía.
+* La doctora le tomó el pelo al residente nuevo durante la guardia.
+
+Si un robot ingenuo intentara procesar esto buscando "verbos de acción", el desastre sería total. 
+En la primera frase, el robot buscaría un verbo de acción y se encontraría con "causó", pero la verdadera carne de la frase (la llegada y la cancelación) están escondidas bajo disfraces de sustantivos. 
+En la segunda frase, el sistema crearía un evento oficial llamado "querer" y otro evento llamado "poder", que son cosas que no existen en el mundo físico, separándolos del evento real que es "contratar". 
+En la tercera frase, el robot crearía un evento de "tomar" donde el objeto físico arrebatado es "el pelo" de un médico. Ridículo. Todos sabemos que *tomar el pelo* significa **bromear o engañar amistosamente**, y no tiene nada que ver con robar cabello.
+
+Estos tres escenarios —las **nominalizaciones** (verbos disfrazados de sustantivos), los **modales** (verbos de intención) y los **idiomas** (frases hechas)— son las pruebas de fuego para cualquier arquitectura de datos. En este capítulo no venimos a presumir de que nuestro modelo tiene una varita mágica para resolverlos; venimos a mostrarte con qué reglas exactas los absorbemos y en qué rincones oscuros todavía nos cuesta trabajo.
+
+## Nominalización: El verbo disfrazado de sustantivo
+
+El español tiene una habilidad fascinante para convertir acciones en cosas. El verbo *llegar* se vuelve *la llegada*; *vender* se vuelve *la venta*; *consultar* se vuelve *la consulta*. A esta mutación gramatical se le llama **nominalización**. 
+
+Para la mente humana, decir *"el avión llegó"* o *"la llegada del avión"* es exactamente lo mismo. Y para nuestra base de datos, también debe serlo.
+
+La regla de arquitectura aquí es vital: **una nominalización no es un evento nuevo; es exactamente la misma situación reificada, pero con otro empaque gramatical**. La frase *"la llegada"* no necesita que inventemos un eje nuevo, solo necesita que el Lexicon sea lo suficientemente inteligente para saber que "llegada" es un alias que dispara el mismo evento que "llegar".
+
+Desarmemos la primera oración problemática:
 > *La llegada tardía del avión causó la cancelación de la conexión.*
->
-> *El cliente quería contratar el plan mensual pero no podía pagarlo todavía.*
->
-> *La doctora le tomó el pelo al residente nuevo durante la guardia.*
 
-Aplicado mecánicamente, el procedimiento del capítulo 12 buscaría verbos principales y los reificaría como situaciones. En la primera oración no hay verbo principal de acción — *causó* es el verbo gramatical, pero las dos cosas interesantes (la llegada, la cancelación) están escondidas como sustantivos. En la segunda, *quería* parece ser el verbo principal y *contratar* un infinitivo subordinado — pero el sistema acabaría creando una situación de "querer" que no existe en el mundo, distinta de la de "contratar" que sí está pasando. En la tercera, una traducción literal generaría una situación de "tomar" con tema "pelo", aplicada a un residente — ridícula. *Tomar el pelo* es una expresión idiomática que significa **bromear o engañar con buena intención**, y no tiene nada que ver con cabello ni con apropiación.
-
-Estos tres casos — **nominalizaciones**, **modales** y **idiomas** — son los lugares donde el lenguaje natural ejerce más presión sobre cualquier modelo de representación semántica. Vale la pena verlos uno por uno, no para presumir de que el modelo los resuelve mágicamente, sino para mostrar exactamente con qué convenciones los absorbe y dónde quedan zonas grises.
-
-## Nominalización: cuando el verbo se vuelve sustantivo
-
-El español tiene una facilidad extraordinaria para convertir verbos en sustantivos: *llegar* → *la llegada*; *contratar* → *la contratación*; *vender* → *la venta*; *renunciar* → *la renuncia*; *consultar* → *la consulta*. Esta operación gramatical, llamada **nominalización**, no es decorativa. Cuando un hablante dice *"la llegada del avión"*, está hablando exactamente del mismo evento que cuando dice *"el avión llegó"*. La diferencia es solo sintáctica.
-
-Para el modelo, esto significa una cosa importante: **una nominalización es una situación reificada bajo otro empaque gramatical**. La frase *"la llegada del avión"* no necesita un mecanismo nuevo: necesita ser reconocida por el lexicon como un disparador del mismo tipo de situación que el verbo *llegar*. La signatura es la misma, los roles son los mismos, lo único que cambia es qué constituyente de la oración lleva al verbo y cuál al sustantivo.
-
-Tomemos la primera oración y desarmémosla:
-
-> *La llegada tardía del avión causó la cancelación de la conexión.*
-
-```
+```text
 (llegada_017, instancia_de,    accion_llegar)
 (llegada_017, agente,          avion_LP2226)
 (llegada_017, estatus_factual, real)
@@ -35,141 +37,105 @@ Tomemos la primera oración y desarmémosla:
 (cancelacion_004, tema,         conexion_lima_arica)
 (cancelacion_004, estatus_factual, real)
 
-(cancelacion_004, causado_por,  llegada_017)    ∈ M(O, O)
+(cancelacion_004, causado_por,  llegada_017)    ← El conector clave (Eje M)
 ```
 
-Una oración con dos sustantivos derivados produce dos situaciones reificadas conectadas por `causado_por` (la relación canónica del capítulo 11). El verbo *causar* de la oración superficial no se reifica como una tercera situación; se traduce a la relación misma, que es lo que el predicado verbal estaba pidiendo. El modelo termina con una representación que es estructuralmente idéntica a la que produciría una versión "verbal" equivalente: *"El avión llegó tarde, lo que canceló la conexión."*
+Fíjate en lo que acabamos de lograr. Dos sustantivos ("llegada" y "cancelación") produjeron dos situaciones oficiales en la caja `O`. Y el verbo "causó", que un robot ingenuo habría convertido en un evento tonto, nosotros lo convertimos en el cable `causado_por` que vimos en el capítulo 11. El resultado es un código limpio y perfecto.
 
 ![Una nominalización y su forma verbal equivalente producen exactamente la misma situación reificada en el modelo. El lexicon hace que ambos disparadores —el verbo "llegar" y el sustantivo "llegada"— activen la misma entrada.](../diagrams/png/25_nominalizacion.png)
 
-La convención que esto requiere en el lexicon es explícita: cada entrada verbal debe **declarar también sus formas nominales aceptables**. Una entrada parcial de *llegar* en el lexicon, con esta convención, se ve así:
+¿Cómo logramos que el sistema haga esto solo? Le decimos al Lexicon que acepte formas nominales:
 
 ```yaml
 verbo: llegar
-  formas_nominales: ["llegada", "arribo"]
+  formas_nominales: ["llegada", "arribo"]  ← El truco está aquí
   tipo_situacion: accion_llegar
   obligatorios:   [agente]
-  opcionales:     [destino, origen, momento, lugar_de, modo]
 ```
 
-Cuando el parser encuentra *la llegada del avión*, busca por superficie nominal y encuentra la entrada de *llegar*. El rol que ocupaba el sujeto en la forma verbal (*el avión*) ahora aparece como complemento del nombre (*del avión*), pero el rol semántico — `agente` — es el mismo. El motor no necesita saber gramática; necesita un lexicon que mapee ambas formas.
+La ganancia comercial de esto es inmensa: a la base de datos le da exactamente igual si un médico escribe *"Diagnostiqué al paciente con asma"* o *"El diagnóstico de asma del paciente"*. La maquinaria extrae los datos y genera los mismos cables, ignorando la poesía del redactor.
 
-La consecuencia práctica es agradable: el modelo se vuelve **invariante a la transformación nominalización-verbalización**, una propiedad valiosa cuando los textos reales mezclan ambas formas libremente. *"El paciente fue diagnosticado con hipertensión por la doctora Torres"* y *"El diagnóstico de hipertensión fue emitido por la doctora Torres"* y *"La doctora Torres diagnosticó al paciente con hipertensión"* producen exactamente los mismos hechos atómicos. La maquinaria captura el contenido, no la superficie.
+## Modales: Decorando eventos que no han ocurrido
 
-## Modales: lo que se quiere, se debe o se puede
+Los verbos modales (*querer, deber, poder, soler, parecer*) son una trampa mortal para las bases de datos. Parecen verbos principales, pero en realidad son **modificadores** de un segundo verbo. 
 
-Los **verbos modales** — *querer*, *deber*, *poder*, *soler*, *parecer*, *tener que*, *haber de* — son una clase aparte. Sintácticamente parecen verbos principales que toman infinitivos como complemento. Semánticamente, son **modificadores** de la situación expresada por ese infinitivo. *Quiero viajar* no afirma que existan dos situaciones — una de "querer" y otra de "viajar" — sino una sola situación de viajar, marcada con un atributo que dice "está en estado volitivo del agente, no ocurrió todavía".
+Si un cliente dice *"Quiero viajar"*, no está realizando un evento de "querer" por un lado y un evento de "viajar" por otro. Lo que hay es **una sola situación (viajar)** que tiene pegada una etiqueta de intención, avisando que todavía no ocurre.
 
-El modelo trata esto con una convención de un solo hecho: la **modalidad** como propiedad de la situación principal.
+Si convirtiéramos cada "querer" y "poder" en un evento oficial en la base de datos, multiplicaríamos el tamaño de los discos duros por cuatro, llenando el sistema de basura abstracta. Para evitarlo, nuestro modelo trata a los modales simplemente como **decoraciones** (propiedades) sobre el evento principal.
 
-```
-"El cliente quería contratar el plan mensual."
-
-(contratar_017, instancia_de,    accion_contratar)
-(contratar_017, agente,          cliente_003)
-(contratar_017, tema,            plan_mensual_oasis)
-(contratar_017, modalidad,       volitiva)        ∈ P(O, K)
-(contratar_017, estatus_factual, intencionado)    ∈ P(O, K)
-```
-
-Una sola situación reificada: la del contratar. Dos hechos atómicos extras — `modalidad: volitiva` y `estatus_factual: intencionado` — que dicen "el cliente quiere esto, no lo hizo todavía". No hay una situación-de-querer aparte; no hay un verbo *querer* reificado. El querer es un modificador del contratar.
-
-Las cuatro modalidades del español que el modelo reconoce explícitamente son:
-
-- **Volitiva** — *querer*, *desear*, *planear*, *tener ganas de*. Lo expresado depende de un deseo o intención del agente.
-- **Deóntica** — *deber*, *tener que*, *haber de*, *estar obligado a*. Lo expresado es una obligación normativa.
-- **Alética** — *poder* (en sentido de capacidad). El agente es capaz de ejecutarlo, lo haga o no.
-- **Epistémica** — *poder* (en sentido de probabilidad), *parecer*, *probablemente*. Lo expresado es una afirmación sobre la probabilidad o el conocimiento, no sobre el mundo.
-
-Tomemos la segunda oración de la apertura entera y desarmémosla con esta convención:
-
+Observemos cómo se desarma la segunda oración:
 > *El cliente quería contratar el plan mensual pero no podía pagarlo todavía.*
 
-```
+```text
 (contratar_017, instancia_de,    accion_contratar)
 (contratar_017, agente,          cliente_003)
 (contratar_017, tema,            plan_mensual_oasis)
-(contratar_017, modalidad,       volitiva)
-(contratar_017, estatus_factual, intencionado)
+(contratar_017, modalidad,       volitiva)          ← Es un deseo
+(contratar_017, estatus_factual, intencionado)      ← Aún no pasa
 
 (pagar_017, instancia_de,    accion_pagar)
 (pagar_017, agente,          cliente_003)
 (pagar_017, tema,            plan_mensual_oasis)
-(pagar_017, modalidad,       alética)
-(pagar_017, polaridad,       negativa)            ∈ P(O, K)
+(pagar_017, modalidad,       alética)               ← Se trata de una capacidad
+(pagar_017, polaridad,       negativa)              ← No tiene la capacidad
 (pagar_017, estatus_factual, no_realizable)
-(pagar_017, momento,         hoy)
+
+(pagar_017, contrasta_con, contratar_017)           ← Conector para el "pero"
 ```
 
-Dos situaciones, no cuatro. Ninguna situación de querer; ninguna situación de poder. El "querer" y el "no poder" son hechos sobre las situaciones-objeto. La conjunción adversativa *pero* se traduce como una relación canónica adicional entre ambas:
-
-```
-(pagar_017, contrasta_con, contratar_017)    ∈ M(O, O)
-```
+Generamos dos situaciones (`contratar` y `pagar`), no cuatro. El "querer" se guardó como `modalidad: volitiva`, y el "no poder" como `polaridad: negativa`. Ahorramos espacio, evitamos crear nodos fantasma y mantuvimos la regla de oro: **una situación en el mundo real equivale a una situación en el sistema**.
 
 ![Los modales no crean nuevas situaciones: decoran una situación existente con propiedades de modalidad. "Quiere viajar" y "viaja" describen la misma situación con distinto modo factual.](../diagrams/png/26_modales_decoradores.png)
 
-La economía es importante. Si cada modal reificara una situación nueva, las oraciones modales triplicarían o cuadruplicarían los hechos en la base; los grafos se llenarían de nodos huecos. Tratar los modales como propiedades preserva el principio fundamental del modelo: **una situación del mundo, una situación en el grafo**. Las actitudes proposicionales del agente no son situaciones del mundo; son cualidades del registro.
+*(Nota técnica: Si alguien dice "Pedro quiere a María", ahí el verbo querer significa "amar", no es un modal. El Lexicon es lo suficientemente listo para distinguir que "querer + verbo" es un modal, y "querer + persona" es un evento emocional).*
 
-Hay un caso límite que vale la pena mencionar. Cuando *querer* aparece como verbo pleno — *"Pedro quiere a María"* — significa **amar**, no es modal, y sí reifica una situación propia (`experiencia_amor`). El lexicon lo distingue por patrón sintáctico: *querer + infinitivo* es modal; *querer + a + persona* es la entrada de amar. La misma lógica de polisemia que vimos en el capítulo 13.
+## Expresiones Idiomáticas: Cuando las palabras mienten
 
-## Idiomas y colocaciones: las unidades léxicas no son palabras
+Llegamos a la tercera oración y al problema más espinoso. Frases como *tomar el pelo* (bromear), *dar a luz* (parir), o *ponerse las pilas* (esforzarse) no pueden separarse palabra por palabra. El lenguaje humano está plagado de estas trampas.
 
-El tercer caso es el más espinoso y el que más reveladoramente expone los límites de cualquier procedimiento mecánico. *Tomar el pelo* no significa nada parecido a la suma de *tomar* y *pelo*. *Echar de menos* no es echar nada ni medir. *Dar a luz* no es dar luminosidad. *Ponerse las pilas* no involucra baterías. *Hablar por los codos* no es hablar a través de las articulaciones. Estas combinaciones — llamadas **expresiones idiomáticas** o **colocaciones fijas** — son frecuentes en cualquier lengua natural y no admiten descomposición palabra por palabra.
-
-La regla operativa del lexicon ya quedó establecida en el capítulo 13: **la unidad léxica no es necesariamente una palabra**. El lexicon mapea **patrones** — combinaciones específicas de verbo y complemento — a tipos de situación, no verbos sueltos. Las entradas idiomáticas se registran como cualquier otra entrada:
+La solución arquitectónica ya la planteamos en el Capítulo 13: **en nuestro Lexicon, la unidad de traducción no es la palabra suelta, es el patrón completo**. Las frases hechas se registran en el diccionario como reglas fijas que apuntan a sus verdaderos significados:
 
 ```yaml
 tomar [el_pelo a Q]
   tipo_situacion: accion_bromear
   obligatorios:   [agente, paciente]
-  opcionales:     [momento, lugar_de, sobre_que]
   ejemplo:        "la doctora le tomó el pelo al residente"
-  notas:          colocación idiomática; no relacionado con cabello
-
-echar [de_menos a Q]
-  tipo_situacion: experiencia_extrañar
-  obligatorios:   [experimentador, tema]
-  opcionales:     [intensidad, desde]
-  ejemplo:        "Juan echaba de menos a su perro"
-  notas:          locución verbal; experimentador es el sujeto
+  notas:          Frase idiomática; ignorar relación con el cabello humano.
 
 dar [a_luz a Q]
   tipo_situacion: accion_parir
   obligatorios:   [agente, paciente]
-  opcionales:     [momento, lugar_de, instrumento]
   ejemplo:        "dio a luz a una niña sana"
-  notas:          eufemismo para parir
 ```
 
-El parser intenta hacer *match* con los patrones más específicos primero. Para *"la doctora le tomó el pelo al residente"*, el patrón `tomar [el_pelo a Q]` coincide y se activa la entrada de bromear. Para *"el camarero tomó la orden"*, el patrón específico no aplica y el parser cae al *tomar* genérico (tomar = recibir/registrar).
+El sistema lee de lo más específico a lo más general. Si ve *"tomar el pelo"*, ejecuta la regla de bromear. Si ve *"tomar la orden"*, ejecuta la regla general de recibir. 
 
-Hasta acá, igual que la polisemia. Lo nuevo es la **escala**: el español tiene del orden de varios miles de colocaciones fijas y locuciones verbales. Inglés tiene más. Cualquier lengua los tiene. Construir un lexicon que cubra el grueso de las locuciones es trabajo de años de lingüistas y, hoy, un buen candidato para aprenderse parcialmente de modelos de lenguaje: los LLMs ya conocen las locuciones; el problema es codificarlas en un diccionario explícito que el motor pueda consultar.
+El verdadero reto aquí no es técnico, es de escala. El idioma español tiene miles de estas frases. Llenar el Lexicon con todas ellas es un trabajo titánico de años. La buena noticia es que **los modelos de Inteligencia Artificial modernos ya conocen estas frases**. El LLM hace el trabajo pesado de entender la ironía, y nuestro modelo le da la estructura perfecta para guardarla.
 
-Este capítulo no resuelve ese trabajo. Lo importante para el modelo es que la **arquitectura lo admite sin contorsiones**: el lexicon es extensible por diseño, y cada locución que se registra es una entrada como cualquier otra.
+## Honradez intelectual: Donde el modelo todavía sufre
 
-## Donde el modelo todavía sufre
+Sería deshonesto terminar esta sección fingiendo que nuestro modelo resuelve el 100% de los problemas de la lingüística mundial. Hay terrenos pantanosos donde nuestra arquitectura avanza con dificultad o simplemente cruje. Y un buen ingeniero debe conocer los límites de su propio sistema:
 
-Sería deshonesto cerrar la Parte IV pretendiendo que con nominalizaciones, modales e idiomas se cubren todos los casos difíciles del lenguaje natural. Hay zonas donde el modelo apenas alcanza y otras donde derechamente cruje. Las dejo enumeradas, sin remedio, porque la honestidad del libro depende de no esconderlas.
+**1. Negaciones complejas:** Decir *"Juan no cree que María vino"* no es lo mismo que *"Juan cree que María no vino"*. El modelo tiene que hacer acrobacias para saber a qué evento exacto le debe pegar la etiqueta de `polaridad: negativa`. A veces los analizadores automáticos se equivocan.
+**2. Cuantificación abstracta:** Frases como *"La mayoría de los pacientes mejoran"* no apuntan a una persona concreta (un agente en `Q`). Obliga al sistema a crear eventos sobre "clases enteras de personas", lo cual vuelve la matemática mucho más pesada.
+**3. El tono exacto del tiempo:** El español distingue magistralmente entre *empezó a hablar*, *estaba hablando*, *terminó de hablar* y *acababa de hablar*. El modelo captura el núcleo temporal, pero para atrapar esas micro-diferencias se ve obligado a reificar "fases del evento", lo cual infla el sistema.
+**4. Lo que no se dice (Presuposiciones):** Si digo *"Juan dejó de fumar"*, el lenguaje da por hecho que Juan fumaba en el pasado. El modelo guardará el "dejar de fumar" de hoy, pero no es capaz de deducir mágicamente el hábito del pasado y guardarlo. Dependemos de que una IA superior haga esa deducción y nos la envíe.
+**5. Sarcasmo e indirectas:** *"¿Puedes pasarme la sal?"* gramaticalmente es una pregunta sobre la capacidad física de una persona. Pragmáticamente es una orden. El modelo es literal; la comprensión del sarcasmo depende del Lexicon o de la IA conectada a él.
 
-**Negación y alcance.** *"Juan no cree que María vino"* y *"Juan cree que María no vino"* son oraciones distintas — la negación tiene **alcance** diferente sobre lo embebido. El modelo distingue ambas (la primera niega la situación-de-creer, la segunda niega la situación-embebida-de-venir), pero la ambigüedad sintáctica del español puede hacer difícil el parsing automático.
+Estos problemas no son defectos de nuestro software; son los misterios sin resolver de las ciencias cognitivas en las últimas cinco décadas. Lo importante es que cuando el modelo choca con estos muros, **no se rompe ni borra la base de datos**; simplemente guarda una representación parcial y segura, esperando a que un humano o una IA futura lo refine.
 
-**Cuantificación generalizada.** *"La mayoría de los pacientes mejora con el tratamiento"* introduce un cuantificador generalizado que no es un agente identificable. El modelo reifica esto como una afirmación sobre una clase (con propiedades de proporción y muestra), pero la formalización honesta requiere extensiones a la lógica de hechos atómicos que todavía están pendientes.
+## Cierre de la Parte IV: El pacto entre el Grafo y la Inteligencia Artificial
 
-**Aspecto fino.** El español distingue *empezó a hablar*, *estaba hablando*, *terminó de hablar*, *seguía hablando*, *acababa de hablar*. Cada uno marca un momento distinto de un evento. El modelo cubre lo grueso (con `aspecto: perfectivo / imperfectivo / progresivo / completivo`) pero las distinciones finas requieren reificar el evento y sus subfases — trabajo viable pero pesado.
+Quiero cerrar esta parte teórica con una reflexión vital para la era moderna. Hoy en día, herramientas como ChatGPT o Claude pueden procesar libros enteros en segundos. Muchos ingenieros de empresas piensan: *"¿Para qué necesito este complejo modelo de WQuestions? Simplemente tiraré los 50.000 PDFs de mi empresa en la IA y que ella busque las respuestas sola"*.
 
-**Presuposiciones.** *"Juan dejó de fumar"* presupone que Juan fumaba antes; *"María se arrepiente de haber renunciado"* presupone que María renunció. El modelo registra los hechos afirmados, pero las presuposiciones — las cosas que la oración da por sentado sin afirmarlas — no se capturan automáticamente; quedan como trabajo del parser o del LLM que produce la representación.
+Sí, eso funciona. Pero es un desastre financiero y técnico. Primero, porque gastas un dineral en "tokens" (poder de cómputo) haciéndole leer texto basura mil veces. Segundo, porque el texto humano es **terriblemente ambiguo**. Una historia clínica de cinco páginas en texto plano está llena de "él", "ella", "eso", y la IA tiene que adivinar a quién se refiere. 
 
-**Discurso e implicaturas.** *"¿Puedes pasarme la sal?"* no es una pregunta sobre capacidad; es un pedido. La diferencia entre lo dicho y lo significado vive en la pragmática, y el modelo todavía no tiene un mecanismo claro para representarla salvo por convenciones específicas del dominio.
+En cambio, si procesas esa historia clínica usando el Lexicon y la conviertes en **un grafo de hechos atómicos (WQuestions)**, reduces esas cinco páginas a unas cuantas líneas de código matemático y estructurado. 
 
-Estos casos no son tachas del modelo — son áreas activas de investigación lingüística después de décadas de trabajo. Lo que importa es que el modelo **no se rompe**: produce representaciones parciales útiles, y deja explícito qué no representa. El día que la representación sea mejor, los hechos extras simplemente se agregan al grafo; nada de lo ya almacenado se invalida.
+El Grafo y la Inteligencia Artificial no compiten; tienen una relación **simbiótica**:
+*   La IA es la mente brillante y creativa: entiende el sarcasmo, maneja el contexto y habla bonito.
+*   El modelo WQuestions es el disco duro de titanio: no olvida, no confunde a Juan con Pedro, audita reglas y sabe exactamente qué cosas son intenciones y cuáles son hechos reales.
 
-## Cierre de Parte IV: lo estructurado al servicio de lo conversacional
+Cuando pones a la IA como el recepcionista que charla con el usuario y al Grafo como el archivo de acero detrás de él, obtienes el sistema corporativo perfecto.
 
-Una reflexión que conviene dejar dicha al cerrar esta parte. Mientras este libro se escribe, los modelos de lenguaje contemporáneos manejan ventanas de contexto de un millón de tokens y la **ingeniería de prompts** se ha vuelto una disciplina por derecho propio. El instinto natural cuando hay tanto espacio disponible es escribir en lenguaje natural — descripciones largas, historias clínicas redactadas en prosa, contratos completos, registros operativos en bruto — y dejar que el modelo encuentre lo que necesita por sí solo.
-
-Funciona. Pero gasta presupuesto de tokens en forma desmedida y arrastra la **ambigüedad** del lenguaje hasta el final del pipeline. Una historia clínica en prosa puede tomar dos mil tokens; los mismos hechos representados como un grafo de situaciones reificadas en formato WQuestions caben en seiscientos. Y, más importante, el grafo es **inequívoco**: no requiere que el modelo reinterprete, no introduce ambigüedades de coreferencia, no se confunde entre *él* y *el doctor*. El LLM puede dedicar sus capacidades a lo que hace mejor — razonar, conversar, decidir — en lugar de gastar su atención reconstruyendo estructura a partir de texto plano.
-
-La relación entre WQuestions y los modelos de lenguaje, vista así, es **simbiótica**. El LLM aporta lo que el modelo no tiene: capacidad lingüística, manejo de implicaturas, intuición pragmática, generación fluida. WQuestions aporta lo que el LLM no tiene: persistencia inequívoca, consultabilidad estructural, auditoría, identidad estable de entidades, distinción explícita entre lo afirmado y lo modal. Cuando ambos trabajan juntos — el LLM como traductor en la entrada y la salida, el grafo como sustrato persistente — cada uno hace lo suyo y la conversación resultante es a la vez fluida y rigurosa.
-
-Esa simbiosis es la base de los capítulos finales del libro. Pero antes — y aquí termina la teoría — viene la Parte V: ver cómo todo esto se aplica, sin atajos, a dominios concretos de extremo a extremo.
+Y con esto, terminamos la teoría pura. En la **Parte V**, nos mancharemos las manos. Dejaremos la academia atrás y aplicaremos este modelo de extremo a extremo en industrias reales y concretas.

@@ -1,133 +1,143 @@
 # Capítulo 6 — Cuánto: el eje cuantitativo y sus trampas
 
-## Una sonda que se estrelló y un equipo de IA que se desconcertó
+## Una sonda que se estrelló y una IA que se desconcertó
 
-En septiembre de 1999, la sonda *Mars Climate Orbiter* de la NASA se acercó a Marte después de un viaje de nueve meses, ejecutó la maniobra final de inserción orbital y se desintegró en la atmósfera marciana. La pérdida costó 327 millones de dólares. La causa fue, mirándola desde lejos, una de las cosas más estúpidas que pueden pasarle a un proyecto de ingeniería: el software de Lockheed Martin enviaba el empuje de los propulsores en **libras-fuerza por segundo**, y el software de navegación de NASA lo recibía como si fueran **newtons por segundo**. La discrepancia — un factor de 4.45 — se acumuló silenciosamente durante el viaje y, cuando la nave llegó a Marte, ya estaba demasiado baja en su trayectoria. Nadie había hecho mal el número. Cada equipo había escrito perfectamente bien su número. El problema era que el número no llevaba la unidad pegada.
+En septiembre de 1999, la sonda espacial *Mars Climate Orbiter* de la NASA completó un viaje de nueve meses hacia Marte. Se preparó para la maniobra final de inserción orbital, encendió sus motores... y se desintegró por completo en la atmósfera marciana. La pérdida instantánea fue de 327 millones de dólares. 
 
-En agosto de 2024, un equipo de producto en una startup que construía un asistente de IA para análisis de documentos legales tuvo una versión miniaturizada de la misma historia. Habían escogido el modelo más nuevo de un proveedor, contento con su "ventana de contexto de 128.000". El primer usuario subió un contrato de 200 páginas y el sistema empezó a comportarse raro: respuestas truncadas, citas inventadas, alucinaciones obvias. El equipo de ingeniería miró el log y entendió: 128.000 eran **tokens**, no **caracteres**. 200 páginas en español denso son unos 200.000 tokens. El modelo estaba descartando silenciosamente las páginas que excedían el límite, y nadie en el equipo de producto sabía cuántos tokens había en un párrafo.
+Cuando los ingenieros revisaron qué había salido mal, encontraron una de las fallas más absurdas en la historia de la exploración espacial: el software de la empresa constructora enviaba la fuerza de los propulsores medida en **libras-fuerza por segundo**, pero el software de navegación de la NASA recibía esos números creyendo que eran **newtons por segundo**. Esa pequeña discrepancia —un error de factor de 4.45— se fue acumulando en silencio durante meses. Para cuando la nave llegó a Marte, su trayectoria era tan baja que la atmósfera la hizo pedazos. 
 
-Ninguna de las dos historias es sobre números. Las dos son sobre lo mismo: **un número sin su unidad no es información, es ruido decorado de dígitos**.
+Nadie había hecho mal el cálculo matemático. Ningún código estaba roto. El problema fue que el número viajó "desnudo", sin su unidad de medida pegada a él.
 
-Este capítulo se ocupa del eje que aloja los números — el eje **N** — y de la trampa que se les pone enfrente: pretender que un número se baste solo. No se basta. Y modelar bien esa dependencia es lo que hace la diferencia entre un sistema que escala y uno que falla justo cuando importa.
+Saltemos veinticinco años hacia el futuro. En agosto de 2024, un equipo de ingenieros en una startup tecnológica sufrió una versión en miniatura de esta misma historia. Estaban construyendo un asistente de Inteligencia Artificial para analizar documentos legales inmensos. Eligieron el modelo más potente del mercado porque presumía de una capacidad enorme: *"128.000 de ventana de contexto"*. El primer usuario subió un contrato de 200 páginas, pero la IA empezó a comportarse de forma errática: cortaba las respuestas a la mitad, inventaba artículos de ley y alucinaba datos. 
 
-## Por qué N es un eje propio
+Cuando el equipo revisó los registros, entendieron el error: la capacidad de 128.000 era de **tokens** (fragmentos de palabras), no de **caracteres**. Un contrato en español de 200 páginas consume fácilmente 200.000 tokens. La Inteligencia Artificial, sencillamente, estaba borrando todo lo que no cabía en su memoria, y nadie en el equipo sabía hacer la conversión entre páginas, caracteres y tokens.
 
-La pregunta es legítima: ¿hace falta separar los números en un eje propio? ¿No serían cosas, como las botellas y los goles, que viven en O?
+Estas dos historias no tratan realmente sobre matemáticas. Tratan sobre el mismo error de diseño fundamental: **un número sin su unidad de medida no es información; es ruido disfrazado de dígitos**.
 
-La respuesta es no, por una razón que se ve clarísima apenas se intenta lo opuesto. Una botella es un individuo: tiene identidad propia, persiste, puede aparecer en muchos hechos. Un gol es un evento: tiene un momento, un agente, un lugar. Pero el número 87 no es una cosa: es un valor. No "existe" un 87 que esté en algún lado y al que dos hechos podrían referirse simultáneamente; lo que hay son muchos hechos que mencionan el valor 87 — el minuto del gol de Messi, el porcentaje de precisión del clasificador, el número de tokens descartados por el modelo. Cada uso del 87 es independiente. La identidad del número está en su valor, no en su existencia.
+Este capítulo se adentra en el eje encargado de alojar los números —al que llamaremos el eje **N**— y en la trampa mortal que esconde: fingir que un número se basta a sí mismo. Modelar correctamente la dependencia entre el número y su unidad es lo que diferencia a una base de datos profesional de una hoja de cálculo a punto de colapsar.
 
-Esa diferencia tiene consecuencias arquitectónicas concretas. Q, O, L y K son ejes donde los individuos necesitan **identidad propia**: una botella, una persona, una ciudad o un concepto tiene un sustrato que persiste y al que múltiples hechos pueden referirse. Cualquier implementación seria asignará a cada uno un identificador interno estable (un UUID, una clave surrogada, una URI). N **no** necesita eso: el valor *es* la identidad. Cuando un hecho dice "el modelo respondió en 340 milisegundos", el 340 no necesita un identificador interno; el dato es el número crudo. Lo mismo pasa con T (las fechas se comparan por igualdad de valor, no por identidad surrogada). **N y T son los dos ejes de valor; los demás son ejes de entidad.**
+## Por qué N exige tener su propio eje
 
-## Las unidades no son neutrales
+Es una pregunta totalmente válida: ¿para qué crearle un eje exclusivo a los números? ¿No podríamos simplemente guardar los números dentro de la caja de los objetos (O), junto con las botellas, los contratos y los goles?
 
-Volvamos al desastre marciano y al malentendido de los tokens. Lo que las dos historias muestran es que **todo número que viene del mundo lleva una unidad implícita**, y que confundir las unidades es una de las formas más caras de error.
+La respuesta es no, y el motivo queda claro apenas intentas forzar esa idea. Una botella es un individuo físico: tiene identidad propia, existe a lo largo del tiempo y puede aparecer en diferentes eventos. Lo mismo ocurre con un gol. Pero el número "87" no es una cosa física; es un **valor**. No existe un "87" guardado en un cajón del universo al que podamos hacer referencia. 
 
-La conclusión arquitectónica es contundente: **un valor de N nunca debería viajar solo**. Siempre debe ir acompañado de una unidad. Modelar esto bien implica que la unidad viva en el eje **K** (las unidades son tipos, no entidades concretas — *kilogramo*, *segundo*, *token*, *dólar* son categorías, no objetos físicos) y que cada hecho que use un número lo conecte con su unidad por una relación canónica.
+Lo que sí existe son millones de hechos en el mundo que utilizan el valor 87 para describir algo: el minuto 87 del gol de Messi, el 87% de precisión de un algoritmo, o los 87 tokens descartados por una IA. Cada vez que usamos ese número, su aparición es totalmente independiente de las demás. 
 
-En notación del modelo:
+Esta diferencia filosófica tiene un impacto brutal en la arquitectura de software. En los ejes que ya vimos (Q, O, L y K), cada elemento necesita una **identidad propia e inconfundible**. Un sistema informático serio le asigna a cada persona, ciudad o concepto un código interno único (un UUID) para no perderlo de vista. 
 
+El eje **N** no necesita eso. Para un número, su valor *es* su identidad. Cuando un servidor anota que "la IA respondió en 340 milisegundos", el sistema no necesita inventarle un código secreto al número 340; el dato puro y crudo es suficiente. (Lo mismo ocurre con las fechas en el eje T: las fechas se comparan por su valor matemático, no por un código interno). 
+
+La regla es simple: **Q, O, L y K son ejes de entidades físicas o conceptuales; N y T son ejes de valor puro.**
+
+## Las unidades de medida nunca son neutrales
+
+Volvamos a la sonda marciana y al caos con los tokens de la IA. Ambas anécdotas demuestran una regla de oro en la ingeniería de datos: **todo número extraído del mundo real trae una unidad implícita**, y confundir esa unidad es una de las formas más caras de destruir un proyecto.
+
+La conclusión arquitectónica no admite excepciones: **un valor en el eje N nunca debe viajar solo**. Tiene que estar siempre escoltado por su unidad de medida. Y aquí es donde los ejes comienzan a trabajar en equipo. Como aprendimos en el capítulo anterior, las unidades (como *kilogramo*, *segundo*, *dólar* o *token*) no son objetos físicos; son categorías abstractas. Por lo tanto, esas unidades viven cómodamente en el eje **K**. 
+
+Nuestro trabajo al diseñar la base de datos es asegurar que cada vez que se registre un número, se tienda un "cable" que lo conecte con su unidad correspondiente en K. 
+
+En la notación formal del modelo se vería así:
+
+```text
+(gol_messi_87,  minuto,           87)           ∈ M(O, N)
+(gol_messi_87,  unidad_minuto,    minuto)       ∈ M(O, K)
+
+(respuesta_017, latencia,         340)          ∈ M(O, N)
+(respuesta_017, unidad_latencia,  milisegundo)  ∈ M(O, K)
 ```
-(gol_messi_87, minuto,        87)        ∈ M(O, N)
-(gol_messi_87, unidad_minuto, minuto)    ∈ M(O, K)
 
-(respuesta_017, latencia,         340)         ∈ M(O, N)
-(respuesta_017, unidad_latencia,  milisegundo) ∈ M(O, K)
-```
+A primera vista, esto podría parecer un exceso de burocracia. ¿Acaso no es obvio que el minuto de un partido se mide en minutos? Sí, es obvio hoy. Pero deja de serlo el día en que un proveedor de estadísticas decide enviar los datos del partido en segundos en lugar de minutos, y tu sistema se rompe por no saber en qué unidad estaba hablando la otra máquina.
 
-A primera vista parece redundante: ¿no es obvio que un minuto se mide en minutos? Sí, hasta que un día alguien quiere agregar segundos y entonces hace falta saber, sin ambigüedad, en qué unidad estaba cada dato.
+Cuando sabemos que un dato va a sufrir conversiones frecuentes, la estrategia de diseño más limpia es **reificar la medición**. Esto significa elevar la simple medida al estatus de un evento formal en el eje O, dándole sus propias propiedades. 
 
-La opción más limpia, cuando la conversión es frecuente, es **reificar la medición**: subirla al estatus de situación en O y darle propiedades propias.
+En código se vería así:
 
-```
+```text
 (latencia_resp_017) ∈ O
-  cantidad   : 340           → N
-  unidad     : milisegundo   → K
-  contexto   : llamada_API_017 → O
+  cantidad   : 340               → Va al eje N
+  unidad     : milisegundo       → Va al eje K
+  contexto   : llamada_API_017   → Va al eje O
 ```
 
-Esto es lo que cambia un sistema que devuelve "340" por uno que devuelve "340 ms, medidos sobre la llamada API 017, en el modelo gpt-X tal día tal hora". El primero es un número; el segundo es información.
+Hacer esto es lo que separa a un sistema amateur que escupe un "340" sin contexto, de un sistema profesional que te dice exactamente: *"Esto es 340 ms, medidos sobre la llamada número 017 al modelo GPT-4, tal día y a tal hora"*. El primero es solo un número flotando en el vacío; el segundo es inteligencia accionable.
 
 ![Dos formas de modelar una medición: la versión simple guarda el valor y la unidad como propiedades del sujeto; la versión reificada eleva la medición misma a entidad en O, con cantidad, unidad, contexto, instrumento y momento como sus propiedades.](../diagrams/png/11_medicion_reificada.png)
 
-La regla de oro, que ya vimos en el contexto general de la reificación: **reificar la medición solo cuando la unidad no es obvia por contexto, o cuando se va a convertir, agregar o comparar entre unidades distintas**. Si todos los minutos del partido están en minutos, no hace falta reificar cada uno; si las latencias vienen mezcladas en ms, μs y s, sí.
+## El catálogo oficial: QUDT y las nuevas unidades de la IA
 
-## El catálogo de unidades: QUDT y los dialectos de dominio
+Una duda común al llegar a este punto es: *¿Tengo que sentarme a escribir un diccionario con todas las unidades del mundo para mi sistema?* La respuesta es un rotundo no. Este es uno de los pocos problemas que la industria mundial ya solucionó de forma definitiva. 
 
-Una pregunta natural: ¿cada sistema inventa sus unidades? La respuesta es: no, y ahí está una de las pocas victorias claras de la estandarización digital. Existe **QUDT** (*Quantities, Units, Dimensions and Types*) [18], una ontología pública que cataloga miles de unidades reconocidas, con sus dimensiones físicas, sus conversiones canónicas, y sus URIs estables. *Milisegundo* es `qudt:MilliSEC`; *byte* es `qudt:Byte`; *dólar estadounidense* es `qudt:USD`.
+Existe una ontología pública llamada **QUDT** (*Quantities, Units, Dimensions and Types*) `[18]` que cataloga miles de unidades reconocidas, sus dimensiones físicas, sus fórmulas de conversión exactas y sus enlaces oficiales (URIs). Si necesitas milisegundos, usas el código `qudt:MilliSEC`; si es un archivo de computadora, usas `qudt:Byte`; si es dinero, `qudt:USD`. Cuando el sistema de WQuestions adopta una unidad, lo hace enlazándose directamente a este catálogo oficial. 
 
-Cuando un modelado en WQuestions adopta una unidad, lo hace con un **alias de dominio** sobre un URI canónico de QUDT. La sintaxis interna del sistema usa la URI; el usuario del dominio ve "ms" o "milisegundo".
+Sin embargo, hay industrias tan nuevas que QUDT todavía no tiene palabras para describirlas. El ecosistema de la Inteligencia Artificial es el mejor ejemplo. ¿Con qué unidad se mide la "calidad" de un texto generado por ChatGPT? ¿Qué unidad le ponemos a la "similitud" entre dos conceptos para una IA? Algunas de estas medidas ni siquiera tienen nombre oficial todavía, y otras dependen enteramente de pruebas de laboratorio (*benchmarks*).
 
-Pero hay dominios donde QUDT se queda corto, sobre todo donde las unidades son emergentes y específicas. La IA es uno de ellos. ¿Qué unidad mide la calidad de una respuesta de un modelo de lenguaje? ¿Qué unidad mide la similitud entre dos embeddings? ¿Qué unidad tiene el "score" devuelto por un clasificador? Algunas son adimensionales por construcción; otras dependen del benchmark. La convención del modelo es:
+Nuestra regla de diseño para estos casos es sencilla:
+1.  Si la unidad existe en el catálogo QUDT, se usa QUDT.
+2.  Si es un concepto inventado ayer, el desarrollador define una unidad nueva en el eje K, la describe, y si es posible, le programa una fórmula para convertirla a una unidad conocida.
 
-1. Si existe en QUDT, usar QUDT.
-2. Si no, definir una unidad de dominio explícita en K, con su descripción, y opcionalmente su relación de conversión a una unidad QUDT cuando exista.
+Para el mundo de la IA, el eje K tendría que alojar unidades como estas:
 
-Ejemplos para IA:
-
-```
-K:token              — unidad de longitud de texto, dependiente del modelo
-K:parametro_modelo   — unidad para tamaños de modelos (7B, 13B, 70B)
-K:flops              — operaciones de punto flotante (sí está en QUDT)
-K:precision_clasificador — proporción entre 0 y 1
-K:perplexity         — medida de calidad de un modelo de lenguaje
-K:USD_per_million_tokens — unidad compuesta, frecuente en billing de APIs
+```text
+K:token                   — La unidad básica con la que la IA lee el texto.
+K:parametro_modelo        — Unidad para medir el "cerebro" de la IA (ej: 7B, 70B).
+K:precision_clasificador  — La tasa de acierto, medida entre 0 y 1.
+K:USD_por_millon_tokens   — La unidad con la que OpenAI o Google te cobran la factura.
 ```
 
-La última es interesante: una "unidad compuesta" que mezcla moneda y cantidad de tokens. QUDT permite construir unidades derivadas, y WQuestions las acepta como elementos de K con su propia descomposición.
+Esa última es sumamente interesante: es una "unidad compuesta" que mezcla dinero y capacidad de procesamiento. Los sistemas maduros permiten armar estas unidades híbridas y guardarlas en el eje K sin que la arquitectura tiemble.
 
-## Conversión, agregación, escala
+## Conversiones y sumas: El fin de las matemáticas ciegas
 
-Una vez que cada medición lleva su unidad explícita, las operaciones que antes eran traicioneras se vuelven seguras.
+Una vez que cada número de tu base de datos tiene su unidad explícitamente pegada a él, operaciones que antes eran peligrosísimas se vuelven seguras y automáticas.
 
-**Conversión:** si quieres sumar latencias provenientes de cuatro APIs (una reporta en ms, dos en μs, una en s), el sistema convierte todo a una unidad común antes de operar. La regla de conversión vive en K, no en cada consulta.
+**La conversión:** Imagina que tienes un panel de control que recibe la latencia de cuatro servidores distintos. Uno te manda el dato en milisegundos, dos en microsegundos y otro en segundos. Si tu sistema tiene las unidades mapeadas en K, la base de datos se encarga de convertir todo a una misma unidad antes de sumar. La regla matemática vive centralizada en K, y el programador no tiene que escribir traductores a mano.
 
-**Agregación:** la media de "340 ms, 1200 μs, 0.7 s" no es la media aritmética cruda; es la media de los tres valores convertidos a una misma unidad. Si el sistema no sabe las unidades, da un número sin sentido y lo presenta como si lo tuviera. (Esto, dicho sea de paso, es exactamente lo que hacen muchísimos dashboards en producción hoy.)
+**La agregación:** Si le pides a un sistema mal diseñado que saque el promedio de "340 ms, 1200 μs y 0.7 s", la máquina va a sumar los números desnudos (340 + 1200 + 0.7) y dividirlos, entregándote un dato ridículo y totalmente falso. Con nuestro modelo, la máquina sabe que no puede mezclar peras con manzanas y homogeneiza los datos antes de operar. (Aunque parezca increíble, este error de suma ciega ocurre todos los días en paneles de análisis de datos corporativos).
 
-**Escala temporal de moneda:** los dólares de 2020 no son los dólares de 2026. Para una receta de panadería el costo de un kilo de harina cambia con la inflación; para un contrato indexado al IPC el monto efectivo varía mes a mes. Modelar correctamente significa que "100 dólares" lleva no solo su unidad (USD) sino su **fecha de denominación**. Una propiedad cambiante en el tiempo, lo cual es exactamente lo que el modelo gestiona vía la decisión D9 — reificación con vigencia, que retomaremos al hablar de situaciones reificadas en la Parte III.
+**La inflación y el tiempo:** Los 100 dólares que costaba algo en 2020 no valen lo mismo que 100 dólares en 2026. Si estás modelando un contrato indexado por inflación, registrar "100 dólares" no es suficiente. Ese número tiene que llevar pegada la unidad (USD) y la **fecha exacta de denominación**. El valor del dinero es una propiedad que cambia con el tiempo, y nuestro modelo está diseñado para gestionar esto a través de la bitemporalidad (un concepto que abordaremos más adelante).
 
-## Incertidumbre, precisión y rangos
+## Rangos y porcentajes: Lidiando con la incertidumbre
 
-Los números del mundo real no suelen ser puntuales. La calidad de un modelo de lenguaje en un benchmark se reporta como *78.3% ± 2.1%*; la latencia de un endpoint se mide como una distribución con percentiles (p50, p95, p99); la posición de un objeto detectado por un modelo de visión es un punto con una incertidumbre.
+En el mundo real, los números casi nunca son exactos. Cuando lees un estudio sobre un modelo de lenguaje, te dicen que su nivel de acierto es *"78.3% ± 2.1%"*. Cuando un servidor mide su latencia, no te da un número fijo, te da una campana de Gauss con promedios y percentiles.
 
-El eje N puede alojar tres formas distintas de "cuánto":
+Nuestro eje N está preparado para recibir la respuesta a "¿cuánto?" en tres formatos distintos:
 
-1. **Valor puntual** — un solo número (`340 ms`).
-2. **Rango** — un intervalo cerrado (`[300 ms, 400 ms]` para el p50–p95).
-3. **Distribución** — un objeto en O que tiene como propiedades su tipo (normal, exponencial), sus parámetros (media, varianza), y opcionalmente su muestreo empírico.
+1.  **Valor puntual:** Un número fijo y simple (ej: `340 ms`).
+2.  **Rango:** Un intervalo con piso y techo (ej: `[300 ms, 400 ms]`).
+3.  **Distribución:** Aquí la cosa se pone profesional. La distribución estadística se reifica; es decir, se convierte en una entidad dentro del eje O, y se le añaden propiedades como la media, la varianza y el tipo de curva. 
 
-Cuando el dato es puntual, no hay nada que decir. Cuando es un rango, el modelo lo trata como un par de números con la misma unidad. Cuando es una distribución, **se reifica**: la distribución es una entidad en O con sus propiedades propias, y el "valor" reportado por el sistema (la media, la mediana, el modo) es una proyección de esa distribución.
+Esto último es vital al trabajar con IA. Si le haces la misma pregunta dos veces a un modelo como GPT-4, te dará dos respuestas distintas. La "calidad" de la IA no es un número clavado en piedra; es una distribución de probabilidades. Cuando un estudio dice que un modelo tiene un *78.3%* de eficacia, te está dando el promedio de 14.000 pruebas distintas. Modelar bien los datos significa que nuestro sistema sepa que ese 78.3% no es una métrica plana, sino la punta del iceberg de un evento estadístico complejo.
 
-Esto último importa especialmente con IA. La respuesta de un modelo de lenguaje no es determinista: para una misma entrada, el modelo puede devolver respuestas distintas. La "calidad" del modelo no es un número, es una distribución de calidad sobre una población de entradas. Cuando un benchmark dice "GPT-X obtiene 78.3% en MMLU", está reportando la **media** de una distribución de aciertos sobre 14.000 preguntas. Modelar bien implica que el sistema sepa que detrás del 78.3% hay un objeto en O con propiedades de variabilidad, no un escalar inerte.
+## Los cuatro ejemplos pasan por el eje N
 
-## Cuatro dominios, cuatro veces N
+Veamos cómo se comporta el eje N cruzando nuestros escenarios habituales, sumándole el ecosistema de la Inteligencia Artificial:
 
-Volvamos a los cuatro casos que vienen acompañándonos, y agreguemos un quinto explícitamente: la IA.
+   **La Receta:** *200 gramos de harina, 30 minutos a 180 °C, rinde para 4 porciones.* Tenemos tres números atados a tres unidades distintas (`gramo`, `minuto`, `°C`), más un número solitario que indica cantidad (4 porciones).
+   **El Gol de fútbol:** *Minuto 87, remate desde 22 metros, velocidad del balón a 105 km/h.* Tres números, tres unidades físicas. (Nota: el "87" requiere contexto explícito en el sistema para saber si se cuenta desde el inicio del partido o desde el descanso).
+   **La Canción:** *BPM 128, duración de 3 minutos y 24 segundos.* (Ojo aquí: si decimos que la canción está en "Sol Mayor", eso no va a N, porque una nota musical no es un número matemático, es una categoría que pertenece al eje K). 
+   **La Noticia política:** *Un decreto entra en vigor en 30 días, mueve un presupuesto de 50 millones de dólares y afecta a 3 ministerios.* Tres números, tres unidades, siendo una de ellas altamente sensible a la inflación temporal.
+   **La llamada a una IA:** *Entrada de 4.500 tokens, salida de 1.200 tokens, latencia de 2.3 segundos, costo de 0.018 dólares y precisión de 78.3% ± 2.1%.* Seis números, seis unidades, y dos de ellos incluyen márgenes de incertidumbre.
 
-- **Receta**: 200 gramos de harina, 30 minutos a 180 °C, rinde 4 porciones. Tres números, tres unidades distintas (`gramo`, `minuto`, `°C`), una cardinalidad sin unidad (4 porciones — aunque "porción" es ya una unidad propia, definida por la receta).
-- **Gol de fútbol**: minuto 87, remate desde 22 metros, velocidad estimada del balón 105 km/h. Cuatro mediciones, tres unidades. El "87" del minuto es ambiguo si no se aclara que es "minuto desde el inicio del partido" (no del segundo tiempo).
-- **Canción**: BPM 128, duración 3 minutos 24 segundos, en sol mayor (esta última no es N, sino un valor en K — el tono no se mide en escala numérica de la misma manera). Posición en el ranking: número 1 (cardinalidad, no magnitud).
-- **Noticia política**: el decreto entra en vigor en 30 días, asigna un presupuesto de 50 millones de dólares (de 2026), afecta a 3 ministerios. Tres números, tres unidades, una de ellas con escala temporal.
-- **IA — llamada a un LLM**: tamaño de entrada 4.500 tokens, tamaño de salida 1.200 tokens, latencia 2.3 segundos, costo 0.018 dólares, temperatura 0.7, precisión esperada según benchmark 78.3% ± 2.1%. Seis números, seis unidades, dos con incertidumbre.
+La verdadera magia ocurre cuando un usuario hace una consulta que cruza todos estos mundos. Por ejemplo: *"¿Cuántos dólares y tokens me cuesta pedirle a una IA que analice un decreto gubernamental de 30 páginas sobre importación de comida?"* 
 
-La consulta interesante es la que cruza los cinco. ¿Cuánto cuesta, en términos de tokens y dólares, generar una receta nueva cada día durante un año para un asistente culinario? ¿Cuánto demora un modelo en analizar un decreto político de 30 páginas? ¿Cuánto cambia el costo si el modelo se actualiza y el precio por millón de tokens baja un 40%? Todas son preguntas razonables, todas mezclan unidades distintas, todas requieren que el sistema sepa qué unidad tiene cada número y cómo se convierten entre sí.
-
-Sin ese cuidado, las respuestas son adivinaciones con apariencia de cálculo.
+Es una pregunta perfectamente lógica para un negocio moderno. Mezcla unidades de páginas, tokens, dólares y tiempo. Y todas estas variables exigen que el sistema sepa exactamente qué unidad acompaña a cada número y cómo se convierten matemáticamente entre sí. Sin esa capa de inteligencia estructural, cualquier respuesta que dé la base de datos es una simple adivinanza disfrazada de cálculo.
 
 ## Resumen del eje N
 
-Antes de seguir con el siguiente eje, vale la pena consolidar lo que se ha establecido sobre N:
+Antes de saltar al siguiente concepto, consolidemos lo que hemos construido con el eje cuantitativo:
 
-1. N es un eje de **valor**, no de entidad. Los números son su propia identidad; no llevan UUID interno.
-2. Todo número viene con una **unidad implícita**. Modelar bien implica que la unidad viva en K y aparezca explícita en algún hecho asociado.
-3. Cuando la unidad no se infiere por contexto, o cuando hace falta convertir, agregar o comparar entre unidades, se **reifica la medición**: pasa a ser una situación en O con cantidad, unidad y contexto como propiedades.
-4. **QUDT** provee el vocabulario canónico de unidades; los dominios emergentes (notablemente, IA) requieren extensiones específicas (token, parámetro de modelo, score, perplexity).
-5. La **incertidumbre** se modela como rango, o se reifica la distribución como entidad en O.
-6. La **escala temporal** de algunas unidades (moneda, especialmente) requiere fecha de denominación, lo cual conecta N con T y con la maquinaria de vigencia (D9).
+1.  **N es un eje de valor puro.** A diferencia de los objetos, los números son su propia identidad y no necesitan un código interno (UUID) para existir en la base de datos.
+2.  **La desnudez numérica está prohibida.** Todo número ingresa al sistema con una unidad de medida pegada a él. Esa unidad siempre habita en el catálogo del eje K.
+3.  **La medición como evento.** Si la unidad de medida no es obvia, o si los datos sufrirán conversiones matemáticas, la medición se reifica: pasa a ser un evento formal en el eje O.
+4.  **Estándares mundiales.** Utilizamos el catálogo oficial **QUDT** para no inventar unidades básicas. Para conceptos emergentes (como los tokens o la precisión de un LLM), creamos unidades personalizadas en K.
+5.  **Tolerancia estadística.** El eje soporta la incertidumbre modelando rangos o distribuciones estadísticas completas, no solo promedios planos.
 
 ## Lo que viene
 
-Con N en su lugar, el universo de individuos del modelo está completo. Tenemos los cuatro pilares concretos (Q, O, L, T), el zócalo categórico (K) y el eje de magnitudes (N). Es decir, **todo lo que el modelo necesita para alojar valores**.
+Con el pilar N instalado, nuestro universo de catalogación está formalmente completo. Ya contamos con los cuatro pilares del mundo físico (quién, qué, dónde, cuándo), tenemos el zócalo intelectual para las categorías (K) y acabamos de asegurar el terreno para las magnitudes matemáticas (N). En resumen, **ya tenemos los cajones listos para alojar cualquier tipo de valor existente.**
 
-Lo que falta no son más ejes para valores, sino **predicados** que conecten esos valores entre sí: las etiquetas que dicen *cómo* un sujeto se relaciona con un objeto. Esos predicados viven en dos ejes adicionales — P (propiedades) y M (relaciones) — que son los conectores entre todo lo demás.
+Lo que nos falta no son más cajones. Lo que nos falta ahora son los **cables** que conecten todos estos valores entre sí. Necesitamos etiquetas que le expliquen a la máquina *cómo* un agente interactúa con un objeto. 
 
-El próximo capítulo cierra la Parte II presentándolos juntos, porque están más conectados de lo que la intuición primera sugiere: la diferencia entre una "propiedad" y una "relación" es matemáticamente más sutil de lo que parece. Y aquí aparece una de las decisiones de diseño más finas del modelo — la decisión D3 — sobre por qué propiedades y relaciones se unifican algebraicamente en lugar de tratarse como cosas distintas.
+Esos cables lógicos viven en dos ejes adicionales: el eje **P** (Propiedades) y el eje **M** (Relaciones). Ambos son los conectores maestros que le dan vida al modelo. En el próximo capítulo, que cierra la Parte II del libro, los presentaremos juntos. Veremos que la diferencia entre "tener una propiedad" y "estar relacionado con algo" es, a nivel informático, muchísimo más delgada de lo que dicta nuestro sentido común.

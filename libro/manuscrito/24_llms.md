@@ -16,7 +16,7 @@ Vista desde la doctora, la interacción es trivial: una pregunta en español lla
 2. **Eligió la función adecuada** del catálogo que el sistema le expone: `consultar_tratamiento(paciente, periodo)`.
 3. **Tradujo el español a argumentos estructurados**: paciente → `maria_g`, periodo → todo el histórico hasta hoy.
 4. **Invocó la función**, que internamente ejecutó un patrón sobre el grafo WQuestions: `query(Pattern(fixed={"paciente": maria_g}, ask={"medicamento_prescrito": Var()}, type_constraint="accion_prescribir"), at=hoy)`.
-5. **El grafo respondió** con la prescripción vigente y su histórico, usando D9 para devolver exactamente lo válido en cada momento.
+5. **El grafo respondió** con la prescripción vigente y su histórico, usando D6 para devolver exactamente lo válido en cada momento.
 6. **El modelo recompuso la respuesta** en lenguaje natural fluido, con detalle, referencias temporales y conexiones causales.
 
 Esa secuencia — usuario natural → LLM → función estructurada → grafo persistente → respuesta natural — es el patrón que define el momento tecnológico de 2026. Y es exactamente para lo que WQuestions, sin haberse propuesto serlo, resulta estructuralmente diseñado.
@@ -91,7 +91,7 @@ En 2024 Anthropic publicó la especificación de **MCP** — *Model Context Prot
 Para WQuestions, esto significa que **el servidor MCP de un sistema WQuestions es esencialmente el lexicon expuesto como funciones**. Cada verbo del lexicon se vuelve una herramienta; cada consulta-WH típica se vuelve otra herramienta:
 
 ```
-Tools del servidor MCP del Sauna Oasis:
+Tools del servidor MCP del Spa Oasis:
 
   ingesta:
     - registrar_sesion(cliente, lugar, inicio, fin)
@@ -116,7 +116,7 @@ Conviene aterrizar la idea con tres escenarios que ya son técnicamente posibles
 
 ### Asistente operativo de un negocio
 
-El dueño del Sauna Oasis, en lugar de revisar reportes, le habla al sistema:
+El dueño del Spa Oasis, en lugar de revisar reportes, le habla al sistema:
 
 > *— ¿Cuántos clientes nuevos vinieron este mes?*
 >
@@ -130,9 +130,9 @@ El dueño del Sauna Oasis, en lugar de revisar reportes, le habla al sistema:
 >
 > — *Listo. Borrador preparado para los dos clientes — Mariana C. y Tomás R. ¿Lo envío?*
 
-Cada turno de la conversación se traduce a una o más llamadas a funciones del lexicon del sauna. El LLM **no sabe** de saunas — sabe del lexicon. El grafo guarda el estado real. La conversación es la **interfaz**, no la base de datos.
+Cada turno de la conversación se traduce a una o más llamadas a funciones del lexicon del spa. El LLM **no sabe** de spas — sabe del lexicon. El grafo guarda el estado real. La conversación es la **interfaz**, no la base de datos.
 
-Lo interesante: el dueño jamás escribe SQL, jamás abre un dashboard, jamás aprende un lenguaje de consulta. El lexicon del sauna es la API; el LLM es el traductor. El sistema se vuelve **operable conversacionalmente** sin que el negocio renuncie a su rigor estructural.
+Lo interesante: el dueño jamás escribe SQL, jamás abre un dashboard, jamás aprende un lenguaje de consulta. El lexicon del spa es la API; el LLM es el traductor. El sistema se vuelve **operable conversacionalmente** sin que el negocio renuncie a su rigor estructural.
 
 ### Ingesta automática desde texto no estructurado
 
@@ -209,7 +209,7 @@ Esto funciona. Pero gasta el presupuesto a velocidad ingenua. Tres números, tom
 | Información | Prosa (tokens) | Grafo WQuestions (tokens) | Compresión |
 | --- | --- | --- | --- |
 | Una nota clínica típica | 320 | 80 | 4× |
-| Un mes de operación del sauna (3 clientes) | 8.000 | 1.800 | 4.4× |
+| Un mes de operación del spa (3 clientes) | 8.000 | 1.800 | 4.4× |
 | Un contrato de alquiler con cláusulas | 2.500 | 700 | 3.6× |
 
 La compresión por sí sola es importante, pero lo que más cambia el cálculo es el segundo factor: **la ambigüedad**. La prosa fuerza al LLM a reinterpretar coreferencias (*"él"*, *"el doctor"*, *"la paciente mencionada"*), a inferir relaciones implícitas, a reconstruir estructura. Todas esas operaciones consumen atención del modelo — tokens efectivos que no van al razonamiento sobre el contenido sino a la reconstrucción del esqueleto.
@@ -236,6 +236,6 @@ Cerremos con la idea más ambiciosa del libro, y la única que merece todo el ap
 
 La distinción importa. Un producto se compra; un framework se aprende; una **infraestructura** se da por sentado. Cuando un programador escribe una aplicación web no piensa en TCP/IP; cuando un sistema procesa pagos no piensa en SWIFT; cuando una conversación con un asistente fluye, no se piensa en el grafo subyacente. La infraestructura es lo que se vuelve invisible porque funciona.
 
-El proyecto WQuestions, en su forma actual, no está terminado para ser infraestructura. Le faltan piezas — persistencia industrial, motor de inferencia, bitemporalidad completa, lexicon poblado con miles de entradas verbales en varios idiomas — todas las cuales el capítulo 22 enumera honestamente. Pero la **arquitectura** está completa, y el momento histórico es favorable: los modelos de lenguaje hicieron que la simbiosis sea operativa, los protocolos como MCP estandarizaron el cable, y el costo de cómputo bajó al punto donde un asistente conversacional con grafo persistente es asequible.
+El proyecto WQuestions, en su forma actual, no está terminado para ser infraestructura. Le faltan piezas — persistencia industrial, motor de inferencia, bitemporalidad completa, lexicon poblado con miles de entradas verbales en varios idiomas — todas las cuales el capítulo 26 enumera honestamente. Pero la **arquitectura** está completa, y el momento histórico es favorable: los modelos de lenguaje hicieron que la simbiosis sea operativa, los protocolos como MCP estandarizaron el cable, y el costo de cómputo bajó al punto donde un asistente conversacional con grafo persistente es asequible.
 
-Lo que el capítulo 21 explora es el lado expansivo de esa misma idea: si WQuestions fuese infraestructura, **¿qué aplicaciones se vuelven posibles que antes no?**. Algunas suenan a ciencia ficción; otras son obvias en cuanto se nombran. Las dejaremos puestas, sin disimular la especulación, porque ahí — y solo ahí — es donde el libro se permite mirar hacia adelante.
+Lo que el capítulo 25 explora es el lado expansivo de esa misma idea: si WQuestions fuese infraestructura, **¿qué aplicaciones se vuelven posibles que antes no?**. Algunas suenan a ciencia ficción; otras son obvias en cuanto se nombran. Las dejaremos puestas, sin disimular la especulación, porque ahí — y solo ahí — es donde el libro se permite mirar hacia adelante.

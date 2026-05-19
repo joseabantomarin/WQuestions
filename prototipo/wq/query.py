@@ -7,7 +7,7 @@ roles fijos y proyecta el valor del rol pregunta.
 
 Soporta:
 - Consultas puntuales: ¿quién vendió X?
-- Consultas temporales: ¿quién era el dueño de X en T0?  (D9)
+- Consultas temporales: ¿quién era el dueño de X en T0?  (D6)
 - Filtros por tipo (instancia_de = K).
 - Agregaciones: count, list.
 """

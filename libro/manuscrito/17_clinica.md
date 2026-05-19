@@ -1,111 +1,117 @@
-# Capítulo 17 — Un dominio nuevo: la historia clínica
+# Capítulo 17 — Un dominio nuevo: La historia clínica
 
-## El cambio de registro
+## El cambio de marcha
 
-El sauna y el taxi tenían algo en común que pasa desapercibido hasta que uno se sienta a modelar un tercer dominio: eran **transaccionales**. Sus situaciones eran eventos puntuales — *la sesión de Ana*, *el viaje de Valeria*, *el pago de Beto* — con inicio, fin, agente y resultado. Modelar uno es ejercitar las herramientas; modelar el otro es repetirlas con otro vocabulario.
+Los dos dominios que vimos antes (el Spa y el Taxi) tenían algo en común que suele pasar desapercibido: eran negocios puramente **transaccionales**. Sus situaciones eran eventos fugaces. La sesión de sauna de Ana empieza, termina, se cobra y el mundo sigue girando. El viaje de Valeria ocurre, se paga y listo. Modelar uno de estos negocios es solo cuestión de aprender a usar nuestras herramientas; modelar el otro es repetir la misma fórmula cambiando las palabras del Lexicon.
 
-La historia clínica es distinta. Una consulta médica es una situación, sí, pero lo que importa de ella no es el evento sino **el contenido que produce**: un diagnóstico, una prescripción, una contraindicación, un control futuro. Estos son los objetos sobre los que el médico va a razonar durante años — el diagnóstico de hipertensión que sigue válido un año después, la medicación que se ajusta, la regla farmacológica que prohíbe combinar dos fármacos, el síntoma que reaparece. La densidad semántica está dentro de cada situación, no en la sucesión de eventos.
+Pero el mundo de la medicina no funciona así. Una consulta médica es un evento, sí, pero lo verdaderamente importante no es cuánto duró la cita, sino **el contenido denso que se produjo allí adentro**: un diagnóstico, una receta de pastillas, una alerta de alergia, la programación de un control futuro. 
 
-Esto pone al modelo bajo una presión distinta. No basta con que los eventos se encadenen bien: hay que poder hablar de **qué dice cada uno**, con suficiente estructura para que un sistema clínico — o un modelo de lenguaje consultando ese sistema — pueda razonar sobre el contenido. Y hay que poder hacerlo a lo largo del tiempo, porque los diagnósticos cambian, las medicaciones se modifican, las reglas farmacológicas se actualizan. La historia clínica es donde D9 deja de ser elegante y se vuelve indispensable.
+A un médico no le importa el evento de la consulta; al médico le importan los "objetos de información" que nacieron en ella. Le importa el diagnóstico de hipertensión que seguirá vigente un año después; la pastilla que se debe ajustar mes a mes; la regla universal que prohíbe mezclar dos fármacos. Aquí, la riqueza de los datos no está en la línea de tiempo, sino en el peso intelectual de cada decisión.
 
-Este capítulo modela un caso típico — una consulta de la doctora Torres con María Gonzales por cefalea persistente — y muestra cómo el modelo absorbe la densidad semántica del dominio. Es también, deliberadamente, el primer dominio del libro donde **el modelo encuentra una fricción que aparece más de una vez**: lo que mide, diagnostica o prescribe vive en K, mientras el rol canónico `tema` exige O. Veremos cómo se resuelve y qué nos enseña.
+Esto somete a nuestra arquitectura a una presión titánica. Ya no basta con encadenar eventos. Necesitamos que nuestro sistema sepa **de qué habla cada evento**, con una estructura tan perfecta que una Inteligencia Artificial pueda leer el expediente de un paciente y deducir si una pastilla lo va a matar. Y todo esto tiene que funcionar a lo largo de décadas, porque los diagnósticos mutan, las medicinas cambian y los protocolos se actualizan. 
 
-## La consulta como situación articuladora
+Este capítulo modela una consulta típica: la Dra. Torres atiende a María Gonzales por un dolor de cabeza crónico. Veremos cómo nuestro modelo absorbe esta avalancha científica. Y, siendo honestos, te mostraré el primer bache real con el que me topé al programar este prototipo: cuando la intuición humana choca contra la rigidez de las matemáticas.
 
-Igual que el taxi tenía un `viaje` superior que articulaba sus seis sub-situaciones, la consulta médica articula las suyas. Una consulta típica produce cinco objetos de información:
+## La consulta como la "Carpeta Maestra"
 
-- **El síntoma**: lo que el paciente reporta. *"Cefalea persistente hace tres días."*
-- **La medición**: signos vitales tomados durante la consulta. *"Presión arterial 145/92 mmHg."*
-- **El diagnóstico**: la conclusión del médico. *"Hipertensión grado 1 confirmada."*
-- **La prescripción**: la intervención terapéutica. *"Enalapril 10 mg, cada mañana, indefinido."*
-- **El control futuro**: el seguimiento agendado. *"Control en 30 días."*
+Igual que en el caso del Taxi creamos un `viaje_001` gigante que abrazaba todos los pequeños pasos, la consulta médica funciona como una gran carpeta articuladora. Una revisión típica produce cinco documentos internos:
 
-Las cinco son sub-situaciones reificadas que cuelgan de la consulta por `parte_de`. El grafo queda así:
+1.  **El síntoma:** Lo que dice el paciente. *"Me duele la cabeza hace tres días."*
+2.  **La medición:** Los números crudos que saca el doctor. *"Presión en 145/92."*
+3.  **El diagnóstico:** La conclusión clínica. *"Tiene Hipertensión de grado 1."*
+4.  **La prescripción:** El ataque químico. *"Tome Enalapril de 10 mg."*
+5.  **El control:** El plan a futuro. *"Nos vemos en 30 días."*
 
-```
+En nuestro modelo, estas cinco cosas no son campos de texto; son **cinco situaciones reificadas independientes** que cuelgan de la consulta principal usando nuestro viejo y confiable cable `parte_de`.
+
+```text
 (consulta_001) ∈ O
   instancia_de    : consulta_medica
   agente          : dra_torres
   paciente        : maria_g
   lugar_de        : consultorio_03
-  momento         : 2026-05-14T10:30Z
   motivo          : cefalea_persistente
-  estatus_factual : real
 
-(sintoma_001    ∈ O, parte_de, consulta_001)
-(medicion_001   ∈ O, parte_de, consulta_001)
-(diag_hta_001   ∈ O, parte_de, consulta_001)
-(pres_001       ∈ O, parte_de, consulta_001)
-(control_001    ∈ O, parte_de, consulta_001)
+(sintoma_001    ∈ O,  parte_de,  consulta_001)
+(medicion_001   ∈ O,  parte_de,  consulta_001)
+(diag_hta_001   ∈ O,  parte_de,  consulta_001)
+(prescrip_001   ∈ O,  parte_de,  consulta_001)
+(control_001    ∈ O,  parte_de,  consulta_001)
 ```
 
-El patrón es idéntico al del viaje del taxi: una entidad superior contiene un manojo de sub-situaciones, cada una con su propia estructura. Pero el contenido de cada sub-situación es lo que cambia el carácter del dominio.
+La arquitectura se mantiene inalterable: una entidad gigante que contiene un racimo de sub-situaciones. Pero el interior de cada una de estas sub-situaciones es lo que vuelve fascinante a la medicina.
 
 ![La consulta médica con sus cinco sub-situaciones colgando: síntoma, medición, diagnóstico, prescripción, control futuro. Cada una con su propia estructura semántica.](../diagrams/png/31_consulta_clinica.png)
 
-## Lo que el modelo descubre: K aparece donde uno espera O
+## Un choque frontal con las matemáticas: Cuando la Caja O se queda corta
 
-Acá entra la fricción anunciada. Cuando el médico mide la presión arterial, intuitivamente decimos *"la medición tiene como tema la presión arterial"*. Pero **"presión arterial" es una categoría**: es un tipo de variable fisiológica, no un objeto individual con identidad. Vive en K, no en O.
+Aquí apareció mi primera fricción seria al programar. Piénsalo como humano: cuando el médico mide la presión arterial de María, tu instinto te dice que escribas que el evento tiene como `tema` a la "presión arterial". 
+Y cuando el doctor receta Enalapril, tu instinto te dice que el `tema` de la receta es el "Enalapril".
 
-El catálogo D7 declara `tema: O → O`. Una medición cuyo `tema` apuntara a una K rompería esa signatura. Lo mismo pasa con la prescripción: *"prescribir enalapril"* — pero **enalapril es una categoría de medicamento**, no un objeto físico individual. La caja de pastillas que el paciente compra en la farmacia es un O; el principio activo `enalapril_10mg` que la doctora prescribe es K.
+Pero espera. **"Presión arterial" y "Enalapril" no son objetos físicos con identidad propia**. No puedes guardar a la "Presión arterial universal" en un cajón. Son **categorías** teóricas. La cajita de pastillas que María compra en la farmacia sí es un objeto físico (caja `O`), pero el concepto científico de la droga *Enalapril de 10mg* es una idea (caja `K`).
 
-El prototipo me obligó a darme cuenta de esto. Al intentar `ingest_situation(...)` con `tema: enalapril`, el catálogo lanzó `SignatureError`. Lo que hubiera sido un detalle imperceptible — y un bug semántico latente — se volvió visible en el primer test.
+Nuestro catálogo estricto D8 dictamina que el cable `tema` solo puede conectar la caja `O` con la caja `O`. Si yo intento conectar la caja `O` con la caja `K` usando el cable `tema`, el sistema entra en pánico y me lanza un error matemático (`SignatureError`). El modelo me regañó por intentar mezclar conceptos físicos con conceptos teóricos.
 
-La solución es directa: usar **roles de dominio específicos** cuya signatura apunte explícitamente a K. La política liberal del modelo (los roles no declarados se aceptan) habilita esto sin tocar el catálogo:
+¿La solución? Crear "Cables de Dominio" (roles propios) específicos para la medicina, diseñados para apuntar hacia la caja `K`:
 
 ```python
-# El medicamento prescrito es una categoría (K), no un objeto.
-u.assert_fact(pres, "medicamento_prescrito", enalapril)
+# Mal: Usar "tema" para la medicina
+# Bien: Crear un cable especial
 
-# La variable medida es una categoría también.
-u.assert_fact(medicion, "medida_de", presion_arterial)
+u.assert_fact(prescripcion, "medicamento_prescrito", enalapril)  ← Este cable va de O a K
+u.assert_fact(medicion,     "medida_evaluada", presion_arterial) ← Este también
 ```
 
-Esto deja claras dos cosas. Primero: **el catálogo D7 cubre los roles más universales**, pero cada dominio agrega los suyos con signaturas específicas. Segundo: la fricción no es del modelo — es de mi intuición pidiéndole a `tema` que sea más promiscuo de lo que su signatura permite. El modelo me hizo explícita la distinción O/K que el lenguaje natural mezcla.
+Esto me dejó dos lecciones valiosas:
+1.  El catálogo de 38 cables universales sirve para casi todo, pero cada industria altamente técnica (como la medicina o la química) te obligará a crear un puñado de cables exclusivos para sus conceptos abstractos.
+2.  El error no era del modelo; el error era de mi mente humana, que mezcla objetos y conceptos todo el tiempo. La rigidez de las matemáticas me salvó de crear un desastre semántico que habría confundido a una IA en el futuro.
 
-Una variante: si quisiéramos canonizar este patrón, podríamos agregar al catálogo un rol `tema_categorico: O → K` que generalice "lo medido/prescrito/diagnosticado cuando es una categoría". Es trabajo pendiente; mientras tanto, los roles de dominio cubren cada caso particular.
+## Diseccionando el Diagnóstico: Dudas, Causas y Tiempo
 
-## Diagnóstico: certeza, modalidad, vigencia
+Un diagnóstico médico es una joya de la información. Combina tres dimensiones complejísimas que nuestro modelo resuelve con elegancia:
 
-El diagnóstico merece atención propia, porque combina tres dimensiones que el modelo introdujo en capítulos distintos.
+**1. El nivel de duda (Modalidad Epistémica):**
+Un diagnóstico casi nunca es una verdad absoluta tallada en piedra; es lo que el médico *cree* en ese instante. Para reflejar esa incertidumbre clínica, decoramos la situación con `modalidad: epistemica` y jugamos con su `estatus_factual` (puede ser *confirmado*, *sospechoso* o *descartado*).
 
-**Primera dimensión: modalidad epistémica.** Un diagnóstico no es una afirmación absoluta del mundo; es una afirmación sobre lo que el médico cree que es cierto, basado en evidencia. El modelo lo refleja con `modalidad: epistemica`. Y la certeza relativa del diagnóstico — *probable*, *posible*, *confirmado*, *descartado* — vive en `estatus_factual`:
-
-```
+```text
 (diag_hta_001, modalidad,       epistemica)
 (diag_hta_001, estatus_factual, confirmado)
 ```
 
-**Segunda dimensión: causalidad evidencial.** Un diagnóstico se construye a partir de evidencia. El de hipertensión está basado en la medición que la precedió. El modelo lo expresa con `motivado_por` y, opcionalmente, `tema`:
+**2. La evidencia (Causalidad):**
+Un diagnóstico no nace de la magia; nace de los números. Si el doctor dice "Hipertensión", es porque vio el número de la "medición de presión". Esta conexión de causa y efecto la guardamos usando nuestro amado cable `motivado_por`:
 
+```text
+(diag_hta_001, motivado_por, medicion_pa_001)
 ```
-(diag_hta_001, tema, medicion_pa_001)
-```
+Ahora la medición no es un simple número flotando; es la **evidencia** del diagnóstico. Si un auditor médico o una IA revisan el expediente, la máquina puede justificar el diagnóstico instantáneamente leyendo este cable.
 
-La medición no es solo un dato suelto: es **fundamento del diagnóstico**. Cuando un colega revisa el diagnóstico, el grafo le da la evidencia con un salto.
+**3. El viaje en el tiempo (Vigencia D6):**
+Esta es la regla que separa el software de juguete del software hospitalario real. Los diagnósticos caducan y cambian. 
+Supongamos que en mayo de 2026 María fue diagnosticada con Hipertensión Grado 1. Un año después, en enero de 2027, el médico le dice que empeoró y ahora tiene Grado 2. Si reescribes el diagnóstico viejo y pones el nuevo, acabas de cometer un crimen de negligencia médica al borrar la historia de la paciente.
 
-**Tercera dimensión: vigencia.** Y esta es la pieza que el dominio clínico exige sin negociación. Un diagnóstico no es eterno: se confirma, se modifica, se reemplaza. Si la hipertensión que en mayo de 2026 fue grado 1 se reclasifica en enero de 2027 como grado 2, el grafo necesita preservar **ambos** estados — el viejo y el nuevo — con sus rangos de vigencia. D9 hace exactamente eso:
+La Regla D6 (Vigencia temporal) entra a salvarnos la vida. Guardamos **ambos** diagnósticos, cada uno con sus fechas de inicio y fin:
 
 ```python
-# Diagnóstico original (vigente hasta el rediagnóstico)
-u.assert_fact(diag, "diagnosticado_como", hta_g1,
-              valid_from=t_consulta, valid_to=t_redx)
+# El Diagnóstico viejo (caducó cuando el doctor emitió el nuevo)
+u.assert_fact(diag1, "diagnostico_asignado", hta_grado_1,
+              valid_from=mayo_2026, valid_to=enero_2027)
 
-# Rediagnóstico (vigente desde T1, abierto al futuro)
-u.assert_fact(diag2, "diagnosticado_como", hta_g2,
-              valid_from=t_redx)
-u.assert_fact(diag2, "rectifica", diag)
+# El Diagnóstico nuevo (vigente hasta el día de hoy)
+u.assert_fact(diag2, "diagnostico_asignado", hta_grado_2,
+              valid_from=enero_2027)
+
+# Y conectamos ambos para que no queden dudas
+u.assert_fact(diag2, "rectifica", diag1)
 ```
 
-La consulta *"¿qué diagnóstico activo tenía María en agosto 2026?"* devuelve HTA grado 1; *"¿y en marzo de 2027?"* devuelve grado 2. La misma consulta, parametrizada por `at`, recupera la verdad clínica de cualquier momento. La relación `rectifica` deja explícito que el rediagnóstico no es un diagnóstico nuevo independiente, sino una corrección/actualización del original.
+Si hay una demanda por negligencia y el juez pregunta: *"¿Qué sabía el hospital sobre esta paciente en agosto de 2026?"*, la base de datos devuelve exactamente la "verdad clínica" que existía en esa fecha (Grado 1), ignorando el futuro. Esta capacidad forense viene incluida de fábrica en nuestra arquitectura.
 
-![D9 sobre un diagnóstico: HTA grado 1 vigente hasta enero 2027, reemplazado por HTA grado 2 desde entonces. La relación `rectifica` conecta ambos. Una consulta `at=` devuelve el correcto según el momento.](../diagrams/png/32_d9_diagnostico.png)
+![D6 sobre un diagnóstico: HTA grado 1 vigente hasta enero 2027, reemplazado por HTA grado 2 desde entonces. La relación `rectifica` conecta ambos. Una consulta `at=` devuelve el correcto según el momento.](../diagrams/png/32_d9_diagnostico.png)
 
-Esta capacidad — **consultar el pasado tal como era**, no como lo reescribimos después — es lo que distingue un sistema clínico auditable de uno que solo guarda el estado actual. En un litigio por mala praxis, en una revisión de cohorte para estudio epidemiológico, en una auditoría de calidad, lo único que sirve es lo que el sistema sabía en el momento. El modelo trata esto como **propiedad estructural**, no como funcionalidad añadida.
+## Prescripción Médica: La tormenta de los "Por qués"
 
-## Prescripción: finalidad, motivo, contraindicación
-
-La prescripción es donde varias relaciones del "por qué" coexisten sobre una misma situación. Veamos:
+Cuando un médico te receta una pastilla, se activan simultáneamente varias de las fuerzas causales que vimos en el Capítulo 11. Mira cómo se acumulan en nuestro sistema:
 
 ```python
 pres = ingest_situation(u, lex, "prescribir", roles={
@@ -114,53 +120,55 @@ pres = ingest_situation(u, lex, "prescribir", roles={
     "medicamento_prescrito": enalapril,
     "frecuencia":            cada_manana,
     "duracion":              indefinida,
-    "momento":               at(0),
 })
 
-u.assert_fact(pres, "motivado_por",   diag)        # por qué se prescribió
-u.assert_fact(pres, "con_finalidad",  objetivo)    # para qué se prescribió
-u.assert_fact(pres, "verificado_contra", regla_contraindicacion)
+u.assert_fact(pres, "motivado_por",      diag_hta_001)           ← Por qué me recetan esto
+u.assert_fact(pres, "con_finalidad",     bajar_presion_obj)      ← Para qué me recetan esto
+u.assert_fact(pres, "verificado_contra", regla_embarazo_alerta)  ← Ley médica de seguridad
 ```
 
-Tres relaciones distintas sobre la misma prescripción. `motivado_por` apunta al diagnóstico que la justifica; `con_finalidad` apunta al objetivo terapéutico — una situación-objetivo reificada — que el médico busca alcanzar; `verificado_contra` apunta a la regla farmacológica que el sistema usó para confirmar que la prescripción es segura. El "porque", el "para qué" y el "bajo qué autoridad" — exactamente la familia D6 del capítulo 11 — quedan registrados sin contorsiones.
+Tres respuestas profundas a tres preguntas distintas. El médico no te receta por gusto; lo hace *motivado* por tu enfermedad. Lo hace *con la finalidad* de alcanzar un resultado a futuro (bajar tu presión). Y lo hace amparado por un manual de farmacología que *verifica* que la pastilla no te matará. 
 
-La regla farmacológica merece su propia atención. Una contraindicación — *"no enalapril durante embarazo"* — no es código aplicación; es un **dato reificado** que el modelo almacena con la misma estructura que cualquier otra situación:
+Y hablemos un segundo de esa última regla de farmacología. Un manual que dice *"Prohibido dar Enalapril a embarazadas"* no es un pedazo de código escondido por un programador; la guardamos como un evento reificado más en el eje `O`, como si fuera una ley de tránsito:
 
+```text
+(ley_enalapril_embarazo) ∈ O
+  instancia_de:           contraindicacion_medica
+  medicamento_implicado:  enalapril           
+  condicion:              estado_embarazo     
+  orden_oficial:          evitar_medicamento  
 ```
-(contraindicacion_enalapril_embarazo) ∈ O
-  instancia_de:           contraindicacion
-  medicamento_prescrito:  enalapril           ∈ M(O, K)
-  condicion:              estado_embarazo     ∈ M(O, K)
-  consecuente:            evitar_medicamento  ∈ M(O, K)
-```
 
-Cuando el médico prescribe, un evaluador externo recorre el grafo: busca contraindicaciones con `medicamento_prescrito` igual al recetado, y para cada una verifica si la condición se cumple en el paciente. Si la regla se viola, el sistema alerta. La regla está en el grafo; el evaluador está afuera. Es exactamente el patrón visto en el sauna con la fidelidad y en el taxi con el surge pricing.
+Con esto, nuestra base de datos se vuelve inteligente. Cuando la doctora presiona "recetar", un script de código externo simplemente escanea la base de datos, lee esta regla universal, se da cuenta de que la paciente está embarazada y bloquea el botón lanzando una alerta roja. 
 
-## Lo que el modelo absorbe sin esfuerzo
+## Balance Médico: Misión Cumplida
 
-Validamos en el prototipo ocho cosas que el dominio clínico exige y el modelo entrega:
+El modelo WQuestions devoró el reto del mundo médico sin sudar. Observa lo que validamos con código ejecutable:
 
-1. **La consulta articula cinco sub-situaciones por `parte_de`** sin tener que inventar tablas auxiliares.
-2. **La prescripción está `motivada_por` el diagnóstico** — la evidencia clínica queda explícita.
-3. **El control futuro tiene `estatus_factual: previsto`** — el modelo distingue lo agendado de lo ocurrido sin reglas especiales.
-4. **D9 en el diagnóstico**: en agosto 2026 vigente HTA-g1; en marzo 2027 vigente HTA-g2; sin perder el histórico.
-5. **`verificado_contra` la contraindicación** — la auditabilidad farmacológica es una arista, no un módulo separado.
-6. **El rediagnóstico `rectifica` el original** — la trazabilidad de cambios viene del catálogo D7, no de código a medida.
-7. **`con_finalidad` apunta a una situación-objetivo reificada** — el "para qué" del tratamiento es consultable.
-8. **62 hechos atómicos** describen toda esta consulta — comparable al sauna en densidad informacional.
+1.  La "Carpeta Maestra" de la consulta abrazó cinco sub-situaciones con la relación `parte_de` sin tener que fabricar bases de datos paralelas.
+2.  La receta médica se enlazó a la evidencia clínica (`motivado_por`).
+3.  El control médico de la próxima semana se guardó como `estatus_factual: previsto`. El sistema sabe que es un plan, no una realidad.
+4.  La regla del tiempo **D6** nos permitió guardar dos diagnósticos contrarios sin perder el rastro histórico forense de la paciente.
+5.  Todo este enmarañado monstruo científico ocupó apenas **62 hechos atómicos**. Un volumen de datos ridiculamente pequeño si lo comparamos con la burocracia de un servidor SQL tradicional.
 
-## Metodología: cómo se elige qué reificar
+## Una lección de diseño: El arte de saber qué reificar
 
-Cerremos con una observación de método que vale para cualquier dominio nuevo. Modelar la consulta clínica obligó a tomar varias decisiones de reificación. Cada vez la pregunta fue la misma: **¿esta cosa va a ser sujeto de alguna afirmación futura, o solo es un valor?**
+Quiero regalarte una pepita de oro metodológica que extraje al programar este hospital. 
 
-- *¿El síntoma se reifica?* Sí: el médico va a querer registrar **cuándo empezó**, **qué intensidad tiene**, **si se acompaña de otros síntomas**. Es sujeto de muchas afirmaciones futuras → O.
-- *¿La medición se reifica?* Sí: el médico va a querer ligarla al diagnóstico (`tema` del diag), referenciarla en el seguimiento, compararla con la próxima. → O.
-- *¿La frecuencia "cada_manana" se reifica?* No: es un valor terminal, no se va a referenciar de otra afirmación. → K.
-- *¿El objetivo terapéutico se reifica?* Sí: aparece como `con_finalidad`, y eventualmente el médico va a querer afirmar *"el objetivo fue alcanzado"* o *"el objetivo fue ajustado"*. → O.
-- *¿La contraindicación se reifica?* Sí: tiene su propia condición, consecuente, vigencia, emisor. Es regla → O.
+A la hora de diseñar, ¿cómo decides qué evento merece convertirse en una entidad importante (Reificarse en `O`) y qué cosa solo debe ser un número triste en la caja `N`?
+La regla es simple y brutal: **Si crees que en el futuro alguien va a hacer una pregunta o una afirmación sobre ese dato, entonces reifícalo.**
 
-La regla operativa, repetida tres veces en este libro: **si alguna vez vas a afirmar algo sobre esta cosa, reifícala**. Si nunca, déjala como valor terminal en K, T o N. El costo de reificar es bajo (un UUID, un nodo); el costo de no reificar y luego necesitarlo es muy alto (refactorización del schema).
+*   *¿Reificamos el "Síntoma de dolor"?* Sí, porque mañana el médico querrá saber cuándo empezó y qué tan fuerte es. Lo volvemos entidad (`O`).
+*   *¿Reificamos la "medición de presión"?* Sí, porque mañana querremos conectarla como evidencia de una enfermedad. Entidad (`O`).
+*   *¿Reificamos el dato "tomar cada mañana"?* No. Es un valor final. A nadie le importa interrogar al concepto "cada mañana". Eso se queda como una etiqueta inerte en `K`.
+*   *¿Reificamos la "Regla de prohibición para embarazadas"?* Sí, porque tiene fecha de vigencia, condición y autor. Entidad (`O`).
+
+El costo en el servidor de convertir algo en entidad es de unos cuantos bytes. El costo corporativo de no hacerlo y luego descubrir que un juez te exige el historial de ese dato... te costará millones en refactorización de software.
 
 ## Lo que viene
 
-Hasta acá modelamos tres dominios con grados crecientes de exigencia: sauna (comercial simple), taxi (concurrencia y agencia repartida), clínica (densidad semántica y vigencia temporal). Cada uno mostró una faceta distinta del modelo. El próximo capítulo cambia la estrategia: en lugar de **modelar un dominio en profundidad**, va a **someter al modelo a cuatro dominios cualitativamente distintos en serie** — música, química, fútbol y contrato — para encontrar lo que el modelo aún no resuelve bien. Es el capítulo donde el libro deja de presumir y empieza a admitir.
+Hasta aquí hemos triunfado modelando tres mundos en profundidad: el Spa (comercio simple), el Taxi (alta velocidad y software tomando decisiones) y la Clínica Médica (alta densidad de ciencia y reglas temporales estrictas). Nuestra arquitectura parece invencible.
+
+El próximo capítulo cambia de escala y pone a WQuestions frente al dominio más exigente del libro: **un banco regional**. No es un negocio simple ni un servicio operativo; es un archipiélago de cinco "islas" de software (core bancario, agencias, contabilidad, promotores, reporting) que tradicionalmente no se hablan entre sí y donde la mayoría de las decisiones de diseño que ya conocemos — bitemporalidad (D6), reificación de situaciones (D4), agencia contextual (D5), las cuatro relaciones del "por qué" (D7) — dejan de ser elegancia conceptual y pasan a ser **exigencias regulatorias**.
+
+Vamos a modelar una transferencia con cinco agentes y dos asientos contables, el ciclo de vida completo de un préstamo que entra en mora y se reestructura, una investigación de fraude que reconstruye el pasado, y una oferta de tarjeta de crédito reificada como producto bancario. En cada caso vas a ver cómo la arquitectura conceptual aguanta el peso del dinero y de la auditoría regulatoria sin doblarse.

@@ -7,7 +7,7 @@ identificados y aplica el pipeline:
     2. Reificar la situación en O
     3. Asentar instancia_de = tipo_situacion
     4. Asentar cada rol como hecho atómico
-    5. Validar contra el catálogo D7
+    5. Validar contra el catálogo D8
     6. Verificar obligatorios
 
 Devuelve la situación reificada para que el caller pueda enriquecerla.

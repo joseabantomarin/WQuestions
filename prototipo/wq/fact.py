@@ -2,9 +2,9 @@
 
 Cada hecho es una tupla `(sujeto, rol, valor)` donde:
 - `sujeto` y `valor` son `Individual` (viven en algún eje de valor).
-- `rol` es una etiqueta del catálogo canónico (D7) o de su capa lexicon.
+- `rol` es una etiqueta del catálogo canónico (D8) o de su capa lexicon.
 
-D9 — vigencia temporal: cada hecho lleva opcionalmente un rango
+D6 — vigencia temporal: cada hecho lleva opcionalmente un rango
 `[valid_from, valid_to)` que indica desde cuándo y hasta cuándo es cierto en
 el mundo. Si `valid_to is None`, está abierto al futuro.
 

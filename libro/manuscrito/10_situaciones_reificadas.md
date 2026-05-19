@@ -1,44 +1,52 @@
 # Capítulo 10 — Situaciones reificadas: los puntos articuladores
 
-## Por qué algunas cosas merecen ser sustantivos
+## Por qué algunas acciones merecen ser sustantivos
 
-Hay una operación gramatical sutil que el español hace con extraordinaria facilidad: convertir un verbo en sustantivo. *Correr* se vuelve *la corrida*. *Vender* se vuelve *una venta*. *Operar* se vuelve *la operación*. *Decidir* se vuelve *la decisión*. *Componer* se vuelve *la composición*. Estos sustantivos no nombran objetos físicos como una taza o un coche; nombran **acciones, eventos o procesos** que adquirieron suficiente identidad como para hablar de ellos.
+Si te fijas con cuidado, el idioma español tiene un truco gramatical fascinante y muy útil: nos permite convertir cualquier verbo en un sustantivo sin el menor esfuerzo. El verbo *correr* se transforma en *la carrera*. *Vender* se vuelve *la venta*. *Operar* pasa a ser *la operación*. *Decidir* se convierte en *la decisión*. 
 
-La transformación no es decorativa. Decir "*María vendió un libro a Juan*" o decir "*la venta de María a Juan ocurrió ayer y la registró el sistema 14*" significa cosas estructuralmente distintas. En la primera versión, la venta es un evento pasajero que la oración nombra. En la segunda, **la venta es una entidad** — tiene fecha, agente que la registró, identidad propia — y puede ser objeto de nuevas afirmaciones: se canceló, se rectificó, se devolvió.
+Esos sustantivos nuevos no nombran cosas físicas que puedas tocar, como una taza de café o un escritorio; nombran **acciones, eventos o procesos**. Pero al volverlos sustantivos, les hemos otorgado algo vital: identidad propia. Los hemos convertido en "cosas" de las que podemos hablar.
 
-Este paso — convertir un evento o acción en una entidad de primera clase con identidad propia — es lo que el modelo llama **reificación**. Y la entidad resultante es una **situación reificada**: un individuo en O que aloja los participantes, el momento, el lugar, el modo, la finalidad y todo lo demás que el evento tiene.
+Este cambio no es solo un adorno literario; en la arquitectura de datos, es la diferencia entre un sistema que entiende el mundo y uno que se ahoga en detalles. 
 
-Las situaciones reificadas son **los puntos articuladores del grafo**: nodos donde múltiples hechos convergen porque hablan de lo mismo. Sin ellas, el modelo solo puede expresar tripletas simples. Con ellas, puede expresar cualquier cosa que el lenguaje natural describa, por compleja que sea.
+Piénsalo así: decir *"María le vendió un libro a Juan"* no es lo mismo que decir *"la venta de María a Juan ocurrió ayer y quedó registrada bajo el código 14"*. En la primera oración, "vender" es solo un acto pasajero que conecta a María con el libro. En la segunda oración, **la venta se ha convertido en una entidad en sí misma**. Ahora tiene un código, una fecha, y lo más importante: podemos añadirle nuevos datos en el futuro. Podemos decir que "la venta se canceló", "se rectificó" o "se pagó en cuotas".
 
-Este capítulo se ocupa de cuatro preguntas: *¿cuándo conviene reificar?*, *¿cómo se ve una situación reificada por dentro?*, *¿cómo se modela su validez en el tiempo?* y *¿cómo se conectan unas con otras?*.
+A este truco tecnológico de tomar un evento fugaz y convertirlo en un objeto de primera clase con identidad propia, nuestro modelo lo llama **reificación** (del latín *res*, que significa 'cosa': literalmente, "hacer cosa" un evento). Y a la entidad que nace de ese proceso la llamamos **situación reificada**. 
 
-## La regla de oro: cuándo reificar
+Estas situaciones reificadas van a vivir siempre en el eje `O`. Son los "nudos" o **puntos articuladores** de nuestra red de datos. Son los conectores maestros donde docenas de pequeños hechos convergen porque todos hablan exactamente de lo mismo. Sin la reificación, nuestro modelo solo podría procesar oraciones simples. Con la reificación, el modelo puede entender y guardar cualquier evento humano, por gigantesco e intrincado que sea.
 
-Una pregunta razonable que el lector probablemente trae desde capítulos anteriores: *¿toda relación entre cosas se reifica?* No. Reificar tiene un costo — multiplica entidades en el universo V, agrega un salto adicional en las consultas, exige asignar un identificador interno (UUID v7, en la implementación que propusimos). Si todo se reifica, el modelo se infla con objetos abstractos que no aportan información.
+## La regla de oro: ¿Cuándo conviene reificar?
 
-La regla de oro del modelo es: **reificar solo cuando se da al menos una de cuatro condiciones**.
+Llegados a este punto, la duda lógica es: *¿Debo convertir absolutamente todo en una situación reificada? ¿Si Juan es alto, debo crear "la situación de la altura de Juan"?* 
 
-1. **La relación tiene propiedades propias** que no caben en una tripleta plana — tiempo, lugar, modo, instrumento, agente adicional. Un gol no es solo `(messi, marca, gol_argentina)`; tiene minuto, asistente, pierna, ubicación del remate. Esas propiedades necesitan colgar de algún nodo. Reificar el gol da ese nodo.
+La respuesta es un rotundo no. Reificar cuesta dinero y recursos. Cada vez que conviertes un hecho en una "situación", estás creando un objeto nuevo en tu base de datos, tienes que asignarle un código de identidad único (un UUID) y el sistema tardará un milisegundo extra en buscarlo. Si reificas todo por costumbre, vas a inflar tu base de datos con basura abstracta.
 
-2. **La relación es n-aria** (más de dos participantes con roles distintos). Una venta tiene vendedor, comprador, producto, monto, fecha. Como vimos en el capítulo 8, una tripleta plana solo retiene dos. La reificación es la forma estándar de modelar n-aridad sin abandonar la estructura de hechos atómicos.
+Para mantener la base de datos veloz y limpia, nuestro modelo sigue una regla de oro: **solo se reifica cuando se cumple al menos una de estas cuatro condiciones**.
 
-3. **Hay que referirse a la relación misma** desde otro hecho. *"La venta fue anulada"*, *"el gol fue revisado por el VAR"*, *"el diagnóstico está siendo cuestionado"*. Si una relación es objeto de otra relación, necesita identidad — porque algo tiene que ser el sujeto del segundo hecho.
+1.  **El evento tiene demasiados detalles.** Si el hecho tiene propiedades que no caben en una oración simple (como la hora exacta, el lugar, el instrumento usado o un agente secundario), reifícalo. Un gol no es solo `(messi, anota, gol)`. Un gol profesional tiene un minuto exacto, una pierna utilizada, un pase previo y una distancia. Esos detalles no tienen de dónde "colgar" a menos que conviertas el gol en una entidad propia.
+2.  **Participan más de dos personas o cosas.** Una transacción de venta tiene un vendedor, un comprador, un producto, un precio y una fecha. Como vimos en el capítulo 8, nuestra "tripleta atómica" solo puede conectar dos cosas a la vez (Sujeto y Objeto). Reificar la venta es el mecanismo estándar para conectar a cinco actores distintos sin romper nuestras reglas matemáticas.
+3.  **Vas a necesitar hablar de este evento más tarde.** Si sabes que en el futuro vas a recibir actualizaciones sobre este hecho, debes reificarlo. Datos como *"la venta fue anulada"*, *"el diagnóstico fue apelado"* o *"el partido fue suspendido por lluvia"* exigen que la venta, el diagnóstico o el partido existan previamente como objetos independientes en la base de datos para poder recibir esas actualizaciones.
+4.  **El dato va a cambiar en el futuro y necesitas guardar el historial.** El dato "dónde vive Marta" es temporal. Hoy vive en una ciudad, mañana vivirá en otra. Si solo guardamos el dato actual, perdemos todo su historial. Si convertimos su residencia en una "situación" y le ponemos una fecha de `inicio` y un `fin`, conservamos la historia intacta. A esto lo llamaremos la regla de **vigencia temporal**, y la veremos más abajo.
 
-4. **El hecho cambia de valor en el tiempo** y hace falta preservar el historial. El "dónde vive Marta" cambia: hasta 2025 vivía en una ciudad, desde 2026 vive en otra. Si almacenamos solo el valor actual, perdemos el histórico. Si reificamos la situación de residencia con `inicio` y `fin`, lo conservamos. Este es el caso que llamamos **D9 — vigencia**, y volveremos sobre él en breve.
+Si un dato no cumple ninguna de estas cuatro reglas, **no lo reifiques**. Dejarlo como un hecho atómico simple `(juan, estatura, 1.80)` es perfecto y mantiene el sistema rápido.
 
-Si no se cumple ninguna de las cuatro, **no reifiques**. *"Juan mide 1.80"* como tripleta `(juan, estatura, 1.80)` está perfecto y vive en V sin inflar nada. Esto es lo que mantiene la limpieza algebraica del modelo sin sacrificar expresividad cuando hace falta.
+Para que no queden dudas, esta será la **cuarta decisión de diseño** de nuestra arquitectura:
 
-## Anatomía de una situación reificada
+> **D4 — Un evento o relación solo se transforma en una "situación reificada" (guardada en el eje O) si cumple al menos uno de cuatro requisitos: (1) tiene atributos propios como lugar o modo, (2) participan más de dos actores, (3) será referenciado por otros eventos en el futuro, o (4) su valor cambiará y necesitamos conservar un registro histórico. Si no cumple ninguna, usamos una tripleta simple.**
 
-Cuando una situación se reifica, ¿cómo se ve por dentro? Tomemos un caso concreto: la consulta médica de María Gonzales del 14 de mayo de 2026 con la Dra. Torres. La consulta es un evento complejo: tiene paciente, médico, fecha, lugar, motivo, mediciones, diagnóstico, prescripción, pago.
+## Autopsia de una situación reificada
 
-```
+¿Cómo se ve uno de estos "nudos" por dentro? Abramos uno para revisarlo. Tomemos un evento cotidiano pero complejo: la consulta médica de la paciente María Gonzales del 14 de mayo de 2026 con la Dra. Torres. 
+
+A nivel humano, sabemos que una consulta médica incluye a un paciente, un doctor, una fecha, un consultorio, un motivo de visita, un diagnóstico oficial y, finalmente, un pago. 
+
+En nuestro sistema, lo primero que hacemos es "hacer cosa" la consulta, creándola en el eje O:
+```text
 (consulta_2026_05_14) ∈ O
 ```
 
-Ese sujeto, `consulta_2026_05_14`, es el punto articulador. Todos los hechos de la consulta cuelgan de él vía hechos atómicos.
+Ese código, `consulta_2026_05_14`, se convierte en nuestro punto articulador. Todos los detalles de la visita médica se van a enganchar a este nodo central utilizando nuestros hechos atómicos de tres partes:
 
-```
+```text
 (consulta_2026_05_14, instancia_de,   accion_consultar)        ∈ M(O, K)
 (consulta_2026_05_14, agente,         dra_torres)              ∈ M(O, Q)
 (consulta_2026_05_14, paciente,       maria_gonzales)          ∈ M(O, Q)
@@ -49,153 +57,157 @@ Ese sujeto, `consulta_2026_05_14`, es el punto articulador. Todos los hechos de 
 (consulta_2026_05_14, estatus_factual, real)                   ∈ P(O, K)
 ```
 
-Ocho hechos atómicos. Cada uno se sostiene por sí solo; juntos describen la consulta. Y como `consulta_2026_05_14` tiene identidad propia, otras situaciones pueden referirla:
+Hemos usado ocho hechos atómicos para dibujar la consulta completa. Y aquí viene la recompensa de haberlo reificado: como `consulta_2026_05_14` ahora es una entidad con identidad propia, otros eventos posteriores pueden apuntar directamente a ella:
 
-```
-(prescripcion_017,  parte_de,        consulta_2026_05_14)      ∈ M(O, O)
-(pago_001,          sobre_situacion, consulta_2026_05_14)      ∈ M(O, O)
-(control_futuro_001, prevista_por,   consulta_2026_05_14)      ∈ M(O, O)
+```text
+(prescripcion_medica_017,  parte_de,        consulta_2026_05_14)
+(pago_tarjeta_001,         sobre_situacion, consulta_2026_05_14)
+(control_mes_siguiente,    prevista_por,    consulta_2026_05_14)
 ```
 
-La prescripción, el pago y el control futuro son cada uno **sus propias situaciones reificadas**, conectadas a la consulta original por relaciones canónicas. El grafo crece naturalmente: situaciones reificadas conectadas por relaciones reificadas, sin que la forma del hecho atómico cambie nunca.
+Fíjate en lo que acabamos de hacer. La prescripción, el pago y la futura visita son, cada una de ellas, **nuevas situaciones reificadas** que se conectan al nodo maestro original. La red de la base de datos crece de forma natural, sin cambiar jamás su formato de "tres columnas".
 
 ![Anatomía de una situación reificada: la consulta médica como nodo central con todos sus participantes, momentos, lugares y propósito colgando como hechos atómicos. Las situaciones derivadas (prescripción, pago, control) se conectan al nodo por relaciones canónicas.](../diagrams/png/17_situacion_reificada.png)
 
-## Estatus factual: situaciones que no han ocurrido todavía
+## D5: El agente no siempre es un humano
 
-Una situación reificada no necesariamente describe algo que **ya pasó**. Puede describir algo que está planeado, algo que se esperaba pero se canceló, algo hipotético, algo cuestionado. El modelo necesita poder distinguir estos modos sin tener que duplicar etiquetas (`agente` vs `agente_planeado`, `momento` vs `momento_planeado`).
+Hagamos una pausa para oficializar algo que los ejemplos ya nos venían gritando. En la consulta médica, el rol de `agente` se lo dimos a una persona de carne y hueso (la Dra. Torres). Sin embargo, si miramos otros mundos, el "agente" de una acción puede ser cualquier cosa: el algoritmo de Uber que te asigna un chófer, el servidor bancario que te cobra mantenimiento, o un modelo de IA que redacta un contrato.
 
-La convención que emergió de las pruebas de dominio — particularmente en historia clínica y en contratos — es marcar la situación con una propiedad explícita de **estatus factual**:
+Esto significa que nuestro modelo **no exige que el protagonista de la acción sea humano**.
 
+> **D5 — Agencia contextual. El rol de `agente` puede ser ocupado por humanos, corporaciones, algoritmos de software o sensores físicos. Todo depende del verbo de la acción. Hay verbos que exigen un agente (como "vender") y otros que no necesitan a nadie ("ocurrir", "llover").**
+
+Esta regla (D5) es la que nos permite auditar sistemas industriales, plantas químicas o plataformas de Inteligencia Artificial utilizando exactamente el mismo lenguaje que usaríamos para registrar ventas humanas. 
+
+## El Estatus Factual: Eventos que todavía no han pasado
+
+Una situación en nuestro sistema no tiene que ser obligatoriamente un hecho consumado. A menudo, las empresas necesitan guardar situaciones que están planeadas, reuniones que se cancelaron, diagnósticos que son meras hipótesis o compras que fueron devueltas.
+
+Para no tener que inventar etiquetas duplicadas para todo (como tener un cable `agente_real` y otro cable `agente_planeado`), la solución más limpia que encontramos fue obligar a todas las situaciones a declarar abiertamente su **estatus factual**:
+
+```text
+estatus_factual : de O hacia K
+  Opciones permitidas: real | planeado | confirmado | hipotético | cancelado | rectificado
 ```
-estatus_factual : O → K
-  valores: real | planeado | confirmado | hipotético | cancelado | rectificado
-```
 
-Una consulta médica programada para el mes próximo se modela igual que una consulta real, pero con `estatus_factual: planeado`. Si el paciente la cumple, se crea una *nueva* situación con `estatus_factual: real` y se la conecta con `(real_001, cumple, planeada_001)`. Si la cancela, se agrega `(planeada_001, estatus_factual, cancelada)` o, mejor, se crea una situación de cancelación que apunta a la planeada.
+Si agendas una consulta médica para el mes que viene, la guardas en el sistema exactamente igual que si fuera una consulta real, pero le añades la propiedad `estatus_factual: planeado`. Si el paciente asiste a su cita, el sistema no borra el plan; crea una *nueva* situación con el estatus `real` y la conecta a la antigua diciendo que la "cumplió". Si el paciente llama para cancelar, creamos una situación de cancelación.
 
-```
-(control_futuro_001) ∈ O
+```text
+(futuro_control_001) ∈ O
   instancia_de    : accion_consultar
   agente          : dra_torres
-  paciente        : maria_gonzales
   momento         : 2026-06-04T10:00:00Z
-  estatus_factual : planeado                    ← clave
-  prevista_por    : consulta_2026_05_14
+  estatus_factual : planeado                    ← ¡La clave está aquí!
 ```
 
-Esta convención preserva la **inmutabilidad** de los hechos pasados — un hecho real registrado no se reescribe — y permite, al mismo tiempo, modelar la red de expectativas, intenciones y planes que orbitan toda actividad humana real.
+Este pequeño truco asegura la **inmutabilidad** de la base de datos: el pasado jamás se reescribe. A la vez, nos permite mapear toda la red de expectativas, promesas y fallos que componen el día a día de cualquier negocio real.
 
-## Vigencia y D9: propiedades que cambian en el tiempo
+## Vigencia y la Regla D6: Datos que caducan con el tiempo
 
-Llegamos a una de las decisiones de diseño más sutiles del modelo. Algunas propiedades no son fijas. La dirección de Marta cambia cuando se muda. El monto de la renta cambia cuando se aplica el reajuste por IPC. El medicamento que toma un paciente cambia cuando el médico ajusta el tratamiento. El precio de un producto cambia con la inflación. Si estas propiedades se almacenaran como tripletas planas, el histórico se perdería: al guardar el valor nuevo, el viejo desaparecería.
+Llegamos a uno de los trucos de diseño más inteligentes de todo el modelo. 
 
-El modelo resuelve esto con **D9 — vigencia temporal mediante reificación**.
+Hay propiedades que simplemente no duran para siempre. El monto del alquiler que pagas hoy cambiará el año que viene por la inflación. El medicamento que receta el doctor hoy, se suspenderá en tres semanas. Si una base de datos antigua recibe un precio nuevo, borra el precio viejo y pone el nuevo encima, destruyendo el historial corporativo para siempre. 
 
-> **D9 — Las propiedades que cambian en el tiempo se reifican como situaciones con `inicio` y `fin` (o `valido_desde` y `valido_hasta`), no se almacenan como atributos directos del sujeto.**
+Nosotros evitamos ese desastre utilizando la reificación para dominar el flujo del tiempo. Esta es nuestra sexta decisión de diseño:
 
-En lugar de:
+> **D6 — Las propiedades que cambian con el paso del tiempo no se guardan directamente. Se reifican convirtiéndolas en situaciones, y se les añade una fecha de `inicio` y una de `fin` (su rango de vigencia).**
 
+En lugar de hacer la barbaridad de reescribir un dato así:
+```text
+(marta, vive_en, ciudad_a)    ← (Y si se muda, borrar este texto y poner ciudad_b)
 ```
-(marta, vive_en, ciudad_a)    ← se sobreescribe cuando se muda
-```
 
-Se modela:
+Lo que hacemos es crear una situación histórica:
 
-```
-(residencia_001) ∈ O
+```text
+(residencia_historial_001) ∈ O
   sujeto         : marta
   ciudad         : ciudad_a
   inicio         : 2010-03-15
   fin            : 2025-12-31
 
-(residencia_002) ∈ O
+(residencia_historial_002) ∈ O
   sujeto         : marta
   ciudad         : ciudad_b
   inicio         : 2026-01-01
-  fin            : null          ← vigencia actual
+  fin            : null          ← Al estar vacío, el sistema sabe que esta es la actual.
 ```
 
-Cualquier consulta sobre "dónde vive Marta" se vuelve una consulta tipo *"residencia con sujeto=marta, vigente en el momento X"*. El motor recupera la situación cuya `inicio ≤ X ≤ fin` (o `fin = null`). Si X es 2024, devuelve `ciudad_a`; si X es hoy, devuelve `ciudad_b`.
+Gracias a esto, cuando le preguntes al sistema "¿dónde vive Marta?", la máquina te pedirá una fecha de referencia. Si pides el año 2024, el motor leerá los rangos de tiempo y te devolverá de forma automática la `ciudad_a`. 
 
-![D9 en acción: una propiedad que cambia en el tiempo se modela como una sucesión de situaciones reificadas, cada una con su rango de vigencia. La consulta temporal recupera la situación válida en el momento solicitado.](../diagrams/png/18_d9_vigencia.png)
+![D6 en acción: una propiedad que cambia en el tiempo se modela como una sucesión de situaciones reificadas, cada una con su rango de vigencia. La consulta temporal recupera la situación válida en el momento solicitado.](../diagrams/png/18_d9_vigencia.png)
 
-La ganancia es enorme y se ve mejor con consultas reales. Preguntas como *"¿qué medicamentos tomaba el paciente en marzo de 2024?"*, *"¿cuál era el monto de la renta cuando se firmó el aviso de desalojo?"*, *"¿qué versión del modelo GPT se usaba el día de la decisión?"* se vuelven triviales. Sin D9, son imposibles sin un journal aparte.
+Esta técnica (llamada *bitemporalidad*) vuelve ridículamente fáciles consultas que antes volvían locos a los analistas de datos, tales como: *"¿Qué versión exacta del algoritmo de IA estaba corriendo en producción el día que se reportó el fallo el año pasado?"*. Sin la regla D6, responder eso es casi imposible.
 
-La regla práctica para decidir si una propiedad merece D9: **¿necesito alguna vez saber su valor en un momento pasado?** Si sí, reificar con vigencia. Si no — si solo importa el valor actual y reescribir el anterior es seguro —, propiedad simple.
+## ¿Cómo se conectan las situaciones entre sí?
 
-## Cómo se conectan las situaciones entre sí
+Para evitar que la base de datos se convierta en una selva inmanejable de eventos sueltos, hemos definido un grupo de cables oficiales (relaciones canónicas) que se encargan de organizar cómo interactúan estas situaciones reificadas entre sí. Son pocos, pero cubren todos los escenarios:
 
-Las situaciones reificadas no viven aisladas. Se conectan unas con otras por un conjunto pequeño de relaciones canónicas que el modelo provee de fábrica.
-
-**`parte_de`** y su inversa **`contiene`**: la situación menor pertenece a la mayor. Una jugada es parte de un partido. Una prescripción es parte de una consulta. Un movimiento contable es parte de una venta.
-
-```
-(gol_001,         parte_de, partido_arg_per_2026)
-(prescripcion_017, parte_de, consulta_2026_05_14)
+**1. Jerarquía (`parte_de` y su inverso `contiene`):** 
+Sirve para meter eventos pequeños dentro de eventos gigantes. Una compra con tarjeta es `parte_de` las ventas del mes. Un gol es `parte_de` un partido. 
+```text
+(gol_001,         parte_de,   partido_arg_per_2026)
+(compra_tarjeta,  parte_de,   cierre_mes_julio)
 ```
 
-**`precede`** y su inversa **`sigue_a`**: una situación ocurre antes de otra, con orden lógico aunque no necesariamente temporal estricto.
-
-```
-(examen_001,    precede, diagnostico_001)
-(diagnostico_001, precede, prescripcion_001)
-```
-
-**`causado_por`**, **`motivado_por`**, **`con_finalidad`**, **`justificado_por`**: las cuatro relaciones canónicas de "por qué", que conectan situaciones por causalidad, motivo, propósito o justificación normativa. Veremos estas en detalle en el próximo capítulo.
-
-**`cumple`**, **`cancela`**, **`modifica`**, **`rectifica`**: una situación nueva opera sobre una previa. El pago cumple la obligación. La cancelación deja sin efecto la reserva. La rectificación corrige el comprobante.
-
-```
-(pago_renta_julio,    cumple,  obligacion_renta_julio)
-(cancelacion_001,     cancela, reserva_017)
-(boleta_rectificativa_007, rectifica, boleta_007)
+**2. Secuencia lógica (`precede` y su inverso `sigue_a`):** 
+Organiza el flujo de los procesos. No importa tanto la hora del reloj, sino qué paso obligatoriamente va antes que otro.
+```text
+(examen_sangre_001,  precede,  diagnostico_medico)
 ```
 
-Con este pequeño catálogo de relaciones inter-situacionales, el grafo entero del sistema se vuelve un **grafo de situaciones** densamente interconectado. Cada situación es un nodo; cada relación canónica es una arista. Y el formato — tripletas atómicas con signatura — es siempre el mismo.
-
-## Reificación como continuo
-
-Una observación que conviene hacer explícita. Reificar no es una decisión binaria entre "sí" y "no": es un continuo de **resolución**. Un mismo fenómeno del mundo puede modelarse a distintos niveles de detalle según lo que el sistema necesite.
-
-Tres niveles ascendentes de resolución para el "consumo eléctrico mensual de un edificio":
-
-**Nivel 1 — tripleta plana.**
+**3. Acción y reacción (`cumple`, `cancela`, `modifica`, `rectifica`):** 
+Define cómo un evento nuevo impacta o anula a un evento del pasado. Un pago de nómina `cumple` la obligación mensual. Una boleta de devolución `cancela` la compra anterior.
+```text
+(transferencia_julio,   cumple,    obligacion_pago_julio)
+(boleta_rectificativa,  rectifica, boleta_original_007)
 ```
-(edificio_017, consumo_octubre, 1240)    ∈ P(O, N)
-(edificio_017, unidad_consumo,  kWh)     ∈ P(O, K)
-```
-Suficiente si solo importa el total.
 
-**Nivel 2 — medición reificada.**
+**4. El grupo del "Por qué" (`causado_por`, `motivado_por`, `justificado_por`):** 
+Los cables que explican los motivos humanos o mecánicos detrás de las situaciones. A estos les dedicaremos un análisis profundo en el próximo capítulo.
+
+## El Zoom de la reificación: Tú decides cuánto detalle quieres
+
+Cerramos con una aclaración vital para cualquier arquitecto de software: reificar la información no es un interruptor que simplemente se enciende o se apaga. Es como hacer zoom con una cámara. Un mismo evento puede modelarse de tres formas distintas en la base de datos, dependiendo de cuán obsesionada esté tu empresa con los detalles.
+
+Imagina que queremos guardar el *"consumo eléctrico mensual de un edificio corporativo"*. Podemos hacerlo en tres niveles de profundidad:
+
+**Nivel 1 — El brochazo gordo (Tripleta plana):**
+```text
+(edificio_017, consumo_octubre, 1240)    
+(edificio_017, unidad_consumo,  kWh)     
 ```
+Es rápido, barato, y suficiente si el gerente solo quiere ver el total gastado en el mes.
+
+**Nivel 2 — Reificación corporativa:**
+```text
 (consumo_oct_017) ∈ O
   edificio   : edificio_017
   cantidad   : 1240
   unidad     : kWh
   periodo    : 2026-10
-  medido_por : empresa_distribuidora
+  medido_por : empresa_distribuidora_luz
 ```
-Necesario si hay que conocer el medidor, el período exacto, la fuente.
+Aquí "hicimos cosa" al recibo de luz. Es necesario si el departamento de contabilidad exige auditorías sobre qué proveedor emitió el cobro y en qué periodo exacto.
 
-**Nivel 3 — consumos discriminados.**
-```
+**Nivel 3 — Reificación extrema (Microdatos):**
+```text
 (consumo_oct_017) ∈ O
   edificio    : edificio_017
   total       : 1240 kWh
   ...
-
-(consumo_oct_017_dia_03) ∈ O    ← parte_de consumo_oct_017
+(consumo_oct_017_dia_03) ∈ O    ← (Y decimos que esto es "parte_de" consumo_oct_017)
   fecha    : 2026-10-03
   cantidad : 42 kWh
-  ...
 ```
-Necesario si hay que detectar picos diarios o aplicar tarifas horarias.
+Aquí desarmamos el recibo gigante en 30 "situaciones de consumo diario" individuales. Solo harías esto si el edificio tiene paneles solares y necesitas calcular tarifas hora por hora para ahorrar energía.
 
-Cada nivel **es legítimo**. La elección depende del uso. Y — esta es la propiedad valiosa — pasar de un nivel a otro **no rompe el modelo**: simplemente se agregan más hechos atómicos sobre nuevas situaciones reificadas. Las consultas más simples siguen funcionando; las más detalladas se vuelven posibles.
+¿Cuál de los tres niveles es el correcto? **Los tres son perfectamente legales**. Todo depende del presupuesto de tu empresa y de lo que quieras lograr. Y lo más hermoso de esta arquitectura es que **saltar del nivel 1 al nivel 3 no rompe tu base de datos**. Si mañana necesitas más detalle, simplemente inyectas nuevas situaciones y las conectas a las antiguas usando el cable `parte_de`. El sistema jamás se detiene.
 
 ## Lo que viene
 
-Las situaciones reificadas son los puntos articuladores del grafo. Pero entre ellas hay un tipo particularmente importante de conexión que merece su propio capítulo: las relaciones de "por qué". *Causado por*, *motivado por*, *con finalidad*, *justificado por*. Estas cuatro relaciones canónicas son las que permiten que el grafo no sea solo una colección de hechos, sino una **explicación**: una estructura donde unos eventos dan razón de otros.
+Las situaciones reificadas son los semáforos y las rotondas por donde circula el tráfico de nuestra base de datos. Pero para que el mapa esté completo, falta pavimentar un tipo de conexión muy especial que une a estas rotondas: los cables del **"Por qué"**.
 
-Es lo que el capítulo 11 — el último de la Parte III — desarrolla.
+Saber que ocurrió una venta o un accidente médico es útil, pero saber *qué lo causó*, *qué normativa lo justificó* o *qué finalidad oculta perseguía* es lo que eleva una base de datos al nivel de inteligencia de negocios. 
+
+Esas cuatro conexiones canónicas (*causado por, motivado por, con finalidad, justificado por*) son las que nos permiten construir una estructura capaz de dar explicaciones razonadas. Y son las protagonistas absolutas del Capítulo 11, con el que clausuraremos la Parte III.

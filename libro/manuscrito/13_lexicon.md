@@ -1,36 +1,45 @@
-# Capítulo 13 — El lexicon: diccionario que es compilador
+# Capítulo 13 — El Lexicon: El traductor maestro
 
-## El problema de la mano
+## El problema de la mano (O por qué los verbos nos mienten)
 
-Tomemos dos oraciones del español que comparten cinco letras y, en apariencia, comparten verbo:
+Piensa en estas dos oraciones tan comunes en español:
 
-> *Pedro le dio un regalo a María.*
->
-> *Pedro le dio la mano a su jefe.*
+* Pedro le dio un regalo a María.
+* Pedro le dio la mano a su jefe.
 
-Si aplicamos al pie de la letra lo que el capítulo anterior estableció — el verbo nombra el tipo de situación, los constituyentes llenan los roles — las dos oraciones generarían situaciones del mismo tipo: `accion_dar`. El primero da un regalo; el segundo da una mano. Para el motor, parecería el mismo verbo con distinto tema.
+Si aplicamos al pie de la letra las reglas matemáticas que aprendimos en el capítulo anterior, nuestra base de datos leería el verbo "dar" y crearía automáticamente un evento de tipo `accion_dar`. El sistema creería que Pedro (el agente) le transfirió algo (el objeto) a un beneficiario. 
 
-Pero claramente no es así. En la primera oración hay una **transferencia de posesión**: María ahora tiene el regalo. En la segunda oración no hay transferencia de nada: el jefe no sale del encuentro con la mano de Pedro en el bolsillo. *Dar la mano* es una expresión idiomática que en español significa **saludar formalmente**. La situación que describe pertenece a una categoría completamente distinta — no a `accion_dar`, sino a `accion_saludar`.
+En la primera oración, todo funciona perfecto: María ahora es dueña de un regalo. Pero en la segunda oración... hay un gran problema. El jefe de Pedro no salió de la oficina con una mano ensangrentada en el bolsillo. No hubo ninguna "transferencia" física de nada. 
+*Dar la mano* es una expresión idiomática de nuestro idioma que simplemente significa **saludar formalmente**. Es decir, la segunda oración no debería guardarse como una `accion_dar`, sino como una `accion_saludar`. 
 
-Y *dar* tiene más. *Pedro dio una conferencia el martes* tampoco transfiere nada; significa que Pedro **realizó** una conferencia, una situación del tipo `evento_exposicion`. *El reloj dio las tres* es una metáfora del sonar, situación `accion_sonar`. *Le dio asco la noticia* es una experiencia sensorial, `experiencia_asco`. Un mismo verbo, cinco tipos de situación distintos.
+Y el verbo *dar* esconde aún más trampas:
+*   *Pedro dio una conferencia el martes*: No transfirió nada, simplemente **realizó** un evento de exposición (`evento_exposicion`).
+*   *El reloj dio las tres*: Es una metáfora, el reloj no regala tiempo, simplemente **suena** (`accion_sonar`).
+*   *La noticia le dio asco*: No hay regalo físico, es una **experiencia sensorial** interna (`experiencia_asco`).
 
-Este fenómeno — un verbo cuyo significado depende del complemento que lo acompaña — se llama **polisemia léxica**, y es la regla, no la excepción. El sistema **necesita resolver** qué tipo de situación está realmente describiendo antes de aplicar el procedimiento del capítulo 12, porque la signatura del verbo es distinta para cada caso. `dar(agente, tema, beneficiario)` no tiene la misma firma que `dar_la_mano(agente, paciente)` ni que `dar_conferencia(agente, tema, audiencia)`.
+Un mismo verbo, cinco tipos de situación completamente distintos. A este fenómeno —cuando el significado del verbo depende de la palabra que lo acompaña— los lingüistas lo llaman **polisemia léxica**. Y es la regla de oro de la comunicación humana, no la excepción.
 
-Lo que el modelo necesita, entonces, es un **diccionario** que mapee no verbos sueltos, sino **unidades léxicas** — verbo + complemento patrón — a sus tipos de situación correspondientes. Ese diccionario es el **lexicon**.
+Nuestra base de datos **necesita resolver** qué tipo de situación está ocurriendo realmente antes de empezar a conectar cables. Porque la regla de seguridad del verbo `dar(agente, regalo, beneficiario)` no tiene la misma firma que `dar_la_mano(agente, persona_saludada)` ni que `dar_conferencia(agente, tema, audiencia)`. 
 
-## El lexicon es la pieza más visible del proyecto
+Para que la máquina no colapse, necesitamos construir un **diccionario** que no mapee palabras sueltas, sino frases completas (el verbo + su complemento clave). A este diccionario maestro lo llamaremos **El Lexicon**.
 
-Antes de bajar al detalle conviene fijar la importancia arquitectónica del lexicon. El capítulo 12 mostró que el modelo tiene un catálogo canónico de roles (D7): `agente`, `tema`, `beneficiario`, `lugar_de`, `momento`, etcétera. Una decisión de diseño correlativa — la decisión número 8, **D8** — establece algo fundamental: **el catálogo canónico es invisible para el usuario final**. El usuario nunca debe escribir "agente" ni "beneficiario" para que el sistema funcione; debe poder hablar en su idioma habitual ("vendedor", "comprador", "cliente", "el que paga") y el sistema traducir.
+## El Lexicon es la pieza más visible del proyecto
 
-Quien hace esa traducción es el lexicon. D7 establece **qué hay debajo**; el lexicon establece **cómo se accede desde arriba**. Sin lexicon, el modelo es una librería interna excelentemente diseñada pero inutilizable; con lexicon, se vuelve una interfaz que cualquier humano puede usar — y, cada vez más relevante, cualquier modelo de lenguaje puede consultar.
+Antes de bajar al código, tenemos que entender la importancia arquitectónica de este diccionario. 
 
-Por eso D8 es estrictamente más fuerte que una decisión de cómoda usabilidad: garantiza que la arquitectura interna del modelo pueda evolucionar — agregar roles, refinar signaturas, cambiar identificadores — sin romper la experiencia de los usuarios, porque la única cara que el usuario ve es el lexicon. Ese es el contrato: el lexicon es estable hacia afuera; lo de adentro puede moverse.
+En el capítulo 12 dijimos que el sistema funciona con un catálogo oficial de roles o cables (como `agente`, `tema` o `beneficiario`). Ahora vamos a presentar una decisión de diseño paralela, nuestra **novena regla (D9)**:
 
-![La arquitectura en capas del lexicon (D8): el usuario habla con su vocabulario natural; el lexicon traduce a los roles canónicos del catálogo D7; el almacenamiento opera con identificadores internos. Cada capa puede cambiar sin afectar a las demás.](../diagrams/png/23_lexicon_capas.png)
+> **D9 — El catálogo oficial de roles es completamente invisible para el usuario final. Un humano jamás debe ser obligado a escribir palabras como "agente" o "beneficiario" para que el sistema funcione. Los usuarios deben poder usar su idioma natural ("vendedor", "comprador", "cliente"), y el sistema debe traducirlo silenciosamente.**
 
-## Anatomía de una entrada
+¿Quién hace esa traducción? El Lexicon. D8 estableció **qué hay debajo del capó**; el Lexicon establece **cómo se maneja el coche desde arriba**. 
 
-Una entrada del lexicon tiene un formato fijo que conviene mirar de cerca. Tomemos el caso de `vender`, que vamos a ver completo y luego desglosar:
+Sin este diccionario, nuestro modelo sería una librería interna maravillosamente diseñada, pero inútil para la gente. Con el Lexicon, se vuelve una interfaz amigable. Y lo que es mejor: D9 garantiza que los ingenieros puedan cambiar la arquitectura interna del software (agregar roles, cambiar códigos) sin romper la experiencia de los clientes, porque la única "cara" que el usuario ve es la del Lexicon. Ese es el trato: el Lexicon es estable hacia afuera; los engranajes por dentro pueden moverse.
+
+![La arquitectura en capas del lexicon (D9): el usuario habla con su vocabulario natural; el lexicon traduce a los roles canónicos del catálogo D8; el almacenamiento opera con identificadores internos. Cada capa puede cambiar sin afectar a las demás.](../diagrams/png/23_lexicon_capas.png)
+
+## Autopsia de una entrada en el diccionario
+
+Veamos cómo se ve una "página" de este diccionario por dentro. Tomemos el caso de `vender`. Así lo escribiría un ingeniero:
 
 ```yaml
 verbo: vender
@@ -53,25 +62,23 @@ verbo: vender
   ejemplo:      "María le vendió el libro a Juan por 20 dólares"
 ```
 
-Las piezas son seis y todas tienen un trabajo claro.
+Desarmemos este bloque. Tiene seis piezas y todas tienen un trabajo muy claro:
 
-**`verbo`** — la unidad léxica que dispara esta entrada. Puede ser una palabra (`vender`) o un patrón verbo + complemento (`dar [la mano]`, `dar [conferencia | clase]`). Los corchetes denotan los complementos que activan esta lectura específica.
+**1. `verbo`**: Es la unidad que activa esta regla. Puede ser una sola palabra (`vender`) o un patrón compuesto (`dar [la mano]`). 
+**2. `tipo_situacion`**: Es el código interno exacto al que se anclará el evento en la caja `K`. Es el motor oculto que el usuario no ve.
+**3. `roles` y sus *aliases***: Aquí está la magia de la traducción. El rol oficial es `agente`, pero la lista de *aliases* le enseña al sistema que si un humano dice *"vendedor"* o *"quien vende"*, significa lo mismo. Así, *"el vendedor le dio una factura al cliente"* y *"el agente proveyó un comprobante al beneficiario"* generan exactamente el mismo registro en la base de datos.
+**4. `obligatorios`** y **`opcionales`**: Son las reglas de seguridad de la firma. Dictan qué datos no pueden faltar para que la base de datos acepte la información.
+**5. `ejemplo`**: Una frase humana real. No es decorativa: el motor de pruebas (o la Inteligencia Artificial) lee esta frase para aprender cómo se usa este verbo en la vida real.
 
-**`tipo_situacion`** — el identificador en K al que la situación reificada quedará anclada. Es el nombre que `instancia_de` tomará como valor. Estable, interno, en general no expuesto al usuario.
+Vista así, una entrada del Lexicon no es solo una definición; es **una declaración de función de código con su propio manual de uso**.
 
-**`roles`** — la lista de roles que la situación admite, cada uno con dos campos: el nombre canónico (vive en D7) y la lista de **aliases naturales** que el usuario podría usar al hablar. *"El vendedor le dio una factura al cliente"* y *"el agente proveyó un comprobante al beneficiario"* deben producir exactamente la misma situación; el lexicon hace ese trabajo de unificación.
+## El Lexicon habla el idioma de la Inteligencia Artificial (Function Calling)
 
-**`obligatorios`** y **`opcionales`** — los dos listados que dicen qué roles deben aparecer para que la situación sea válida y cuáles son extras admisibles. Como vimos en el capítulo 12, esto convierte cada entrada en una signatura tipada chequeable.
+Los modelos de lenguaje más potentes del mundo actual (GPT-4, Claude, Gemini) han adoptado una forma estándar de conectarse con el software corporativo. Se llama *Function Calling* (o "Uso de Herramientas"). 
 
-**`ejemplo`** — una oración natural que muestra la entrada en uso. No es decorativa: es lo que el motor de prueba (o el modelo de lenguaje que aprende del lexicon) utiliza para verificar que la entrada efectivamente reconoce el patrón.
+Funciona así: la empresa le entrega a la IA un catálogo con formato JSON que describe todas las herramientas disponibles y sus reglas. Cuando un humano le pide algo a la IA, ella lee el catálogo, elige la herramienta correcta y envía una orden estructurada a la base de datos.
 
-Una entrada del lexicon es, vista así, **una declaración de función con su documentación adjunta**. Y aquí es donde la analogía deja de ser pedagógica para volverse técnica.
-
-## El lexicon como function schema
-
-Los modelos de lenguaje de la generación 2024-2026 — GPT, Claude, Gemini y sus equivalentes — han convergido en un paradigma de integración con sistemas externos llamado *function calling* o *tool use* [22]. El patrón es siempre el mismo: el sistema le presenta al modelo un catálogo de funciones disponibles, cada una con su schema JSON que declara nombre, descripción, parámetros y tipos. El modelo, cuando el usuario pide algo que requiere acción, genera una invocación estructurada: el nombre de la función y los argumentos con sus tipos correctos. Un evaluador externo recibe la invocación y la ejecuta.
-
-Lo notable es que el formato esperado por function calling es **estructuralmente idéntico** al formato de una entrada del lexicon. Tomemos la entrada de `vender` arriba y traduzcámosla a un schema de función:
+Lo fascinante es que el formato JSON que exigen estas IAs... **es estructuralmente idéntico a una entrada de nuestro Lexicon**. Tomemos la entrada de `vender` y traduzcámosla al formato que lee una IA:
 
 ```json
 {
@@ -92,63 +99,56 @@ Lo notable es que el formato esperado por function calling es **estructuralmente
 }
 ```
 
-Las correspondencias son una a una: `tipo_situacion` → `name`; los `aliases` se convierten en `description` para que el modelo sepa cómo lo llamaría el usuario; los tipos de eje (`Q`, `O`, `T`, `N`, `L`) se vuelven tipos del schema; `obligatorios` → `required`. **El lexicon, leído así, es un catálogo de funciones que un LLM puede invocar.**
+Las correspondencias son uno a uno. El `tipo_situacion` se vuelve el `name`. Los *aliases* se convierten en la `description` para que la IA sepa qué significan. Los ejes (`Q`, `O`, `T`) se vuelven los tipos obligatorios. **Nuestro Lexicon es, literalmente, un catálogo de herramientas listo para que un LLM lo invoque.**
 
-Esto importa más de lo que parece. Cuando un usuario escribe *"Ana se inscribió ayer en el plan mensual del sauna"* a un asistente conversacional respaldado por WQuestions, el modelo no necesita inventar cómo estructurar esa información: el lexicon le dice exactamente qué función llamar (`inscribirse` o `contratar`), qué roles llenar (`agente`, `tema`, `momento`) y qué tipos esperar en cada uno. La generación de la situación reificada es lo que produce la función. Y como el lexicon vive separado del motor de almacenamiento, agregar dominios nuevos es agregar entradas al lexicon — no escribir parsers ad-hoc.
+Esto significa que cuando un usuario de un sauna le escribe a un bot: *"Ana se inscribió ayer en el plan mensual"*, el modelo de IA no tiene que inventar cómo estructurar eso. Revisa el Lexicon, ve qué función debe llamar (`inscribirse`), qué roles llenar y qué datos espera tu base de datos. Esta convergencia no es suerte; es la demostración de que la estructura de la lingüística formal y la inteligencia artificial moderna llegaron exactamente al mismo puerto.
 
-Esta convergencia no es accidente. El paradigma de function calling redescubrió la misma intuición que la lingüística formal venía explotando desde Fillmore y Davidson: **un verbo es una función con argumentos tipados** [12, 24]. Lo que cambió en 2024 fue que los modelos se volvieron lo suficientemente buenos como para poder *llamar* esas funciones con fluidez. El lexicon de WQuestions queda exactamente sobre esa línea de convergencia.
+## Resolviendo el caos de la "Mano" (Polisemia)
 
-## Polisemia: una entrada por sentido
+Volvamos al verbo `dar`. ¿Cómo lo trata el Lexicon para no confundirse?
+La respuesta es brutalmente directa: **crea una entrada distinta para cada significado**. El Lexicon no intenta que una sola regla mágica cubra todos los usos. En su lugar, hace una lista de patrones, cada uno apuntando a su propio evento:
 
-Volvamos al *dar* del comienzo. ¿Cómo lo trata el lexicon?
-
-La respuesta es directa: **una entrada por cada sentido**. El lexicon no intenta que una única declaración de `dar` cubra todos los usos. En su lugar, lista varias unidades léxicas, cada una con su patrón de complemento que dispara la lectura específica:
-
-```
+```text
 dar
   tipo_situacion: accion_dar
   obligatorios:   [agente, tema, beneficiario]
-  notas:          dar canónico = transferir posesión
   ejemplo:        "Pedro le dio un regalo a María"
 
 dar [la_mano]
   tipo_situacion: accion_saludar
   obligatorios:   [agente, paciente]
-  notas:          colocación idiomática; tipo es saludar, no dar
   ejemplo:        "Pedro le dio la mano a su jefe"
 
 dar [conferencia | clase | charla]
   tipo_situacion: evento_exposicion
   obligatorios:   [agente, tema]
   opcionales:     [audiencia, lugar_de, momento, duracion]
-  notas:          light verb; dar = realizar
   ejemplo:        "Pedro dio una conferencia el martes"
 
 dar [las_horas]
   tipo_situacion: accion_sonar
   obligatorios:   [agente, tema]
-  notas:          metáfora del reloj; sujeto = el reloj
   ejemplo:        "El reloj dio las tres"
 
 dar [asco | pena | miedo]
   tipo_situacion: experiencia_sensorial
   obligatorios:   [tema, experimentador]
-  opcionales:     [momento]
-  notas:          dar invertido: el tema causa la experiencia
   ejemplo:        "La noticia le dio asco"
 ```
 
-El procedimiento de resolución es mecánico: el parser intenta hacer *match* del verbo con cada patrón disponible, **del más específico al más general**. Si la oración contiene *dar la mano*, el patrón `dar [la_mano]` coincide y se activa la entrada de saludo; si la oración contiene *dar un regalo*, ningún patrón específico coincide y se aplica la entrada genérica de `dar`. La regla del más específico al más general es la misma que cualquier compilador moderno usa para resolver sobrecarga de funciones.
+El procedimiento de resolución es el mismo que usan los compiladores de código: el sistema intenta encajar la frase **desde el patrón más específico hacia el más general**. Si la oración contiene *dar la mano*, se activa la entrada de saludo. Si la oración dice *dar un regalo*, el sistema no encuentra un patrón específico para "regalo", así que aplica la regla genérica de `accion_dar`. 
 
 ![Resolución de polisemia: el verbo "dar" se desambigua por su patrón de complemento. Cuatro unidades léxicas distintas apuntan a cuatro tipos de situación distintos en K. El parser elige el patrón más específico que coincida.](../diagrams/png/24_polisemia_resolucion.png)
 
-Lo importante es que la polisemia **no se trata como un problema lingüístico a resolver heurísticamente**; se trata como un caso normal de sobrecarga, declarado en el lexicon. Cada sentido tiene su signatura propia, su lista de obligatorios, su tipo en K. La complejidad no desaparece, pero se traslada al lugar donde corresponde: el diccionario, donde el lingüista del dominio (o el modelador, o el LLM) puede registrar nuevas lecturas sin tocar el motor.
+La complejidad del lenguaje no desaparece, simplemente se traslada al lugar correcto: al diccionario, donde un modelador de datos puede registrar nuevos significados sin tener que alterar el núcleo de la base de datos.
 
-## Dialectos de dominio
+## Dialectos de dominio (La jerga corporativa)
 
-Hay otra capa de aliases que vale la pena explicar. Hasta ahora vimos aliases por *rol* — el rol `agente` puede llamarse "vendedor" en una venta, "médico" en una consulta, "piloto" en un viaje. Pero hay aliases que aplican **transversalmente a todos los verbos** de un dominio determinado. Un sistema de ventas en cierto país llama "RUC" al identificador fiscal y "razón social" al nombre del cliente, sea cual sea el verbo. Un sistema clínico habla de "DNI del paciente" y "diagnóstico" en lugar de "identificador" y "estado_evaluado". Un sauna habla de "cliente", "sesión", "plan mensual" y "promoción" todo el tiempo.
+Existe otro nivel de traducción en el Lexicon que es clave para los negocios. Hasta ahora vimos *aliases* por rol ("vendedor" en lugar de `agente`). Pero hay palabras que aplican transversalmente a toda una empresa, sin importar qué verbo se esté usando.
 
-El lexicon admite **dialectos de dominio**: paquetes de aliases que se activan cuando el contexto operativo lo indica. Su declaración es liviana:
+Un sistema de salud siempre habla de "DNI", "paciente" y "diagnóstico". Un sauna habla de "cliente", "plan mensual" y "promoción". Para que nuestro motor universal funcione en todos estos lugares sin obligar a la gente a cambiar su forma de hablar, el Lexicon permite instalar **dialectos de dominio**.
+
+Es un pequeño archivo de traducción que se ve así:
 
 ```yaml
 dominio: sauna_oasis
@@ -159,35 +159,496 @@ dominio: sauna_oasis
     sesion_gratuita:   beneficio_fidelidad
     promo:             aplicacion_de_promocion
     redimir:           verbo_usar_beneficio
-    cubierto_por:      cubierto_por
 ```
 
-Con este dialecto cargado, un usuario del sauna puede escribir *"el cliente redimió su sesión gratuita el sábado"* y el sistema entender — sin ambigüedad — que `cliente` mapea a `agente`, `redimió` mapea al verbo `usar_beneficio`, y `sesión gratuita` mapea a una instancia de `beneficio_fidelidad`. Sin el dialecto, el sistema requeriría que el usuario escribiera las palabras canónicas, lo cual derrotaría D8.
+Con este dialecto cargado, un empleado del sauna puede escribir: *"El cliente redimió su sesión gratuita"*. El sistema, automáticamente, traduce "cliente" a `agente`, "redimió" al verbo `usar_beneficio` y "sesión gratuita" a la categoría `beneficio_fidelidad`. El sistema central sigue intacto, pero la clínica, el aeropuerto y el sauna sienten que el software fue hecho a su medida.
 
-Un dialecto de dominio no introduce nuevos verbos ni nuevos roles; introduce **traducciones del vocabulario habitual del dominio al vocabulario canónico**. Es la pieza que hace que el mismo motor sirva sin modificación para sauna, hospital, aeropuerto, contrato legal y juego de fútbol — porque cada uno trae su dialecto y el resto del sistema no se entera.
+## A hombros de gigantes: Precedentes industriales (FrameNet, VerbNet, PropBank)
 
-## Precedentes industriales: FrameNet, VerbNet, PropBank
+Es crucial entender que nosotros no nos estamos inventando estas estructuras desde cero. La lingüística computacional lleva treinta años construyendo inmensos catálogos con esta misma lógica, y cualquier implementación seria de nuestro Lexicon debe alimentarse de ellos. No tenemos que reinventar la rueda.
 
-El lexicon no nació en el vacío. La lingüística computacional pasó las últimas tres décadas construyendo recursos masivos con la misma intuición central. Vale la pena mencionarlos brevemente, porque cualquier implementación seria del lexicon va a apoyarse en ellos.
+**FrameNet `[14]`:** Iniciado en la Universidad de Berkeley en los años noventa, este proyecto clasifica el idioma en *escenarios conceptuales* (frames). Su escenario de "Comercio" tiene roles predefinidos como `Buyer` (Comprador), `Seller` (Vendedor) y `Goods` (Mercancía), casi idéntico a nuestra entrada de `vender`. Sus más de 1.200 escenarios son una mina de oro para poblar nuestra caja `K` de forma profesional.
 
-**FrameNet** [14], iniciado por Charles Fillmore en Berkeley en los años noventa, codifica el inglés (y por extensión otros idiomas) en términos de *frames semánticos*: escenarios conceptuales con un conjunto de roles típicos. El frame *Commerce_buy* de FrameNet tiene los roles `Buyer`, `Seller`, `Goods`, `Money`, `Means_of_payment`, casi uno a uno con la entrada de `vender` del lexicon. Sus más de 1.200 frames, anotados sobre corpus reales, son una fuente directa para poblar el catálogo de tipos en K.
+**VerbNet `[15]`:** Creado en la Universidad de Pensilvania, agrupa miles de verbos en inglés que comparten la misma estructura lógica (por ejemplo, verbos de transferencia o verbos de encuentro). 
 
-**VerbNet** [15], desarrollado por Karin Kipper Schuler en UPenn, clasifica verbos del inglés en clases que comparten sintaxis y semántica. Las clases de VerbNet — `give-13.1`, `transfer-mesg-37.1.1`, `meet-36.3` — funcionan como una primera aproximación a la familia de tipos en K, con la ventaja de venir con predicados lógicos explícitos que se pueden traducir al modelo.
+**PropBank:** Es un proyecto que prioriza la velocidad, etiquetando masivamente textos reales con roles genéricos (`Arg0` a `Arg5`). Es la base de datos favorita para entrenar modelos de Inteligencia Artificial modernos.
 
-**PropBank**, de Martha Palmer, prioriza la anotación masiva sobre corpus reales con roles minimalistas (`Arg0`–`Arg5`). Es menos rico semánticamente, pero su volumen y su uso en entrenamiento de modelos de procesamiento lingüístico lo hacen una referencia obligada al construir lexicones de gran escala.
+WQuestions no busca competir ni reemplazar a estas obras maestras. Al contrario, WQuestions actúa como una **capa de agregación**. Podemos extraer las signaturas de FrameNet, alinearnos con VerbNet y usar los datos de PropBank para entrenar a nuestro propio sistema. El camino ya está pavimentado.
 
-WQuestions no pretende reemplazar a ninguno de ellos. Se posiciona, más bien, como una capa de **agregación** que puede consumir sus aportes: la signatura de cada entrada del lexicon puede derivarse de FrameNet, los tipos en K pueden alinearse con clases de VerbNet, los corpus de PropBank pueden alimentar el entrenamiento de parsers que llenan el lexicon automáticamente. La integración exacta es trabajo futuro; lo importante por ahora es que el camino no es de cero.
+## Un buen puñado de entradas del Lexicon (En acción)
 
-## Lo que se gana con el lexicon
+Para que esta teoría pase a la realidad, es necesario mostrarte cómo se ve un catálogo abundante de entradas del Lexicon aplicadas a múltiples industrias. 
 
-Conviene cerrar enumerando lo que aparece cuando el lexicon está presente y desaparece cuando no.
+Mientras lees esta inmensa lista, quiero que notes tres cosas fundamentales:
+1. **Reciclamos los mismos roles siempre.** Observa cómo `agente`, `tema` y `beneficiario` se repiten en hospitales, bancos y escuelas. El catálogo base de 38 roles (D8) basta para todo.
+2. **Los eventos "meteorológicos" y los dolores caben perfecto.** Verás verbos como *llover* o *doler* que funcionan a la perfección simplemente dejando en blanco la necesidad de un "agente".
+3. **El poder de los *aliases***. Nota cómo las palabras en español cambian según la industria, pero el esqueleto de datos por debajo es siempre el mismo.
 
-**Con lexicon, el sistema entiende dialectos.** Un usuario del sauna habla de "cliente" y "sesión"; un usuario del hospital habla de "paciente" y "consulta"; un usuario del aeropuerto habla de "pasajero" y "vuelo". Los tres pueden ingresar información al mismo motor sin saber que internamente todo se llama `agente` y `situacion`. Sin lexicon, los tres tienen que aprender el vocabulario interno o el sistema necesita un parser ad-hoc por dominio.
+(Cada bloque contiene al final un ejemplo entre comillas que ilustra cómo el sistema leería la frase).
 
-**Con lexicon, los modelos de lenguaje pueden invocar el sistema.** Como vimos, una entrada del lexicon es estructuralmente un function schema. Un LLM con acceso al lexicon puede traducir lenguaje natural a invocaciones estructuradas sin entrenamiento adicional sobre el modelo. Sin lexicon, integrar un LLM exige escribir prompts complejos que enseñen al modelo el catálogo canónico cada vez.
+### Comercio y e-commerce
 
-**Con lexicon, la polisemia es declarativa.** *Dar la mano* y *dar un regalo* son entradas separadas en el diccionario; el parser elige por patrón. Sin lexicon, la desambiguación queda repartida en reglas dispersas en el código.
+```yaml
+verbo: comprar
+  tipo_situacion: accion_comprar
+  roles:
+    agente:        ["comprador", "el que compra", "cliente"]
+    tema:          ["producto", "artículo", "ítem", "mercancía"]
+    beneficiario:  ["vendedor", "tienda", "el que vende"]
+    por_cuanto:    ["precio", "monto", "valor"]
+  obligatorios: [agente, tema, beneficiario, por_cuanto]
+  opcionales:   [unidad, momento, lugar_de, instrumento]
+  ejemplo:      "Sofía compró tres camisetas en Zara por 89 dólares con tarjeta"
 
-**Con lexicon, el modelo es extensible sin tocar el motor.** Un dominio nuevo se incorpora agregando entradas y un dialecto. El motor de almacenamiento, el espacio multidimensional, la maquinaria de consulta — todo eso queda intacto. Sin lexicon, cada dominio nuevo requiere modificaciones en varios lados.
+verbo: pagar
+  tipo_situacion: accion_pagar
+  roles:
+    agente:        ["pagador", "el que paga", "deudor"]
+    beneficiario:  ["receptor", "acreedor", "el que cobra"]
+    monto:         ["importe", "cantidad", "monto"]
+    instrumento:   ["medio de pago", "tarjeta", "transferencia"]
+    tema:          ["concepto", "factura", "deuda", "servicio"]
+  obligatorios: [agente, beneficiario, monto]
+  ejemplo:      "Juan le pagó 250 dólares al plomero por la reparación"
 
-Por estas cuatro razones, decir que el lexicon es *el más importante de los artefactos del proyecto* no es exageración. La elegancia conceptual del modelo (los ocho ejes, los roles canónicos, las situaciones reificadas) vive en el catálogo D7. Pero su **usabilidad real** vive en el lexicon — y la usabilidad es la diferencia entre una propuesta interesante y una infraestructura adoptable. El próximo capítulo se ocupa de los tres casos lingüísticos que ponen al lexicon (y al modelo) bajo presión: nominalizaciones, modales e idiomas. Veremos qué hace bien, qué hace con esfuerzo y dónde están las grietas reales.
+verbo: facturar
+  tipo_situacion: accion_facturar
+  roles:
+    agente:        ["proveedor", "vendedor", "el que emite"]
+    beneficiario:  ["cliente", "el que recibe la factura"]
+    tema:          ["servicio prestado", "producto entregado"]
+    monto:         ["importe facturado", "total"]
+  obligatorios: [agente, beneficiario, tema, monto]
+  ejemplo:      "El estudio jurídico le facturó 1.200 dólares a la constructora"
+
+verbo: reclamar
+  tipo_situacion: accion_reclamar
+  roles:
+    agente:        ["reclamante", "el que reclama", "afectado"]
+    paciente:      ["empresa demandada", "destinatario del reclamo"]
+    tema:          ["motivo del reclamo", "defecto", "problema"]
+    con_finalidad: ["lo que se pide", "compensación", "devolución"]
+  obligatorios: [agente, paciente, tema]
+  ejemplo:      "Mariana reclamó al banco una transferencia mal procesada para que se la devolvieran"
+
+verbo: devolver
+  tipo_situacion: accion_devolver
+  roles:
+    agente:        ["devolvedor", "el que devuelve", "cliente"]
+    tema:          ["producto devuelto", "ítem"]
+    beneficiario:  ["tienda", "vendedor"]
+    causado_por:   ["motivo de devolución", "defecto", "razón"]
+  obligatorios: [agente, tema, beneficiario]
+  ejemplo:      "Pedro devolvió la cafetera defectuosa a la tienda online"
+```
+
+### Banca y finanzas
+
+```yaml
+verbo: transferir
+  tipo_situacion: accion_transferir
+  roles:
+    agente:        ["ordenante", "remitente"]
+    beneficiario:  ["destinatario", "el que recibe"]
+    monto:         ["importe", "cantidad"]
+    origen:        ["cuenta_origen", "de qué cuenta"]
+    destino:       ["cuenta_destino", "a qué cuenta"]
+  obligatorios: [agente, beneficiario, monto, origen, destino]
+  ejemplo:      "Lucía transfirió 500 dólares de su cuenta corriente a la cuenta de su madre"
+
+verbo: depositar
+  tipo_situacion: accion_depositar
+  roles:
+    agente:        ["depositante"]
+    monto:         ["importe", "cantidad depositada"]
+    destino:       ["cuenta", "destino"]
+    instrumento:   ["efectivo", "cheque", "transferencia recibida"]
+  obligatorios: [agente, monto, destino]
+  ejemplo:      "El comerciante depositó 3.200 dólares en efectivo en la cuenta del negocio"
+
+verbo: prestar
+  tipo_situacion: accion_prestar
+  roles:
+    agente:        ["prestamista", "banco"]
+    beneficiario:  ["prestatario", "el que recibe"]
+    monto:         ["capital", "importe del préstamo"]
+    inicio:        ["fecha de desembolso"]
+    fin:           ["fecha de vencimiento"]
+    con_finalidad: ["destino del préstamo", "para qué"]
+  obligatorios: [agente, beneficiario, monto]
+  ejemplo:      "El banco le prestó 50.000 dólares a Ramiro para la compra de su vivienda"
+
+verbo: cobrar
+  tipo_situacion: accion_cobrar
+  roles:
+    agente:        ["acreedor", "el que cobra"]
+    paciente:      ["deudor", "el que paga"]
+    monto:         ["importe cobrado"]
+    tema:          ["concepto", "factura", "comisión"]
+  obligatorios: [agente, paciente, monto]
+  ejemplo:      "El banco le cobró 18 dólares de comisión por mantenimiento de cuenta"
+```
+
+### Salud
+
+```yaml
+verbo: consultar
+  tipo_situacion: accion_consultar
+  roles:
+    agente:        ["médico", "doctora", "profesional"]
+    paciente:      ["paciente", "persona atendida"]
+    motivo:        ["motivo de consulta", "queja principal"]
+    lugar_de:      ["consultorio", "sala", "centro médico"]
+  obligatorios: [agente, paciente]
+  ejemplo:      "La Dra. Vega consultó a Renata el martes por dolor lumbar"
+
+verbo: prescribir
+  tipo_situacion: accion_prescribir
+  roles:
+    agente:        ["médico", "prescriptor"]
+    paciente:      ["paciente"]
+    tema:          ["medicamento", "principio activo"]
+    cantidad:      ["dosis", "miligramos"]
+    duracion:      ["por cuántos días"]
+    con_finalidad: ["objetivo terapéutico"]
+    justificado_por: ["diagnóstico", "protocolo"]
+  obligatorios: [agente, paciente, tema]
+  ejemplo:      "El cardiólogo prescribió enalapril 10mg diarios para controlar la hipertensión"
+
+verbo: diagnosticar
+  tipo_situacion: accion_diagnosticar
+  roles:
+    agente:        ["médico", "diagnosticador"]
+    paciente:      ["paciente"]
+    tema:          ["diagnóstico", "enfermedad", "condición"]
+    causado_por:   ["evidencia", "síntomas", "estudio"]
+  obligatorios: [agente, paciente, tema]
+  ejemplo:      "El pediatra diagnosticó otitis media aguda basándose en la otoscopia"
+
+verbo: operar
+  tipo_situacion: accion_operar
+  roles:
+    agente:        ["cirujano", "equipo quirúrgico"]
+    paciente:      ["paciente"]
+    tema:          ["zona operada", "órgano"]
+    instrumento:   ["instrumental", "equipo"]
+    con_finalidad: ["objetivo de la intervención"]
+    duracion:      ["duración de la cirugía"]
+  obligatorios: [agente, paciente, tema]
+  ejemplo:      "El Dr. Larrea operó la rodilla de Marcelo durante tres horas para reparar el menisco"
+
+verbo: vacunar
+  tipo_situacion: accion_vacunar
+  roles:
+    agente:        ["enfermera", "personal sanitario"]
+    paciente:      ["paciente", "vacunado"]
+    tema:          ["vacuna", "antígeno"]
+    con_finalidad: ["enfermedad prevenida"]
+  obligatorios: [agente, paciente, tema]
+  ejemplo:      "La enfermera vacunó a 47 niños con la dosis triple viral el sábado"
+```
+
+### Educación
+
+```yaml
+verbo: inscribirse
+  tipo_situacion: accion_inscribirse
+  roles:
+    agente:        ["estudiante", "inscripto", "postulante"]
+    tema:          ["curso", "programa", "carrera"]
+    momento:       ["fecha de inscripción"]
+    con_finalidad: ["objetivo académico"]
+  obligatorios: [agente, tema]
+  ejemplo:      "Diana se inscribió en la maestría en ciencia de datos para mejorar su perfil"
+
+verbo: examinar
+  tipo_situacion: accion_examinar
+  roles:
+    agente:        ["examinador", "profesor"]
+    paciente:      ["examinado", "estudiante"]
+    tema:          ["contenido evaluado", "materia"]
+    momento:       ["fecha del examen"]
+    calificacion:  ["nota", "resultado"]
+  obligatorios: [agente, paciente, tema]
+  ejemplo:      "El tribunal examinó a Andrés sobre cálculo integral y le puso un 8.5"
+
+verbo: graduarse
+  tipo_situacion: accion_graduarse
+  roles:
+    agente:        ["graduado", "el que se gradúa"]
+    tema:          ["título obtenido", "carrera"]
+    lugar_de:      ["institución", "universidad"]
+    momento:       ["fecha de graduación"]
+  obligatorios: [agente, tema]
+  ejemplo:      "Camila se graduó de ingeniera civil en la Universidad Nacional en 2026"
+
+verbo: enseñar
+  tipo_situacion: accion_ensenar
+  roles:
+    agente:        ["docente", "profesor", "instructor"]
+    beneficiario:  ["alumno", "estudiante", "audiencia"]
+    tema:          ["materia", "contenido", "concepto"]
+    instrumento:   ["método", "material didáctico"]
+  obligatorios: [agente, beneficiario, tema]
+  ejemplo:      "El profesor Méndez enseñó programación a 25 alumnos durante tres meses"
+```
+
+### Legal y gobierno
+
+```yaml
+verbo: firmar
+  tipo_situacion: accion_firmar
+  roles:
+    agente:        ["firmante", "el que firma"]
+    tema:          ["documento", "contrato", "acuerdo"]
+    momento:       ["fecha de firma"]
+    lugar_de:      ["lugar de firma"]
+  obligatorios: [agente, tema]
+  ejemplo:      "Eduardo firmó el contrato de alquiler el lunes en la escribanía"
+
+verbo: denunciar
+  tipo_situacion: accion_denunciar
+  roles:
+    agente:        ["denunciante", "el que denuncia"]
+    paciente:      ["denunciado", "acusado"]
+    tema:          ["hecho denunciado", "delito", "irregularidad"]
+    beneficiario:  ["autoridad receptora", "fiscalía", "policía"]
+  obligatorios: [agente, paciente, tema]
+  ejemplo:      "La asamblea denunció al constructor por daño ambiental ante la fiscalía"
+
+verbo: multar
+  tipo_situacion: accion_multar
+  roles:
+    agente:        ["autoridad", "oficial", "ente regulador"]
+    paciente:      ["multado", "infractor"]
+    monto:         ["importe de la multa"]
+    causado_por:   ["infracción cometida"]
+    justificado_por: ["norma aplicada", "artículo legal"]
+  obligatorios: [agente, paciente, monto, causado_por, justificado_por]
+  ejemplo:      "El SUNAT multó a la empresa con 8.500 dólares por declaración tardía"
+
+verbo: votar
+  tipo_situacion: accion_votar
+  roles:
+    agente:        ["votante", "elector"]
+    tema:          ["candidato", "opción", "moción"]
+    lugar_de:      ["mesa de votación", "centro electoral"]
+    momento:       ["fecha de la elección"]
+  obligatorios: [agente, tema]
+  ejemplo:      "Mariana votó por la lista 14 en la mesa 087 el domingo en la mañana"
+```
+
+### Trabajo y empleo
+
+```yaml
+verbo: contratar
+  tipo_situacion: accion_contratar
+  roles:
+    agente:        ["empleador", "empresa contratante"]
+    beneficiario:  ["empleado", "contratado"]
+    tema:          ["puesto", "rol", "función"]
+    inicio:        ["fecha de inicio del contrato"]
+    monto:         ["salario", "remuneración"]
+  obligatorios: [agente, beneficiario, tema]
+  ejemplo:      "La empresa contrató a Federico como ingeniero con un salario de 4.500 dólares"
+
+verbo: despedir
+  tipo_situacion: accion_despedir
+  roles:
+    agente:        ["empleador"]
+    paciente:      ["despedido", "ex empleado"]
+    causado_por:   ["causa", "motivo del despido"]
+    justificado_por: ["cláusula contractual", "ley laboral"]
+    momento:       ["fecha de despido"]
+  obligatorios: [agente, paciente]
+  ejemplo:      "La empresa despidió a Roberto en marzo por incumplimiento del reglamento interno"
+```
+
+### Tecnología y operaciones
+
+```yaml
+verbo: desplegar
+  tipo_situacion: accion_desplegar
+  roles:
+    agente:        ["devops", "el que despliega", "pipeline"]
+    tema:          ["aplicación", "versión", "release"]
+    lugar_destino: ["entorno", "servidor", "producción"]
+    momento:       ["timestamp del deploy"]
+  obligatorios: [agente, tema, lugar_destino]
+  notas:        "El agente puede ser un humano o un algoritmo automatizado (Regla D5)"
+  ejemplo:      "El pipeline desplegó la versión 3.4.1 en producción el martes a las 9:14"
+
+verbo: fallar
+  tipo_situacion: evento_fallo
+  roles:
+    paciente:      ["sistema afectado", "componente que falló"]
+    causado_por:   ["causa raíz", "trigger"]
+    momento:       ["timestamp del incidente"]
+    duracion:      ["downtime"]
+  obligatorios: [paciente]
+  notas:        "Verbo sin agente. Los sistemas caen sin intervención intencional."
+  ejemplo:      "El servicio de pagos falló durante 47 minutos a causa de un overflow"
+
+verbo: invocar
+  tipo_situacion: accion_invocar_funcion
+  roles:
+    agente:        ["llamador", "cliente API", "LLM"]
+    tema:          ["función invocada", "endpoint"]
+    instrumento:   ["protocolo", "HTTP"]
+    con_finalidad: ["objetivo de la invocación"]
+  obligatorios: [agente, tema]
+  ejemplo:      "Claude invocó la función registrar_venta con los parámetros extraídos"
+```
+
+### Estados mentales (experimentador)
+
+```yaml
+verbo: temer
+  tipo_situacion: experiencia_emocional
+  roles:
+    experimentador: ["el que teme", "persona asustada"]
+    tema:           ["lo temido", "objeto del miedo"]
+    inicio:         ["desde cuándo"]
+  obligatorios: [experimentador, tema]
+  notas:        "No hay agente. La persona no actúa, sufre un estado interno."
+  ejemplo:      "Andrés teme a las alturas desde su accidente de niñez"
+
+verbo: gustar
+  tipo_situacion: experiencia_preferencia
+  roles:
+    tema:           ["lo que gusta", "objeto del gusto"]
+    experimentador: ["a quién le gusta"]
+  obligatorios: [tema, experimentador]
+  notas:        "Verbo invertido en español. El sujeto de la frase es la cosa que gusta."
+  ejemplo:      "A Sofía le gusta el jazz brasileño"
+
+verbo: doler
+  tipo_situacion: experiencia_dolor
+  roles:
+    tema:           ["lo que duele", "zona dolorida"]
+    experimentador: ["a quién le duele"]
+    intensidad:     ["nivel del dolor"]
+  obligatorios: [tema, experimentador]
+  ejemplo:      "A Marta le duele la rodilla derecha desde el lunes con una intensidad 7 sobre 10"
+```
+
+### Sin agente: Meteorología y eventos espontáneos
+
+```yaml
+verbo: llover
+  tipo_situacion: evento_meteorologico
+  roles:
+    lugar_de:    ["dónde llueve", "región", "ciudad"]
+    momento:     ["cuándo"]
+    intensidad:  ["leve", "moderada", "intensa", "torrencial"]
+    duracion:    ["por cuánto tiempo"]
+  obligatorios: []
+  notas:        "Verbo totalmente impersonal. No tiene roles obligatorios."
+  ejemplo:      "Llovió torrencialmente en Lima durante seis horas el sábado"
+
+verbo: ocurrir
+  tipo_situacion: evento_generico
+  roles:
+    tema:        ["lo que ocurre", "evento"]
+    lugar_de:    ["dónde"]
+    momento:     ["cuándo"]
+    causado_por: ["disparador del evento"]
+  obligatorios: [tema]
+  ejemplo:      "Ocurrió un sismo de magnitud 5.4 en la zona costera a causa del rozamiento de placas"
+
+verbo: vencer
+  tipo_situacion: evento_vencimiento
+  roles:
+    tema:        ["lo que vence", "contrato", "plazo"]
+    momento:     ["fecha de vencimiento"]
+  obligatorios: [tema, momento]
+  notas:        "Las cosas vencen por el simple paso del tiempo, sin agente humano."
+  ejemplo:      "La licencia comercial vence el 31 de diciembre de 2026"
+```
+
+### Verbos con polisemia clásica
+
+```yaml
+verbo: correr
+  tipo_situacion: accion_correr_fisica
+  roles:
+    agente:    ["corredor", "el que corre"]
+    distancia: ["distancia recorrida"]
+    duracion:  ["tiempo invertido"]
+    lugar_de:  ["dónde"]
+  obligatorios: [agente]
+  ejemplo:      "Daniela corrió 10 km en el parque en 52 minutos"
+
+verbo: correr [riesgo]
+  tipo_situacion: estado_de_riesgo
+  roles:
+    experimentador: ["el que corre el riesgo"]
+    tema:           ["lo que se arriesga", "el riesgo"]
+  obligatorios: [experimentador, tema]
+  notas:        "Verbo de soporte: correr = estar expuesto a."
+  ejemplo:      "La empresa corre el riesgo de perder el contrato más grande del año"
+
+verbo: correr [el rumor | la noticia]
+  tipo_situacion: difusion_informacion
+  roles:
+    tema:     ["la información que circula"]
+    lugar_de: ["dónde se difunde"]
+  obligatorios: [tema]
+  ejemplo:      "Corre el rumor de que la oficina central va a mudarse"
+
+verbo: cerrar
+  tipo_situacion: accion_cerrar_fisica
+  roles:
+    agente: ["el que cierra"]
+    tema:   ["lo cerrado", "puerta", "ventana"]
+  obligatorios: [agente, tema]
+  ejemplo:      "El conserje cerró la puerta principal"
+
+verbo: cerrar [trato | negocio | acuerdo]
+  tipo_situacion: accion_acordar
+  roles:
+    agente:        ["las partes que acuerdan"]
+    tema:          ["el acuerdo cerrado"]
+    beneficiario:  ["contraparte"]
+  obligatorios: [agente, tema]
+  ejemplo:      "Las dos empresas cerraron un trato por 2.5 millones de dólares"
+
+verbo: cerrar [el año | el mes | el ejercicio]
+  tipo_situacion: accion_finalizar_periodo
+  roles:
+    agente:    ["organización"]
+    tema:      ["período contable"]
+    monto:     ["resultado financiero"]
+  obligatorios: [agente, tema]
+  ejemplo:      "La empresa cerró el ejercicio con una utilidad de 340.000 dólares"
+```
+
+### Cierre: Lo que se ve mirando el catálogo entero
+
+Si miras estas casi cuarenta entradas en perspectiva, aparecen revelaciones técnicas que valen oro:
+
+- **Se usan los mismos cables siempre:** Observa cómo casi todos los verbos, sin importar si hablan de despidos, graduaciones o tormentas, utilizan los mismos 8 a 10 roles del catálogo base de D8 (`agente`, `tema`, `lugar_de`, `momento`).
+- **Los *aliases* son el verdadero poder de adaptación:** Lo que diferencia al módulo de Salud del módulo Bancario no son los códigos internos, sino las palabras naturales. *"Médico"* y *"Acreedor"* ambos se mapean al mismo `agente`; *"Factura"* y *"Diagnóstico"* van ambos al mismo `tema`. La base de datos es ignorante sobre el negocio, el Lexicon le hace todo el trabajo de traducción.
+- **Lo raro también es normal:** Nota cómo los verbos raros que no tienen sujeto (como *llover*) o que son internos (como *doler* o *temer*) encajan a la perfección en esta arquitectura sin forzar nada. 
+
+Un sistema robusto a nivel empresarial puede llegar a tener un archivo de Lexicon con dos mil o cinco mil entradas. Las que acabas de ver son el cimiento.
+
+## Lo que tu empresa gana implementando el Lexicon
+
+Para cerrar, enlistemos las diferencias brutales entre usar este modelo y no hacerlo:
+
+**1. Entiende el idioma real de tu gente.** 
+Sin el Lexicon, tendrías que enseñarle a cada empleado de cada departamento cómo usar los campos robóticos del sistema. Con el Lexicon, un entrenador de gimnasio escribe *"el usuario faltó a la clase"*, y la base de datos registra perfectamente el evento usando la jerga de ese gimnasio.
+
+**2. Es la puerta de entrada perfecta para la Inteligencia Artificial.** 
+Como vimos, el Lexicon es un listado en formato JSON (Function Calling) esperando a ser leído. Una IA conectada a tu Lexicon puede empezar a redactar, archivar y auditar datos en tu servidor mañana mismo, sin necesidad de reprogramar tu sistema.
+
+**3. Desambigua el caos del idioma antes de ensuciar los discos duros.** 
+Los clásicos problemas de la polisemia (como el verbo *dar*) se quedan resueltos a nivel de diccionario. La base de datos siempre recibe datos purificados y etiquetados de antemano con códigos exactos en `K`.
+
+**4. Permite a la empresa escalar infinitamente.** 
+Si mañana tu compañía abre una rama en logística marítima, tus ingenieros no tienen que destruir la base de datos SQL para crear 40 tablas nuevas sobre barcos. Simplemente añaden un nuevo bloque de verbos al archivo de texto del Lexicon, y el motor central hereda ese conocimiento de inmediato.
+
+Afirmar que el Lexicon es *la pieza más decisiva de toda la arquitectura* no es una exageración técnica. La genialidad matemática de los ocho ejes es el corazón palpitante, sí; pero **la usabilidad y la adopción real** del sistema dependen entera y exclusivamente de este traductor maestro. 
+
+El próximo capítulo examinará tres fenómenos del lenguaje que intentarán engañar a nuestro traductor: las nominalizaciones, los modales y el sarcasmo. Veremos cómo se defiende nuestro Lexicon en las trincheras.

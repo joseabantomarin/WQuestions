@@ -20,10 +20,10 @@ La respuesta del libro fue: sí, hay siete preguntas. Quién, qué, dónde, cuá
 
 Sobre las preguntas montamos cuatro decisiones de diseño que las vuelven operativas:
 
-- Reificar las situaciones cuando importan (D2).
+- Reificar las situaciones cuando importan (D4).
 - Aceptar agencia contextual (D5) — humanos, organizaciones, software, todos pueden ser agentes según el contexto.
-- Distinguir cuatro tipos de "por qué" (D6) — causa, motivo, finalidad, justificación — porque el lenguaje natural ya los distingue.
-- Preservar la historia con vigencia temporal (D9) — el sistema nunca olvida.
+- Distinguir cuatro tipos de "por qué" (D7) — causa, motivo, finalidad, justificación — porque el lenguaje natural ya los distingue.
+- Preservar la historia con vigencia temporal (D6) — el sistema nunca olvida.
 
 Y sobre eso, una capa de **lexicon** que traduce el lenguaje del usuario al catálogo canónico, sin obligar a nadie a aprender vocabulario interno. El lexicon es, técnicamente, lo mismo que un *function schema* para los modelos de lenguaje de la generación 2026 — y esa coincidencia, que no buscamos al inicio del proyecto, es la que vuelve la propuesta accionable hoy.
 
@@ -37,11 +37,11 @@ Esa intuición — que las preguntas son lo invariante mientras las ontologías 
 
 ## Lo que el libro no terminó
 
-Sería deshonesto cerrar sin admitir lo que falta. El capítulo 22 lo enumeró sin maquillaje: motor de inferencia, bitemporalidad completa, persistencia industrial, tooling, lexicon poblado en varios idiomas, comunidad. La propuesta es completa **conceptualmente**; no está lista para producción. El prototipo en Python que acompaña al libro ejecuta lo que el libro afirma — los ocho dominios pasan sus validaciones, los 21 tests pasan, los 12 ejemplos corren — pero está lejos de ser infraestructura.
+Sería deshonesto cerrar sin admitir lo que falta. El capítulo 26 lo enumeró sin maquillaje: motor de inferencia, bitemporalidad completa, persistencia industrial, tooling, lexicon poblado en varios idiomas, comunidad. La propuesta es completa **conceptualmente**; no está lista para producción. El prototipo en Python que acompaña al libro ejecuta lo que el libro afirma — los ocho dominios pasan sus validaciones, los 21 tests pasan, los 12 ejemplos corren — pero está lejos de ser infraestructura.
 
 Lo que también falta, y conviene decirlo en voz alta, es que ninguna arquitectura sobrevive por su elegancia. Las que sobrevivieron — Unix, TCP/IP, HTTP, SQL — sobrevivieron porque hubo gente que las cuidó durante décadas. RDF, que cumple veinticinco años en 2026, sigue siendo un activo subutilizado precisamente porque la comunidad nunca alcanzó la masa crítica para volverlo invisible. WQuestions, hoy, está en el día uno de ese proceso.
 
-Si la propuesta tiene valor, otros la perfeccionarán. Si no lo tiene, este libro es el monumento sincero a una intuición que no aguantó el peso real. En ambos casos, vale la pena que la propuesta exista escrita: la siguiente generación de modelos de información puede aprender de lo que funcionó tanto como de lo que se quedó corto.
+La propuesta tiene valor — los ocho dominios que pasamos por el prototipo lo demostraron — y ahora la tarea es que otros la perfeccionen. Por eso vale la pena que exista escrita: la siguiente generación de modelos de información tiene acá una base operable de la que partir.
 
 ## Una última nota sobre el momento
 
