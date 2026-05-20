@@ -37,7 +37,7 @@ Esa intuición — que las preguntas son lo invariante mientras las ontologías 
 
 ## Lo que el libro no terminó
 
-Sería deshonesto cerrar sin admitir lo que falta. El capítulo 26 lo enumeró sin maquillaje: motor de inferencia, bitemporalidad completa, persistencia industrial, tooling, lexicon poblado en varios idiomas, comunidad. La propuesta es completa **conceptualmente**; no está lista para producción. El prototipo en Python que acompaña al libro ejecuta lo que el libro afirma — los ocho dominios pasan sus validaciones, los 21 tests pasan, los 12 ejemplos corren — pero está lejos de ser infraestructura.
+Sería deshonesto cerrar sin admitir lo que falta. El capítulo 27 lo enumeró sin maquillaje: motor de inferencia, bitemporalidad completa, persistencia industrial, tooling, lexicon poblado en varios idiomas, comunidad. La propuesta es completa **conceptualmente**; no está lista para producción. El prototipo en Python que acompaña al libro ejecuta lo que el libro afirma — los ocho dominios pasan sus validaciones, los 21 tests pasan, los 12 ejemplos corren — pero está lejos de ser infraestructura.
 
 Lo que también falta, y conviene decirlo en voz alta, es que ninguna arquitectura sobrevive por su elegancia. Las que sobrevivieron — Unix, TCP/IP, HTTP, SQL — sobrevivieron porque hubo gente que las cuidó durante décadas. RDF, que cumple veinticinco años en 2026, sigue siendo un activo subutilizado precisamente porque la comunidad nunca alcanzó la masa crítica para volverlo invisible. WQuestions, hoy, está en el día uno de ese proceso.
 

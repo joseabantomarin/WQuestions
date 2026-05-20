@@ -1,4 +1,4 @@
-# Capítulo 21 — Aplicaciones futuras: lo que se vuelve posible
+# Capítulo 26 — Aplicaciones futuras: lo que se vuelve posible
 
 ## Tres escenas a tres años vista
 
@@ -113,4 +113,4 @@ Algunas de estas condiciones se están cumpliendo solas, otras requieren empuje 
 
 Las aplicaciones de este capítulo asumen una versión madura del proyecto. La versión actual — la que el prototipo ejecuta — está incompleta. Falta persistencia industrial, motor de inferencia, bitemporalidad completa, lexicon poblado en varios idiomas, herramientas para que las organizaciones definan sus dialectos sin asistencia de un ingeniero.
 
-El próximo capítulo — el último antes de la conclusión — enumera ese trabajo pendiente honestamente. No es un capítulo de promesas: es un **mapa de implementación**, dirigido a quien lea este libro y quiera contribuir o adoptar la propuesta como base de un proyecto propio. Las cinco familias de este capítulo viven en el futuro; el capítulo 26 vive en el presente operativo.
+El próximo capítulo — el último antes de la conclusión — enumera ese trabajo pendiente honestamente. No es un capítulo de promesas: es un **mapa de implementación**, dirigido a quien lea este libro y quiera contribuir o adoptar la propuesta como base de un proyecto propio. Las cinco familias de este capítulo viven en el futuro; el capítulo 27 vive en el presente operativo.
