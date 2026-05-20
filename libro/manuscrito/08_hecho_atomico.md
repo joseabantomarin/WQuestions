@@ -11,6 +11,7 @@ A esta pieza maestra la llamaremos **hecho atómico**. Su estructura informátic
 Solo tres campos. El `sujeto` y el `objeto` son individuos que sacamos de alguna de nuestras cajas de valor (como Personas, Lugares o Números). El `predicado` es el cable conector que vive en P (si el dato es único) o en M (si el dato es múltiple). Y eso es todo. **Absolutamente toda la información que el sistema sabe del mundo se construye, bloque a bloque, utilizando esta misma forma exacta.**
 
 Sé que afirmar esto suena a exageración técnica. ¿De verdad todo cabe aquí? ¿Las recetas, los goles, las canciones de Los Beatles, las leyes de un gobierno, las historias clínicas y las llamadas a ChatGPT? Sí, todo. Este capítulo se va a encargar de demostrarlo. Vamos a ver por qué aferrarnos a esta estructura atómica lo cambia todo, cómo logramos describir cosas súper complejas acumulando piezas simples, y por qué —casi por arte de magia— esta estructura resulta ser exactamente la forma natural en la que los humanos y la Inteligencia Artificial hablan.
+Para ser honesto, al empezar este libro solo tenía la intuición de que las 8 preguntas podían modelar la información en un multiverso al que se accedía con un par de coordenadas, eje_a vs eje_b, pero la tripleta es el resultado de someter al modelo a las pruebas de laboratorio, más adelante veremos cómo.
 
 ## La forma inalterable
 
