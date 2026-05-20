@@ -1,0 +1,461 @@
+# =============================================================================
+# Lexicon WQuestions para yaku — v0.1 (POC inicial)
+# =============================================================================
+# Propósito: traducir el vocabulario operativo de yaku (sauna + hostal + gym
+# + cafetín) a entidades, situaciones y verbos del modelo WQuestions de 8 ejes.
+#
+# Cubre cinco familias de servicios (HOSTAL, SAUNA, GYM, RESTAURANT, STOCK)
+# observadas en producto.MARCA del esquema yaku.
+#
+# Referencias del libro:
+#   - cap. 13 (lexicon como pieza central de usabilidad)
+#   - cap. 15 (caso spa: estancia, sesion, polisemia de "tomar")
+#   - WQuestions.md secciones D5 (agencia contextual), D6 (vigencia temporal)
+# =============================================================================
+
+meta:
+  version: 0.1
+  fecha: 2026-05-19
+  fuente: yaku.sql (MySQL 5.7, charset latin1)
+  modo: read_only_mapping     # esta versión sólo lee; no escribe a yaku
+
+
+# =============================================================================
+# CLASES K — qué tipo de cosa o evento es cada cosa
+# =============================================================================
+# La columna producto.MARCA en yaku decide la clase K base para todo lo que
+# pasa por venta+ventadet. La tabla asistencia produce uso_gimnasio (siempre)
+# con eventuales saunas/duchas anexas.
+# =============================================================================
+
+classes:
+
+  # --------- Personas / agentes (eje Q) ---------
+
+  cliente:
+    eje: Q
+    descripcion: "Persona consumidora de servicios o productos"
+    fuente_yaku: tabla.cliente
+    identificador: cliente.CODIGO            # típicamente DNI
+    aliases: [huesped, socio, visitante, usuario]
+
+  empleado:
+    eje: Q
+    descripcion: "Personal del negocio (masajista, recepción, caja, etc.)"
+    fuente_yaku: tabla.persona
+    identificador: persona.codigo
+
+  # --------- Tipos de cosas vendibles (eje K, derivado de producto.MARCA) ---------
+
+  producto_alojamiento:
+    eje: K
+    marca_yaku: HOSTAL
+    descripcion: "Habitación-como-producto vendible (la noche)"
+    sub_clases:
+      habitacion_matrimonial: { match_nombre: ["MATRI"] }
+      habitacion_doble:       { match_nombre: ["DOBLE"] }
+      habitacion_simple:      { match_nombre: ["SIMPLE"] }
+      habitacion_con_jacuzzi: { match_nombre: ["JACUZZI", "YACUSII"] }
+
+  servicio_sauna:
+    eje: K
+    marca_yaku: SAUNA
+    descripcion: "Sesión de sauna walk-in (pagada en el momento)"
+    sub_clases:
+      sauna_adulto: { match_nombre: ["ADULTO", "ADULT"] }
+      sauna_nino:   { match_nombre: ["NINO", "NIÑO", "INFANTIL"] }
+
+  servicio_gimnasio:
+    eje: K
+    marca_yaku: GYM
+    descripcion: "Servicio de gimnasio cobrado vía venta (día suelto, plan)"
+
+  servicio_preparacion:
+    eje: K
+    marca_yaku: RESTAURANT
+    descripcion: "Comida o bebida preparada en el local (incluye jugos)"
+    propiedades:
+      controla_inventario: false
+
+  producto_envasado:
+    eje: K
+    marca_yaku: STOCK
+    descripcion: "Bebida/snack pre-empaquetado, vendido sin preparación"
+    propiedades:
+      controla_inventario: true
+
+  # --------- Tipos de situaciones / eventos (eje K para situaciones reificadas) ---------
+
+  uso_sauna:
+    eje: K
+    descripcion: "Evento concreto: alguien usa el sauna"
+    deriva_de:
+      - "venta+ventadet con producto MARCA=SAUNA (walk-in)"
+      - "asistencia.Sauna=1 (anexo al gimnasio del socio)"
+    roles_obligatorios: [cliente, inicio]
+    roles_opcionales:   [fin, durante, cubierto_por, lugar]
+
+  uso_gimnasio:
+    eje: K
+    descripcion: "Asistencia al gimnasio del socio en plan"
+    deriva_de: "tabla asistencia"
+    roles_obligatorios: [cliente, inicio]
+    roles_opcionales:   [fin, cubierto_por, anexo_sauna, anexo_ducha]
+
+  consumo_cafetin:
+    eje: K
+    descripcion: "Consumo (preparado o envasado) en cafetín"
+    deriva_de: "venta+ventadet con producto MARCA en (RESTAURANT, STOCK)"
+    roles_obligatorios: [cliente, producto, fecha]
+    roles_opcionales:   [cantidad, atendido_por, cubierto_por, durante]
+
+  estancia_hostal:
+    eje: K
+    descripcion: "Estancia de un huésped en una habitación física"
+    deriva_de: "venta con primer ventadet de producto MARCA=HOSTAL"
+    roles_obligatorios: [huesped, habitacion, inicio]
+    roles_opcionales:   [fin, cubierto_por]
+    nota: "La venta misma queda como la situación; sus ventadet adicionales son consumos cargados a la estancia"
+
+  contrato_plan:
+    eje: K
+    descripcion: "Inscripción del cliente a un plan mensual (sauna o gym)"
+    deriva_de:
+      - "tabla socio (registro vigente)"
+      - "venta+ventadet de producto MARCA en (SAUNA, GYM) con NOMBRE conteniendo 'PLAN' (cobro)"
+    roles_obligatorios: [cliente, plan, inicio]
+    roles_opcionales:   [fin, debe]
+
+
+# =============================================================================
+# VERBOS — cómo habla el staff y a qué situación se traduce
+# =============================================================================
+
+verbs:
+
+  - verb: tomar
+    situation: uso_sauna
+    pattern: ["sauna"]                       # "tomar sauna", "tomar una sauna"
+    obligatory_roles: [cliente]
+    notas: "Polisemia: 'tomar el pelo' iría a otra entrada si llega a ocurrir"
+
+  - verb: entrenar
+    situation: uso_gimnasio
+    obligatory_roles: [cliente]
+    aliases_verbo: [ir_al_gym, hacer_gym, hacer_gimnasio]
+
+  - verb: hospedar
+    situation: estancia_hostal
+    pattern: ["en"]                          # "hospedar a X en H103"
+    obligatory_roles: [huesped, habitacion]
+    aliases_verbo: [alojar, registrar, check_in]
+
+  - verb: consumir
+    situation: consumo_cafetin
+    obligatory_roles: [cliente, producto]
+    aliases_verbo: [pedir, ordenar]
+    notas: "'tomar una cerveza' usa este verbo, NO el de sauna (pattern desambigua)"
+
+  - verb: contratar
+    situation: contrato_plan
+    obligatory_roles: [cliente, plan]
+    aliases_verbo: [inscribir, sacar_plan, comprar_plan]
+
+  - verb: cargar
+    pattern: ["a", "la", "habitacion"]       # "cárguenselo a la H103"
+    relation: cubierto_por
+    target_type: estancia_hostal
+    notas: "No produce una situación nueva; modifica la cobertura de una existente"
+
+  - verb: regalar
+    modalidad_cobertura: cortesia
+    notas: "'regálenle la sauna' → marca cubierto_por=cortesia"
+
+  - verb: cancelar
+    cambio_estatus: anulado
+    obligatory_roles: [referencia_situacion]
+    notas: "Refleja venta.CANCELADO=1 o asistencia con UPDTYPE de anulación"
+
+
+# =============================================================================
+# DIALECTO yaku — jerga del staff → roles canónicos del catálogo D7
+# =============================================================================
+# El staff escribe en su vocabulario familiar; el lexicon traduce al canon
+# WQuestions (los roles canónicos viven en eje M).
+# =============================================================================
+
+domain_dialect:
+  cliente:        agente
+  huesped:        agente
+  socio:          agente
+  habitacion:     lugar_consumo
+  consumo:        ventadet
+  comanda:        venta
+  noche:          unidad_tiempo_dia
+  turno:          contexto_turno
+  caja:           contexto_caja
+  salida:         fin_estancia
+  llave:          identificador_locker
+  encargo:        nota_recepcion
+
+
+# =============================================================================
+# INDIVIDUOS L — lugares físicos del local
+# =============================================================================
+# Estos viven en eje L. Cada habitación física tiene su contraparte como
+# producto-vendible (eje K) en yaku — la dualidad prevista en cap. 15.
+# =============================================================================
+
+places:
+
+  - id: local_principal
+    type: local
+    descripcion: "Sede única del negocio"
+
+  # Áreas funcionales
+
+  - id: area_sauna
+    type: area
+    ubicado_en: local_principal
+
+  - id: sauna_camara_1
+    type: camara_vapor
+    ubicado_en: area_sauna
+    temperatura: 60
+
+  - id: sauna_camara_seca
+    type: camara_seca
+    ubicado_en: area_sauna
+    temperatura: 60
+
+  - id: gimnasio
+    type: area_gimnasio
+    ubicado_en: local_principal
+
+  - id: cafetin
+    type: area_cafetin
+    ubicado_en: local_principal
+
+  - id: recepcion
+    type: area_recepcion
+    ubicado_en: local_principal
+
+  # Habitaciones del hostal (lugares físicos)
+
+  - id: hab_h101
+    type: habitacion_fisica
+    codigo: H101
+    capacidad: 2
+    matrimonial: true
+    aliases: ["H101", "Hab 101", "101"]
+
+  - id: hab_h102
+    type: habitacion_fisica
+    codigo: H102
+    capacidad: 2
+    matrimonial: true
+    aliases: ["H102", "Hab 102", "102"]
+
+  - id: hab_h103
+    type: habitacion_fisica
+    codigo: H103
+    capacidad: 2
+    matrimonial: true
+    tiene_jacuzzi: true
+    aliases: ["H103", "Hab 103", "103", "la del jacuzzi"]
+
+  - id: hab_h104
+    type: habitacion_fisica
+    codigo: H104
+    capacidad: 2
+    cama_doble: true
+    aliases: ["H104", "Hab 104", "104"]
+
+  # H201 - H210 son simples — se expanden por patrón al cargar
+  - id_pattern: hab_h{n}
+    rango: [201, 210]
+    type: habitacion_fisica
+    codigo_pattern: "H{n}"
+    capacidad: 1
+    simple: true
+
+
+# =============================================================================
+# MODALIDADES DE COBERTURA — cómo se pagó / cubrió un uso
+# =============================================================================
+# Este es el discriminador que yaku NO tiene formalmente y WQuestions explicita.
+# Cuando un uso queda registrado, el motor infiere su cobertura a partir de
+# señales en yaku (importe = 0, presencia de socio activo, etc.).
+# =============================================================================
+
+modalidades_cobertura:
+
+  pago_directo:
+    descripcion: "El cliente paga la consumición/servicio en el acto"
+    senal_yaku:
+      - "ventadet.PRECIO * CANTIDAD > 0"
+      - "AND venta no asociada a estancia activa"
+
+  cubierto_por_plan:
+    descripcion: "Servicio incluido en plan mensual vigente del socio"
+    senal_yaku:
+      - "asistencia.IMPORTE = 0"
+      - "AND existe socio activo (socio.hasta >= fecha o NULL)"
+    requiere: contrato_plan
+
+  cargo_a_estancia:
+    descripcion: "Cargo agregado a una estancia activa del hostal"
+    senal_yaku:
+      - "ventadet pertenece a venta cuyo primer detalle tiene MARCA=HOSTAL"
+      - "AND venta.HORASAL IS NULL (estancia aún abierta)"
+    requiere: estancia_hostal
+
+  cortesia:
+    descripcion: "Servicio gratuito otorgado como promoción o gesto"
+    senal_yaku:
+      - "asistencia.IMPORTE = 0 SIN socio activo"
+      - "OR ventadet.PRECIO = 0 con NOTAS describiendo el motivo"
+    nota: "Pendiente: cuando exista catálogo formal de promociones, cada cortesía debería tener justificado_por: promocion_X"
+
+
+# =============================================================================
+# MAPPER — cómo proyectar filas yaku a hechos atómicos WQuestions
+# =============================================================================
+# Cada regla traduce un conjunto de filas en una clase de situaciones.
+# Las SQL son ilustrativas; el motor real las parametriza con filtros de
+# fecha, cliente, etc. al recibir una consulta.
+# =============================================================================
+
+mapper:
+
+  source:
+    backend: mysql
+    schema: yaku
+
+  reglas:
+
+    - nombre: estancia_desde_venta_hostal
+      produce: estancia_hostal
+      source_sql: |
+        SELECT v.NUMERO AS venta_id,
+               v.CLIENTE AS huesped_cod,
+               v.NNCLIENTE AS huesped_walkin,
+               v.FECHA, v.HORA, v.HORASAL,
+               vd.PRODUCTO AS prod_codigo,
+               p.NOMBRE AS prod_nombre
+        FROM venta v
+        JOIN ventadet vd ON vd.VENTA = v.NUMERO
+        JOIN producto p  ON p.CODIGO = vd.PRODUCTO
+        WHERE p.MARCA = 'HOSTAL'
+          AND COALESCE(v.ANULA, 0) = 0
+          AND COALESCE(v.CANCELADO, 0) = 0
+      roles:
+        huesped:    "coalesce(cliente_por_codigo(huesped_cod), individuo_walkin(huesped_walkin))"
+        habitacion: "lookup_lugar_por_codigo_hostal(prod_nombre)"
+        inicio:     "concat(FECHA, ' ', HORA)"
+        fin:        "HORASAL"   # NULL = estancia aún activa
+
+    - nombre: uso_gimnasio_desde_asistencia
+      produce: uso_gimnasio
+      source_sql: |
+        SELECT a.Id AS asistencia_id,
+               a.dni, a.fecha, a.horaent, a.horasal,
+               a.Sauna AS bandera_sauna,
+               a.ducha AS bandera_ducha,
+               a.IMPORTE
+        FROM asistencia a
+        WHERE COALESCE(a.UPDTYPE, 0) <> 2
+      roles:
+        cliente:      "cliente_por_codigo(dni)"
+        inicio:       "concat(fecha, ' ', horaent)"
+        fin:          "horasal"
+        anexo_sauna:  "if bandera_sauna=1 then producir(uso_sauna, durante=this, cubierto_por=cubierto_por_plan)"
+        anexo_ducha:  "if bandera_ducha=1 then producir(uso_ducha, durante=this)"
+        cubierto_por: "if IMPORTE=0 then cubierto_por_plan else pago_directo"
+
+    - nombre: uso_sauna_walkin_desde_venta
+      produce: uso_sauna
+      source_sql: |
+        SELECT v.NUMERO AS venta_id, v.CLIENTE, v.FECHA,
+               vd.CANTIDAD, vd.PRECIO,
+               p.NOMBRE AS prod_nombre, p.MARCA
+        FROM venta v
+        JOIN ventadet vd ON vd.VENTA = v.NUMERO
+        JOIN producto p  ON p.CODIGO = vd.PRODUCTO
+        WHERE p.MARCA = 'SAUNA'
+          AND COALESCE(v.ANULA, 0) = 0
+      roles:
+        cliente:      "cliente_por_codigo(CLIENTE)"
+        inicio:       "FECHA"
+        durante:      "estancia_activa_del_cliente(CLIENTE, FECHA)"   # nullable
+        cubierto_por: "if durante is not null then cargo_a_estancia else pago_directo"
+
+    - nombre: consumo_cafetin_desde_venta
+      produce: consumo_cafetin
+      source_sql: |
+        SELECT v.NUMERO AS venta_id, v.CLIENTE, v.NNCLIENTE, v.FECHA,
+               vd.PRODUCTO, vd.CANTIDAD, vd.PRECIO, vd.PERSONA,
+               p.MARCA
+        FROM venta v
+        JOIN ventadet vd ON vd.VENTA = v.NUMERO
+        JOIN producto p  ON p.CODIGO = vd.PRODUCTO
+        WHERE p.MARCA IN ('RESTAURANT', 'STOCK')
+          AND COALESCE(v.ANULA, 0) = 0
+      roles:
+        cliente:      "coalesce(cliente_por_codigo(CLIENTE), individuo_walkin(NNCLIENTE))"
+        producto:     "PRODUCTO"
+        cantidad:     "CANTIDAD"
+        fecha:        "FECHA"
+        atendido_por: "empleado_por_nombre(PERSONA)"
+        durante:      "estancia_activa_del_cliente(CLIENTE, FECHA)"   # nullable
+        cubierto_por: "if durante is not null then cargo_a_estancia else pago_directo"
+
+    - nombre: contrato_plan_desde_socio
+      produce: contrato_plan
+      source_sql: |
+        SELECT s.Id, s.dni, s.plan, s.desde, s.hasta, s.fecreg, s.DEBE,
+               pl.nplan, pl.precio
+        FROM socio s
+        LEFT JOIN plan pl ON pl.Id = s.plan
+        WHERE COALESCE(s.UPDTYPE, 0) <> 2
+      roles:
+        cliente: "cliente_por_codigo(dni)"
+        plan:    "plan_canonico_por_id(plan)"        # clasificar plan → plan_sauna | plan_gym | plan_mixto
+        inicio:  "desde"
+        fin:     "hasta"
+        debe:    "DEBE"
+
+
+# =============================================================================
+# PENDIENTES (lo que falta aclarar antes de v0.2)
+# =============================================================================
+pendientes:
+
+  - tema: clasificacion_de_planes
+    descripcion: |
+      `plan.nplan` es texto libre (~96 planes). Hay que clasificar cada uno como
+      plan_sauna | plan_gym | plan_mixto leyendo el nombre + valores de dsauna/nsauna.
+      Una sola pasada manual o asistida por LLM resuelve esto.
+
+  - tema: catalogo_de_promociones
+    descripcion: |
+      Hoy las cortesías se anotan en notas libres. Para que `cortesia` apunte a una
+      promocion identificable, el negocio necesita un catálogo formal (5-10 entradas).
+
+  - tema: subcategorias_completas_de_producto
+    descripcion: |
+      Se infieren los sub-tipos de HOSTAL/SAUNA por substring del NOMBRE.
+      Falta revisar el listado real para detectar excepciones (masajes están
+      en cuál MARCA? sauna niños tiene exactamente qué nombre? etc.).
+
+  - tema: walk-ins_sin_dni
+    descripcion: |
+      venta.NNCLIENTE guarda nombre libre de no-clientes. WQuestions necesita un
+      individuo Q temporal para esos casos (ana_walkin_2026_05_19_v5234, por ejemplo)
+      para que las situaciones queden conectadas a algún Q, aunque sea efímero.
+
+  - tema: gimnasio_sin_uso
+    descripcion: |
+      El uso del gimnasio sólo se registra para socios con plan (vía asistencia).
+      Los días sueltos comprados como producto MARCA=GYM se cobran pero no
+      generan registro de entrada/salida. Esto es un hueco del negocio, no del modelo.
