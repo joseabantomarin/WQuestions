@@ -16,7 +16,7 @@ Esa capacidad de descomposición automática que tiene nuestra mente es, literal
 
 En este capítulo vamos a recorrer estos pilares uno por uno. Todavía no los vamos a tratar como ejes matemáticos formales —eso lo haremos más adelante cuando toquemos la arquitectura—, sino que vamos a analizarlos como **preguntas con personalidad propia**. Cada una de ellas esconde rarezas, trampas de diseño y convenciones que solemos pasar por alto. Entender a fondo cómo se comportan ahora nos va a ahorrar muchísimos dolores de cabeza cuando empecemos a modelar bases de datos.
 
-## Q — Quién: la pregunta por la agencia
+## Q — Quién: la pregunta por el agente o actor
 
 A simple vista, la pregunta "¿quién?" parece la más obvia e inofensiva de las cuatro. Queremos saber quién hizo algo, quién recibió la acción o sobre quién recae la responsabilidad. La respuesta estándar y canónica que esperamos encontrar aquí es **un agente capaz de ejecutar una acción**: una persona individual, un grupo de personas o una organización formal.
 
