@@ -2,7 +2,7 @@
 
 ## La unidad mínima que hace funcionar todo
 
-A lo largo de los capítulos anteriores nos hemos dedicado a presentar nuestras ocho "cajas" (los ejes Q, O, L, T, N, K, P, M) como si fueran piezas sueltas de un enorme rompecabezas. Es hora de dejar de mirar las piezas por separado y empezar a armarlo. Para que este rompecabezas de datos tenga sentido y empiece a describir el mundo real, necesitamos una pieza central: **lo que construimos al conectar esos ejes**.
+A lo largo de los capítulos anteriores nos hemos dedicado a presentar nuestras ocho "cajas" (los ejes Q, O, L, T, N, K, P, M) como si fueran piezas sueltas de un enorme rompecabezas (que la cantidad de piezas no nos abrume, recordemos que toda la información está codificada por millones de ceros y unos, solo necesitamos reglas claras y válidas). Es hora de dejar de mirar las piezas por separado y empezar a armarlo. Para que este rompecabezas de datos tenga sentido y empiece a describir el mundo real, necesitamos una pieza central: **lo que construimos al conectar esos ejes**.
 
 A esta pieza maestra la llamaremos **hecho atómico**. Su estructura informática es tan simple que parece engañosa:
 
