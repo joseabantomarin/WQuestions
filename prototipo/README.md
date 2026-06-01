@@ -18,8 +18,8 @@ cd /Users/joseabanto/WQuestions/prototipo
 # Suite de tests unitarios (21 tests)
 PYTHONPATH=. python3 -m unittest tests.test_wq -v
 
-# Demo extremo a extremo del dominio sauna (10 validaciones)
-PYTHONPATH=. python3 ejemplos/sauna.py
+# Demo extremo a extremo del dominio spa (10 validaciones)
+PYTHONPATH=. python3 ejemplos/spa.py
 
 # Validación de fricciones en los 8 dominios previos (17 comprobaciones)
 PYTHONPATH=. python3 ejemplos/dominios_previos.py
@@ -39,13 +39,13 @@ wq/
   query.py      Patrones WH como proyecciones sobre roles, con filtro temporal `at`.
 
 ejemplos/
-  sauna.py            Dominio sauna completo (3 clientes, 16 sesiones, plan, fidelidad, D9).
+  spa.py            Dominio spa completo (3 clientes, 16 sesiones, plan, fidelidad, D9).
   dominios_previos.py Valida fricciones en aeropuerto, ventas, taxi, clínica,
                       música, contrato, química, fútbol.
 
 tests/
   test_wq.py    21 tests unitarios cubriendo ejes, signaturas, lexicon,
-                modales, queries, D9, sauna end-to-end.
+                modales, queries, D9, spa end-to-end.
 ```
 
 ## Resultados de validación
@@ -53,14 +53,14 @@ tests/
 | Suite                              | Pasa | Total |
 | ---------------------------------- | ---- | ----- |
 | Tests unitarios (`tests/test_wq.py`)  | 21   | 21    |
-| Sauna end-to-end (`ejemplos/sauna.py`) | 10   | 10    |
+| Spa end-to-end (`ejemplos/spa.py`) | 10   | 10    |
 | 8 dominios previos (`ejemplos/dominios_previos.py`) | 17 | 17 |
 
 Capacidades validadas:
 
 - **Validación de signatura**: el catálogo rechaza un hecho con valor en eje
   equivocado (`(situ, agente, ciudad_a)` → `SignatureError`).
-- **Polisemia por especificidad**: `tomar [sesion]` → `servicio_sauna`,
+- **Polisemia por especificidad**: `tomar [sesion]` → `servicio_spa`,
   `tomar [el_pelo]` → `accion_bromear`, `tomar` solo → `accion_tomar`.
   Igual para `dar [la_mano]` vs `dar [conferencia]` vs `dar` genérico.
 - **Nominalización**: `contratación` (forma nominal) resuelve a la
@@ -82,7 +82,7 @@ Capacidades validadas:
 
 ## Fricciones reales encontradas mientras codificaba
 
-Estas son fricciones que el prototipo expuso al construir el sauna y los
+Estas son fricciones que el prototipo expuso al construir el spa y los
 demás dominios — no estaban todas en el libro. Cuatro de cinco son
 **ajustes de uso, no del modelo**; la quinta es una fricción real ya
 documentada.
@@ -98,7 +98,7 @@ negocio comercializa).
 
 **Solución aplicada**: reificar la oferta como O con `instancia_de:
 tipo_oferta_servicio`. El plan que Carlos contrata es entonces un O,
-no un K. Es más correcto semánticamente (la oferta del Sauna Oasis es
+no un K. Es más correcto semánticamente (la oferta del Spa Oasis es
 una entidad concreta del negocio) y evita el patch al catálogo.
 
 **Implicación para el libro**: vale la pena explicitar en Parte V que
@@ -120,7 +120,7 @@ residencia de Marta. El prototipo me obligó a aplicar la convención.
 **Implicación**: D5 + D9 + reificación de situaciones de estado producen
 un modelo más rico que las relaciones planas Q-L. Esto debería quedar
 nítido en algún ejemplo de la Parte V (residencia de un cliente del
-sauna a través del tiempo).
+spa a través del tiempo).
 
 ### F3 — Consultas de conteo necesitan `ask` vacío
 
@@ -135,8 +135,7 @@ rol; solo contar matches. Mi `Pattern` exigía al menos una `Var`.
 ### F4 — Fricción documentada en química #2 (paciente: O → Q) — CONFIRMADA
 
 El prototipo confirma la fricción documentada: `paciente` declarado como
-`O → Q` rechaza el valor `CH4_qty` (en N). El patch propuesto en
-`dominios.md` (relajar `paciente` a `O → V`) sigue siendo válido. Mientras
+`O → Q` rechaza el valor `CH4_qty` (en N). El patch propuesto (relajar `paciente` a `O → V`) sigue siendo válido. Mientras
 no se aplique, el dominio químico se modela con roles de dominio
 (`insumo`, `reactivo`, `producto_reaccion`) que la política liberal admite.
 
@@ -157,7 +156,7 @@ patrón típico de "ejecución de algo categorial".
 
 2. **La reificación es asimétrica respecto a costo cognitivo.** Las
    situaciones que no se reifican generan código más corto pero
-   bloquean D9. Cuando descubrí en el sauna que quería consultar
+   bloquean D9. Cuando descubrí en el spa que quería consultar
    "¿dónde vivía Carlos en 2022?" tuve que volver atrás y reificar
    la residencia. Vale la pena reificar generosamente desde el inicio
    si hay sospecha de evolución temporal.
@@ -175,7 +174,7 @@ patrón típico de "ejecución de algo categorial".
    `SignatureError` el modelo se llena rápidamente de hechos
    sintácticamente válidos pero semánticamente sin sentido.
 
-5. **184 hechos atómicos cubren un día de operación de un sauna chico.**
+5. **184 hechos atómicos cubren un día de operación de un spa chico.**
    Tres clientes, 16 sesiones, un plan mensual, una cadena causal y dos
    residencias temporales: 184 hechos, 111 individuos, 7 verbos en el
    lexicon. Esto es comparable en densidad a lo que un schema relacional

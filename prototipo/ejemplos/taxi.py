@@ -1,7 +1,7 @@
 """Dominio taxi — servicio on-demand con agentes múltiples y cadena de
 situaciones.
 
-Stress-test del modelo en lo que el sauna no estresaba:
+Stress-test del modelo en lo que el spa no estresaba:
 - D5 al extremo: agencia repartida entre humano-pasajero, humano-conductor,
   app (software), vehículo (artefacto).
 - 6 situaciones encadenadas: solicitar → asignar → aceptar → recoger →

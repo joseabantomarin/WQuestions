@@ -113,7 +113,7 @@ for r, fila in enumerate(filas):
 # Pie con anotación
 ax.text(7.5, 0.7,
         "Las celdas marcadas con — son dimensiones no aplicables a ese hecho.\n"
-        "El espacio es parcial por diseño: ningún hecho ocupa los ocho ejes a la vez.",
+        "El espacio es parcial por diseño: ningún hecho ocupa los siete ejes a la vez.",
         ha="center", va="center", fontsize=10, style="italic", color="#6b7280")
 
 # Leyenda visual de cruce de ejes

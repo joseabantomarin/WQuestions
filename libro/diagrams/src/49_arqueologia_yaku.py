@@ -1,5 +1,5 @@
 """Diagrama: arqueología semántica de yaku.
-Mapea las tablas existentes del MySQL legacy a los 8 ejes WQuestions.
+Mapea las tablas existentes del MySQL legacy a los 7 ejes WQuestions.
 Rectángulos sólidos = lo que yaku ya implementa (informalmente).
 Rectángulos punteados = lo que falta y WQuestions añadiría.
 
@@ -20,7 +20,7 @@ ax.axis("off")
 fig.patch.set_facecolor("#ffffff")
 
 # Título
-ax.text(7.5, 9.10, "Arqueología semántica: las tablas de yaku proyectadas a los 8 ejes",
+ax.text(7.5, 9.10, "Arqueología semántica: las tablas de yaku proyectadas a los 7 ejes",
         ha="center", va="center", fontsize=14, fontweight="bold", color=INK)
 ax.text(7.5, 8.70,
         "Cajas sólidas = ya implementado en yaku (informalmente). Cajas punteadas = lo que WQuestions añade.",
@@ -53,7 +53,7 @@ for i, (name, fill, edge) in enumerate(YAKU_TABLES):
     ax.text(2.0, y, name, ha="center", va="center",
             fontsize=10, color=INK, family="monospace")
 
-# ---- LADO DERECHO: 8 ejes WQuestions ----
+# ---- LADO DERECHO: 7 ejes WQuestions ----
 ax.text(12.5, 8.10, "Ejes WQuestions",
         ha="center", va="center", fontsize=11, fontweight="bold", color=INK)
 
@@ -63,8 +63,7 @@ AXES = [
     ("L", "dónde",  "#fef3c7", "#b45309"),
     ("T", "cuándo", "#fed7aa", "#c2410c"),
     ("N", "cuánto", "#e9d5ff", "#7c3aed"),
-    ("K", "clase",  "#e0e7ff", "#4f46e5"),
-    ("P", "cuál",   "#fce7f3", "#be185d"),
+    ("K", "cuál",   "#e0e7ff", "#4f46e5"),
     ("M", "cómo",   "#cffafe", "#0e7490"),
 ]
 
@@ -77,8 +76,7 @@ EJE_ESTADO = {
     "T": ("solido", "fechas, horas, vigencias en socio.desde/hasta (D6 ✓)"),
     "N": ("solido", "IMPORTE, PRECIO, CANTIDAD, STOCK"),
     "K": ("mixto", "producto.MARCA implícita; planes sin tipar"),
-    "P": ("solido", "atributos no-clave"),
-    "M": ("punteado", "cubierto_por, durante, justificado_por faltan"),
+    "M": ("mixto", "atributos no-clave ✓; cubierto_por, durante, justificado_por faltan"),
 }
 
 e_y_start = 7.50

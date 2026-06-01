@@ -1,10 +1,11 @@
 """Catálogo canónico de roles (D8).
 
-Cada rol declara una signatura tipada `dominio → rango`, ambos ejes,
-más si es **funcional** (un valor por sujeto: vive en P) o **multi-valor**
-(vive en M). La signatura habilita la validación mecánica de hechos:
-al insertar `(s, role, v)` el catálogo verifica que `s.axis` coincida con
-el dominio y `v.axis` con el rango.
+Cada rol declara una signatura tipada `dominio → rango`, ambos ejes de valor,
+más su **cardinalidad** (`functional`: un solo valor por sujeto, o múltiple).
+Todos los roles son predicados del eje M (cómo); la cardinalidad es un atributo
+de la signatura, no un eje aparte. La signatura habilita la validación mecánica
+de hechos: al insertar `(s, role, v)` el catálogo verifica que `s.axis` coincida
+con el dominio y `v.axis` con el rango.
 """
 
 from __future__ import annotations
@@ -20,7 +21,7 @@ class RoleSignature:
     name: str
     domain: Axis    # eje del sujeto
     range: Axis     # eje del valor
-    functional: bool  # True → P (una por sujeto), False → M (multi)
+    functional: bool  # True → un valor por sujeto, False → múltiple
     description: str = ""
 
 
@@ -145,7 +146,7 @@ class Catalog:
             RoleSignature("calificacion", Axis.O, Axis.K, True,
                           "atributo cualitativo"),
 
-            # --- "por qué" (D7, capítulo 11) ---
+            # --- "por qué" (D7, capítulo 10) ---
             RoleSignature("causado_por", Axis.O, Axis.O, False,
                           "causalidad mecánica"),
             RoleSignature("motivado_por", Axis.O, Axis.O, False,

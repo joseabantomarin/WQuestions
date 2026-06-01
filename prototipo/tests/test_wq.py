@@ -22,8 +22,6 @@ from wq import (
 class TestAxes(unittest.TestCase):
     def test_individual_must_live_in_value_axis(self):
         with self.assertRaises(ValueError):
-            Individual(id="x", axis=Axis.P)
-        with self.assertRaises(ValueError):
             Individual(id="x", axis=Axis.M)
 
     def test_value_axis_individuals_ok(self):
@@ -122,12 +120,12 @@ class TestLexicon(unittest.TestCase):
         self.assertEqual(e.verb, "llegar")
 
     def test_domain_dialect(self):
-        self.lex.register_domain_dialect("sauna_oasis", {
+        self.lex.register_domain_dialect("spa_oasis", {
             "cliente": "agente",
-            "sesion": "servicio_sauna",
+            "sesion": "servicio_spa",
         })
         self.assertEqual(
-            self.lex.translate_alias("sauna_oasis", "cliente"),
+            self.lex.translate_alias("spa_oasis", "cliente"),
             "agente",
         )
         self.assertIsNone(self.lex.translate_alias("ventas", "cliente"))
@@ -329,19 +327,19 @@ class TestTemporalValidity(unittest.TestCase):
 
 
 # ===========================================================================
-# 8. Sauna end-to-end
+# 8. Spa end-to-end
 # ===========================================================================
 
-class TestSaunaDomain(unittest.TestCase):
-    def test_sauna_demo_passes_all_validations(self):
-        from ejemplos.sauna import build_lexicon, build_universe, run_validations
+class TestSpaDomain(unittest.TestCase):
+    def test_spa_demo_passes_all_validations(self):
+        from ejemplos.spa import build_lexicon, build_universe, run_validations
         lex = build_lexicon()
         u, h = build_universe(lex)
         results = run_validations(u, lex, h)
         failed = [(q, c) for q, ok, c in results if not ok]
         self.assertEqual(
             len(failed), 0,
-            f"Validaciones fallidas en sauna: {failed}",
+            f"Validaciones fallidas en spa: {failed}",
         )
 
 
