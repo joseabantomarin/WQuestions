@@ -14,7 +14,7 @@ La limitación estructural es clara: los pilares que hemos visto hasta ahora fun
 
 ## Qué es K, exactamente
 
-La letra K se eligió por convergencia lingüística (*Kind* en inglés, *Klasse* en alemán, *Kategoria* en lenguas latinas o griego). Es el eje que responde a la pregunta **¿cuál?** —¿cuál de entre un conjunto acotado de tipos, estados o categorías—, y está diseñado exclusivamente para alojar **tipos, categorías y conceptos abstractos**. Es el territorio lógico donde viven ideas genéricas como *libro*, *persona*, *gol*, *receta*, *modelo de lenguaje*, *infarto agudo de miocardio*, *cliente*, *kilogramo*, *dólar*, *arquitectura transformer* o *receta vegetariana*.
+La letra K se eligió por convergencia lingüística (*Kind* en inglés, *Klasse* en alemán, *Kategoria* en lenguas latinas o griego). Es el eje que responde a la pregunta **¿cuál?**: cuál, de entre un conjunto acotado de tipos, estados o categorías, le corresponde a algo. Está diseñado exclusivamente para alojar **tipos, categorías y conceptos abstractos**. Es el territorio lógico donde viven ideas genéricas como *libro*, *persona*, *gol*, *receta*, *modelo de lenguaje*, *infarto agudo de miocardio*, *cliente*, *kilogramo*, *dólar*, *arquitectura transformer* o *receta vegetariana*.
 
 Para visualizarlo mejor, podemos pensar en el modelo como un edificio sostenido por dos grandes fundaciones. Los pilares Q, O, L y T conforman el **primer zócalo**, el de lo concreto. Allí viven las cosas que existen materialmente en el mundo, entidades que tienen una identidad propia y, casi siempre, una ubicación en el espacio y en el tiempo. 
 
