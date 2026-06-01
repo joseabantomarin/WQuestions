@@ -39,7 +39,7 @@ layers = [
     {
         "name": "NÚCLEO WQUESTIONS",
         "subtitle": "modelo de datos",
-        "options": "8 ejes (Q O L T N K P M) · catálogo D7 · D9 vigencia · hechos atómicos",
+        "options": "7 ejes (Q O L T N K M) · catálogo D7 · D9 vigencia · hechos atómicos",
         "responsibility": "identidad estable · signaturas · ingesta · queries",
         "fill": "#dcfce7", "edge": "#15803d",
     },

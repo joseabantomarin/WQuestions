@@ -1,8 +1,10 @@
-"""Diagrama: los ocho ejes de WQuestions.
+"""Diagrama: los siete ejes de WQuestions.
 
-Representa los ocho ejes (Q, O, L, T, N, K, P, M) como una estructura radial:
-seis ejes de valor en torno a un centro (Q, O, L, T, N, K) y dos ejes
-estructurales (P y M) como anillo exterior que los conecta.
+Representa los siete ejes (Q, O, L, T, N, K, M) como una estructura radial:
+seis ejes de valor en torno a un centro (Q, O, L, T, N, K) y un eje
+estructural (M, cómo) como anillo exterior que conecta a todos. La
+cardinalidad (funcional o múltiple) es un atributo de cada predicado de M,
+no un eje aparte.
 
 Salida: ../png/01_ocho_ejes.png
 """
@@ -32,11 +34,10 @@ value_axes = [
     ("L", "dónde",   "lugares"),
     ("T", "cuándo",  "momentos"),
     ("N", "cuánto",  "magnitudes"),
-    ("K", "clase",   "tipos y categorías"),
+    ("K", "cuál",    "tipos y categorías"),
 ]
 predicate_axes = [
-    ("P", "cuál", "propiedades (funcionales)"),
-    ("M", "cómo", "relaciones (no funcionales)"),
+    ("M", "cómo", "predicados (cardinalidad 1..n)"),
 ]
 
 fig, ax = plt.subplots(figsize=FIG_SIZE, dpi=DPI)
@@ -46,7 +47,7 @@ ax.set_aspect("equal")
 ax.axis("off")
 fig.patch.set_facecolor(BG)
 
-# Anillo exterior — predicados (P y M) que conectan todo
+# Anillo exterior — el eje de predicados (M, cómo) que conecta todo
 ring = Circle((0, 0), 1.05, fill=False, edgecolor=RING_COLOR,
               linewidth=1, linestyle="--", zorder=1)
 ax.add_patch(ring)
@@ -81,10 +82,9 @@ ax.text(0, 0.02, "V", ha="center", va="center",
 ax.text(0, -0.08, "universo", ha="center", va="center",
         fontsize=8, style="italic", color=INK, zorder=4)
 
-# Predicados P y M en el anillo exterior, arriba a la derecha y abajo a la izquierda
+# El eje de predicados M (cómo) como badge sobre el anillo exterior
 for letra, pregunta, descripcion, pos_angle in [
     (predicate_axes[0][0], predicate_axes[0][1], predicate_axes[0][2], math.pi * 0.25),
-    (predicate_axes[1][0], predicate_axes[1][1], predicate_axes[1][2], math.pi * 1.25),
 ]:
     x = 1.05 * math.cos(pos_angle)
     y = 1.05 * math.sin(pos_angle)
@@ -99,14 +99,14 @@ for letra, pregunta, descripcion, pos_angle in [
             fontsize=9, style="italic", color=INK, zorder=4)
 
 # Título y leyenda
-ax.text(0, 1.32, "Los ocho ejes de WQuestions",
+ax.text(0, 1.32, "Los siete ejes de WQuestions",
         ha="center", va="center", fontsize=15, fontweight="bold", color=INK)
 
 # Leyenda visual abajo
 legend_y = -1.32
 ax.text(-1.30, legend_y, "●  ejes de valor (alojan individuos)",
         ha="left", va="center", fontsize=9, color=VALUE_EDGE)
-ax.text(0.30, legend_y, "▭  ejes estructurales (etiquetas de predicado)",
+ax.text(0.30, legend_y, "▭  eje estructural M (predicados; funcional o múltiple)",
         ha="left", va="center", fontsize=9, color=PRED_EDGE)
 
 # Guardar

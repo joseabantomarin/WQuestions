@@ -19,7 +19,7 @@ ax.axis("off")
 fig.patch.set_facecolor("#ffffff")
 
 # Título
-ax.text(6.5, 6.6, "La única diferencia real entre P y M es de cardinalidad",
+ax.text(6.5, 6.6, "Propiedades y relaciones: la única diferencia es la cardinalidad",
         ha="center", va="center", fontsize=14, fontweight="bold", color=INK)
 
 # Subtitle
@@ -32,7 +32,7 @@ LEFT_W = 5.7
 left_box = FancyBboxPatch((LEFT_X, 0.8), LEFT_W, 4.9, boxstyle="round,pad=0.08",
                           facecolor=P_FILL, edgecolor=P_EDGE, linewidth=1.8)
 ax.add_patch(left_box)
-ax.text(LEFT_X + LEFT_W/2, 5.3, "P — propiedades (funcionales)",
+ax.text(LEFT_X + LEFT_W/2, 5.3, "Cable funcional (propiedad)",
         ha="center", va="center", fontsize=13, fontweight="bold", color=P_EDGE)
 ax.text(LEFT_X + LEFT_W/2, 4.95, "un sujeto → un objeto",
         ha="center", va="center", fontsize=10, style="italic", color=INK)
@@ -82,7 +82,7 @@ RIGHT_W = 5.7
 right_box = FancyBboxPatch((RIGHT_X, 0.8), RIGHT_W, 4.9, boxstyle="round,pad=0.08",
                            facecolor=M_FILL, edgecolor=M_EDGE, linewidth=1.8)
 ax.add_patch(right_box)
-ax.text(RIGHT_X + RIGHT_W/2, 5.3, "M — relaciones (no funcionales)",
+ax.text(RIGHT_X + RIGHT_W/2, 5.3, "Cable múltiple (relación)",
         ha="center", va="center", fontsize=13, fontweight="bold", color=M_EDGE)
 ax.text(RIGHT_X + RIGHT_W/2, 4.95, "un sujeto → varios objetos",
         ha="center", va="center", fontsize=10, style="italic", color=INK)

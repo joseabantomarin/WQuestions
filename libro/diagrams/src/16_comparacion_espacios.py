@@ -17,7 +17,7 @@ spaces = [
      "fill": "#fed7aa", "edge": "#c2410c",
      "dims": "Dimensiones específicas\n(tiempo, geografía, producto,\ncliente, vendedor…).",
      "elem": "Hechos por celda con\nmedidas agregables.",
-     "vs_wq": "Un cubo por dominio.\nWQ usa un único cubo\nuniversal de ocho ejes."},
+     "vs_wq": "Un cubo por dominio.\nWQ usa un único cubo\nuniversal de siete ejes."},
     {"name": "Espacios Conceptuales",
      "subtitle": "Gärdenfors",
      "fill": "#dbeafe", "edge": "#1d4ed8",
@@ -33,7 +33,7 @@ spaces = [
     {"name": "WQuestions",
      "subtitle": "este libro",
      "fill": "#dcfce7", "edge": "#15803d",
-     "dims": "Ocho ejes universales\n(Q, O, L, T, N, K, P, M).",
+     "dims": "Siete ejes universales\n(Q, O, L, T, N, K, M).",
      "elem": "Hechos atómicos\ncomo puntos parciales,\nmulti-valuados, tipados.",
      "vs_wq": "Pensado desde el inicio\npara consumo por LLMs\n+ federación de dominios."},
 ]

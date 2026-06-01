@@ -1,4 +1,4 @@
-"""Validación de las fricciones documentadas en dominios.md.
+"""Validación de las fricciones documentadas durante el modelado de dominios.
 
 Para cada dominio previo (aeropuerto, ventas, taxi, clínica, música,
 contrato, química, fútbol) ejercemos los patrones críticos y reportamos:
