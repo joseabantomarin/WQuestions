@@ -82,7 +82,7 @@ El **label visible** de cada opción ("Bienvenida") = el `label` del propio indi
 | `tiene_opcion` | O→O | múltiple | menú → opción |
 | `orden` | O→N | funcional | opción → posición |
 | `tiene_accion` | O→O | funcional | opción → acción |
-| `destino` | O→O | funcional | acción `abrir_submenu` → menú destino |
+| `submenu_destino` | O→O | funcional | acción `abrir_submenu` → menú destino |
 | `contenido` | O→K | funcional | acción `mostrar_texto` → texto |
 
 ### Ejemplo de hechos
@@ -98,7 +98,7 @@ El **label visible** de cada opción ("Bienvenida") = el `label` del propio indi
 
 (opt_config, tiene_accion, acc_abrir_config)
 (acc_abrir_config, instancia_de, abrir_submenu)
-(acc_abrir_config, destino, menu_config)        # submenú = otro O → recursión
+(acc_abrir_config, submenu_destino, menu_config)        # submenú = otro O → recursión
 ```
 
 ## 6. SQLite
@@ -136,7 +136,7 @@ mientras corriendo:
 
 `DISPATCH` (1 handler por primitiva):
 - `mostrar_texto` → imprime `contenido(accion).label`; sigue en el menú actual.
-- `abrir_submenu` → `stack.append(destino(accion))`.
+- `abrir_submenu` → `stack.append(submenu_destino(accion))`.
 - `volver` → `stack.pop()` (si `len(stack) > 1`).
 - `salir` → termina el loop.
 
@@ -144,7 +144,7 @@ IO inyectable: `run(universe, leer=input, escribir=print)` para testear sin tecl
 Entradas inválidas (no numérica, fuera de rango) → reimprimir el menú.
 
 `catalogo_app.py`: parte del `Catalog` canónico de `wq` y registra los 5 roles del app
-(`tiene_opcion`, `orden`, `tiene_accion`, `destino`, `contenido`). Los verbos son
+(`tiene_opcion`, `orden`, `tiene_accion`, `submenu_destino`, `contenido`). Los verbos son
 individuos K; su "signatura de roles obligatorios" no se valida en v1 (el seed autora
 hechos correctos).
 
