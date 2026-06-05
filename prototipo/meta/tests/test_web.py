@@ -57,6 +57,11 @@ class TestWebAPI(unittest.TestCase):
         self.assertEqual(d["estado"]["titulo"], "Menú principal")
         self.assertFalse(d["estado"]["es_submenu"])
 
+    def test_index_html_se_sirve(self):
+        with urllib.request.urlopen(self._url("/")) as r:
+            self.assertEqual(r.status, 200)
+            self.assertIn(b"meta-driven", r.read())
+
 
 if __name__ == "__main__":
     unittest.main()

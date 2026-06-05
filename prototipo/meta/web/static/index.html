@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WQuestions · menú meta-driven</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header><h1>WQuestions · menú meta-driven</h1></header>
+  <main>
+    <section id="panel-menu">
+      <div id="migas"></div>
+      <h2 id="titulo"></h2>
+      <div id="opciones"></div>
+      <div id="salida" class="oculto"></div>
+    </section>
+    <aside id="panel-inspector">
+      <h2>Tripletas detrás (lo que ves = datos)</h2>
+      <div id="inspector"></div>
+    </aside>
+  </main>
+  <div id="overlay" class="oculto">
+    <div class="overlay-card">
+      <p>Sesión finalizada.</p>
+      <button id="btn-reiniciar">Reiniciar</button>
+    </div>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

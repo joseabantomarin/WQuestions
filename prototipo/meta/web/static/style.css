@@ -1,0 +1,24 @@
+:root { --azul:#1e3a8a; --azul2:#1d4ed8; --gris:#6b7280; --fondo:#f8fafc; }
+* { box-sizing: border-box; }
+body { margin:0; font-family: system-ui, -apple-system, sans-serif; color:#1f2937; background:var(--fondo); }
+header { background:var(--azul); color:#fff; padding:14px 22px; }
+header h1 { margin:0; font-size:18px; font-weight:600; }
+main { display:grid; grid-template-columns:1fr 1fr; gap:18px; padding:22px; max-width:1100px; margin:0 auto; }
+#panel-menu, #panel-inspector { background:#fff; border:1px solid #e5e7eb; border-radius:10px; padding:18px; }
+#migas { color:var(--gris); font-size:12px; min-height:16px; }
+#titulo { margin:4px 0 16px; color:var(--azul); }
+.opcion { display:block; width:100%; text-align:left; margin:8px 0; padding:12px 16px;
+          font-size:15px; background:#eef2ff; color:var(--azul2); border:1px solid #c7d2fe;
+          border-radius:8px; cursor:pointer; }
+.opcion:hover { background:#e0e7ff; }
+#salida { margin-top:16px; padding:14px 16px; background:#ecfdf5; border:1px solid #a7f3d0;
+          border-radius:8px; color:#065f46; }
+.oculto { display:none; }
+#panel-inspector h2 { margin:0 0 12px; font-size:14px; color:var(--gris); font-weight:600; }
+#inspector { font-family:"SF Mono", Menlo, Consolas, monospace; font-size:12px; line-height:1.5; }
+.trip-sujeto { font-weight:700; color:var(--azul); margin-top:10px; }
+.trip-row { color:#374151; padding-left:14px; }
+#overlay { position:fixed; inset:0; background:rgba(15,23,42,.55); display:flex; align-items:center; justify-content:center; }
+.overlay-card { background:#fff; padding:28px 34px; border-radius:12px; text-align:center; }
+.overlay-card button { margin-top:12px; padding:10px 20px; font-size:15px; background:var(--azul2);
+                       color:#fff; border:none; border-radius:8px; cursor:pointer; }
