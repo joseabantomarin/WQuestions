@@ -4,7 +4,8 @@ Mantiene la firma `run(u, leer, escribir, menu_inicial)` para no romper los test
 existentes. La lógica de navegación vive en engine.MenuSession; aquí solo se traduce
 el motor a print/input. Reexporta los helpers por compatibilidad.
 """
-from .engine import MenuSession, _valores, _uno, _orden, _opciones  # noqa: F401 (reexport)
+from .engine import (MenuSession, _valores, _uno, _orden, _opciones,  # noqa: F401
+                     guardar, efecto_formulario, efecto_grilla)
 
 
 def run(u, leer=input, escribir=print, menu_inicial="menu_principal"):
