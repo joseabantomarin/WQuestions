@@ -75,6 +75,9 @@ def run(u, leer=input, escribir=print, menu_inicial="menu_principal"):
 
         opcion = opciones[int(entrada) - 1]
         accion = _uno(u, opcion, "tiene_accion")
+        if accion is None:
+            escribir("(opción sin acción)")
+            continue
         verbo = _uno(u, accion, "instancia_de")
         handler = DISPATCH.get(verbo.id) if verbo is not None else None
         if handler is None:
