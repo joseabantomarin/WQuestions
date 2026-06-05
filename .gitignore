@@ -26,3 +26,6 @@ env/
 # Logs y temporales
 *.log
 *.tmp
+
+# BD generada por el demo meta-driven
+prototipo/meta/menu.db
