@@ -1,4 +1,6 @@
 """Construye el menú meta-driven como hechos WQuestions y los persiste a SQLite."""
+import sqlite3
+
 from wq import Universe, Individual, Axis
 
 from .catalogo_app import build_catalog
@@ -86,3 +88,14 @@ def build_universe() -> Universe:
 def seed(conn) -> None:
     """Construye el universo del menú y lo persiste en `conn`."""
     storage.save(build_universe(), conn)
+
+
+def abrir_universo(db_path):
+    """Abre la BD SQLite; si está vacía la siembra; devuelve (conn, universe)."""
+    conn = sqlite3.connect(db_path)
+    storage.init_db(conn)
+    vacio = conn.execute("SELECT COUNT(*) FROM hechos").fetchone()[0] == 0
+    if vacio:
+        seed(conn)
+    u = storage.load(conn, build_catalog())
+    return conn, u

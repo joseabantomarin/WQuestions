@@ -158,6 +158,17 @@ class TestOpcionSinAccion(unittest.TestCase):
         self.assertIn("opción sin acción", "\n".join(salida).lower())
 
 
+class TestAbrirUniverso(unittest.TestCase):
+    def test_siembra_y_carga(self):
+        import tempfile, os
+        db = os.path.join(tempfile.mkdtemp(), "menu.db")
+        conn, u = seed.abrir_universo(db)
+        try:
+            self.assertEqual(u.ind("menu_principal").label, "Menú principal")
+        finally:
+            conn.close()
+
+
 class TestMenuSession(unittest.TestCase):
     def setUp(self):
         self.u = seed.build_universe()
