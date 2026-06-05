@@ -4,6 +4,7 @@ import unittest
 from wq import Individual, Axis, SignatureError, Universe
 from meta.catalogo_app import build_catalog
 from meta import storage, seed, runtime
+from meta.engine import MenuSession
 
 
 class TestCatalogo(unittest.TestCase):
@@ -155,6 +156,47 @@ class TestOpcionSinAccion(unittest.TestCase):
         runtime.run(u, leer=lambda *_: next(entradas),
                     escribir=lambda s: salida.append(str(s)), menu_inicial="m")
         self.assertIn("opción sin acción", "\n".join(salida).lower())
+
+
+class TestMenuSession(unittest.TestCase):
+    def setUp(self):
+        self.u = seed.build_universe()
+
+    def test_estado_menu_principal(self):
+        e = MenuSession(self.u).estado()
+        self.assertEqual(e["titulo"], "Menú principal")
+        self.assertFalse(e["es_submenu"])
+        self.assertEqual([o["label"] for o in e["opciones"]],
+                         ["Bienvenida", "Configuración", "Salir"])
+
+    def test_seleccionar_texto(self):
+        r = MenuSession(self.u).seleccionar(1)
+        self.assertEqual(r["efecto"]["tipo"], "texto")
+        self.assertIn("Bienvenido", r["efecto"]["contenido"])
+
+    def test_seleccionar_abre_y_vuelve(self):
+        s = MenuSession(self.u)
+        r = s.seleccionar(2)  # Configuración
+        self.assertEqual(r["efecto"]["tipo"], "navegado")
+        self.assertTrue(r["estado"]["es_submenu"])
+        self.assertEqual(r["estado"]["titulo"], "Configuración")
+        r2 = s.seleccionar(2)  # Volver
+        self.assertEqual(r2["efecto"]["tipo"], "navegado")
+        self.assertFalse(r2["estado"]["es_submenu"])
+
+    def test_seleccionar_salir(self):
+        r = MenuSession(self.u).seleccionar(3)
+        self.assertEqual(r["efecto"]["tipo"], "salir")
+        self.assertTrue(r["estado"]["terminada"])
+
+    def test_indice_invalido(self):
+        self.assertEqual(MenuSession(self.u).seleccionar(99)["efecto"]["tipo"], "invalido")
+
+    def test_tripletas_visibles_incluye_opciones(self):
+        trips = MenuSession(self.u).tripletas_visibles()
+        pares = {(t["sujeto"], t["rol"], t["valor"]) for t in trips}
+        self.assertIn(("menu_principal", "tiene_opcion", "opt_bienvenida"), pares)
+        self.assertIn(("opt_bienvenida", "orden", "n_1"), pares)
 
 
 if __name__ == "__main__":
