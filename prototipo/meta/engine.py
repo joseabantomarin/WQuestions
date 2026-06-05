@@ -29,6 +29,15 @@ def _ultimo(u, subj, rol):
     return vals[-1] if vals else None
 
 
+def literal_texto(s):
+    """Un literal de texto libre: K minteado y único, marcado como literal.
+
+    Distinto de una categoría controlada (K nombrada y compartida). El texto no
+    es un eje; vive en K con su valor en `label` y la marca `meta.literal`.
+    """
+    return Individual(id=mint_id("txt"), axis=Axis.K, label=str(s), meta={"literal": True})
+
+
 def _campos(u, tipo):
     campos = sorted(_valores(u, tipo, "tiene_campo"), key=lambda c: _orden(u, c))
     out = []
@@ -124,7 +133,7 @@ def guardar(u, tipo_id, valores, registro_id=None):
         elif c["tipo"] == "fecha":
             valor = time_point(str(raw))
         else:
-            valor = Individual(id=mint_id("k"), axis=Axis.K, label=str(raw))
+            valor = literal_texto(raw)
         u.assert_fact(reg, c["rol"], valor)
     return reg.id
 
