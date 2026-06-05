@@ -1,8 +1,9 @@
 import sqlite3
 import unittest
 
-from wq import Individual, Axis, SignatureError
+from wq import Individual, Axis, SignatureError, Universe
 from meta.catalogo_app import build_catalog
+from meta import storage, seed, runtime
 
 
 class TestCatalogo(unittest.TestCase):
@@ -25,12 +26,8 @@ class TestCatalogo(unittest.TestCase):
         self.assertEqual(cat.get("destino").range, Axis.L)
 
 
-from meta import storage
-
-
 class TestStorage(unittest.TestCase):
     def _universo_minimo(self):
-        from wq import Universe
         cat = build_catalog()
         u = Universe(catalog=cat)
         m = Individual(id="m1", axis=Axis.O, label="Menú")
@@ -49,9 +46,6 @@ class TestStorage(unittest.TestCase):
                    if f.role == "tiene_opcion"]
         self.assertEqual(valores, ["o1"])
         self.assertEqual(u2.ind("o1").label, "Opción 1")
-
-
-from meta import seed
 
 
 def _valores(u, subj_id, rol):
@@ -98,9 +92,6 @@ class TestSeed(unittest.TestCase):
         self.assertIn("Bienvenido", txt.label)
 
 
-from meta import runtime
-
-
 class TestSignatura(unittest.TestCase):
     def test_signatura_protege(self):
         u = seed.build_universe()
@@ -136,6 +127,34 @@ class TestNavegacion(unittest.TestCase):
             escribir=lambda s: salida.append(str(s)),
         )
         self.assertIn("inválida", "\n".join(salida).lower())
+
+
+class TestOpcionSinAccion(unittest.TestCase):
+    def test_opcion_sin_accion_no_rompe(self):
+        u = Universe(catalog=build_catalog())
+        t_menu = Individual(id="menu", axis=Axis.K, label="menu")
+        t_opcion = Individual(id="opcion", axis=Axis.K, label="opcion")
+        v_salir = Individual(id="salir", axis=Axis.K, label="salir")
+        m = Individual(id="m", axis=Axis.O, label="M")
+        o_mala = Individual(id="o_mala", axis=Axis.O, label="Sin acción")
+        o_salir = Individual(id="o_salir", axis=Axis.O, label="Salir")
+        acc_salir = Individual(id="acc_salir", axis=Axis.O, label="acc_salir")
+        u.assert_fact(m, "instancia_de", t_menu)
+        u.assert_fact(o_mala, "instancia_de", t_opcion)
+        u.assert_fact(o_salir, "instancia_de", t_opcion)
+        u.assert_fact(acc_salir, "instancia_de", v_salir)
+        u.assert_fact(m, "tiene_opcion", o_mala)
+        u.assert_fact(m, "tiene_opcion", o_salir)
+        u.assert_fact(o_mala, "orden",
+                      Individual(id="n_1", axis=Axis.N, label="1", payload={"value": 1}))
+        u.assert_fact(o_salir, "orden",
+                      Individual(id="n_2", axis=Axis.N, label="2", payload={"value": 2}))
+        u.assert_fact(o_salir, "tiene_accion", acc_salir)
+        entradas = iter(["1", "2"])  # opción sin acción, luego salir
+        salida = []
+        runtime.run(u, leer=lambda *_: next(entradas),
+                    escribir=lambda s: salida.append(str(s)), menu_inicial="m")
+        self.assertIn("opción sin acción", "\n".join(salida).lower())
 
 
 if __name__ == "__main__":

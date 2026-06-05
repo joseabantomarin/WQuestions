@@ -68,6 +68,8 @@ def load(conn: sqlite3.Connection, catalog) -> Universe:
         )
         inds[id_] = ind
         u.add_individual(ind)
+    # v1: los hechos del menú son atemporales; load() ignora valid_from/valid_to/tx_time
+    # (assert_fact regenera tx_time). Restaurar la vigencia es trabajo de una versión futura.
     for sujeto, rol, valor in conn.execute(
             "SELECT sujeto, rol, valor FROM hechos ORDER BY rowid"):
         u.assert_fact(inds[sujeto], rol, inds[valor])
