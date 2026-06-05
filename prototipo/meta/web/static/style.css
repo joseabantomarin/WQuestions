@@ -23,3 +23,18 @@ main { display:grid; grid-template-columns:1fr 1fr; gap:18px; padding:22px; max-
 .overlay-card { background:#fff; padding:28px 34px; border-radius:12px; text-align:center; }
 .overlay-card button { margin-top:12px; padding:10px 20px; font-size:15px; background:var(--azul2);
                        color:#fff; border:none; border-radius:8px; cursor:pointer; }
+#ventana { position:fixed; inset:0; background:rgba(15,23,42,.55); display:flex; align-items:center; justify-content:center; }
+#ventana.oculto { display:none; }
+.ventana-card { background:#fff; border-radius:12px; padding:22px 26px; min-width:380px; max-width:90vw; max-height:85vh; overflow:auto; }
+.ventana-titulo { font-size:17px; font-weight:700; color:var(--azul); margin-bottom:14px; }
+.campo { display:flex; flex-direction:column; margin:10px 0; }
+.campo label { font-size:12px; color:var(--gris); margin-bottom:4px; }
+.campo input, .campo select { padding:8px 10px; border:1px solid #cbd5e1; border-radius:6px; font-size:14px; }
+.ventana-pie { margin-top:18px; display:flex; gap:10px; justify-content:flex-end; }
+.ventana-pie button { padding:9px 18px; font-size:14px; background:var(--azul2); color:#fff; border:none; border-radius:8px; cursor:pointer; }
+.ventana-pie button.secundario { background:#e5e7eb; color:#374151; }
+table.grilla { border-collapse:collapse; width:100%; }
+table.grilla th, table.grilla td { border:1px solid #e5e7eb; padding:7px 12px; text-align:left; font-size:13px; }
+table.grilla th { background:#f1f5f9; }
+tr.fila-click { cursor:pointer; }
+tr.fila-click:hover td { background:#eff6ff; }
