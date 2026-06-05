@@ -4,7 +4,7 @@ import webbrowser
 
 from .server import crear_servidor
 
-DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "menu.db")
+DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "wq.db")
 HOST, PORT = "127.0.0.1", 8000
 
 
