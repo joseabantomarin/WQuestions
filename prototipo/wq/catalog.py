@@ -57,13 +57,13 @@ class Catalog:
             # Rol no declarado: política liberal — se permite, no se valida.
             # Una política estricta lo rechazaría; preferimos extensibilidad.
             return
-        if subject.axis != sig.domain:
+        if sig.domain != Axis.V and subject.axis != sig.domain:
             raise SignatureError(
                 f"Sujeto en eje incorrecto para '{role}': se esperaba "
                 f"{sig.domain.value}, recibido {subject.axis.value} "
                 f"(sujeto={subject})"
             )
-        if value.axis != sig.range:
+        if sig.range != Axis.V and value.axis != sig.range:
             raise SignatureError(
                 f"Valor en eje incorrecto para '{role}': se esperaba "
                 f"{sig.range.value}, recibido {value.axis.value} "
@@ -83,8 +83,8 @@ class Catalog:
     def _load_canonical(self) -> None:
         canonical = [
             # --- estructurales ---
-            RoleSignature("instancia_de", Axis.O, Axis.K, False,
-                          "sujeto pertenece a la categoría"),
+            RoleSignature("instancia_de", Axis.V, Axis.K, False,
+                          "sujeto (cualquier eje de valor) pertenece a la categoría"),
             RoleSignature("subtipo_de", Axis.K, Axis.K, False,
                           "subtipo conceptual"),
             RoleSignature("parte_de", Axis.O, Axis.O, False,

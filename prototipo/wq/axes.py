@@ -26,6 +26,7 @@ class Axis(Enum):
     N = "N"  # cuánto
     K = "K"  # cuál (categórico)
     M = "M"  # cómo / predicados (modus)
+    V = "V"  # comodín de signatura: "cualquier eje de valor" (no es lugar de individuos)
 
 
 VALUE_AXES = {Axis.Q, Axis.O, Axis.L, Axis.T, Axis.N, Axis.K}
