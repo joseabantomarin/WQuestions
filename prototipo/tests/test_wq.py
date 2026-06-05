@@ -65,6 +65,15 @@ class TestSignatures(unittest.TestCase):
         f = self.u.assert_fact(self.sit, "rol_de_dominio_nuevo", self.persona)
         self.assertEqual(f.role, "rol_de_dominio_nuevo")
 
+    def test_instancia_de_acepta_sujeto_de_cualquier_eje_de_valor(self):
+        # V→K: un sujeto en Q es válido (antes el dominio era O)
+        f = self.u.assert_fact(self.persona, "instancia_de", self.cat_k)
+        self.assertEqual(f.role, "instancia_de")
+
+    def test_instancia_de_sigue_exigiendo_valor_K(self):
+        with self.assertRaises(SignatureError):
+            self.u.assert_fact(self.persona, "instancia_de", self.lugar)
+
 
 # ===========================================================================
 # 3. Lexicon — polisemia y nominalización
