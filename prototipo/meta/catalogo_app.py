@@ -27,6 +27,10 @@ def build_catalog() -> Catalog:
                       "campo → rol; el id de ese K es el predicado en los registros"),
         RoleSignature("referencia_a", Axis.O, Axis.K, True,
                       "campo referencia → tipo de entidad apuntado"),
+        RoleSignature("eje_instancia", Axis.K, Axis.K, True,
+                      "tipo de entidad → eje (K cuyo label es la letra: Q/O/...) de sus instancias"),
+        RoleSignature("campo_etiqueta", Axis.K, Axis.O, True,
+                      "tipo de entidad → campo cuyo valor es la etiqueta visible del individuo"),
     ]
     for sig in roles:
         cat.register(sig)
