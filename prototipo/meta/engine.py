@@ -102,7 +102,15 @@ def guardar(u, tipo_id, valores, registro_id=None):
     if registro_id:
         reg = u.ind(registro_id)
     else:
-        reg = Individual(id=mint_id(tipo_id), axis=Axis.O, label=f"{tipo_id} nuevo")
+        ax = _uno(u, tipo, "eje_instancia")
+        axis = Axis(ax.label) if ax is not None else Axis.O
+        etq = _uno(u, tipo, "campo_etiqueta")
+        label = f"{tipo_id} nuevo"
+        if etq is not None:
+            rol_etq_ind = _uno(u, etq, "rol")
+            rol_etq = rol_etq_ind.id if rol_etq_ind is not None else etq.id
+            label = str(valores.get(rol_etq, label))
+        reg = Individual(id=mint_id(tipo_id), axis=axis, label=label)
         u.assert_fact(reg, "instancia_de", tipo)
     for c in campos:
         raw = valores.get(c["rol"])

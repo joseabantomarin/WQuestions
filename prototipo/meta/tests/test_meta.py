@@ -231,6 +231,48 @@ class TestMenuSession(unittest.TestCase):
 from meta import engine as _engine
 
 
+class TestGuardarGeneralizado(unittest.TestCase):
+    def _mini(self):
+        from wq import Universe, Individual, Axis
+        from meta.catalogo_app import build_catalog
+        u = Universe(catalog=build_catalog())
+
+        def K(i, l=None):
+            ind = Individual(id=i, axis=Axis.K, label=l or i); u.add_individual(ind); return ind
+
+        def O(i, l=None):
+            ind = Individual(id=i, axis=Axis.O, label=l or i); u.add_individual(ind); return ind
+
+        def N(v):
+            ind = Individual(id=f"n_{v}", axis=Axis.N, label=str(v), payload={"value": v}); u.add_individual(ind); return ind
+
+        persona = K("persona", "Persona"); campo = K("campo"); texto = K("texto"); eje_q = K("eje_q", "Q")
+        cn = O("campo_persona_nombre", "Nombre")
+        u.assert_fact(cn, "instancia_de", campo)
+        u.assert_fact(persona, "tiene_campo", cn)
+        u.assert_fact(cn, "tipo_dato", texto)
+        u.assert_fact(cn, "orden", N(1))
+        u.assert_fact(cn, "rol", K("nombre"))
+        u.assert_fact(persona, "eje_instancia", eje_q)
+        u.assert_fact(persona, "campo_etiqueta", cn)
+        return u
+
+    def test_guardar_usa_eje_instancia_y_campo_etiqueta(self):
+        u = self._mini()
+        rid = _engine.guardar(u, "persona", {"nombre": "Ana"})
+        reg = u.ind(rid)
+        self.assertEqual(reg.axis, Axis.Q)      # eje_instancia → Q
+        self.assertEqual(reg.label, "Ana")      # campo_etiqueta → "Ana"
+
+    def test_guardar_default_axis_O_sin_eje_instancia(self):
+        u = self._mini()
+        # un tipo sin eje_instancia ni campo_etiqueta → O y label genérico
+        from wq import Individual, Axis
+        cosa = Individual(id="cosa", axis=Axis.K, label="Cosa"); u.add_individual(cosa)
+        rid = _engine.guardar(u, "cosa", {})
+        self.assertEqual(u.ind(rid).axis, Axis.O)
+
+
 class TestEntidad(unittest.TestCase):
     def setUp(self):
         self.u = seed.build_universe()
