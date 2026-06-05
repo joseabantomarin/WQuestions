@@ -60,13 +60,31 @@ def _instancias(u, tipo):
     return [f.subject for f in u.facts_with_value(tipo) if f.role == "instancia_de"]
 
 
+def _etiqueta(u, ind):
+    """Etiqueta visible de un individuo, derivada de hechos.
+
+    Si su tipo declara `campo_etiqueta`, devuelve el valor vigente de ese campo
+    (no el `.label` cacheado). Si no, cae al `.label`.
+    """
+    tipo = _uno(u, ind, "instancia_de")
+    if tipo is not None:
+        campo_etq = _uno(u, tipo, "campo_etiqueta")
+        if campo_etq is not None:
+            rol = _uno(u, campo_etq, "rol")
+            rol_id = rol.id if rol is not None else campo_etq.id
+            val = _ultimo(u, ind, rol_id)
+            if val is not None:
+                return val.label
+    return ind.label
+
+
 def _opciones_ref(u, tipo_id):
-    return [{"id": o.id, "label": o.label} for o in _instancias(u, u.ind(tipo_id))]
+    return [{"id": o.id, "label": _etiqueta(u, o)} for o in _instancias(u, u.ind(tipo_id))]
 
 
 def _valor_display(u, reg, rol):
     v = _ultimo(u, reg, rol)
-    return v.label if v is not None else ""
+    return _etiqueta(u, v) if v is not None else ""
 
 
 def _valor_raw(u, reg, campo):
