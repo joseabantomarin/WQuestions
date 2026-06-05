@@ -37,6 +37,13 @@ class TestCatalogo(unittest.TestCase):
         self.assertEqual(cat.get("rol").range, Axis.K)
         self.assertEqual(cat.get("referencia_a").range, Axis.K)
 
+    def test_roles_de_maestros_registrados(self):
+        cat = build_catalog()
+        self.assertEqual(cat.get("eje_instancia").domain, Axis.K)
+        self.assertEqual(cat.get("eje_instancia").range, Axis.K)
+        self.assertEqual(cat.get("campo_etiqueta").domain, Axis.K)
+        self.assertEqual(cat.get("campo_etiqueta").range, Axis.O)
+
 
 class TestStorage(unittest.TestCase):
     def _universo_minimo(self):
