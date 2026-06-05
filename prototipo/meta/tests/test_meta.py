@@ -96,3 +96,47 @@ class TestSeed(unittest.TestCase):
         txt = _uno(self.u, acc.id, "contenido")
         self.assertEqual(txt.axis, Axis.K)
         self.assertIn("Bienvenido", txt.label)
+
+
+from meta import runtime
+
+
+class TestSignatura(unittest.TestCase):
+    def test_signatura_protege(self):
+        u = seed.build_universe()
+        k = Individual(id="x_k", axis=Axis.K, label="x")
+        menu = u.ind("menu_principal")
+        # tiene_opcion espera valor en O; un K debe ser rechazado
+        with self.assertRaises(SignatureError):
+            u.assert_fact(menu, "tiene_opcion", k)
+
+
+class TestNavegacion(unittest.TestCase):
+    def test_navegacion_completa(self):
+        u = seed.build_universe()
+        entradas = iter(["1", "2", "2", "3"])  # Bienvenida, Configuración, Volver, Salir
+        salida = []
+        runtime.run(
+            u,
+            leer=lambda *_: next(entradas),
+            escribir=lambda s: salida.append(str(s)),
+        )
+        texto = "\n".join(salida)
+        self.assertIn("Bienvenido", texto)       # opción 1 mostró el texto
+        self.assertIn("Menú principal", texto)    # se mostró el menú principal
+        self.assertIn("Idioma", texto)            # el submenú mostró sus opciones
+
+    def test_entrada_invalida_no_rompe(self):
+        u = seed.build_universe()
+        entradas = iter(["9", "x", "3"])  # fuera de rango, no-número, luego Salir
+        salida = []
+        runtime.run(
+            u,
+            leer=lambda *_: next(entradas),
+            escribir=lambda s: salida.append(str(s)),
+        )
+        self.assertIn("inválida", "\n".join(salida).lower())
+
+
+if __name__ == "__main__":
+    unittest.main()
