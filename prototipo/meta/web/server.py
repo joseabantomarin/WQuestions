@@ -1,10 +1,12 @@
 """Servidor HTTP del menú meta-driven: API JSON + estáticos. Single-user, localhost."""
 import json
 import os
+import sqlite3
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 from ..engine import MenuSession
 from ..seed import abrir_universo
+from .. import storage
 
 _STATIC = os.path.abspath(os.path.join(os.path.dirname(__file__), "static"))
 _MIME = {
@@ -71,6 +73,35 @@ def crear_handler(estado):
             elif self.path == "/api/reiniciar":
                 estado["sesion"] = MenuSession(estado["universe"])
                 self._enviar_json(self._payload())
+            elif self.path == "/api/abrir_formulario":
+                try:
+                    datos = json.loads(raw or b"{}")
+                    entidad = datos["entidad"]
+                    registro_id = datos.get("registro_id")
+                except (KeyError, ValueError, TypeError, json.JSONDecodeError):
+                    self._enviar_json({"error": "datos inválidos"}, 400)
+                    return
+                from ..engine import efecto_formulario
+                u = estado["universe"]
+                tipo = u.ind(entidad)
+                ef = efecto_formulario(u, tipo, "Editar " + (tipo.label or entidad),
+                                       registro_id)
+                self._enviar_json({"efecto": ef})
+            elif self.path == "/api/guardar":
+                try:
+                    datos = json.loads(raw or b"{}")
+                    entidad = datos["entidad"]
+                    valores = datos["valores"]
+                except (KeyError, ValueError, TypeError, json.JSONDecodeError):
+                    self._enviar_json({"error": "datos inválidos"}, 400)
+                    return
+                from ..engine import guardar
+                u = estado["universe"]
+                rid = guardar(u, entidad, valores, datos.get("registro_id"))
+                conn = sqlite3.connect(estado["db_path"])
+                storage.save(u, conn)
+                conn.close()
+                self._enviar_json({"ok": True, "registro_id": rid})
             else:
                 self.send_error(404)
 
@@ -80,7 +111,7 @@ def crear_handler(estado):
 def crear_servidor(db_path, host="127.0.0.1", port=8000):
     """Carga el universo (siembra si hace falta) y devuelve (httpd, estado)."""
     conn, u = abrir_universo(db_path)
-    conn.close()  # el universo ya está en memoria
-    estado = {"universe": u, "sesion": MenuSession(u)}
+    conn.close()
+    estado = {"universe": u, "sesion": MenuSession(u), "db_path": db_path}
     httpd = HTTPServer((host, port), crear_handler(estado))
     return httpd, estado

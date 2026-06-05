@@ -77,5 +77,35 @@ class TestWebAPI(unittest.TestCase):
         self.assertEqual(cm.exception.code, 400)
 
 
+    def test_guardar_crea_y_persiste(self):
+        import sqlite3
+        d = self._post("/api/guardar", {"entidad": "venta",
+                                        "valores": {"fecha": "2026-06-09", "cliente": "ana",
+                                                    "producto": "mouse", "monto": "77"}})
+        self.assertTrue(d["ok"])
+        rid = d["registro_id"]
+        # persistido en la db del server
+        conn = sqlite3.connect(self.db)
+        n = conn.execute("SELECT COUNT(*) FROM hechos WHERE sujeto=? AND rol='monto'",
+                         (rid,)).fetchone()[0]
+        conn.close()
+        self.assertGreaterEqual(n, 1)
+
+    def test_abrir_formulario_precargado(self):
+        d = self._post("/api/abrir_formulario", {"entidad": "venta",
+                                                 "registro_id": "venta_001"})
+        ef = d["efecto"]
+        self.assertEqual(ef["tipo"], "formulario")
+        self.assertEqual(ef["valores"]["cliente"], "ana")
+
+    def test_guardar_body_malformado_400(self):
+        req = urllib.request.Request(self._url("/api/guardar"), data=b"{}",
+                                     headers={"Content-Type": "application/json"},
+                                     method="POST")
+        with self.assertRaises(urllib.error.HTTPError) as cm:
+            urllib.request.urlopen(req)
+        self.assertEqual(cm.exception.code, 400)
+
+
 if __name__ == "__main__":
     unittest.main()
