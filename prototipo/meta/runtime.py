@@ -1,86 +1,32 @@
-"""Evaluador genérico del menú meta-driven.
+"""Driver CLI sobre el motor headless `MenuSession`.
 
-No conoce ninguna opción por nombre: lee el menú actual desde el grafo, lo muestra,
-y despacha cada acción según su tipo-K (`instancia_de`). Agregar una primitiva nueva
-= un individuo K + una entrada en DISPATCH.
+Mantiene la firma `run(u, leer, escribir, menu_inicial)` para no romper los tests
+existentes. La lógica de navegación vive en engine.MenuSession; aquí solo se traduce
+el motor a print/input. Reexporta los helpers por compatibilidad.
 """
-
-
-def _valores(u, subj, rol):
-    return [f.value for f in u.facts_about(subj) if f.role == rol]
-
-
-def _uno(u, subj, rol):
-    vs = _valores(u, subj, rol)
-    return vs[0] if vs else None
-
-
-def _orden(u, opt):
-    n = _uno(u, opt, "orden")
-    return n.payload["value"] if n is not None and n.payload else 0
-
-
-def _opciones(u, menu):
-    return sorted(_valores(u, menu, "tiene_opcion"), key=lambda o: _orden(u, o))
-
-
-# --- handlers: (u, accion, stack, escribir) -> bool "seguir corriendo" -------
-
-def _h_mostrar_texto(u, accion, stack, escribir):
-    txt = _uno(u, accion, "contenido")
-    escribir(txt.label if txt is not None else "")
-    return True
-
-
-def _h_abrir_submenu(u, accion, stack, escribir):
-    destino = _uno(u, accion, "submenu_destino")
-    if destino is not None:
-        stack.append(destino)
-    return True
-
-
-def _h_volver(u, accion, stack, escribir):
-    if len(stack) > 1:
-        stack.pop()
-    return True
-
-
-def _h_salir(u, accion, stack, escribir):
-    return False
-
-
-DISPATCH = {
-    "mostrar_texto": _h_mostrar_texto,
-    "abrir_submenu": _h_abrir_submenu,
-    "volver": _h_volver,
-    "salir": _h_salir,
-}
+from .engine import MenuSession, _valores, _uno, _orden, _opciones  # noqa: F401 (reexport)
 
 
 def run(u, leer=input, escribir=print, menu_inicial="menu_principal"):
-    """Corre el menú. `leer`/`escribir` son inyectables para testear sin teclado."""
-    stack = [u.ind(menu_inicial)]
-    seguir = True
-    while seguir:
-        menu = stack[-1]
-        opciones = _opciones(u, menu)
-        escribir(f"\n== {menu.label} ==")
-        for i, opt in enumerate(opciones, 1):
-            escribir(f"  {i}. {opt.label}")
-
+    """Corre el menú en la terminal. `leer`/`escribir` son inyectables para tests."""
+    sess = MenuSession(u, menu_inicial)
+    while not sess.terminada:
+        e = sess.estado()
+        escribir(f"\n== {e['titulo']} ==")
+        for o in e["opciones"]:
+            escribir(f"  {o['indice']}. {o['label']}")
         entrada = str(leer("> ")).strip()
-        if not entrada.isdigit() or not (1 <= int(entrada) <= len(opciones)):
+        if not entrada.isdigit():
             escribir("Opción inválida.")
             continue
-
-        opcion = opciones[int(entrada) - 1]
-        accion = _uno(u, opcion, "tiene_accion")
-        if accion is None:
+        ef = sess.seleccionar(int(entrada))["efecto"]
+        tipo = ef["tipo"]
+        if tipo == "texto":
+            escribir(ef["contenido"])
+        elif tipo == "invalido":
+            escribir("Opción inválida.")
+        elif tipo == "sin_accion":
             escribir("(opción sin acción)")
-            continue
-        verbo = _uno(u, accion, "instancia_de")
-        handler = DISPATCH.get(verbo.id) if verbo is not None else None
-        if handler is None:
-            escribir(f"(sin handler para '{verbo.id if verbo else '?'}')")
-            continue
-        seguir = handler(u, accion, stack, escribir)
+        elif tipo == "desconocido":
+            escribir("(sin handler para esa acción)")
+        # navegado / salir: nada que imprimir
