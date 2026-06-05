@@ -1,7 +1,7 @@
 """WQuestions — prototipo de validación en Python.
 
 Implementa el modelo descrito en `WQuestions.md` y discutido en el libro:
-- 8 ejes (Q, O, L, T, N, K, P, M)
+- 7 ejes (Q, O, L, T, N, K, M)
 - hechos atómicos con signatura tipada
 - situaciones reificadas (D4, D5)
 - catálogo canónico de roles (D8)
