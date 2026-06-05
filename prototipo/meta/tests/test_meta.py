@@ -281,7 +281,7 @@ class TestEntidad(unittest.TestCase):
     def test_campos_ordenados(self):
         campos = _engine._campos(self.u, self.u.ind("venta"))
         self.assertEqual([c["rol"] for c in campos],
-                         ["fecha", "cliente", "producto", "monto"])
+                         ["fecha", "cliente", "producto", "monto", "documento"])
         self.assertEqual(campos[1]["tipo"], "referencia")
         self.assertEqual(campos[1]["referencia_a"], "persona")
 
@@ -293,7 +293,7 @@ class TestEntidad(unittest.TestCase):
         ef = _engine.efecto_grilla(self.u, self.u.ind("venta"), "Consulta")
         self.assertEqual(ef["tipo"], "grilla")
         self.assertEqual({c["rol"] for c in ef["columnas"]},
-                         {"fecha", "cliente", "producto", "monto"})
+                         {"fecha", "cliente", "producto", "monto", "documento"})
         fila = next(f for f in ef["filas"] if f["id"] == "venta_001")
         self.assertEqual(fila["valores"]["cliente"], "Ana")
         self.assertEqual(fila["valores"]["producto"], "Laptop")
@@ -332,14 +332,14 @@ class TestSeedVentas(unittest.TestCase):
                 if f.role == "tiene_opcion"]
         self.assertIn("Ventas", opts)
 
-    def test_esquema_venta_cuatro_campos(self):
+    def test_esquema_venta_campos(self):
         campos = [f.value for f in self.u.facts_about(self.u.ind("venta"))
                   if f.role == "tiene_campo"]
         roles = set()
         for c in campos:
             rol = [f.value for f in self.u.facts_about(c) if f.role == "rol"][0]
             roles.add(rol.id)
-        self.assertEqual(roles, {"fecha", "cliente", "producto", "monto"})
+        self.assertEqual(roles, {"fecha", "cliente", "producto", "monto", "documento"})
 
     def test_cliente_es_agente_Q_clasificado(self):
         ana = self.u.ind("ana")
