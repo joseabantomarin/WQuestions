@@ -221,5 +221,35 @@ class TestMenuSession(unittest.TestCase):
         self.assertIn(("opt_bienvenida", "orden", "n_1"), pares)
 
 
+class TestSeedVentas(unittest.TestCase):
+    def setUp(self):
+        self.u = seed.build_universe()
+
+    def test_menu_principal_incluye_ventas(self):
+        opts = [f.value.label for f in self.u.facts_about(self.u.ind("menu_principal"))
+                if f.role == "tiene_opcion"]
+        self.assertIn("Ventas", opts)
+
+    def test_esquema_venta_cuatro_campos(self):
+        campos = [f.value for f in self.u.facts_about(self.u.ind("venta"))
+                  if f.role == "tiene_campo"]
+        roles = set()
+        for c in campos:
+            rol = [f.value for f in self.u.facts_about(c) if f.role == "rol"][0]
+            roles.add(rol.id)
+        self.assertEqual(roles, {"fecha", "cliente", "producto", "monto"})
+
+    def test_cliente_es_agente_Q_clasificado(self):
+        ana = self.u.ind("ana")
+        self.assertEqual(ana.axis, Axis.Q)
+        tipos = [f.value.id for f in self.u.facts_about(ana) if f.role == "instancia_de"]
+        self.assertIn("cliente", tipos)
+
+    def test_hay_registros_de_ejemplo(self):
+        ventas = [f.subject for f in self.u.facts_with_value(self.u.ind("venta"))
+                  if f.role == "instancia_de"]
+        self.assertGreaterEqual(len(ventas), 2)
+
+
 if __name__ == "__main__":
     unittest.main()
