@@ -5,6 +5,7 @@ from wq import Universe, Individual, Axis, time_point
 
 from .catalogo_app import build_catalog, registrar_firmas_de_esquema
 from . import storage
+from .engine import literal_texto
 
 
 def _k(id_, label=None):
@@ -118,6 +119,7 @@ def build_universe() -> Universe:
     _campo(venta, "campo_venta_cliente", "Cliente", t_ref, 2, _k("cliente"), persona)
     _campo(venta, "campo_venta_producto", "Producto", t_ref, 3, producto, producto)
     _campo(venta, "campo_venta_monto", "Monto", t_numero, 4, _k("monto"))
+    _campo(venta, "campo_venta_documento", "Documento", t_texto, 5, _k("documento"))
 
     _campo(compra, "campo_compra_fecha", "Fecha", t_fecha, 1, t_fecha)
     _campo(compra, "campo_compra_proveedor", "Proveedor", t_ref, 2, _k("proveedor"), persona)
@@ -130,10 +132,10 @@ def build_universe() -> Universe:
     laptop = _o("laptop", "Laptop"); mouse = _o("mouse", "Mouse")
     for p, nom in [(ana, "Ana"), (beto, "Beto")]:
         u.assert_fact(p, "instancia_de", persona)
-        u.assert_fact(p, "nombre", _k(nom))
+        u.assert_fact(p, "nombre", literal_texto(nom))
     for pr, nom, pre in [(laptop, "Laptop", 1200), (mouse, "Mouse", 25)]:
         u.assert_fact(pr, "instancia_de", producto)
-        u.assert_fact(pr, "nombre_producto", _k(nom))
+        u.assert_fact(pr, "nombre_producto", literal_texto(nom))
         u.assert_fact(pr, "precio", _n(pre))
 
     # --- Registros de ejemplo ---

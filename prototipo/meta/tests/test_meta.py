@@ -453,5 +453,46 @@ class TestCatalogoComoDato(unittest.TestCase):
                          (A.O, A.K))
 
 
+class TestLiteralTexto(unittest.TestCase):
+    def test_literal_unico_y_marcado(self):
+        from meta.engine import literal_texto
+        a = literal_texto("Ana"); b = literal_texto("Ana")
+        self.assertNotEqual(a.id, b.id)          # literales independientes
+        self.assertEqual(a.label, "Ana")
+        self.assertTrue(a.meta.get("literal"))
+        self.assertEqual(a.axis, Axis.K)
+
+    def test_seed_nombre_es_literal(self):
+        u = seed.build_universe()
+        v = [f.value for f in u.facts_about(u.ind("ana")) if f.role == "nombre"][-1]
+        self.assertTrue(v.meta.get("literal"))
+
+    def test_guardar_persona_nombre_es_literal(self):
+        u = seed.build_universe()
+        rid = _engine.guardar(u, "persona", {"nombre": "Zoe"})
+        v = [f.value for f in u.facts_about(u.ind(rid)) if f.role == "nombre"][-1]
+        self.assertTrue(v.meta.get("literal"))
+        self.assertEqual(v.label, "Zoe")
+
+
+class TestDisplayDerivado(unittest.TestCase):
+    def setUp(self):
+        self.u = seed.build_universe()
+
+    def test_opciones_ref_usa_nombre_vigente(self):
+        rid = _engine.guardar(self.u, "persona", {"nombre": "Caro"})
+        labels = {o["id"]: o["label"] for o in _engine._opciones_ref(self.u, "persona")}
+        self.assertEqual(labels[rid], "Caro")
+        _engine.guardar(self.u, "persona", {"nombre": "Carolina"}, registro_id=rid)
+        labels = {o["id"]: o["label"] for o in _engine._opciones_ref(self.u, "persona")}
+        self.assertEqual(labels[rid], "Carolina")   # display vigente, no el label cacheado
+
+    def test_grilla_cliente_muestra_nombre_vigente(self):
+        ef = _engine.efecto_grilla(self.u, self.u.ind("venta"), "Consulta")
+        fila = next(f for f in ef["filas"] if f["id"] == "venta_001")
+        self.assertEqual(fila["valores"]["cliente"], "Ana")
+        self.assertEqual(fila["valores"]["producto"], "Laptop")
+
+
 if __name__ == "__main__":
     unittest.main()
