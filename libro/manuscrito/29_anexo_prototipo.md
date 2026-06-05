@@ -84,6 +84,7 @@ class Axis(Enum):
     N = "N"  # cuánto
     K = "K"  # cuál (categórico)
     M = "M"  # cómo / predicados (modus)
+    V = "V"  # comodín de signatura: cualquier eje de valor
 
 
 VALUE_AXES = {Axis.Q, Axis.O, Axis.L, Axis.T, Axis.N, Axis.K}
@@ -346,8 +347,8 @@ class Catalog:
     def _load_canonical(self) -> None:
         canonical = [
             # --- estructurales ---
-            RoleSignature("instancia_de", Axis.O, Axis.K, False,
-                          "sujeto pertenece a la categoría"),
+            RoleSignature("instancia_de", Axis.V, Axis.K, False,
+                          "sujeto (cualquier eje de valor) pertenece a la categoría"),
             RoleSignature("subtipo_de", Axis.K, Axis.K, False,
                           "subtipo conceptual"),
             RoleSignature("parte_de", Axis.O, Axis.O, False,
