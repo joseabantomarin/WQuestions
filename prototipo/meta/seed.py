@@ -3,7 +3,7 @@ import sqlite3
 
 from wq import Universe, Individual, Axis, time_point
 
-from .catalogo_app import build_catalog
+from .catalogo_app import build_catalog, registrar_firmas_de_esquema
 from . import storage
 
 
@@ -185,6 +185,7 @@ def build_universe() -> Universe:
     _pantallas(m_maestros, "menu_productos", "Productos", 2, producto)
     _opcion(m_maestros, "opt_maestros_vol", "Volver", 3, v_volver)
 
+    registrar_firmas_de_esquema(u)
     return u
 
 
@@ -201,4 +202,5 @@ def abrir_universo(db_path):
     if vacio:
         seed(conn)
     u = storage.load(conn, build_catalog())
+    registrar_firmas_de_esquema(u)
     return conn, u

@@ -35,3 +35,46 @@ def build_catalog() -> Catalog:
     for sig in roles:
         cat.register(sig)
     return cat
+
+
+def registrar_firmas_de_esquema(u):
+    """Deriva y registra en el catálogo la firma de cada campo del esquema.
+
+    dominio = eje_instancia del tipo dueño (default O); rango = de tipo_dato
+    (texto→K, numero→N, fecha→T, referencia→eje del referencia_a). Solo registra
+    roles que no estén ya en el catálogo (se confía en el núcleo canónico).
+    """
+    try:
+        campo_meta = u.ind("campo")
+    except Exception:
+        return
+
+    def _uno(subj, rol):
+        for f in u.facts_about(subj):
+            if f.role == rol:
+                return f.value
+        return None
+
+    rango_por_tipo = {"texto": Axis.K, "numero": Axis.N, "fecha": Axis.T}
+    cat = u.catalog
+    campos = [f.subject for f in u.facts_with_value(campo_meta) if f.role == "instancia_de"]
+    for c in campos:
+        rol = _uno(c, "rol")
+        rol_id = rol.id if rol is not None else c.id
+        if cat.get(rol_id) is not None:
+            continue  # ya tipado (canónico o ya derivado) — se confía en el núcleo
+        duenos = [f.subject for f in u.facts_with_value(c) if f.role == "tiene_campo"]
+        dom = Axis.O
+        if duenos:
+            ax = _uno(duenos[0], "eje_instancia")
+            if ax is not None:
+                dom = Axis(ax.label)
+        td = _uno(c, "tipo_dato")
+        td_id = td.id if td is not None else "texto"
+        if td_id == "referencia":
+            ref = _uno(c, "referencia_a")
+            rax = _uno(ref, "eje_instancia") if ref is not None else None
+            rng = Axis(rax.label) if rax is not None else Axis.O
+        else:
+            rng = rango_por_tipo.get(td_id, Axis.K)
+        cat.register(RoleSignature(rol_id, dom, rng, True, f"campo de esquema ({td_id})"))
