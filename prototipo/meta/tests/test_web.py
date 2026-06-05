@@ -106,6 +106,27 @@ class TestWebAPI(unittest.TestCase):
             urllib.request.urlopen(req)
         self.assertEqual(cm.exception.code, 400)
 
+    def test_guardar_monto_no_numerico_da_400(self):
+        req = urllib.request.Request(
+            self._url("/api/guardar"),
+            data=json.dumps({"entidad": "venta",
+                             "valores": {"monto": "abc"}}).encode(),
+            headers={"Content-Type": "application/json"}, method="POST")
+        with self.assertRaises(urllib.error.HTTPError) as cm:
+            urllib.request.urlopen(req)
+        self.assertEqual(cm.exception.code, 400)
+
+    def test_guardar_referencia_eje_incorrecto_da_400(self):
+        # proveedor está tipado O→Q; pasar un producto (O) viola la firma → 400
+        req = urllib.request.Request(
+            self._url("/api/guardar"),
+            data=json.dumps({"entidad": "compra",
+                             "valores": {"proveedor": "laptop"}}).encode(),
+            headers={"Content-Type": "application/json"}, method="POST")
+        with self.assertRaises(urllib.error.HTTPError) as cm:
+            urllib.request.urlopen(req)
+        self.assertEqual(cm.exception.code, 400)
+
 
 if __name__ == "__main__":
     unittest.main()
