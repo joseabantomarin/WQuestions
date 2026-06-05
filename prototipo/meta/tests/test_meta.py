@@ -23,3 +23,29 @@ class TestCatalogo(unittest.TestCase):
         self.assertEqual(cat.get("contenido").range, Axis.K)
         # el canónico 'destino' sigue intacto
         self.assertEqual(cat.get("destino").range, Axis.L)
+
+
+from meta import storage
+
+
+class TestStorage(unittest.TestCase):
+    def _universo_minimo(self):
+        from wq import Universe
+        cat = build_catalog()
+        u = Universe(catalog=cat)
+        m = Individual(id="m1", axis=Axis.O, label="Menú")
+        o = Individual(id="o1", axis=Axis.O, label="Opción 1")
+        u.assert_fact(m, "tiene_opcion", o)
+        return u
+
+    def test_storage_roundtrip(self):
+        u = self._universo_minimo()
+        conn = sqlite3.connect(":memory:")
+        storage.save(u, conn)
+        u2 = storage.load(conn, build_catalog())
+        self.assertEqual(len(u2.individuals), len(u.individuals))
+        self.assertEqual(len(u2.facts), len(u.facts))
+        valores = [f.value.id for f in u2.facts_about(u2.ind("m1"))
+                   if f.role == "tiene_opcion"]
+        self.assertEqual(valores, ["o1"])
+        self.assertEqual(u2.ind("o1").label, "Opción 1")
