@@ -3,6 +3,7 @@ import os
 import tempfile
 import threading
 import unittest
+import urllib.error
 import urllib.request
 
 from meta.web.server import crear_servidor
@@ -61,6 +62,19 @@ class TestWebAPI(unittest.TestCase):
         with urllib.request.urlopen(self._url("/")) as r:
             self.assertEqual(r.status, 200)
             self.assertIn(b"meta-driven", r.read())
+
+    def test_traversal_estatico_bloqueado(self):
+        with self.assertRaises(urllib.error.HTTPError) as cm:
+            urllib.request.urlopen(self._url("/static/../server.py"))
+        self.assertEqual(cm.exception.code, 404)
+
+    def test_body_malformado_da_400(self):
+        req = urllib.request.Request(
+            self._url("/api/seleccionar"), data=b"no-es-json",
+            headers={"Content-Type": "application/json"}, method="POST")
+        with self.assertRaises(urllib.error.HTTPError) as cm:
+            urllib.request.urlopen(req)
+        self.assertEqual(cm.exception.code, 400)
 
 
 if __name__ == "__main__":

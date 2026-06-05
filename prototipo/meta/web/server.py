@@ -1,7 +1,7 @@
 """Servidor HTTP del menú meta-driven: API JSON + estáticos. Single-user, localhost."""
 import json
 import os
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
 from ..engine import MenuSession
 from ..seed import abrir_universo
@@ -33,7 +33,7 @@ def crear_handler(estado):
 
         def _enviar_estatico(self, nombre):
             ruta = os.path.abspath(os.path.join(_STATIC, nombre))
-            if not ruta.startswith(_STATIC) or not os.path.isfile(ruta):
+            if not (ruta == _STATIC or ruta.startswith(_STATIC + os.sep)) or not os.path.isfile(ruta):
                 self.send_error(404)
                 return
             with open(ruta, "rb") as f:
@@ -82,5 +82,5 @@ def crear_servidor(db_path, host="127.0.0.1", port=8000):
     conn, u = abrir_universo(db_path)
     conn.close()  # el universo ya está en memoria
     estado = {"universe": u, "sesion": MenuSession(u)}
-    httpd = ThreadingHTTPServer((host, port), crear_handler(estado))
+    httpd = HTTPServer((host, port), crear_handler(estado))
     return httpd, estado

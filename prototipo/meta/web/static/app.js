@@ -56,20 +56,26 @@ function aplicar(data) {
 }
 
 async function onSeleccion(indice) {
-  const data = await seleccionar(indice);
-  const ef = data.efecto || {};
-  if (ef.tipo === "texto") {
-    const s = $("#salida");
-    s.textContent = ef.contenido;
+  try {
+    const data = await seleccionar(indice);
+    const ef = data.efecto || {};
+    if (ef.tipo === "texto") {
+      const s = $("#salida");
+      s.textContent = ef.contenido;
+      s.classList.remove("oculto");
+      aplicar(data);
+    } else if (ef.tipo === "navegado") {
+      $("#salida").classList.add("oculto");
+      aplicar(data);
+    } else if (ef.tipo === "salir") {
+      $("#overlay").classList.remove("oculto");
+    } else {
+      aplicar(data);
+    }
+  } catch (e) {
+    const s = document.querySelector("#salida");
+    s.textContent = "Error de comunicación con el servidor.";
     s.classList.remove("oculto");
-    aplicar(data);
-  } else if (ef.tipo === "navegado") {
-    $("#salida").classList.add("oculto");
-    aplicar(data);
-  } else if (ef.tipo === "salir") {
-    $("#overlay").classList.remove("oculto");
-  } else {
-    aplicar(data);
   }
 }
 
@@ -80,4 +86,13 @@ $("#btn-reiniciar").onclick = async () => {
   aplicar(data);
 };
 
-(async () => aplicar(await getEstado()))();
+async function cargar() {
+  try {
+    aplicar(await getEstado());
+  } catch (e) {
+    const s = document.querySelector("#salida");
+    s.textContent = "No se pudo conectar con el servidor.";
+    s.classList.remove("oculto");
+  }
+}
+cargar();
