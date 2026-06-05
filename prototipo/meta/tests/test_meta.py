@@ -90,7 +90,8 @@ class TestSeed(unittest.TestCase):
         opts = sorted(_valores(self.u, "menu_principal", "tiene_opcion"),
                       key=lambda o: _orden(self.u, o))
         self.assertEqual([o.id for o in opts],
-                         ["opt_bienvenida", "opt_config", "opt_ventas", "opt_salir"])
+                         ["opt_bienvenida", "opt_config", "opt_menu_ventas",
+                          "opt_menu_compras", "opt_menu_maestros", "opt_salir"])
 
     def test_config_abre_submenu(self):
         acc = _uno(self.u, "opt_config", "tiene_accion")
@@ -124,7 +125,7 @@ class TestSignatura(unittest.TestCase):
 class TestNavegacion(unittest.TestCase):
     def test_navegacion_completa(self):
         u = seed.build_universe()
-        entradas = iter(["1", "2", "2", "4"])  # Bienvenida, Configuración, Volver, Salir
+        entradas = iter(["1", "2", "2", "6"])  # Bienvenida, Configuración, Volver, Salir
         salida = []
         runtime.run(
             u,
@@ -138,7 +139,7 @@ class TestNavegacion(unittest.TestCase):
 
     def test_entrada_invalida_no_rompe(self):
         u = seed.build_universe()
-        entradas = iter(["9", "x", "4"])  # fuera de rango, no-número, luego Salir
+        entradas = iter(["9", "x", "6"])  # fuera de rango, no-número, luego Salir
         salida = []
         runtime.run(
             u,
@@ -196,7 +197,7 @@ class TestMenuSession(unittest.TestCase):
         self.assertEqual(e["titulo"], "Menú principal")
         self.assertFalse(e["es_submenu"])
         self.assertEqual([o["label"] for o in e["opciones"]],
-                         ["Bienvenida", "Configuración", "Ventas", "Salir"])
+                         ["Bienvenida", "Configuración", "Ventas", "Compras", "Maestros", "Salir"])
 
     def test_seleccionar_texto(self):
         r = MenuSession(self.u).seleccionar(1)
@@ -214,7 +215,7 @@ class TestMenuSession(unittest.TestCase):
         self.assertFalse(r2["estado"]["es_submenu"])
 
     def test_seleccionar_salir(self):
-        r = MenuSession(self.u).seleccionar(4)
+        r = MenuSession(self.u).seleccionar(6)
         self.assertEqual(r["efecto"]["tipo"], "salir")
         self.assertTrue(r["estado"]["terminada"])
 
@@ -282,10 +283,10 @@ class TestEntidad(unittest.TestCase):
         self.assertEqual([c["rol"] for c in campos],
                          ["fecha", "cliente", "producto", "monto"])
         self.assertEqual(campos[1]["tipo"], "referencia")
-        self.assertEqual(campos[1]["referencia_a"], "cliente")
+        self.assertEqual(campos[1]["referencia_a"], "persona")
 
-    def test_opciones_ref_lista_clientes(self):
-        ops = _engine._opciones_ref(self.u, "cliente")
+    def test_opciones_ref_lista_personas(self):
+        ops = _engine._opciones_ref(self.u, "persona")
         self.assertEqual({o["id"] for o in ops}, {"ana", "beto"})
 
     def test_efecto_grilla_tiene_filas_legibles(self):
@@ -344,12 +345,68 @@ class TestSeedVentas(unittest.TestCase):
         ana = self.u.ind("ana")
         self.assertEqual(ana.axis, Axis.Q)
         tipos = [f.value.id for f in self.u.facts_about(ana) if f.role == "instancia_de"]
-        self.assertIn("cliente", tipos)
+        self.assertIn("persona", tipos)
 
     def test_hay_registros_de_ejemplo(self):
         ventas = [f.subject for f in self.u.facts_with_value(self.u.ind("venta"))
                   if f.role == "instancia_de"]
         self.assertGreaterEqual(len(ventas), 2)
+
+
+class TestMaestrosCompras(unittest.TestCase):
+    def setUp(self):
+        self.u = seed.build_universe()
+
+    def test_persona_es_Q_clasificada_con_nombre(self):
+        ana = self.u.ind("ana")
+        self.assertEqual(ana.axis, Axis.Q)
+        tipos = [f.value.id for f in self.u.facts_about(ana) if f.role == "instancia_de"]
+        self.assertIn("persona", tipos)
+
+    def test_eje_instancia_persona_es_Q(self):
+        ax = _engine._uno(self.u, self.u.ind("persona"), "eje_instancia")
+        self.assertEqual(ax.label, "Q")
+
+    def test_guardar_persona_crea_en_Q_con_label(self):
+        rid = _engine.guardar(self.u, "persona", {"nombre": "Caro"})
+        reg = self.u.ind(rid)
+        self.assertEqual(reg.axis, Axis.Q)
+        self.assertEqual(reg.label, "Caro")
+
+    def test_guardar_producto_con_precio(self):
+        rid = _engine.guardar(self.u, "producto",
+                              {"nombre_producto": "Teclado", "precio": "50"})
+        reg = self.u.ind(rid)
+        self.assertEqual(reg.axis, Axis.O)
+        self.assertEqual(reg.label, "Teclado")
+        precio = [f.value for f in self.u.facts_about(reg) if f.role == "precio"][-1]
+        self.assertEqual(precio.axis, Axis.N)
+
+    def test_compra_referencia_persona_y_producto(self):
+        campos = _engine._campos(self.u, self.u.ind("compra"))
+        prov = next(c for c in campos if c["rol"] == "proveedor")
+        self.assertEqual(prov["referencia_a"], "persona")
+
+    def test_persona_compartida_cliente_y_proveedor(self):
+        # ana es proveedor en compra_001 (seed) y la usamos como cliente en una venta
+        vid = _engine.guardar(self.u, "venta",
+                              {"fecha": "2026-06-05", "cliente": "ana",
+                               "producto": "laptop", "monto": "300"})
+        cli = [f.value for f in self.u.facts_about(self.u.ind(vid)) if f.role == "cliente"][-1]
+        prov = [f.value for f in self.u.facts_about(self.u.ind("compra_001")) if f.role == "proveedor"][-1]
+        self.assertEqual(cli.id, prov.id)   # mismo individuo persona
+
+    def test_menu_principal_incluye_compras_y_maestros(self):
+        opts = [f.value.label for f in self.u.facts_about(self.u.ind("menu_principal"))
+                if f.role == "tiene_opcion"]
+        self.assertIn("Compras", opts)
+        self.assertIn("Maestros", opts)
+
+    def test_maestros_tiene_personas_y_productos(self):
+        opts = [f.value.label for f in self.u.facts_about(self.u.ind("menu_maestros"))
+                if f.role == "tiene_opcion"]
+        self.assertIn("Personas", opts)
+        self.assertIn("Productos", opts)
 
 
 if __name__ == "__main__":
