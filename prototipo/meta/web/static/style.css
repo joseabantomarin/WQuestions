@@ -19,6 +19,7 @@ main { display:grid; grid-template-columns:1fr 1fr; gap:18px; padding:22px; max-
 .trip-sujeto { font-weight:700; color:var(--azul); margin-top:10px; }
 .trip-row { color:#374151; padding-left:14px; }
 #overlay { position:fixed; inset:0; background:rgba(15,23,42,.55); display:flex; align-items:center; justify-content:center; }
+#overlay.oculto { display:none; }
 .overlay-card { background:#fff; padding:28px 34px; border-radius:12px; text-align:center; }
 .overlay-card button { margin-top:12px; padding:10px 20px; font-size:15px; background:var(--azul2);
                        color:#fff; border:none; border-radius:8px; cursor:pointer; }
