@@ -4,6 +4,7 @@ import os
 import sqlite3
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
+from wq import SignatureError
 from ..engine import MenuSession
 from ..seed import abrir_universo
 from .. import storage
@@ -83,9 +84,13 @@ def crear_handler(estado):
                     return
                 from ..engine import efecto_formulario
                 u = estado["universe"]
-                tipo = u.ind(entidad)
-                ef = efecto_formulario(u, tipo, "Editar " + (tipo.label or entidad),
-                                       registro_id)
+                try:
+                    tipo = u.ind(entidad)
+                    ef = efecto_formulario(u, tipo, "Editar " + (tipo.label or entidad),
+                                           registro_id)
+                except (SignatureError, ValueError, KeyError) as e:
+                    self._enviar_json({"error": str(e)}, 400)
+                    return
                 self._enviar_json({"efecto": ef})
             elif self.path == "/api/guardar":
                 try:
@@ -97,7 +102,11 @@ def crear_handler(estado):
                     return
                 from ..engine import guardar
                 u = estado["universe"]
-                rid = guardar(u, entidad, valores, datos.get("registro_id"))
+                try:
+                    rid = guardar(u, entidad, valores, datos.get("registro_id"))
+                except (SignatureError, ValueError, KeyError) as e:
+                    self._enviar_json({"error": str(e)}, 400)
+                    return
                 conn = sqlite3.connect(estado["db_path"])
                 storage.save(u, conn)
                 conn.close()
