@@ -82,77 +82,108 @@ def build_universe() -> Universe:
     u.assert_fact(acc_idioma, "contenido", txt_idioma)
     u.assert_fact(acc_abrir, "submenu_destino", m_cfg)
 
-    # --- Rama Ventas (permanente) ---
+    # --- Verbos de pantalla + tipos de dato + meta-tipo campo + ejes ---
     v_form = _k("abrir_formulario"); v_grilla = _k("abrir_grilla")
+    campo = _k("campo")
+    t_texto = _k("texto"); t_numero = _k("numero"); t_fecha = _k("fecha"); t_ref = _k("referencia")
+    eje_q = _k("eje_q", "Q"); eje_o = _k("eje_o", "O")
 
-    # tipo de entidad + meta-tipo de campo + tipos de dato (K)
-    venta = _k("venta", "Venta"); campo = _k("campo")
-    t_texto = _k("texto"); t_numero = _k("numero"); t_fecha = _k("fecha")
-    t_ref = _k("referencia")
-    k_cliente = _k("cliente"); k_producto = _k("producto")  # tipos de entidad
-
-    # esquema de venta: 4 campos (descriptores O)
-    def _campo(cid, etiqueta, tipo_k, orden, rol_k, ref_k=None):
+    def _campo(tipo, cid, etiqueta, tipo_k, orden, rol_k, ref_k=None):
         c = _o(cid, etiqueta)
         u.assert_fact(c, "instancia_de", campo)
-        u.assert_fact(venta, "tiene_campo", c)
+        u.assert_fact(tipo, "tiene_campo", c)
         u.assert_fact(c, "tipo_dato", tipo_k)
         u.assert_fact(c, "orden", _n(orden))
         u.assert_fact(c, "rol", rol_k)
         if ref_k is not None:
             u.assert_fact(c, "referencia_a", ref_k)
         return c
-    _campo("campo_fecha",    "Fecha",    t_fecha,  1, t_fecha)
-    _campo("campo_cliente",  "Cliente",  t_ref,    2, k_cliente, k_cliente)
-    _campo("campo_producto", "Producto", t_ref,    3, k_producto, k_producto)
-    _campo("campo_monto",    "Monto",    t_numero, 4, _k("monto"))
 
-    # entidades compartidas: clientes en Q, productos en O (instancia_de via V→K)
+    # --- Tipos de entidad ---
+    persona = _k("persona", "Persona"); producto = _k("producto", "Producto")
+    venta = _k("venta", "Venta"); compra = _k("compra", "Compra")
+    u.assert_fact(persona, "eje_instancia", eje_q)
+    u.assert_fact(producto, "eje_instancia", eje_o)
+    # venta/compra sin eje_instancia → default O en guardar
+
+    # esquemas (campos como datos)
+    cp_nombre = _campo(persona, "campo_persona_nombre", "Nombre", t_texto, 1, _k("nombre"))
+    u.assert_fact(persona, "campo_etiqueta", cp_nombre)
+
+    cpr_nombre = _campo(producto, "campo_producto_nombre", "Nombre", t_texto, 1, _k("nombre_producto"))
+    _campo(producto, "campo_producto_precio", "Precio", t_numero, 2, _k("precio"))
+    u.assert_fact(producto, "campo_etiqueta", cpr_nombre)
+
+    _campo(venta, "campo_venta_fecha", "Fecha", t_fecha, 1, t_fecha)
+    _campo(venta, "campo_venta_cliente", "Cliente", t_ref, 2, _k("cliente"), persona)
+    _campo(venta, "campo_venta_producto", "Producto", t_ref, 3, producto, producto)
+    _campo(venta, "campo_venta_monto", "Monto", t_numero, 4, _k("monto"))
+
+    _campo(compra, "campo_compra_fecha", "Fecha", t_fecha, 1, t_fecha)
+    _campo(compra, "campo_compra_proveedor", "Proveedor", t_ref, 2, _k("proveedor"), persona)
+    _campo(compra, "campo_compra_producto", "Producto", t_ref, 3, producto, producto)
+    _campo(compra, "campo_compra_monto", "Monto", t_numero, 4, _k("monto"))
+
+    # --- Entidades maestras compartidas ---
     ana = Individual(id="ana", axis=Axis.Q, label="Ana")
     beto = Individual(id="beto", axis=Axis.Q, label="Beto")
     laptop = _o("laptop", "Laptop"); mouse = _o("mouse", "Mouse")
-    for ent, tipo in [(ana, k_cliente), (beto, k_cliente),
-                      (laptop, k_producto), (mouse, k_producto)]:
-        u.assert_fact(ent, "instancia_de", tipo)
+    for p, nom in [(ana, "Ana"), (beto, "Beto")]:
+        u.assert_fact(p, "instancia_de", persona)
+        u.assert_fact(p, "nombre", _k(nom))
+    for pr, nom, pre in [(laptop, "Laptop", 1200), (mouse, "Mouse", 25)]:
+        u.assert_fact(pr, "instancia_de", producto)
+        u.assert_fact(pr, "nombre_producto", _k(nom))
+        u.assert_fact(pr, "precio", _n(pre))
 
-    # registros de ejemplo
-    def _venta(vid, fecha_iso, cli, prod, monto):
-        r = _o(vid, vid)
-        u.assert_fact(r, "instancia_de", venta)
-        u.assert_fact(r, "fecha", time_point(fecha_iso))
-        u.assert_fact(r, "cliente", cli)
-        u.assert_fact(r, "producto", prod)
-        u.assert_fact(r, "monto", _n(monto))
-    _venta("venta_001", "2026-06-01", ana, laptop, 120)
-    _venta("venta_002", "2026-06-02", beto, mouse, 25)
+    # --- Registros de ejemplo ---
+    def _registro(tipo, rid, **rol_valor):
+        r = _o(rid, rid)
+        u.assert_fact(r, "instancia_de", tipo)
+        for rol, val in rol_valor.items():
+            u.assert_fact(r, rol, val)
+        return r
+    _registro(venta, "venta_001", fecha=time_point("2026-06-01"), cliente=ana, producto=laptop, monto=_n(120))
+    _registro(venta, "venta_002", fecha=time_point("2026-06-02"), cliente=beto, producto=mouse, monto=_n(25))
+    _registro(compra, "compra_001", fecha=time_point("2026-05-20"), proveedor=ana, producto=laptop, monto=_n(900))
 
-    # opción "Ventas" en el menú principal + submenú
-    m_ventas = _o("menu_ventas", "Ventas")
-    opt_ventas = _o("opt_ventas", "Ventas"); acc_abrir_ventas = _o("acc_abrir_ventas")
-    u.assert_fact(opt_ventas, "instancia_de", t_opcion)
-    u.assert_fact(m_main, "tiene_opcion", opt_ventas)
-    u.assert_fact(opt_ventas, "orden", _n(2.5))   # entre Configuración(2) y Salir(3)
-    u.assert_fact(opt_ventas, "tiene_accion", acc_abrir_ventas)
-    u.assert_fact(acc_abrir_ventas, "instancia_de", v_sub)
-    u.assert_fact(acc_abrir_ventas, "submenu_destino", m_ventas)
-    u.assert_fact(m_ventas, "instancia_de", t_menu)
+    # --- Menús: Ventas, Compras, Maestros(Personas/Productos) ---
+    def _submenu(mid, label, orden_en_padre, padre):
+        m = _o(mid, label)
+        u.assert_fact(m, "instancia_de", t_menu)
+        opt = _o(f"opt_{mid}", label); acc = _o(f"acc_open_{mid}")
+        u.assert_fact(opt, "instancia_de", t_opcion)
+        u.assert_fact(padre, "tiene_opcion", opt)
+        u.assert_fact(opt, "orden", _n(orden_en_padre))
+        u.assert_fact(opt, "tiene_accion", acc)
+        u.assert_fact(acc, "instancia_de", v_sub)
+        u.assert_fact(acc, "submenu_destino", m)
+        return m
 
-    opt_reg = _o("opt_registro", "Registro"); acc_reg = _o("acc_registro")
-    opt_con = _o("opt_consulta", "Consulta"); acc_con = _o("acc_consulta")
-    opt_volv = _o("opt_volver_ventas", "Volver"); acc_volv = _o("acc_volver_ventas")
-    for o in (opt_reg, opt_con, opt_volv):
-        u.assert_fact(o, "instancia_de", t_opcion)
-    for o, n in ((opt_reg, 1), (opt_con, 2), (opt_volv, 3)):
-        u.assert_fact(m_ventas, "tiene_opcion", o)
-        u.assert_fact(o, "orden", _n(n))
-    u.assert_fact(opt_reg, "tiene_accion", acc_reg)
-    u.assert_fact(acc_reg, "instancia_de", v_form)
-    u.assert_fact(acc_reg, "sobre_tipo", venta)
-    u.assert_fact(opt_con, "tiene_accion", acc_con)
-    u.assert_fact(acc_con, "instancia_de", v_grilla)
-    u.assert_fact(acc_con, "sobre_tipo", venta)
-    u.assert_fact(opt_volv, "tiene_accion", acc_volv)
-    u.assert_fact(acc_volv, "instancia_de", v_volver)
+    def _opcion(menu, oid, label, orden, verbo, **extra):
+        opt = _o(oid, label); acc = _o(f"acc_{oid}")
+        u.assert_fact(opt, "instancia_de", t_opcion)
+        u.assert_fact(menu, "tiene_opcion", opt)
+        u.assert_fact(opt, "orden", _n(orden))
+        u.assert_fact(opt, "tiene_accion", acc)
+        u.assert_fact(acc, "instancia_de", verbo)
+        for rol, val in extra.items():
+            u.assert_fact(acc, rol, val)
+        return opt
+
+    def _pantallas(menu_padre, mid, label, orden_padre, tipo):
+        m = _submenu(mid, label, orden_padre, menu_padre)
+        _opcion(m, f"opt_{mid}_reg", "Registro", 1, v_form, sobre_tipo=tipo)
+        _opcion(m, f"opt_{mid}_con", "Consulta", 2, v_grilla, sobre_tipo=tipo)
+        _opcion(m, f"opt_{mid}_vol", "Volver", 3, v_volver)
+        return m
+
+    _pantallas(m_main, "menu_ventas", "Ventas", 2.5, venta)
+    _pantallas(m_main, "menu_compras", "Compras", 2.6, compra)
+    m_maestros = _submenu("menu_maestros", "Maestros", 2.7, m_main)
+    _pantallas(m_maestros, "menu_personas", "Personas", 1, persona)
+    _pantallas(m_maestros, "menu_productos", "Productos", 2, producto)
+    _opcion(m_maestros, "opt_maestros_vol", "Volver", 3, v_volver)
 
     return u
 
