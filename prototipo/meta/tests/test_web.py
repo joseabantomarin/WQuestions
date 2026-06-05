@@ -44,7 +44,7 @@ class TestWebAPI(unittest.TestCase):
     def test_estado_inicial(self):
         d = self._get("/api/estado")
         self.assertEqual(d["estado"]["titulo"], "Menú principal")
-        self.assertEqual(len(d["estado"]["opciones"]), 3)
+        self.assertEqual(len(d["estado"]["opciones"]), 4)
         self.assertTrue(any(t["rol"] == "tiene_opcion" for t in d["tripletas"]))
 
     def test_seleccionar_navega_submenu(self):

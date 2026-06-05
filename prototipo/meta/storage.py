@@ -5,6 +5,7 @@ Dos tablas que espejan el modelo: `individuos` y `hechos`. El runtime solo usa
 """
 import json
 import sqlite3
+from datetime import datetime
 
 from wq import Universe, Individual, Axis
 
@@ -42,7 +43,7 @@ def save(universe: Universe, conn: sqlite3.Connection) -> None:
         conn.execute(
             "INSERT INTO individuos(id, eje, label, payload) VALUES (?, ?, ?, ?)",
             (ind.id, ind.axis.value, ind.label,
-             json.dumps(ind.payload) if ind.payload is not None else None),
+             json.dumps(ind.payload, default=lambda o: o.isoformat() if isinstance(o, datetime) else str(o)) if ind.payload is not None else None),
         )
     for f in universe.facts:
         conn.execute(

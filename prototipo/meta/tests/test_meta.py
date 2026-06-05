@@ -83,7 +83,7 @@ class TestSeed(unittest.TestCase):
         opts = sorted(_valores(self.u, "menu_principal", "tiene_opcion"),
                       key=lambda o: _orden(self.u, o))
         self.assertEqual([o.id for o in opts],
-                         ["opt_bienvenida", "opt_config", "opt_salir"])
+                         ["opt_bienvenida", "opt_config", "opt_ventas", "opt_salir"])
 
     def test_config_abre_submenu(self):
         acc = _uno(self.u, "opt_config", "tiene_accion")
@@ -117,7 +117,7 @@ class TestSignatura(unittest.TestCase):
 class TestNavegacion(unittest.TestCase):
     def test_navegacion_completa(self):
         u = seed.build_universe()
-        entradas = iter(["1", "2", "2", "3"])  # Bienvenida, Configuración, Volver, Salir
+        entradas = iter(["1", "2", "2", "4"])  # Bienvenida, Configuración, Volver, Salir
         salida = []
         runtime.run(
             u,
@@ -131,7 +131,7 @@ class TestNavegacion(unittest.TestCase):
 
     def test_entrada_invalida_no_rompe(self):
         u = seed.build_universe()
-        entradas = iter(["9", "x", "3"])  # fuera de rango, no-número, luego Salir
+        entradas = iter(["9", "x", "4"])  # fuera de rango, no-número, luego Salir
         salida = []
         runtime.run(
             u,
@@ -189,7 +189,7 @@ class TestMenuSession(unittest.TestCase):
         self.assertEqual(e["titulo"], "Menú principal")
         self.assertFalse(e["es_submenu"])
         self.assertEqual([o["label"] for o in e["opciones"]],
-                         ["Bienvenida", "Configuración", "Salir"])
+                         ["Bienvenida", "Configuración", "Ventas", "Salir"])
 
     def test_seleccionar_texto(self):
         r = MenuSession(self.u).seleccionar(1)
@@ -207,7 +207,7 @@ class TestMenuSession(unittest.TestCase):
         self.assertFalse(r2["estado"]["es_submenu"])
 
     def test_seleccionar_salir(self):
-        r = MenuSession(self.u).seleccionar(3)
+        r = MenuSession(self.u).seleccionar(4)
         self.assertEqual(r["efecto"]["tipo"], "salir")
         self.assertTrue(r["estado"]["terminada"])
 
@@ -219,6 +219,58 @@ class TestMenuSession(unittest.TestCase):
         pares = {(t["sujeto"], t["rol"], t["valor"]) for t in trips}
         self.assertIn(("menu_principal", "tiene_opcion", "opt_bienvenida"), pares)
         self.assertIn(("opt_bienvenida", "orden", "n_1"), pares)
+
+
+from meta import engine as _engine
+
+
+class TestEntidad(unittest.TestCase):
+    def setUp(self):
+        self.u = seed.build_universe()
+
+    def test_campos_ordenados(self):
+        campos = _engine._campos(self.u, self.u.ind("venta"))
+        self.assertEqual([c["rol"] for c in campos],
+                         ["fecha", "cliente", "producto", "monto"])
+        self.assertEqual(campos[1]["tipo"], "referencia")
+        self.assertEqual(campos[1]["referencia_a"], "cliente")
+
+    def test_opciones_ref_lista_clientes(self):
+        ops = _engine._opciones_ref(self.u, "cliente")
+        self.assertEqual({o["id"] for o in ops}, {"ana", "beto"})
+
+    def test_efecto_grilla_tiene_filas_legibles(self):
+        ef = _engine.efecto_grilla(self.u, self.u.ind("venta"), "Consulta")
+        self.assertEqual(ef["tipo"], "grilla")
+        self.assertEqual({c["rol"] for c in ef["columnas"]},
+                         {"fecha", "cliente", "producto", "monto"})
+        fila = next(f for f in ef["filas"] if f["id"] == "venta_001")
+        self.assertEqual(fila["valores"]["cliente"], "Ana")
+        self.assertEqual(fila["valores"]["producto"], "Laptop")
+
+    def test_guardar_crea_y_comparte_referencia(self):
+        rid = _engine.guardar(self.u, "venta",
+                              {"fecha": "2026-06-03", "cliente": "ana",
+                               "producto": "mouse", "monto": "300"})
+        # el cliente referenciado es el MISMO individuo ana (compartido)
+        cli = [f.value for f in self.u.facts_about(self.u.ind(rid))
+               if f.role == "cliente"][-1]
+        self.assertEqual(cli.id, "ana")
+        self.assertEqual(cli.axis, Axis.Q)
+
+    def test_guardar_actualiza_ultimo_gana(self):
+        _engine.guardar(self.u, "venta", {"monto": "999"}, registro_id="venta_001")
+        ef = _engine.efecto_grilla(self.u, self.u.ind("venta"), "Consulta")
+        fila = next(f for f in ef["filas"] if f["id"] == "venta_001")
+        self.assertEqual(fila["valores"]["monto"], "999")
+
+    def test_efecto_formulario_precargado(self):
+        ef = _engine.efecto_formulario(self.u, self.u.ind("venta"), "Editar",
+                                       registro_id="venta_001")
+        self.assertEqual(ef["valores"]["cliente"], "ana")   # id para el select
+        self.assertEqual(ef["valores"]["monto"], 120)
+        campo_cli = next(c for c in ef["campos"] if c["rol"] == "cliente")
+        self.assertIn({"id": "ana", "label": "Ana"}, campo_cli["opciones"])
 
 
 class TestSeedVentas(unittest.TestCase):
