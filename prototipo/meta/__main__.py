@@ -3,7 +3,7 @@ import os
 
 from . import seed, runtime
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "menu.db")
+DB_PATH = os.path.join(os.path.dirname(__file__), "wq.db")
 
 
 def main():
