@@ -409,5 +409,49 @@ class TestMaestrosCompras(unittest.TestCase):
         self.assertIn("Productos", opts)
 
 
+class TestCatalogoComoDato(unittest.TestCase):
+    def setUp(self):
+        self.u = seed.build_universe()
+        self.cat = self.u.catalog
+
+    def test_firmas_de_campos_nuevos_registradas(self):
+        self.assertEqual((self.cat.get("precio").domain, self.cat.get("precio").range),
+                         (Axis.O, Axis.N))
+        self.assertEqual((self.cat.get("fecha").domain, self.cat.get("fecha").range),
+                         (Axis.O, Axis.T))
+        self.assertEqual((self.cat.get("nombre_producto").domain, self.cat.get("nombre_producto").range),
+                         (Axis.O, Axis.K))
+
+    def test_referencia_deriva_rango_del_eje_apuntado(self):
+        # proveedor → persona (Q); producto-como-rol → producto (O)
+        self.assertEqual(self.cat.get("proveedor").range, Axis.Q)
+        self.assertEqual(self.cat.get("producto").range, Axis.O)
+
+    def test_no_sobrescribe_roles_canonicos(self):
+        # cliente y monto siguen siendo los canónicos (O→Q, O→N)
+        self.assertEqual(self.cat.get("cliente").range, Axis.Q)
+        self.assertEqual(self.cat.get("monto").range, Axis.N)
+
+    def test_universo_minimo_sin_campo_no_rompe(self):
+        from wq import Universe
+        from meta.catalogo_app import build_catalog, registrar_firmas_de_esquema
+        u = Universe(catalog=build_catalog())
+        registrar_firmas_de_esquema(u)  # no debe lanzar
+
+    def test_campo_agregado_en_vivo_se_tipa(self):
+        from wq import Individual, Axis as A
+        from meta.catalogo_app import registrar_firmas_de_esquema
+        u = self.u
+        c = Individual(id="campo_x_doc", axis=A.O, label="Doc"); u.add_individual(c)
+        rol = Individual(id="doc_rol", axis=A.K, label="doc_rol"); u.add_individual(rol)
+        u.assert_fact(c, "instancia_de", u.ind("campo"))
+        u.assert_fact(u.ind("venta"), "tiene_campo", c)
+        u.assert_fact(c, "tipo_dato", u.ind("texto"))
+        u.assert_fact(c, "rol", rol)
+        registrar_firmas_de_esquema(u)
+        self.assertEqual((u.catalog.get("doc_rol").domain, u.catalog.get("doc_rol").range),
+                         (A.O, A.K))
+
+
 if __name__ == "__main__":
     unittest.main()
