@@ -27,6 +27,17 @@ class TestCatalogo(unittest.TestCase):
         self.assertEqual(cat.get("destino").range, Axis.L)
 
 
+    def test_roles_de_entidad_registrados(self):
+        cat = build_catalog()
+        self.assertEqual(cat.get("tiene_campo").domain, Axis.K)
+        self.assertEqual(cat.get("tiene_campo").range, Axis.O)
+        self.assertFalse(cat.get("tiene_campo").functional)
+        self.assertEqual(cat.get("sobre_tipo").range, Axis.K)
+        self.assertEqual(cat.get("tipo_dato").range, Axis.K)
+        self.assertEqual(cat.get("rol").range, Axis.K)
+        self.assertEqual(cat.get("referencia_a").range, Axis.K)
+
+
 class TestStorage(unittest.TestCase):
     def _universo_minimo(self):
         cat = build_catalog()

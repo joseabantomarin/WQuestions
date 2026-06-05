@@ -17,6 +17,16 @@ def build_catalog() -> Catalog:
                       "acción abrir_submenu → menú destino"),
         RoleSignature("contenido", Axis.O, Axis.K, True,
                       "acción mostrar_texto → texto (individuo K)"),
+        RoleSignature("sobre_tipo", Axis.O, Axis.K, True,
+                      "acción → tipo de entidad sobre el que opera"),
+        RoleSignature("tiene_campo", Axis.K, Axis.O, False,
+                      "tipo de entidad → campo (descriptor)"),
+        RoleSignature("tipo_dato", Axis.O, Axis.K, True,
+                      "campo → tipo de dato (texto/numero/fecha/referencia)"),
+        RoleSignature("rol", Axis.O, Axis.K, True,
+                      "campo → rol; el id de ese K es el predicado en los registros"),
+        RoleSignature("referencia_a", Axis.O, Axis.K, True,
+                      "campo referencia → tipo de entidad apuntado"),
     ]
     for sig in roles:
         cat.register(sig)
