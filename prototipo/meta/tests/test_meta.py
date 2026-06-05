@@ -49,3 +49,50 @@ class TestStorage(unittest.TestCase):
                    if f.role == "tiene_opcion"]
         self.assertEqual(valores, ["o1"])
         self.assertEqual(u2.ind("o1").label, "Opción 1")
+
+
+from meta import seed
+
+
+def _valores(u, subj_id, rol):
+    s = u.ind(subj_id)
+    return [f.value for f in u.facts_about(s) if f.role == rol]
+
+
+def _uno(u, subj_id, rol):
+    vs = _valores(u, subj_id, rol)
+    return vs[0] if vs else None
+
+
+def _orden(u, opt):
+    n = _uno(u, opt.id, "orden")
+    return n.payload["value"] if n and n.payload else 0
+
+
+class TestSeed(unittest.TestCase):
+    def setUp(self):
+        self.u = seed.build_universe()
+
+    def test_menu_principal_tres_opciones_ordenadas(self):
+        opts = sorted(_valores(self.u, "menu_principal", "tiene_opcion"),
+                      key=lambda o: _orden(self.u, o))
+        self.assertEqual([o.id for o in opts],
+                         ["opt_bienvenida", "opt_config", "opt_salir"])
+
+    def test_config_abre_submenu(self):
+        acc = _uno(self.u, "opt_config", "tiene_accion")
+        verbo = _uno(self.u, acc.id, "instancia_de")
+        self.assertEqual(verbo.id, "abrir_submenu")
+        destino = _uno(self.u, acc.id, "submenu_destino")
+        self.assertEqual(destino.id, "menu_config")
+
+    def test_submenu_config_dos_opciones(self):
+        opts = sorted(_valores(self.u, "menu_config", "tiene_opcion"),
+                      key=lambda o: _orden(self.u, o))
+        self.assertEqual([o.id for o in opts], ["opt_idioma", "opt_volver"])
+
+    def test_bienvenida_tiene_texto(self):
+        acc = _uno(self.u, "opt_bienvenida", "tiene_accion")
+        txt = _uno(self.u, acc.id, "contenido")
+        self.assertEqual(txt.axis, Axis.K)
+        self.assertIn("Bienvenido", txt.label)
