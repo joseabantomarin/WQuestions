@@ -321,13 +321,13 @@ class Catalog:
             # Rol no declarado: política liberal — se permite, no se valida.
             # Una política estricta lo rechazaría; preferimos extensibilidad.
             return
-        if subject.axis != sig.domain:
+        if sig.domain != Axis.V and subject.axis != sig.domain:
             raise SignatureError(
                 f"Sujeto en eje incorrecto para '{role}': se esperaba "
                 f"{sig.domain.value}, recibido {subject.axis.value} "
                 f"(sujeto={subject})"
             )
-        if value.axis != sig.range:
+        if sig.range != Axis.V and value.axis != sig.range:
             raise SignatureError(
                 f"Valor en eje incorrecto para '{role}': se esperaba "
                 f"{sig.range.value}, recibido {value.axis.value} "
