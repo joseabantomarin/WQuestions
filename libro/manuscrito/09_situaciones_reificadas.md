@@ -79,6 +79,14 @@ Esto significa que nuestro modelo **no exige que el protagonista de la acción s
 
 Esta regla (D5) es la que nos permite auditar sistemas industriales, plantas químicas o plataformas de Inteligencia Artificial utilizando exactamente el mismo lenguaje que usaríamos para registrar ventas humanas. 
 
+### Los límites de la agencia: el rol, no la voluntad
+
+Conviene fijar el límite, porque la pregunta es legítima: si un horno inteligente o un algoritmo de recomendación pueden "vestirse" de agente, ¿cuándo deja un objeto de ser una *herramienta* y pasa a ser un *actor*? La tentación es buscar la frontera en la **voluntad** o la **conciencia** del objeto — y por ahí no hay salida limpia, porque ni un algoritmo ni una empresa "quieren" nada en sentido fuerte.
+
+El modelo esquiva esa trampa filosófica: el criterio **no es la voluntad, es el rol que la entidad ocupa en una situación concreta**. Una misma cosa puede ser las dos cosas en momentos distintos. El bisturí con el que opera un cirujano es un **instrumento** (un objeto en O) de la situación *operar* — el agente es el cirujano. Pero "el robot Da Vinci ejecutó la sutura" pone al robot en el rol de **agente** (Q) de la situación *suturar*, donde no hay otro candidato a protagonista. El mismo aparato es herramienta o actor según **qué verbo lo invoque y qué rol llene**, no según una propiedad que lleve puesta.
+
+La regla operativa, entonces, es simple: una entidad entra a Q como agente cuando **ocupa el rol `agente` de un verbo que exige uno** (vender, asignar, redactar, suturar); se queda como instrumento en O cuando es solo el medio a través del cual otro actúa. La agencia la determina la **gramática de la situación**, no la metafísica del objeto. Por eso el modelo puede auditar a un algoritmo que niega un crédito con el mismo rigor con que audita a un gerente que lo niega — sin tener que resolver primero si el algoritmo "tiene voluntad".
+
 ## El Estatus Factual: Eventos que todavía no han pasado
 
 Una situación en nuestro sistema no tiene que ser obligatoriamente un hecho consumado. A menudo, las empresas necesitan guardar situaciones que están planeadas, reuniones que se cancelaron, diagnósticos que son meras hipótesis o compras que fueron devueltas.

@@ -64,6 +64,27 @@ Todo dominio profesional serio cuenta con diccionarios controlados. Aquí entran
 
 Si hay una línea en común que atraviesa a estas cuatro familias es esta: **todo lo que vive en K no es un ejemplar único en el mundo, sino un patrón conceptual que puede aplicarse a decenas, miles o millones de casos**.
 
+## La frontera resbaladiza: ¿instancia (O) o clase (K)?
+
+El lector técnico choca tarde o temprano con un caso incómodo: ciertos objetos híbridos —un **VAR**, un **algoritmo de recomendación**, un **modelo de lenguaje**— parecen vivir en varios ejes a la vez. La confusión se disuelve apenas se entiende que **no es la cosa la que tiene un eje, sino cada uno de sus papeles**. Una misma palabra nombra cosas distintas según qué le estemos preguntando:
+
+| Si te referís a… | Eje | VAR | Algoritmo de recomendación |
+|---|---|---|---|
+| El **tipo o concepto** (la tecnología, la categoría) | **K** | `var` como clase de sistema arbitral | `filtrado_colaborativo` como técnica |
+| El **ejemplar concreto** (un despliegue, una unidad) | **O** | el VAR instalado en el estadio Monumental | el motor de recomendación de Netflix |
+| Una **acción suya, reificada** (un evento que ejecutó) | **O** | *"el VAR revisó la jugada del minuto 34"* | *"el motor recomendó la serie a Ana"* |
+| Cuando **actúa** (ocupa el rol `agente`) | **Q** | el VAR como agente de *anular_gol* | el motor como agente de *recomendar* |
+
+Acá se ve la **reificación** en movimiento, y su parentesco con la agencia contextual (la regla D5 que formalizaremos en el Capítulo 9). El mismo VAR es un objeto pasivo en O cuando describimos su instalación; es el `agente` en Q cuando *anula* un gol; y ese "anular el gol" es, a su vez, una situación reificada que vive en O. La entidad **no se duplica** al cambiar de eje: es un solo individuo referido desde situaciones distintas. Y un evento activo en un nivel —la revisión del VAR— puede volverse el objeto pasivo de otro —"la revisión del minuto 34 fue impugnada por el club"—: eso es, exactamente, reificar.
+
+La regla práctica para no perderse es preguntar, ante cada mención, *qué* se está nombrando:
+
+- **¿De qué tipo es?** → K (la categoría).
+- **¿Qué ejemplar, o qué evento, es?** → O (la instancia concreta o la acción reificada).
+- **¿Quién actúa en esta situación?** → Q (el agente, por contexto, no por naturaleza).
+
+La misma disciplina ordena a los demás híbridos del libro: *transformer* la arquitectura (K), *gpt_x* el modelo desplegado (O), *"gpt_x resumió la consulta"* el evento (O), y *gpt_x como redactor del informe* el agente (Q).
+
 ## Por qué K necesita un eje propio
 
 Existe una objeción sumamente válida que cualquier ingeniero de bases de datos plantearía al llegar a este punto: *¿Para qué molestarnos en crear todo un eje nuevo? ¿Por qué no tratar las categorías como simples cadenas de texto (strings) guardadas dentro de una columna? Que el atributo sea "estado_civil" y el valor sea la palabra `"casado"`, y problema resuelto.*
@@ -163,6 +184,23 @@ El caos semántico alcanza su punto máximo cuando dos entidades internacionales
 ```
 
 A lo largo del tiempo y a medida que el sistema se alimenta, K se transforma orgánicamente en una **red maestra de equivalencias** entre normas heterogéneas. Actúa como el puente de traducción universal que las ontologías de dominio nunca lograron (o no quisieron) construir entre ellas.
+
+### El enchufe: las ontologías ponen los nodos; WQuestions, los cables
+
+El mecanismo no se limita a K. Una entidad de cualquier ontología externa se *enchufa* en el eje que le corresponde por naturaleza —una persona de CIDOC CRM (`E21_Person`) en Q, un evento de Schema.org en O, un lugar de GeoNames en L— conservando su URI canónica como ancla de identidad. Lo que ninguna de esas ontologías sabe hacer por sí sola —el problema que diseccionamos en el Capítulo 2— es **vincular profundamente nodos de catálogos distintos**. Ahí entra WQuestions: las ontologías aportan los **nodos**; el eje M aporta los **cables** que cruzan de una a otra.
+
+```text
+   CIDOC «E21_Person»     Schema.org «Event»      GeoNames «Place»
+        rembrandt          pintar_ronda_001          amsterdam
+          │ (URI→Q)            │ (URI→O)              │ (URI→L)
+          ▼                    ▼                      ▼
+       ┌─────┐             ┌─────┐                ┌─────┐
+       │  Q  │◄── agente ──│  O  │── lugar_de ───►│  L  │
+       └─────┘             └──┬──┘                └─────┘
+                              │ momento → [ T ] 1642
+```
+
+El hecho *"La ronda de noche fue pintada por Rembrandt (CIDOC) en Ámsterdam (GeoNames) en 1642"* queda como **un solo grafo**, sin el código-pegamento que cada ontología exigía para saltar de su perímetro al del vecino. Cada catálogo sigue siendo dueño de sus nodos y sus URIs; WQuestions solo añade la capa de predicados que los estándares dejaron sin estandarizar — y con eso neutraliza la fragmentación.
 
 ## Cinco dominios, cinco vistas de K
 

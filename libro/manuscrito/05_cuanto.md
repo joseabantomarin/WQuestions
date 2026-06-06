@@ -134,6 +134,12 @@ Antes de saltar al siguiente concepto, consolidemos lo que hemos construido con 
 4.  **Estándares mundiales.** Utilizamos el catálogo oficial **QUDT** para no inventar unidades básicas. Para conceptos emergentes (como los tokens o la precisión de un LLM), creamos unidades personalizadas en K.
 5.  **Tolerancia estadística.** El eje soporta la incertidumbre modelando rangos o distribuciones estadísticas completas, no solo promedios planos.
 
+## Trampa de programación: el número que viaja desnudo
+
+El error clásico, el que aparece en producción y cuesta dinero real: guardar `100` en una columna `monto` y dar por hecho que "ya se sabe" que son dólares. Un día el sistema integra un proveedor que factura en yenes, otro operario carga `100` pensando en soles, y la suma `100 + 100` arroja `200` de una moneda que no existe. Es la misma falla que, a otra escala, le costó a la NASA el Mars Climate Orbiter en 1999: un módulo entregaba libras-fuerza y el otro leía newtons. El número, solo, **miente por omisión**.
+
+La regla del eje N lo previene de raíz: una magnitud nunca se almacena como un escalar pelado, sino como el par **valor + unidad**, y la unidad vive en K con su URI canónica (QUDT). El motor que intente sumar `100 USD` con `100 JPY` se detiene en seco, igual que se negaría a sumar peras con tornillos. La cantidad deja de ser un número y pasa a ser un **hecho completo y autoexplicativo**.
+
 ## El inventario de cajas está completo
 
 Con el pilar N instalado, nuestro universo de catalogación está formalmente completo. Ya contamos con los cuatro pilares del mundo físico (quién, qué, dónde, cuándo), tenemos el zócalo intelectual para las categorías (K) y acabamos de asegurar el terreno para las magnitudes matemáticas (N). En resumen, **ya tenemos los cajones listos para alojar cualquier tipo de valor existente.**
