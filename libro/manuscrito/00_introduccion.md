@@ -14,6 +14,8 @@ Ese desgaste técnico, esa necesidad constante de construir traductores manuales
 
 Este libro plantea, defiende y demuestra una sola idea. Es una idea tan simple de enunciar que resulta difícil creer en su potencia hasta que la ves ejecutándose en código: **las preguntas básicas de toda la vida —quién, qué, dónde, cuándo, cuánto, cuál y cómo— son estrictamente suficientes para organizar, con precisión técnica, la información de cualquier industria o dominio en el mundo.**
 
+Quizá notes un pequeño desplazamiento respecto de las seis preguntas con las que abrimos. Es deliberado: al llevar esa intuición a la precisión, *cuánto* y *cuál* se revelan como preguntas propias que el genérico *qué* tenía escondidas, y *por qué* resulta no ser una coordenada más sino una **relación entre hechos** — la causa de algo es siempre otro hecho que lo explica. La intuición de la infancia no se reemplaza: se **afina** hasta volverse siete coordenadas exactas. (Al "por qué" le dedicamos, de hecho, un capítulo entero más adelante.)
+
 No hay trucos ocultos ni capas de complejidad innecesaria. Pero, como ocurre con los verdaderos cambios de paradigma, cuando tomas esta premisa y la llevas hasta sus últimas consecuencias lógicas, el panorama entero cambia. Cambia la forma en que diseñas una base de datos. Cambia la manera en que construyes agentes de inteligencia artificial. Cambia cómo conectas sistemas que hoy son incapaces de hablarse entre sí. Incluso cambia la forma en que le explicas un negocio nuevo a un programador junior.
 
 Lo hemos puesto a prueba. Funciona. Y el propósito de este texto es mostrarte la ingeniería exacta detrás de ese funcionamiento.
@@ -24,11 +26,11 @@ Si la idea central cabe en un solo párrafo, la pregunta es válida: ¿hace falt
 
 Para que una arquitectura de este tipo sea adoptada y no se quede en un mero ensayo académico, necesita cinco cosas:
 
-   **Una intuición clara:** Demostrar que esta idea no es un capricho de diseño, sino que se fundamenta en cómo procesa la información la mente humana, la lingüística y la ciencia formal.
-    **Un modelo formal:** Reglas escritas con precisión matemática, cerrando cualquier margen de ambigüedad para el programador que deba implementarlo.
-    **Una batería de pruebas de estrés:** Aplicar el modelo en dominios reales y complejos —nada de ejemplos de juguete— para que el lector escéptico compruebe que el sistema no colapsa cuando la realidad del negocio se vuelve exigente.
-   **Una conexión con el ecosistema actual:** Las propuestas que ignoran su contexto están condenadas al fracaso. Este modelo debe dialogar de frente con las ontologías existentes, los estándares de la industria y las herramientas modernas de IA.
-    **Una hoja de ruta honesta:** Definir con total transparencia qué problemas están resueltos y cuáles son los desafíos pendientes para que esto se convierta en una infraestructura de uso diario.
+1. **Una intuición clara:** Demostrar que esta idea no es un capricho de diseño, sino que se fundamenta en cómo procesa la información la mente humana, la lingüística y la ciencia formal.
+2. **Un modelo formal:** Reglas escritas con precisión matemática, cerrando cualquier margen de ambigüedad para el programador que deba implementarlo.
+3. **Una batería de pruebas de estrés:** Aplicar el modelo en dominios reales y complejos —nada de ejemplos de juguete— para que el lector escéptico compruebe que el sistema no colapsa cuando la realidad del negocio se vuelve exigente.
+4. **Una conexión con el ecosistema actual:** Las propuestas que ignoran su contexto están condenadas al fracaso. Este modelo debe dialogar de frente con las ontologías existentes, los estándares de la industria y las herramientas modernas de IA.
+5. **Una hoja de ruta honesta:** Definir con total transparencia qué problemas están resueltos y cuáles son los desafíos pendientes para que esto se convierta en una infraestructura de uso diario.
 
 Cada uno de estos cinco requerimientos ocupa una sección de este libro. No hay relleno; cada capítulo cumple una función de carga en la estructura general.
 
@@ -39,7 +41,7 @@ A medida que avancemos, vas a ir construyendo junto conmigo una arquitectura lla
 Y este libro **no se detiene en la teoría**. Va hasta el final del proceso de ingeniería:
 
 -   Define las reglas del modelo con rigor (utilizando notación de teoría de conjuntos cuando la precisión lo exige, y prosa clara cuando es suficiente).
--   Somete la arquitectura a prueba en **ocho escenarios comerciales distintos**: desde la gestión de un spa comercial y un servicio de taxis con alta concurrencia, hasta el modelado de historias clínicas, transacciones bancarias regionales, composición musical, reacciones químicas, análisis de partidos de fútbol y la estructura de contratos legales.
+-   Somete la arquitectura a prueba en **ocho dominios industriales completos** —un spa comercial, un servicio de taxis de alta concurrencia, una historia clínica, un banco regional, un ERP multi-módulo, una universidad, una municipalidad y una operación minera— y, además, la enfrenta a **cuatro escenarios de alto estrés técnico**: composición musical, reacciones químicas, análisis de partidos de fútbol y la redacción de contratos legales.
 -   Se respalda en un **prototipo funcional escrito en Python**, garantizando que lo que se afirma en el texto es ejecutable: los ocho dominios pasan sus validaciones y los tests corren sin errores.
 -   Conecta la arquitectura con doce teorías y estándares fundamentales de la informática y la lingüística, asegurando que el modelo se integre al estado del arte y no nazca como un sistema aislado.
 
@@ -71,12 +73,12 @@ Para optimizar la lectura, la estructura del libro está **diseñada por capas**
 
 El desarrollo del modelo se divide en seis bloques principales:
 
-   **Parte I (Capítulos 1 y 2) — Por qué las preguntas:** Definimos el problema industrial que justifica este esfuerzo, repasamos cómo diversas ciencias convergieron de forma independiente en este mismo descubrimiento, y analizamos sin filtros por qué los intentos previos de la industria por resolver la interoperabilidad se quedaron a medias.
-   **Parte II (Capítulos 3 al 6) — Las siete coordenadas:** Diseccionamos un eje por capítulo: quién, qué, dónde, cuándo, cuál, cuánto y cómo. Analizamos la carga semántica de cada pregunta, las trampas lógicas al momento de programarlas y las reglas para modelarlas limpiamente.
-   **Parte III (Capítulos 7 al 10) — Cómo funcionan juntas:** Pasamos al ensamblaje. Explicamos cómo un evento del mundo real se transforma en la unidad atómica de nuestra base de datos, cómo la intersección de estos ejes crea una geometría de datos coherente, y cómo se vinculan los eventos entre sí (incluyendo el complejo modelado de la causalidad o el "por qué").
-   **Parte IV (Capítulos 11 al 13) — Del lenguaje a los hechos:** Construimos el puente entre la ambigüedad del lenguaje humano y la rigidez de los datos estructurados. Abordamos la función crítica de los verbos, el diseño del diccionario operativo del sistema (*lexicon*) y la resolución técnica de problemas lingüísticos severos (polisemia, frases compuestas y fricciones entre idiomas).
-   **Parte V (Capítulos 14 al 23) — En la práctica:** Entramos a la sala de máquinas. Ejecutamos el modelado completo de ocho dominios industriales — spa, taxi, clínica, banca, ERP, universidad, municipalidad, minera — y enfrentamos el modelo a cuatro escenarios de alto estrés técnico (música, química, fútbol y redacción de contratos). Esta es la sección donde la teoría se convierte en código.
-   **Parte VI (Capítulos 24 al 27) — IA, el futuro y el cierre:** Proyectamos cómo la arquitectura WQuestions potencia a los LLMs mediante *function calling*, exploramos las aplicaciones comerciales que se desbloquean al unirlos, sometemos el modelo a su prueba más exigente —describirse a sí mismo en una aplicación hecha de puras preguntas—, definimos los retos pendientes para convertir esto en un estándar de infraestructura, y cerramos el ciclo volviendo al problema original.
+- **Parte I (Capítulos 1 y 2) — Por qué las preguntas:** Definimos el problema industrial que justifica este esfuerzo, repasamos cómo diversas ciencias convergieron de forma independiente en este mismo descubrimiento, y analizamos sin filtros por qué los intentos previos de la industria por resolver la interoperabilidad se quedaron a medias.
+- **Parte II (Capítulos 3 al 6) — Las siete coordenadas:** Diseccionamos las siete coordenadas —quién, qué, dónde, cuándo, cuánto, cuál y cómo—, agrupadas por capítulo (los cuatro pilares van juntos en el primero). Analizamos la carga semántica de cada pregunta, las trampas lógicas al momento de programarlas y las reglas para modelarlas limpiamente.
+- **Parte III (Capítulos 7 al 10) — Cómo funcionan juntas:** Pasamos al ensamblaje. Explicamos cómo un evento del mundo real se transforma en la unidad atómica de nuestra base de datos, cómo la intersección de estos ejes crea una geometría de datos coherente, y cómo se vinculan los eventos entre sí (incluyendo el complejo modelado de la causalidad o el "por qué").
+- **Parte IV (Capítulos 11 al 13) — Del lenguaje a los hechos:** Construimos el puente entre la ambigüedad del lenguaje humano y la rigidez de los datos estructurados. Abordamos la función crítica de los verbos, el diseño del diccionario operativo del sistema (*lexicon*) y la resolución técnica de problemas lingüísticos severos (polisemia, frases compuestas y fricciones entre idiomas).
+- **Parte V (Capítulos 14 al 23) — En la práctica:** Entramos a la sala de máquinas. Ejecutamos el modelado completo de ocho dominios industriales — spa, taxi, clínica, banca, ERP, universidad, municipalidad, minera — y enfrentamos el modelo a cuatro escenarios de alto estrés técnico (música, química, fútbol y redacción de contratos). Esta es la sección donde la teoría se convierte en código.
+- **Parte VI (Capítulos 24 al 27) — IA, el futuro y el cierre:** Proyectamos cómo la arquitectura WQuestions potencia a los LLMs mediante *function calling*, exploramos las aplicaciones comerciales que se desbloquean al unirlos, sometemos el modelo a su prueba más exigente —describirse a sí mismo en una aplicación hecha de puras preguntas—, definimos los retos pendientes para convertir esto en un estándar de infraestructura, y cerramos el ciclo volviendo al problema original.
 
 ## Una nota metodológica
 
