@@ -35,6 +35,7 @@ CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
 CSS = """
 @page { size: A4; margin: 22mm 20mm; }
+@page :first { margin: 0; }
 * { box-sizing: border-box; }
 body { font-family: Georgia, 'Times New Roman', serif; font-size: 11.5pt;
        line-height: 1.5; color: #1f2937; margin: 0; }
@@ -47,9 +48,9 @@ body { font-family: Georgia, 'Times New Roman', serif; font-size: 11.5pt;
                    max-width: 80%; margin-bottom: 60px; }
 .cover .author { font-size: 15pt; color: #111827; }
 .cover .rule { width: 90px; height: 3px; background: #1e3a8a; margin: 26px 0; }
-.cover-img { margin: -22mm -20mm 0 -20mm; width: 210mm; height: 297mm;
-             page-break-after: always; display: flex; align-items: center;
-             justify-content: center; overflow: hidden; background: #fff; }
+.cover-img { width: 210mm; height: 297mm; page-break-after: always;
+             display: flex; align-items: center; justify-content: center;
+             overflow: hidden; background: #fff; }
 .cover-img img { width: 100%; height: 100%; object-fit: contain; }
 .chapter { page-break-before: always; }
 h1 { font-size: 22pt; color: #1e3a8a; line-height: 1.2;
