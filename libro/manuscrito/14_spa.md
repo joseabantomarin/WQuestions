@@ -170,6 +170,12 @@ Ana quería comprar el plan mensual del gimnasio, pero no tenía dinero en ese m
 ```
 Cuando el equipo de marketing pregunte: *"¿Qué clientes tienen un plan mensual activo?"*, el sistema filtra por estatus `real` y Ana no aparece (no le cobrarán por error). Pero cuando marketing pregunte: *"¿A qué clientes podemos llamar para ofrecer un descuento?"*, filtran por estatus `intencionado` y el nombre de Ana salta a la luz.
 
+## El antes y el después: del esquema fragmentado al grafo único
+
+**Antes (relacional).** En un esquema SQL tradicional, el Spa Oasis vive repartido en al menos cinco tablas: `clientes`, `sesiones`, `planes_mensuales`, `pagos` y `reglas_fidelidad`. Responder *"¿Ana ya acumuló 7 sesiones este mes y le corresponde la octava gratis?"* obliga a hacer un JOIN entre `clientes` y `sesiones` filtrado por rango de fechas, cruzarlo con `planes_mensuales` para saber si su cuenta corre aparte o en conjunto, y luego comparar el resultado con el umbral que vive en `reglas_fidelidad` — todo eso pegado en código de aplicación que nadie documenta y que se rompe cada vez que cambia la promoción.
+
+**Después (WQuestions).** La misma información existe como un grafo único de hechos atómicos: cada sesión es un nodo con el cable `cliente → ana` y el cable `estatus_factual → finalizada`. La pregunta se convierte en dos líneas — un `count` sobre el patrón fijo y una comparación aritmética (`n >= 7`) — sin migrar esquema, sin JOINs y sin lógica enterrada en procedimientos almacenados. Cuando la regla cambie de 7 a 10 visitas, se edita un solo hecho en el catálogo; el resto del sistema ni se entera.
+
 ## Balance del Spa: Misión Cumplida
 
 Cerremos este capítulo revisando qué logró demostrar nuestro prototipo de código en la vida real:

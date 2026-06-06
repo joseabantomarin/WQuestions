@@ -139,6 +139,12 @@ causa = [f for f in explicaciones if f.role == "causado_por"]
 ```
 Seguimos el cable causal y obtenemos la justificación matemática. Simple, rápido e indiscutible.
 
+## El antes y el después: del esquema fragmentado al grafo único
+
+**Antes (relacional).** El esquema clásico de una app de taxi distribuye la realidad entre tablas separadas: `viajes`, `conductores`, `pasajeros`, `tarifas`, `eventos_viaje`. Reconstruir la cadena completa —qué ocurrió, en qué orden y por qué el precio subió— obliga a hacer JOINs en cascada entre cuatro o cinco tablas más una concatenación en código que ordena por timestamp. Peor aún, la pregunta *"¿cuál fue la causa concreta de que esa tarifa subiera a 25 dólares ese minuto?"* no tiene respuesta posible: no existe tabla de `causas_tarifa`; el motivo —lluvia, alta demanda, zona de congestión— o se perdió o vive enterrado en un campo de texto libre que nadie consulta con coherencia.
+
+**Después (WQuestions).** La misma realidad vive como un único grafo: `viaje_001` agrupa los seis eventos reificados —`solicitar`, `asignar`, `aceptar`, `recoger`, `trasladar`, `completar`— mediante cables `parte_de` y `sigue_a`. La tarifa es un nodo en `O` conectado al estado de alta demanda por el cable `causado_por`. Reconstruir el viaje completo es seguir los cables desde `viaje_001`; obtener la causa del precio es leer un único hecho. No hay JOIN, no hay pegamento en código, no hay pregunta que el esquema no pueda responder —porque el motivo nunca fue un campo numérico: siempre fue un evento con identidad propia.
+
 ## Resumen: Lo que el Taxi nos enseñó (que el Spa ocultaba)
 
 El Spa fue un calentamiento; el negocio del Taxi nos demostró la resistencia extrema del modelo en tres áreas clave:

@@ -134,6 +134,12 @@ Cuando el banco le da el plástico a Ana, conectamos la tarjeta de Ana a la ofer
 
 ¿Por qué es vital hacer esto? Porque si en julio el banco lanza una versión nueva de la tarjeta que cuesta 10 USD, la tarjeta de Ana no puede subir de precio mágicamente; ella firmó el contrato de la oferta de Enero. Al tratar a los productos financieros como "objetos independientes congelados en el tiempo", el banco evita demandas multimillonarias por cambiar reglas sin avisar.
 
+## El antes y el después: del esquema fragmentado al grafo único
+
+**Antes (relacional).** En un core bancario tradicional la información se reparte entre tablas como `clientes`, `cuentas`, `transacciones`, `asientos_contables` y `perfiles_riesgo`. La pregunta parece sencilla: *"¿Cuáles fueron las dos contrapartidas contables de la transferencia 001 y qué perfil de riesgo tenía Ana en ese momento exacto?"* Pero ya implica un JOIN de cuatro tablas —y aun así fracasa, porque `perfiles_riesgo` solo guarda el registro actual. Para saber qué decía el perfil la noche del cargo hay que buscar en tablas de auditoría separadas, si es que existen; de lo contrario, la respuesta sencillamente no existe en los datos. Eso no es un defecto de un banco en particular: es el defecto estructural del modelo plano frente a la bitemporalidad —qué ocurrió y qué sabía el sistema cuando ocurrió son dos ejes de tiempo distintos que el esquema clásico confunde en uno solo.
+
+**Después (WQuestions).** La misma información vive como un grafo de hechos. `transferencia_001` se liga por `parte_de` a `asiento_debito_001` y `asiento_credito_001`; `perfil_riesgo_ana_v3` lleva su propio rango de vigencia `inicio=2026-04-10, fin=2026-05-22`. La pregunta se convierte en un patrón de proyección: filtra los hechos cuyos extremos cuelgan de `transferencia_001` y cuyo intervalo temporal solapa con la marca de tiempo del evento. No hay JOIN complejo, no hay tabla de auditoría paralela —el tiempo es un atributo de primer orden en cada hecho— y no hay que migrar ningún esquema para que funcione.
+
 ## Balance: El banco no logró tumbar al modelo
 
 Este capítulo demostró que WQuestions no es un experimento de laboratorio. Observa todo lo que soportó sin trucos sucios:

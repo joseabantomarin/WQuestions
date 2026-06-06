@@ -261,6 +261,12 @@ El ejemplo Python que acompaña el capítulo (`prototipo/ejemplos/erp.py`) mater
 Resultado: 12/12 validaciones pasadas.
 ```
 
+## El antes y el después: del esquema fragmentado al grafo único
+
+**Antes (relacional).** En un ERP tradicional, los módulos viven en islas: `employees` y `emp_salary_hist` en RRHH, `sales_orders` y `sales_commissions` en Ventas, `production_orders` y `wh_stock_movements` en Manufactura e Inventario. Una pregunta aparentemente simple — *¿cuántas horas-hombre de producción demandó cada unidad que Pedro vendió este trimestre, y cuánto cobró él de comisión por esa venta?* — obliga a cruzar cuatro tablas de tres módulos distintos con JOINs frágiles, claves foráneas de convención y, casi siempre, una vista ETL mantenida a mano por el equipo de BI. Cualquier cambio de esquema en un módulo rompe silenciosamente el reporte.
+
+**Después (WQuestions).** La misma información ya existe como un único grafo de hechos atómicos: `venta_001` es una situación reificada que contiene — por `parte_de` — la sub-situación de comisión de Pedro, la de movimiento de inventario y la de consumo de horas-hombre de la orden de producción asociada. La pregunta transversal es una proyección de tres saltos sobre el grafo: encuentra `venta_001`, recorre sus sub-situaciones, lee `monto` en la comisión y `cantidad` en el consumo de mano de obra. No hay silos porque nunca hubo fronteras de módulo: hubo una sola venta, y el grafo la modeló entera.
+
 ## Qué quedó probado en este capítulo
 
 El ERP es probablemente el dominio donde la promesa de WQuestions paga su mayor dividendo concreto: **la integración cross-módulo deja de ser un proyecto y se vuelve gratis**. La venta no genera "registros en tres tablas"; genera una situación con tres sub-situaciones. El BOM no necesita esquemas auxiliares; es un caso de `parte_de` recursivo. El audit trail bitemporal no es un módulo aparte; es la forma normal de modelar hechos con vigencia (D6). La aprobación no es un workflow externo; es una situación reificada con su justificación normativa (D7).
