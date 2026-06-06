@@ -96,10 +96,12 @@ Son los cables más básicos: sin ellos, no hay grafo. Permiten conectar instanc
 
 | Rol | Signatura | Para qué sirve |
 |---|---|---|
-| `instancia_de` | O → K (mult) | Marca que un objeto concreto es un ejemplar de una categoría. *"esta consulta es una instancia de `accion_consultar`"*. |
+| `instancia_de` | V → K (mult) | Marca que un individuo —de cualquier eje— es un ejemplar de una categoría. *"esta consulta (O) es una instancia de `accion_consultar`"; "Messi (Q) es una instancia de `jugador_de_futbol`"*. |
 | `subtipo_de` | K → K (mult) | Construye jerarquías de categorías. *"`jugador_de_futbol` es subtipo de `atleta_profesional`"*. |
 | `parte_de` | O → O (mult) | Indica que algo forma parte de un evento o entidad mayor. *"esta prescripción es parte de la consulta del 14 de mayo"*. |
 | `contiene` | O → O (mult) | El inverso del anterior. *"la consulta contiene esta prescripción"*. |
+
+**El comodín `V`.** Quizá notaste que `instancia_de` dice `V → K` y no `O → K`. Es deliberado: **clasificar es universal**. No solo los objetos (O) pertenecen a una categoría — también un agente (Messi, en Q), un lugar (Lima, en L) o un instante (T) responden a la pregunta "¿de qué concepto sos instancia?". `V` es el comodín de signatura que significa *cualquier eje de valor*: es el **universo V** del Capítulo 6 — los seis ejes tomados como conjunto. Cuidado de no confundirlo con K: **K es un eje** —el lugar donde viven las categorías—; **V es "todos los ejes" a la vez** —un cuantificador, no un sitio donde algo vive—. Por eso `instancia_de` es `V → K`: *cualquier individuo* hacia *una categoría*. El mismo comodín sirve en el rango cuando un rol necesita admitir varios ejes a la vez: por ejemplo, generalizar `partes` o `tema` a `O → V` para que acepten lo mismo un objeto que una categoría (lo retomamos en el Capítulo 27).
 
 ### Familia 2: Participantes — el "quién" y "qué" del verbo
 
