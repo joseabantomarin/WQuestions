@@ -172,4 +172,6 @@ Seis cajas gigantes para guardar "cosas", entrelazadas por una red de cables est
 
 ![Los siete ejes de WQuestions: seis ejes de valor (Q, O, L, T, N, K) alrededor del universo V, conectados por el eje estructural de predicados (M, cómo).](../diagrams/png/01_ocho_ejes.png)
 
+El diagrama bautiza con una letra al conjunto de esas seis cajas: **V**, *el universo de valores*. No es un séptimo eje ni una caja nueva: es, simplemente, **la unión de los seis ejes de valor** (Q, O, L, T, N, K) tomados juntos — todo lo que puede ser *valor* de un hecho, frente a M, que son los cables y no los valores. Lo nombramos desde ya porque más adelante hará falta: cuando una relación no se ate a un eje concreto sino que admita *cualquiera* de los seis, diremos que su dominio o su rango es V (lo veremos al definir las signaturas, en el Capítulo 11).
+
 Pero tener el plano del motor en la mano no es lo mismo que encenderlo. Hasta aquí, hemos visto los ejes por separado, como piezas sueltas de un reloj. Lo que le da valor industrial a este modelo es observar **cómo interactúan todos juntos** a la vez para estructurar escenarios del mundo real de altísima complejidad. Ahí dejamos atrás la etapa de inventario y entramos en la etapa operativa: el diseño en movimiento.
