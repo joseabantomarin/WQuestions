@@ -102,6 +102,14 @@ Si prestamos atención al uso natural de la información, descubrimos que la pre
 
 Cualquier eje *cuándo* robusto tiene que estar preparado para recibir estos cinco formatos y, más importante aún, tener la inteligencia para reconocer cuál de ellos se está utilizando en cada transacción. La estrategia que adoptaremos formalmente más adelante es la **pluralidad de tiempos**. No intentaremos forzar toda la información a pasar por un único reloj universal. En su lugar, el eje funcionará como un espacio donde conviven múltiples escalas temporales, todas válidas, operando cada una bajo su propio sistema de coordenadas.
 
+Esa pluralidad plantea de inmediato una pregunta operativa: si conviven varios relojes, ¿cómo ordena el sistema los eventos sin aplastarlos a uno solo? La regla de normalización es deliberadamente humilde: **no traducir** el compás 17 a un horario de cuarzo —eso destruiría su naturaleza—, sino reificar cada instante no-reloj con tres datos estándar:
+
+- `escala` — a qué sistema temporal pertenece (`musical`, `narrativo`, `paginado`, `reloj_absoluto`). Impide comparar peras con manzanas: el motor nunca ordena un compás contra una fecha por accidente.
+- `posicion` — un ordinal numérico que lo vuelve **ordenable dentro de su propia escala** (compás 17 → `17`; página 240 → `240`; "final del segundo acto" → `acto 2, 1.0`). Es la clave de orden.
+- `valor_nativo` — la expresión original, preservada tal cual ("compás 17", "p. 240", "final del segundo acto"), para no perder fidelidad.
+
+Con esto, ordenar es trivial *dentro* de una escala (se ordena por `posicion` filtrando por `escala`) y honesto *entre* escalas (no se mezclan, salvo que exista un puente real). Y los puentes existen cuando el mundo los provee: la grabación de un concierto ata el `compás 17` (escala musical) a las `20:03:14` (escala absoluta) con un hecho explícito, no con una conversión inventada. El modelo conserva así la naturaleza del dato y, a la vez, gana la capacidad de secuenciar que el negocio necesita.
+
 A esto se le suma una complicación técnica fascinante en la que no profundizaremos mucho ahora, pero que dejaremos planteada. Una propiedad o un dato puede ser completamente **válido** en un período de tiempo, y dejar de serlo en el siguiente. Marta vivió ininterrumpidamente en esa casa entre 2010 y 2025; pero si consultamos en 2026, su residencia es otra. La respuesta a "dónde vive Marta" no es un bloque de piedra inamovible; es un flujo temporal compuesto por una sucesión de valores, cada uno con su propia fecha de caducidad. Este concepto es lo que en la teoría de bases de datos avanzadas se conoce como **bitemporalidad**, y en la lingüística estructural se denomina **vigencia**. Será un componente explícito de nuestro diseño final.
 
 Si aplicamos todo esto a nuestros casos de uso:
