@@ -999,13 +999,13 @@ Si se mira el código completo de la librería en una sola pasada, aparecen seis
 
 3. **La política liberal es explícita.** En `catalog.validate`, si el rol no está declarado, *no se valida*. Cuatro líneas de código que materializan la decisión de mantener el modelo extensible sin pelearse con el catálogo central.
 
-4. **La bitemporalidad es ligera.** No hay un sistema bitemporal completo (eso falta para producción — está documentado en el capítulo 26). Lo que hay es un `valid_from`/`valid_to` opcional y un `tx_time` automático: 5 atributos extra sobre `Fact`, una función `is_valid_at` que decide la vigencia, y un parámetro `at=` en todas las consultas. Con eso ya se modelan mudanzas, rediagnósticos, contratos con cláusulas que expiran.
+4. **La bitemporalidad es ligera.** No hay un sistema bitemporal completo (eso falta para producción — está documentado en el capítulo 27). Lo que hay es un `valid_from`/`valid_to` opcional y un `tx_time` automático: 5 atributos extra sobre `Fact`, una función `is_valid_at` que decide la vigencia, y un parámetro `at=` en todas las consultas. Con eso ya se modelan mudanzas, rediagnósticos, contratos con cláusulas que expiran.
 
 5. **No hay parser de lenguaje natural.** El prototipo asume que el parser es externo — un LLM, o un módulo dedicado que se conecta vía `ingest_situation`. Esto es deliberado: separar la responsabilidad de "entender la oración" (lingüística) de "modelar el hecho" (arquitectura) es lo que permite reutilizar el motor en cualquier idioma y con cualquier parser.
 
-6. **El motor de consulta es ingenuo.** Un barrido sobre el universo con tres índices simples. Sirve para validar el modelo en dominios reales; no sirve para producción a escala. El capítulo 26 enumera los reemplazos productivos: Datalog, SHACL, motores RDF, bases de datos columnar.
+6. **El motor de consulta es ingenuo.** Un barrido sobre el universo con tres índices simples. Sirve para validar el modelo en dominios reales; no sirve para producción a escala. El capítulo 27 enumera los reemplazos productivos: Datalog, SHACL, motores RDF, bases de datos columnar.
 
-Estas seis observaciones, juntas, son la justificación del enfoque del prototipo: **no construir infraestructura; construir prueba de concepto**. Lo que estas 850 líneas demuestran es que el modelo es *coherente* y *operable*. La validación industrial es otro trabajo — el del capítulo 26 y de quien lo continúe.
+Estas seis observaciones, juntas, son la justificación del enfoque del prototipo: **no construir infraestructura; construir prueba de concepto**. Lo que estas 850 líneas demuestran es que el modelo es *coherente* y *operable*. La validación industrial es otro trabajo — el del capítulo 27 y de quien lo continúe.
 
 ---
 
@@ -1054,4 +1054,4 @@ python -m prototipo.ejemplos.banco         # ejecuta el dominio bancario
 
 No hace falta instalar dependencias: el prototipo solo usa la librería estándar de Python. Si lo abres en un editor moderno, los identificadores y las APIs (`Universe`, `ingest_situation`, `Pattern`, `query`) son los mismos que vienen en este anexo, así que la transición entre leer y ejecutar es instantánea.
 
-El prototipo, los ejemplos y los tests son **el espejo operable del libro**. Lo que se afirma en cualquier capítulo de la Parte V se puede ejecutar línea por línea en el repo. Si encuentras una afirmación del libro que no puedas reproducir, el repo tiene un issue tracker abierto — y es exactamente ese tipo de feedback el que el capítulo 26 reclama para que la propuesta deje de ser un texto y se vuelva infraestructura.
+El prototipo, los ejemplos y los tests son **el espejo operable del libro**. Lo que se afirma en cualquier capítulo de la Parte V se puede ejecutar línea por línea en el repo. Si encuentras una afirmación del libro que no puedas reproducir, el repo tiene un issue tracker abierto — y es exactamente ese tipo de feedback el que el capítulo 27 reclama para que la propuesta deje de ser un texto y se vuelva infraestructura.
