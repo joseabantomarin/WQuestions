@@ -1,4 +1,4 @@
-# Capítulo 27 — Qué falta: validación, tooling, comunidad
+# Capítulo 28 — Qué falta: validación, tooling, comunidad
 
 ## El contrato del cierre
 

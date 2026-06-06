@@ -180,7 +180,7 @@ norma_ambiental = u.add_individual(Individual(
 u.assert_fact(norma_ambiental, "umbral_arsenico", n(0.10, "mg/L"))
 ```
 
-Cuando el motor de reglas (que no implementamos en este prototipo pero está documentado en el cap. 26) detecta que el valor medido supera el umbral, dispara automáticamente un reporte regulatorio:
+Cuando el motor de reglas (que no implementamos en este prototipo pero está documentado en el cap. 28) detecta que el valor medido supera el umbral, dispara automáticamente un reporte regulatorio:
 
 ```python
 reporte = ingest_situation("reportar", roles={
@@ -239,7 +239,7 @@ u.assert_fact(test_hidro, "duracion_medida", n(32, "min"))
 u.assert_fact(test_hidro, "resultado", category("test_aprobado"))
 ```
 
-Lo que el modelo **no hace** y conviene admitir: el cálculo *"8.4 ≥ 8.0 ∧ 1.3 ≤ 2.0 ∧ 32 ≥ 30 → APROBADO"* no es un hecho atómico que el sistema deduzca solo. Es lógica que vive en un **motor de reglas externo** (Datalog, SHACL, o una función Python) que el cap. 26 declara como pendiente del proyecto. Por ahora el `resultado` se asienta explícitamente como hecho. Esta es la misma fricción que ya veremos con el marcador de fútbol en el cap. 23: el modelo aloja los datos, las reglas derivadas necesitan un motor que el prototipo todavía no trae.
+Lo que el modelo **no hace** y conviene admitir: el cálculo *"8.4 ≥ 8.0 ∧ 1.3 ≤ 2.0 ∧ 32 ≥ 30 → APROBADO"* no es un hecho atómico que el sistema deduzca solo. Es lógica que vive en un **motor de reglas externo** (Datalog, SHACL, o una función Python) que el cap. 28 declara como pendiente del proyecto. Por ahora el `resultado` se asienta explícitamente como hecho. Esta es la misma fricción que ya veremos con el marcador de fútbol en el cap. 23: el modelo aloja los datos, las reglas derivadas necesitan un motor que el prototipo todavía no trae.
 
 ### Sign-off paralelo: tres firmas independientes sobre el mismo test
 
@@ -343,7 +343,7 @@ for situ in u.facts_with_role("instancia_de"):
 listo_para_operacion = (abiertos_A == 0)
 ```
 
-Pero — y acá viene la fricción honesta — **el resultado "listo_para_operacion" no es un hecho atómico que el grafo guarde**. Es lógica derivada que se computa al vuelo, igual que el marcador del partido de fútbol (cap. 23) o el balance de una cuenta bancaria (cap. 17). El cap. 26 marca esta pieza — el motor de inferencia que evalúa reglas declarativas sobre el grafo y materializa resultados derivados — como el primer trabajo pendiente del proyecto.
+Pero — y acá viene la fricción honesta — **el resultado "listo_para_operacion" no es un hecho atómico que el grafo guarde**. Es lógica derivada que se computa al vuelo, igual que el marcador del partido de fútbol (cap. 23) o el balance de una cuenta bancaria (cap. 17). El cap. 28 marca esta pieza — el motor de inferencia que evalúa reglas declarativas sobre el grafo y materializa resultados derivados — como el primer trabajo pendiente del proyecto.
 
 Lo que el modelo **sí** garantiza es que los datos para esa derivación están ahí, completos, sin pérdida. La regla puede ejecutarse en Python ad-hoc, en Datalog cuando llegue el motor, o en un LLM que entienda el lexicon. La separación entre "el dato como hecho" y "el resultado derivado por regla" es deliberada y limpia.
 
@@ -386,7 +386,7 @@ Las **fricciones nuevas** que aportaron commissioning y punchlist quedaron resue
 - **Sign-off paralelo de múltiples partes** sobre el mismo test — cada firma es una situación reificada con `agente` distinto que apunta al test por `tema`. Tres firmas, tres situaciones, una sola consulta para reconstruirlas.
 - **Severidad ordenada en K** vía un atributo numérico `nivel_severidad` — patrón genérico para cualquier categoría que necesite orden (prioridades, grados, escalas Likert). El catálogo K no impone orden; el dominio lo declara.
 - **Tres roles Q distintos sobre la misma entidad** (encontrado / responsable / verificador) — la política liberal acepta los roles de dominio sin protestar, y el grafo conserva las tres perspectivas separadas para auditoría.
-- **Estado agregado derivado** — el "comisionamiento listo" no es un hecho atómico, es el resultado de una regla evaluada sobre los punchitems clase A abiertos. El modelo guarda los datos completos; el motor de inferencia que cap. 26 marca como pendiente es el encargado de materializar los derivados.
+- **Estado agregado derivado** — el "comisionamiento listo" no es un hecho atómico, es el resultado de una regla evaluada sobre los punchitems clase A abiertos. El modelo guarda los datos completos; el motor de inferencia que cap. 28 marca como pendiente es el encargado de materializar los derivados.
 
 Es decir: **el dominio minero no exigió ninguna pieza nueva del modelo**. Lo absorbió combinando piezas que ya conocemos. El motor sigue siendo el mismo. Lo único que crece es el lexicon (cinco verbos: `extraer`, `operar_equipo`, `dar_mantenimiento`, `medir_calidad`, `reportar`) y la lista de roles de dominio (`dentro_de`, `ley_mineral`, `operador_asignado`, `calculado_de`, `umbral_arsenico`, etc.) que la política liberal acepta sin chistar.
 
