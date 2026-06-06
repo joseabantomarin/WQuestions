@@ -47,6 +47,10 @@ body { font-family: Georgia, 'Times New Roman', serif; font-size: 11.5pt;
                    max-width: 80%; margin-bottom: 60px; }
 .cover .author { font-size: 15pt; color: #111827; }
 .cover .rule { width: 90px; height: 3px; background: #1e3a8a; margin: 26px 0; }
+.cover-img { margin: -22mm -20mm 0 -20mm; width: 210mm; height: 297mm;
+             page-break-after: always; display: flex; align-items: center;
+             justify-content: center; overflow: hidden; background: #fff; }
+.cover-img img { width: 100%; height: 100%; object-fit: contain; }
 .chapter { page-break-before: always; }
 h1 { font-size: 22pt; color: #1e3a8a; line-height: 1.2;
      border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; margin-top: 0; }
@@ -109,14 +113,22 @@ def main():
         html = embed_images(html)
         cuerpo.append(f'<section class="chapter">{html}</section>')
 
+    # Portada: imagen a página completa si existe portada.png; si no, portada de texto.
+    portada_path = os.path.join(LIBRO_DIR, "portada.png")
+    if os.path.isfile(portada_path):
+        with open(portada_path, "rb") as f:
+            cov_b64 = base64.b64encode(f.read()).decode("ascii")
+        cover = f'<div class="cover-img"><img src="data:image/png;base64,{cov_b64}"></div>'
+        print("  portada: imagen portada.png")
+    else:
+        cover = (f'<div class="cover"><div class="title">{TITULO}</div>'
+                 f'<div class="rule"></div><div class="subtitle">{SUBTITULO}</div>'
+                 f'<div class="author">{AUTOR}</div></div>')
+        print("  portada: texto (portada.png no encontrada)")
+
     doc = f"""<!DOCTYPE html><html lang="es"><head><meta charset="utf-8">
 <style>{CSS}</style></head><body>
-<div class="cover">
-  <div class="title">{TITULO}</div>
-  <div class="rule"></div>
-  <div class="subtitle">{SUBTITULO}</div>
-  <div class="author">{AUTOR}</div>
-</div>
+{cover}
 {''.join(cuerpo)}
 </body></html>"""
 
