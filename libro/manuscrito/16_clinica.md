@@ -151,6 +151,12 @@ El modelo WQuestions devoró el reto del mundo médico sin sudar. Observa lo que
 4.  La regla del tiempo **D6** nos permitió guardar dos diagnósticos contrarios sin perder el rastro histórico forense de la paciente.
 5.  Todo este enmarañado monstruo científico ocupó apenas **62 hechos atómicos**. Un volumen de datos ridiculamente pequeño si lo comparamos con la burocracia de un servidor SQL tradicional.
 
+## El antes y el después: del esquema fragmentado al grafo único
+
+**Antes (relacional).** En un sistema hospitalario típico, el expediente de María vive repartido entre cinco o seis tablas: `pacientes`, `consultas`, `diagnosticos`, `prescripciones`, `contraindicaciones` y —si el equipo fue cuidadoso— una tabla `diagnostico_historial` para versionar los cambios. Cuando la doctora quiere saber si el Enalapril que acaba de recetar choca con alguna contraindicación *vigente* del paciente, el sistema tiene que cruzar `prescripciones` con `contraindicaciones`, pero la vigencia del diagnóstico de hipertensión —¿sigue activo?— exige otro JOIN contra `diagnostico_historial` filtrando por fechas. La respuesta no está en ninguna tabla sola; vive en el pegamento que el programador escribe y reescribe cada vez que la lógica clínica cambia.
+
+**Después (WQuestions).** La misma información existe como un único grafo de hechos: `diag_hta_001` cuelga de `consulta_001` con `parte_de`, lleva sus propias fechas `valid_from / valid_to` internas, y `prescrip_001` apunta a `ley_enalapril_embarazo` con `verificado_contra`. La pregunta —¿esta prescripción choca con una contraindicación vigente?— es una proyección sobre el grafo con un filtro temporal: el motor entrega solo los hechos cuya ventana de validez cubre la fecha de hoy. No hay JOIN entre tablas, no hay código de pegamento; el modelo lo resuelve porque la vigencia y las relaciones causales ya estaban tejidas en el mismo tejido de datos desde el primer día.
+
 ## Una lección de diseño: El arte de saber qué reificar
 
 Quiero regalarte una pepita de oro metodológica que extraje al programar este hospital. 

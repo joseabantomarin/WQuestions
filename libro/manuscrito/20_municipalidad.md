@@ -184,6 +184,12 @@ El ejemplo Python ([`prototipo/ejemplos/municipalidad.py`](https://github.com/jo
 Resultado: 11/11 validaciones pasadas.
 ```
 
+## El antes y el después: del esquema fragmentado al grafo único
+
+**Antes (relacional).** Un esquema municipal típico distribuye la información en tablas como `tramites`, `pasos_tramite`, `ordenanzas`, `multas` y `ciudadanos`. Las relaciones entre ellas se ensamblan con JOINs, pero hay una pregunta que el esquema casi nunca modela: *¿qué norma autoriza cada paso de un trámite?* El vínculo normativo — si existe — vive en una columna `observaciones` de texto libre, o en una clave foránea hacia `ordenanzas` que apunta solo al encabezado, sin distinguir qué artículo específico habilita la acción. Cuando el auditor pregunta *"¿bajo qué artículo el inspector Quispe declaró procedente la denuncia?"*, la respuesta exige rastrear código, leer comentarios y cruzar manualmente tablas que nunca se diseñaron para responder esa pregunta juntas.
+
+**Después (WQuestions).** La misma información vive en un solo grafo de hechos, exactamente como lo modeló este capítulo. Cada paso administrativo — la solicitud, la inspección, la emisión de la licencia, la multa, la resolución — es una situación reificada que lleva sus propios cables del "por qué": `causado_por` apunta a la causa fáctica y `justificado_por` apunta al artículo de la ordenanza que lo habilita. La trazabilidad normativa no es código a mano ni un JOIN adicional — es un recorrido de grafo de un solo salto. Cualquier auditor, tribunal o periodista puede responder *"¿qué norma autorizó este acto?"* con la misma consulta que responde *"¿quién lo ejecutó?"* y *"¿cuándo?"*.
+
 ## Qué quedó probado en este capítulo
 
 El dominio municipal pone a trabajar **D7 en su forma más exigente**: cada acto del Estado tiene fundamento factual y fundamento normativo, y el modelo los preserva como dos relaciones distintas que se pueden consultar independientemente. La pregunta *"¿por qué se aplicó esta multa?"* tiene dos respuestas válidas según se interprete el "porque" — y el modelo distingue cuál se está pidiendo.

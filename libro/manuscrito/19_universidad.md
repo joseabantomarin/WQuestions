@@ -190,6 +190,12 @@ El ejemplo Python que acompaña el capítulo ([`prototipo/ejemplos/universidad.p
 Resultado: 11/11 validaciones pasadas.
 ```
 
+## El antes y el después: del esquema fragmentado al grafo único
+
+**Antes (relacional).** Un sistema universitario típico distribuye su información entre tablas `alumnos`, `cursos`, `matrículas`, `prerequisitos` y `notas`. Preguntar *"¿qué cadena de prerequisitos arrastra Cálculo III y cuáles de ellos ya aprobó este estudiante?"* obliga a un `WITH RECURSIVE` sobre `prerequisitos` para expandir el árbol de dependencias, cruzado luego con `matrículas` y `notas` mediante múltiples `JOINs` — o, en los sistemas que lo evitan, a un procedimiento almacenado que replica en código la lógica de recorrido. Cada vez que la malla curricular cambia, el procedimiento hay que revisarlo. El historial borroso de calificaciones rectificadas suma otra tabla auxiliar al pegamento.
+
+**Después (WQuestions).** La misma información vive como un solo grafo de hechos: cada prerequisito es una tripleta `requiere_prerequisito`, cada calificación aprobada es un nodo alcanzable desde el alumno, y la cadena completa de dependencias de Cálculo III se recorre con un simple recorrido hacia atrás sobre el grafo — sin SQL recursivo, sin procedimiento almacenado. Determinar qué cursos puede tomar un estudiante hoy es filtrar los cursos cuyos prerequisitos estén todos en su subgrafo de aprobados. El grafo no distingue entre malla vigente y malla histórica: la bitemporalidad ya lo cubre.
+
 ## Qué quedó probado en este capítulo
 
 El sistema universitario es probablemente el dominio donde el **timeline largo** y los **grafos de dependencia** se vuelven el problema central, no un detalle accesorio. El modelo absorbe ambas cosas con su maquinaria estándar: la bitemporalidad (D6) deja todas las inscripciones, calificaciones y estados con su historial intacto durante toda la vida académica del egresado. El catálogo D8 con su política liberal admite roles tan específicos como `jurado_secretario`, `director_tesis` o `requiere_prerequisito` sin que el motor tenga que cambiar nada. Una persona puede ser estudiante, docente y tesista a la vez — el grafo no distingue tipos de personas, distingue tipos de situaciones (D5).
