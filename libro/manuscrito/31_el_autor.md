@@ -1,0 +1,9 @@
+# El autor
+
+**José Roberto Abanto Marín** (Celendín, Perú, 1973).
+
+Desarrollador de software con treinta y cinco años de experiencia construyendo sistemas a la medida. Es el creador de *Ghenesis*, un framework meta-driven que persiste la lógica de negocio en base de datos —formularios, reportes, módulos— para permitir su administración sin tocar el código de la aplicación. Esa obsesión por separar el qué del cómo, por buscar la capa donde la información deja de depender de la aplicación que la consulta, atraviesa toda su trayectoria profesional y desemboca naturalmente en este libro.
+
+Apasionado de las bases de datos, los modelos de inteligencia artificial y la ciencia en general, encuentra en la física cuántica y en los enigmas del universo una forma de mantener viva la sospecha de que todo lo aparentemente complejo esconde, en algún nivel, una estructura más simple. La filosofía es para él una herramienta de trabajo: una manera de detectar los patrones, las abstracciones y los paradigmas que se asoman en cada problema técnico.
+
+*WQuestions, Las preguntas como coordenadas*, es el primer libro en el que reúne esas tres líneas —la práctica de tres décadas modelando datos, la curiosidad científica y la mirada filosófica— alrededor de una sola tesis arquitectónica.
