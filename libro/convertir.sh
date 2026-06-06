@@ -33,8 +33,9 @@ pandoc "$MANUSCRITO_DIR"/*.md \
     --standalone \
     --toc \
     --toc-depth=2 \
-    --metadata title="Las preguntas como coordenadas" \
-    --metadata author="WQuestions"
+    --metadata title="WQuestions" \
+    --metadata subtitle="Gramática Universal de la arquitectura de datos" \
+    --metadata author="José Abanto Marín"
 
 echo "  ✓ manuscrito_completo.docx"
 echo ""

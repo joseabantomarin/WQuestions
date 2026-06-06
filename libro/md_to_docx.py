@@ -252,13 +252,16 @@ def main():
     if md_files:
         doc = Document()
         # Página de título
-        title = doc.add_heading('Las preguntas como coordenadas', level=0)
+        title = doc.add_heading('WQuestions', level=0)
         subtitle = doc.add_paragraph()
         subtitle_run = subtitle.add_run(
-            'Arquitectura universal para la información en la era de la IA'
+            'Gramática Universal de la arquitectura de datos'
         )
         subtitle_run.italic = True
         subtitle_run.font.size = Pt(14)
+        author = doc.add_paragraph()
+        author_run = author.add_run('José Abanto Marín')
+        author_run.font.size = Pt(12)
         doc.add_paragraph()
         doc.add_page_break()
 
