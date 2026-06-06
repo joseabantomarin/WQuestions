@@ -29,3 +29,8 @@ env/
 
 # BD generada por el demo meta-driven
 prototipo/meta/wq.db
+
+# Artefactos regenerables del libro (PDF/DOCX) y config local
+libro/*.pdf
+*.docx
+.claude/
