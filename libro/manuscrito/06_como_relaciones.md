@@ -156,6 +156,12 @@ Cables múltiples (acumulan):
 
 Aquí la distinción requiere una mirada afilada. El cable `partes_jugando` (los dos equipos) engaña: podrías pensar que es **funcional** porque el número de equipos en un partido *siempre* es exactamente dos, un número fijo. Sin embargo, es **múltiple**. ¿Por qué? Porque la regla no trata sobre si el número es fijo o infinito, la regla dicta que un cable funcional solo admite **una única respuesta posible**. Al haber dos respuestas legítimas para el mismo partido (el equipo A y el equipo B), matemáticamente es un cable múltiple. 
 
+## Trampa de programación: la relación disfrazada de columna
+
+El error que se paga caro al escalar: modelar una relación como una **columna** de la tabla. Una persona tiene teléfono, así que ponemos una columna `telefono`. Funciona hasta que alguien tiene dos números — y empieza el parche: `telefono2`, `telefono_alt`, un campo de texto con comas, una tablita improvisada a las apuradas. La columna asumió, sin decirlo, una **cardinalidad** (un solo valor) que el mundo no respeta.
+
+El eje M evita el problema poniendo la cardinalidad **en la signatura del predicado**, no en la forma de la tabla: `telefono` se declara de antemano como funcional (un valor) o múltiple (varios), y el modelo lo respeta sin rediseños. Distinguir "tener un atributo" de "estar relacionado con algo" deja de ser una decisión rígida de esquema y pasa a ser un dato más — un cable con su cardinalidad escrita en la firma. Pasar de "un teléfono" a "muchos" es cambiar una marca en M, no migrar una tabla.
+
 ## Cierre de la Parte II: El tablero está listo
 
 Con la formalización del eje *cómo*, hemos terminado de construir todo el andamiaje del modelo. El inventario de las siete coordenadas maestras está oficialmente cerrado y listo para operar:

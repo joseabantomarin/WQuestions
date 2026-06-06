@@ -250,6 +250,12 @@ Esa danza constante entre la plantilla atemporal de K y la ocurrencia situada de
 
 ![D1 en acción: la receta abstracta vive como tipo en K; la preparación concreta del 14 de mayo vive como instancia en O, con factor de escala, fecha, lugar y cocinero específicos.](../diagrams/png/10_plantilla_instancia.png)
 
+## Trampa de programación: la categoría guardada como texto
+
+El atajo de todos los días: `estado_civil = "casado"`, `estado = "aprobado"`, guardados como texto libre en una columna. Parece inofensivo hasta que el sistema crece: un operario escribe `"Casado"`, otro `"casado "` con un espacio, un tercero `"married"`, y la consulta *"dame todos los casados"* devuelve la mitad. No hay validación, no hay traducción, y no hay forma de saber que `"IAM"` y `"infarto agudo de miocardio"` son lo mismo. La categoría, tratada como string, **pierde su identidad**.
+
+El eje K lo corrige tratando cada categoría como un **individuo formal** con su URI canónica: `casado` es un nodo único, no una cadena de caracteres. Las búsquedas son exactas, los alias (`"IAM"`) apuntan al mismo concepto, los idiomas conviven, y los diccionarios internacionales (SNOMED, Schema.org) se enchufan sin reescribir nada. Un valor de una lista cerrada nunca debería ser texto libre — debería ser un punto en K.
+
 ## Resumen del capítulo
 
 El eje K opera como el segundo gran zócalo fundacional de nuestra arquitectura, actuando como el complemento intelectual y abstracto de los pilares físicos (Q, O, L, T). Hemos establecido que:
