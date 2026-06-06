@@ -86,11 +86,11 @@ Decir *"vamos a aplicar WQuestions"* deja sin responder una pregunta crítica: *
 
 *Esta es la que yo recomendaría para casi cualquier adoptante real.* Aprovecha el sistema operativo existente para lo que ya hace bien; le añade encima la capa semántica que WQuestions aporta. Cero riesgo sobre la operación diaria, ganancia incremental en consultas nuevas.
 
-El cap. 26 de este libro lista persistencia industrial como uno de los seis frentes pendientes. Lo que ese capítulo no menciona, y este sí, es que **persistencia industrial no es solo elegir entre Postgres y RDF**. Es también elegir si la capa WQuestions vive *con* el legacy o *aparte* de él, y la respuesta práctica casi siempre es "ambas, en proporciones distintas según el dato".
+El cap. 28 de este libro lista persistencia industrial como uno de los seis frentes pendientes. Lo que ese capítulo no menciona, y este sí, es que **persistencia industrial no es solo elegir entre Postgres y RDF**. Es también elegir si la capa WQuestions vive *con* el legacy o *aparte* de él, y la respuesta práctica casi siempre es "ambas, en proporciones distintas según el dato".
 
 ## El costo real de construir un lexicon
 
-El cap. 12 presentaba el lexicon como una pieza ya construida. El cap. 26 reconoce que falta poblarlo *a nivel idioma* — miles de verbos del español, FrameNet español, AnCora. Pero entre el verbo genérico y la entrada del lexicon usable en producción hay un trabajo intermedio que el libro no mencionaba: **construir el lexicon de un negocio específico**.
+El cap. 12 presentaba el lexicon como una pieza ya construida. El cap. 28 reconoce que falta poblarlo *a nivel idioma* — miles de verbos del español, FrameNet español, AnCora. Pero entre el verbo genérico y la entrada del lexicon usable en producción hay un trabajo intermedio que el libro no mencionaba: **construir el lexicon de un negocio específico**.
 
 Para yaku, ese trabajo se desglosa así:
 
