@@ -1,4 +1,4 @@
-# Capítulo 4 — Cuál: el zócalo categórico (K)
+# Capítulo 3 — Cuál: el zócalo categórico (K)
 
 ## Lo que los pilares dejan sin decir
 
@@ -148,6 +148,31 @@ La segunda relación es **`subtipo_de`**. A diferencia de la anterior, este cone
 
 ¿Por qué es esto tan importante a nivel tecnológico? Porque cuando declaras correctamente las reglas `instancia_de` y `subtipo_de`, le otorgas al sistema la capacidad de realizar **inferencias transitivas básicas**. Si la máquina sabe que Messi es un `jugador_de_futbol`, y por otro lado sabe que todo jugador es un `atleta_profesional`, el motor deduce de forma automática que Messi es un atleta profesional. En el mundo de la arquitectura de datos, a esta habilidad se le conoce como *cierre transitivo* (transitive closure). Es el mecanismo de razonamiento más simple, pero es el superpoder que evita que los programadores tengan que codificar miles de reglas lógicas a mano.
 
+## Lo que ya se intentó: tres puertas, ningún piso
+
+Antes de ver cómo K aloja las ontologías del mundo, conviene entender por qué nadie lo había resuelto antes. No fue por falta de intentos: la industria abrió tres grandes puertas, y cada una se quedó a un paso.
+
+**La primera puerta: las 5W1H como extracción.** A fines del siglo XX, varios investigadores `[9]` `[10]` vieron las seis preguntas periodísticas como una herramienta para extraer datos de texto: un programa lee una noticia y acomoda las respuestas en casilleros (*quién: el ministro de Salud; qué: anunció una campaña; cuándo: ayer*). El resultado luce ordenado, pero estalla apenas se intenta **almacenarlo y cruzarlo**: para la máquina, "el ministro de Salud" y "el titular de la cartera de salud" son dos cadenas de texto distintas. Sin una capa de tipos ni un vocabulario canónico, las 5W1H funcionan como un buen *checklist* para no olvidar nada, pero no como una arquitectura: les faltan justamente las dos piezas que este capítulo introduce —una estructura de tipos (K) y un vocabulario oficial.
+
+**La segunda puerta: la web semántica.** En 2001, Tim Berners-Lee propuso la **Web Semántica** `[31]`, con **RDF** `[8]` como pieza maestra: toda la información reducida a tripletas *sujeto–predicado–objeto*. La idea es de una elegancia impecable y sostiene proyectos titánicos como Wikidata `[32]` y DBpedia `[33]`. Pero RDF resolvió la *sintaxis* y dejó libre la *semántica*: un sistema escribe `(McCartney, compuso, "Yesterday")`, otro `(McCartney, autor_de, "Yesterday")`, un tercero `(McCartney, escribió, "Yesterday")` — las tres correctas, las tres incompatibles. Sin un diccionario mínimo común, la diversidad de lenguajes simplemente se mudó a otra capa.
+
+**La tercera puerta: las ontologías de dominio.** Ante ese caos, el tercer enfoque eligió el control estricto: reunir a los expertos de cada industria y publicar un vocabulario oficial y obligatorio. Así nacieron obras de arte de la ingeniería como **CIDOC CRM** `[4]` (patrimonio), **Biolink** `[5]` (biomedicina), **HL7 FHIR** `[6]` (historias clínicas) y **Schema.org** `[30]` (web comercial). Cada una es excelente dentro de su perímetro: Schema.org/`Recipe` modela una receta a la perfección. El problema asoma apenas hay que **vincular profundamente** ramas distintas —la receta con la biografía del chef (`Person`) y el contexto histórico (`Event`)—: las ontologías crean los nodos, pero no estandarizan los cables entre ellos, y atarlos vuelve a recaer en código manual. Peor aún: como cada una se construyó aislada, todas tuvieron que modelar desde cero lo universal. Para decir "una persona", los museos usan `E21_Person`, la genética `biolink:Agent`, el comercio `Person` y las clínicas `Patient`: cuatro etiquetas incompatibles para un mismo ser humano físico.
+
+A estas tres puertas se sumaron dos variantes que chocaron con el mismo muro: los **estándares de intercambio** (FHIR `[6]`, EDI `[20]`, ISO 20022 `[21]`), que funcionan como un servicio de mensajería —traducen para el transporte, no unifican—; y la **canonicalización a posteriori** (OpenIE `[23]`, sistemas de limpieza de datos), que intenta reconciliar el caos *después* de que ocurrió, con un costo computacional que se vuelve inmanejable al cruzar decenas de sistemas.
+
+El balance, llevado a los cuatro ejemplos que recorren este libro, es elocuente:
+
+|                         | 1. 5W1H (heurística)                                                  | 2. RDF / Web Semántica (libre conexión)                                                             | 3. Ontología de dominio (diccionario estricto)                                                                 |
+| ----------------------- | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| **La Receta**           | Insuficiente: no entiende medidas exactas, listas ordenadas de pasos ni tiempos de horno.  | Factible, siempre que los programadores no usen verbos distintos para "mezclar" o "hervir".             | Schema.org/Recipe la modela a la perfección, pero dificulta cruzarla con datos históricos o geográficos.          |
+| **El Gol de fútbol**    | Útil para leer la noticia deportiva, inútil para armar estadísticas del partido.  | Posible vía Wikidata, aunque los términos para describir una jugada varían drásticamente entre bases.             | Existe `SportsEvent`, pero no llega al detalle de con qué pierna se ejecutó el remate.        |
+| **La Canción**          | Sirve para una noticia *sobre* la canción, no para modelar la obra musical. | MusicBrainz lo soporta bien, pero sus vocabularios chocan con otras fuentes.       | Modelos robustos en la industria musical, pero operan como burbujas cerradas difíciles de integrar.       |
+| **La Noticia política** | Excelente: el dominio exacto para el que nació el modelo.                     | Funcional, pero la falta de acuerdo sobre cómo nombrar "promulgar" o "debatir" arruina las búsquedas. | Schema.org/NewsArticle estructura el "contenedor", pero no entiende qué dice adentro. |
+
+El patrón de las fallas es nítido: las 5W1H identificaron las dimensiones pero no construyeron arquitectura; RDF construyó la conexión pero sin vocabulario base; las ontologías construyeron vocabularios de lujo pero sin un piso común. Todas levantaron **techos** espléndidos; ninguna construyó el **piso**. Y un piso es justamente lo que el eje K aporta: una capa fundacional, por debajo de todos los vocabularios, lo bastante sutil para no estorbar la jerga de médicos o arquitectos y lo bastante firme como para que la información fluya sin traductores. Las preguntas cognitivas —que el Capítulo 1 postuló como universales y que el Capítulo 6 fundamentará en detalle— son ese piso. Veamos, entonces, cómo K abraza las ontologías existentes en lugar de competir con ellas.
+
+![Las tres puertas previas comparadas en qué resuelve cada una y qué deja sin resolver. Ninguna terminó de cerrar el problema porque cada una atacó un síntoma distinto y dejó el otro intacto.](../diagrams/png/06_tres_puertas.png)
+
 ## K como zócalo para las ontologías existentes
 
 Quizá la promesa de mayor impacto industrial que ofrece el eje K es que **no obliga a ninguna empresa a reinventar su terminología**. Los diccionarios masivos y sofisticados que ya rigen en el mundo (Schema.org, QUDT, SNOMED, CIDOC CRM, Biolink) se mapean dentro de K como subconjuntos de datos, manteniendo intactas todas sus relaciones internas. WQuestions no llega para competir o reemplazar a estas herramientas: su objetivo explícito es **abrazarlas**.
@@ -187,7 +212,7 @@ A lo largo del tiempo y a medida que el sistema se alimenta, K se transforma org
 
 ### El enchufe: las ontologías ponen los nodos; WQuestions, los cables
 
-El mecanismo no se limita a K. Una entidad de cualquier ontología externa se *enchufa* en el eje que le corresponde por naturaleza —una persona de CIDOC CRM (`E21_Person`) en Q, un evento de Schema.org en O, un lugar de GeoNames en L— conservando su URI canónica como ancla de identidad. Lo que ninguna de esas ontologías sabe hacer por sí sola —el problema que diseccionamos en el Capítulo 2— es **vincular profundamente nodos de catálogos distintos**. Ahí entra WQuestions: las ontologías aportan los **nodos**; el eje M aporta los **cables** que cruzan de una a otra.
+El mecanismo no se limita a K. Una entidad de cualquier ontología externa se *enchufa* en el eje que le corresponde por naturaleza —una persona de CIDOC CRM (`E21_Person`) en Q, un evento de Schema.org en O, un lugar de GeoNames en L— conservando su URI canónica como ancla de identidad. Lo que ninguna de esas ontologías sabe hacer por sí sola —el problema que diseccionamos unas páginas atrás, en "Tres puertas, ningún piso"— es **vincular profundamente nodos de catálogos distintos**. Ahí entra WQuestions: las ontologías aportan los **nodos**; el eje M aporta los **cables** que cruzan de una a otra.
 
 ```text
    CIDOC «E21_Person»     Schema.org «Event»      GeoNames «Place»

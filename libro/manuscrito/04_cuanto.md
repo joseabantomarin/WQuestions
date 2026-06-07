@@ -1,4 +1,4 @@
-# Capítulo 5 — Cuánto: el eje cuantitativo y sus trampas
+# Capítulo 4 — Cuánto: el eje cuantitativo y sus trampas
 
 ## Una sonda que se estrelló y una IA que se desconcertó
 

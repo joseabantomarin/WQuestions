@@ -29,7 +29,7 @@ Y sobre eso, una capa de **lexicon** que traduce el lenguaje del usuario al cat�
 
 ## Por qué las preguntas son anteriores a las ontologías
 
-Acá es donde el libro toma su única licencia filosófica, y conviene dejarla explícita. Las ontologías de dominio — CIDOC CRM, Schema.org, Biolink, FHIR, las decenas de iniciativas que enumeramos en el capítulo 2 — son catálogos de **qué cosas hay**. Cada una hizo el trabajo paciente de definir entidades, relaciones, vocabularios consistentes para su dominio. Cada una es valiosa dentro de su perímetro.
+Acá es donde el libro toma su única licencia filosófica, y conviene dejarla explícita. Las ontologías de dominio — CIDOC CRM, Schema.org, Biolink, FHIR, las decenas de iniciativas que enumeramos en el capítulo 3 — son catálogos de **qué cosas hay**. Cada una hizo el trabajo paciente de definir entidades, relaciones, vocabularios consistentes para su dominio. Cada una es valiosa dentro de su perímetro.
 
 Lo que el libro propone es que **antes que las entidades están las preguntas**. Antes que *paciente, doctor, diagnóstico, prescripción*, está la pregunta *¿quién hizo qué a quién?* — y las respuestas tipadas. Un dominio nuevo, al modelarse, no se reduce a otro dominio existente: se mapea a las preguntas, que son siempre las mismas. La ontología específica del dominio sobrevive como **dialecto** del lexicon; el catálogo común sobrevive como infraestructura. Cada ontología sigue siendo valiosa donde ya está; lo que cambia es la posibilidad de hablar entre ellas sin proyectos de integración.
 

@@ -101,7 +101,7 @@ Son los cables más básicos: sin ellos, no hay grafo. Permiten conectar instanc
 | `parte_de` | O → O (mult) | Indica que algo forma parte de un evento o entidad mayor. *"esta prescripción es parte de la consulta del 14 de mayo"*. |
 | `contiene` | O → O (mult) | El inverso del anterior. *"la consulta contiene esta prescripción"*. |
 
-**El comodín `V`.** Quizá notaste que `instancia_de` dice `V → K` y no `O → K`. Es deliberado: **clasificar es universal**. No solo los objetos (O) pertenecen a una categoría — también un agente (Messi, en Q), un lugar (Lima, en L) o un instante (T) responden a la pregunta "¿de qué concepto sos instancia?". `V` es el comodín de signatura que significa *cualquier eje de valor*: es el **universo V** del Capítulo 6 — los seis ejes tomados como conjunto. Cuidado de no confundirlo con K: **K es un eje** —el lugar donde viven las categorías—; **V es "todos los ejes" a la vez** —un cuantificador, no un sitio donde algo vive—. Por eso `instancia_de` es `V → K`: *cualquier individuo* hacia *una categoría*. El mismo comodín sirve en el rango cuando un rol necesita admitir varios ejes a la vez: por ejemplo, generalizar `partes` o `tema` a `O → V` para que acepten lo mismo un objeto que una categoría (lo retomamos en el Capítulo 28).
+**El comodín `V`.** Quizá notaste que `instancia_de` dice `V → K` y no `O → K`. Es deliberado: **clasificar es universal**. No solo los objetos (O) pertenecen a una categoría — también un agente (Messi, en Q), un lugar (Lima, en L) o un instante (T) responden a la pregunta "¿de qué concepto sos instancia?". `V` es el comodín de signatura que significa *cualquier eje de valor*: es el **universo V** del Capítulo 5 — los seis ejes tomados como conjunto. Cuidado de no confundirlo con K: **K es un eje** —el lugar donde viven las categorías—; **V es "todos los ejes" a la vez** —un cuantificador, no un sitio donde algo vive—. Por eso `instancia_de` es `V → K`: *cualquier individuo* hacia *una categoría*. El mismo comodín sirve en el rango cuando un rol necesita admitir varios ejes a la vez: por ejemplo, generalizar `partes` o `tema` a `O → V` para que acepten lo mismo un objeto que una categoría (lo retomamos en el Capítulo 28).
 
 ### Familia 2: Participantes — el "quién" y "qué" del verbo
 
@@ -434,7 +434,7 @@ Si tomamos el evento `dar_001` de arriba, mira cómo cualquier pregunta que haga
 
 Para la computadora, leer un documento y guardar los datos es exactamente el mismo proceso matemático que buscar en el archivo para responder una duda. Son las dos caras de la misma moneda. 
 
-*(Dato curioso: Las palabras que usamos para preguntar en español descienden directamente de las reglas judiciales de Cicerón en Roma que vimos en el Capítulo 1. Los filósofos modernos lo redescubrieron hace poco, pero la mente humana ya lo traía de fábrica).*
+*(Dato curioso: Las palabras que usamos para preguntar en español descienden directamente de las reglas judiciales de Cicerón en Roma que vimos en el Capítulo 6. Los filósofos modernos lo redescubrieron hace poco, pero la mente humana ya lo traía de fábrica).*
 
 ## El efecto Matrioshka: Cuando alguien habla sobre otra cosa
 
