@@ -103,6 +103,30 @@ Las correspondencias son uno a uno. El `tipo_situacion` se vuelve el `name`. Los
 
 Esto significa que cuando un usuario de un spa le escribe a un bot: *"Ana se inscribió ayer en el plan mensual"*, el modelo de IA no tiene que inventar cómo estructurar eso. Revisa el Lexicon, ve qué función debe llamar (`inscribirse`), qué roles llenar y qué datos espera tu base de datos. Esta convergencia no es suerte; es la demostración de que la estructura de la lingüística formal y la inteligencia artificial moderna llegaron exactamente al mismo puerto.
 
+En la práctica, exponer el lexicon a un LLM convierte una frase suelta en un hecho estructurado sin que nadie escriba un parser. El prompt es casi todo catálogo:
+
+```text
+SISTEMA. Eres un extractor de hechos WQuestions. Dada una frase en español,
+devuelve SOLO un JSON con la situación y sus roles canónicos.
+
+Catálogo (verbo → situación · roles obligatorios):
+  inscribirse → inscripcion  · [agente, tema]
+  tomar       → servicio_spa · [cliente, lugar_de]
+
+Frase del usuario: "Ana se inscribió ayer en el plan mensual"
+```
+
+Y el modelo responde con la situación lista para asentar en el grafo:
+
+```json
+{
+  "situation_type": "inscripcion",
+  "agente": "ana",
+  "tema": "plan_mensual",
+  "momento": "2026-06-06"
+}
+```
+
 ## Resolviendo el caos de la "Mano" (Polisemia)
 
 Volvamos al verbo `dar`. ¿Cómo lo trata el Lexicon para no confundirse?

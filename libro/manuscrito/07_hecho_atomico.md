@@ -149,6 +149,33 @@ Incluso, si necesitas hacer una búsqueda digna de un analista avanzado, lo úni
 
 Así de simple. No importan los diagramas complejos ni las consultas eternas de código SQL. **Consultar información es simplemente decirle a la máquina que busque un patrón de cables dentro de la gran red**. La operación matemática es idéntica en cualquier industria y a cualquier escala. Justamente lo que la antigua "Torre de Babel" de datos nos impedía hacer.
 
+El contraste con el mundo relacional es brutal. Esa misma pregunta —*goles de Messi en 2026*—, sobre un esquema SQL clásico, obliga a encadenar tablas que ni siquiera fueron pensadas para conversar:
+
+```sql
+SELECT j.nombre, g.minuto
+FROM goles g
+JOIN jugadores j ON j.id = g.jugador_id
+JOIN partidos  p ON p.id = g.partido_id
+WHERE j.nombre = 'Messi'
+  AND p.fecha BETWEEN '2026-01-01' AND '2026-12-31';
+```
+
+Y cuando un hecho necesita viajar entre sistemas, se serializa sin perder un solo eje. Así se ve una venta —una situación reificada— como JSON:
+
+```json
+{
+  "id": "venta_74921",
+  "instancia_de": "venta",
+  "agente": "vendedor_17",
+  "cliente": "cliente_1042",
+  "objeto": "camiseta_88",
+  "monto": { "valor": 49.90, "unidad": "Currency:USD" },
+  "momento": "2026-05-14T16:32:00-05:00"
+}
+```
+
+Cada clave es un cable; cada valor, un individuo en su eje. El mismo átomo que dibujamos como grafo es, sobre el cable, un objeto que cualquier sistema —o cualquier IA— lee sin manual.
+
 ## Los cuatro ejemplos de siempre, pasados por el átomo
 
 Para cerrar el capítulo con los pies en la tierra, veamos cómo este sistema de hechos atómicos mapea nuestros cinco escenarios principales.

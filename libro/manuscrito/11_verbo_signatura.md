@@ -389,6 +389,28 @@ Resultado final: **una frase humana se transformó en diez líneas de código pe
 
 ![De una oración en lenguaje natural a una situación reificada con sus hechos atómicos: el verbo determina el tipo, el sujeto se vuelve agente, los complementos llenan roles canónicos. Una sub-oración (la finalidad) genera una sub-situación.](../diagrams/png/22_oracion_a_situacion.png)
 
+Y esto no es teoría: el prototipo que acompaña al libro lo ejecuta tal cual. Afirmar un hecho valida su signatura; consultar es buscar un patrón de cables:
+
+```python
+from wq import Axis, Individual, Universe, Catalog, Pattern, count, category
+
+u = Universe(name="demo", catalog=Catalog())
+
+# "Messi marcó un gol en el minuto 87" — una situación reificada
+gol   = u.add_individual(Individual(id="gol_min87", axis=Axis.O, label="gol del minuto 87"))
+messi = u.add_individual(Individual(id="messi",     axis=Axis.Q, label="Messi"))
+u.add_individual(category("evento_gol"))
+
+# Cada hecho es (sujeto, rol, valor); la signatura del rol se valida al afirmar.
+u.assert_fact(gol, "instancia_de", u.ind("evento_gol"))   # M(O, K)
+u.assert_fact(gol, "agente",       messi)                 # M(O, Q)
+
+# Consultar = buscar un patrón: "¿cuántos goles marcó Messi?"
+goles = count(u, Pattern(fixed={"agente": messi},
+                         type_constraint=u.ind("evento_gol")))
+print(goles)   # -> 1
+```
+
 ## Funciona igual para el SPA de Ana
 
 Para que veas que esto no es un truco arreglado, apliquemos este mismo proceso "tonto y mecánico" a una industria totalmente distinta. Una clienta en un Spa:
