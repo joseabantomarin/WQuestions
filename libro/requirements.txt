@@ -1,0 +1,4 @@
+# Dependencias para generar el PDF del libro (libro/generar_pdf.py).
+# Render: Markdown -> HTML (con resaltado de sintaxis) -> Chrome headless -> PDF.
+markdown>=3.4
+pygments>=2.16
