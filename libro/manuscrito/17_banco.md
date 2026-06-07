@@ -138,6 +138,20 @@ Cuando el banco le da el plástico a Ana, conectamos la tarjeta de Ana a la ofer
 
 **Antes (relacional).** En un core bancario tradicional la información se reparte entre tablas como `clientes`, `cuentas`, `transacciones`, `asientos_contables` y `perfiles_riesgo`. La pregunta parece sencilla: *"¿Cuáles fueron las dos contrapartidas contables de la transferencia 001 y qué perfil de riesgo tenía Ana en ese momento exacto?"* Pero ya implica un JOIN de cuatro tablas —y aun así fracasa, porque `perfiles_riesgo` solo guarda el registro actual. Para saber qué decía el perfil la noche del cargo hay que buscar en tablas de auditoría separadas, si es que existen; de lo contrario, la respuesta sencillamente no existe en los datos. Eso no es un defecto de un banco en particular: es el defecto estructural del modelo plano frente a la bitemporalidad —qué ocurrió y qué sabía el sistema cuando ocurrió son dos ejes de tiempo distintos que el esquema clásico confunde en uno solo.
 
+```sql
+-- Antes: perfiles_riesgo solo guarda el estado ACTUAL — la historia se pierde.
+CREATE TABLE transferencias  (id INTEGER PRIMARY KEY, monto NUMERIC, fecha TEXT);
+CREATE TABLE asientos        (id INTEGER PRIMARY KEY, transferencia_id INT, tipo TEXT, monto NUMERIC);
+CREATE TABLE perfiles_riesgo (cliente_id INTEGER PRIMARY KEY, nivel TEXT);  -- sin vigencia
+
+-- Las dos contrapartidas contables de la transferencia: sale bien.
+SELECT tipo, monto FROM asientos WHERE transferencia_id = 1;
+
+-- "¿Qué nivel de riesgo tenía Ana la noche del cargo?"
+-- Imposible: la tabla solo tiene el valor de hoy, no el de entonces.
+SELECT nivel FROM perfiles_riesgo WHERE cliente_id = 7;
+```
+
 **Después (WQuestions).** La misma información vive como un grafo de hechos. `transferencia_001` se liga por `parte_de` a `asiento_debito_001` y `asiento_credito_001`; `perfil_riesgo_ana_v3` lleva su propio rango de vigencia `inicio=2026-04-10, fin=2026-05-22`. La pregunta se convierte en un patrón de proyección: filtra los hechos cuyos extremos cuelgan de `transferencia_001` y cuyo intervalo temporal solapa con la marca de tiempo del evento. No hay JOIN complejo, no hay tabla de auditoría paralela —el tiempo es un atributo de primer orden en cada hecho— y no hay que migrar ningún esquema para que funcione.
 
 ## Balance: El banco no logró tumbar al modelo

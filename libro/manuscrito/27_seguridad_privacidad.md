@@ -42,6 +42,21 @@ consentimiento_4471
   carácter      → revocable
 ```
 
+Y ese mismo consentimiento, serializado para viajar entre sistemas, es un hecho más del grafo:
+
+```json
+{
+  "id": "consentimiento_4471",
+  "instancia_de": "consentimiento",
+  "quien": "paciente_maria",
+  "permite": "puede_ver",
+  "sobre": "arritmia_diagnostico_2026",
+  "a_quien": "cardiologo_rosales",
+  "desde": "2026-03-12",
+  "caracter": "revocable"
+}
+```
+
 Tres consecuencias caen de regalo:
 
 **El consentimiento es un hecho con fecha.** No es una casilla marcada en un formulario perdido: es una situación reificada que dice quién consintió qué, para quién y desde cuándo. Y como es un hecho, puede tener su propia procedencia: *quién* recogió el consentimiento, *cómo*, bajo qué versión de los términos.

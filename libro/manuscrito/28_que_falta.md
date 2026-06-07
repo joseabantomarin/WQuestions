@@ -31,6 +31,24 @@ El experimento reflexivo dio el **primer medio paso**: probó que la conducta pu
 
 La forma productiva de sumar IA, entonces, no es ponerla de *runtime* sino de **autor**: que un LLM **compile** una regla escrita en lenguaje natural —*"a las siete sesiones, la octava es gratis"*— a una regla declarativa Datalog/SHACL sobre los hechos del grafo, y que el **motor determinista la ejecute**. El modelo bien definido vuelve esa compilación directa, porque los roles ya están tipados y la regla mapea a patrones sobre hechos canónicos. Así se obtiene la flexibilidad del lenguaje natural para *escribir* reglas y el rigor del motor para *ejecutarlas*: la IA entra dos veces —parsear lenguaje a hechos (Capítulo 24) y compilar reglas— pero el corazón de la inferencia estricta queda determinista y demostrable. Una nota a favor del open-source: un modelo autoalojado, con sus pesos fijados, es **más** reproducible que una API cerrada que cambia bajo los pies — y la reproducibilidad es exactamente lo que una auditoría exige.
 
+En concreto, esa compilación se ve así: el LLM recibe la regla en español y el catálogo tipado, y emite una regla declarativa que el motor ejecuta.
+
+```text
+SISTEMA. Compila la regla de negocio a Datalog sobre hechos WQuestions
+(sujeto, rol, valor). No la ejecutes; solo compílala.
+
+Catálogo: servicio_spa(S) con roles cliente, estatus_factual.
+Regla: "A las siete sesiones finalizadas de un cliente, la octava es gratis."
+```
+
+```text
+sesion_ok(C, S)  :- instancia_de(S, servicio_spa),
+                    cliente(S, C), estatus_factual(S, finalizada).
+octava_gratis(C) :- count{ S : sesion_ok(C, S) } >= 7.
+```
+
+El LLM *escribió* la regla; el motor determinista la *ejecuta* y firma cada hecho derivado. La IA nunca toca el dato en caliente.
+
 ## Frente 2 — Bitemporalidad completa
 
 Hoy el modelo soporta **valid time**: cada hecho lleva su rango `[valid_from, valid_to)`. Una consulta `at=T` recupera lo cierto del mundo en ese momento. Lo que **falta** es **transaction time**: cuándo el sistema afirmó ese hecho.

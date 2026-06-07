@@ -174,7 +174,29 @@ Cuando el equipo de marketing pregunte: *"¿Qué clientes tienen un plan mensual
 
 **Antes (relacional).** En un esquema SQL tradicional, el Spa Oasis vive repartido en al menos cinco tablas: `clientes`, `sesiones`, `planes_mensuales`, `pagos` y `reglas_fidelidad`. Responder *"¿Ana ya acumuló 7 sesiones este mes y le corresponde la octava gratis?"* obliga a hacer un JOIN entre `clientes` y `sesiones` filtrado por rango de fechas, cruzarlo con `planes_mensuales` para saber si su cuenta corre aparte o en conjunto, y luego comparar el resultado con el umbral que vive en `reglas_fidelidad` — todo eso pegado en código de aplicación que nadie documenta y que se rompe cada vez que cambia la promoción.
 
+```sql
+-- Antes: cliente, sesión y pago viven en tablas distintas; la pregunta de
+-- fidelidad obliga a encadenarlas con JOINs frágiles.
+CREATE TABLE clientes (id INTEGER PRIMARY KEY, nombre TEXT);
+CREATE TABLE sesiones (id INTEGER PRIMARY KEY, cliente_id INT, sala_id INT, inicio TEXT);
+CREATE TABLE pagos    (id INTEGER PRIMARY KEY, sesion_id INT, monto NUMERIC, moneda TEXT);
+
+SELECT c.nombre, COUNT(s.id) AS sesiones, SUM(p.monto) AS gastado
+FROM clientes c
+LEFT JOIN sesiones s ON s.cliente_id = c.id
+LEFT JOIN pagos    p ON p.sesion_id  = s.id
+GROUP BY c.id;
+```
+
 **Después (WQuestions).** La misma información existe como un grafo único de hechos atómicos: cada sesión es un nodo con el cable `cliente → ana` y el cable `estatus_factual → finalizada`. La pregunta se convierte en dos líneas — un `count` sobre el patrón fijo y una comparación aritmética (`n >= 7`) — sin migrar esquema, sin JOINs y sin lógica enterrada en procedimientos almacenados. Cuando la regla cambie de 7 a 10 visitas, se edita un solo hecho en el catálogo; el resto del sistema ni se entera.
+
+```python
+# Después: la misma pregunta, como un patrón sobre el grafo de hechos.
+sesiones = count(u, Pattern(
+    fixed={"cliente": ana, "estatus_factual": u.ind("finalizada")},
+    type_constraint=u.ind("servicio_spa")))
+octava_gratis = sesiones >= 7
+```
 
 ## Balance del Spa: Misión Cumplida
 
