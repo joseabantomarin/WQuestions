@@ -61,8 +61,13 @@ p { text-align: justify; }
 code { font-family: 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5pt;
        background: #f3f4f6; padding: 1px 4px; border-radius: 3px; }
 pre { background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 6px;
-      padding: 10px 12px; overflow-x: auto; page-break-inside: avoid; }
+      padding: 10px 12px; overflow-x: auto; page-break-inside: avoid;
+      font-family: 'SF Mono', Menlo, Consolas, monospace; font-size: 9pt; line-height: 1.4; }
 pre code { background: none; padding: 0; font-size: 9pt; line-height: 1.4; }
+.codehilite { background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 6px;
+      padding: 10px 12px; overflow-x: auto; page-break-inside: avoid; margin: 1em 0;
+      font-family: 'SF Mono', Menlo, Consolas, monospace; font-size: 9pt; line-height: 1.4; }
+.codehilite pre { background: none; border: 0; padding: 0; margin: 0; }
 blockquote { border-left: 4px solid #93c5fd; background: #eff6ff; margin: 1em 0;
              padding: 8px 16px; color: #1e3a8a; border-radius: 0 6px 6px 0; }
 table { border-collapse: collapse; width: 100%; font-size: 9pt; margin: 1em 0;
@@ -101,7 +106,12 @@ def embed_images(html: str) -> str:
 
 
 def main():
-    md = markdown.Markdown(extensions=["tables", "fenced_code", "sane_lists"])
+    md = markdown.Markdown(
+        extensions=["tables", "fenced_code", "sane_lists", "codehilite"],
+        extension_configs={"codehilite": {"guess_lang": False, "css_class": "codehilite"}},
+    )
+    from pygments.formatters import HtmlFormatter
+    pygments_css = HtmlFormatter(style="default").get_style_defs(".codehilite")
     files = sorted(glob.glob(os.path.join(MANUSCRITO_DIR, "*.md")))
     if not files:
         sys.exit("No hay .md en " + MANUSCRITO_DIR)
@@ -128,7 +138,8 @@ def main():
         print("  portada: texto (portada.png no encontrada)")
 
     doc = f"""<!DOCTYPE html><html lang="es"><head><meta charset="utf-8">
-<style>{CSS}</style></head><body>
+<style>{CSS}
+{pygments_css}</style></head><body>
 {cover}
 {''.join(cuerpo)}
 </body></html>"""
