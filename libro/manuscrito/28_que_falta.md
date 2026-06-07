@@ -2,7 +2,7 @@
 
 ## El contrato del cierre
 
-Hasta acá el libro presentó la propuesta completa y la sometió a prueba: un prototipo en Python con tests pasando, ocho dominios modelados que confirman que el catálogo se sostiene en territorios disímiles, y —en el capítulo anterior— el experimento reflexivo, donde el modelo bastó para describir su propia herramienta y se corrigió a sí mismo bajo carga.
+Hasta acá el libro presentó la propuesta completa y la sometió a prueba: un prototipo en Python con tests pasando, ocho dominios modelados que confirman que el catálogo se sostiene en territorios disímiles, y —en el Capítulo 26— el experimento reflexivo, donde el modelo bastó para describir su propia herramienta y se corrigió a sí mismo bajo carga.
 
 Este capítulo cambia de registro deliberadamente. No es una recapitulación; no es una mirada al horizonte. Es un **mapa de implementación**: lo que falta para que WQuestions deje de ser una propuesta y se vuelva una pieza de infraestructura adoptable. Está pensado para quien lea el libro y quiera empujar el proyecto adelante — sea como contribuyente al núcleo, como adoptante temprano en su organización, o simplemente como observador que necesita medir el camino que queda.
 
@@ -94,7 +94,7 @@ Acá entramos en la pieza que el autor no controla. WQuestions, para volverse ú
 
 - **Repositorio canónico** abierto, con licencia permisiva. Una primera versión vive en GitHub mientras leés esto.
 - **Proceso de contribución**: cómo proponer nuevas entradas al catálogo D8, nuevos dominios al lexicon, parches al motor. Necesita criterios escritos.
-- **Foro o canal de discusión**: para resolver fricciones que surjan al modelar dominios nuevos. Cada conversación cualifica el catálogo — y la prueba reflexiva del capítulo anterior es evidencia de que las fricciones más valiosas aparecen al someter el modelo a una carga real.
+- **Foro o canal de discusión**: para resolver fricciones que surjan al modelar dominios nuevos. Cada conversación cualifica el catálogo — y la prueba reflexiva (Capítulo 26) es evidencia de que las fricciones más valiosas aparecen al someter el modelo a una carga real.
 - **Estandarización gradual**: una vez que varios proyectos adopten el modelo, vale la pena llevar partes del catálogo (los roles más universales) a un proceso de estandarización formal — IETF, W3C, ISO. Esto da estabilidad legal para uso empresarial.
 - **Dialectos de dominio** mantenidos por comunidades sectoriales: clínico, financiero, legal, manufactura. Cada uno con su propia gobernanza dentro de la espina común.
 
@@ -106,7 +106,7 @@ Acá entramos en la pieza que el autor no controla. WQuestions, para volverse ú
 
 ## Las fricciones documentadas que siguen abiertas
 
-Además de los seis frentes mayores, el prototipo expuso un puñado de fricciones puntuales al catálogo. La prueba reflexiva del capítulo anterior **cerró varias** —el texto libre, el tipado de los campos definidos por datos, el display derivado de hechos— y entregó el comodín `V` —*cualquier eje de valor*— que resuelve de raíz la familia "esta signatura es demasiado estrecha". Lo que queda abierto es esto:
+Además de los seis frentes mayores, el prototipo expuso un puñado de fricciones puntuales al catálogo. La prueba reflexiva (Capítulo 26) **cerró varias** —el texto libre, el tipado de los campos definidos por datos, el display derivado de hechos— y entregó el comodín `V` —*cualquier eje de valor*— que resuelve de raíz la familia "esta signatura es demasiado estrecha". Lo que queda abierto es esto:
 
 | Fricción                                                  | Origen           | Patch propuesto                                                        |
 | --------------------------------------------------------- | ---------------- | ---------------------------------------------------------------------- |

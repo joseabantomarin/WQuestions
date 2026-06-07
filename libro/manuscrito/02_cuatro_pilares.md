@@ -1,4 +1,4 @@
-# Capítulo 3 — Quién, qué, dónde, cuándo: los cuatro pilares
+# Capítulo 2 — Quién, qué, dónde, cuándo: los cuatro pilares
 
 ## Una oración sencilla
 
