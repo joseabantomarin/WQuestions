@@ -54,9 +54,9 @@
   --cod-borde:   #3a342a;
 
   /* — Tipografía — */
-  --serif:   "Literata", Georgia, "Times New Roman", serif;
-  --display: "Fraunces", "Literata", Georgia, serif;
-  --sans:    "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --serif:   Arial, "Helvetica Neue", Helvetica, "Liberation Sans", sans-serif;
+  --display: Arial, "Helvetica Neue", Helvetica, "Liberation Sans", sans-serif;
+  --sans:    Arial, "Helvetica Neue", Helvetica, "Liberation Sans", sans-serif;
   --mono:    "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   --txt-base: 1.1875rem;   /* ~19px */
@@ -567,4 +567,11 @@ html.js .revelar.visible { opacity: 1; transform: none; transition: opacity .6s 
   a { color: #000; text-decoration: underline; }
   .capitulo { max-width: none; }
   html.js .revelar { opacity: 1 !important; transform: none !important; }
+  @page { size: A4; margin: 15mm 14mm 17mm; }
+  .contenido { max-width: none; }
+  .figura--ancha { width: auto; max-width: 100%; }
+  .figura--margen { float: none; width: auto; margin: 1.2rem 0; }
+  .columnas { column-count: 1; }
+  .portada-cap { break-after: avoid; padding-top: 0; }
+  .bloque-codigo pre { white-space: pre-wrap; word-break: break-word; }
 }
