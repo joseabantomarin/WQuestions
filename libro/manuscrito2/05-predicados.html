@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 5 · Cómo: los predicados (P y M) — WQuestions</title>
+  <meta name="description" content="Con el universo de valores ya completo, faltan los enlaces. Los predicados son los cables tipados que conectan los ejes; su única diferencia real es la cardinalidad.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'5'">
+      <header class="portada-cap">
+        <p class="parte">Parte II · Las siete coordenadas</p>
+        <div class="num-cap">05</div>
+        <h1>Cómo: los predicados (P y M)</h1>
+        <p class="lede">Ya tenemos seis cajas donde alojar cualquier cosa del mundo. Lo que aún no
+          tenemos son los cables que las unen. Y al examinarlos de cerca descubriremos que la vieja
+          frontera entre «propiedad» y «relación» nunca fue más que gramática.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Sobre la barra hay un espresso recién servido, <code>espresso_311</code>, y
+          junto a él una pantalla donde un agente de inteligencia artificial acaba de cerrar una
+          consulta, <code>sesion_ia_5521</code>. Tienes delante todos los datos: sabes que el café lo
+          extrajo la barista Lucía, que pesó dieciocho gramos de café, que salió a noventa y tres
+          grados; sabes que la sesión de IA corrió sobre el modelo <code>modelo_lumen_2026</code>, que
+          consumió 4180 <em>tokens</em> de entrada y que invocó dos herramientas. Cada dato, por
+          separado, ya tiene su casillero en alguno de los seis ejes que construimos en los capítulos
+          anteriores. Y, sin embargo, si te detienes a mirarlos, son un montón de fichas sueltas sobre
+          la mesa. Nada dice todavía que el café sea <em>de</em> Lucía, ni que los dieciocho gramos
+          pertenezcan a <em>ese</em> espresso y no al de la mesa de al lado.</p>
+
+        <p>Ese es el agujero que cierra este capítulo. Hemos llenado el universo de valores —personas,
+          objetos, lugares, instantes, números, clases—, pero los valores, por sí solos, no se
+          conocen entre ellos. Faltan los <strong>enlaces</strong>: los «cables» lógicos que le dicen
+          a la máquina qué tiene que ver cada cosa con cada cosa. En lógica y en programación esos
+          enlaces se llaman <strong>predicados</strong>, y en nuestro modelo viven en el séptimo eje,
+          el que responde a la pregunta <em>¿cómo?</em> —cómo se conecta cada cosa con cada otra.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Dónde estamos</span>
+          Con este eje cerramos el inventario de las siete coordenadas. Los seis anteriores guardan
+          <em>individuos</em>; el séptimo no guarda cosas, guarda los <em>vínculos</em> entre ellas.
+          Es estructural, no de valor.
+        </aside>
+
+        <p>Pero antes de declararlo cerrado, el capítulo nos obliga a una pregunta técnica que parece
+          ingenua y resulta profunda: en el fondo de una base de datos, <em>¿qué diferencia real hay
+          entre una propiedad y una relación?</em> La respuesta —que ambas son el mismo tipo de cable
+          y que lo único que las separa es su cardinalidad— se volverá nuestra decisión de diseño
+          <strong>D2</strong>, y nos ahorrará miles de horas de programación innecesaria.</p>
+
+        <h2>Una distinción que parece de sentido común</h2>
+
+        <p>Calentemos motores con cinco datos sueltos, repartidos entre el espresso de la barra y la
+          sesión del agente de IA:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">cinco enlaces</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="text">1.  espresso_311  tiene de dosis        18 (gramos)
+2.  espresso_311  se sirvió a las       08:14
+3.  espresso_311  lo preparó            barista_lucia
+4.  sesion_ia_5521  consumió de entrada  4180 (tokens)
+5.  sesion_ia_5521  usó la herramienta   busqueda_web, consulta_grafo</code></pre>
+        </div>
+
+        <p>Pídele a un programador que empieza que divida estos cinco enlaces en dos montones:
+          <strong>propiedades</strong> (atributos propios de la cosa) y <strong>relaciones</strong>
+          (vínculos con otra cosa externa). Lo hará sin titubear. La <em>dosis</em> y los
+          <em>tokens</em> de entrada son, dirá, claramente propiedades: cifras que describen el objeto
+          por dentro. En cambio <em>lo preparó</em> y <em>usó la herramienta</em> son relaciones,
+          porque atan el sujeto a otra entidad separada —una barista, una herramienta de software—.
+          La intuición es limpia: <em>propiedad = atributo interno; relación = puente hacia afuera</em>.</p>
+
+        <p>Suena impecable. Pero basta someterla a un poco de presión arquitectónica para verla
+          desmoronarse:</p>
+
+        <ul>
+          <li>Decimos que <em>«lo preparó barista_lucia»</em> es una relación externa. ¿Y si
+            diseñamos la tabla con un campo interno <code>barista_responsable</code> cuyo valor es
+            Lucía? Bajo esa óptica, se vuelve una propiedad.</li>
+          <li>Decimos que <em>«la dosis es 18 gramos»</em> es una propiedad interna. Pero,
+            matemáticamente, podemos leerlo como que el espresso «está conectado» con el número
+            <code>18</code>, que vive con derechos propios en el eje
+            <span class="eje-rotulo"><span class="eje eje--n">N</span></span>. Bajo esa óptica, se
+            vuelve una relación externa.</li>
+          <li>Decimos que <em>«se sirvió a las 08:14»</em> es casi un sello de tiempo, una propiedad.
+            Pero <code>08:14</code> es un instante que habita el eje
+            <span class="eje-rotulo"><span class="eje eje--t">T</span></span>: el espresso, en
+            realidad, se relaciona con un punto del tiempo.</li>
+        </ul>
+
+        <p>Si miramos estos cinco enlaces con frialdad informática, aflora una verdad incómoda:
+          <strong>la diferencia entre propiedad y relación no existe en la realidad material</strong>.
+          Es una diferencia <em>gramatical</em>, sobre cómo los humanos redactamos las oraciones. A
+          veces usamos verbos posesivos («tiene 18 gramos») y a veces verbos relacionales («lo
+          preparó Lucía»). Para el disco que guarda el dato, la estructura técnica es idéntica: hay un
+          sujeto de partida, un cable conector y un objeto de destino.</p>
+
+        <p class="cita-destacada revelar">La frontera entre tener un atributo y estar relacionado con
+          algo no la dibuja la realidad: la dibuja la gramática. La base de datos nunca la vio.
+          <cite>El punto de partida de D2</cite></p>
+
+        <p>Esa observación es el germen de la regla D2. Pero antes de formalizarla, miremos la
+          «estructura técnica idéntica» que comparten todos los cables.</p>
+
+        <h2>La anatomía del cable: la signatura tipada</h2>
+
+        <p>Todo enlace de nuestro modelo —lo llames propiedad o relación— obedece a una misma forma
+          de tres partes:</p>
+
+        <div class="caja caja--definicion revelar">
+          <p class="caja-tit">La forma del hecho</p>
+          <p style="margin:0;font-size:1.05rem;font-family:var(--mono)">hecho = (sujeto, predicado, objeto)</p>
+        </div>
+
+        <p>Hasta aquí, nada que no tenga cualquier grafo. El truco —y la diferencia de seguridad
+          frente a un grafo libre— está en que el predicado no es un texto ciego. Viene de fábrica con
+          una <strong>signatura tipada</strong>: una etiqueta, como la de un enchufe, que le dice a la
+          máquina <em>de qué eje</em> tiene que venir obligatoriamente el sujeto y <em>a qué eje</em>
+          debe ir a parar el objeto. La forma de esa etiqueta es:</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Forma de una signatura</p>
+          <p style="margin:0;font-size:1.05rem;font-family:var(--mono)">predicado : eje_sujeto → eje_objeto</p>
+        </div>
+
+        <p>Vista así, cada cable es una pequeña función tipada. Los enlaces de nuestras cuatro escenas
+          —espresso, agente de IA, baloncesto y cine— quedan con estas etiquetas de seguridad:</p>
+
+        <!-- FIGURA 5.1: la signatura tipada como enchufe entre dos ejes, cross-dominio -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 326" class="svg-eje" role="img"
+                 aria-label="Cinco predicados de cuatro dominios, cada uno conecta un eje de sujeto con un eje de objeto según su signatura tipada">
+              <defs>
+                <marker id="flechaM" markerWidth="9" markerHeight="9" refX="7" refY="4.2" orient="auto">
+                  <path d="M0,0 L8,4.2 L0,8.4 Z" fill="var(--eje-m)"/>
+                </marker>
+              </defs>
+              <text x="20" y="26" font-size="12.5" font-weight="700" letter-spacing="1"
+                fill="var(--tinta-suave)">PREDICADO</text>
+              <text x="232" y="26" font-size="12.5" font-weight="700" letter-spacing="1"
+                fill="var(--tinta-suave)">EJE DEL SUJETO</text>
+              <text x="430" y="26" font-size="12.5" font-weight="700" letter-spacing="1"
+                fill="var(--tinta-suave)">EJE DEL OBJETO</text>
+
+              <!-- fila helper -->
+              <g font-family="var(--mono)" font-size="12.5">
+                <!-- 1 dosis: O → N -->
+                <text x="20" y="64" fill="var(--eje-m)" font-weight="700">dosis</text>
+                <rect x="232" y="50" width="30" height="22" rx="5" fill="var(--eje-o)"/>
+                <text x="247" y="65.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">O</text>
+                <line x1="270" y1="61" x2="424" y2="61" stroke="var(--eje-m)" stroke-width="2" marker-end="url(#flechaM)"/>
+                <rect x="430" y="50" width="30" height="22" rx="5" fill="var(--eje-n)"/>
+                <text x="445" y="65.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">N</text>
+                <text x="472" y="65.5" font-size="11" fill="var(--tinta-tenue)" font-family="var(--sans)">espresso → 18 g</text>
+
+                <!-- 2 se_sirvio_a: O → T -->
+                <text x="20" y="106" fill="var(--eje-m)" font-weight="700">se_sirvio_a</text>
+                <rect x="232" y="92" width="30" height="22" rx="5" fill="var(--eje-o)"/>
+                <text x="247" y="107.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">O</text>
+                <line x1="270" y1="103" x2="424" y2="103" stroke="var(--eje-m)" stroke-width="2" marker-end="url(#flechaM)"/>
+                <rect x="430" y="92" width="30" height="22" rx="5" fill="var(--eje-t)"/>
+                <text x="445" y="107.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">T</text>
+                <text x="472" y="107.5" font-size="11" fill="var(--tinta-tenue)" font-family="var(--sans)">espresso → 08:14</text>
+
+                <!-- 3 preparado_por: O → Q -->
+                <text x="20" y="148" fill="var(--eje-m)" font-weight="700">preparado_por</text>
+                <rect x="232" y="134" width="30" height="22" rx="5" fill="var(--eje-o)"/>
+                <text x="247" y="149.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">O</text>
+                <line x1="270" y1="145" x2="424" y2="145" stroke="var(--eje-m)" stroke-width="2" marker-end="url(#flechaM)"/>
+                <rect x="430" y="134" width="30" height="22" rx="5" fill="var(--eje-q)"/>
+                <text x="445" y="149.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Q</text>
+                <text x="472" y="149.5" font-size="11" fill="var(--tinta-tenue)" font-family="var(--sans)">espresso → lucia</text>
+
+                <!-- 4 tokens_entrada: O → N -->
+                <text x="20" y="190" fill="var(--eje-m)" font-weight="700">tokens_entrada</text>
+                <rect x="232" y="176" width="30" height="22" rx="5" fill="var(--eje-o)"/>
+                <text x="247" y="191.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">O</text>
+                <line x1="270" y1="187" x2="424" y2="187" stroke="var(--eje-m)" stroke-width="2" marker-end="url(#flechaM)"/>
+                <rect x="430" y="176" width="30" height="22" rx="5" fill="var(--eje-n)"/>
+                <text x="445" y="191.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">N</text>
+                <text x="472" y="191.5" font-size="11" fill="var(--tinta-tenue)" font-family="var(--sans)">sesión → 4180</text>
+
+                <!-- 5 uso_herramienta: O → K -->
+                <text x="20" y="232" fill="var(--eje-m)" font-weight="700">uso_herramienta</text>
+                <rect x="232" y="218" width="30" height="22" rx="5" fill="var(--eje-o)"/>
+                <text x="247" y="233.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">O</text>
+                <line x1="270" y1="229" x2="424" y2="229" stroke="var(--eje-m)" stroke-width="2" marker-end="url(#flechaM)"/>
+                <rect x="430" y="218" width="30" height="22" rx="5" fill="var(--eje-k)"/>
+                <text x="445" y="233.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">K</text>
+                <text x="472" y="233.5" font-size="11" fill="var(--tinta-tenue)" font-family="var(--sans)">sesión → busqueda_web</text>
+              </g>
+
+              <!-- nota inferior -->
+              <line x1="20" y1="262" x2="640" y2="262" stroke="var(--linea)" stroke-width="1"/>
+              <text x="20" y="286" font-size="12" fill="var(--eje-m)" font-family="var(--mono)" font-weight="700">dosis : O → N</text>
+              <text x="20" y="306" font-size="11.5" fill="var(--tinta-suave)" font-style="italic" font-family="var(--serif)">El mismo cable, leído como función tipada: «de un objeto, hacia un número».</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 5.1.</span> Cinco predicados de cuatro dominios. Cada
+            uno es un cable magenta que sale de un eje de sujeto y entra en un eje de objeto, según su
+            signatura. La etiqueta no es decoración: es la que la máquina lee para decidir qué conexión
+            es legal y cuál no.</figcaption>
+        </figure>
+
+        <p>La signatura es la magia que convierte un montón de datos desordenados en una estructura
+          <strong>predecible y validable</strong>. Si un programador comete un error y trata de
+          guardar <code>(espresso_311, dosis, "color rojo")</code>, el sistema lo bloquea solo: la
+          signatura de <code>dosis</code> exige que el destino esté en el eje
+          <span class="eje-rotulo"><span class="eje eje--n">N</span></span> —los números—, y «color
+          rojo» es un texto. Esa capacidad de rechazar el absurdo desde el instante en que entra el
+          dato es lo que separa la arquitectura sólida de WQuestions del caos de los grafos libres,
+          donde cualquiera puede conectar un espresso con un color usando el verbo «dosis» sin que
+          nada chille.</p>
+
+        <h2>La diferencia verdadera: ¿funcional o múltiple?</h2>
+
+        <p>Si la forma del cable es siempre la misma —sujeto, cable, objeto—, ¿queda alguna razón
+          técnica para distinguir entre «propiedades» y «relaciones»? Sí, una sola, y es estrictamente
+          matemática: la <strong>cardinalidad</strong>.</p>
+
+        <p>Vuelve a mirar las signaturas de la figura. Cuatro de ellas se comportan como lo que en
+          matemáticas llamamos <strong>funciones</strong>: dado un sujeto concreto, el cable solo
+          puede conducir a <em>un único</em> destino en ese instante. Un espresso tiene <em>una</em>
+          dosis de café; se sirvió en <em>un</em> instante; lo preparó <em>una</em> barista; una
+          sesión de IA consumió <em>un</em> número exacto de <em>tokens</em> de entrada.</p>
+
+        <p>El quinto cable —<code>uso_herramienta</code>— rompe la regla. Un mismo agente de IA pudo
+          invocar la búsqueda web <em>y</em> la consulta al grafo <em>y</em> una calculadora, todo en
+          la misma sesión. Un solo sujeto dispara varios cables hacia múltiples objetos a la vez, y
+          todos son correctos.</p>
+
+        <p>Esa es la única diferencia estructural, en la base de datos, entre lo que solemos llamar
+          «propiedades» y «relaciones»:</p>
+
+        <div class="rejilla-2 revelar">
+          <div class="tarjeta" style="border-left:4px solid var(--eje-m)">
+            <h4 style="color:var(--eje-m)">Cable funcional — P</h4>
+            <p style="margin:0 0 .5rem;font-size:.95rem">Admite <strong>un único destino</strong> por
+              sujeto. Es lo que el sentido común llama una <em>propiedad</em>.</p>
+            <p style="margin:0;font-size:.9rem;color:var(--tinta-suave)"><code>dosis</code>,
+              <code>se_sirvio_a</code>, <code>tokens_entrada</code>, <code>latencia_ms</code>.</p>
+          </div>
+          <div class="tarjeta" style="border-left:4px solid var(--eje-m)">
+            <h4 style="color:var(--eje-m)">Cable múltiple — M</h4>
+            <p style="margin:0 0 .5rem;font-size:.95rem">Permite <strong>varios destinos</strong> a la
+              vez. Es lo que el sentido común llama una <em>relación</em>.</p>
+            <p style="margin:0;font-size:.9rem;color:var(--tinta-suave)"><code>uso_herramienta</code>,
+              <code>ingrediente</code>, <code>jugó_para</code>, <code>reparto</code>.</p>
+          </div>
+        </div>
+
+        <aside class="nota-margen">
+          <span class="etq">Por qué dos letras</span>
+          A los predicados funcionales los marcamos como <strong>P</strong> y a los múltiples como
+          <strong>M</strong>. No son dos ejes distintos: son dos <em>modos</em> de un mismo eje. La
+          letra solo nombra la cardinalidad declarada en la signatura.
+        </aside>
+
+        <p>Pero ambos son el mismo tipo de cable y viven en el mismo eje. La cardinalidad no es un eje
+          aparte: es un <strong>atributo de cada cable</strong>, escrito en su signatura. Y lo único
+          que ese atributo le dice a la base de datos es <strong>cómo comportarse cuando el dato se
+          actualice</strong>. Aquí está la razón de fondo por la que conviene conservar las dos marcas
+          —P y M— aunque algebraicamente sean la misma familia de funciones tipadas: cada una
+          gobierna una <em>lógica de actualización</em> distinta.</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">La lógica de actualización</p>
+          <p>Si el cable es <strong>funcional (P)</strong> y llega información nueva, el sistema
+            <strong>borra y reemplaza</strong>. Si la barista corrige la dosis de
+            <code>espresso_311</code> de 18 a 19 gramos, el 18 desaparece; no acumulamos dos dosis.</p>
+          <p style="margin-bottom:0">Si el cable es <strong>múltiple (M)</strong> y llega información
+            nueva, el sistema la <strong>agrega a la lista</strong>. Si el agente de IA invoca una
+            tercera herramienta, esa herramienta se suma al historial sin borrar a las dos
+            anteriores.</p>
+        </div>
+
+        <p>Y aquí viene el alivio para quien programa: <strong>el motor de consulta no hace la
+          diferencia</strong>. Da igual que preguntes «¿qué dosis tiene <code>espresso_311</code>?» o
+          «¿con qué herramientas trabajó <code>sesion_ia_5521</code>?»: la máquina ejecuta exactamente
+          el mismo código de búsqueda. Solo que en el primer caso te devuelve una respuesta y en el
+          segundo, una lista.</p>
+
+        <!-- FIGURA 5.2: P vs M por cardinalidad — la figura insignia, color del eje M -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 372" class="svg-eje" role="img"
+                 aria-label="Comparación entre un cable funcional, que reemplaza el valor anterior, y un cable múltiple, que acumula los valores">
+              <defs>
+                <marker id="fM2" markerWidth="9" markerHeight="9" refX="7" refY="4.2" orient="auto">
+                  <path d="M0,0 L8,4.2 L0,8.4 Z" fill="var(--eje-m)"/>
+                </marker>
+                <marker id="fMtenue" markerWidth="9" markerHeight="9" refX="7" refY="4.2" orient="auto">
+                  <path d="M0,0 L8,4.2 L0,8.4 Z" fill="var(--eje-m)" opacity=".32"/>
+                </marker>
+              </defs>
+
+              <!-- divisoria -->
+              <line x1="330" y1="20" x2="330" y2="352" stroke="var(--linea)" stroke-width="1.5"/>
+
+              <!-- ===== IZQUIERDA: FUNCIONAL (P) ===== -->
+              <rect x="22" y="22" width="120" height="26" rx="13" fill="var(--eje-m-suave)" stroke="var(--eje-m)" stroke-width="1.5"/>
+              <text x="82" y="39.5" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-m)">P · funcional</text>
+              <text x="22" y="70" font-size="12.5" fill="var(--tinta-suave)" font-family="var(--mono)">dosis : O → N</text>
+              <text x="22" y="88" font-size="11.5" fill="var(--tinta-tenue)" font-style="italic" font-family="var(--serif)">un único destino → BORRA Y REEMPLAZA</text>
+
+              <!-- sujeto -->
+              <rect x="40" y="120" width="118" height="40" rx="9" fill="var(--eje-o)"/>
+              <text x="99" y="138" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff" font-family="var(--mono)">espresso_311</text>
+              <text x="99" y="153" text-anchor="middle" font-size="10" fill="#fff" opacity=".85">O · sujeto</text>
+
+              <!-- destino viejo (tachado) -->
+              <line x1="158" y1="140" x2="232" y2="206" stroke="var(--eje-m)" stroke-width="2" opacity=".3" marker-end="url(#fMtenue)" stroke-dasharray="4 3"/>
+              <rect x="232" y="190" width="74" height="34" rx="8" fill="var(--papel-2)" stroke="var(--eje-n)" stroke-width="1.5" opacity=".55"/>
+              <text x="269" y="211" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-n)" opacity=".7" font-family="var(--mono)">18 g</text>
+              <line x1="240" y1="207" x2="298" y2="207" stroke="var(--eje-q)" stroke-width="2.2"/>
+
+              <!-- destino nuevo -->
+              <line x1="158" y1="140" x2="232" y2="100" stroke="var(--eje-m)" stroke-width="2.4" marker-end="url(#fM2)"/>
+              <rect x="232" y="80" width="74" height="38" rx="8" fill="var(--eje-n-suave)" stroke="var(--eje-n)" stroke-width="1.5"/>
+              <text x="269" y="104" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--eje-n)" font-family="var(--mono)">19 g</text>
+
+              <text x="40" y="270" font-size="11.5" fill="var(--tinta-suave)" font-family="var(--sans)">Llega <tspan font-weight="700">19 g</tspan>: el viejo</text>
+              <text x="40" y="288" font-size="11.5" fill="var(--tinta-suave)" font-family="var(--sans)"><tspan font-weight="700">18 g</tspan> se descarta. Queda</text>
+              <text x="40" y="306" font-size="11.5" fill="var(--tinta-suave)" font-family="var(--sans)">una sola respuesta.</text>
+
+              <!-- ===== DERECHA: MÚLTIPLE (M) ===== -->
+              <rect x="356" y="22" width="120" height="26" rx="13" fill="var(--eje-m-suave)" stroke="var(--eje-m)" stroke-width="1.5"/>
+              <text x="416" y="39.5" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-m)">M · múltiple</text>
+              <text x="356" y="70" font-size="12.5" fill="var(--tinta-suave)" font-family="var(--mono)">uso_herramienta : O → K</text>
+              <text x="356" y="88" font-size="11.5" fill="var(--tinta-tenue)" font-style="italic" font-family="var(--serif)">varios destinos → ACUMULA</text>
+
+              <!-- sujeto -->
+              <rect x="362" y="172" width="120" height="40" rx="9" fill="var(--eje-o)"/>
+              <text x="422" y="190" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff" font-family="var(--mono)">sesion_ia_5521</text>
+              <text x="422" y="205" text-anchor="middle" font-size="10" fill="#fff" opacity=".85">O · sujeto</text>
+
+              <!-- destino 1 -->
+              <line x1="482" y1="186" x2="556" y2="104" stroke="var(--eje-m)" stroke-width="2.4" marker-end="url(#fM2)"/>
+              <rect x="556" y="86" width="92" height="34" rx="8" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="1.5"/>
+              <text x="602" y="107" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-k)" font-family="var(--mono)">busqueda_web</text>
+              <!-- destino 2 -->
+              <line x1="482" y1="192" x2="556" y2="175" stroke="var(--eje-m)" stroke-width="2.4" marker-end="url(#fM2)"/>
+              <rect x="556" y="158" width="92" height="34" rx="8" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="1.5"/>
+              <text x="602" y="179" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-k)" font-family="var(--mono)">consulta_grafo</text>
+              <!-- destino 3 (nuevo) -->
+              <line x1="482" y1="198" x2="556" y2="246" stroke="var(--eje-m)" stroke-width="2.4" marker-end="url(#fM2)"/>
+              <rect x="556" y="230" width="92" height="34" rx="8" fill="var(--eje-l-suave)" stroke="var(--eje-l)" stroke-width="1.6"/>
+              <text x="602" y="251" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-l)" font-family="var(--mono)">calculadora</text>
+
+              <text x="362" y="300" font-size="11.5" fill="var(--tinta-suave)" font-family="var(--sans)">Llega <tspan font-weight="700" fill="var(--eje-l)">calculadora</tspan>: se suma a las</text>
+              <text x="362" y="318" font-size="11.5" fill="var(--tinta-suave)" font-family="var(--sans)">anteriores. La respuesta es una</text>
+              <text x="362" y="336" font-size="11.5" fill="var(--tinta-suave)" font-family="var(--sans)">lista que crece.</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 5.2.</span> La única diferencia real entre una
+            propiedad y una relación. A la izquierda, un cable <strong>funcional (P)</strong>: cuando
+            llega un valor nuevo, el anterior se descarta. A la derecha, un cable
+            <strong>múltiple (M)</strong>: el valor nuevo se acumula. Misma forma de cable, misma
+            consulta; cambia solo qué hace el motor al actualizar.</figcaption>
+        </figure>
+
+        <h2>La regla de diseño D2: la unificación algebraica</h2>
+
+        <p>Esta revelación nos permite enunciar de manera formal una de las decisiones de diseño más
+          elegantes del modelo. Reúne todo lo anterior en una sola frase:</p>
+
+        <div class="caja caja--decision revelar">
+          <p class="caja-tit"><span class="codigo-d">D2</span> Predicados unificados</p>
+          <p>Las <strong>propiedades</strong> y las <strong>relaciones</strong> se unifican bajo el
+            mismo concepto: son simplemente cables (predicados) del eje <em>cómo</em> (M) con etiquetas
+            de seguridad (signaturas tipadas). La única diferencia entre ellas es la
+            <strong>cardinalidad</strong> —si aceptan uno o varios destinos simultáneos—, y esa
+            cardinalidad es un atributo de la signatura de cada cable, no un eje aparte. Le indica a la
+            base de datos cuándo debe «borrar y reemplazar» (cable funcional) y cuándo debe «acumular»
+            (cable múltiple) nueva información.</p>
+        </div>
+
+        <p>Conviene precisar la relación entre D2 y la doble marca P / M, porque a primera vista
+          parecen tirar en sentidos opuestos. <strong>Algebraicamente, todo es un mismo objeto</strong>:
+          un predicado tipado con la forma <code>predicado : eje_sujeto → eje_objeto</code>. No hay dos
+          familias de cables ni dos lenguajes. <strong>Operativamente, conviene seguir distinguiendo
+          dos modos</strong> —P para los funcionales, M para los múltiples— porque la cardinalidad no
+          es un adorno: gobierna la lógica de actualización, y un sistema que la ignore no sabría si
+          un dato nuevo pisa al viejo o se le suma. P y M no son, pues, dos ejes: son la misma
+          coordenada vista bajo su único atributo que de verdad cambia el comportamiento del motor.</p>
+
+        <p>Entender D2 significa comprender que el abismo técnico que se enseña en la universidad
+          —donde nos obligan a tratar los atributos internos como «columnas en una tabla» y los
+          vínculos externos como «tablas conectadas o <em>joins</em>»— es, en realidad, una
+          <strong>ilusión pedagógica</strong>. Una complicación heredada de la programación
+          tradicional. A nivel matemático, todo es un sujeto, un cable tipado y un destino. Y esa
+          simplicidad es la gasolina que hace volar al modelo.</p>
+
+        <h2>Cuatro cosas que gana una empresa al unificar</h2>
+
+        <p>Adoptar D2 no es una elegancia teórica: tiene cuatro consecuencias prácticas, directas y
+          medibles en producción.</p>
+
+        <div class="rejilla-2 revelar">
+          <div class="tarjeta">
+            <h4><span class="eje eje--o">1</span>&nbsp; Un motor de consulta único</h4>
+            <p style="margin:0;font-size:.95rem">El sistema deja de necesitar «un lenguaje para datos
+              internos» y «otro para cruces de tablas». Todo se reduce a una instrucción maestra:
+              <em>dado este sujeto y este cable, devuélveme el destino</em>. Adiós a los
+              <code>SELECT</code> y los <code>JOIN</code> enredados del SQL tradicional.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--k">2</span>&nbsp; Un JSON único</h4>
+            <p style="margin:0;font-size:.95rem">Cuando un agente de IA pide datos por
+              <em>function calling</em>, los recibe siempre con la misma estructura limpia. No gasta
+              <em>tokens</em> averiguando si la dosis viene en un formato y la lista de herramientas en
+              otro. La uniformidad abarata la integración.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--l">3</span>&nbsp; Extensibilidad sin migraciones</h4>
+            <p style="margin:0;font-size:.95rem">Para registrar un dato nuevo, nadie debate si crear
+              una columna o una tabla intermedia. Se añade el cable al diccionario, se decide si su
+              respuesta es única o múltiple, y el motor ya sabe qué hacer.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--q">4</span>&nbsp; Lenguaje natural, gratis</h4>
+            <p style="margin:0;font-size:.95rem">Cada verbo humano —«servir», «anotar», «dirigir»—
+              exige ciertos roles. Como el sistema no separa propiedades de relaciones, leer
+              «Lucía sirvió un espresso» y volcarlo a cables uniformes es casi mecánico.</p>
+          </div>
+        </div>
+
+        <p>Esa última consecuencia merece subrayarse, porque es el puente hacia toda la Parte&nbsp;IV.
+          Cuando le decimos al sistema <em>«la escolta Rivas anotó un triple tras la asistencia de
+          Navarro»</em>, la máquina registra a la anotadora, el evento y la asistente usando la misma
+          estructura uniforme. Al no distinguir entre propiedades y relaciones, lee frases humanas casi
+          como si leyera código de máquina.</p>
+
+        <h2>Tres dominios bajo el microscopio</h2>
+
+        <p>Para asentar el concepto, veamos cómo se reparten los cables funcionales y los múltiples al
+          diseñar tres mundos sin relación entre sí. Fíjate en el patrón: lo que el sentido común
+          considera «atributos estáticos» tiende a ser funcional; lo que son «piezas que se suman»
+          tiende a ser múltiple.</p>
+
+        <h3>El espresso de la barra</h3>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">signaturas · espresso</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple"># funcionales (P) — respuesta única, borra y reemplaza
+dosis          : O → N    P   # 18 g
+temperatura    : O → N    P   # 93 °C
+extraccion     : O → N    P   # 27 s
+tueste         : O → K    P   # tueste_medio
+
+# múltiples (M) — acumulan
+preparado_con  : O → O    M   # varios granos en una mezcla
+nota_de_cata   : O → K    M   # cacao, cítrico, caramelo…</code></pre>
+        </div>
+
+        <h3>La sesión del agente de IA</h3>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">signaturas · agente IA</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple"># funcionales (P)
+tokens_entrada : O → N    P   # 4180
+tokens_salida  : O → N    P   # 920
+latencia_ms    : O → N    P   # 2100
+costo_usd      : O → N    P   # 0.015
+modelo_usado   : O → K    P   # modelo_lumen_2026
+
+# múltiples (M)
+uso_herramienta : O → K   M   # busqueda_web, consulta_grafo…
+consultó_fuente : O → O   M   # la IA pudo leer 5 documentos</code></pre>
+        </div>
+
+        <p>El consumo exacto en dinero es uno solo —funcional—; las herramientas invocadas y los
+          documentos leídos durante la consulta pueden ser docenas —múltiples—.</p>
+
+        <h3>El partido de baloncesto</h3>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">signaturas · baloncesto</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple"># funcionales (P)
+resultado    : O → K    P   # victoria_local
+asistencia   : O → N    P   # 9120 espectadores
+
+# múltiples (M)
+jugó_para    : O → Q    M   # SON SIEMPRE 2 equipos — y aun así, múltiple
+canasta      : O → O    M   # muchas canastas
+falta        : O → O    M   # decenas de faltas</code></pre>
+        </div>
+
+        <div class="caja caja--alerta revelar">
+          <p class="caja-tit">La trampa de <code>jugó_para</code></p>
+          <p style="margin-bottom:0">El cable <code>jugó_para</code> engaña. Podrías creer que es
+            <strong>funcional</strong> porque el número de equipos en un partido <em>siempre</em> es
+            exactamente dos: un número fijo. Pero es <strong>múltiple</strong>. La regla no trata sobre
+            si el número es fijo o infinito, sino sobre si hay <strong>una única respuesta posible</strong>.
+            Como hay dos respuestas legítimas para el mismo partido —los Halcones <em>y</em> los
+            Lobos—, matemáticamente el cable es múltiple. «Fijo en dos» no es lo mismo que «único».</p>
+        </div>
+
+        <h2>Trampa de programación: la relación disfrazada de columna</h2>
+
+        <p>Hay un error que parece inocente y se paga carísimo al escalar: modelar una relación como
+          una <strong>columna</strong> de la tabla. La directora <code>serra</code> tiene un teléfono,
+          así que el sistema crea una columna <code>telefono</code>. Funciona —hasta el día en que
+          alguien tiene dos números—. Entonces empieza el parche: <code>telefono2</code>,
+          <code>telefono_alt</code>, un campo de texto con comas, una tablita improvisada a las apuradas.
+          La columna había asumido, sin decirlo, una <strong>cardinalidad</strong> —un solo valor— que
+          el mundo no respeta.</p>
+
+        <p>El eje M evita el problema de raíz: pone la cardinalidad <strong>en la signatura del
+          predicado</strong>, no en la forma de la tabla. <code>telefono</code> se declara de antemano
+          como funcional (un valor) o múltiple (varios), y el modelo lo respeta sin rediseños. Pasar de
+          «un teléfono» a «muchos» deja de ser una migración de tabla y se vuelve cambiar una marca en
+          M —de P a M—. Distinguir «tener un atributo» de «estar relacionado con algo» deja de ser una
+          decisión rígida de esquema y pasa a ser un dato más: un cable con su cardinalidad escrita en
+          la firma.</p>
+
+        <h2>Un cable especial: <code>parte_de</code> y la puerta a las situaciones</h2>
+
+        <p>Antes de cerrar la Parte&nbsp;II hace falta presentar un predicado que merece trato aparte,
+          porque será una bisagra del resto del libro. Hasta aquí hemos tratado cada hecho como un
+          punto suelto. Pero el mundo no viene en puntos sueltos: viene en escenas. La canasta de Rivas
+          no flota en el vacío —ocurre <em>dentro</em> de un partido—. La escena 42 no es una isla
+          —es una pieza <em>de</em> la película <code>pelicula_marea</code>—. El gesto de servir el
+          espresso pertenece <em>al</em> servicio de toda la mañana.</p>
+
+        <p>Ese vínculo de pertenencia tiene su propio cable. Es un predicado múltiple, de objeto a
+          objeto, y lo llamamos <code>parte_de</code>:</p>
+
+        <div class="triple">
+          <span class="nodo nodo--o"><span>triple_088</span><small>O</small></span>
+          <span class="enlace">parte_de<span class="firma">M(O→O)</span></span>
+          <span class="nodo nodo--o"><span>partido_halcones_lobos</span><small>O</small></span>
+        </div>
+        <div class="triple">
+          <span class="nodo nodo--o"><span>escena_42</span><small>O</small></span>
+          <span class="enlace">parte_de<span class="firma">M(O→O)</span></span>
+          <span class="nodo nodo--o"><span>pelicula_marea</span><small>O</small></span>
+        </div>
+
+        <aside class="nota-margen">
+          <span class="etq">Subobjeto contingente</span>
+          Llamamos <strong>subobjeto contingente</strong> a una entidad que existe como pieza de otra
+          mayor y cuya identidad <em>depende</em> del marco que la contiene. La escena 42 no significa
+          nada fuera de <em>su</em> película.
+        </aside>
+
+        <p>Lo notable de <code>parte_de</code> no es su forma —es un cable múltiple corriente—, sino lo
+          que <strong>habilita</strong>. Cuando muchos hechos pequeños cuelgan, por este predicado, de
+          un mismo hecho contenedor, ese contenedor deja de ser un objeto cualquiera y se convierte en
+          una <strong>situación</strong>: un marco amplio dentro del cual ocurren eventos
+          interconectados. El partido entero, el rodaje completo, el servicio de la mañana. Es la
+          entidad <em>compuesta</em> que vimos asomar al hablar del eje <em>qué</em>, y que ahora tiene
+          el cable que la ensambla.</p>
+
+        <p>Por eso <code>parte_de</code> es un <strong>subobjeto contingente</strong>: la pieza existe
+          en función del todo. Y por eso este predicado es el puente entre lo que hemos hecho hasta
+          ahora —hechos atómicos, sueltos— y lo que viene en la <a href="09-situaciones.html">Parte
+          III</a>: las situaciones, los contextos y la agencia. Dejamos puesto el cable; en la sala de
+          máquinas lo veremos sostener escenas enteras.</p>
+
+        <h2>Cierre de la Parte II: el tablero está listo</h2>
+
+        <p>Con la formalización del eje <em>cómo</em>, terminamos de armar el andamiaje del modelo. El
+          inventario de las siete coordenadas queda oficialmente cerrado:</p>
+
+        <div class="columnas">
+          <p><span class="eje-rotulo"><span class="eje eje--q">Q</span> quién</span> — las personas y
+            agentes que actúan.<br>
+            <span class="eje-rotulo"><span class="eje eje--o">O</span> qué</span> — los objetos físicos,
+            los eventos y las situaciones.<br>
+            <span class="eje-rotulo"><span class="eje eje--l">L</span> dónde</span> — las locaciones.<br>
+            <span class="eje-rotulo"><span class="eje eje--t">T</span> cuándo</span> — el flujo del
+            tiempo.</p>
+          <p><span class="eje-rotulo"><span class="eje eje--n">N</span> cuánto</span> — los números y
+            las magnitudes.<br>
+            <span class="eje-rotulo"><span class="eje eje--k">K</span> cuál</span> — los conceptos y las
+            categorías: tipos, unidades, estados, vocabularios.<br>
+            <span class="eje-rotulo"><span class="eje eje--m">M</span> cómo</span> — los cables o
+            predicados que conectan los ejes de valor, funcionales (P) o múltiples (M).</p>
+        </div>
+
+        <p>Seis cajas gigantes para guardar «cosas», entrelazadas por una red de cables estructurales
+          —el eje <em>cómo</em>—. Cualquier fenómeno, suceso, registro bancario o reporte médico que
+          ocurra en el mundo cabe, sin distorsiones, dentro de esta matriz de siete ejes. Cumplimos la
+          promesa con la que abrió el libro: el universo de los datos puede mapearse usando únicamente
+          las preguntas fundamentales del cerebro humano.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">El universo V</span>
+          Bautizamos como <strong>V</strong> a la unión de los seis ejes de valor (Q, O, L, T, N, K).
+          No es un séptimo eje ni una caja nueva: es <em>todo lo que puede ser valor</em> de un hecho,
+          frente a M, que son los cables y no los valores.
+        </aside>
+
+        <p>Conviene dejar nombrada una abreviatura que hará falta más adelante. Al conjunto de esas
+          seis cajas de valor —Q, O, L, T, N, K tomadas juntas— lo llamamos <strong>V</strong>, el
+          <em>universo de valores</em>. Lo nombramos desde ya porque cuando un predicado no se ate a un
+          eje concreto, sino que admita <em>cualquiera</em> de los seis, diremos que su dominio o su
+          rango es V. Lo veremos al definir las signaturas con todo rigor, en el
+          <a href="11-verbo.html">Capítulo 11</a>.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Idea clave</p>
+          <p style="margin:0;font-size:1.05rem">Con los seis ejes de valor llenamos el universo de
+            cosas; con el séptimo —los predicados— lo conectamos. Y al examinar de cerca esos enlaces
+            descubrimos que «propiedad» y «relación» nunca fueron dos especies distintas, sino el mismo
+            cable tipado bajo dos cardinalidades.</p>
+        </div>
+
+        <p>Pero tener el plano del motor en la mano no es lo mismo que encenderlo. Hasta aquí vimos los
+          ejes por separado, como piezas sueltas de un reloj. Antes de armarlo y verlo girar, conviene
+          cerrar una pregunta que dejamos abierta en el primer capítulo: <em>¿por qué estas preguntas,
+          y no otras?</em> Es una pausa breve —el próximo capítulo— y enseguida entramos en la etapa
+          operativa: el modelo en movimiento, observando cómo interactúan todos los ejes juntos para
+          estructurar escenarios reales de altísima complejidad.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="04-cuanto.html"><span class="dir">← Anterior</span><span class="tit">Cuánto: el eje cuantitativo (N)</span></a>
+      <a class="sig" href="06-raices.html"><span class="dir">Siguiente →</span><span class="tit">Las raíces de las preguntas</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

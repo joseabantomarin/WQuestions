@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introducción — WQuestions</title>
+  <meta name="description" content="La intuición que todos compartimos y la falla arquitectónica que este libro corrige.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'0'">
+      <header class="portada-cap">
+        <p class="parte">Apertura</p>
+        <div class="num-cap">00</div>
+        <h1>Introducción</h1>
+        <p class="lede">Hay una intuición que cualquier niño domina antes de saber qué es un
+          sustantivo, y que la industria del software lleva décadas olvidando. Este libro trata de
+          recuperarla y volverla arquitectura.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Existen seis palabras que un niño de cinco años usa con la soltura de un
+          experto: <strong>quién, qué, dónde, cuándo, cómo y por qué</strong>. Las pronuncia mucho
+          antes de aprender en la escuela qué cosa es un verbo o un adjetivo. Las usa cuando todavía
+          confunde el ayer con el mañana, cuando ignora que existen océanos al otro lado del mundo y
+          cuando los números mayores que diez le suenan a magia. Las usa, en suma, porque esas
+          preguntas son las piezas con las que el cerebro humano empieza a ensamblar la realidad para
+          que tenga sentido.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Adelanto</span>
+          Esas mismas preguntas aparecen en Aristóteles, en los manuales de periodismo de 1900 y en
+          el orden en que los niños adquieren el lenguaje. El <a href="06-raices.html">capítulo 6</a>
+          rastrea esa convergencia.
+        </aside>
+
+        <p>Lo notable no es que el niño las use, sino que nunca deja de usarlas. Cambian los temas
+          —pasamos de preguntar quién rompió el florero a preguntar quién firmó el contrato— pero la
+          forma de la pregunta permanece idéntica a lo largo de toda una vida y a lo largo de toda la
+          historia. Son, podríamos decir, invariantes: el armazón estable bajo la infinita variedad
+          de lo que queremos saber.</p>
+
+        <h2>Una intuición que la industria olvidó</h2>
+
+        <p>Ahora traslademos la escena a una oficina, un martes por la tarde. Una desarrolladora
+          intenta que el sistema de facturación de una clínica converse con la plataforma estatal de
+          salud. Tiene delante toda la información necesaria: sabe qué se le diagnosticó al paciente,
+          quién lo atendió y cuándo. El problema no son los datos, sino que cada sistema los nombra a
+          su manera. Uno exige una estructura rígida; el otro habla un dialecto distinto. La tarde se
+          va escribiendo traductores a mano —puentes, <em>scripts</em>, exportaciones a medida— solo
+          para que dos bases de datos se pongan de acuerdo sobre un hecho que, para aquel niño de
+          cinco años, sería elemental.</p>
+
+        <p>Ese desgaste no es un gaje del oficio. Es el síntoma de una falla arquitectónica profunda
+          en cómo la industria modeló la información durante décadas. Observa el mismo hecho clínico
+          —un diagnóstico— tal como lo guardan tres sistemas que deberían entenderse:</p>
+
+        <!-- INFOGRAFÍA: el mismo hecho, vocabularios distintos -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <div class="rejilla-3" style="margin:0">
+              <div class="tarjeta">
+                <h4 style="color:var(--eje-q)">Sistema A · Facturación</h4>
+                <div class="bloque-codigo" style="margin:.4rem 0 0">
+                  <pre style="padding:.7rem .8rem"><code data-lang="json">{
+  "dx_p": "I48.0",
+  "f": "04/03/26",
+  "cod_pac": 88213
+}</code></pre>
+                </div>
+              </div>
+              <div class="tarjeta">
+                <h4 style="color:var(--eje-o)">Sistema B · Historia clínica</h4>
+                <div class="bloque-codigo" style="margin:.4rem 0 0">
+                  <pre style="padding:.7rem .8rem"><code data-lang="json">{
+  "diagnostico_principal": "Fibrilación auricular",
+  "fecha_dx": "2026-03-04",
+  "id_paciente": "VEGA-771"
+}</code></pre>
+                </div>
+              </div>
+              <div class="tarjeta">
+                <h4 style="color:var(--eje-k)">Sistema C · Laboratorio</h4>
+                <div class="bloque-codigo" style="margin:.4rem 0 0">
+                  <pre style="padding:.7rem .8rem"><code data-lang="json">{
+  "finding": "atrial_fibrillation",
+  "observed_at": 1741046400,
+  "subject": "pat/771"
+}</code></pre>
+                </div>
+              </div>
+            </div>
+            <p style="text-align:center;font-family:var(--sans);font-size:.85rem;color:var(--tinta-suave);margin:1.1rem 0 .6rem">
+              La misma realidad, tres vocabularios incompatibles &nbsp;↓&nbsp; pero las mismas preguntas debajo
+            </p>
+            <div class="caja caja--idea" style="margin:0">
+              <p class="caja-tit">Las mismas preguntas</p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:.5rem .9rem">
+                <span class="eje-rotulo"><span class="eje eje--q">Q</span> quién atendió → <b>Dra. Soto</b></span>
+                <span class="eje-rotulo"><span class="eje eje--q">Q</span> a quién → <b>paciente Vega</b></span>
+                <span class="eje-rotulo"><span class="eje eje--t">T</span> cuándo → <b>2026-03-04</b></span>
+                <span class="eje-rotulo"><span class="eje eje--k">K</span> cuál diagnóstico → <b>fibrilación auricular (I48.0)</b></span>
+              </div>
+            </div>
+          </div>
+          <figcaption><span class="fnum">Figura 0.1.</span> Tres sistemas describen el mismo
+            diagnóstico con claves distintas (<code>dx_p</code>, <code>diagnostico_principal</code>,
+            <code>finding</code>). Pero todos responden, sin saberlo, a las mismas preguntas. Esa
+            capa común es la que este libro hace explícita.</figcaption>
+        </figure>
+
+        <p>Si los tres sistemas declararan de antemano <em>qué pregunta responde cada campo</em>, la
+          traducción dejaría de ser un proyecto y pasaría a ser una obviedad. No haría falta que
+          <code>dx_p</code> y <code>finding</code> se conocieran entre sí: bastaría con que ambos
+          admitieran que están respondiendo a la pregunta «¿cuál es el diagnóstico?». Esa es,
+          enunciada en una línea, la apuesta del libro.</p>
+
+        <h2>La tesis</h2>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Idea central</p>
+          <p style="margin:0;font-size:1.05rem">Las preguntas básicas de toda la vida —<strong>quién,
+            qué, dónde, cuándo, cuánto, cuál y cómo</strong>— son suficientes para organizar, con
+            precisión técnica, la información de cualquier dominio del mundo.</p>
+        </div>
+
+        <p>Quizá notes un pequeño desplazamiento respecto de las seis preguntas con las que abrimos.
+          Es deliberado. Al exigirles precisión, dos preguntas que parecían una sola se separan, y
+          una que parecía pregunta resulta ser otra cosa:</p>
+
+        <!-- INFOGRAFÍA: de seis preguntas a siete coordenadas -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <div class="rejilla-2" style="margin:0;align-items:center">
+              <div>
+                <h4 style="margin-top:0">La intuición de la infancia</h4>
+                <div class="franja-ejes" style="margin:.4rem 0 0">
+                  <span class="pill">quién</span><span class="pill">qué</span>
+                  <span class="pill">dónde</span><span class="pill">cuándo</span>
+                  <span class="pill">cómo</span><span class="pill">por qué</span>
+                </div>
+                <p style="font-size:.9rem;color:var(--tinta-suave);margin:.8rem 0 0">
+                  El genérico <em>qué</em> esconde tres preguntas distintas; el <em>por qué</em> no
+                  apunta a una cosa, sino que enlaza un hecho con otro.</p>
+              </div>
+              <div>
+                <h4 style="margin-top:0">Las siete coordenadas</h4>
+                <div style="display:flex;flex-direction:column;gap:.4rem">
+                  <span class="eje-rotulo"><span class="eje eje--q">Q</span> quién <span style="color:var(--tinta-tenue)">· agente</span></span>
+                  <span class="eje-rotulo"><span class="eje eje--o">O</span> qué <span style="color:var(--tinta-tenue)">· objeto, evento, situación</span></span>
+                  <span class="eje-rotulo"><span class="eje eje--l">L</span> dónde <span style="color:var(--tinta-tenue)">· lugar</span></span>
+                  <span class="eje-rotulo"><span class="eje eje--t">T</span> cuándo <span style="color:var(--tinta-tenue)">· tiempo</span></span>
+                  <span class="eje-rotulo"><span class="eje eje--n">N</span> cuánto <span style="color:var(--tinta-tenue)">· número, magnitud</span></span>
+                  <span class="eje-rotulo"><span class="eje eje--k">K</span> cuál <span style="color:var(--tinta-tenue)">· clase, categoría</span></span>
+                  <span class="eje-rotulo"><span class="eje eje--m">M</span> cómo <span style="color:var(--tinta-tenue)">· predicado, conexión</span></span>
+                </div>
+                <p style="font-size:.9rem;color:var(--tinta-suave);margin:.8rem 0 0">
+                  Y el <em>por qué</em> queda como <b>relación entre hechos</b>, no como coordenada.</p>
+              </div>
+            </div>
+          </div>
+          <figcaption><span class="fnum">Figura 0.2.</span> Al llevar la intuición a la precisión,
+            <em>cuánto</em> y <em>cuál</em> se revelan como preguntas que el genérico <em>qué</em>
+            tenía escondidas, y <em>por qué</em> se descubre como una relación. La intuición no se
+            reemplaza: se afina hasta volverse siete coordenadas exactas.</figcaption>
+        </figure>
+
+        <p>De esas siete, seis fijan la <em>posición</em> de un hecho —quién, qué, dónde, cuándo,
+          cuánto, cuál— y la séptima, <em>cómo</em>, aporta los enlaces que amarran todo: los
+          predicados. Por eso conviene pensar cada hecho no como una fila de una tabla, sino como un
+          <strong>punto en un espacio de coordenadas</strong>.</p>
+
+        <!-- FIGURA SVG: un hecho como punto (parallel coordinates) -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 640 372" class="svg-eje" role="img"
+                 aria-label="Un hecho representado como un punto con una lectura en cada eje de valor">
+              <!-- leyenda M -->
+              <line x1="356" y1="20" x2="388" y2="20" stroke="var(--eje-m)" stroke-width="2.4" stroke-dasharray="5 4"/>
+              <text x="394" y="24" font-size="12" fill="var(--eje-m)" font-weight="600">M · cómo · los predicados que enlazan</text>
+
+              <!-- fila Q -->
+              <rect x="12" y="37" width="26" height="26" rx="6" fill="var(--eje-q)"/>
+              <text x="25" y="55" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">Q</text>
+              <text x="46" y="50" font-size="13" fill="var(--tinta)" font-weight="600">quién</text>
+              <text x="46" y="64" font-size="11" fill="var(--tinta-tenue)">agente</text>
+              <line x1="175" y1="50" x2="610" y2="50" stroke="var(--eje-q)" stroke-width="2" opacity=".32"/>
+              <text x="300" y="40" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">barista_lucia</text>
+              <circle cx="300" cy="50" r="6.5" fill="var(--eje-q)"/>
+
+              <!-- fila O -->
+              <rect x="12" y="93" width="26" height="26" rx="6" fill="var(--eje-o)"/>
+              <text x="25" y="111" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">O</text>
+              <text x="46" y="106" font-size="13" fill="var(--tinta)" font-weight="600">qué</text>
+              <text x="46" y="120" font-size="11" fill="var(--tinta-tenue)">objeto</text>
+              <line x1="175" y1="106" x2="610" y2="106" stroke="var(--eje-o)" stroke-width="2" opacity=".32"/>
+              <text x="250" y="96" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">espresso_311</text>
+              <circle cx="250" cy="106" r="6.5" fill="var(--eje-o)"/>
+
+              <!-- fila L -->
+              <rect x="12" y="149" width="26" height="26" rx="6" fill="var(--eje-l)"/>
+              <text x="25" y="167" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">L</text>
+              <text x="46" y="162" font-size="13" fill="var(--tinta)" font-weight="600">dónde</text>
+              <text x="46" y="176" font-size="11" fill="var(--tinta-tenue)">lugar</text>
+              <line x1="175" y1="162" x2="610" y2="162" stroke="var(--eje-l)" stroke-width="2" opacity=".32"/>
+              <text x="440" y="152" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">barra_central</text>
+              <circle cx="440" cy="162" r="6.5" fill="var(--eje-l)"/>
+
+              <!-- fila T -->
+              <rect x="12" y="205" width="26" height="26" rx="6" fill="var(--eje-t)"/>
+              <text x="25" y="223" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">T</text>
+              <text x="46" y="218" font-size="13" fill="var(--tinta)" font-weight="600">cuándo</text>
+              <text x="46" y="232" font-size="11" fill="var(--tinta-tenue)">tiempo</text>
+              <line x1="175" y1="218" x2="610" y2="218" stroke="var(--eje-t)" stroke-width="2" opacity=".32"/>
+              <text x="520" y="208" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">08:14</text>
+              <circle cx="520" cy="218" r="6.5" fill="var(--eje-t)"/>
+
+              <!-- fila N -->
+              <rect x="12" y="261" width="26" height="26" rx="6" fill="var(--eje-n)"/>
+              <text x="25" y="279" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">N</text>
+              <text x="46" y="274" font-size="13" fill="var(--tinta)" font-weight="600">cuánto</text>
+              <text x="46" y="288" font-size="11" fill="var(--tinta-tenue)">número</text>
+              <line x1="175" y1="274" x2="610" y2="274" stroke="var(--eje-n)" stroke-width="2" opacity=".32"/>
+              <text x="360" y="264" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">36 ml</text>
+              <circle cx="360" cy="274" r="6.5" fill="var(--eje-n)"/>
+
+              <!-- fila K -->
+              <rect x="12" y="317" width="26" height="26" rx="6" fill="var(--eje-k)"/>
+              <text x="25" y="335" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">K</text>
+              <text x="46" y="330" font-size="13" fill="var(--tinta)" font-weight="600">cuál</text>
+              <text x="46" y="344" font-size="11" fill="var(--tinta-tenue)">clase</text>
+              <line x1="175" y1="330" x2="610" y2="330" stroke="var(--eje-k)" stroke-width="2" opacity=".32"/>
+              <text x="232" y="320" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">espresso</text>
+              <circle cx="232" cy="330" r="6.5" fill="var(--eje-k)"/>
+
+              <!-- conexión M (predicados) -->
+              <polyline points="300,50 250,106 440,162 520,218 360,274 232,330" fill="none"
+                stroke="var(--eje-m)" stroke-width="2.4" stroke-dasharray="5 4" opacity=".6"/>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 0.3.</span> El hecho <code>espresso_311</code> —un café
+            que la barista Lucía sirvió a las 08:14— leído como un punto: una lectura por cada eje de
+            valor. La línea magenta que une las lecturas son los predicados (<em>cómo</em>), el séptimo
+            eje, que conecta el hecho con cada uno de sus valores.</figcaption>
+        </figure>
+
+        <p>No hay trucos ocultos ni capas de complejidad innecesaria. Pero, como ocurre con los
+          verdaderos cambios de perspectiva, cuando tomas esta premisa y la llevas hasta sus últimas
+          consecuencias, el panorama entero cambia: cambia cómo diseñas una base de datos, cómo
+          construyes un agente de inteligencia artificial, cómo conectas sistemas que hoy no saben
+          hablarse, e incluso cómo le explicas un negocio nuevo a un programador que recién empieza.
+          Lo hemos puesto a prueba. Funciona. Y el propósito de este texto es mostrarte la ingeniería
+          exacta detrás de ese funcionamiento.</p>
+
+        <h2>Por qué hace falta un libro entero</h2>
+
+        <p>Si la idea central cabe en un párrafo, la pregunta es legítima: ¿hace falta un libro? Sí,
+          por una razón concreta. En ingeniería de software, entre <strong>enunciar</strong> una
+          propuesta y <strong>poder usarla</strong> en producción hay un abismo. Para cruzarlo, una
+          arquitectura como esta necesita cinco cosas, y cada una ocupa una parte del libro:</p>
+
+        <div class="rejilla-2 revelar">
+          <div class="tarjeta"><h4><span class="eje eje--q">1</span>&nbsp; Una intuición clara</h4>
+            <p style="margin:0;font-size:.95rem">Demostrar que la idea no es un capricho de diseño,
+              sino que se apoya en cómo la mente, la lingüística y la ciencia formal organizan la
+              información.</p></div>
+          <div class="tarjeta"><h4><span class="eje eje--o">2</span>&nbsp; Un modelo formal</h4>
+            <p style="margin:0;font-size:.95rem">Reglas escritas con precisión —notación de conjuntos
+              cuando hace falta, prosa clara cuando basta— que no dejen ambigüedad a quien
+              implemente.</p></div>
+          <div class="tarjeta"><h4><span class="eje eje--l">3</span>&nbsp; Pruebas de estrés</h4>
+            <p style="margin:0;font-size:.95rem">Aplicar el modelo a dominios reales y exigentes —nada
+              de ejemplos de juguete— para que el lector escéptico vea que no colapsa.</p></div>
+          <div class="tarjeta"><h4><span class="eje eje--t">4</span>&nbsp; Diálogo con el ecosistema</h4>
+            <p style="margin:0;font-size:.95rem">Conversar de frente con las ontologías existentes, los
+              estándares de la industria y las herramientas modernas de IA.</p></div>
+          <div class="tarjeta" style="grid-column:1/-1"><h4><span class="eje eje--n">5</span>&nbsp; Una hoja de ruta honesta</h4>
+            <p style="margin:0;font-size:.95rem">Decir con transparencia qué está resuelto y qué falta
+              para que esto sea infraestructura de uso diario. Ocultar una falla, en ingeniería, es
+              una irresponsabilidad.</p></div>
+        </div>
+
+        <h2>Qué es, exactamente, WQuestions</h2>
+
+        <p>A lo largo del libro construirás conmigo una arquitectura llamada <strong>WQuestions</strong>.
+          Conviene pensarla no como otra base de datos rígida, sino como un <em>protocolo de
+          normalización semántica</em>: un motor que toma las preguntas cotidianas y las convierte en
+          los ejes formales de un espacio geométrico. Es un mapa de coordenadas para el conocimiento.
+          Al plantearlo como un estándar de interoperabilidad —y no como una taxonomía que se impone
+          desde arriba— deja de competir con las ontologías existentes y empieza a hacerlas dialogar.</p>
+
+        <p class="cita-destacada revelar">Si todas las aplicaciones del mundo estructuraran su
+          información sobre los ejes de las preguntas, un agente de IA tendría que aprender a hablar
+          una sola vez.<cite>La apuesta del libro</cite></p>
+
+        <h2>Por qué este libro aparece ahora</h2>
+
+        <div class="columnas">
+          <p>Si hubiéramos propuesto esta arquitectura hace cinco años, su adopción habría sido casi
+            imposible. Faltaba una pieza: una capa capaz de traducir con fluidez entre el modelo de
+            datos estructurado y el lenguaje natural de las personas. Hoy esa pieza existe: son los
+            grandes modelos de lenguaje. Su capacidad para invocar herramientas de forma autónoma
+            —<em>function calling</em>— y sostener flujos de trabajo dinámicos reescribió las reglas de
+            la integración.</p>
+          <p>Cuando un agente moderno necesita registrar una venta o leer un dato hospitalario, los
+            «cables» ya están tendidos: domina JSON, valida esquemas, entiende tipos. Lo que le sigue
+            faltando a la industria es un <strong>vocabulario común</strong> que viaje por esos cables.
+            Hoy cada API expone su dialecto privado, y el agente gasta tiempo y <em>tokens</em>
+            aprendiendo un idioma nuevo por cada herramienta. El costo de no tener ese vocabulario
+            crece más rápido de lo que parece.</p>
+        </div>
+
+        <figure class="figura revelar">
+          <div class="lienzo" data-chart>
+            <script type="application/json">
+            {"tipo":"lineas","unidad":" puentes","max":46,
+             "series":[
+               {"nombre":"Puentes punto a punto","color":"q","datos":[{"x":2,"y":1},{"x":3,"y":3},{"x":4,"y":6},{"x":5,"y":10},{"x":6,"y":15},{"x":7,"y":21},{"x":8,"y":28},{"x":9,"y":36},{"x":10,"y":45}]},
+               {"nombre":"Vocabulario común","color":"k","datos":[{"x":2,"y":2},{"x":3,"y":3},{"x":4,"y":4},{"x":5,"y":5},{"x":6,"y":6},{"x":7,"y":7},{"x":8,"y":8},{"x":9,"y":9},{"x":10,"y":10}]}
+             ]}
+            </script>
+          </div>
+          <figcaption><span class="fnum">Figura 0.4.</span> Conectar <em>n</em> sistemas de a pares
+            cuesta <code>n(n−1)/2</code> puentes (rojo): a diez sistemas, cuarenta y cinco. Con un
+            vocabulario común al centro, cada sistema se conecta una sola vez (verde): diez. Pasa el
+            cursor sobre los puntos para ver las cifras.</figcaption>
+        </figure>
+
+        <p>La tesis de este libro es que las preguntas son, por su propia naturaleza, ese idioma
+          común. Y el momento tecnológico para implementarlo es ahora.</p>
+
+        <h2>Para quién está escrito</h2>
+
+        <p>Diseñé el texto apuntando a tres lectores simultáneos. Si el equilibrio es el correcto,
+          cada uno encontrará valor sin estorbarse con el de los demás.</p>
+
+        <div class="rejilla-3 revelar">
+          <div class="tarjeta">
+            <p class="emoji">🧭</p>
+            <h4>Curiosidad estructural</h4>
+            <p style="margin:0;font-size:.93rem">Si te fascina cómo la IA intenta mapear el
+              conocimiento humano, este texto te hará mirar con rigor algo que damos por sentado: la
+              naturaleza de las preguntas.</p>
+          </div>
+          <div class="tarjeta">
+            <p class="emoji">⚙️</p>
+            <h4>Profesional técnico</h4>
+            <p style="margin:0;font-size:.93rem">Si eres arquitecto de software o ingeniero de datos,
+              aquí tienes un marco concreto, probado y desmenuzado: ocho industrias modeladas,
+              decisiones justificadas y un lexicon para arrancar.</p>
+          </div>
+          <div class="tarjeta">
+            <p class="emoji">🎓</p>
+            <h4>Investigación</h4>
+            <p style="margin:0;font-size:.93rem">Si trabajas en semántica, bases de datos o
+              lingüística computacional, cada propuesta está anclada en la literatura: Barwise y Perry,
+              Davidson, Gärdenfors, CIDOC&nbsp;CRM, FrameNet.</p>
+          </div>
+        </div>
+
+        <p>Para que las tres lecturas convivan, cada capítulo está <strong>estratificado</strong>: abre
+          con una escena accesible y aumenta su densidad hacia el final. Si solo buscas la visión
+          estratégica, el primer tercio basta; si buscas el sustento formal, sigue hasta las cajas de
+          decisión de diseño; si quieres ver código aplicado, tu lugar es la Parte&nbsp;V.</p>
+
+        <h2>El recorrido</h2>
+
+        <p>El desarrollo del modelo se reparte en seis bloques:</p>
+
+        <ul class="limpia">
+          <li style="margin-bottom:.7rem"><b><a href="01-torre-de-babel.html">Parte I · El problema.</a></b>
+            La torre de Babel de los datos: la información existe, pero está atrapada en esquemas que
+            no se hablan. Y la apuesta de que la solución es anterior y más simple que cualquier base
+            de datos.</li>
+          <li style="margin-bottom:.7rem"><b><a href="02-cuatro-pilares.html">Parte II · Las siete coordenadas.</a></b>
+            Diseccionamos quién, qué, dónde, cuándo, cuánto, cuál y cómo —su carga semántica, sus
+            trampas— y cerramos mostrando por qué son <em>estas</em> preguntas y no otras.</li>
+          <li style="margin-bottom:.7rem"><b><a href="07-hecho-atomico.html">Parte III · Cómo funcionan juntas.</a></b>
+            El ensamblaje: cómo un evento se vuelve la unidad atómica, cómo la intersección de los ejes
+            crea una geometría consultable y cómo se enlaza la causalidad.</li>
+          <li style="margin-bottom:.7rem"><b><a href="11-verbo.html">Parte IV · Del lenguaje a los hechos.</a></b>
+            El puente entre la ambigüedad del lenguaje y la rigidez de los datos: el papel del verbo,
+            el diseño del lexicon y los problemas lingüísticos difíciles.</li>
+          <li style="margin-bottom:.7rem"><b><a href="14-spa.html">Parte V · En la práctica.</a></b>
+            La sala de máquinas: ocho dominios industriales completos y cuatro escenarios de alto
+            estrés técnico (música, química, fútbol y contratos).</li>
+          <li><b><a href="24-llms.html">Parte VI · IA, futuro y cierre.</a></b>
+            Cómo WQuestions potencia a los LLMs, qué aplicaciones desbloquea, la prueba más exigente
+            —describirse a sí mismo—, la seguridad del grafo compartido y los retos pendientes.</li>
+        </ul>
+
+        <h2>Una nota sobre el método</h2>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">Cómo se construyó este modelo</p>
+          <p>Esta arquitectura no se diseñó en abstracto sobre una pizarra para después forzar a los
+            datos a encajar. Al contrario: emergió de forma empírica, dominio tras dominio, chocando
+            con las fricciones reales que cada negocio exigía resolver. Ninguna regla está aquí por
+            amor a la elegancia; cada decisión técnica existe porque un caso de uso real la reclamó.</p>
+          <p style="margin-bottom:0">Esa génesis empírica es su mayor garantía. El modelo tomó su forma
+            actual el día en que comprendimos que ocho industrias sin relación entre sí estaban pidiendo
+            la <em>misma</em> solución estructural, disfrazada con vocabularios distintos. Cuando ocho
+            problemas independientes convergen en la misma respuesta, esa respuesta deja de ser una
+            hipótesis.</p>
+        </div>
+
+        <p>Conviene aclarar el tono: este libro no peca de falsa modestia. La arquitectura se expone
+          con la contundencia de quien la ha sometido a prueba, y sus límites se declaran de frente.
+          Donde el modelo aún no resuelve algo de forma óptima, lo leerás sin rodeos; donde demostró
+          ser superior a los estándares actuales, lo defenderemos con argumentos, sin diplomacias
+          innecesarias.</p>
+
+        <p style="font-family:var(--display);font-style:italic;font-size:1.5rem;color:var(--tinta);margin-top:2.5rem">
+          Empecemos.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="index.html"><span class="dir">← Índice</span><span class="tit">Tabla de contenidos</span></a>
+      <a class="sig" href="01-torre-de-babel.html"><span class="dir">Capítulo 1 →</span><span class="tit">La torre de Babel de los datos</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

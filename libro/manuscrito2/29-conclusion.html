@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 29 · Por qué importan las preguntas — WQuestions</title>
+  <meta name="description" content="La misma sala de urgencias, otra noche, dos años después: ahora la historia clínica de Vega sí se reconstruye en segundos, porque los sistemas hablan en preguntas. El cierre del libro.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'29'">
+      <header class="portada-cap">
+        <p class="parte">Parte VI · IA, futuro y cierre</p>
+        <div class="num-cap">29</div>
+        <h1>Por qué importan las preguntas</h1>
+        <p class="lede">La misma sala, otra noche, dos años después. La paciente es la misma; el
+          dolor es otro. Lo que cambió no fue la tecnología: fue que los sistemas, por fin,
+          aprendieron a hablar en preguntas.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Son otra vez las dos de la madrugada, y otra vez entra <strong>Vega</strong>
+          en urgencias. Han pasado dos años desde la noche con la que abrimos este libro; ahora tiene
+          cuarenta y cuatro. Aquel dolor en el pecho resultó ser una crisis de ansiedad; esta vez es
+          una cosa distinta: una arritmia que su endocrinóloga le venía vigilando desde hace meses y
+          sobre la que el cardiólogo de la otra ciudad ya le había advertido. Lo cuenta entre frases
+          entrecortadas, mientras la enfermera le toma la presión y el oxígeno. El médico de guardia
+          es nuevo —no es el de aquella noche, no la conoce de nada— y tiene los mismos minutos, no
+          horas, para decidir bien.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Cierre del hilo</span>
+          Esta escena es la otra cara de la que abrió el <a href="01-torre-de-babel.html">capítulo
+          1</a>. Allí, la consulta que salvaba una vida era imposible. Aquí, es una sola línea.
+        </aside>
+
+        <p>Teclea el nombre en la tablet. Y esta vez sí aparece —entera— la historia. No la trae un
+          convenio firmado entre los dos hospitales, ni una conexión bilateral negociada durante
+          meses, ni el esfuerzo heroico de algún integrador de turno a las dos de la madrugada.
+          Aparece porque ambos hospitales, junto con la endocrinóloga privada y el cardiólogo de la
+          otra ciudad, <strong>hablan en preguntas</strong>. Donde hace dos años uno escribía
+          <code>dx_p</code> y el otro <code>diagnostico_principal</code> —y por esa sola diferencia
+          de vocabulario la información existía pero no podía consultarse—, hoy los dos reconocen que
+          están afirmando lo mismo: una situación de tipo <code>diagnostico_medico</code>, con un
+          <em>paciente</em>, un <em>agente</em>, un <em>momento</em> y un <em>diagnosticado_como</em>.
+          El vocabulario interno de cada sistema sigue siendo el suyo. Lo único que comparten es la
+          pregunta que cada hecho responde.</p>
+
+        <p>El médico ve la cronología completa, en orden: el primer eco que detectó la endocrinóloga,
+          los controles trimestrales, el ajuste de medicación de noviembre, la consulta de marzo con
+          el cardiólogo, la recomendación específica para los episodios de descompensación. Toma una
+          decisión informada en treinta segundos, sin tener que despertar a un especialista. Vega
+          queda estable. Y el equipo registra la situación nueva —<code>consulta_emergencia_2028_4471</code>—
+          que mañana otro médico, en otro hospital, podrá consultar exactamente igual.</p>
+
+        <p class="cita-destacada revelar">Entre las dos noches no hubo un milagro tecnológico: hubo
+          el reconocimiento de algo viejo y la disciplina de construir, encima, las piezas mínimas
+          para volverlo operativo.<cite>El arco del libro, en una frase</cite></p>
+
+        <p>Esta escena —banal, casi aburrida cuando funciona— es lo que el libro entero quiso
+          explicar cómo conseguir. Las dos noches son la misma sala, la misma paciente, el mismo tipo
+          de pregunta clínica. Lo que cambió cabe en una figura.</p>
+
+        <!-- FIGURA SVG INSIGNIA: las dos noches comparadas (cierre del libro) -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 412" class="svg-eje" role="img"
+                 aria-label="Dos noches comparadas. En 2026, cuatro sistemas con cuatro esquemas distintos bloquean la información que ya existe; el médico solo ve una línea. En 2028, los cuatro publican al grafo común y la historia clínica de la paciente se reconstruye entera en segundos.">
+              <!-- línea divisoria central -->
+              <line x1="330" y1="34" x2="330" y2="392" stroke="var(--linea)" stroke-width="1.4" stroke-dasharray="4 5"/>
+
+              <!-- ===== PANEL IZQUIERDO · 2026 ===== -->
+              <text x="160" y="26" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-q)" font-family="var(--sans)">2026 · cuatro idiomas</text>
+
+              <!-- cuatro fuentes, cada una en su color de eje, sin conexión entre sí -->
+              <g font-family="var(--mono)" font-size="10.5">
+                <rect x="24" y="48" width="128" height="34" rx="8" fill="var(--eje-q-suave)" stroke="var(--eje-q)" stroke-width="1.3"/>
+                <text x="88" y="69" text-anchor="middle" fill="var(--eje-q)" font-weight="700">dx_p</text>
+
+                <rect x="168" y="48" width="128" height="34" rx="8" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="1.3"/>
+                <text x="232" y="69" text-anchor="middle" fill="var(--eje-o)" font-weight="700">diagnostico_principal</text>
+
+                <rect x="24" y="92" width="128" height="34" rx="8" fill="var(--eje-t-suave)" stroke="var(--eje-t)" stroke-width="1.3"/>
+                <text x="88" y="113" text-anchor="middle" fill="var(--eje-t)" font-weight="700">finding</text>
+
+                <rect x="168" y="92" width="128" height="34" rx="8" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="1.3"/>
+                <text x="232" y="113" text-anchor="middle" fill="var(--eje-k)" font-weight="700">dx_code</text>
+              </g>
+
+              <!-- muros: cada fuente choca contra un tabique, nada llega a la pantalla -->
+              <g stroke="var(--eje-q)" stroke-width="1.6" opacity=".5">
+                <line x1="88" y1="126" x2="88" y2="150"/>
+                <line x1="232" y1="126" x2="232" y2="150"/>
+                <line x1="88" y1="136" x2="232" y2="136"/>
+              </g>
+              <!-- símbolos de bloqueo -->
+              <g font-family="var(--sans)" font-size="15" font-weight="700" fill="var(--eje-q)">
+                <text x="160" y="152" text-anchor="middle">✕  ✕  ✕  ✕</text>
+              </g>
+
+              <!-- la pantalla del médico: casi vacía -->
+              <rect x="44" y="176" width="232" height="186" rx="12" fill="var(--papel-hund)" stroke="var(--linea)" stroke-width="1.6"/>
+              <text x="160" y="200" text-anchor="middle" font-size="10.5" fill="var(--tinta-tenue)" font-family="var(--sans)" letter-spacing=".08em">LO QUE VE EL MÉDICO</text>
+              <line x1="64" y1="222" x2="256" y2="222" stroke="var(--linea)" stroke-width="1"/>
+              <text x="64" y="244" font-size="11" fill="var(--tinta-suave)" font-family="var(--mono)">· bronquitis (2022)</text>
+              <text x="160" y="300" text-anchor="middle" font-size="12" fill="var(--tinta-tenue)" font-family="var(--sans)" font-style="italic">— sin más datos —</text>
+              <text x="160" y="384" text-anchor="middle" font-size="11.5" fill="var(--eje-q)" font-family="var(--sans)" font-weight="600">la información existe, pero no llega</text>
+
+              <!-- ===== PANEL DERECHO · 2028 ===== -->
+              <text x="498" y="26" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-k)" font-family="var(--sans)">2028 · una pregunta común</text>
+
+              <!-- las mismas cuatro fuentes, ahora cada una publica su tripleta al grafo -->
+              <g font-family="var(--mono)" font-size="10.5">
+                <rect x="362" y="48" width="124" height="30" rx="8" fill="var(--eje-q-suave)" stroke="var(--eje-q)" stroke-width="1.2"/>
+                <text x="424" y="67" text-anchor="middle" fill="var(--eje-q)" font-weight="700">endocrinóloga</text>
+
+                <rect x="500" y="48" width="138" height="30" rx="8" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="1.2"/>
+                <text x="569" y="67" text-anchor="middle" fill="var(--eje-o)" font-weight="700">hospital_norte</text>
+
+                <rect x="362" y="86" width="124" height="30" rx="8" fill="var(--eje-t-suave)" stroke="var(--eje-t)" stroke-width="1.2"/>
+                <text x="424" y="105" text-anchor="middle" fill="var(--eje-t)" font-weight="700">cardiólogo</text>
+
+                <rect x="500" y="86" width="138" height="30" rx="8" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="1.2"/>
+                <text x="569" y="105" text-anchor="middle" fill="var(--eje-k)" font-weight="700">hospital_sur</text>
+              </g>
+
+              <!-- haces que convergen al nodo central -->
+              <g fill="none" stroke-width="1.7" opacity=".6">
+                <path d="M424 78 C 424 120, 470 150, 498 162" stroke="var(--eje-q)"/>
+                <path d="M569 78 C 569 120, 528 150, 500 162" stroke="var(--eje-o)"/>
+                <path d="M424 116 C 424 140, 470 158, 496 168" stroke="var(--eje-t)"/>
+                <path d="M569 116 C 569 140, 528 158, 502 168" stroke="var(--eje-k)"/>
+              </g>
+
+              <!-- nodo: el grafo común (la pregunta) -->
+              <circle cx="498" cy="184" r="34" fill="var(--papel-2)" stroke="var(--acento-2)" stroke-width="2.4"/>
+              <text x="498" y="180" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--acento-2-hov)" font-family="var(--sans)">¿quién · qué ·</text>
+              <text x="498" y="193" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--acento-2-hov)" font-family="var(--sans)">cuándo · cuál?</text>
+
+              <!-- baja a la pantalla -->
+              <path d="M498 218 C 498 232, 498 236, 498 246" fill="none" stroke="var(--eje-m)" stroke-width="2" stroke-dasharray="4 4"/>
+
+              <!-- la pantalla del médico: historia completa -->
+              <rect x="384" y="246" width="228" height="116" rx="12" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="1.6"/>
+              <text x="498" y="268" text-anchor="middle" font-size="10.5" fill="var(--eje-k)" font-family="var(--sans)" letter-spacing=".08em" font-weight="700">HISTORIA RECONSTRUIDA</text>
+              <g font-family="var(--mono)" font-size="9.5" fill="var(--tinta-suave)">
+                <text x="402" y="288">· eco inicial · endocrinóloga</text>
+                <text x="402" y="304">· controles trimestrales</text>
+                <text x="402" y="320">· ajuste medicación · nov</text>
+                <text x="402" y="336">· consulta cardiólogo · mar</text>
+                <text x="402" y="352">· protocolo de descompensación</text>
+              </g>
+              <text x="498" y="384" text-anchor="middle" font-size="11.5" fill="var(--eje-k)" font-family="var(--sans)" font-weight="600">la misma información, ahora consultable</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 29.1.</span> Las dos noches de Vega. En
+            <b style="color:var(--eje-q)">2026</b> cuatro sistemas guardan el mismo hecho clínico con
+            cuatro claves incompatibles (<code>dx_p</code>, <code>diagnostico_principal</code>,
+            <code>finding</code>, <code>dx_code</code>): la información existe, pero choca contra
+            tabiques y el médico solo ve una línea. En <b style="color:var(--eje-k)">2028</b> las
+            mismas fuentes publican al grafo común declarando <em>qué pregunta responde cada hecho</em>;
+            la historia se reconstruye entera. No cambió el dato: cambió que ahora se puede consultar.</figcaption>
+        </figure>
+
+        <h2>Lo que las preguntas resolvieron</h2>
+
+        <p>Visto en retrospectiva, lo que las seis partes de este libro destilaron es una respuesta a
+          una pregunta vieja, la misma que dejamos planteada en el capítulo 1: <em>¿existe algo más
+          simple que una ontología y más estructurado que un texto libre, que pueda servir de común
+          denominador entre sistemas que no se conocen?</em></p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">La respuesta del libro</p>
+          <p style="margin:0;font-size:1.05rem">Sí: hay <strong>siete preguntas</strong>. Quién, qué,
+            dónde, cuándo, cuánto, cuál y cómo —donde <em>cuál</em> es, justamente, la que organiza las
+            categorías. Son lo bastante universales para que cualquier descripción del mundo se mapee a
+            ellas, y lo bastante simples para que un humano —o un modelo de lenguaje— las entienda sin
+            manual.</p>
+        </div>
+
+        <p>Esas siete preguntas no son un invento de este libro ni de su autor. Son anteriores a
+          cualquier ontología: están en las categorías de Aristóteles, codificadas por Cicerón en su
+          hexámetro retórico, redescubiertas por los manuales de periodismo de 1900, formalizadas por
+          la semántica de eventos que la lingüística viene refinando hace sesenta años, y presentes en
+          la cognición infantil mucho antes que la escritura. El <a href="06-raices.html">capítulo
+          6</a> rastreó esa convergencia: cuando tantas tradiciones independientes, separadas por
+          siglos y sin coordinarse, llegan a la misma lista, esa lista deja de ser una hipótesis y
+          empieza a parecer un descubrimiento.</p>
+
+        <p>Pero las preguntas, por sí solas, son apenas una intuición. Para volverlas
+          <strong>operativas</strong> —ejecutables por una máquina, consultables con rigor— hicieron
+          falta unas pocas decisiones de diseño, las que recorre la Parte III. Conviene recapitularlas,
+          porque son lo que separa una buena metáfora de una arquitectura:</p>
+
+        <div class="rejilla-2 revelar">
+          <div class="tarjeta">
+            <h4 style="color:var(--eje-o)">Reificar cuando importa <span style="font-family:var(--mono);font-size:.8em;color:var(--tinta-tenue)">D4</span></h4>
+            <p style="margin:0;font-size:.95rem">Un evento o una relación se convierte en una
+              <em>situación</em> de pleno derecho —con identidad propia, consultable— solo cuando lo
+              amerita. La <code>consulta_emergencia_2028_4471</code> de esta noche es una de esas
+              situaciones: existe como objeto porque mañana habrá que preguntarle cosas.</p>
+          </div>
+          <div class="tarjeta">
+            <h4 style="color:var(--eje-q)">Agencia contextual <span style="font-family:var(--mono);font-size:.8em;color:var(--tinta-tenue)">D5</span></h4>
+            <p style="margin:0;font-size:.95rem">El rol de <em>agente</em> no es exclusivo de los
+              humanos. Lo puede ocupar una persona, una organización, un programa o un sensor, según
+              el verbo. La endocrinóloga, el hospital y el monitor cardíaco son, cada uno en su hecho,
+              <em>quién</em>.</p>
+          </div>
+          <div class="tarjeta">
+            <h4 style="color:var(--eje-t)">Vigencia temporal <span style="font-family:var(--mono);font-size:.8em;color:var(--tinta-tenue)">D6</span></h4>
+            <p style="margin:0;font-size:.95rem">Las propiedades que cambian se reifican con un rango
+              <code>inicio</code>/<code>fin</code>: el sistema nunca olvida. Por eso el médico no ve
+              solo la medicación de hoy, sino el ajuste de noviembre y lo que había antes. La
+              cronología es consultable porque el tiempo es un dato, no un descarte.</p>
+          </div>
+          <div class="tarjeta">
+            <h4 style="color:var(--eje-m)">Cuatro porqués <span style="font-family:var(--mono);font-size:.8em;color:var(--tinta-tenue)">D7</span></h4>
+            <p style="margin:0;font-size:.95rem">No hay un eje «por qué»: el porqué se reparte en cuatro
+              cables —<code>causado_por</code>, <code>motivado_por</code>, <code>con_finalidad</code>,
+              <code>justificado_por</code>—, porque el lenguaje natural ya los distingue. La arritmia
+              fue <em>causada</em> por una condición; el ajuste de dosis fue <em>motivado</em> por un
+              control.</p>
+          </div>
+        </div>
+
+        <p>Y por encima de las preguntas y de las decisiones, una sola capa más: el
+          <strong>lexicon</strong>. Es lo que traduce el vocabulario del usuario al catálogo canónico
+          sin obligar a nadie a aprender etiquetas internas —el médico escribe en su jerga; el sistema
+          la mapea—. Su forma final encierra la coincidencia más afortunada de todo el proyecto.</p>
+
+        <div class="caja caja--precedente revelar">
+          <p class="caja-tit">El lexicon es, técnicamente, un <em>function schema</em></p>
+          <p style="margin:0">La interfaz que un modelo de lenguaje necesita para invocar una
+            herramienta —<em>function calling</em>: un nombre, unos parámetros tipados, una
+            descripción— es, hasta en su estructura, lo mismo que una entrada del lexicon. No lo
+            buscamos al empezar el proyecto; lo descubrimos al final. Esa coincidencia es la que vuelve
+            la propuesta accionable hoy, en 2026, y no en una pizarra teórica. El
+            <a href="24-llms.html">capítulo 24</a> la desarrolla.</p>
+        </div>
+
+        <h2>Por qué las preguntas son anteriores a las ontologías</h2>
+
+        <p>Aquí el libro toma su única licencia filosófica, y conviene dejarla explícita. Las
+          ontologías de dominio —CIDOC&nbsp;CRM, Schema.org, FHIR, Biolink, las decenas de iniciativas
+          que repasamos en el <a href="03-clase.html">capítulo 3</a>— son catálogos de <strong>qué
+          cosas hay</strong>. Cada una hizo el trabajo paciente de definir entidades, relaciones y
+          vocabularios consistentes para su parcela. Cada una es valiosa dentro de su perímetro. No
+          competimos con ninguna.</p>
+
+        <p>Lo que el libro propone es que, <strong>antes que las entidades, están las preguntas</strong>.
+          Antes de <em>paciente, médico, diagnóstico, prescripción</em>, está la pregunta
+          <em>¿quién hizo qué a quién, cuándo y de qué tipo?</em>, y sus respuestas tipadas. Un dominio
+          nuevo, al modelarse, no se reduce a otro dominio existente: se mapea a las preguntas, que son
+          siempre las mismas. La ontología específica del dominio sobrevive como <strong>dialecto</strong>
+          del lexicon; el catálogo común sobrevive como infraestructura. Cada ontología sigue siendo
+          valiosa donde ya está; lo que cambia es que, por fin, pueden hablar entre ellas sin un proyecto
+          de integración de por medio.</p>
+
+        <div class="columnas">
+          <p>Visto así, la torre de Babel del primer capítulo nunca fue un problema de ontologías
+            <em>de más</em>. Fue un problema de ontologías <em>sin un suelo común</em>. La solución no
+            era una ontología más grande que las tragara a todas —el sueño de la ontología universal
+            fracasó tantas veces que ya es un género literario—, sino una capa <em>por debajo</em>:
+            más simple, más vieja, más estable.</p>
+          <p>Esa capa son las preguntas. Mientras las ontologías son lo variable —cambian con cada
+            dominio, con cada empresa, con cada década—, las preguntas son lo invariante. Lo único que
+            este libro hizo fue proponer una <strong>articulación operativa</strong> de esa intuición
+            antigua: un catálogo concreto, un prototipo ejecutable y ocho dominios modelados como prueba
+            de que el catálogo se sostiene fuera de un solo nicho.</p>
+        </div>
+
+        <p>Esa es, al final, la diferencia entre las dos noches de Vega expresada en una sola tripleta.
+          En 2026, el hecho clínico vivía encerrado en el dialecto de un sistema. En 2028, el mismo
+          hecho se publica declarando a qué pregunta responde cada parte:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas · la historia de Vega, hoy</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(consulta_emergencia_2028_4471, paciente,         vega)              ∈ M(O, Q)
+(consulta_emergencia_2028_4471, agente,           guardia_nocturno)  ∈ M(O, Q)
+(consulta_emergencia_2028_4471, instante,         2028-03-04T02:11)  ∈ M(O, T)
+(consulta_emergencia_2028_4471, diagnosticado_como, arritmia)        ∈ M(O, K)
+(consulta_emergencia_2028_4471, causado_por,      condicion_cardiaca) ∈ M(O, O)</code></pre>
+        </div>
+
+        <p>Cualquiera de los cuatro sistemas —y cualquier modelo de lenguaje— lee ese registro de
+          izquierda a derecha, como una frase. Ninguno necesitó conocer a los otros tres. Solo
+          necesitaron coincidir en las preguntas.</p>
+
+        <h2>Lo que el libro no terminó</h2>
+
+        <p>Sería deshonesto cerrar sin admitir lo que falta —y este libro prometió, desde la
+          introducción, no pecar de falsa modestia ni esconder sus límites—. El
+          <a href="28-que-falta.html">capítulo 28</a> lo enumeró sin maquillaje:</p>
+
+        <div class="caja caja--alerta revelar">
+          <p class="caja-tit">Lo que aún no está</p>
+          <p style="margin:0">Un motor de inferencia maduro. Bitemporalidad completa. Persistencia a
+            escala industrial. Herramientas de autoría y depuración. Un lexicon poblado en varios
+            idiomas. Y, sobre todo, una comunidad. La propuesta es completa <strong>conceptualmente</strong>;
+            no está lista para producción. El prototipo que acompaña al libro ejecuta lo que el libro
+            afirma —los ocho dominios pasan sus validaciones, los tests pasan, los ejemplos corren—,
+            pero está lejos, todavía, de ser infraestructura.</p>
+        </div>
+
+        <p>Hay una verdad más, incómoda, que conviene decir en voz alta: <strong>ninguna arquitectura
+          sobrevive por su elegancia</strong>. Las que sobrevivieron —Unix, TCP/IP, HTTP, SQL— no
+          ganaron por ser las más bellas, sino porque hubo gente que las cuidó durante décadas hasta
+          volverlas invisibles. RDF, que cumple veinticinco años en 2026, sigue siendo un activo
+          subutilizado precisamente porque nunca alcanzó esa masa crítica. WQuestions, hoy, está en el
+          día uno de ese proceso. Tiene valor —los ocho dominios que pasamos por el prototipo lo
+          demuestran—, pero la tarea de aquí en adelante es que <em>otros</em> lo perfeccionen.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">La idea de fondo</span>
+          El libro como semilla, no como punto final. Lo que importa no es que la propuesta esté
+          terminada, sino que esté escrita, sea operable y se pueda criticar.
+        </aside>
+
+        <p>Por eso vale la pena que exista escrita. La siguiente generación de modelos de información
+          tiene aquí una base operable de la que partir: el repositorio en línea, el prototipo
+          ejecutable, los ocho dominios modelados, las decisiones de diseño documentadas. No es
+          mucho —apenas lo suficiente para entender la propuesta y atacarla con argumentos—. Pero esa
+          es, exactamente, la idea.</p>
+
+        <h2>Una última nota sobre el momento</h2>
+
+        <p>Queda una coincidencia histórica que el libro mencionó solo de pasada y que merece decirse
+          en limpio. Esta propuesta —un modelo de información organizado sobre preguntas-coordenadas,
+          traducido por un lexicon que es a la vez catálogo de funciones— habría sido casi imposible de
+          adoptar hace cinco años. Faltaba la pieza que la vuelve usable: una capa capaz de traducir
+          con fluidez entre el modelo estructurado y el lenguaje natural de las personas. Hoy esa pieza
+          existe, y son los grandes modelos de lenguaje.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Dos piezas complementarias</p>
+          <p style="margin:0">El <strong>grafo</strong> aporta lo que al LLM le falta: identidad
+            estable, memoria persistente, hechos que no se alucinan. El <strong>LLM</strong> aporta lo
+            que al grafo le falta: fluidez conversacional, traducción a cualquier idioma, tolerancia a
+            la ambigüedad humana. Lo que una no hace, la otra sí. Y la pieza que las une —el lexicon
+            como <em>function schema</em>— resulta ser, exactamente, lo que se necesita a ambos lados
+            de la frontera.</p>
+        </div>
+
+        <p>Eso es lo que justifica este libro <em>ahora</em>, en 2026, y no antes ni después. Antes no
+          había con qué construirlo. Después puede haber demasiadas propuestas competidoras, cada una
+          con un costo de adopción que nadie querrá pagar dos veces. La ventana entre que los LLMs
+          maduraron y que el espacio se consolide en torno a un estándar dominante es estrecha. Si en
+          esa ventana las preguntas-coordenadas aparecen como una opción razonable —discutible,
+          mejorable, pero razonable—, el esfuerzo del libro habrá valido la pena.</p>
+
+        <h2>Cierre</h2>
+
+        <p>Empezamos con una sala de emergencias donde la información existía pero no podía consultarse.
+          La cerramos con otra noche en la misma sala, dos años después, donde la información sigue
+          existiendo y ahora <em>sí</em> se consulta. Entre las dos noches no hubo magia: hubo el
+          reconocimiento de algo muy viejo —que las preguntas que hace dos mil años se le hacían a un
+          acto moral son las mismas que hoy se le hacen a una historia clínica— y la disciplina de
+          construir, encima de ese reconocimiento, las piezas mínimas para volverlo operativo.</p>
+
+        <p>Vega salió estable de urgencias. No porque la medicina avanzara en dos años —avanzó, pero no
+          es de eso de lo que trata este libro—, sino porque la información que la describía aprendió a
+          responder, en voz alta, a qué pregunta pertenecía. Quién, qué, dónde, cuándo, cuánto, cuál,
+          cómo. Las mismas siete de siempre. Las que un niño domina antes de saber qué es un sustantivo.
+          Las que no cambian.</p>
+
+        <div class="franja-ejes revelar" style="justify-content:center">
+          <span class="eje-rotulo"><span class="eje eje--q">Q</span> quién</span>
+          <span class="eje-rotulo"><span class="eje eje--o">O</span> qué</span>
+          <span class="eje-rotulo"><span class="eje eje--l">L</span> dónde</span>
+          <span class="eje-rotulo"><span class="eje eje--t">T</span> cuándo</span>
+          <span class="eje-rotulo"><span class="eje eje--n">N</span> cuánto</span>
+          <span class="eje-rotulo"><span class="eje eje--k">K</span> cuál</span>
+          <span class="eje-rotulo"><span class="eje eje--m">M</span> cómo</span>
+        </div>
+
+        <p class="cita-destacada revelar">Las preguntas seguirán siendo las mismas. Lo que falta es
+          construir entre todos las respuestas.<cite>WQuestions</cite></p>
+
+        <p style="font-family:var(--display);font-style:italic;font-size:1.5rem;color:var(--tinta);margin-top:2.5rem;text-align:center">
+          El resto, lector, lo escribes tú.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="28-que-falta.html"><span class="dir">← Anterior</span><span class="tit">Qué falta</span></a>
+      <a class="sig" href="30-anexo-codigo.html"><span class="dir">Siguiente →</span><span class="tit">Anexo: el código</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

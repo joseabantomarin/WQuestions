@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 9 · Situaciones, contextos y agencia — WQuestions</title>
+  <meta name="description" content="El mundo no son hechos sueltos: son escenas con participantes en roles. Cuándo un evento merece ser un sustantivo, quién puede ser agente y cómo se modela el paso del tiempo.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'9'">
+      <header class="portada-cap">
+        <p class="parte">Parte III · Cómo funcionan juntas</p>
+        <div class="num-cap">09</div>
+        <h1>Situaciones, contextos y agencia</h1>
+        <p class="lede">El mundo no nos llega como una lista de hechos sueltos, sino como escenas: un
+          partido, una sesión, una escena de cine. Aprenderás cuándo una acción merece volverse un
+          sustantivo, quién puede protagonizarla y cómo el tiempo deja de borrar la historia.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Considera dos frases que parecen decir lo mismo y no lo dicen. La primera:
+          «alguien corre». La segunda: «el correr de alguien, ayer, en el parque». La diferencia es
+          minúscula en el idioma y enorme en la arquitectura. En la primera, <em>correr</em> es un
+          verbo fugaz: pasa y se esfuma, no deja a qué agarrarse. En la segunda, <em>el correr</em> se
+          ha vuelto un sustantivo —una <strong>cosa</strong>— y, de golpe, admite un dueño, un lugar,
+          un ayer; y mañana admitirá un más todavía: que duró cuarenta minutos, que fue su récord, que
+          lo interrumpió la lluvia.</p>
+
+        <p>Toda lengua humana sabe hacer ese truco. <em>Vender</em> se vuelve <em>la venta</em>;
+          <em>operar</em>, <em>la operación</em>; <em>decidir</em>, <em>la decisión</em>. Al
+          convertir un verbo en sustantivo no añadimos un adorno literario: le otorgamos
+          <strong>identidad</strong>. Lo que era un acto pasajero pasa a ser una entidad de la que
+          podemos hablar, que podemos contar, fechar, cancelar y corregir. Este capítulo trata de
+          cuándo conviene hacer ese truco dentro del modelo, y de las tres decisiones de diseño que lo
+          gobiernan.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Etimología</span>
+          A este truco —tomar un evento fugaz y volverlo un objeto de primera clase— el modelo lo
+          llama <strong>reificación</strong>, del latín <em>res</em>, «cosa»: literalmente, «hacer
+          cosa» un evento. La entidad que nace de ahí es una <strong>situación reificada</strong>.
+        </aside>
+
+        <p>El nombre técnico de ese truco es <strong>reificación</strong>, y la entidad que produce es
+          una <strong>situación reificada</strong>. Estas situaciones viven siempre en el eje
+          <span class="eje-rotulo"><span class="eje eje--o">O</span> qué</span>. Son los nudos de la
+          red: los conectores maestros donde decenas de hechos atómicos convergen porque todos hablan
+          de lo mismo. Sin ellos, el modelo solo sabría registrar oraciones simples. Con ellos, puede
+          guardar cualquier escena humana, por intrincada que sea, sin abandonar jamás la forma de la
+          tripleta que fijamos en el <a href="07-hecho-atomico.html">capítulo 7</a>.</p>
+
+        <h2>No todo merece ser un sustantivo</h2>
+
+        <p>La tentación, una vez que descubres la reificación, es aplicarla a todo. ¿Si una jugadora
+          es alta, debo crear «la situación de su altura»? La respuesta es un no rotundo. Reificar
+          cuesta: cada situación es un objeto nuevo en la base de datos, con su identificador único,
+          que el sistema tendrá que buscar y mantener. Reificar por costumbre es inflar la base con
+          abstracción vacía y volverla lenta.</p>
+
+        <p>La estatura de una persona se queda perfectamente como un hecho atómico plano,
+          <code>(rivas, estatura_cm, 191)</code>: no tiene partes, no participa nadie más, nadie
+          volverá a hablar de ese número, no caduca. Reificarla sería como guardar un termómetro
+          dentro de una caja fuerte. La pregunta correcta, entonces, no es «¿puedo reificar esto?»,
+          sino «¿hay alguna razón de peso para hacerlo?». El modelo reconoce exactamente cuatro
+          razones, y basta con que se cumpla una.</p>
+
+        <div class="rejilla-2 revelar">
+          <div class="tarjeta">
+            <h4><span class="eje eje--o">1</span>&nbsp; Tiene atributos propios</h4>
+            <p style="margin:0;font-size:.95rem">El hecho carga detalles que no caben en una sola
+              frase: un lugar, un instrumento, un modo, un actor secundario. Una canasta profesional
+              tiene minuto, distancia y un pase previo; esos datos no tienen de dónde colgar si la
+              canasta no es una entidad.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--q">2</span>&nbsp; Participan más de dos actores</h4>
+            <p style="margin:0;font-size:.95rem">La tripleta solo conecta dos cosas a la vez. Una
+              venta reúne vendedor, comprador, producto, precio y fecha. Reificarla es el modo estándar
+              de amarrar cinco participantes sin romper la regla de las tres columnas.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--k">3</span>&nbsp; Será referenciado luego</h4>
+            <p style="margin:0;font-size:.95rem">Si sabes que llegarán novedades sobre el hecho —«el
+              partido fue suspendido», «la sesión se reanudó»—, ese hecho debe existir antes como
+              objeto independiente para poder recibirlas.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--t">4</span>&nbsp; Su valor cambiará y hay historia</h4>
+            <p style="margin:0;font-size:.95rem">El precio de una suscripción de hoy cambiará el año
+              que viene. Si reificamos con fecha de inicio y de fin, conservamos el historial intacto
+              en vez de pisarlo. Es la regla de vigencia que verás más abajo.</p>
+          </div>
+        </div>
+
+        <p>Si un dato no cumple ninguna de las cuatro, déjalo como tripleta plana y el sistema seguirá
+          rápido. Esta frontera es lo bastante importante como para escribirla en piedra: es la cuarta
+          decisión de diseño del modelo.</p>
+
+        <div class="caja caja--decision revelar">
+          <p class="caja-tit"><span class="codigo-d">D4</span> Cuándo reificar una situación</p>
+          <p>Un evento o relación solo se transforma en una «situación reificada» (guardada en el eje
+            O) si cumple al menos uno de cuatro requisitos: (1) tiene atributos propios como lugar o
+            modo, (2) participan más de dos actores, (3) será referenciado por otros eventos en el
+            futuro, o (4) su valor cambiará y necesitamos conservar un registro histórico. Si no
+            cumple ninguna, usamos una tripleta simple.</p>
+        </div>
+
+        <p>Léela como una compuerta de eficiencia, no como un permiso. Reificar es poderoso
+          justamente porque es selectivo: el modelo reserva sus nudos para los eventos que de verdad
+          articulan información, y deja el resto como átomos baratos. La economía es deliberada.</p>
+
+        <h2>Autopsia de una situación</h2>
+
+        <p>¿Cómo se ve uno de estos nudos por dentro? Abramos uno. Tomemos un evento cotidiano pero
+          con suficiente sustancia: el espresso número 311, que la barista Lucía preparó a las 08:14
+          de una mañana de mayo. Cumple D4 de sobra —tiene varios participantes, carga media docena de
+          parámetros propios y la taza resultante volverá a aparecer cuando el cliente la valore—. Lo
+          primero es «hacer cosa» el evento, creándolo en el eje O:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(espresso_311) ∈ O          // el nudo: a partir de aquí, todo cuelga de él</code></pre>
+        </div>
+
+        <p>Ese identificador, <code>espresso_311</code>, se vuelve el punto articulador. Todos los
+          detalles de la preparación se enganchan a él con hechos atómicos de tres partes, cada uno
+          aportando una coordenada de un eje distinto:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(espresso_311, instancia_de,   espresso)                  ∈ M(O, K)
+(espresso_311, agente,         barista_lucia)            ∈ M(O, Q)
+(espresso_311, grano,          cafe_arabica)             ∈ M(O, K)
+(espresso_311, momento,        2026-05-14T08:14:00-05:00) ∈ M(O, T)
+(espresso_311, lugar_de,       barra_central)            ∈ M(O, L)
+(espresso_311, dosis_g,        18)                       ∈ M(O, N)
+(espresso_311, presion_bar,    9)                        ∈ M(O, N)
+(espresso_311, rendimiento_ml, 36)                       ∈ M(O, N)
+(espresso_311, estatus_factual, real)                    ∈ M(O, K)</code></pre>
+        </div>
+
+        <p>Nueve hechos atómicos dibujan el espresso completo: qué clase de café es, quién lo hizo,
+          con qué grano, cuándo, dónde, con qué parámetros y en qué estado. Y aquí llega la recompensa
+          de haberlo reificado. Como <code>espresso_311</code> ahora tiene identidad propia, otros
+          eventos posteriores pueden apuntar directamente a él:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(valoracion_311,  sobre_situacion, espresso_311)   // el cliente lo puntúa
+(recarga_grano_9, parte_de,        espresso_311)   // el gramaje que consumió
+(reclamo_088,     rectifica,       espresso_311)   // "salió frío", se rehízo</code></pre>
+        </div>
+
+        <p>La valoración, la recarga del grano y el reclamo son, cada una, <strong>nuevas situaciones
+          reificadas</strong> que se conectan al nudo original. La red crece de forma orgánica, sin
+          cambiar jamás su formato de tres columnas. Esto es lo que la siguiente figura hace visible:
+          un evento en el centro y sus participantes irradiando hacia los ejes, cada cable con su
+          color.</p>
+
+        <!-- FIGURA 9.1: situación reificada con sus roles, irradiando a los ejes -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 400" class="svg-eje" role="img"
+                 aria-label="El espresso 311 reificado como evento central en el eje O, rodeado de participantes conectados por roles canónicos, cada uno coloreado según su eje">
+              <!-- enlaces -->
+              <g stroke-width="2" opacity=".55" fill="none">
+                <line x1="330" y1="200" x2="330" y2="48"  stroke="var(--eje-k)"/>
+                <line x1="330" y1="200" x2="516" y2="74"  stroke="var(--eje-q)"/>
+                <line x1="330" y1="200" x2="606" y2="200" stroke="var(--eje-t)"/>
+                <line x1="330" y1="200" x2="516" y2="326" stroke="var(--eje-l)"/>
+                <line x1="330" y1="200" x2="144" y2="326" stroke="var(--eje-n)"/>
+                <line x1="330" y1="200" x2="54"  y2="200" stroke="var(--eje-n)"/>
+                <line x1="330" y1="200" x2="144" y2="74"  stroke="var(--eje-k)"/>
+              </g>
+              <!-- rótulos de rol sobre los enlaces -->
+              <g font-size="11" font-family="var(--sans)" fill="var(--tinta-tenue)" text-anchor="middle">
+                <text x="330" y="124">instancia_de</text>
+                <text x="436" y="122">agente</text>
+                <text x="482" y="194">momento</text>
+                <text x="436" y="276">lugar_de</text>
+                <text x="226" y="276">dosis_g</text>
+                <text x="174" y="194">presion_bar</text>
+                <text x="226" y="122">grano</text>
+              </g>
+              <!-- nodo central O -->
+              <circle cx="330" cy="200" r="46" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="2.5"/>
+              <text x="330" y="196" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">espresso_311</text>
+              <text x="330" y="212" text-anchor="middle" font-size="10" fill="var(--tinta-tenue)">evento · O</text>
+              <!-- satélites -->
+              <g font-family="var(--mono)" font-size="11.5" text-anchor="middle">
+                <!-- instancia_de K (arriba) -->
+                <rect x="276" y="18" width="108" height="34" rx="9" fill="var(--eje-k-suave)" stroke="var(--eje-k)"/>
+                <text x="330" y="39" fill="var(--tinta)">espresso</text>
+                <!-- agente Q (arriba derecha) -->
+                <rect x="456" y="56" width="124" height="34" rx="9" fill="var(--eje-q-suave)" stroke="var(--eje-q)"/>
+                <text x="518" y="77" fill="var(--tinta)" font-size="10.5">barista_lucia</text>
+                <!-- momento T (derecha) -->
+                <rect x="552" y="182" width="100" height="34" rx="9" fill="var(--eje-t-suave)" stroke="var(--eje-t)"/>
+                <text x="602" y="203" fill="var(--tinta)">08:14</text>
+                <!-- lugar_de L (abajo derecha) -->
+                <rect x="456" y="308" width="124" height="34" rx="9" fill="var(--eje-l-suave)" stroke="var(--eje-l)"/>
+                <text x="518" y="329" fill="var(--tinta)" font-size="10.5">barra_central</text>
+                <!-- dosis_g N (abajo izquierda) -->
+                <rect x="88" y="308" width="112" height="34" rx="9" fill="var(--eje-n-suave)" stroke="var(--eje-n)"/>
+                <text x="144" y="329" fill="var(--tinta)">18 g</text>
+                <!-- presion_bar N (izquierda) -->
+                <rect x="8" y="182" width="92" height="34" rx="9" fill="var(--eje-n-suave)" stroke="var(--eje-n)"/>
+                <text x="54" y="203" fill="var(--tinta)">9 bar</text>
+                <!-- grano K (arriba izquierda) -->
+                <rect x="80" y="56" width="128" height="34" rx="9" fill="var(--eje-k-suave)" stroke="var(--eje-k)"/>
+                <text x="144" y="77" fill="var(--tinta)" font-size="10.5">cafe_arabica</text>
+              </g>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 9.1.</span> El espresso de Lucía, reificado como el
+            individuo <code>espresso_311</code> en el eje O, con sus participantes colgados por roles
+            canónicos. Cada cable lleva el color del eje al que apunta: el agente en rojo (Q), el
+            grano y la clase en verde azulado (K), el momento en violeta (T), el lugar en verde (L),
+            los parámetros en ámbar (N). La escena entera cabe sin abandonar la tripleta.</figcaption>
+        </figure>
+
+        <h2>Quién puede ser agente</h2>
+
+        <p>Detengámonos en uno de esos cables, porque oficializa algo que los ejemplos ya venían
+          gritando. En el espresso, el rol <code>agente</code> lo ocupó una persona de carne y hueso.
+          Pero abre el abanico de dominios y el protagonista de una acción puede ser otra cosa: el
+          algoritmo que asigna un conductor, el servidor bancario que cobra el mantenimiento, el
+          modelo de lenguaje que redacta un borrador, el sensor que dispara una alarma. El modelo
+          <strong>no exige que el agente sea humano</strong>.</p>
+
+        <p>Mira una sesión de un asistente de inteligencia artificial. El protagonista de la situación
+          —quien ejecuta la respuesta, invoca las herramientas y consume los tokens— no es la usuaria
+          que escribe, sino el modelo mismo:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(sesion_ia_5521, instancia_de,    sesion_modelo_lenguaje)  ∈ M(O, K)
+(sesion_ia_5521, agente,          modelo_lumen_2026)       ∈ M(O, Q)   ← un software es el agente
+(sesion_ia_5521, usuaria,         paredes)                 ∈ M(O, Q)
+(sesion_ia_5521, herramienta,     consulta_grafo)          ∈ M(O, K)
+(sesion_ia_5521, tokens_salida,   920)                     ∈ M(O, N)
+(sesion_ia_5521, latencia_ms,     2100)                    ∈ M(O, N)</code></pre>
+        </div>
+
+        <p>El mismo molde sirve para un sensor. «El termopar registró 480 °C» pone a un dispositivo
+          físico en el rol de agente de la situación <em>medir</em>, sin que ningún humano haya tocado
+          nada. Esta universalidad del rol es la que nos deja auditar plantas industriales, plataformas
+          de IA y sistemas automáticos con exactamente el mismo lenguaje que usamos para registrar
+          ventas entre personas. Lo formalizamos así:</p>
+
+        <div class="caja caja--decision revelar">
+          <p class="caja-tit"><span class="codigo-d">D5</span> Agencia contextual</p>
+          <p>El rol de <code>agente</code> puede ser ocupado por humanos, corporaciones, algoritmos de
+            software o sensores físicos. Todo depende del verbo de la acción. Hay verbos que exigen un
+            agente (como «vender») y otros que no necesitan a nadie («ocurrir», «llover»).</p>
+        </div>
+
+        <h3>El rol, no la voluntad</h3>
+
+        <p>Conviene fijar el límite, porque la pregunta es legítima: si un horno inteligente o un
+          algoritmo de recomendación pueden «vestirse» de agente, ¿cuándo deja un objeto de ser una
+          <em>herramienta</em> y pasa a ser un <em>actor</em>? La tentación es buscar la frontera en
+          la <strong>voluntad</strong> o la <strong>conciencia</strong>, y por ahí no hay salida
+          limpia: ni un algoritmo ni una empresa «quieren» nada en sentido fuerte.</p>
+
+        <p>El modelo esquiva la trampa filosófica. El criterio no es la voluntad: es el
+          <strong>rol que la entidad ocupa en una situación concreta</strong>. Una misma cosa puede
+          ser las dos cosas en momentos distintos. La cámara con la que se filma una película es un
+          <strong>instrumento</strong> —un objeto en O— de la situación <em>filmar</em>; el agente es
+          la directora. Pero «el dron sobrevoló el set y capturó el plano aéreo» pone al dron en el rol
+          de <strong>agente</strong> de la situación <em>capturar</em>, donde no hay otro candidato a
+          protagonista. El mismo aparato es herramienta o actor según qué verbo lo invoque y qué rol
+          llene, no según una propiedad que lleve puesta.</p>
+
+        <p>La regla operativa, entonces, es simple: una entidad entra a Q como agente cuando
+          <strong>ocupa el rol <code>agente</code> de un verbo que lo exige</strong> —vender, asignar,
+          redactar, capturar—; se queda como instrumento en O cuando es solo el medio a través del
+          cual otro actúa. La agencia la determina la <strong>gramática de la situación</strong>, no
+          la metafísica del objeto. Por eso el modelo puede auditar a un algoritmo que niega un crédito
+          con el mismo rigor con que audita a un gerente que lo niega, sin tener que resolver primero
+          si el algoritmo «tiene voluntad».</p>
+
+        <p class="cita-destacada revelar">La agencia no es una propiedad que un objeto lleva puesta;
+          es un papel que el verbo reparte. El robot que sutura es agente; el bisturí, jamás.
+          <cite>La regla del rol</cite></p>
+
+        <aside class="nota-margen">
+          <span class="etq">Precedente</span>
+          Esta idea —que el sentido vive en la <em>situación</em>, no en la palabra aislada— es el
+          corazón de la <em>semántica de situaciones</em> de Barwise y Perry (1983). Y la noción de
+          que un evento es un individuo del que se predican roles viene de Davidson (1967): la
+          reificación del modelo es, en el fondo, una forma operativa de su argumento eventual.
+        </aside>
+
+        <div class="caja caja--precedente">
+          <p class="caja-tit">Dos raíces formales</p>
+          <p style="margin:0">Davidson propuso en 1967 tratar cada evento como un individuo lógico:
+            «alguien corrió» se vuelve «existe un evento <em>e</em> tal que <em>e</em> es un correr,
+            su agente es alguien, su lugar es el parque…». Reificar en el eje O es exactamente eso,
+            llevado a una base de datos. Barwise y Perry, en su semántica de situaciones, añaden la
+            pieza que cierra el capítulo: los participantes ocupan <em>roles</em> dentro de una escena,
+            y es la escena —no la palabra— la que fija el significado.</p>
+        </div>
+
+        <h2>Eventos que todavía no han pasado</h2>
+
+        <p>Una situación no tiene por qué ser un hecho consumado. Los negocios necesitan guardar
+          reuniones planeadas, rodajes que se cancelaron, diagnósticos que son hipótesis, compras que
+          se devolvieron. Antes que inventar etiquetas duplicadas para cada caso —un cable
+          <code>agente_real</code> y otro <code>agente_planeado</code>—, la solución más limpia es
+          obligar a toda situación a declarar abiertamente su <strong>estatus factual</strong>:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">signatura</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="text">estatus_factual : de O hacia K
+  Opciones permitidas: real | planeado | confirmado | hipotético | cancelado | rectificado</code></pre>
+        </div>
+
+        <p>Una escena de cine programada para rodarse la semana próxima se guarda igual que una ya
+          filmada, solo que con <code>estatus_factual: planeado</code>. Cuando se rueda, el sistema no
+          borra el plan: crea una situación <em>nueva</em> con estatus <code>real</code> y la conecta a
+          la antigua diciendo que la <code>cumple</code>. Si se cancela, se crea una situación de
+          cancelación. El plan original nunca se reescribe.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(escena_42) ∈ O
+  instancia_de    : escena
+  parte_de        : pelicula_marea
+  directora       : serra
+  momento         : 2026-06-04T07:00:00-05:00
+  estatus_factual : planeado                    ← aún no se ha rodado</code></pre>
+        </div>
+
+        <p>Este pequeño recurso asegura la <strong>inmutabilidad</strong> de la base: el pasado jamás
+          se sobreescribe. Y a la vez deja mapear toda la red de expectativas, promesas y fracasos que
+          compone el día a día de cualquier operación real. Aquí conviene fijar una convención que
+          atraviesa todo el modelo.</p>
+
+        <div class="caja caja--idea">
+          <p class="caja-tit">Convención de hechos inmutables</p>
+          <p style="margin:0">Un hecho nunca se borra ni se edita: se <em>supera</em>. Para corregir
+            el pasado no se modifica la situación vieja, sino que se crea una nueva y se la enlaza a la
+            anterior con un cable de reacción (<code>cumple</code>, <code>cancela</code>,
+            <code>rectifica</code>). La verdad del sistema no es un estado que se pisa, sino una
+            sucesión de hechos que se acumula. Auditar deja de ser un esfuerzo: es leer la pila.</p>
+        </div>
+
+        <h2>Datos que caducan: la vigencia</h2>
+
+        <p>Llegamos a uno de los recursos de diseño más finos del modelo. Hay propiedades que
+          sencillamente no duran para siempre. El precio de una suscripción de software cambia con cada
+          renovación. La posición de una jugadora en la cancha cambia de temporada en temporada. El
+          modelo de IA que corre en producción se reemplaza por una versión nueva cada pocas semanas.
+          Una base de datos ingenua, al recibir un valor nuevo, pisa el viejo y destruye el historial
+          para siempre.</p>
+
+        <p>El modelo evita ese desastre usando la reificación para domesticar el tiempo. En lugar de
+          la barbaridad de reescribir un dato vivo —</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(sesion_ia, modelo_en_uso, modelo_lumen_2025)   ✗  // ¿y si se actualiza? ¿borrar y pisar?</code></pre>
+        </div>
+
+        <p>— convertimos la propiedad cambiante en una sucesión de situaciones, cada una con su rango
+          de vigencia. Esta es la sexta decisión de diseño.</p>
+
+        <div class="caja caja--decision revelar">
+          <p class="caja-tit"><span class="codigo-d">D6</span> Vigencia temporal</p>
+          <p>Las propiedades que cambian con el paso del tiempo no se guardan directamente. Se reifican
+            convirtiéndolas en situaciones, y se les añade una fecha de <code>inicio</code> y una de
+            <code>fin</code> (su rango de vigencia).</p>
+        </div>
+
+        <p>Así, la pregunta «¿qué versión del modelo estaba en producción?» deja de tener una sola
+          respuesta y pasa a tener una respuesta <em>por fecha</em>:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(despliegue_001) ∈ O
+  sujeto : servicio_inferencia
+  modelo : modelo_lumen_2025
+  inicio : 2025-09-01
+  fin    : 2026-03-14
+
+(despliegue_002) ∈ O
+  sujeto : servicio_inferencia
+  modelo : modelo_lumen_2026
+  inicio : 2026-03-15
+  fin    : null          ← vacío: el sistema sabe que esta es la versión actual</code></pre>
+        </div>
+
+        <p>Cuando le preguntas al sistema «¿qué modelo corría en producción?», la máquina te pide una
+          fecha de referencia. Si preguntas por el 20 de febrero de 2026, recorre los rangos y devuelve
+          <code>modelo_lumen_2025</code>; si preguntas por hoy, devuelve <code>modelo_lumen_2026</code>.
+          La siguiente figura muestra esa sucesión como una banda temporal: cada vigencia es un tramo, y
+          una consulta fechada es una línea vertical que cae sobre el tramo correcto.</p>
+
+        <!-- FIGURA 9.2: vigencia como sucesión temporal de situaciones -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 250" class="svg-eje" role="img"
+                 aria-label="Una propiedad que cambia en el tiempo modelada como tres situaciones sucesivas con rangos de vigencia; una consulta fechada selecciona la situación válida">
+              <!-- eje de tiempo -->
+              <line x1="48" y1="186" x2="624" y2="186" stroke="var(--eje-t)" stroke-width="1.6" opacity=".7"/>
+              <polygon points="624,186 614,181 614,191" fill="var(--eje-t)"/>
+              <g font-family="var(--sans)" font-size="11" fill="var(--tinta-tenue)" text-anchor="middle">
+                <text x="48"  y="206">2025-09</text>
+                <text x="246" y="206">2026-03</text>
+                <text x="444" y="206">2026-08</text>
+                <text x="610" y="206">hoy</text>
+              </g>
+              <!-- ticks -->
+              <g stroke="var(--eje-t)" stroke-width="1" opacity=".4">
+                <line x1="48"  y1="182" x2="48"  y2="190"/>
+                <line x1="246" y1="182" x2="246" y2="190"/>
+                <line x1="444" y1="182" x2="444" y2="190"/>
+              </g>
+              <!-- tramo 1: despliegue_001 (caduca) -->
+              <rect x="48" y="120" width="198" height="40" rx="8" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="1.6" opacity=".75"/>
+              <text x="147" y="138" text-anchor="middle" font-size="11" font-family="var(--mono)" fill="var(--eje-o)">despliegue_001</text>
+              <text x="147" y="152" text-anchor="middle" font-size="10" font-family="var(--mono)" fill="var(--tinta-suave)">lumen_2025</text>
+              <!-- tramo 2: despliegue_002 (vigente) -->
+              <rect x="246" y="120" width="366" height="40" rx="8" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="2"/>
+              <text x="429" y="138" text-anchor="middle" font-size="11" font-family="var(--mono)" fill="var(--eje-k)">despliegue_002</text>
+              <text x="429" y="152" text-anchor="middle" font-size="10" font-family="var(--mono)" fill="var(--tinta-suave)">lumen_2026 · fin = null</text>
+              <!-- línea de consulta fechada -->
+              <line x1="160" y1="40" x2="160" y2="178" stroke="var(--eje-q)" stroke-width="2" stroke-dasharray="5 4"/>
+              <circle cx="160" cy="140" r="6.5" fill="var(--eje-q)" stroke="var(--papel)" stroke-width="1.5"/>
+              <rect x="92" y="20" width="190" height="26" rx="7" fill="var(--eje-q-suave)" stroke="var(--eje-q)"/>
+              <text x="187" y="37" text-anchor="middle" font-size="11" font-family="var(--sans)" fill="var(--tinta)">consulta: 2026-02-20</text>
+              <!-- etiqueta resultado -->
+              <text x="160" y="100" text-anchor="middle" font-size="10.5" font-family="var(--sans)" fill="var(--eje-q)" font-weight="600">cae sobre el tramo 1</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 9.2.</span> La propiedad «modelo en producción»
+            modelada según D6 como una sucesión de situaciones, cada una con su rango de vigencia
+            (azul, ya cerrado; verde azulado, abierto con <code>fin = null</code>). Una consulta
+            fechada (línea roja, eje Q de quien pregunta) cae sobre el tramo válido en ese instante y
+            devuelve la versión correcta. Recuperar el pasado deja de ser arqueología.</figcaption>
+        </figure>
+
+        <p>Esta técnica —la <strong>bitemporalidad</strong>— vuelve triviales consultas que antes
+          enloquecían a los analistas: «¿qué versión exacta del modelo corría el día que se reportó el
+          fallo el año pasado?». Sin D6, responder eso es casi imposible; con D6, es leer un rango.</p>
+
+        <h2>Cómo se conectan las situaciones entre sí</h2>
+
+        <p>Para que la base no degenere en una selva de eventos sueltos, el modelo define un puñado de
+          cables oficiales —relaciones canónicas— que organizan cómo se relacionan las situaciones
+          entre ellas. Son pocos, pero cubren todos los escenarios. Conviene verlos en dos columnas,
+          porque caen en familias claras.</p>
+
+        <div class="columnas">
+          <p><strong>1 · Jerarquía</strong> (<code>parte_de</code> y su inverso <code>contiene</code>).
+            Mete eventos pequeños dentro de eventos grandes. Una canasta es <code>parte_de</code> un
+            partido; una escena es <code>parte_de</code> una película. El todo y la parte coexisten
+            como entidades de pleno derecho, sin que el todo aplaste a sus partes.</p>
+          <p><strong>2 · Secuencia lógica</strong> (<code>precede</code> y su inverso
+            <code>sigue_a</code>). Ordena el flujo de un proceso. No importa tanto la hora del reloj
+            como qué paso va obligatoriamente antes que otro: la grabación del sonido
+            <code>precede</code> a la mezcla, sin importar cuántos días medien.</p>
+          <p><strong>3 · Acción y reacción</strong> (<code>cumple</code>, <code>cancela</code>,
+            <code>modifica</code>, <code>rectifica</code>). Define cómo un evento nuevo impacta o anula
+            a uno del pasado. El rodaje real <code>cumple</code> la escena planeada; una toma corregida
+            <code>rectifica</code> la anterior. Aquí vive la inmutabilidad: se supera, no se borra.</p>
+          <p><strong>4 · El grupo del «por qué»</strong> (<code>causado_por</code>,
+            <code>motivado_por</code>, <code>justificado_por</code>). Los cables que explican los
+            motivos —humanos o mecánicos— detrás de las situaciones. Son tan particulares que merecen
+            su propio capítulo: el <a href="10-por-que.html">siguiente</a>.</p>
+        </div>
+
+        <p>Mira cómo se aplican a un partido de baloncesto, el ejemplo arquetípico de una situación que
+          <em>contiene</em> otras. El partido es el nudo grande; cada jugada es un nudo pequeño que
+          cuelga de él por <code>parte_de</code>, y entre jugadas hay secuencia y reacción:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(partido_halcones_lobos) ∈ O
+  instancia_de : partido
+  estatus_factual : real
+
+(triple_088, parte_de,  partido_halcones_lobos)   // la jugada cuelga del partido
+(triple_088, anotadora, rivas)         ∈ M(O, Q)
+(triple_088, asistente, navarro)       ∈ M(O, Q)
+(triple_088, cuarto,    4)             ∈ M(O, N)
+
+(falta_091,  sigue_a,   triple_088)    // ocurrió justo después
+(tiro_libre_092, cumple, falta_091)    // el tiro libre que la falta concedió</code></pre>
+        </div>
+
+        <p>El partido, las jugadas, la falta y el tiro libre son seis situaciones distintas, todas en
+          O, todas tejidas con cables canónicos. Borra cualquiera y las demás siguen teniendo sentido;
+          añade una jugada nueva y nada se rompe. La estructura n-aria —cinco actores en una canasta—
+          se conserva entera porque cada situación absorbe la complejidad sin deformar la tripleta.</p>
+
+        <h2>El zoom de la reificación</h2>
+
+        <p>Cierro con una aclaración vital para quien implemente. Reificar no es un interruptor de
+          encendido y apagado: es un <strong>zoom</strong>. Un mismo evento admite varios niveles de
+          detalle, y los tres son perfectamente legales. Tómalo con el espresso de antes, pero ahora
+          pensando en su consumo de grano a lo largo de un día de cafetería.</p>
+
+        <div class="rejilla-3 revelar">
+          <div class="tarjeta">
+            <h4><span class="eje eje--n">1</span>&nbsp; Brochazo grueso</h4>
+            <p style="margin:0 0 .5rem;font-size:.92rem">Una tripleta plana. Suficiente si solo
+              quieres el total del día.</p>
+            <div class="bloque-codigo" style="margin:0">
+              <pre style="padding:.6rem .7rem"><code data-lang="triple">(barra_central, grano_dia_kg, 3.4)</code></pre>
+            </div>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--o">2</span>&nbsp; Reificación normal</h4>
+            <p style="margin:0 0 .5rem;font-size:.92rem">«Hicimos cosa» el consumo. Necesario para
+              auditar lote y proveedor.</p>
+            <div class="bloque-codigo" style="margin:0">
+              <pre style="padding:.6rem .7rem"><code data-lang="triple">(consumo_dia_14) ∈ O
+  lugar    : barra_central
+  cantidad : 3.4 kg
+  lote     : arabica_l77</code></pre>
+            </div>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--k">3</span>&nbsp; Reificación extrema</h4>
+            <p style="margin:0 0 .5rem;font-size:.92rem">Cada espresso, una situación propia, ligada
+              al día por <code>parte_de</code>.</p>
+            <div class="bloque-codigo" style="margin:0">
+              <pre style="padding:.6rem .7rem"><code data-lang="triple">(espresso_311) ∈ O
+  parte_de : consumo_dia_14
+  dosis_g  : 18</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <p>¿Cuál es el correcto? <strong>Los tres.</strong> Depende del presupuesto y del objetivo. Y
+          lo más hermoso de esta arquitectura es que <strong>saltar del nivel 1 al nivel 3 no rompe la
+          base</strong>: si mañana necesitas más detalle, inyectas situaciones nuevas y las cuelgas de
+          las viejas con <code>parte_de</code>. El sistema nunca se detiene, porque nunca cambia su
+          forma. El nivel de zoom es una decisión de negocio, no una atadura del modelo.</p>
+
+        <div class="caja caja--practica">
+          <p class="caja-tit">En la práctica</p>
+          <p style="margin:0">Empieza siempre por el nivel más grueso que responda tus preguntas de
+            hoy. Reificar de más es deuda técnica disfrazada de prolijidad; reificar de menos se
+            corrige sin dolor más adelante, gracias a <code>parte_de</code>. La regla D4 es tu
+            checklist: si un dato no cumple ninguno de sus cuatro requisitos, déjalo plano y duerme
+            tranquilo.</p>
+        </div>
+
+        <p>Las situaciones reificadas son las rotondas por donde circula el tráfico de la base: los
+          puntos donde convergen los hechos y desde donde se ramifican los procesos. Pero para que el
+          mapa esté completo falta pavimentar un tipo de conexión muy especial entre esas rotondas.
+          Saber que ocurrió una venta o un fallo es útil; saber <em>qué lo causó</em>, <em>qué
+          finalidad perseguía</em> o <em>qué norma lo justificó</em> es lo que eleva una base de datos
+          a inteligencia de negocio. Esos cables del «por qué» son tan singulares que el próximo
+          capítulo defiende una tesis incómoda: que <strong>el porqué no es un eje</strong>.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="08-espacio-multidimensional.html"><span class="dir">← Anterior</span><span class="tit">El espacio multidimensional</span></a>
+      <a class="sig" href="10-por-que.html"><span class="dir">Siguiente →</span><span class="tit">El "por qué" no es un eje</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

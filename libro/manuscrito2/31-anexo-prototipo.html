@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anexo · El prototipo — WQuestions</title>
+  <meta name="description" content="El código fuente íntegro de la librería núcleo del prototipo de WQuestions en Python: los siete ejes, el hecho atómico, el catálogo de signaturas, el lexicon, el universo y el motor de consulta. Nueve archivos cortos que respaldan cada afirmación del libro.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'31'">
+      <header class="portada-cap">
+        <p class="parte">Anexos</p>
+        <div class="num-cap">31</div>
+        <h1>Anexo: el prototipo</h1>
+        <p class="lede">Todo lo que el libro afirma —las siete coordenadas, los hechos con
+          signatura, las situaciones reificadas, la bitemporalidad, el motor de consulta— cabe en
+          nueve archivos cortos de Python que corren sin una sola dependencia externa.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Una arquitectura que solo vive en prosa es una promesa; una arquitectura
+          que corre es una prueba. Este anexo reúne el <strong>código fuente íntegro de la librería
+          núcleo</strong> del prototipo de WQuestions: alrededor de ochocientas cincuenta líneas
+          repartidas en nueve módulos. No es pseudocódigo ni un boceto ilustrativo. Es Python real,
+          ejecutable, que da cuerpo a cada decisión de diseño discutida en los capítulos anteriores y
+          que sirvió de banco de pruebas mientras el modelo tomaba forma, dominio tras dominio.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Alcance</span>
+          El <a href="30-anexo-codigo.html">anexo anterior</a> recoge el código que acompaña a los
+          capítulos a lo largo del libro. Este se concentra en una sola cosa: la <em>librería
+          núcleo</em>, leída de principio a fin como un programa coherente.
+        </aside>
+
+        <p>Conviene fijar el alcance desde la primera línea, sin letra pequeña. Lo que sigue es
+          <strong>solo la librería núcleo</strong> —el paquete <code>wq/</code>—. Los ejemplos por
+          dominio que ejercita la Parte&nbsp;V (el spa, el taxi, la clínica, el banco), la batería de
+          tests del modelo y los scripts de utilidad <em>no aparecen aquí</em>, pero existen, corren y
+          están publicados. El proyecto completo vive en el repositorio del libro, y al final de este
+          anexo se indica exactamente qué encontrarás allí y cómo ponerlo en marcha en cinco minutos.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Qué demuestra este código</p>
+          <p style="margin:0">Que el modelo de las preguntas no es una metáfora afortunada, sino una
+            arquitectura <em>coherente</em> y <em>operable</em>. Ochocientas cincuenta líneas bastan
+            para sostener las siete coordenadas, validar hechos contra sus signaturas, reificar
+            situaciones, resolver polisemia y responder preguntas-WH con vigencia temporal. La
+            validación industrial es otro trabajo —el del <a href="28-que-falta.html">capítulo
+            28</a>—; lo que estas líneas prueban es que la idea cierra.</p>
+        </div>
+
+        <h2>La arquitectura en una sola mirada</h2>
+
+        <p>El prototipo se organiza en nueve módulos que se apilan como capas. En la base están los
+          siete ejes; sobre ellos, la noción de individuo; sobre los individuos, el hecho atómico; a
+          un lado, las dos estructuras transversales —el catálogo de roles y el lexicon—; por encima
+          de todo, el universo que lo contiene todo y, en la cima, la superficie pública que reexporta
+          lo que el usuario va a tocar. Cada decisión de diseño del libro aterriza en un módulo
+          concreto: el paralelismo es deliberado y casi uno a uno.</p>
+
+        <!-- FIGURA SVG: arquitectura del prototipo por capas, coloreada por eje -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 760 470" class="svg-eje" role="img"
+                 aria-label="Arquitectura por capas del prototipo: de los ejes en la base a la superficie pública en la cima">
+              <defs>
+                <marker id="flecha31" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" fill="var(--tinta-tenue)"/>
+                </marker>
+              </defs>
+
+              <!-- Capa 0: axes (base) -->
+              <rect x="250" y="410" width="260" height="46" rx="9" fill="var(--eje-m)" opacity=".14" stroke="var(--eje-m)" stroke-width="1.5"/>
+              <text x="380" y="431" text-anchor="middle" font-size="13" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">axes.py</text>
+              <text x="380" y="447" text-anchor="middle" font-size="11" fill="var(--tinta-suave)">los siete ejes — Q O L T N K M</text>
+
+              <!-- Capa 1: individual -->
+              <rect x="250" y="344" width="260" height="46" rx="9" fill="var(--eje-o)" opacity=".12" stroke="var(--eje-o)" stroke-width="1.5"/>
+              <text x="380" y="365" text-anchor="middle" font-size="13" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">individual.py</text>
+              <text x="380" y="381" text-anchor="middle" font-size="11" fill="var(--tinta-suave)">individuos en los ejes de valor</text>
+
+              <!-- Capa 2: las tres transversales -->
+              <rect x="40" y="262" width="200" height="56" rx="9" fill="var(--eje-k)" opacity=".12" stroke="var(--eje-k)" stroke-width="1.5"/>
+              <text x="140" y="284" text-anchor="middle" font-size="13" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">catalog.py</text>
+              <text x="140" y="300" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">D8 · roles + signaturas</text>
+
+              <rect x="280" y="262" width="200" height="56" rx="9" fill="var(--eje-q)" opacity=".12" stroke="var(--eje-q)" stroke-width="1.5"/>
+              <text x="380" y="284" text-anchor="middle" font-size="13" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">lexicon.py</text>
+              <text x="380" y="300" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">D9 · verbos + aliases</text>
+
+              <rect x="520" y="262" width="200" height="56" rx="9" fill="var(--eje-t)" opacity=".12" stroke="var(--eje-t)" stroke-width="1.5"/>
+              <text x="620" y="284" text-anchor="middle" font-size="13" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">fact.py</text>
+              <text x="620" y="300" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">D3 · tripleta + D6 vigencia</text>
+
+              <!-- Capa 3: universe -->
+              <rect x="250" y="180" width="260" height="46" rx="9" fill="var(--eje-n)" opacity=".12" stroke="var(--eje-n)" stroke-width="1.5"/>
+              <text x="380" y="201" text-anchor="middle" font-size="13" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">universe.py</text>
+              <text x="380" y="217" text-anchor="middle" font-size="11" fill="var(--tinta-suave)">container con tres índices</text>
+
+              <!-- Capa 4: query + ingest -->
+              <rect x="170" y="98" width="200" height="50" rx="9" fill="var(--eje-l)" opacity=".12" stroke="var(--eje-l)" stroke-width="1.5"/>
+              <text x="270" y="119" text-anchor="middle" font-size="13" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">ingest.py</text>
+              <text x="270" y="135" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">D4 · pipeline de ingesta</text>
+
+              <rect x="390" y="98" width="200" height="50" rx="9" fill="var(--eje-l)" opacity=".12" stroke="var(--eje-l)" stroke-width="1.5"/>
+              <text x="490" y="119" text-anchor="middle" font-size="13" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">query.py</text>
+              <text x="490" y="135" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">preguntas-WH</text>
+
+              <!-- Capa 5: __init__ (cima) -->
+              <rect x="250" y="24" width="260" height="46" rx="9" fill="var(--tinta)" opacity=".07" stroke="var(--tinta-suave)" stroke-width="1.5"/>
+              <text x="380" y="45" text-anchor="middle" font-size="13" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">__init__.py</text>
+              <text x="380" y="61" text-anchor="middle" font-size="11" fill="var(--tinta-suave)">superficie pública</text>
+
+              <!-- conectores verticales -->
+              <line x1="380" y1="410" x2="380" y2="390" stroke="var(--tinta-tenue)" stroke-width="1.6" marker-end="url(#flecha31)"/>
+              <line x1="380" y1="344" x2="380" y2="320" stroke="var(--tinta-tenue)" stroke-width="1.6"/>
+              <!-- individual → 3 transversales -->
+              <path d="M380,330 L380,326 L140,326 L140,318" fill="none" stroke="var(--tinta-tenue)" stroke-width="1.4" marker-end="url(#flecha31)"/>
+              <path d="M380,326 L380,318" fill="none" stroke="var(--tinta-tenue)" stroke-width="1.4" marker-end="url(#flecha31)"/>
+              <path d="M380,330 L380,326 L620,326 L620,318" fill="none" stroke="var(--tinta-tenue)" stroke-width="1.4" marker-end="url(#flecha31)"/>
+              <!-- 3 transversales → universe -->
+              <path d="M140,262 L140,234 L380,234 L380,226" fill="none" stroke="var(--tinta-tenue)" stroke-width="1.4" marker-end="url(#flecha31)"/>
+              <path d="M380,262 L380,226" fill="none" stroke="var(--tinta-tenue)" stroke-width="1.4" marker-end="url(#flecha31)"/>
+              <path d="M620,262 L620,234 L380,234" fill="none" stroke="var(--tinta-tenue)" stroke-width="1.4"/>
+              <!-- universe → ingest + query -->
+              <path d="M380,180 L380,160 L270,160 L270,148" fill="none" stroke="var(--tinta-tenue)" stroke-width="1.4" marker-end="url(#flecha31)"/>
+              <path d="M380,160 L490,160 L490,148" fill="none" stroke="var(--tinta-tenue)" stroke-width="1.4" marker-end="url(#flecha31)"/>
+              <!-- ingest + query → __init__ -->
+              <path d="M270,98 L270,84 L380,84 L380,70" fill="none" stroke="var(--tinta-tenue)" stroke-width="1.4" marker-end="url(#flecha31)"/>
+              <path d="M490,98 L490,84 L380,84" fill="none" stroke="var(--tinta-tenue)" stroke-width="1.4"/>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 31.1.</span> Los nueve módulos del paquete
+            <code>wq/</code>, apilados de la base a la cima. El orden de lectura natural va de abajo
+            hacia arriba: primero <code>axes.py</code> (los siete ejes), luego los individuos, luego
+            las tres estructuras transversales —catálogo (<span class="eje eje--k">K</span>), lexicon
+            (<span class="eje eje--q">Q</span>) y hecho (<span class="eje eje--t">T</span>)—, luego el
+            universo que las une, y por fin la API de ingesta y consulta. Las nueve secciones de este
+            anexo siguen ese mismo orden.</figcaption>
+        </figure>
+
+        <p>El recorrido de lectura es de abajo hacia arriba. Empezamos por la base —los ejes—, subimos
+          a los individuos que los pueblan, llegamos al hecho atómico, abrimos en abanico las dos
+          piezas transversales, las reunimos en el universo y rematamos con la fachada que expone todo
+          al usuario. Cada sección abre con una nota breve sobre qué resuelve el módulo y termina con
+          su código íntegro.</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">Cómo leer el código de este anexo</p>
+          <p style="margin:0">Los bloques están coloreados con el resaltador del libro: las palabras
+            clave de Python, las cadenas, los números y los comentarios se distinguen al vuelo, y los
+            identificadores de eje (<code>Q</code>, <code>O</code>, <code>L</code>, <code>T</code>,
+            <code>N</code>, <code>K</code>, <code>M</code>) llevan su color habitual. Si una línea es
+            larga, el bloque permite desplazarse en horizontal sin romper la página. El botón
+            <em>copiar</em> de cada bloque entrega el código tal cual, listo para pegar en un archivo.</p>
+        </div>
+
+        <h2><span class="eje eje--m">§A1</span>&nbsp; <code>axes.py</code> — los siete ejes</h2>
+
+        <p>Es la pieza fundacional y la más corta. Declara, como un <code>Enum</code>, los seis ejes de
+          valor —los que albergan individuos— y el único eje estructural de predicados. A partir de
+          aquí, todo el modelo se referencia contra estos siete identificadores: no hay cadenas
+          mágicas dispersas por el código, hay un vocabulario cerrado y verificable.</p>
+
+        <p>La distinción central que codifica este archivo es la que recorre todo el libro: seis ejes
+          <em>contienen cosas</em> y uno <em>conecta cosas</em>. <span class="eje eje--q">Q</span>
+          guarda agentes, <span class="eje eje--o">O</span> objetos y situaciones, <span
+          class="eje eje--l">L</span> lugares, <span class="eje eje--t">T</span> momentos, <span
+          class="eje eje--n">N</span> magnitudes y <span class="eje eje--k">K</span> categorías
+          atemporales. El séptimo, <span class="eje eje--m">M</span>, no guarda valores: guarda los
+          cables que enlazan los valores de los otros seis.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Detalle</span>
+          El <code>Enum</code> incluye un valor extra, <code>V</code>, que no es un eje del modelo sino
+          un comodín de signatura: significa «cualquier eje de valor». Lo usa el catálogo para roles
+          cuyo sujeto puede vivir en más de un eje, como <code>instancia_de</code>.
+        </aside>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">"""Los 7 ejes de WQuestions.
+
+Seis ejes de valor (contienen individuos):
+    Q — quién — agentes
+    O — qué  — objetos / situaciones reificadas
+    L — dónde — lugares
+    T — cuándo — momentos / intervalos
+    N — cuánto — magnitudes con unidad
+    K — cuál — categorías atemporales (tipos, unidades, estados, vocabularios)
+
+Un eje estructural (contiene etiquetas con signatura):
+    M — cómo — predicados/cables que conectan individuos. Cada predicado
+        declara su cardinalidad en la signatura (`functional`: un solo valor
+        por sujeto, o múltiple). La cardinalidad es un atributo del predicado,
+        no un eje aparte.
+"""
+
+from enum import Enum
+
+
+class Axis(Enum):
+    Q = "Q"  # quién
+    O = "O"  # qué (objectum)
+    L = "L"  # dónde
+    T = "T"  # cuándo (tempus)
+    N = "N"  # cuánto
+    K = "K"  # cuál (categórico)
+    M = "M"  # cómo / predicados (modus)
+    V = "V"  # comodín de signatura: cualquier eje de valor
+
+
+VALUE_AXES = {Axis.Q, Axis.O, Axis.L, Axis.T, Axis.N, Axis.K}
+PREDICATE_AXES = {Axis.M}
+
+
+def is_value_axis(axis: Axis) -> bool:
+    return axis in VALUE_AXES</code></pre>
+        </div>
+
+        <h2><span class="eje eje--o">§A2</span>&nbsp; <code>individual.py</code> — individuos en los ejes</h2>
+
+        <p>Ochenta y un líneas. Define qué es un <em>individuo</em>: la entidad concreta que habita en
+          alguno de los seis ejes de valor. Un agente, una situación, un lugar, un instante, una
+          magnitud o una categoría son todos individuos; lo que cambia es el eje en el que viven. La
+          clase es inmutable —un <code>dataclass</code> congelado— porque en este modelo un individuo,
+          una vez acuñado, no cambia de identidad ni de eje.</p>
+
+        <p>El archivo aporta además tres fábricas de individuos «primitivos», esos que en realidad son
+          datos: <code>time_point</code> crea un instante en <span class="eje eje--t">T</span> a partir
+          de una marca ISO 8601, <code>quantity</code> crea una magnitud en <span
+          class="eje eje--n">N</span> anclando su unidad en <span class="eje eje--k">K</span>, y
+          <code>category</code> crea una categoría en <span class="eje eje--k">K</span>. El detalle de
+          que <code>quantity</code> exija que la unidad viva en K no es decorativo: es la regla del
+          <a href="04-cuanto.html">eje cuantitativo</a> hecha código —un número sin unidad anclada
+          simplemente no se puede construir.</p>
+
+        <div class="caja caja--definicion revelar">
+          <p class="caja-tit">Individuo</p>
+          <p style="margin:0">Instancia concreta que ocupa <strong>uno y solo un</strong> eje de
+            valor, con un identificador estable. El campo <code>payload</code> permite alojar el valor
+            nativo cuando el individuo <em>es</em> un dato: el <code>datetime</code> de un instante, el
+            par <code>{valor, unidad}</code> de una magnitud. Para agentes y situaciones, el
+            identificador basta y el <code>payload</code> queda vacío.</p>
+        </div>
+
+        <aside class="nota-margen">
+          <span class="etq">Producción</span>
+          El generador <code>mint_id</code> produce identificadores cortos y monótonos
+          (<code>n_000001</code>, <code>n_000002</code>…). Es una elección de observabilidad para el
+          prototipo: en producción se reemplaza por UUID&nbsp;v7, que sacrifica legibilidad a cambio
+          de unicidad global.
+        </aside>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">"""Individuos del modelo: instancias de cualquier eje de valor.
+
+Cada individuo tiene un identificador estable y vive en uno y solo un eje.
+Para sujetos sintéticos usamos un mint determinista (id corto, monótono)
+en vez de UUID — la observabilidad gana, la pérdida de globalidad no
+importa para un prototipo.
+"""
+
+from __future__ import annotations
+from dataclasses import dataclass, field
+from typing import Optional, Any, Dict
+from itertools import count
+
+from .axes import Axis, is_value_axis
+
+
+_counter = count(1)
+
+
+def mint_id(prefix: str = "id") -> str:
+    """Genera un id corto y monótono. En producción se reemplazaría por UUID v7."""
+    n = next(_counter)
+    return f"{prefix}_{n:06d}"
+
+
+@dataclass(frozen=True)
+class Individual:
+    """Individuo en un eje de valor.
+
+    `payload` permite alojar valores nativos cuando el "individuo" es en
+    realidad un dato (un instante T, una magnitud N, una categoría K). Para
+    Q y O suele ser None; el id basta.
+    """
+
+    id: str
+    axis: Axis
+    label: Optional[str] = None
+    payload: Any = None
+    meta: Dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self):
+        if not is_value_axis(self.axis):
+            raise ValueError(
+                f"Un individuo debe vivir en un eje de valor, no en {self.axis}."
+            )
+
+    def __repr__(self) -> str:
+        tag = self.label or self.id
+        return f"&lt;{self.axis.value}:{tag}&gt;"
+
+
+# --- helpers para individuos "primitivos" -----------------------------------
+
+
+def time_point(iso: str) -> Individual:
+    """Crea un individuo T desde una marca ISO 8601."""
+    from datetime import datetime
+    try:
+        dt = datetime.fromisoformat(iso.replace("Z", "+00:00"))
+    except ValueError as e:
+        raise ValueError(f"Marca temporal inválida: {iso}") from e
+    return Individual(id=f"t_{iso}", axis=Axis.T, label=iso, payload=dt)
+
+
+def quantity(value: float, unit_k: "Individual") -> Individual:
+    """Crea un individuo N con valor numérico y unidad anclada en K."""
+    if unit_k.axis != Axis.K:
+        raise ValueError(
+            f"La unidad debe vivir en K (recibido: {unit_k.axis})."
+        )
+    return Individual(
+        id=mint_id("n"),
+        axis=Axis.N,
+        label=f"{value} {unit_k.label or unit_k.id}",
+        payload={"value": value, "unit": unit_k.id},
+    )
+
+
+def category(label: str) -> Individual:
+    """Crea un individuo K (categoría) con id derivado del label."""
+    return Individual(id=label, axis=Axis.K, label=label)</code></pre>
+        </div>
+
+        <h2><span class="eje eje--t">§A3</span>&nbsp; <code>fact.py</code> — el hecho atómico con bitemporalidad</h2>
+
+        <p>Sesenta y una líneas para la unidad mínima del modelo. Un hecho es una tupla inmutable
+          <code>(sujeto, rol, valor)</code> donde sujeto y valor son individuos —viven en algún eje de
+          valor— y el rol es una etiqueta del catálogo. Esto es <strong>D3</strong> en estado puro:
+          todo, absolutamente todo lo que el modelo sabe, se descompone en estas tripletas tipadas. Lo
+          complejo no se modela con estructuras más ricas: se apila como más tripletas.</p>
+
+        <div class="caja caja--decision revelar">
+          <p class="caja-tit"><span class="codigo-d">D3</span> El hecho atómico</p>
+          <p style="margin:0">La clase <code>Fact</code> es la encarnación literal de D3: una tripleta
+            <code>(subject, role, value)</code>, congelada e inmutable. No hay forma de representar un
+            hecho fuera de esta forma. La riqueza del mundo se reconstruye apilando tripletas, no
+            inflando la estructura de cada una.</p>
+        </div>
+
+        <p>Sobre esa base mínima, el archivo añade la dimensión temporal que pide <strong>D6</strong>.
+          Cada hecho lleva un rango de vigencia opcional <code>[valid_from, valid_to)</code> —desde
+          cuándo y hasta cuándo es cierto <em>en el mundo</em>— y un <code>tx_time</code> automático
+          que registra cuándo entró <em>al sistema</em>. Son dos líneas de tiempo distintas: el tiempo
+          de los hechos y el tiempo de los registros. Esa separación es lo que da bitemporalidad, y
+          basta para modelar mudanzas, rediagnósticos o cláusulas contractuales que expiran.</p>
+
+        <p>El método <code>is_valid_at</code> condensa la lógica de D6 en seis líneas: si no hay rango
+          de vigencia, el hecho es atemporal y vale siempre; si lo hay, el momento consultado debe caer
+          en el intervalo, con el inicio inclusivo y el fin exclusivo. Un <code>valid_to</code> nulo
+          significa «abierto al futuro».</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Convención</span>
+          Intervalo semiabierto <code>[inicio, fin)</code>: el instante de inicio cuenta, el de fin no.
+          Es la misma convención que evita solapamientos en bases de datos temporales y la que usa el
+          <a href="09-situaciones.html">capítulo 9</a> al hablar de vigencia.
+        </aside>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">"""Hechos atómicos: la unidad mínima del modelo.
+
+Cada hecho es una tupla `(sujeto, rol, valor)` donde:
+- `sujeto` y `valor` son `Individual` (viven en algún eje de valor).
+- `rol` es una etiqueta del catálogo canónico (D8) o de su capa lexicon.
+
+D6 — vigencia temporal: cada hecho lleva opcionalmente un rango
+`[valid_from, valid_to)` que indica desde cuándo y hasta cuándo es cierto en
+el mundo. Si `valid_to is None`, está abierto al futuro.
+
+Adicionalmente registramos `tx_time` (transaction time): el momento en el que
+el hecho entró al sistema. Esto da bitemporalidad ligera, suficiente para
+auditoría.
+"""
+
+from __future__ import annotations
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from typing import Optional
+
+from .individual import Individual
+
+
+def _utcnow() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+@dataclass(frozen=True)
+class Fact:
+    subject: Individual
+    role: str
+    value: Individual
+    valid_from: Optional[datetime] = None
+    valid_to: Optional[datetime] = None
+    tx_time: datetime = field(default_factory=_utcnow)
+
+    def is_valid_at(self, moment: datetime) -> bool:
+        """¿Este hecho es cierto en el mundo en `moment`?
+
+        Reglas:
+        - Si no hay vigencia, el hecho es atemporal: vale siempre.
+        - `valid_from` inclusivo, `valid_to` exclusivo.
+        - `valid_to is None` significa "abierto al futuro".
+        """
+        if self.valid_from is None and self.valid_to is None:
+            return True
+        if self.valid_from is not None and moment &lt; self.valid_from:
+            return False
+        if self.valid_to is not None and moment &gt;= self.valid_to:
+            return False
+        return True
+
+    def __repr__(self) -> str:
+        s = self.subject.label or self.subject.id
+        v = self.value.label or self.value.id
+        base = f"({s}, {self.role}, {v})"
+        if self.valid_from or self.valid_to:
+            f = self.valid_from.isoformat() if self.valid_from else "-∞"
+            t = self.valid_to.isoformat() if self.valid_to else "+∞"
+            base += f"  [{f} .. {t})"
+        return base</code></pre>
+        </div>
+
+        <p class="cita-destacada revelar">Un hecho es una tripleta congelada con dos líneas de tiempo:
+          la del mundo y la del registro. Todo lo demás se construye apilando hechos.<cite>El corazón
+          del prototipo</cite></p>
+
+        <h2><span class="eje eje--k">§A4</span>&nbsp; <code>catalog.py</code> — el catálogo canónico de roles</h2>
+
+        <p>Ciento setenta y nueve líneas: es el módulo más largo de la librería núcleo y donde se
+          materializa <strong>D8</strong>. El catálogo declara los treinta y ocho roles canónicos del
+          modelo, cada uno con su signatura tipada —un <em>dominio</em> y un <em>rango</em>, ambos
+          ejes de valor— y su cardinalidad. Esa signatura es lo que convierte una tripleta de texto
+          libre en un hecho verificable: al insertar <code>(sujeto, rol, valor)</code>, el catálogo
+          comprueba que el eje del sujeto coincida con el dominio del rol y el eje del valor con su
+          rango.</p>
+
+        <div class="caja caja--decision revelar">
+          <p class="caja-tit"><span class="codigo-d">D8</span> El catálogo canónico de roles</p>
+          <p style="margin:0">Cada rol es un predicado del eje <span class="eje eje--m">M</span> con
+            una signatura <code>dominio → rango</code>. La clase <code>RoleSignature</code> la guarda;
+            el método <code>validate</code> la hace cumplir. Así, <code>agente</code> solo admite un
+            sujeto en <span class="eje eje--o">O</span> y un valor en <span class="eje eje--q">Q</span>;
+            <code>monto</code>, un valor en <span class="eje eje--n">N</span>; <code>lugar_de</code>, uno
+            en <span class="eje eje--l">L</span>. La basura no entra al grafo.</p>
+        </div>
+
+        <p>Conviene detenerse en una decisión que el libro defiende y que aquí ocupa apenas cuatro
+          líneas: la <strong>política liberal</strong>. Si un rol no está declarado en el catálogo, el
+          método <code>validate</code> <em>no lo rechaza</em>: simplemente no lo valida y lo deja
+          pasar. Una política estricta abortaría ante cualquier rol desconocido; el prototipo prefiere
+          la extensibilidad. Quien quiera un rol nuevo puede usarlo de inmediato sin pedir permiso al
+          catálogo central; si más tarde quiere validación, lo registra. La elección está comentada en
+          el propio código, a la vista.</p>
+
+        <p>La cardinalidad —el campo <code>functional</code>— merece una nota. Un rol funcional admite
+          un solo valor por sujeto: una situación tiene un <code>agente</code>, un <code>lugar_de</code>,
+          un <code>inicio</code>. Un rol no funcional admite varios: una situación puede estar
+          <code>causado_por</code> varias otras, o <code>contiene</code> muchas partes. Esto es
+          <strong>D2</strong> en acción: propiedades y relaciones no son cosas distintas; son cables
+          del mismo eje <span class="eje eje--m">M</span> que solo difieren en cuántos valores admiten.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Subconjunto</span>
+          Los treinta y ocho roles que carga <code>_load_canonical</code> son un subconjunto
+          representativo del catálogo completo descrito en el documento maestro. Cubren los grupos que
+          el libro discute: estructurales, participantes, lugar y tiempo, cuantitativos,
+          clasificatorios, los cuatro cables del «por qué» (<strong>D7</strong>) e
+          inter-situacionales.
+        </aside>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">"""Catálogo canónico de roles (D8).
+
+Cada rol declara una signatura tipada `dominio → rango`, ambos ejes de valor,
+más su **cardinalidad** (`functional`: un solo valor por sujeto, o múltiple).
+Todos los roles son predicados del eje M (cómo); la cardinalidad es un atributo
+de la signatura, no un eje aparte. La signatura habilita la validación mecánica
+de hechos: al insertar `(s, role, v)` el catálogo verifica que `s.axis` coincida
+con el dominio y `v.axis` con el rango.
+"""
+
+from __future__ import annotations
+from dataclasses import dataclass
+from typing import Dict, Optional
+
+from .axes import Axis
+from .individual import Individual
+
+
+@dataclass(frozen=True)
+class RoleSignature:
+    name: str
+    domain: Axis    # eje del sujeto
+    range: Axis     # eje del valor
+    functional: bool  # True → un valor por sujeto, False → múltiple
+    description: str = ""
+
+
+class SignatureError(ValueError):
+    pass
+
+
+class Catalog:
+    """Catálogo de signaturas canónicas + validación de hechos."""
+
+    def __init__(self):
+        self._roles: Dict[str, RoleSignature] = {}
+        self._load_canonical()
+
+    def register(self, sig: RoleSignature) -> None:
+        if sig.name in self._roles:
+            existing = self._roles[sig.name]
+            if existing != sig:
+                raise SignatureError(
+                    f"Rol '{sig.name}' ya registrado con signatura distinta: "
+                    f"{existing} vs {sig}"
+                )
+            return
+        self._roles[sig.name] = sig
+
+    def get(self, name: str) -> Optional[RoleSignature]:
+        return self._roles.get(name)
+
+    def validate(self, role: str, subject: Individual, value: Individual) -> None:
+        """Lanza `SignatureError` si el hecho viola la signatura."""
+        sig = self._roles.get(role)
+        if sig is None:
+            # Rol no declarado: política liberal — se permite, no se valida.
+            # Una política estricta lo rechazaría; preferimos extensibilidad.
+            return
+        if sig.domain != Axis.V and subject.axis != sig.domain:
+            raise SignatureError(
+                f"Sujeto en eje incorrecto para '{role}': se esperaba "
+                f"{sig.domain.value}, recibido {subject.axis.value} "
+                f"(sujeto={subject})"
+            )
+        if sig.range != Axis.V and value.axis != sig.range:
+            raise SignatureError(
+                f"Valor en eje incorrecto para '{role}': se esperaba "
+                f"{sig.range.value}, recibido {value.axis.value} "
+                f"(valor={value})"
+            )
+
+    def __contains__(self, name: str) -> bool:
+        return name in self._roles
+
+    def __len__(self) -> int:
+        return len(self._roles)
+
+    # ------------------------------------------------------------------
+    # Carga del catálogo canónico (subset del documento WQuestions.md)
+    # ------------------------------------------------------------------
+
+    def _load_canonical(self) -> None:
+        canonical = [
+            # --- estructurales ---
+            RoleSignature("instancia_de", Axis.V, Axis.K, False,
+                          "sujeto (cualquier eje de valor) pertenece a la categoría"),
+            RoleSignature("subtipo_de", Axis.K, Axis.K, False,
+                          "subtipo conceptual"),
+            RoleSignature("parte_de", Axis.O, Axis.O, False,
+                          "subobjeto/subevento de"),
+            RoleSignature("contiene", Axis.O, Axis.O, False,
+                          "inversa de parte_de"),
+
+            # --- participantes (Q es típico) ---
+            RoleSignature("agente", Axis.O, Axis.Q, True,
+                          "agente principal de la situación"),
+            RoleSignature("paciente", Axis.O, Axis.Q, True,
+                          "afectado por la situación"),
+            RoleSignature("tema", Axis.O, Axis.O, True,
+                          "objeto temático (cosa o sub-situación)"),
+            RoleSignature("beneficiario", Axis.O, Axis.Q, True,
+                          "destinatario o beneficiario"),
+            RoleSignature("experimentador", Axis.O, Axis.Q, True,
+                          "quien experimenta un estado mental"),
+            RoleSignature("instrumento", Axis.O, Axis.O, True,
+                          "objeto usado para ejecutar la acción"),
+            RoleSignature("comprador", Axis.O, Axis.Q, True,
+                          "comprador en una venta"),
+            RoleSignature("cliente", Axis.O, Axis.Q, True,
+                          "cliente de un servicio (alias frecuente de agente)"),
+
+            # --- lugar / tiempo ---
+            RoleSignature("lugar_de", Axis.O, Axis.L, True,
+                          "lugar donde ocurre la situación"),
+            RoleSignature("origen", Axis.O, Axis.L, True,
+                          "lugar de origen"),
+            RoleSignature("destino", Axis.O, Axis.L, True,
+                          "lugar de destino"),
+            RoleSignature("lugar_destino", Axis.O, Axis.L, True,
+                          "alias de destino"),
+            RoleSignature("momento", Axis.O, Axis.T, True,
+                          "momento puntual"),
+            RoleSignature("inicio", Axis.O, Axis.T, True,
+                          "instante de inicio"),
+            RoleSignature("fin", Axis.O, Axis.T, True,
+                          "instante de fin"),
+
+            # --- cuantitativos ---
+            RoleSignature("monto", Axis.O, Axis.N, True,
+                          "cantidad numérica con unidad"),
+            RoleSignature("cantidad", Axis.O, Axis.N, True,
+                          "alias de monto"),
+            RoleSignature("por_cuanto", Axis.O, Axis.N, True,
+                          "precio o medida asociada"),
+            RoleSignature("unidad", Axis.O, Axis.K, True,
+                          "unidad de medida (QUDT)"),
+
+            # --- clasificatorios ---
+            RoleSignature("estatus_factual", Axis.O, Axis.K, True,
+                          "real / intencionado / no_realizable / ..."),
+            RoleSignature("modalidad", Axis.O, Axis.K, True,
+                          "volitiva / deóntica / alética / epistémica"),
+            RoleSignature("polaridad", Axis.O, Axis.K, True,
+                          "afirmativa / negativa"),
+            RoleSignature("calificacion", Axis.O, Axis.K, True,
+                          "atributo cualitativo"),
+
+            # --- "por qué" (D7, capítulo 10) ---
+            RoleSignature("causado_por", Axis.O, Axis.O, False,
+                          "causalidad mecánica"),
+            RoleSignature("motivado_por", Axis.O, Axis.O, False,
+                          "motivación intencional"),
+            RoleSignature("con_finalidad", Axis.O, Axis.O, False,
+                          "propósito"),
+            RoleSignature("justificado_por", Axis.O, Axis.O, False,
+                          "regla que autoriza"),
+
+            # --- inter-situacionales ---
+            RoleSignature("precede", Axis.O, Axis.O, False,
+                          "orden lógico/temporal"),
+            RoleSignature("sigue_a", Axis.O, Axis.O, False,
+                          "inversa de precede"),
+            RoleSignature("cumple", Axis.O, Axis.O, False,
+                          "cumple una obligación"),
+            RoleSignature("cancela", Axis.O, Axis.O, False,
+                          "deja sin efecto"),
+            RoleSignature("rectifica", Axis.O, Axis.O, False,
+                          "corrige otra situación"),
+            RoleSignature("contrasta_con", Axis.O, Axis.O, False,
+                          "relación adversativa (\"pero\")"),
+
+            # --- atributos del sujeto Q ---
+            RoleSignature("nombre", Axis.Q, Axis.K, True,
+                          "nombre de un agente"),
+            RoleSignature("identificador", Axis.Q, Axis.K, True,
+                          "id documental"),
+        ]
+        for sig in canonical:
+            self.register(sig)</code></pre>
+        </div>
+
+        <h2><span class="eje eje--q">§A5</span>&nbsp; <code>lexicon.py</code> — el lexicon con resolución de polisemia</h2>
+
+        <p>Ciento dieciséis líneas. Aquí vive la capa que traduce entre el lenguaje del usuario y los
+          roles canónicos —la materialización de <strong>D9</strong>—. Cada entrada del lexicon es un
+          <code>LexiconEntry</code>: declara un verbo, el tipo de situación que produce, sus roles
+          obligatorios y opcionales, los aliases naturales por rol y por dominio, sus formas nominales
+          y, sobre todo, un <code>pattern</code> de complementos que es el motor de la desambiguación.</p>
+
+        <div class="caja caja--decision revelar">
+          <p class="caja-tit"><span class="codigo-d">D9</span> El usuario nunca toca etiquetas canónicas</p>
+          <p style="margin:0">El lexicon es la interfaz; el catálogo, invisible. Un negocio puede
+            llamar «socio» a lo que el modelo registra como <code>cliente</code>, o «huésped» a lo que
+            es un <code>paciente</code>: el método <code>translate_alias</code> y los dialectos de
+            dominio absorben esa diferencia. El usuario habla su idioma; el sistema traduce por debajo.</p>
+        </div>
+
+        <p>La pieza ingeniosa es la resolución de polisemia. Un mismo verbo puede tener varias entradas
+          —<code>dar la mano</code> no es <code>dar una conferencia</code>—, y el lexicon elige la
+          <strong>más específica que coincide</strong>. La especificidad se mide por la longitud del
+          patrón de complementos: una entrada con patrón <code>('la_mano',)</code> es más específica que
+          una entrada genérica sin patrón. Las entradas se mantienen ordenadas de más específica a más
+          general, de modo que <code>resolve</code> devuelve la primera que encaja con los complementos
+          observados en la oración.</p>
+
+        <p>El módulo también resuelve nominalizaciones —«la llegada del avión» remite al verbo
+          <code>llegar</code>— mediante un índice de formas nominales, y guarda los dialectos de
+          dominio en una tabla aparte. Tres mecanismos distintos, una sola idea: que la riqueza y la
+          ambigüedad del lenguaje natural se resuelvan <em>antes</em> de tocar el grafo, no dentro de
+          él.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">"""Lexicon: diccionario verbo → tipo de situación + roles + aliases.
+
+Implementa el paradigma del capítulo 12: cada entrada declara una
+signatura (qué roles obligatorios y opcionales), un tipo de situación en K,
+y aliases naturales por rol y por dominio. La resolución de polisemia
+elige la entrada más específica que coincide con el patrón de complemento.
+"""
+
+from __future__ import annotations
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional, Tuple
+
+
+@dataclass
+class LexiconEntry:
+    verb: str                          # "vender", "dar", ...
+    situation_type: str                # K id, ej. "accion_vender"
+    obligatory: List[str] = field(default_factory=list)
+    optional: List[str] = field(default_factory=list)
+    aliases: Dict[str, List[str]] = field(default_factory=dict)
+    nominal_forms: List[str] = field(default_factory=list)
+    pattern: Optional[Tuple[str, ...]] = None  # complementos clave para polisemia
+    notes: str = ""
+    example: str = ""
+
+    def specificity(self) -> int:
+        """Cuanto más largo el patrón, más específica la entrada."""
+        return 0 if self.pattern is None else len(self.pattern)
+
+    def matches(self, observed_complements: List[str]) -> bool:
+        """¿Esta entrada coincide con los complementos vistos en la oración?
+
+        Una entrada con `pattern=None` siempre coincide (entrada genérica).
+        Una entrada con patrón coincide si TODOS sus elementos aparecen
+        entre los complementos.
+        """
+        if self.pattern is None:
+            return True
+        obs = set(observed_complements)
+        return all(p in obs for p in self.pattern)
+
+
+class Lexicon:
+    """Lexicon con resolución de polisemia.
+
+    Las entradas se registran por verbo; varias entradas pueden compartir
+    verbo (polisemia). `resolve(verb, complements)` devuelve la entrada
+    más específica que coincide.
+    """
+
+    def __init__(self):
+        self._by_verb: Dict[str, List[LexiconEntry]] = {}
+        # Aliases globales de dominio: nombre_usuario → rol_canonico
+        self._domain_aliases: Dict[str, Dict[str, str]] = {}
+        # Aliases nominales globales: forma_nominal → verbo
+        self._nominal_index: Dict[str, str] = {}
+
+    # --- registro ----------------------------------------------------------
+
+    def register(self, entry: LexiconEntry) -> None:
+        self._by_verb.setdefault(entry.verb, []).append(entry)
+        # Orden por especificidad decreciente: más específico primero.
+        self._by_verb[entry.verb].sort(key=lambda e: -e.specificity())
+        for nf in entry.nominal_forms:
+            self._nominal_index[nf] = entry.verb
+
+    def register_domain_dialect(self, domain: str,
+                                aliases: Dict[str, str]) -> None:
+        """Agrega un dialecto de dominio: nombre_usuario → rol_canónico."""
+        self._domain_aliases.setdefault(domain, {}).update(aliases)
+
+    # --- resolución --------------------------------------------------------
+
+    def resolve(self, verb: str,
+                complements: Optional[List[str]] = None) -> Optional[LexiconEntry]:
+        """Devuelve la entrada más específica que coincide con el verbo
+        y los complementos observados. None si no hay match.
+        """
+        candidates = self._by_verb.get(verb, [])
+        comps = complements or []
+        for entry in candidates:  # ya ordenadas más específico → más general
+            if entry.matches(comps):
+                return entry
+        return None
+
+    def resolve_nominal(self, nominal_form: str,
+                        complements: Optional[List[str]] = None
+                        ) -> Optional[LexiconEntry]:
+        """Resolución por forma nominal (nominalización).
+
+        *"la llegada del avión"* → verbo `llegar` → entrada de llegar.
+        """
+        verb = self._nominal_index.get(nominal_form)
+        if verb is None:
+            return None
+        return self.resolve(verb, complements)
+
+    def translate_alias(self, domain: str, user_term: str) -> Optional[str]:
+        """Traduce un término de usuario al rol canónico vía dialecto."""
+        return self._domain_aliases.get(domain, {}).get(user_term)
+
+    def alias_for_role(self, verb: str, role: str) -> List[str]:
+        """Aliases declarados para un rol de una entrada específica."""
+        entries = self._by_verb.get(verb, [])
+        for e in entries:
+            if role in e.aliases:
+                return e.aliases[role]
+        return []
+
+    # --- introspección -----------------------------------------------------
+
+    def verbs(self) -> List[str]:
+        return list(self._by_verb.keys())
+
+    def entries_for(self, verb: str) -> List[LexiconEntry]:
+        return list(self._by_verb.get(verb, []))</code></pre>
+        </div>
+
+        <h2><span class="eje eje--n">§A6</span>&nbsp; <code>universe.py</code> — el universo V</h2>
+
+        <p>Ciento treinta líneas. El universo es el container que aloja todos los individuos y todos los
+          hechos. Por dentro mantiene tres índices —por sujeto, por valor y por rol— para que las
+          consultas no degeneren en un barrido lineal sobre toda la colección. Es aquí donde se conecta
+          el catálogo: cada <code>assert_fact</code> delega la validación de signatura al catálogo si se
+          le inyectó uno. Sin catálogo, el universo acepta cualquier hecho bien formado; con catálogo,
+          rechaza los que violan una signatura declarada.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Los hechos no se sobreescriben jamás</p>
+          <p style="margin:0">El universo solo <em>agrega</em>. Un dato que cambia no se edita: se
+            modela con un rango de vigencia (D6) o con una nueva situación que <code>rectifica</code> o
+            <code>cancela</code> a la anterior. La historia completa queda en el grafo, y el método
+            <code>at=</code> de las consultas reconstruye cualquier momento del pasado.</p>
+        </div>
+
+        <p>El método <code>add_individual</code> protege una invariante sutil pero crucial: un mismo
+          identificador no puede vivir en dos ejes distintos. Si alguien intenta registrar
+          <code>sede_central</code> como lugar y luego como agente, el universo aborta. Es la garantía
+          de que cada cosa ocupa un lugar único en el espacio de coordenadas. Los métodos
+          <code>facts_about</code>, <code>facts_with_role</code> y <code>facts_with_value</code> son las
+          tres puertas de recuperación, todas con un parámetro <code>at</code> opcional que filtra por
+          vigencia temporal. Y <code>summary</code> ofrece un censo rápido: cuántos individuos por eje,
+          cuántos hechos en total.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">En memoria</span>
+          El universo no persiste a disco: es una estructura en memoria, suficiente para tests y demos.
+          La persistencia —y los motores que la harían escalar— se discute en el <a
+          href="28-que-falta.html">capítulo 28</a>.
+        </aside>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">"""El universo V — unión disjunta de los ejes de valor.
+
+`Universe` es el almacenamiento en memoria del prototipo: una lista de
+individuos y una lista de hechos, con índices para consulta eficiente.
+
+Diseño:
+- Se accede vía `add_individual`, `assert_fact`, `query`.
+- La validación de signatura ocurre al insertar el hecho (delegada al Catalog).
+- Los hechos son inmutables; "cambios" se modelan como nuevas situaciones
+  o como rangos de vigencia (D6).
+
+No persiste a disco — el prototipo es en memoria. Para tests y demos basta.
+"""
+
+from __future__ import annotations
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Dict, List, Optional, Iterator, Tuple, Any
+
+from .axes import Axis
+from .individual import Individual
+from .fact import Fact
+
+
+@dataclass
+class Universe:
+    name: str = "default"
+    individuals: Dict[str, Individual] = field(default_factory=dict)
+    facts: List[Fact] = field(default_factory=list)
+    catalog: Any = None  # Catalog inyectado opcionalmente para validación
+
+    # Índices
+    _by_subject: Dict[str, List[int]] = field(default_factory=dict)
+    _by_value: Dict[str, List[int]] = field(default_factory=dict)
+    _by_role: Dict[str, List[int]] = field(default_factory=dict)
+
+    # --- registro de individuos --------------------------------------------
+
+    def add_individual(self, ind: Individual) -> Individual:
+        existing = self.individuals.get(ind.id)
+        if existing is not None:
+            if existing.axis != ind.axis:
+                raise ValueError(
+                    f"Conflicto de eje para {ind.id}: ya existe en {existing.axis} "
+                    f"y se intenta registrar en {ind.axis}."
+                )
+            return existing
+        self.individuals[ind.id] = ind
+        return ind
+
+    def ind(self, id_or_label: str) -> Individual:
+        """Recupera un individuo por id."""
+        if id_or_label in self.individuals:
+            return self.individuals[id_or_label]
+        raise KeyError(f"Individuo no registrado: {id_or_label}")
+
+    # --- afirmación de hechos ----------------------------------------------
+
+    def assert_fact(
+        self,
+        subject: Individual,
+        role: str,
+        value: Individual,
+        valid_from: Optional[datetime] = None,
+        valid_to: Optional[datetime] = None,
+    ) -> Fact:
+        """Afirma un hecho atómico. Valida la signatura si hay catálogo."""
+        self.add_individual(subject)
+        self.add_individual(value)
+
+        if self.catalog is not None:
+            self.catalog.validate(role, subject, value)
+
+        fact = Fact(
+            subject=subject,
+            role=role,
+            value=value,
+            valid_from=valid_from,
+            valid_to=valid_to,
+        )
+        idx = len(self.facts)
+        self.facts.append(fact)
+        self._by_subject.setdefault(subject.id, []).append(idx)
+        self._by_value.setdefault(value.id, []).append(idx)
+        self._by_role.setdefault(role, []).append(idx)
+        return fact
+
+    # --- recuperación ------------------------------------------------------
+
+    def facts_about(self, individual: Individual,
+                    at: Optional[datetime] = None) -> List[Fact]:
+        """Todos los hechos donde `individual` es el sujeto."""
+        idxs = self._by_subject.get(individual.id, [])
+        result = [self.facts[i] for i in idxs]
+        if at is not None:
+            result = [f for f in result if f.is_valid_at(at)]
+        return result
+
+    def facts_with_role(self, role: str,
+                        at: Optional[datetime] = None) -> List[Fact]:
+        idxs = self._by_role.get(role, [])
+        result = [self.facts[i] for i in idxs]
+        if at is not None:
+            result = [f for f in result if f.is_valid_at(at)]
+        return result
+
+    def facts_with_value(self, individual: Individual,
+                         at: Optional[datetime] = None) -> List[Fact]:
+        idxs = self._by_value.get(individual.id, [])
+        result = [self.facts[i] for i in idxs]
+        if at is not None:
+            result = [f for f in result if f.is_valid_at(at)]
+        return result
+
+    # --- utilidades --------------------------------------------------------
+
+    def __len__(self) -> int:
+        return len(self.facts)
+
+    def summary(self) -> str:
+        n_by_axis: Dict[Axis, int] = {}
+        for ind in self.individuals.values():
+            n_by_axis[ind.axis] = n_by_axis.get(ind.axis, 0) + 1
+        parts = [f"Universe '{self.name}'",
+                 f"  individuos: {len(self.individuals)}"]
+        for ax in Axis:
+            if ax in n_by_axis:
+                parts.append(f"    {ax.value}: {n_by_axis[ax]}")
+        parts.append(f"  hechos:     {len(self.facts)}")
+        return "\n".join(parts)</code></pre>
+        </div>
+
+        <h2><span class="eje eje--l">§A7</span>&nbsp; <code>ingest.py</code> — el pipeline de ingesta</h2>
+
+        <p>Noventa y seis líneas. Esta es la función que más se usa en los ejemplos de la Parte&nbsp;V:
+          <code>ingest_situation</code>. Toma un verbo y un diccionario de roles ya identificados, y
+          aplica un pipeline de seis pasos que produce una situación reificada —<strong>D4</strong>—
+          con todos sus hechos atómicos colgando de ella. El parser lingüístico se asume externo: lo
+          hace un LLM, o un parser dedicado. La ingesta no entiende español; <em>modela</em> lo que
+          alguien ya entendió.</p>
+
+        <div class="caja caja--decision revelar">
+          <p class="caja-tit"><span class="codigo-d">D4</span> Reificar la situación</p>
+          <p style="margin:0">El paso clave del pipeline es acuñar un individuo nuevo en <span
+            class="eje eje--o">O</span> que <em>representa la situación entera</em> —la venta, la
+            consulta, el préstamo— y colgar de él cada rol como un hecho atómico. Un evento deja de ser
+            una fila con columnas y pasa a ser un nodo con cables. Eso es reificación, y es lo que
+            permite que una situación tenga, a su vez, modalidad, causa o vigencia propias.</p>
+        </div>
+
+        <p>El pipeline se lee casi como su docstring: resuelve el lexicon (con polisemia o forma
+          nominal), reifica la situación en <span class="eje eje--o">O</span>, asienta su
+          <code>instancia_de</code> apuntando al tipo, recorre los roles y asienta cada uno como un
+          hecho, agrega los extras —modalidad, estatus factual, calificación— y, antes de devolver,
+          verifica que no falte ningún rol obligatorio declarado por la entrada del lexicon. El valor
+          de retorno es la situación reificada, para que quien llama pueda seguir enriqueciéndola.</p>
+
+        <p>Nótese la coherencia con la política liberal del catálogo: la ingesta <em>no exige</em> que
+          cada rol pasado esté declarado en la entrada del lexicon. La entrada es informativa, no una
+          camisa de fuerza; los roles extra se admiten. Lo único que se verifica con dureza es la
+          presencia de los obligatorios —sin agente no hay venta— y, vía <code>assert_fact</code>, la
+          signatura de cada hecho contra el catálogo.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Separación</span>
+          Que el parser sea externo no es una carencia, es un principio de diseño: separa «entender la
+          oración» (lingüística) de «modelar el hecho» (arquitectura). Así el mismo motor sirve para
+          cualquier idioma y cualquier parser, sea un LLM o un analizador hecho a mano.
+        </aside>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">"""Ingesta: traduce una "oración" (estructurada) a hechos en el universo.
+
+Para el prototipo no parsear español real — eso es trabajo del LLM.
+En su lugar exponemos una API de ingesta que recibe verbo + roles ya
+identificados y aplica el pipeline:
+    1. Resolver lexicon (con polisemia / forma nominal)
+    2. Reificar la situación en O
+    3. Asentar instancia_de = tipo_situacion
+    4. Asentar cada rol como hecho atómico
+    5. Validar contra el catálogo D8
+    6. Verificar obligatorios
+
+Devuelve la situación reificada para que el caller pueda enriquecerla.
+"""
+
+from __future__ import annotations
+from datetime import datetime
+from typing import Dict, Optional, Any, List
+
+from .axes import Axis
+from .individual import Individual, mint_id, category
+from .universe import Universe
+from .lexicon import Lexicon, LexiconEntry
+
+
+class IngestError(ValueError):
+    pass
+
+
+def ingest_situation(
+    universe: Universe,
+    lexicon: Lexicon,
+    verb: str,
+    roles: Dict[str, Individual],
+    *,
+    complements: Optional[List[str]] = None,
+    nominal: bool = False,
+    valid_from: Optional[datetime] = None,
+    valid_to: Optional[datetime] = None,
+    extra: Optional[Dict[str, Individual]] = None,
+    sit_id: Optional[str] = None,
+) -> Individual:
+    """Ingesta una situación a partir de un verbo y sus roles.
+
+    `roles` mapea NOMBRE_CANÓNICO → Individual (el caller ya resolvió aliases).
+    `complements` lista patrones de complemento que disparan polisemia
+    (p. ej. ['la_mano'] para `dar la mano`).
+    `nominal=True` indica que el "verbo" es en realidad una forma nominal
+    ("llegada") y debe buscarse vía `resolve_nominal`.
+    `extra` agrega hechos adicionales que no están en la signatura (p. ej.
+    `modalidad`, `estatus_factual`, `calificacion`, ...).
+
+    Devuelve la situación reificada en O.
+    """
+    entry = (
+        lexicon.resolve_nominal(verb, complements)
+        if nominal else
+        lexicon.resolve(verb, complements)
+    )
+    if entry is None:
+        raise IngestError(
+            f"Lexicon no tiene entrada para '{verb}' "
+            f"con complementos {complements}."
+        )
+
+    # Verificar obligatorios
+    missing = [r for r in entry.obligatory if r not in roles]
+    if missing:
+        raise IngestError(
+            f"Faltan roles obligatorios para '{verb}': {missing}"
+        )
+
+    # Reificar la situación
+    sid = sit_id or mint_id(entry.situation_type)
+    situ = Individual(id=sid, axis=Axis.O, label=sid)
+    universe.add_individual(situ)
+
+    # instancia_de
+    tipo = category(entry.situation_type)
+    universe.assert_fact(situ, "instancia_de", tipo,
+                         valid_from=valid_from, valid_to=valid_to)
+
+    # Roles obligatorios y opcionales
+    for role, value in roles.items():
+        # No exigimos que esté declarado en la entrada — la entrada es
+        # informativa; los extras se admiten. (Política liberal.)
+        universe.assert_fact(situ, role, value,
+                             valid_from=valid_from, valid_to=valid_to)
+
+    # Extras (modalidad, calificación, ...)
+    if extra:
+        for role, value in extra.items():
+            universe.assert_fact(situ, role, value,
+                                 valid_from=valid_from, valid_to=valid_to)
+
+    return situ</code></pre>
+        </div>
+
+        <h2><span class="eje eje--l">§A8</span>&nbsp; <code>query.py</code> — el motor de consulta</h2>
+
+        <p>Ciento veinticuatro líneas. Aquí las preguntas-WH se vuelven operaciones concretas. Una
+          consulta es un <code>Pattern</code>: un diccionario de roles <code>fixed</code> con valores
+          conocidos —lo que ya sabemos— y uno o más roles en <code>ask</code> marcados con un
+          <code>Var</code> —lo que queremos descubrir—. «¿Quién vendió el circuito de hidroterapia?» se
+          escribe fijando el rol <code>tema</code> en el circuito y pidiendo el rol <code>agente</code>.
+          El motor busca todas las situaciones que satisfacen los roles fijos y proyecta el valor del
+          rol preguntado.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">La pregunta como proyección</p>
+          <p style="margin:0">Preguntar es fijar algunas coordenadas y dejar otra libre. <span
+            class="eje eje--q">¿Quién?</span> deja libre el rol con valor en <span
+            class="eje eje--q">Q</span>; <span class="eje eje--t">¿cuándo?</span>, el de <span
+            class="eje eje--t">T</span>; <span class="eje eje--n">¿cuánto?</span>, el de <span
+            class="eje eje--n">N</span>. El motor recorre las situaciones que casan con lo fijo y
+            devuelve lo que ocupa la coordenada libre. La geometría del libro se vuelve aquí un bucle.</p>
+        </div>
+
+        <p>El algoritmo tiene dos fases. Primero elige un <em>ancla</em> para no recorrer todo el
+          universo: si el patrón restringe por tipo (<code>type_constraint</code>, un filtro por
+          <code>instancia_de</code>), parte de ahí; si no, toma el primer rol fijo como punto de
+          entrada y usa el índice correspondiente. Después filtra las candidatas verificando que cada
+          una cumpla <em>todos</em> los roles fijos, comprueba el tipo si se pidió, y extrae los valores
+          de los roles preguntados. Si un rol preguntado tiene varios valores, devuelve la lista; si
+          tiene uno, el individuo suelto.</p>
+
+        <p>Toda consulta admite el parámetro <code>at</code>: el momento en que se quiere evaluar la
+          vigencia. Es lo que permite preguntar «¿quién era el dueño en aquella fecha?» y obtener la
+          respuesta correcta para <em>ese</em> instante, no para el presente —la consulta bitemporal de
+          <strong>D6</strong>—. Y <code>count</code> es simplemente <code>query</code> que devuelve la
+          cardinalidad en vez de los bindings: el caso de «¿cuántos?».</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Honestidad</span>
+          Este motor es deliberadamente ingenuo: un barrido con tres índices simples. Sirve para
+          validar el modelo en dominios reales, no para producción a escala. El <a
+          href="28-que-falta.html">capítulo 28</a> nombra los reemplazos serios: Datalog, SHACL,
+          motores RDF, bases columnares.
+        </aside>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">"""Motor de consulta: las preguntas-WH como proyecciones.
+
+Una consulta es un `Pattern`: un diccionario de roles fijos con valores
+conocidos, y al menos un rol marcado como `Var(...)` (la pregunta).
+El motor busca todas las situaciones del universo que satisfacen los
+roles fijos y proyecta el valor del rol pregunta.
+
+Soporta:
+- Consultas puntuales: ¿quién vendió X?
+- Consultas temporales: ¿quién era el dueño de X en T0?  (D6)
+- Filtros por tipo (instancia_de = K).
+- Agregaciones: count, list.
+"""
+
+from __future__ import annotations
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Dict, List, Optional, Any
+
+from .individual import Individual
+from .universe import Universe
+
+
+@dataclass
+class Var:
+    """Marcador de variable en un patrón de consulta."""
+    name: str = "?"
+
+
+@dataclass
+class Pattern:
+    """Patrón de consulta sobre una situación.
+
+    `fixed`: roles cuyo valor está dado (Individual).
+    `ask`:   uno o más roles cuyo valor queremos descubrir (Var).
+    """
+    fixed: Dict[str, Individual] = field(default_factory=dict)
+    ask: Dict[str, Var] = field(default_factory=dict)
+    type_constraint: Optional[Individual] = None  # filtra por instancia_de = K
+
+    def __post_init__(self):
+        # `ask` vacío es válido: cuenta/lista candidatos sin proyección.
+        # En ese caso el binding contiene solo `_subject`.
+        pass
+
+
+def query(universe: Universe, pattern: Pattern,
+          at: Optional[datetime] = None) -> List[Dict[str, Any]]:
+    """Ejecuta el patrón contra el universo. Devuelve una lista de bindings.
+
+    Cada binding es un dict con las claves de `pattern.ask` y los valores
+    encontrados (Individual). Las situaciones-candidatas son los sujetos
+    que tienen *todos* los roles fijos del patrón (con sus valores) y, si
+    aplica, instancia_de = type_constraint.
+    """
+    # Punto 1: buscar candidatas — sujetos en O que tienen todos los roles
+    # del patrón. Tomamos el primer rol fijo (o type_constraint) como ancla
+    # para reducir el espacio.
+
+    if pattern.type_constraint is not None:
+        # Sujetos cuya instancia_de == type_constraint
+        candidate_subjects = {
+            f.subject.id
+            for f in universe.facts_with_role("instancia_de", at=at)
+            if f.value.id == pattern.type_constraint.id
+        }
+    elif pattern.fixed:
+        # Tomamos el primer fixed como ancla.
+        role0, val0 = next(iter(pattern.fixed.items()))
+        candidate_subjects = {
+            f.subject.id
+            for f in universe.facts_with_role(role0, at=at)
+            if f.value.id == val0.id
+        }
+    else:
+        # Si solo hay ask, buscamos sobre todas las situaciones (raro).
+        candidate_subjects = set(universe.individuals.keys())
+
+    # Punto 2: filtrar candidatas por todos los roles fijos
+    results: List[Dict[str, Any]] = []
+    for sid in candidate_subjects:
+        subject = universe.individuals[sid]
+        sit_facts = universe.facts_about(subject, at=at)
+
+        # Map role → list of values for this subject
+        roles_map: Dict[str, List[Individual]] = {}
+        for f in sit_facts:
+            roles_map.setdefault(f.role, []).append(f.value)
+
+        # Chequear roles fijos
+        ok = True
+        for role, expected_val in pattern.fixed.items():
+            vals = roles_map.get(role, [])
+            if not any(v.id == expected_val.id for v in vals):
+                ok = False
+                break
+        if not ok:
+            continue
+
+        # Chequear type_constraint si está
+        if pattern.type_constraint is not None:
+            instancia_vals = roles_map.get("instancia_de", [])
+            if not any(v.id == pattern.type_constraint.id for v in instancia_vals):
+                continue
+
+        # Extraer valores para los roles preguntados
+        binding: Dict[str, Any] = {"_subject": subject}
+        all_present = True
+        for ask_role in pattern.ask:
+            vals = roles_map.get(ask_role, [])
+            if not vals:
+                all_present = False
+                break
+            # Si hay más de uno, devolvemos lista; si uno, el individuo.
+            binding[ask_role] = vals[0] if len(vals) == 1 else list(vals)
+        if all_present:
+            results.append(binding)
+    return results
+
+
+def count(universe: Universe, pattern: Pattern,
+          at: Optional[datetime] = None) -> int:
+    """Cuenta sujetos que satisfacen el patrón."""
+    return len(query(universe, pattern, at=at))</code></pre>
+        </div>
+
+        <h2><span class="eje eje--m">§A9</span>&nbsp; <code>__init__.py</code> — la superficie pública</h2>
+
+        <p>Treinta y dos líneas. Es lo último que ve quien importa la librería y lo primero que toca al
+          escribir <code>from wq import *</code>. Reexporta cada clase y función que el usuario va a
+          usar, con un docstring que recapitula el modelo entero en una pantalla. Esta fachada es el
+          contrato del paquete: si un nombre está aquí, es público y estable; si no, es interno.</p>
+
+        <p>Vale la pena leer el <code>__all__</code> como un índice del propio modelo. Están los
+          <code>Axis</code>, los constructores de individuos (<code>category</code>, <code>quantity</code>,
+          <code>time_point</code>), el <code>Fact</code> y el <code>Universe</code>, el <code>Catalog</code>
+          con sus signaturas, el <code>Lexicon</code>, el motor de consulta (<code>Pattern</code>,
+          <code>Var</code>, <code>query</code>, <code>count</code>) y la ingesta. Nada más. Toda la
+          potencia del prototipo cabe en estos diecisiete nombres.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">"""WQuestions — prototipo de validación en Python.
+
+Implementa el modelo descrito en `WQuestions.md` y discutido en el libro:
+- 7 ejes (Q, O, L, T, N, K, M)
+- hechos atómicos con signatura tipada
+- situaciones reificadas (D4, D5)
+- catálogo canónico de roles (D8)
+- lexicon con resolución de polisemia (D9)
+- vigencia temporal por reificación (D6)
+- consultas como proyecciones sobre roles (preguntas-WH)
+
+Se prioriza claridad sobre rendimiento. La meta es validar la arquitectura,
+no servir producción.
+"""
+
+from .axes import Axis
+from .individual import Individual, mint_id, category, quantity, time_point
+from .fact import Fact
+from .universe import Universe
+from .catalog import Catalog, RoleSignature, SignatureError
+from .lexicon import Lexicon, LexiconEntry
+from .query import Pattern, Var, query, count
+from .ingest import ingest_situation, IngestError
+
+__all__ = [
+    "Axis", "Individual", "mint_id", "category", "quantity", "time_point",
+    "Fact", "Universe",
+    "Catalog", "RoleSignature", "SignatureError",
+    "Lexicon", "LexiconEntry",
+    "Pattern", "Var", "query", "count",
+    "ingest_situation", "IngestError",
+]</code></pre>
+        </div>
+
+        <h2>Seis observaciones sobre el código completo</h2>
+
+        <p>Visto de una sola pasada, de <code>axes.py</code> a <code>__init__.py</code>, el código deja
+          seis impresiones que vale la pena nombrar. No son conclusiones nuevas: son la confirmación,
+          en líneas de Python, de lo que el libro defiende en prosa.</p>
+
+        <div class="rejilla-2 revelar">
+          <div class="tarjeta">
+            <h4><span class="eje eje--q">1</span>&nbsp; Poco de todo</h4>
+            <p style="margin:0;font-size:.95rem">Nueve archivos, ~850 líneas, una clase principal por
+              archivo. Sin infraestructura inútil ni abstracciones especulativas. Cada pieza existe
+              porque un capítulo entero la justifica.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--o">2</span>&nbsp; Las decisiones se ven</h4>
+            <p style="margin:0;font-size:.95rem">D3 vive en <code>fact.py</code>, D4 en
+              <code>ingest.py</code>, D6 en <code>is_valid_at</code>, D8 en <code>catalog.py</code>, D9
+              en <code>lexicon.py</code>. Una decisión, un módulo: el paralelismo es directo.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--l">3</span>&nbsp; La política liberal es explícita</h4>
+            <p style="margin:0;font-size:.95rem">En <code>catalog.validate</code>, un rol no declarado
+              no se valida. Cuatro líneas que materializan la decisión de mantener el modelo extensible
+              sin pelear con el catálogo central.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--t">4</span>&nbsp; La bitemporalidad es ligera</h4>
+            <p style="margin:0;font-size:.95rem">No hay un sistema bitemporal completo. Hay
+              <code>valid_from</code>/<code>valid_to</code> opcionales, un <code>tx_time</code>
+              automático y un parámetro <code>at=</code> en las consultas. Suficiente para mudanzas,
+              rediagnósticos y cláusulas que expiran.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--n">5</span>&nbsp; No hay parser de lenguaje</h4>
+            <p style="margin:0;font-size:.95rem">El prototipo asume el parser externo —un LLM o un
+              módulo dedicado— que se enchufa por <code>ingest_situation</code>. Separar «entender» de
+              «modelar» es lo que lo hace reutilizable en cualquier idioma.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--k">6</span>&nbsp; El motor es ingenuo</h4>
+            <p style="margin:0;font-size:.95rem">Un barrido con tres índices simples. Valida el modelo
+              en dominios reales; no escala a producción. Los reemplazos serios —Datalog, SHACL, RDF,
+              columnar— están en el capítulo 28.</p>
+          </div>
+        </div>
+
+        <p>Juntas, estas seis observaciones son la justificación del enfoque: <strong>no construir
+          infraestructura, sino prueba de concepto</strong>. Lo que estas ochocientas cincuenta líneas
+          demuestran es que el modelo es coherente y operable. La validación industrial es otro trabajo
+          —el del capítulo 28 y de quien lo continúe.</p>
+
+        <h2>Lo que queda en el repositorio</h2>
+
+        <p>Para que este anexo siga siendo legible, incluí solo la librería núcleo. El resto del
+          prototipo —alrededor de <strong>2.400 líneas adicionales</strong>— está publicado completo en
+          el repositorio del proyecto. Este es el mapa de lo que encontrarás allí.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">text</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="text">github.com/joseabantomarin/WQuestions
+└── prototipo/
+    ├── wq/                       ← incluida en este anexo (850 líneas)
+    │   ├── axes.py
+    │   ├── individual.py
+    │   ├── fact.py
+    │   ├── catalog.py
+    │   ├── lexicon.py
+    │   ├── universe.py
+    │   ├── ingest.py
+    │   ├── query.py
+    │   └── __init__.py
+    │
+    ├── ejemplos/                 ← no incluida — está en el repo
+    │   ├── spa.py                (532 líneas)
+    │   ├── dominios_previos.py   (522 líneas — receta, gol, canción, noticia)
+    │   ├── banco.py              (465 líneas)
+    │   ├── clinica.py            (312 líneas)
+    │   └── taxi.py               (256 líneas)
+    │
+    └── tests/                    ← no incluida — está en el repo
+        └── test_wq.py            (349 líneas)</code></pre>
+        </div>
+
+        <p>Cada archivo de <code>ejemplos/</code> es un script ejecutable que modela un dominio
+          completo: declara los individuos, registra el lexicon, ingresa todas las situaciones, corre
+          las consultas que el libro discute y valida los resultados. Ejecutar uno cualquiera —por
+          ejemplo <code>python -m prototipo.ejemplos.banco</code>— reproduce las escenas de la
+          Parte&nbsp;V tal como aparecen en el texto.</p>
+
+        <p>El archivo <code>test_wq.py</code> ejercita las invariantes del modelo: que el catálogo
+          valide signaturas, que las consultas bitemporales devuelvan lo correcto en distintos
+          momentos, que la polisemia del lexicon elija la entrada más específica, que la reificación
+          produzca el grafo esperado. Es el cinturón de seguridad detrás de la promesa del libro de que
+          «todos los tests pasan».</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">Correr el prototipo en cinco minutos</p>
+          <div class="bloque-codigo" style="margin:.6rem 0 0">
+            <div class="barra"><span class="lenguaje">bash</span><button class="copiar">⧉ copiar</button></div>
+            <pre><code data-lang="text">git clone https://github.com/joseabantomarin/WQuestions.git
+cd WQuestions
+python -m prototipo.tests.test_wq          # corre la batería de tests
+python -m prototipo.ejemplos.spa           # ejecuta el dominio del Spa
+python -m prototipo.ejemplos.banco         # ejecuta el dominio bancario</code></pre>
+          </div>
+          <p style="margin:.8rem 0 0">No hace falta instalar dependencias: el prototipo solo usa la
+            librería estándar de Python. Los identificadores y las APIs (<code>Universe</code>,
+            <code>ingest_situation</code>, <code>Pattern</code>, <code>query</code>) son los mismos que
+            leíste aquí, así que pasar de leer a ejecutar es inmediato.</p>
+        </div>
+
+        <p class="cita-destacada revelar">El prototipo, los ejemplos y los tests son el espejo operable
+          del libro: lo que se afirma en cualquier capítulo de la Parte&nbsp;V se puede ejecutar línea
+          por línea.<cite>Del texto a la infraestructura</cite></p>
+
+        <p>Si encuentras una afirmación del libro que no puedas reproducir, el repositorio tiene un
+          <em>issue tracker</em> abierto. Es exactamente ese tipo de retroalimentación la que el
+          <a href="28-que-falta.html">capítulo 28</a> reclama para que la propuesta deje de ser un
+          texto y empiece a ser infraestructura de uso diario.</p>
+
+        <p style="font-family:var(--display);font-style:italic;font-size:1.5rem;color:var(--tinta);margin-top:2.5rem">
+          Clónalo, córrelo, rómpelo.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="30-anexo-codigo.html"><span class="dir">← Anterior</span><span class="tit">Anexo: el código</span></a>
+      <a class="sig" href="32-el-autor.html"><span class="dir">Siguiente →</span><span class="tit">El autor</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

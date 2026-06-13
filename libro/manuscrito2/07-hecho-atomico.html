@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 7 · El hecho atómico — WQuestions</title>
+  <meta name="description" content="Toda la información se descompone en tripletas tipadas (sujeto, predicado, objeto): la decisión D3. El átomo del que se construye el grafo entero, y por qué coincide con el lenguaje humano y con la IA.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'7'">
+      <header class="portada-cap">
+        <p class="parte">Parte III · Cómo funcionan juntas</p>
+        <div class="num-cap">07</div>
+        <h1>El hecho atómico</h1>
+        <p class="lede">Seis ejes sueltos no describen nada. Hace falta una pieza que los conecte
+          —una sola, repetida millones de veces— para que el modelo deje de ser una lista de columnas
+          y empiece a ser un mundo.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Son las 08:14 de la mañana y la barista Lucía termina de servir un
+          espresso. Ese gesto, que dura tres segundos, esconde más datos de los que parece: hubo
+          alguien que lo preparó, una máquina que lo extrajo, una dosis de café molido, una
+          temperatura del agua, una presión, un tiempo de extracción, un rendimiento en mililitros y
+          una hora exacta. En los seis capítulos anteriores aprendimos a clasificar cada uno de esos
+          fragmentos en su eje: Lucía es un <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>,
+          la taza un <span class="eje-rotulo"><span class="eje eje--o">O</span></span>, los 36 ml un
+          <span class="eje-rotulo"><span class="eje eje--n">N</span></span>. Pero clasificar no es
+          describir. Tenemos las piezas separadas sobre la mesa; nos falta el gesto que las une.</p>
+
+        <p>Ese gesto es el tema de este capítulo. Para que las siete coordenadas dejen de ser cajones
+          de un archivador y empiecen a contar la historia del espresso de Lucía, necesitamos una
+          unidad mínima de afirmación: la pieza más pequeña con la que se puede decir <em>algo</em>
+          sobre el mundo. La llamaremos el <strong>hecho atómico</strong>, y su forma es desconcertantemente
+          simple.</p>
+
+        <h2>La forma de un hecho</h2>
+
+        <p>Un hecho atómico es siempre una frase de exactamente tres partes —una <em>tripleta</em>—:
+          un sujeto, un predicado y un objeto.</p>
+
+        <div class="triple">
+          <span class="nodo nodo--o"><span>espresso_311</span><small>O</small></span>
+          <span class="enlace">agente<span class="firma">M(O→Q)</span></span>
+          <span class="nodo nodo--q"><span>barista_lucia</span><small>Q</small></span>
+        </div>
+
+        <p>Se lee de izquierda a derecha como una oración del castellano: «el espresso 311 tiene como
+          agente a la barista Lucía». El <strong>sujeto</strong> y el <strong>objeto</strong> son
+          individuos que sacamos de alguna de las cajas de valor —un evento del eje O, una persona del
+          eje Q, un número del eje N—. El <strong>predicado</strong> es el cable conector que vimos en
+          el capítulo anterior: un habitante del eje M, el <em>cómo</em>, que une los dos extremos.
+          Y eso es todo. No hay un cuarto campo escondido, ni una nota al pie, ni una excepción para
+          los casos difíciles.</p>
+
+        <p>La afirmación que sostiene este capítulo —y que al principio cuesta creer— es esta:
+          <strong>absolutamente toda la información que el sistema sabe del mundo se construye con esta
+          misma forma exacta</strong>, repetida una y otra vez. Las recetas, las jugadas de
+          baloncesto, las películas, las ordenanzas de un municipio, las llamadas a un agente de
+          inteligencia artificial. Todo. El resto del capítulo se dedica a demostrarlo y, sobre todo,
+          a explicar por qué esa terquedad por una sola forma es justamente lo que hace que el sistema
+          no se rompa nunca.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Confesión</span>
+          Al empezar el libro yo solo tenía la intuición de que las siete preguntas podían modelar la
+          información como un espacio de coordenadas —eje contra eje—. La tripleta no estaba en el
+          plano inicial: apareció al someter el modelo a las pruebas de laboratorio que veremos en la
+          Parte&nbsp;V. Es un hallazgo, no un punto de partida.
+        </aside>
+
+        <p>La misma forma viaja entre dominios sin deformarse. Mira cinco hechos sacados de cinco
+          industrias que no tienen nada en común. Cambian los individuos, cambian los cables; la
+          estructura, jamás.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(espresso_311,   barista,        barista_lucia)        ∈ M(O, Q)   ☕
+(triple_088,     anotadora,      rivas)                ∈ M(O, Q)   🏀
+(pelicula_marea, directora,      serra)                ∈ M(O, Q)   🎬
+(ordenanza_142,  fecha_publicacion, 2026-05-14)        ∈ M(O, T)   🏛️
+(sesion_ia_5521, tokens_entrada, 4180)                 ∈ M(O, N)   🤖</code></pre>
+        </div>
+
+        <p>Cinco cables distintos —<code>barista</code>, <code>anotadora</code>, <code>directora</code>,
+          <code>fecha_publicacion</code>, <code>tokens_entrada</code>— y cinco pares de cajas distintos.
+          Pero las cinco líneas son, estructuralmente, la misma línea. Esa uniformidad no es un capricho
+          estético para que el código se vea ordenado: es la propiedad arquitectónica de la que cuelga
+          todo lo demás. Vale la pena, entonces, escribirla en piedra.</p>
+
+        <h2>La decisión D3</h2>
+
+        <p>Ya tomamos dos decisiones de diseño en los capítulos previos (D1 y D2). La que sigue es,
+          con diferencia, la más pesada del libro, porque el resto de la arquitectura se apoya
+          literalmente sobre ella.</p>
+
+        <div class="caja caja--decision revelar">
+          <p class="caja-tit"><span class="codigo-d">D3</span> El átomo de la información</p>
+          <p>Cualquier hecho de la realidad se representa siempre como una <strong>tripleta atómica</strong>
+            de la forma <code>(sujeto, cable, objeto)</code>. El cable debe estar <strong>tipado</strong>
+            —saber qué cajas conecta— para que el sistema pueda validar si el dato es lógico o absurdo.
+            Las descripciones de cosas complejas <strong>jamás</strong> se construyen inventando
+            estructuras nuevas ni tablas más anchas: se construyen <strong>apilando</strong> decenas de
+            estas tripletas simples sobre un mismo sujeto.</p>
+        </div>
+
+        <p>Léela despacio, porque tiene dos prohibiciones tan importantes como sus permisos. La primera:
+          un cable sin tipo no es un cable válido. La segunda: ante un dato más rico, la respuesta nunca
+          es «cambiemos la estructura», sino «agreguemos más tripletas». Todo lo que sigue es la
+          consecuencia directa de habernos atrevido a tomar esta decisión.</p>
+
+        <h2>Tres exigencias que el átomo debe cumplir</h2>
+
+        <p>Para que esta unidad mínima funcione como cimiento de cualquier base de datos del mundo,
+          debe satisfacer tres exigencias estrictas. No son adornos: si fallara cualquiera de las
+          tres, el modelo se vendría abajo.</p>
+
+        <h3>Exigencia 1 — Tipada: protección contra el caos</h3>
+
+        <p>Cada cable lleva pegada su propia regla de seguridad, su <strong>signatura</strong>: la
+          declaración de qué caja admite a la izquierda y qué caja admite a la derecha. El cable
+          <code>presion_bar</code> sabe de fábrica que conecta un objeto del eje O con un número del
+          eje N. Esa es exactamente la parte <code>∈ M(O, N)</code> que aparece al final de cada línea.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(espresso_311, presion_bar, 9)          ∈ M(O, N)   // válido: 9 vive en la caja N
+(espresso_311, presion_bar, "intensa")  ✗ rechazada  // "intensa" no es un número</code></pre>
+        </div>
+
+        <p>Si un programador cansado, a las dos de la tarde, intenta registrar
+          <code>(espresso_311, presion_bar, "intensa")</code>, el sistema lo rechaza al instante: la
+          palabra «intensa» no habita la caja de los números. Esta protección, que ocurre en tiempo
+          real, es lo que convierte la tripleta en un bloque de información <em>seguro</em> y
+          <em>validable</em>. Un dato absurdo no llega siquiera a guardarse.</p>
+
+        <h3>Exigencia 2 — Independiente: cada hecho se sostiene solo</h3>
+
+        <p>Cada hecho atómico debe tener sentido por sí mismo, sin depender de ningún otro. La tripleta
+          <code>(triple_088, anotadora, rivas)</code> significa exactamente lo mismo aunque nadie haya
+          anotado todavía en qué minuto del partido ocurrió, o con qué resultado quedó el marcador.
+          Quitar contexto no la corrompe; solo la deja menos detallada.</p>
+
+        <p>Esa independencia es un superpoder silencioso: permite guardar el hecho en un archivo de
+          texto, en una base de datos relacional o enviarlo por internet a otro continente sin que
+          pierda una gota de su significado. El átomo es portátil porque no arrastra dependencias
+          ocultas.</p>
+
+        <h3>Exigencia 3 — Componible: los átomos se apilan</h3>
+
+        <p>Aunque cada hecho es independiente, su verdadera potencia se libera cuando los apilas sobre
+          un mismo sujeto. Un espresso no se describe en una frase gigante; se describe con una lluvia
+          de átomos que comparten a <code>espresso_311</code> como sujeto, cada uno aportando una
+          coordenada distinta.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(espresso_311, instancia_de,   espresso)         ∈ M(O, K)
+(espresso_311, barista,        barista_lucia)    ∈ M(O, Q)
+(espresso_311, grano,          cafe_arabica)     ∈ M(O, K)
+(espresso_311, tueste,         tueste_medio)     ∈ M(O, K)
+(espresso_311, dosis_g,        18)               ∈ M(O, N)
+(espresso_311, temp_agua_c,    93)               ∈ M(O, N)
+(espresso_311, presion_bar,    9)                ∈ M(O, N)
+(espresso_311, extraccion_s,   27)               ∈ M(O, N)
+(espresso_311, rendimiento_ml, 36)               ∈ M(O, N)
+(espresso_311, momento,        2026-05-14T08:14:00-05:00)  ∈ M(O, T)</code></pre>
+        </div>
+
+        <p>Diez pequeñas piezas de Lego que, juntas, dibujan la taza entera: qué clase de café es,
+          quién lo hizo, con qué grano, a qué dosis, presión y temperatura, en cuántos segundos y a
+          qué hora. Cada pieza se entiende por separado; sumadas, forman el retrato completo del
+          espresso.</p>
+
+        <p>Lo verdaderamente revelador llega cuando el negocio quiere ser más preciso. Supongamos que
+          la cafetería decide auditar el lote de grano usado en cada taza, con su fecha de molienda.
+          En una base de datos tradicional esto obligaría a alterar la tabla de espressos, añadirle
+          columnas y migrar miles de filas —tocar la estructura, con todo el riesgo que eso implica—.
+          En nuestra arquitectura, <strong>la estructura no cambia jamás</strong>. Simplemente se
+          eleva el uso del grano a la categoría de evento (algo que ya aprendimos a llamar
+          <em>reificación</em>) y se le cuelgan sus propias tripletas:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(uso_grano_311, parte_de,    espresso_311)     ∈ M(O, O)
+(uso_grano_311, grano,       cafe_arabica)     ∈ M(O, K)
+(uso_grano_311, lote,        lote_2026_044)    ∈ M(O, K)
+(uso_grano_311, cantidad_g,  18)               ∈ M(O, N)
+(uso_grano_311, molido_el,   2026-05-14)       ∈ M(O, T)</code></pre>
+        </div>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Idea clave</p>
+          <p style="margin:0">El sistema escala <strong>acumulando bloques de información</strong>, no
+            obligando a nadie a rediseñar la base de datos. Más detalle siempre significa <em>más
+            tripletas</em>, nunca <em>otra estructura</em>. Esta es, quizá, la ventaja más práctica de
+            todo el modelo.</p>
+        </div>
+
+        <h2>El universo de datos es una pizarra de tripletas</h2>
+
+        <p>Cuando una empresa empieza a guardar miles —y luego millones— de estos hechos atómicos, va
+          tejiéndose una red inmensa de nodos conectados por cables. A esa red se le llama un
+          <strong>grafo</strong>. Y aquí conviene ser radicalmente honesto sobre qué es, técnicamente,
+          una base de datos WQuestions: no es más que <strong>un conjunto gigantesco de oraciones de
+          tres partes escritas en una pizarra común</strong>. Ni más, ni menos.</p>
+
+        <p class="cita-destacada revelar">El estado entero de la realidad, para el sistema, se reduce
+          a contar cables sobre una pizarra. No hay archivos ocultos ni arquitecturas secretas que
+          solo entiendan los creadores del software.<cite>El principio de la pizarra</cite></p>
+
+        <p>Esa transparencia es liberadora. Si le preguntas a la máquina «¿quién dirigió la película
+          <em>Marea</em>?», no hay misterio que resolver: solo busca cables que arranquen en
+          <code>pelicula_marea</code> y lleven la etiqueta <code>directora</code>. Y si pides algo más
+          ambicioso —«dame todas las directoras de largometrajes estrenados después de 2020»—, el
+          sistema hace un trabajo tonto pero velocísimo: localiza los cables <code>año_estreno</code>
+          cuyo número final supere 2020, mira a qué películas están pegados, y rastrea quién figura
+          como su <code>directora</code> en cada una. Cada paso es, simplemente, saltar de una tripleta
+          a la siguiente. Fin del enigma.</p>
+
+        <h2>Cuando tres palabras no alcanzan: la reificación</h2>
+
+        <p>A veces la realidad se niega a caber en una sola tripleta. Piensa en esta crónica deportiva,
+          de las que se narran en una sola respiración:</p>
+
+        <p style="font-family:var(--display);font-style:italic;font-size:1.2rem;color:var(--tinta);margin:1.4rem 0;padding-left:1.2rem;border-left:3px solid var(--eje-o)">
+          «Rivas anotó un triple en el último cuarto, a falta de dos minutos, gracias a una asistencia
+          de Navarro desde la esquina.»</p>
+
+        <p>Esa frase es una veta de oro: tiene una anotadora (Rivas), una asistente (Navarro), un tipo
+          de jugada (triple), un momento (cuarto 4, minuto 38), un origen (la esquina) y un partido en
+          el que ocurre. Si quisiéramos meterla a la fuerza en una tripleta simple —
+          <code>(rivas, asistio_por, navarro)</code>— estaríamos tirando a la basura casi toda la
+          información. ¿Cómo lo resolvemos sin violar la D3?</p>
+
+        <p>Con la <strong>reificación</strong>, que ya asomó en capítulos anteriores. La maniobra es
+          elegante: elevamos esa jugada al estatus de <em>evento con nombre propio</em> dentro del eje
+          O —la bautizamos <code>triple_088</code>— y colgamos a cada participante con su propia
+          tripleta, todas apuntando a ese evento central.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(triple_088, instancia_de, triple_anotado)              ∈ M(O, K)
+(triple_088, anotadora,    rivas)                       ∈ M(O, Q)
+(triple_088, asistente,    navarro)                     ∈ M(O, Q)
+(triple_088, parte_de,     partido_halcones_lobos)      ∈ M(O, O)
+(triple_088, cuarto,       4)                           ∈ M(O, N)
+(triple_088, minuto,       38)                          ∈ M(O, N)
+(triple_088, origen,       esquina_derecha)             ∈ M(O, K)</code></pre>
+        </div>
+
+        <p>Lo que era un nudo lingüístico imposible de meter en una fila de tabla se desarmó en siete
+          hechos atómicos independientes, cada uno tipado, cada uno sostenido por sí solo. La estructura
+          n-aria —un evento con muchos participantes— se preservó entera sin abandonar la forma de la
+          tripleta. La figura siguiente muestra cómo se ve esa estrella de hechos alrededor del evento
+          central.</p>
+
+        <!-- FIGURA 7.1 · evento reificado n-ario -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 392" class="svg-eje" role="img"
+                 aria-label="La anotación de un triple reificada como evento central en el eje O, rodeada de siete participantes conectados por roles canónicos">
+              <!-- enlaces -->
+              <g stroke-width="2" opacity=".55" fill="none">
+                <line x1="330" y1="196" x2="150" y2="70"  stroke="var(--eje-k)"/>
+                <line x1="330" y1="196" x2="510" y2="70"  stroke="var(--eje-q)"/>
+                <line x1="330" y1="196" x2="600" y2="196" stroke="var(--eje-q)"/>
+                <line x1="330" y1="196" x2="510" y2="322" stroke="var(--eje-o)"/>
+                <line x1="330" y1="196" x2="150" y2="322" stroke="var(--eje-n)"/>
+                <line x1="330" y1="196" x2="60"  y2="196" stroke="var(--eje-n)"/>
+                <line x1="330" y1="196" x2="330" y2="44"  stroke="var(--eje-k)"/>
+              </g>
+              <!-- rótulos de rol sobre los enlaces -->
+              <g font-size="11" font-family="var(--sans)" fill="var(--tinta-tenue)" text-anchor="middle">
+                <text x="232" y="120">instancia_de</text>
+                <text x="430" y="120">anotadora</text>
+                <text x="476" y="190">asistente</text>
+                <text x="430" y="272">parte_de</text>
+                <text x="232" y="272">minuto</text>
+                <text x="178" y="190">cuarto</text>
+                <text x="330" y="120">origen</text>
+              </g>
+              <!-- nodo central O -->
+              <circle cx="330" cy="196" r="44" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="2.5"/>
+              <text x="330" y="192" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">triple_088</text>
+              <text x="330" y="208" text-anchor="middle" font-size="10" fill="var(--tinta-tenue)">evento · O</text>
+              <!-- satélites -->
+              <g font-family="var(--mono)" font-size="11.5" text-anchor="middle">
+                <!-- instancia_de K -->
+                <rect x="86" y="40" width="128" height="34" rx="9" fill="var(--eje-k-suave)" stroke="var(--eje-k)"/>
+                <text x="150" y="61" fill="var(--tinta)">triple_anotado</text>
+                <!-- anotadora Q -->
+                <rect x="452" y="40" width="116" height="34" rx="9" fill="var(--eje-q-suave)" stroke="var(--eje-q)"/>
+                <text x="510" y="61" fill="var(--tinta)">rivas</text>
+                <!-- asistente Q -->
+                <rect x="548" y="178" width="104" height="34" rx="9" fill="var(--eje-q-suave)" stroke="var(--eje-q)"/>
+                <text x="600" y="199" fill="var(--tinta)">navarro</text>
+                <!-- parte_de O -->
+                <rect x="430" y="304" width="160" height="34" rx="9" fill="var(--eje-o-suave)" stroke="var(--eje-o)"/>
+                <text x="510" y="325" fill="var(--tinta)" font-size="10">partido_h_l</text>
+                <!-- minuto N -->
+                <rect x="98" y="304" width="104" height="34" rx="9" fill="var(--eje-n-suave)" stroke="var(--eje-n)"/>
+                <text x="150" y="325" fill="var(--tinta)">38</text>
+                <!-- cuarto N -->
+                <rect x="14" y="178" width="92" height="34" rx="9" fill="var(--eje-n-suave)" stroke="var(--eje-n)"/>
+                <text x="60" y="199" fill="var(--tinta)">4</text>
+                <!-- origen K -->
+                <rect x="262" y="10" width="136" height="34" rx="9" fill="var(--eje-k-suave)" stroke="var(--eje-k)"/>
+                <text x="330" y="31" fill="var(--tinta)" font-size="10">esquina_derecha</text>
+              </g>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 7.1.</span> La canasta de Rivas, reificada como el
+            individuo <code>triple_088</code> en el eje O, con sus siete participantes colgados por
+            roles canónicos —<em>anotadora</em>, <em>asistente</em>, <em>parte_de</em>, <em>cuarto</em>,
+            <em>minuto</em>, <em>origen</em>, <em>instancia_de</em>—. La estructura n-aria se conserva
+            entera sin abandonar la forma de la tripleta.</figcaption>
+        </figure>
+
+        <p>Conviene una regla práctica, de las que un ingeniero de datos hace bien en tatuarse:
+          <strong>reifica solo cuando te falte espacio</strong>. Si la relación es entre dos individuos
+          y nada más —<code>(pelicula_marea, directora, serra)</code>—, basta una tripleta directa. Si
+          el hecho involucra a más participantes o arrastra detalles propios (tiempo, lugar,
+          instrumento), entonces sí: elévalo a evento con nombre propio y cuélgale sus tripletas. Ni
+          más reificación de la necesaria, ni menos de la que el detalle exige.</p>
+
+        <h2>El modelo y el lenguaje humano son gemelos</h2>
+
+        <p>Aquí ocurre algo que, la primera vez que lo notas, parece magia, y conviene resaltarlo de
+          inmediato. Toma un artículo de prensa cualquiera y pásaselo a un modelo de lenguaje moderno
+          —Claude, por ejemplo— con esta instrucción: «Resume paso a paso quién hizo qué en esta
+          noticia». La respuesta casi siempre vuelve como una lista de líneas limpias, sin que nadie
+          se lo haya pedido en ese formato:</p>
+
+        <div class="caja caja--definicion" style="background:var(--eje-k-suave)">
+          <p class="caja-tit" style="color:var(--eje-k)">Lo que la IA devuelve, sola</p>
+          <ul class="limpia" style="margin:0">
+            <li style="margin-bottom:.4rem">El alcalde Reyes promulgó la ordenanza de micromovilidad.</li>
+            <li style="margin-bottom:.4rem">La ordenanza entra en vigor a los 30 días de su publicación.</li>
+            <li style="margin-bottom:.4rem">La medida afecta a la gerencia de tránsito.</li>
+            <li style="margin:0">La medida afecta a la gerencia de fiscalización.</li>
+          </ul>
+        </div>
+
+        <p>Cuatro líneas, cuatro hechos. Y cada línea tiene su sujeto, su verbo y su objeto. La IA no
+          responde así porque haya leído este libro: responde así porque <strong>así funciona el
+          lenguaje humano cuando intenta describir la realidad</strong>. Las oraciones simples que nos
+          enseñaron en la escuela —sujeto, verbo, predicado— son idénticas, molécula a molécula, a
+          nuestros hechos atómicos tipados.</p>
+
+        <p>El impacto de esta coincidencia es enorme. Si tu base de datos guarda la información como
+          tripletas, y la inteligencia artificial <em>piensa</em> en tripletas, entonces la
+          comunicación entre la IA y tu empresa se vuelve casi automática. No hace falta programar
+          costosos algoritmos de comprensión del lenguaje natural ni levantar capas de traducción
+          frágiles: existe un enchufe directo entre lo que la IA dice y lo que tu sistema guarda. Esa
+          es la llave maestra del agente que el mercado persigue —uno capaz de conversar, auditar y
+          registrar información en cualquier empresa— sin obligarlo a memorizar la estructura interna
+          de la base de datos de cada cliente. Es el tema que el <a href="24-llms.html">capítulo
+          24</a> lleva hasta el fondo.</p>
+
+        <h2>Consultar es tapar un hueco</h2>
+
+        <p>Si toda la información se guarda como tripletas, buscar en ella se vuelve un juego de niños.
+          Hacer una consulta es, literalmente, escribir una tripleta pero <strong>tapando uno de sus
+          tres campos con un signo de interrogación</strong> —dejando un hueco que el sistema debe
+          rellenar—. Mira tres patrones de búsqueda sobre nuestros ejemplos:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">patrones</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(serra,          ?,           ?)         // "Dime todo lo que sepas de Serra"
+(?,              directora,   serra)      // "¿Qué obras dirigió Serra?"
+(?,              anotadora,   rivas)      // "Busca todas las canastas de Rivas"</code></pre>
+        </div>
+
+        <p>Y si necesitas una consulta digna de un analista, no hay que aprender un lenguaje nuevo:
+          basta encadenar varias «tripletas con huecos» y pedirle al sistema los datos que encajen en
+          <em>todas</em> a la vez. Las variables que se repiten (las que empiezan con <code>?</code>)
+          son las junturas: amarran un patrón con el siguiente.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">patrones</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(?canasta, anotadora, rivas)
+(?canasta, parte_de,  ?partido)
+(?partido, fecha,     [2026-01-01, 2026-12-31])
+// → "Todas las canastas de Rivas en partidos del año 2026"</code></pre>
+        </div>
+
+        <p>Así de simple. No hacen falta diagramas enrevesados ni consultas eternas: <strong>consultar
+          es decirle a la máquina que busque un patrón de cables dentro de la red</strong>. Y la
+          operación matemática es idéntica en cualquier industria y a cualquier escala —exactamente lo
+          que la vieja torre de Babel de los datos, que vimos en el <a href="01-torre-de-babel.html">capítulo
+          1</a>, nos impedía hacer.</p>
+
+        <h2>El contraste con SQL</h2>
+
+        <p>Para medir la diferencia, traduzcamos esa última pregunta —<em>canastas de Rivas en
+          2026</em>— al mundo relacional clásico. Allí los hechos no viven en una pizarra común, sino
+          repartidos en tablas que muchas veces ni siquiera se diseñaron para conversar. Recuperar el
+          dato obliga a coserlas con <code>JOIN</code>s, una operación que el grafo no necesita porque
+          nunca separó la información en primer lugar.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">SQL</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="sql">SELECT j.nombre, c.minuto
+FROM canastas c
+JOIN jugadoras j ON j.id = c.jugadora_id
+JOIN partidos  p ON p.id = c.partido_id
+WHERE j.nombre = 'Rivas'
+  AND c.tipo = 'triple'
+  AND p.fecha BETWEEN '2026-01-01' AND '2026-12-31';</code></pre>
+        </div>
+
+        <p>No es que el SQL esté mal escrito; es que carga con un trabajo que el modelo de tripletas
+          ni siquiera tiene. Cada <code>JOIN</code> es la cicatriz de una decisión previa de partir el
+          mundo en tablas; y si mañana el negocio quiere registrar la asistente de cada canasta, habrá
+          que alterar el esquema. En la pizarra de tripletas, recordemos, eso era una línea más.</p>
+
+        <h2>El mismo átomo, viajando por el cable</h2>
+
+        <p>Cuando un hecho necesita salir del sistema y viajar a otro —una API, un agente, otra
+          empresa—, se serializa sin perder un solo eje. La <strong>reificación se vuelve un objeto
+          JSON</strong> casi sin esfuerzo: el sujeto es el <code>id</code>, cada cable es una clave y
+          cada objeto es el valor. Así se ve la jugada de Rivas sobre el cable:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">JSON</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="json">{
+  "id": "triple_088",
+  "instancia_de": "triple_anotado",
+  "anotadora": "rivas",
+  "asistente": "navarro",
+  "parte_de": "partido_halcones_lobos",
+  "cuarto": 4,
+  "minuto": 38,
+  "puntos": { "valor": 3, "unidad": "Unit:puntos" },
+  "origen": "esquina_derecha"
+}</code></pre>
+        </div>
+
+        <p>Cada clave es un cable; cada valor, un individuo en su eje. El mismo átomo que dibujamos
+          como una estrella de nodos en la Figura 7.1 es, sobre el cable, un objeto que cualquier
+          sistema —o cualquier IA— lee sin manual de instrucciones. La figura siguiente cierra el
+          círculo: una sola afirmación, vista de tres maneras que son la misma.</p>
+
+        <!-- FIGURA 7.2 · tres notaciones del mismo átomo -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 250" class="svg-eje" role="img"
+                 aria-label="Un mismo hecho atómico expresado como tripleta, como grafo y como par clave-valor JSON">
+              <!-- columna 1: tripleta -->
+              <text x="110" y="34" text-anchor="middle" font-size="12" font-weight="700" fill="var(--tinta-suave)">como tripleta</text>
+              <rect x="14" y="56" width="192" height="44" rx="9" fill="var(--cod-fondo)"/>
+              <text x="24" y="83" font-size="11" font-family="var(--mono)" fill="var(--cod-texto)">(espresso_311,</text>
+              <text x="40" y="98" font-size="11" font-family="var(--mono)" fill="var(--cod-func)"> dosis_g, 18)</text>
+
+              <!-- columna 2: grafo -->
+              <text x="330" y="34" text-anchor="middle" font-size="12" font-weight="700" fill="var(--tinta-suave)">como grafo</text>
+              <circle cx="276" cy="120" r="30" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="2"/>
+              <text x="276" y="124" text-anchor="middle" font-size="9.5" font-family="var(--mono)" fill="var(--eje-o)">espresso_311</text>
+              <line x1="306" y1="120" x2="368" y2="120" stroke="var(--eje-m)" stroke-width="2"/>
+              <text x="337" y="112" text-anchor="middle" font-size="10" font-family="var(--sans)" fill="var(--eje-m)">dosis_g</text>
+              <polygon points="368,120 360,116 360,124" fill="var(--eje-m)"/>
+              <circle cx="398" cy="120" r="26" fill="var(--eje-n-suave)" stroke="var(--eje-n)" stroke-width="2"/>
+              <text x="398" y="124" text-anchor="middle" font-size="13" font-weight="700" font-family="var(--mono)" fill="var(--eje-n)">18</text>
+
+              <!-- columna 3: json -->
+              <text x="556" y="34" text-anchor="middle" font-size="12" font-weight="700" fill="var(--tinta-suave)">como JSON</text>
+              <rect x="454" y="56" width="192" height="60" rx="9" fill="var(--cod-fondo)"/>
+              <text x="466" y="80" font-size="11" font-family="var(--mono)" fill="var(--cod-func)">"dosis_g"<tspan fill="var(--cod-puntu)">:</tspan> <tspan fill="var(--cod-num)">18</tspan></text>
+              <text x="466" y="100" font-size="9" font-family="var(--mono)" fill="var(--cod-tenue)">// dentro de espresso_311</text>
+
+              <!-- equivalencias -->
+              <text x="230" y="124" text-anchor="middle" font-size="20" fill="var(--tinta-tenue)">≡</text>
+              <text x="438" y="92" text-anchor="middle" font-size="20" fill="var(--tinta-tenue)">≡</text>
+
+              <text x="330" y="222" text-anchor="middle" font-size="12" font-family="var(--sans)" fill="var(--tinta-suave)">
+                Una sola afirmación. Tres ropajes. El mismo átomo.</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 7.2.</span> El hecho «el espresso 311 lleva 18 gramos
+            de dosis» expresado como tripleta, como arista de un grafo y como par clave-valor en JSON.
+            Las tres notaciones son intercambiables: el modelo no privilegia ninguna, porque todas
+            describen la misma coordenada.</figcaption>
+        </figure>
+
+        <h2>El repertorio entero, pasado por el átomo</h2>
+
+        <p>Para cerrar con los pies en la tierra, recorramos los cinco escenarios de este capítulo y
+          veámoslos descompuestos en hechos atómicos. La lección, repetida cinco veces, es siempre la
+          misma: basta apilar tripletas sobre un sujeto, y reificar solo cuando un evento lo pide.</p>
+
+        <div class="columnas">
+          <p><b>☕ El espresso.</b> Ya lo desmenuzamos: diez tripletas bastan para el retrato general
+            de la taza, y si la cafetería exige trazar el lote del grano, se reifica el uso del grano
+            sumando cinco tripletas más —sin tocar el diseño base—.</p>
+
+          <p><b>🏀 La canasta.</b> También la vimos reificada: siete hechos atómicos que conservan
+            anotadora, asistente, partido, cuarto, minuto y origen. Suficiente detalle táctico para
+            una casa de apuestas o un analista de rendimiento, sin reducir la jugada a una fila gris
+            de hoja de cálculo.</p>
+
+          <p><b>🎬 La película.</b> Una obra cinematográfica se describe apilando autoría —que tiene
+            roles distintos: dirigir no es escribir— y composición recursiva, porque una escena es
+            «parte de» la película:</p>
+        </div>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(pelicula_marea, instancia_de, largometraje)         ∈ M(O, K)
+(pelicula_marea, genero,       genero_drama)         ∈ M(O, K)
+(pelicula_marea, directora,    serra)                ∈ M(O, Q)
+(pelicula_marea, guionista,    haddad)               ∈ M(O, Q)
+(pelicula_marea, año_estreno,  2026)                 ∈ M(O, N)
+(escena_42,      parte_de,     pelicula_marea)       ∈ M(O, O)
+(escena_42,      tiempo_narrativo, fin_segundo_acto) ∈ M(O, K)</code></pre>
+        </div>
+
+        <p>Siete hechos en los que <code>directora</code> y <code>guionista</code> son cables
+          distintos —Serra y Haddad cumplen papeles que no se confunden— y donde <code>escena_42</code>
+          se cuelga de la película por <code>parte_de</code>, abriendo la puerta a describir cada
+          escena con su propia lluvia de tripletas. La composición no tiene fondo.</p>
+
+        <p><b>🏛️ La ordenanza.</b> Un acto de gobierno combina fechas, vigencias y entidades
+          afectadas. Nótese que <code>afecta_a</code> es un cable <em>múltiple</em>: el mismo sujeto lo
+          usa varias veces, una por cada gerencia tocada.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(ordenanza_142, instancia_de,     ordenanza_municipal)   ∈ M(O, K)
+(ordenanza_142, promulgada_por,   alcalde_reyes)         ∈ M(O, Q)
+(ordenanza_142, organo,           municipalidad_centro)  ∈ M(O, Q)
+(ordenanza_142, fecha_publicacion, 2026-05-14)           ∈ M(O, T)
+(ordenanza_142, entra_en_vigor,   2026-06-13)            ∈ M(O, T)
+(ordenanza_142, afecta_a,         gerencia_transito)     ∈ M(O, Q)
+(ordenanza_142, afecta_a,         gerencia_fiscalizacion) ∈ M(O, Q)</code></pre>
+        </div>
+
+        <p>La fecha de entrada en vigor (30 días después de la publicación) no se inventa a mano: es un
+          <em>tiempo derivado por reglas</em>, un tema que el <a href="08-espacio-multidimensional.html">capítulo
+          siguiente</a> y los de la Parte&nbsp;V exploran. Si alguien pregunta «¿qué normas promulgó el
+          alcalde Reyes este año?», la máquina cruza las primeras dos tripletas y responde sin demora.</p>
+
+        <p><b>🤖 El agente de IA.</b> Y el dominio más moderno de todos: la telemetría de una sesión
+          con un modelo de lenguaje. Diez hechos atómicos que registran qué usuaria preguntó, qué
+          modelo respondió, cuántos tokens costó y qué herramientas tuvo que invocar el agente.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(sesion_ia_5521, instancia_de,   sesion_modelo_lenguaje)  ∈ M(O, K)
+(sesion_ia_5521, modelo,         modelo_lumen_2026)       ∈ M(O, K)
+(sesion_ia_5521, usuaria,        paredes)                 ∈ M(O, Q)
+(sesion_ia_5521, tokens_entrada, 4180)                    ∈ M(O, N)
+(sesion_ia_5521, tokens_salida,  920)                     ∈ M(O, N)
+(sesion_ia_5521, latencia_ms,    2100)                    ∈ M(O, N)
+(sesion_ia_5521, costo_usd,      0.015)                   ∈ M(O, N)
+(sesion_ia_5521, temperatura,    0.7)                     ∈ M(O, N)
+(sesion_ia_5521, herramienta,    busqueda_web)            ∈ M(O, K)
+(sesion_ia_5521, herramienta,    consulta_grafo)          ∈ M(O, K)</code></pre>
+        </div>
+
+        <p>Toda la telemetría que un ingeniero moderno exige —quién, qué modelo, cuánto costó, si tuvo
+          que buscar en la web o consultar el propio grafo— vive en diez líneas tipadas. Es
+          incomparablemente más limpio, y más consultable, que un volcado de logs sin estructura.</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">En la práctica</p>
+          <p style="margin:0">Fíjate en el patrón que se repite en los cinco dominios: la primera
+            tripleta casi siempre es <code>instancia_de</code> —ancla el sujeto en su clase del eje K—,
+            y a partir de ahí cuelgan los atributos. Cuando empieces a modelar un dominio propio, abre
+            por ahí: nombra el sujeto, declara su clase y deja que las coordenadas vayan cayendo, una
+            tripleta cada vez.</p>
+        </div>
+
+        <h2>Lo que llevamos, y lo que viene</h2>
+
+        <p>El hecho atómico es la piedra fundacional de toda la arquitectura. Tiene siempre la misma
+          forma rígida de tres partes —<code>(sujeto, cable, objeto)</code>—; lleva protección interna
+          que impide mezclar cosas absurdas; y se compone consigo mismo para describir realidades tan
+          complejas como queramos, sin pedir jamás un cambio de programación. En este modelo, la base
+          de datos es, sin metáfora, un océano de estos hechos.</p>
+
+        <p>Lo hermoso del hallazgo no es haber inventado un código nuevo, sino haber descubierto que
+          esta forma matemática coincide al milímetro con la manera en que los seres humanos —y la
+          inteligencia artificial— hablan cuando describen el mundo. El modelo no obliga a nadie a
+          aprender un idioma robótico: toma la estructura natural del lenguaje y la convierte en
+          tecnología consultable.</p>
+
+        <p>Hasta aquí hemos tratado cada hecho como una pieza solitaria. Pero cuando se amontonan por
+          millones, emerge algo nuevo: un <strong>espacio geométrico</strong>. No una metáfora, sino
+          una herramienta matemática real, donde consultar masivamente equivale a poner restricciones
+          sobre coordenadas —como jugar a la batalla naval a escala planetaria—. Ese espacio es el
+          tema del próximo capítulo.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="06-raices.html"><span class="dir">← Anterior</span><span class="tit">Las raíces de las preguntas</span></a>
+      <a class="sig" href="08-espacio-multidimensional.html"><span class="dir">Siguiente →</span><span class="tit">El espacio multidimensional</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>
