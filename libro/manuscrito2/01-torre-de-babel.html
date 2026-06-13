@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 1 · La torre de Babel de los datos — WQuestions</title>
+  <meta name="description" content="Cada dominio inventa su propio vocabulario y eso impide que la información dialogue. La torre de Babel de las ontologías, y la apuesta para derribarla.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'1'">
+      <header class="portada-cap">
+        <p class="parte">Parte I · El problema</p>
+        <div class="num-cap">01</div>
+        <h1>La torre de Babel de los datos</h1>
+        <p class="lede">La información que salva una vida puede existir, estar guardada y no
+          estar oculta para nadie, y aun así ser imposible de consultar. No es un fallo del
+          azar: es un fallo de diseño que hemos repetido durante décadas.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Son las dos de la madrugada y entra en urgencias una mujer de
+          cuarenta y dos años. La llamaremos <strong>Vega</strong>. Está consciente, pero
+          suda frío y le falta el aire; refiere un dolor en el pecho que no cede. El médico
+          de guardia tiene minutos, no horas, para decidir, y para decidir bien necesita
+          responder tres preguntas concretas: qué medicación toma a diario, si tiene alergias
+          documentadas y si ya vivió antes un episodio parecido. Teclea su nombre en el
+          sistema del hospital. La pantalla devuelve tres líneas: una bronquitis tratada hace
+          cuatro años. Nada más.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Hilo conductor</span>
+          La paciente <code>vega</code> reaparece en el cierre del libro. Cuando lleguemos a
+          la <a href="29-conclusion.html">conclusión</a>, esta misma escena se resolverá: la
+          consulta que aquí es imposible será una sola línea.
+        </aside>
+
+        <p>Lo desesperante es que la información existe. Vega tiene una endocrinóloga que
+          gestiona su historia desde hace siete años. Hace unos meses la evaluó un cardiólogo
+          en otra ciudad. Y ya pasó por una urgencia muy parecida en un tercer centro, donde
+          le hicieron un electrocardiograma completo. Cada dato está escrito, guardado en
+          algún disco, y ninguno de esos profesionales tiene el menor interés en ocultarlo.
+          El obstáculo no es el secreto ni la pérdida: es estructural. Los datos de Vega están
+          repartidos en esquemas que no se hablan entre sí.</p>
+
+        <p>La endocrinóloga usa un software que guarda el diagnóstico en un campo llamado
+          <code>diagnostico_principal</code>. El sistema del cardiólogo, hecho por otra
+          empresa, lo registra como <code>dx_p</code>. Para la medicación, la primera clínica
+          emplea una estructura plana —<code>medicacion_actual</code> con <code>nombre</code>,
+          <code>dosis</code> y <code>frecuencia</code>—; la segunda diseñó una base relacional
+          con una tabla de <code>prescripciones</code> que pide un identificador numérico
+          (<code>farmaco_id</code>), los miligramos por toma (<code>mg_por_toma</code>) y el
+          número de tomas diarias (<code>tomas_dia</code>). Dos formas legítimas y razonables
+          de anotar exactamente lo mismo. Y, sin embargo, incompatibles.</p>
+
+        <p>Si trabajas en software, ya sabes que conectar esas dos bases no es ciencia
+          ficción. Es posible. Pero es un trabajo artesanal, caro y frágil: hay que programar
+          un puente de código —un <em>middleware</em>—, mapear a mano qué columna equivale a
+          qué columna y escribir una excepción por cada formato de fecha o de número. Y ese
+          puente caduca. El día en que una de las clínicas actualice su sistema y renombre un
+          solo campo, el puente se rompe en silencio. Multiplica ese esfuerzo por miles de
+          hospitales, decenas de proveedores y décadas de historias clínicas, y la integración
+          deja de ser un reto de ingeniería para revelarse como un problema de diseño a escala
+          planetaria. La información existe; lo que falta es la capacidad de razonar con ella.</p>
+
+        <p class="cita-destacada revelar">La información de Vega no está perdida ni oculta.
+          Está atrapada en idiomas que nunca acordaron hablar entre
+          sí.<cite>El problema de Babel</cite></p>
+
+        <h2>El mismo hecho, cuatro idiomas distintos</h2>
+
+        <p>El drama de urgencias es la versión extrema; pero el mecanismo que lo causa late en
+          el sistema más banal. Para verlo en cámara lenta, bajemos a un escenario sin víctimas:
+          un café. A las 08:14, en la barra de una cafetería, la barista Lucía sirve un
+          espresso. Lo llamaremos <code>espresso_311</code>. Es <em>un</em> hecho del mundo,
+          uno solo. Y, sin embargo, si nos asomamos a los servidores del negocio, descubriremos
+          que sus distintos sistemas anotan ese mismo instante en cuatro lenguajes radicalmente
+          distintos.</p>
+
+        <p>Para el <strong>punto de venta</strong> —la caja— lo que importa es la transacción y
+          quiénes la protagonizan. El hecho se guarda como una fila en una base relacional:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">SQL · punto de venta</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="sql">INSERT INTO ventas
+  (id, cliente_id, producto_id, monto, fecha, barista_id)
+VALUES (311, 1042, 88, 3.40, '2026-05-14', 17);</code></pre>
+        </div>
+
+        <p>Para <strong>contabilidad</strong>, en cambio, la identidad de la barista o del
+          cliente es irrelevante. Su única obsesión es que las cuentas cuadren por partida
+          doble. El mismo evento se descompone en un asiento:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">asiento · contabilidad</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="text">asiento: 2026-05-14
+  debe:  caja                        3.40
+  haber: ventas_brutas              2.88
+  haber: impuesto_al_consumo        0.52</code></pre>
+        </div>
+
+        <p>El equipo de <strong>analítica de producto</strong> ve otra cosa todavía. Le importa
+          el comportamiento y el canal, para medir campañas. Estructura el hecho como un evento
+          de telemetría:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">JSON · telemetría</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="json">{
+  "evento": "compra_completada",
+  "id_usuario": "u_1042",
+  "sku": "sku-88",
+  "ingreso": 3.40,
+  "canal": "mostrador",
+  "id_sesion": "s_abcdef"
+}</code></pre>
+        </div>
+
+        <p>Y para <strong>inventario</strong>, por fin, solo ocurrió una cosa: una dosis de café
+          en grano y un vaso salieron del almacén. El evento se reduce a un movimiento de
+          existencias:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">JSON · inventario</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="json">{
+  "movimiento": "salida",
+  "producto": 88,
+  "cantidad": 1,
+  "almacen": "barra_central",
+  "ref": "vta-311"
+}</code></pre>
+        </div>
+
+        <p>Observa la desconexión. Cuatro equipos, cuatro estructuras. Cada esquema es perfecto
+          y coherente para quien lo diseñó. La fractura aparece cuando la dirección pide una
+          visión global. Si le entregas estas cuatro piezas a una computadora, no tiene ninguna
+          forma <em>obvia</em> de saber que las cuatro hablan del mismo suceso. Contabilidad no
+          sabe quién sirvió el café; analítica no sabe de qué almacén salió; la caja no sabe
+          separar el impuesto. Cada software capturó solo la <em>sombra</em> del evento que le
+          interesaba y la archivó en su dialecto privado.</p>
+
+        <!-- FIGURA SVG: cuatro sistemas, un hecho, vocabularios incompatibles -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 640 318" class="svg-eje" role="img"
+                 aria-label="Un único hecho del mundo proyecta cuatro sombras parciales, una por sistema, cada una con su propio vocabulario incompatible">
+              <!-- el hecho central -->
+              <circle cx="320" cy="58" r="30" fill="none" stroke="var(--eje-o)" stroke-width="2.4"/>
+              <text x="320" y="55" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">espresso</text>
+              <text x="320" y="70" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">_311</text>
+              <text x="320" y="20" text-anchor="middle" font-size="12" fill="var(--tinta-suave)" font-weight="600">UN hecho del mundo</text>
+
+              <!-- rayos hacia cada sistema -->
+              <line x1="295" y1="80" x2="115" y2="172" stroke="var(--linea)" stroke-width="1.6"/>
+              <line x1="312" y1="88" x2="270" y2="172" stroke="var(--linea)" stroke-width="1.6"/>
+              <line x1="328" y1="88" x2="372" y2="172" stroke="var(--linea)" stroke-width="1.6"/>
+              <line x1="345" y1="80" x2="527" y2="172" stroke="var(--linea)" stroke-width="1.6"/>
+
+              <!-- cuatro tarjetas-sombra -->
+              <g font-family="var(--mono)">
+                <rect x="40" y="174" width="150" height="116" rx="9" fill="var(--eje-q-suave)" stroke="var(--eje-q)" stroke-width="1.4"/>
+                <text x="115" y="194" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-q)" font-family="var(--sans)">PUNTO DE VENTA</text>
+                <text x="56" y="216" font-size="11" fill="var(--tinta)">barista_id 17</text>
+                <text x="56" y="236" font-size="11" fill="var(--tinta)">cliente_id 1042</text>
+                <text x="56" y="256" font-size="11" fill="var(--tinta)">monto 3.40</text>
+                <text x="56" y="278" font-size="10" fill="var(--tinta-tenue)" font-family="var(--sans)">¿quién? ¿cuánto?</text>
+
+                <rect x="200" y="174" width="140" height="116" rx="9" fill="var(--eje-n-suave)" stroke="var(--eje-n)" stroke-width="1.4"/>
+                <text x="270" y="194" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--acento-2-hov)" font-family="var(--sans)">CONTABILIDAD</text>
+                <text x="214" y="216" font-size="11" fill="var(--tinta)">caja 3.40</text>
+                <text x="214" y="236" font-size="11" fill="var(--tinta)">ventas 2.88</text>
+                <text x="214" y="256" font-size="11" fill="var(--tinta)">iva 0.52</text>
+                <text x="214" y="278" font-size="10" fill="var(--tinta-tenue)" font-family="var(--sans)">¿cuánto? ¿cuándo?</text>
+
+                <rect x="350" y="174" width="140" height="116" rx="9" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="1.4"/>
+                <text x="420" y="194" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-k)" font-family="var(--sans)">ANALÍTICA</text>
+                <text x="364" y="216" font-size="11" fill="var(--tinta)">evento compra</text>
+                <text x="364" y="236" font-size="11" fill="var(--tinta)">canal mostrador</text>
+                <text x="364" y="256" font-size="11" fill="var(--tinta)">u_1042</text>
+                <text x="364" y="278" font-size="10" fill="var(--tinta-tenue)" font-family="var(--sans)">¿qué? ¿dónde?</text>
+
+                <rect x="500" y="174" width="140" height="116" rx="9" fill="var(--eje-l-suave)" stroke="var(--eje-l)" stroke-width="1.4"/>
+                <text x="570" y="194" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-l)" font-family="var(--sans)">INVENTARIO</text>
+                <text x="514" y="216" font-size="11" fill="var(--tinta)">salida</text>
+                <text x="514" y="236" font-size="11" fill="var(--tinta)">producto 88</text>
+                <text x="514" y="256" font-size="11" fill="var(--tinta)">barra_central</text>
+                <text x="514" y="278" font-size="10" fill="var(--tinta-tenue)" font-family="var(--sans)">¿qué? ¿dónde?</text>
+              </g>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 1.1.</span> Un único hecho —el espresso que Lucía
+            sirvió a las 08:14— proyecta cuatro <em>sombras</em> parciales. Cada sistema captura
+            la cara que le importa (<code>barista_id</code>, <code>caja</code>,
+            <code>evento</code>, <code>movimiento</code>) y la escribe en su dialecto. Ninguna
+            sombra sabe de las otras, aunque debajo todas respondan a las mismas preguntas.</figcaption>
+        </figure>
+
+        <p>A esta fragmentación masiva la llamaremos, a lo largo del libro, <strong>la torre de
+          Babel de las ontologías</strong>. Conviene desactivar una alarma: en datos, la
+          palabra <em>ontología</em> no es un concepto filosófico inalcanzable.</p>
+
+        <div class="caja caja--definicion revelar">
+          <p class="caja-tit">Ontología (en ingeniería de datos)</p>
+          <p style="margin:0">El catálogo oficial de conceptos que un sistema reconoce —«cliente»,
+            «factura», «producto», «prescripción»— junto con las reglas lógicas que dictan cómo
+            se relacionan entre sí. Nada más esotérico que un diccionario con gramática. El
+            problema no es que existan ontologías: es que cada departamento, empresa y disciplina
+            construye la suya <em>cerrada</em>, aislándose del resto.</p>
+        </div>
+
+        <h2>La causa de todo el problema</h2>
+
+        <p>La raíz de esta torre de Babel —y el punto de partida de este libro— se enuncia en una
+          frase: hemos permitido que <strong>cada sector invente, desde cero, su propia forma de
+          entender la realidad</strong>. La ingeniería médica no hereda nada de la contabilidad.
+          El comercio no comparte cimientos con el derecho. La educación diseña bases que jamás
+          conversarán con las del urbanismo. Cada industria levanta su pirámide con planos
+          distintos y luego nos sorprende lo carísimo que resulta contratar gente para tender
+          puentes colgantes entre las cimas.</p>
+
+        <p>Llevemos esa frase a un caso donde el aislamiento no cuesta dinero, sino una nave
+          espacial.</p>
+
+        <div class="caja caja--alerta revelar">
+          <p class="caja-tit">El precio de no acordar las unidades</p>
+          <p style="margin:0 0 .7rem">En 1999, la <em>Mars Climate Orbiter</em> de la NASA se
+            desintegró al entrar en la atmósfera de Marte. La causa no fue un error de cálculo
+            sino de <em>vocabulario</em>: un equipo de software entregaba el empuje en unidades
+            inglesas (libra-fuerza por segundo) y el otro lo leía como si fueran unidades del
+            sistema internacional (newton por segundo). Cada número, por separado, era correcto.
+            La nave navegó hacia una órbita equivocada y se perdió.</p>
+          <p style="margin:0">Doscientos millones de dólares y años de trabajo evaporados porque
+            dos sistemas no declararon, de forma explícita, <em>qué pregunta respondía cada
+            número</em>. La distancia entre <code>dx_p</code> y <code>diagnostico_principal</code>
+            es la misma distancia, solo que sin el cráter.</p>
+        </div>
+
+        <p>El patrón es siempre idéntico. Donde cada parte cultiva su jardín semántico amurallado,
+          el coste de conectar no crece poco a poco: crece de forma combinatoria. Si tienes
+          <em>n</em> sistemas y los quieres comunicar de a pares, el número de puentes que debes
+          construir y mantener es <code>n(n−1)/2</code>. Diez sistemas no piden diez traductores:
+          piden cuarenta y cinco. Y cada uno de ellos es un punto que puede romperse.</p>
+
+        <figure class="figura revelar">
+          <div class="lienzo" data-chart>
+            <script type="application/json">
+            {"tipo":"barras","eje":"q","unidad":" puentes","max":47,
+             "datos":[
+               {"l":"3 sist.","v":3},
+               {"l":"5 sist.","v":10},
+               {"l":"7 sist.","v":21},
+               {"l":"10 sist.","v":45},
+               {"l":"vocab. común","v":1,"color":"k"}
+             ]}
+            </script>
+          </div>
+          <figcaption><span class="fnum">Figura 1.2.</span> El coste de la fragmentación es
+            combinatorio: conectar diez sistemas de a pares exige <code>n(n−1)/2</code> = 45
+            puentes (rojo). Un vocabulario común al centro reduce el problema a un solo punto de
+            conexión por sistema (verde). Pasa el cursor sobre las barras para ver las cifras.</figcaption>
+        </figure>
+
+        <p>Por eso el integrador de datos —ese rol que casi ninguna escuela enseña y que casi
+          toda empresa necesita— existe. Su oficio es escribir y vigilar esos <em>n(n−1)/2</em>
+          puentes: los ETL que vacían una base en otra, los mapeos columna a columna, las
+          excepciones por cada formato de fecha. Es trabajo valioso y, a la vez, trabajo que no
+          debería existir. Es el impuesto que paga la industria por un pecado original de diseño.</p>
+
+        <h2>Lo que ya se intentó (y por qué no bastó)</h2>
+
+        <p>Sería injusto sugerir que nadie vio el problema. Llevamos décadas intentando derribar
+          la torre, y los intentos se agrupan en dos familias, opuestas y simétricas en su
+          fracaso. Vale la pena entenderlas, porque marcan exactamente el hueco que este libro
+          quiere ocupar.</p>
+
+        <div class="rejilla-2 revelar">
+          <div class="tarjeta">
+            <h4 style="color:var(--eje-t)">Vía 1 · Las grandes ontologías</h4>
+            <p style="margin:0;font-size:.95rem">Construir esquemas formales, ricos y
+              minuciosos para cada dominio. Funcionan con una precisión admirable… dentro de su
+              parcela. Pero son <strong>profundas y estrechas</strong>: modelar un campo nuevo
+              cuesta años de comité, y dos ontologías profundas vuelven a necesitar un puente
+              entre ellas. Resuelven Babel <em>dentro</em> de cada torre, no <em>entre</em>
+              torres.</p>
+          </div>
+          <div class="tarjeta">
+            <h4 style="color:var(--eje-m)">Vía 2 · La extracción abierta</h4>
+            <p style="margin:0;font-size:.95rem">Renunciar al esquema y dejar que una máquina
+              extraiga relaciones del texto libre —la llamada <em>OpenIE</em>—. Es
+              <strong>ancha pero informe</strong>: cubre cualquier tema, sí, pero produce
+              tripletas sin tipos estables, sin unidades, sin distinguir un agente de un lugar.
+              Mucha cobertura y poca estructura: imposible de consultar con rigor.</p>
+          </div>
+        </div>
+
+        <div class="caja caja--precedente revelar">
+          <p class="caja-tit">El callejón de las dos vías</p>
+          <p style="margin:0">Las ontologías clásicas —de las que CIDOC&nbsp;CRM o las redes de
+            <em>frames</em> son ejemplos refinados— ganan en estructura lo que pierden en
+            alcance. La extracción abierta gana en alcance lo que pierde en estructura. La
+            industria osciló entre ambos extremos sin encontrar el punto medio: un esquema
+            <em>a la vez ancho y estructurado</em>. Ese punto medio es lo que perseguimos, y la
+            pista de dónde buscarlo no está en la informática, sino en algo mucho más antiguo.</p>
+        </div>
+
+        <p>Y aquí cabe una pregunta incómoda, la que abre la puerta a todo lo demás: ¿y si la
+          solución a este caos fuera <em>anterior</em> —y mucho más simple— que cualquier diseño
+          de base de datos? ¿Y si, mucho antes de que existieran los hospitales, los bancos o el
+          comercio internacional, la humanidad ya hubiera fijado un esquema cognitivo universal
+          que nadie, en ningún idioma, puede evitar usar?</p>
+
+        <h2>La apuesta de este libro</h2>
+
+        <p>Volvamos al espresso una última vez. Si detuviéramos a cualquier persona en la calle
+          —sin nociones de bases de datos ni de código— y le pidiéramos describir lo que pasó en
+          esa barra, su respuesta natural sería algo muy parecido a esto:</p>
+
+        <blockquote>
+          <p>«<em>Lucía</em> (<strong>quién</strong>) <em>sirvió</em> (<strong>qué</strong>)
+            <em>un espresso</em> (<strong>qué</strong>) <em>en la barra del centro</em>
+            (<strong>dónde</strong>) <em>esta mañana</em> (<strong>cuándo</strong>) <em>de 36
+            mililitros</em> (<strong>cuánto</strong>).»</p>
+        </blockquote>
+
+        <p>Sin el menor esfuerzo, cualquier ser humano produce una descripción
+          <strong>estructurada, completa y combinable</strong>. La mente no percibe el mundo como
+          un bloque de texto ni como una hoja de cálculo: descompone cualquier evento con un
+          repertorio brevísimo de preguntas fundamentales. Y aquí está el giro: esas preguntas
+          son exactamente las coordenadas que las cuatro sombras del espresso estaban capturando
+          por separado, sin saberlo.</p>
+
+        <!-- FIGURA SVG: las cuatro sombras convergen en las preguntas -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 640 360" class="svg-eje" role="img"
+                 aria-label="Cuatro sistemas dispares convergen hacia un único conjunto de seis preguntas que todos responden">
+              <!-- columna izquierda: los cuatro sistemas -->
+              <g font-family="var(--sans)" font-size="11.5" font-weight="600">
+                <rect x="14" y="40" width="150" height="38" rx="8" fill="var(--papel-hund)" stroke="var(--linea)"/>
+                <text x="89" y="64" text-anchor="middle" fill="var(--tinta-suave)">Punto de venta</text>
+                <rect x="14" y="108" width="150" height="38" rx="8" fill="var(--papel-hund)" stroke="var(--linea)"/>
+                <text x="89" y="132" text-anchor="middle" fill="var(--tinta-suave)">Contabilidad</text>
+                <rect x="14" y="176" width="150" height="38" rx="8" fill="var(--papel-hund)" stroke="var(--linea)"/>
+                <text x="89" y="200" text-anchor="middle" fill="var(--tinta-suave)">Analítica</text>
+                <rect x="14" y="244" width="150" height="38" rx="8" fill="var(--papel-hund)" stroke="var(--linea)"/>
+                <text x="89" y="268" text-anchor="middle" fill="var(--tinta-suave)">Inventario</text>
+              </g>
+
+              <!-- haces de convergencia hacia el centro -->
+              <g stroke-width="1.6" fill="none" opacity=".55">
+                <path d="M164 59 C 230 59, 250 165, 300 168" stroke="var(--eje-q)"/>
+                <path d="M164 127 C 230 127, 250 168, 300 174" stroke="var(--eje-n)"/>
+                <path d="M164 195 C 230 195, 250 175, 300 180" stroke="var(--eje-k)"/>
+                <path d="M164 263 C 230 263, 250 185, 300 186" stroke="var(--eje-l)"/>
+              </g>
+
+              <!-- nodo central: LAS PREGUNTAS -->
+              <circle cx="338" cy="177" r="42" fill="var(--papel-2)" stroke="var(--acento-2)" stroke-width="2.4"/>
+              <text x="338" y="172" text-anchor="middle" font-size="12" font-weight="700" fill="var(--acento-2-hov)" font-family="var(--sans)">LAS</text>
+              <text x="338" y="188" text-anchor="middle" font-size="12" font-weight="700" fill="var(--acento-2-hov)" font-family="var(--sans)">PREGUNTAS</text>
+
+              <!-- haces de salida hacia las seis coordenadas -->
+              <g stroke-width="1.8" fill="none" opacity=".6">
+                <path d="M380 165 C 430 150, 450 70, 500 70" stroke="var(--eje-q)"/>
+                <path d="M380 170 C 430 160, 450 116, 500 116" stroke="var(--eje-o)"/>
+                <path d="M380 176 C 440 176, 460 162, 500 162" stroke="var(--eje-l)"/>
+                <path d="M380 182 C 440 182, 460 208, 500 208" stroke="var(--eje-t)"/>
+                <path d="M380 188 C 430 198, 450 254, 500 254" stroke="var(--eje-n)"/>
+                <path d="M380 193 C 430 210, 450 300, 500 300" stroke="var(--eje-k)"/>
+              </g>
+
+              <!-- columna derecha: las seis preguntas con chips de color -->
+              <g font-family="var(--sans)">
+                <rect x="500" y="55" width="30" height="30" rx="6" fill="var(--eje-q)"/>
+                <text x="515" y="75" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">Q</text>
+                <text x="538" y="68" font-size="12.5" font-weight="600" fill="var(--tinta)">quién</text>
+                <text x="538" y="82" font-size="10.5" fill="var(--tinta-tenue)">la barista Lucía</text>
+
+                <rect x="500" y="101" width="30" height="30" rx="6" fill="var(--eje-o)"/>
+                <text x="515" y="121" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">O</text>
+                <text x="538" y="114" font-size="12.5" font-weight="600" fill="var(--tinta)">qué</text>
+                <text x="538" y="128" font-size="10.5" fill="var(--tinta-tenue)">el espresso servido</text>
+
+                <rect x="500" y="147" width="30" height="30" rx="6" fill="var(--eje-l)"/>
+                <text x="515" y="167" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">L</text>
+                <text x="538" y="160" font-size="12.5" font-weight="600" fill="var(--tinta)">dónde</text>
+                <text x="538" y="174" font-size="10.5" fill="var(--tinta-tenue)">la barra central</text>
+
+                <rect x="500" y="193" width="30" height="30" rx="6" fill="var(--eje-t)"/>
+                <text x="515" y="213" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">T</text>
+                <text x="538" y="206" font-size="12.5" font-weight="600" fill="var(--tinta)">cuándo</text>
+                <text x="538" y="220" font-size="10.5" fill="var(--tinta-tenue)">a las 08:14</text>
+
+                <rect x="500" y="239" width="30" height="30" rx="6" fill="var(--eje-n)"/>
+                <text x="515" y="259" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">N</text>
+                <text x="538" y="252" font-size="12.5" font-weight="600" fill="var(--tinta)">cuánto</text>
+                <text x="538" y="266" font-size="10.5" fill="var(--tinta-tenue)">36 ml</text>
+
+                <rect x="500" y="285" width="30" height="30" rx="6" fill="var(--eje-k)"/>
+                <text x="515" y="305" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">K</text>
+                <text x="538" y="298" font-size="12.5" font-weight="600" fill="var(--tinta)">cuál</text>
+                <text x="538" y="312" font-size="10.5" fill="var(--tinta-tenue)">clase: espresso</text>
+              </g>
+
+              <text x="89" y="320" text-anchor="middle" font-size="10.5" fill="var(--tinta-tenue)" font-family="var(--sans)">cuatro dialectos</text>
+              <text x="565" y="340" text-anchor="middle" font-size="10.5" fill="var(--tinta-tenue)" font-family="var(--sans)">un solo armazón</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 1.3.</span> Los cuatro dialectos del espresso no
+            son cuatro realidades: son cuatro recortes de la misma. Debajo de todos late un único
+            armazón de preguntas. Si los sistemas declararan <em>qué pregunta responde cada
+            campo</em>, convergerían sin necesidad de conocerse entre sí.</figcaption>
+        </figure>
+
+        <p>Esa es, enunciada con todas sus letras, la apuesta del libro:</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">La apuesta</p>
+          <p style="margin:0;font-size:1.05rem">Existe un conjunto reducido y estable de preguntas
+            primarias —<strong>siete</strong>— con poder descriptivo suficiente para modelar
+            cualquier hecho factual, en cualquier dominio industrial y en cualquier idioma:
+            <strong>quién, qué, dónde, cuándo, cuánto, cuál y cómo</strong>. Al diseñar las bases
+            de datos alrededor de estas coordenadas cognitivas —y no de la terminología de turno
+            de cada industria— se neutraliza de raíz la fragmentación semántica. La torre de
+            Babel se desmorona desde los cimientos.</p>
+        </div>
+
+        <p>Y viene un beneficio que en 1999, o en 2010, habría sonado a ciencia ficción y hoy es
+          decisivo: <strong>cualquier inteligencia artificial entrenada con lenguaje humano
+          entiende esta estructura de fábrica</strong>, porque es la misma con la que aprendió a
+          leer. Un modelo de lenguaje no necesita que le expliques qué es un «quién» o un
+          «cuándo». Esas categorías ya viven en él. Si los datos del mundo se expusieran sobre los
+          ejes de las preguntas, un agente tendría que aprender a hablar una sola vez —y no un
+          dialecto nuevo por cada API que toca.</p>
+
+        <p>Conviene separar aquí las siete coordenadas en dos grupos, porque así las recorreremos.
+          Seis fijan la <em>posición</em> de un hecho —dónde cae en cada dimensión de la
+          realidad—; la séptima, <em>cómo</em>, aporta los enlaces que amarran las otras seis
+          entre sí:</p>
+
+        <div class="columnas">
+          <p><span class="eje-rotulo"><span class="eje eje--q">Q</span> <b>quién</b></span> y
+            <span class="eje-rotulo"><span class="eje eje--o">O</span> <b>qué</b></span> y
+            <span class="eje-rotulo"><span class="eje eje--l">L</span> <b>dónde</b></span> y
+            <span class="eje-rotulo"><span class="eje eje--t">T</span> <b>cuándo</b></span>
+            son las cuatro coordenadas más concretas: el agente, el objeto o evento, el lugar y
+            el tiempo. Son las que un niño domina primero y las que ningún sistema, por raro que
+            sea su dialecto, deja de registrar.</p>
+          <p><span class="eje-rotulo"><span class="eje eje--n">N</span> <b>cuánto</b></span> y
+            <span class="eje-rotulo"><span class="eje eje--k">K</span> <b>cuál</b></span> son
+            las dos que el genérico «qué» suele esconder: la magnitud (con sus unidades, que la
+            <em>Mars Climate Orbiter</em> aprendió a la mala) y la clase a la que algo pertenece.
+            Y <span class="eje-rotulo"><span class="eje eje--m">M</span> <b>cómo</b></span> es la
+            séptima: los predicados que conectan todo lo demás.</p>
+        </div>
+
+        <p>Anticipando un poco la maquinaria que viene, así se ve un fragmento del hecho
+          <code>espresso_311</code> expresado ya en el formato del modelo —cada línea es una
+          tripleta que conecta el hecho con uno de sus valores, y la firma final declara a qué
+          par de ejes pertenece:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas · WQuestions</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(espresso_311, agente,     barista_lucia)  ∈ M(O, Q)
+(espresso_311, lugar,      barra_central)  ∈ M(O, L)
+(espresso_311, instante,   08:14)          ∈ M(O, T)
+(espresso_311, rendimiento, 36)            ∈ M(O, N)
+(espresso_311, clase,      espresso)       ∈ M(O, K)</code></pre>
+        </div>
+
+        <p>No te detengas todavía en la notación; el <a href="07-hecho-atomico.html">capítulo
+          7</a> la desarma pieza por pieza. Lo único que importa ver aquí es que las cuatro
+          sombras de la Figura 1.1 acaban de fundirse en un solo registro, y que ese registro es
+          legible —de izquierda a derecha, como una frase— por cualquiera de los cuatro sistemas
+          y por una máquina por igual.</p>
+
+        <h2>Una promesa que se puede comprobar</h2>
+
+        <p>No te pido que tomes esto como un acto de fe. La fuerza de la apuesta no está en que
+          suene elegante, sino en que estas siete preguntas no son un invento moderno. Filósofos
+          griegos, juristas romanos, escuelas de periodismo del 1900 y los propios niños que
+          aprenden a hablar convergen —sin coordinarse, separados por siglos— en la misma lista.
+          Cuando tantas tradiciones independientes llegan a la misma respuesta, esa respuesta
+          deja de ser una hipótesis y empieza a parecer un descubrimiento.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Más adelante</span>
+          La demostración de <em>por qué estas siete y no otras</em> —la convergencia entre
+          Aristóteles, la retórica clásica y la adquisición del lenguaje— tiene capítulo propio:
+          el <a href="06-raices.html">capítulo 6</a>.
+        </aside>
+
+        <p>A esa convergencia —la prueba de por qué estas preguntas y no otras— le dedicamos un
+          capítulo entero. Pero no hace falta esperar a la demostración para empezar a construir.
+          De hecho, conviene construir primero: ver la maquinaria funcionando convence más que
+          cualquier argumento.</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">Cómo nació este modelo</p>
+          <p style="margin:0">Esta arquitectura no se diseñó en abstracto para luego forzar a los
+            datos a encajar. Emergió al revés: dominio tras dominio, chocando con las fricciones
+            reales que cada negocio exigía resolver. El día decisivo fue aquel en que comprendimos
+            que ocho industrias sin relación entre sí —de un spa a un banco, de una clínica a una
+            mina— estaban pidiendo la <em>misma</em> solución estructural, disfrazada con
+            vocabularios distintos. Cuando ocho problemas independientes convergen en la misma
+            respuesta, esa respuesta deja de ser una opinión.</p>
+        </div>
+
+        <p>Lo que sigue es, sencillamente, la ingeniería. Vamos a diseccionar las siete
+          coordenadas una por una: su carga de significado, sus trampas, los casos límite donde
+          parecen romperse. Empezaremos por las cuatro más concretas —quién, qué, dónde y
+          cuándo—, porque son el suelo firme sobre el que se levanta todo lo demás. La paciente
+          Vega nos espera al final del camino; cuando volvamos a su sala de urgencias, la consulta
+          imposible de esta noche será una sola línea.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="00-introduccion.html"><span class="dir">← Anterior</span><span class="tit">Introducción</span></a>
+      <a class="sig" href="02-cuatro-pilares.html"><span class="dir">Siguiente →</span><span class="tit">Quién, qué, dónde, cuándo</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

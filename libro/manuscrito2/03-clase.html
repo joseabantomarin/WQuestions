@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 3 · Cuál: el zócalo categórico (K) — WQuestions</title>
+  <meta name="description" content="Además de los individuos concretos hay categorías. K es el segundo zócalo del modelo: el eje de los tipos, las unidades, los estados y las nomenclaturas.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'3'">
+      <header class="portada-cap">
+        <p class="parte">Parte II · Las siete coordenadas</p>
+        <div class="num-cap">03</div>
+        <h1>Cuál: el zócalo categórico (K)</h1>
+        <p class="lede">Los cuatro pilares saben dónde guardar a Lucía y a su taza, pero no saben
+          decir <em>qué son</em>. Falta un eje para los tipos, las unidades y los estados: el segundo
+          gran zócalo del modelo.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">La barista pone delante de ti una taza pequeña, de borde grueso, con una
+          crema avellana que tarda en deshacerse. Sabes muchas cosas concretas de <em>esa</em> taza:
+          que la sirvió Lucía, que está sobre la barra, que son las ocho y catorce. Pero hay otra
+          pregunta que tu mente responde antes incluso de probar el primer sorbo, y que ninguno de
+          los cuatro pilares del capítulo anterior puede contestar: <strong>¿qué es esto?</strong> Es
+          un espresso. No <em>ese</em> espresso en particular —el que humea frente a ti—, sino un
+          ejemplar de una categoría que existía mucho antes de que Lucía encendiera la máquina y
+          seguirá existiendo cuando la taza esté vacía en el lavavajillas.</p>
+
+        <p>Esa pregunta —<em>¿de qué tipo es?</em>— parece menor, casi una formalidad. No lo es. Es
+          la grieta por la que se cuela un eje entero, y con él la mitad del poder de razonamiento de
+          cualquier sistema serio. Este capítulo trata de ese eje: <strong>K</strong>, el zócalo
+          categórico, la respuesta a la pregunta <em>cuál</em>.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Dónde encaja</span>
+          El <a href="02-cuatro-pilares.html">capítulo anterior</a> levantó el esqueleto con cuatro
+          pilares concretos. Este añade el primer eje <em>abstracto</em>. El
+          <a href="04-cuanto.html">siguiente</a> mostrará por qué los números no pueden existir sin
+          él.
+        </aside>
+
+        <h2>Lo que los pilares dejan sin decir</h2>
+
+        <p>Conviene volver un momento a la escena con la que cerró el capítulo dos. Teníamos un hecho
+          —la taza que Lucía dejó sobre la barra a las 08:14— repartido limpiamente en cuatro
+          casilleros: Lucía en el <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>,
+          la taza en el <span class="eje-rotulo"><span class="eje eje--o">O</span></span>, la barra en
+          el <span class="eje-rotulo"><span class="eje eje--l">L</span></span> y el instante en el
+          <span class="eje-rotulo"><span class="eje eje--t">T</span></span>. A primera vista, el hecho
+          quedó descrito por completo. Pero si lo miras con ojos de ingeniero de datos, descubres un
+          punto ciego enorme: hay información crítica que esos cuatro pilares, <em>por diseño</em>, no
+          te dejan expresar.</p>
+
+        <p>Sabemos que Lucía vive en el eje Q. Y si en la escena apareciera también el cliente que
+          pidió el café, sabríamos que él vive igualmente en Q. Hasta ahí, sin problemas. Pero un
+          sistema que aspire a ser útil necesita algo más profundo que un lugar donde guardar dos
+          nombres: necesita saber <em>que ambos son personas</em>. Necesita la capacidad lógica de
+          reconocer que <code>barista_lucia</code> y <code>cliente_038</code> comparten una
+          naturaleza —pertenecen a la misma <strong>categoría</strong>— para poder, por ejemplo,
+          contar cuánta gente pasó por la barra sin confundirla con las tazas.</p>
+
+        <p>Lo mismo ocurre con la taza, o más bien con el café que contiene. Ese líquido concreto,
+          extraído esta mañana, vive correctamente en el eje O. Pero la palabra «espresso» nombra algo
+          mucho más amplio que esa porción específica que se enfría sobre la barra. «Espresso» es
+          <strong>el tipo</strong> de cosa al que pertenece esa porción. Cualquier sistema con
+          aspiraciones de inteligencia tiene que distinguir sin esfuerzo entre el ejemplar concreto
+          —este café puntual, con su crema que ya empieza a romperse— y la categoría universal a la
+          que pertenece —el espresso como concepto general, la receta, el método de extracción que se
+          enseña en cualquier escuela de baristas del mundo.</p>
+
+        <p>La limitación es estructural y vale la pena nombrarla con claridad: los pilares que hemos
+          visto funcionan como un <strong>inventario de individuos</strong>. Catalogan a esta persona,
+          a este objeto, a este lugar exacto, a este instante del reloj. Lo que falta es un inventario
+          distinto, uno que defina <strong>lo que esos individuos son</strong>. Y esa definición de
+          identidad no cabe en Q ni en O. Reclama su propio eje.</p>
+
+        <h2>Qué es K, exactamente</h2>
+
+        <p>La letra <strong>K</strong> se eligió por convergencia lingüística: <em>Kind</em> en inglés,
+          <em>Klasse</em> en alemán, la raíz griega <em>katēgoría</em> que comparten las lenguas
+          latinas. Es el eje que responde a la pregunta <strong>¿cuál?</strong>: cuál, de entre un
+          conjunto acotado de tipos, estados o categorías, le corresponde a algo. Está diseñado en
+          exclusiva para alojar <strong>tipos, categorías y conceptos abstractos</strong>. Es el
+          territorio lógico donde viven ideas genéricas como <code>espresso</code>,
+          <code>cafe_arabica</code>, <code>largometraje</code>, <code>genero_drama</code>,
+          <code>posicion_escolta</code>, <code>ordenanza_municipal</code>, <code>kilogramo</code>,
+          <code>infarto_agudo_de_miocardio</code> o <code>arquitectura_transformer</code>.</p>
+
+        <p>La imagen que mejor lo captura es la de un edificio sostenido por dos grandes fundaciones.
+          Los pilares Q, O, L y T forman el <strong>primer zócalo</strong>, el de lo concreto. Allí
+          viven las cosas que existen materialmente, entidades con identidad propia y, casi siempre,
+          una ubicación en el espacio y en el tiempo. K es el <strong>segundo zócalo</strong>, el de
+          lo categórico. Allí no hay nada que puedas tocar: hay nombres genéricos, patrones y moldes
+          bajo los cuales agrupamos a los ejemplares del primer zócalo.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Idea clave</p>
+          <p style="margin:0">El modelo descansa sobre <strong>dos zócalos</strong>, no uno. El
+            primero —Q, O, L, T— cataloga los individuos del mundo. El segundo —K— define las
+            categorías a las que esos individuos pertenecen. Sin el segundo, un sistema puede guardar
+            datos, pero no puede <em>razonar</em> sobre ellos.</p>
+        </div>
+
+        <p>Esta distinción entre el individuo y su categoría es sutil, pero es la herramienta más
+          potente del modelo. Una <em>directora de cine</em> de carne y hueso vive en Q: es una
+          persona, <code>serra</code>, con fecha de nacimiento, nacionalidad y una filmografía. Pero
+          el concepto de <em>directora</em> —el rol, el oficio— vive en K. Un <em>partido de
+          baloncesto</em> concreto vive en O: <code>partido_halcones_lobos</code>, ocurrió un sábado,
+          terminó 88 a 84. Pero el concepto de <em>partido de baloncesto</em> vive en K. La ciudad
+          donde se jugó vive en L; la categoría abstracta de <em>ciudad sede</em> vive en K.</p>
+
+        <p>Separar las instancias de sus categorías es justamente lo que le permite a un sistema
+          <strong>razonar con generalidad</strong>. Es lo que hace posible que el buscador de una
+          plataforma de streaming entienda la orden «muéstrame todos los largometrajes de género
+          drama», en lugar de obligar al usuario a teclear, uno por uno, el título de cada película
+          que cumple esa condición.</p>
+
+        <!-- FIGURA 3.1: K como red de conceptos (jerarquía subtipo_de + instancia_de) -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 430" class="svg-eje" role="img"
+                 aria-label="Red de conceptos del eje K: una jerarquía de categorías unidas por subtipo_de, y dos individuos concretos atados a sus tipos mediante instancia_de">
+              <defs>
+                <marker id="flechaK" markerWidth="9" markerHeight="9" refX="7" refY="3"
+                        orient="auto" markerUnits="userSpaceOnUse">
+                  <path d="M0,0 L7,3 L0,6 Z" fill="var(--eje-k)"/>
+                </marker>
+                <marker id="flechaIns" markerWidth="9" markerHeight="9" refX="7" refY="3"
+                        orient="auto" markerUnits="userSpaceOnUse">
+                  <path d="M0,0 L7,3 L0,6 Z" fill="var(--eje-o)"/>
+                </marker>
+              </defs>
+
+              <!-- leyenda -->
+              <line x1="372" y1="24" x2="404" y2="24" stroke="var(--eje-k)" stroke-width="2.2"/>
+              <text x="410" y="28" font-size="12" fill="var(--eje-k)" font-weight="600">subtipo_de · K → K (jerarquía)</text>
+              <line x1="372" y1="44" x2="404" y2="44" stroke="var(--eje-o)" stroke-width="2.2" stroke-dasharray="4 3"/>
+              <text x="410" y="48" font-size="12" fill="var(--eje-o)" font-weight="600">instancia_de · O/Q → K (anclaje)</text>
+
+              <!-- aristas subtipo_de (de abajo hacia arriba, hijo apunta a padre) -->
+              <!-- nivel raíz -->
+              <line x1="200" y1="92" x2="200" y2="62" stroke="var(--eje-k)" stroke-width="2.2" marker-end="url(#flechaK)" opacity=".85"/>
+              <!-- bebida_caliente -> producto_consumible (raíz) : centramos raíz arriba -->
+              <line x1="200" y1="150" x2="200" y2="118" stroke="var(--eje-k)" stroke-width="2.2" marker-end="url(#flechaK)" opacity=".85"/>
+              <line x1="160" y1="208" x2="192" y2="176" stroke="var(--eje-k)" stroke-width="2.2" marker-end="url(#flechaK)" opacity=".85"/>
+              <line x1="240" y1="208" x2="208" y2="176" stroke="var(--eje-k)" stroke-width="2.2" marker-end="url(#flechaK)" opacity=".85"/>
+
+              <!-- nodo raíz: producto_consumible -->
+              <rect x="118" y="30" width="164" height="32" rx="9" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="1.6"/>
+              <text x="200" y="51" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-k)" font-family="var(--mono)">producto_consumible</text>
+
+              <!-- nodo bebida_caliente -->
+              <rect x="132" y="88" width="136" height="30" rx="9" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="1.6"/>
+              <text x="200" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="var(--eje-k)" font-family="var(--mono)">bebida_caliente</text>
+
+              <!-- nodo cafe -->
+              <rect x="158" y="146" width="84" height="30" rx="9" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="1.6"/>
+              <text x="200" y="166" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-k)" font-family="var(--mono)">cafe</text>
+
+              <!-- hojas: espresso y cortado -->
+              <rect x="84" y="204" width="92" height="30" rx="9" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="1.6"/>
+              <text x="130" y="224" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-k)" font-family="var(--mono)">espresso</text>
+
+              <rect x="200" y="204" width="92" height="30" rx="9" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="1.6"/>
+              <text x="246" y="224" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-k)" font-family="var(--mono)">cortado</text>
+
+              <!-- atributo colgando de espresso (red de conceptos K→K) -->
+              <line x1="130" y1="234" x2="130" y2="262" stroke="var(--eje-k)" stroke-width="1.4" stroke-dasharray="2 3" opacity=".6"/>
+              <text x="130" y="278" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)" font-family="var(--mono)">tueste · K→K</text>
+              <rect x="78" y="286" width="104" height="28" rx="8" fill="var(--papel-2)" stroke="var(--eje-k)" stroke-width="1.2" opacity=".9"/>
+              <text x="130" y="304" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-k)" font-family="var(--mono)">tueste_medio</text>
+
+              <!-- INSTANCIA: el café concreto (O) ata a espresso -->
+              <line x1="130" y1="380" x2="130" y2="236" stroke="var(--eje-o)" stroke-width="2.2" stroke-dasharray="4 3" marker-end="url(#flechaIns)" opacity=".9"/>
+              <rect x="70" y="380" width="120" height="32" rx="9" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="1.6"/>
+              <text x="130" y="401" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">espresso_311</text>
+              <text x="130" y="424" text-anchor="middle" font-size="10" fill="var(--tinta-tenue)">el café servido hoy · eje O</text>
+
+              <!-- columna derecha: persona y un agente, atados por instancia_de -->
+              <rect x="430" y="146" width="150" height="30" rx="9" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="1.6"/>
+              <text x="505" y="166" text-anchor="middle" font-size="12" font-weight="700" fill="var(--eje-k)" font-family="var(--mono)">persona_humana</text>
+
+              <rect x="438" y="204" width="134" height="30" rx="9" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="1.6"/>
+              <text x="505" y="224" text-anchor="middle" font-size="12" font-weight="700" fill="var(--eje-k)" font-family="var(--mono)">profesion_barista</text>
+
+              <line x1="505" y1="204" x2="505" y2="176" stroke="var(--eje-k)" stroke-width="2.2" marker-end="url(#flechaK)" opacity=".85"/>
+
+              <!-- agente barista_lucia (Q) instancia_de las dos -->
+              <rect x="438" y="380" width="134" height="32" rx="9" fill="var(--eje-q-suave)" stroke="var(--eje-q)" stroke-width="1.6"/>
+              <text x="505" y="401" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-q)" font-family="var(--mono)">barista_lucia</text>
+              <text x="505" y="424" text-anchor="middle" font-size="10" fill="var(--tinta-tenue)">la persona · eje Q</text>
+
+              <line x1="490" y1="380" x2="490" y2="234" stroke="var(--eje-o)" stroke-width="2.2" stroke-dasharray="4 3" marker-end="url(#flechaIns)" opacity=".9"/>
+              <line x1="525" y1="380" x2="505" y2="176" stroke="var(--eje-o)" stroke-width="2.2" stroke-dasharray="4 3" marker-end="url(#flechaIns)" opacity=".75"/>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 3.1.</span> El eje K como red de conceptos. Las
+            flechas <span style="color:var(--eje-k);font-weight:700">verdosas</span> son
+            <code>subtipo_de</code> y arman la jerarquía categórica: <code>espresso</code> es subtipo
+            de <code>cafe</code>, que es subtipo de <code>bebida_caliente</code>. Las flechas
+            <span style="color:var(--eje-o);font-weight:700">punteadas</span> son
+            <code>instancia_de</code> y atan cada individuo concreto a sus tipos:
+            <code>espresso_311</code> (un café en O) y <code>barista_lucia</code> (una persona en Q).
+            Las categorías también se conectan entre sí —<code>espresso</code> tiene un
+            <code>tueste_medio</code>—: K no es una lista, es un grafo.</figcaption>
+        </figure>
+
+        <h2>Cuatro familias dentro de K</h2>
+
+        <p>El eje K no es una bolsa plana donde arrojamos etiquetas al azar. Es un entorno muy
+          estructurado que aloja, al menos, cuatro familias distintas de entidades categóricas. Vale
+          la pena recorrerlas una a una para entender su alcance.</p>
+
+        <h3>1 · Tipos de objetos y eventos</h3>
+
+        <p>Conceptos como <code>espresso</code>, <code>largometraje</code>, <code>triple_anotado</code>,
+          <code>ordenanza_municipal</code> o <code>sesion_ia</code> son, en sentido estricto, tipos.
+          El café físico está en O; el molde teórico <code>espresso</code> está en K. Para coser ambos
+          ejes usamos una relación fundamental que llamaremos <code>instancia_de</code>. Esa única
+          tripleta es el cordón umbilical entre el café concreto y su concepto:</p>
+
+        <div class="triple">
+          <span class="nodo nodo--o"><span>espresso_311</span><small>O</small></span>
+          <span class="enlace">instancia_de<span class="firma">M(O→K)</span></span>
+          <span class="nodo nodo--k"><span>espresso</span><small>K</small></span>
+        </div>
+
+        <p>Esa misma forma se repite para cualquier individuo de cualquier pilar; lo que cambia es el
+          eje de origen:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(espresso_311,   instancia_de, espresso)             ∈ M(O, K)
+(barista_lucia,  instancia_de, profesion_barista)   ∈ M(Q, K)
+(pelicula_marea, instancia_de, largometraje)        ∈ M(O, K)
+(modelo_lumen_2026, instancia_de, modelo_de_lenguaje) ∈ M(O, K)</code></pre>
+        </div>
+
+        <p>Cualquier individuo registrado en Q, O o L —y a veces en T— debe poder responder a la
+          pregunta «¿de qué concepto eres instancia?». Ese hilo es lo que ata el grafo de hechos
+          concretos con el diccionario abstracto del sistema. Sin él, los pilares serían un montón de
+          nombres flotando sin red.</p>
+
+        <h3>2 · Unidades de medida</h3>
+
+        <p>Términos como <code>kilogramo</code>, <code>segundo</code>, <code>token</code>,
+          <code>dolar</code>, <code>milisegundo</code> o <code>grado_celsius</code> son categorías
+          puras; no son entidades materiales. Nunca te cruzarás por la calle con «un kilogramo físico»
+          flotando en el aire como una botella; lo que experimentas es el patrón de «ser un kilogramo»
+          aplicado a la masa de una botella. Como son conceptos teóricos para medir, todas las unidades
+          habitan en K.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Adelanto</span>
+          No hay que inventar las unidades: existe un catálogo canónico, <strong>QUDT</strong>, que clasifica miles de ellas, define sus dimensiones físicas
+          y permite conversiones. Lo estudiaremos a fondo en el <a href="04-cuanto.html">capítulo del
+          eje N</a>.
+        </aside>
+
+        <p>Que las unidades vivan en K no es un capricho de catalogación: es una necesidad
+          arquitectónica. Como veremos en el próximo capítulo, un número desnudo no significa nada
+          —«18» no es nada hasta que sabes que son <em>18 gramos de café molido</em>— y el único lugar
+          donde puede habitar esa unidad es el zócalo categórico. Por eso K tenía que presentarse antes
+          que N.</p>
+
+        <h3>3 · Estados y valores enumerativos</h3>
+
+        <p>En el diseño de software es muy común encontrar atributos que solo admiten un valor de una
+          lista estricta y cerrada: <em>casado / soltero / viudo</em>, <em>aprobado / pendiente /
+          rechazado</em>, <em>titular / suplente</em>, <em>encendido / apagado</em>. Esos valores
+          predefinidos no son números ni deberían tratarse como texto libre: son
+          <strong>categorías de estado</strong>. Y como son conceptos genéricos aplicables a muchos
+          casos, viven en K.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(jugador_071,   posicion_en_pista, posicion_escolta)  ∈ M(Q, K)
+(ordenanza_142, estado_tramite,    promulgada)        ∈ M(O, K)
+(sesion_ia_5521, modo_entrega,     streaming)         ∈ M(O, K)</code></pre>
+        </div>
+
+        <h3>4 · Conceptos abstractos y nomenclaturas</h3>
+
+        <p>Todo dominio profesional serio cuenta con diccionarios controlados. Aquí entran los
+          diagnósticos médicos oficiales (CIE-10, SNOMED), las categorías comerciales y códigos de
+          producto (SKU), los géneros cinematográficos y musicales, las tipologías de actos
+          administrativos o las arquitecturas de inteligencia artificial. Cualquier nomenclatura
+          controlada, sin excepción, aterriza en el eje K.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(pelicula_marea, genero,       genero_drama)     ∈ M(O, K)
+(producto_088,   sku,          "esp_arabica_250") ∈ M(O, K)
+(ordenanza_142,  tipo_norma,   ordenanza_municipal) ∈ M(O, K)
+(modelo_lumen_2026, arquitectura, transformer)     ∈ M(O, K)</code></pre>
+        </div>
+
+        <p>Si una línea atraviesa a las cuatro familias es esta: <strong>todo lo que vive en K no es
+          un ejemplar único del mundo, sino un patrón conceptual que puede aplicarse a decenas, miles
+          o millones de casos</strong>.</p>
+
+        <h2>La frontera resbaladiza: ¿instancia (O) o clase (K)?</h2>
+
+        <p>El lector técnico choca tarde o temprano con un caso incómodo: ciertos objetos híbridos
+          —un <strong>sistema de repetición instantánea</strong> en el baloncesto, un
+          <strong>algoritmo de recomendación</strong>, un <strong>modelo de lenguaje</strong>—
+          parecen vivir en varios ejes a la vez. La confusión se disuelve apenas se entiende que
+          <strong>no es la cosa la que tiene un eje, sino cada uno de sus papeles</strong>. Una misma
+          palabra nombra cosas distintas según qué le preguntemos.</p>
+
+        <figure class="figura figura--ancha">
+          <table>
+            <caption style="caption-side:top;text-align:left;font-family:var(--sans);font-size:.82rem;color:var(--tinta-suave);margin-bottom:.5rem">
+              La misma palabra, distintos papeles, distintos ejes</caption>
+            <thead>
+              <tr>
+                <th>Si te refieres a…</th>
+                <th>Eje</th>
+                <th>Sistema de repetición</th>
+                <th>Algoritmo de recomendación</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>El <b>tipo o concepto</b> (la tecnología, la categoría)</td>
+                <td><span class="eje eje--k">K</span></td>
+                <td><code>repeticion_instantanea</code> como clase de sistema arbitral</td>
+                <td><code>filtrado_colaborativo</code> como técnica</td>
+              </tr>
+              <tr>
+                <td>El <b>ejemplar concreto</b> (un despliegue, una unidad)</td>
+                <td><span class="eje eje--o">O</span></td>
+                <td>el sistema instalado en el Pabellón Norte</td>
+                <td>el motor de recomendación de una plataforma</td>
+              </tr>
+              <tr>
+                <td>Una <b>acción suya, reificada</b> (un evento que ejecutó)</td>
+                <td><span class="eje eje--o">O</span></td>
+                <td><em>«revisó la jugada del minuto 38»</em></td>
+                <td><em>«recomendó la serie a Paredes»</em></td>
+              </tr>
+              <tr>
+                <td>Cuando <b>actúa</b> (ocupa el rol <code>agente</code>)</td>
+                <td><span class="eje eje--q">Q</span></td>
+                <td>el sistema como agente de <em>anular_canasta</em></td>
+                <td>el motor como agente de <em>recomendar</em></td>
+              </tr>
+            </tbody>
+          </table>
+          <figcaption><span class="fnum">Figura 3.2.</span> Un mismo objeto híbrido se reparte por
+            varios ejes según el papel que cumpla en cada hecho. No se duplica: es un solo individuo,
+            referido desde situaciones distintas.</figcaption>
+        </figure>
+
+        <p>Aquí se ve la <strong>reificación</strong> en movimiento, y su parentesco con la agencia
+          contextual (la regla D5 que formalizaremos en el <a href="09-situaciones.html">capítulo
+          9</a>). El mismo sistema de repetición es un objeto pasivo en O cuando describimos su
+          instalación; es el <code>agente</code> en Q cuando <em>anula</em> una canasta; y ese «anular
+          la canasta» es, a su vez, una situación reificada que vive en O. La entidad <strong>no se
+          duplica</strong> al cambiar de eje: es un solo individuo, referido desde situaciones
+          distintas. Y un evento activo en un nivel —la revisión del sistema— puede volverse el objeto
+          pasivo de otro —«la revisión del minuto 38 fue impugnada por el club»—: eso es,
+          exactamente, reificar.</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">La regla de los tres dedos</p>
+          <p style="margin-bottom:.4rem">Ante cada mención, pregúntate <em>qué</em> se está nombrando:</p>
+          <ul style="margin:0">
+            <li><b>¿De qué tipo es?</b> → <span class="eje eje--k">K</span> (la categoría).</li>
+            <li><b>¿Qué ejemplar, o qué evento, es?</b> → <span class="eje eje--o">O</span> (la
+              instancia concreta o la acción reificada).</li>
+            <li><b>¿Quién actúa en esta situación?</b> → <span class="eje eje--q">Q</span> (el agente,
+              por contexto, no por naturaleza).</li>
+          </ul>
+        </div>
+
+        <p>La misma disciplina ordena a los demás híbridos del libro: <code>transformer</code> es la
+          arquitectura (K), <code>modelo_lumen_2026</code> el modelo desplegado (O),
+          <em>«el modelo resumió la consulta»</em> el evento (O), y el modelo en su papel de redactor
+          del informe el agente (Q).</p>
+
+        <h2>Por qué K necesita un eje propio</h2>
+
+        <p>Hay una objeción legítima que cualquier ingeniero de bases de datos plantea al llegar
+          aquí: <em>¿para qué crear todo un eje nuevo? ¿Por qué no tratar las categorías como simples
+          cadenas de texto guardadas en una columna? Que el atributo sea <code>estado_civil</code> y
+          el valor sea la palabra <code>"casado"</code>, y asunto resuelto.</em></p>
+
+        <p>A corto plazo, parece pragmático. A escala de arquitectura empresarial, es la receta
+          perfecta para la fragmentación de datos. La objeción del texto plano no se sostiene por tres
+          razones técnicas que se acumulan hasta colapsar los sistemas tradicionales.</p>
+
+        <h3>Razón 1 · Las categorías tienen estructura interna</h3>
+
+        <p>La palabra <code>genero_drama</code> no es solo una secuencia de letras. Es un nodo
+          semántico con una enorme riqueza de propiedades. Tiene equivalentes en otros idiomas
+          (<em>drama</em>, <em>Drama</em>). Tiene dependencias lógicas con otras categorías (el drama
+          es un tipo de <em>género narrativo</em>). Tiene contextos de aplicabilidad. Si guardamos
+          «drama» como un simple <em>string</em> en una tabla SQL, toda esa estructura queda
+          inaccesible para el motor: la palabra está «ciega». En cambio, si la tratamos como un
+          individuo con derechos propios dentro de K, esa categoría puede tener sus propios hechos
+          conectados:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(genero_drama, etiqueta_en,  "drama")            ∈ M(K, K)
+(genero_drama, subtipo_de,   genero_narrativo)   ∈ M(K, K)
+(genero_drama, contrasta_con, genero_comedia)    ∈ M(K, K)
+(genero_drama, uri_canonica, "schema:DramaSeries") ∈ M(K, K)</code></pre>
+        </div>
+
+        <p>Visto así, K no es un archivo plano: es una <strong>red de conceptos interconectados</strong>
+          —exactamente la red que dibujamos en la Figura 3.1—. Los individuos de K son ciudadanos de
+          primera clase del modelo. Esta capacidad de vincular conceptos entre sí será la clave cuando
+          analicemos cómo WQuestions se integra con los diccionarios de otras industrias.</p>
+
+        <h3>Razón 2 · El vocabulario serio exige autoridad externa</h3>
+
+        <p>Las categorías de alto nivel que usan hospitales, bancos o gobiernos no se inventan en una
+          lluvia de ideas de programadores; provienen de autoridades internacionales que las publican
+          con identificadores únicos, los <strong>URI</strong>. <strong>QUDT</strong> regula las unidades; <strong>Schema.org</strong> da los estándares del comercio web; <strong>SNOMED</strong>
+          dicta los códigos médicos; la <strong>ICAO</strong> define las siglas de los aeropuertos.
+          Tratar una de estas categorías como texto ignora por completo su peso legal e internacional.
+          Al registrarla como individuo formal en K, podemos anexarle su URI canónica como atributo
+          permanente:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(qudt_miliseg,   uri_canonica, "http://qudt.org/vocab/unit/MilliSEC") ∈ M(K, K)
+(snomed_infarto, uri_canonica, "http://snomed.info/id/22298006")     ∈ M(K, K)
+(cie10_I21,      uri_canonica, "http://id.who.int/icd/release/10/2019/I21") ∈ M(K, K)</code></pre>
+        </div>
+
+        <p>El caso del <strong>CIE-10</strong> —la <em>Clasificación Internacional de Enfermedades</em>
+          en su décima edición, publicada por la Organización Mundial de la Salud— es el más nítido.
+          Cuando un médico anota el código <code>I21</code> no escribe una palabra cualquiera: apunta
+          a una entrada formal, internacional y traducida a decenas de idiomas, que significa «infarto
+          agudo de miocardio». Si tu sistema guarda el diagnóstico como el texto libre «infarto»,
+          pierdes esa conexión: un hospital alemán escribirá «Herzinfarkt», uno brasileño «infarto do
+          miocárdio», y nadie podrá cruzar datos. En cambio, si el sistema guarda la categoría como un
+          individuo de K con su URI del CIE-10 anexada, todos los hospitales del mundo hablan el mismo
+          idioma sin esfuerzo. La estadística global de salud, los estudios epidemiológicos, las
+          alertas sanitarias internacionales: todo descansa sobre este mecanismo.</p>
+
+        <h3>Razón 3 · Las consultas sobre categorías son el corazón del sistema</h3>
+
+        <p>Las preguntas de negocio más valiosas siempre cruzan información categórica. Un analista no
+          pide buscar un identificador concreto; pide <em>«todos los largometrajes de género drama
+          estrenados después de 2024»</em>, o <em>«todas las sesiones del modelo Lumen con modo de
+          entrega <code>streaming</code> y más de mil tokens de salida»</em>.</p>
+
+        <p>Si las categorías estuvieran guardadas como texto libre, estas búsquedas serían un campo
+          minado: un usuario escribió «Drama», otro «drama», otro «Dram.». Al convertir las categorías
+          en nodos estructurados de K, las consultas dejan de depender de la ortografía y pasan a
+          depender de la matemática relacional. Se vuelven exactas, predecibles y combinables.</p>
+
+        <h2>Dos relaciones canónicas: <code>instancia_de</code> y <code>subtipo_de</code></h2>
+
+        <p>Para que esta red de conceptos funcione y sea navegable, hay dos relaciones fundacionales
+          que organizan la estructura interna de K. Es vital entender cómo operan.</p>
+
+        <p>La primera es <strong><code>instancia_de</code></strong>. Como adelantamos, es la relación
+          de uso más intensivo en todo el modelo. Su trabajo exclusivo es actuar como puente, atando
+          los individuos del mundo físico (los pilares) con sus definiciones conceptuales (el eje K).
+          Y un punto crucial: un individuo puede ser instancia de varios conceptos a la vez.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(jugador_071, instancia_de, deportista_profesional) ∈ M(Q, K)
+(jugador_071, instancia_de, capitan_de_equipo)      ∈ M(Q, K)
+(jugador_071, instancia_de, persona_humana)         ∈ M(Q, K)
+(jugador_071, instancia_de, jugador_en_activo)      ∈ M(Q, K)</code></pre>
+        </div>
+
+        <p>Estas cuatro asignaciones no compiten ni generan errores lógicos: coexisten en paralelo. Si
+          el motor recibe una consulta filtrando por cualquiera de esas categorías,
+          <code>jugador_071</code> aparecerá como resultado válido.</p>
+
+        <p>La segunda relación es <strong><code>subtipo_de</code></strong>. A diferencia de la
+          anterior, este conector <em>nunca</em> sale de las fronteras de K. Se usa en exclusiva para
+          enlazar categorías entre sí, creando jerarquías y árboles de conocimiento —taxonomías—:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(posicion_escolta,    subtipo_de, posicion_exterior)             ∈ M(K, K)
+(posicion_exterior,   subtipo_de, posicion_de_baloncesto)        ∈ M(K, K)
+(modelo_de_lenguaje,  subtipo_de, modelo_de_aprendizaje_automatico) ∈ M(K, K)
+(modelo_transformer,  subtipo_de, modelo_de_lenguaje)            ∈ M(K, K)</code></pre>
+        </div>
+
+        <p>¿Por qué importa tanto a nivel tecnológico? Porque cuando declaras bien las reglas
+          <code>instancia_de</code> y <code>subtipo_de</code>, le otorgas al sistema la capacidad de
+          realizar <strong>inferencias transitivas</strong>. Si la máquina sabe que el jugador es un
+          <code>posicion_escolta</code>, y por otro lado sabe que toda escolta es una
+          <code>posicion_exterior</code>, deduce sola que el jugador ocupa una posición exterior. A esa
+          habilidad se la conoce como <strong>cierre transitivo</strong> (<em>transitive closure</em>).
+          Es el mecanismo de razonamiento más simple que existe, pero es el superpoder que evita que
+          los programadores codifiquen a mano miles de reglas lógicas.</p>
+
+        <p class="cita-destacada revelar">Una taxonomía bien declarada es razonamiento gratis: el
+          sistema deduce lo que nunca le dijiste, solo porque supo encadenar
+          «<em>es un</em>».<cite>El cierre transitivo, en una frase</cite></p>
+
+        <h2>Lo que ya se intentó: tres puertas, ningún piso</h2>
+
+        <p>Antes de ver cómo K aloja las ontologías del mundo, conviene entender por qué nadie lo
+          había resuelto antes. No fue por falta de intentos: la industria abrió tres grandes puertas,
+          y cada una se quedó a un paso.</p>
+
+        <div class="caja caja--precedente revelar">
+          <p class="caja-tit">Precedente · La primera puerta: las 5W1H como extracción</p>
+          <p style="margin:0">A fines del siglo XX, varios investigadores vieron las seis preguntas periodísticas como una herramienta
+            para extraer datos de texto: un programa lee una noticia y acomoda las respuestas en
+            casilleros (<em>quién: el alcalde; qué: promulgó una ordenanza; cuándo: ayer</em>). El
+            resultado luce ordenado, pero estalla apenas se intenta <strong>almacenarlo y
+            cruzarlo</strong>: para la máquina, «el alcalde» y «el titular del municipio» son dos
+            cadenas distintas. Sin una capa de tipos ni un vocabulario canónico, las 5W1H son un buen
+            <em>checklist</em> para no olvidar nada, pero no una arquitectura: les faltan justo las dos
+            piezas que este capítulo introduce —una estructura de tipos (K) y un vocabulario
+            oficial.</p>
+        </div>
+
+        <div class="caja caja--precedente revelar">
+          <p class="caja-tit">Precedente · La segunda puerta: la web semántica</p>
+          <p style="margin:0">En 2001, Tim Berners-Lee propuso la <strong>Web Semántica</strong>, con <strong>RDF</strong> como
+            pieza maestra: toda la información reducida a tripletas <em>sujeto–predicado–objeto</em>.
+            La idea es de una elegancia impecable y sostiene proyectos titánicos como Wikidata y DBpedia. Pero RDF resolvió
+            la <em>sintaxis</em> y dejó libre la <em>semántica</em>: un sistema escribe
+            <code>(serra, dirigio, pelicula_marea)</code>, otro <code>(serra, directora_de, …)</code>,
+            un tercero <code>(serra, realizo, …)</code> —las tres correctas, las tres incompatibles—.
+            Sin un diccionario mínimo común, la diversidad de lenguajes simplemente se mudó a otra
+            capa.</p>
+        </div>
+
+        <div class="caja caja--precedente revelar">
+          <p class="caja-tit">Precedente · La tercera puerta: las ontologías de dominio</p>
+          <p style="margin:0">Ante ese caos, el tercer enfoque eligió el control estricto: reunir a
+            los expertos de cada industria y publicar un vocabulario oficial y obligatorio. Así
+            nacieron obras de arte de la ingeniería como <strong>CIDOC CRM</strong> (patrimonio), <strong>Biolink</strong> (biomedicina), <strong>HL7 FHIR</strong> (historias clínicas) y <strong>Schema.org</strong> (web comercial). Cada una es excelente dentro de su
+            perímetro. El problema asoma apenas hay que <strong>vincular profundamente</strong> ramas
+            distintas —la película con la biografía de su directora (<code>Person</code>) y el lugar
+            de rodaje (<code>Place</code>)—: las ontologías crean los nodos, pero no estandarizan los
+            cables entre ellos, y atarlos vuelve a recaer en código manual. Peor: como cada una se
+            construyó aislada, todas tuvieron que modelar desde cero lo universal. Para decir «una
+            persona», los museos usan <code>E21_Person</code>, la genética <code>biolink:Agent</code>,
+            el comercio <code>Person</code> y las clínicas <code>Patient</code>: cuatro etiquetas
+            incompatibles para un mismo ser humano físico.</p>
+        </div>
+
+        <p>A estas tres puertas se sumaron dos variantes que chocaron con el mismo muro: los
+          <strong>estándares de intercambio</strong> (FHIR, EDI, ISO 20022), que funcionan como
+          un servicio de mensajería —traducen para el transporte, no unifican—; y la
+          <strong>canonicalización a posteriori</strong> (OpenIE,
+          sistemas de limpieza de datos), que intenta reconciliar el caos <em>después</em> de que
+          ocurrió, con un costo computacional que se vuelve inmanejable al cruzar decenas de
+          sistemas.</p>
+
+        <p>El balance, llevado a cuatro dominios concretos, es elocuente:</p>
+
+        <figure class="figura figura--ancha">
+          <table>
+            <thead>
+              <tr>
+                <th>Dominio</th>
+                <th>1 · 5W1H <small>(heurística)</small></th>
+                <th>2 · RDF / Web Semántica <small>(libre conexión)</small></th>
+                <th>3 · Ontología de dominio <small>(diccionario estricto)</small></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>☕ El espresso</b></td>
+                <td>Insuficiente: no entiende dosis exactas, secuencias de pasos ni temperaturas.</td>
+                <td>Factible, si los programadores no usan verbos distintos para «moler» o
+                  «extraer».</td>
+                <td>Schema.org modela el producto, pero cuesta cruzarlo con datos del barista o del
+                  local.</td>
+              </tr>
+              <tr>
+                <td><b>🏀 El triple</b></td>
+                <td>Útil para la crónica deportiva, inútil para armar estadística del partido.</td>
+                <td>Posible vía Wikidata, aunque los términos para describir la jugada varían entre
+                  bases.</td>
+                <td>Existe <code>SportsEvent</code>, pero no llega al detalle de la posición desde la
+                  que se lanzó.</td>
+              </tr>
+              <tr>
+                <td><b>🎬 La película</b></td>
+                <td>Sirve para una nota <em>sobre</em> la película, no para modelar la obra.</td>
+                <td>Soportable, pero los vocabularios de cada base de cine chocan entre sí.</td>
+                <td>Modelos robustos en la industria, pero operan como burbujas difíciles de
+                  integrar.</td>
+              </tr>
+              <tr>
+                <td><b>🏛️ La ordenanza</b></td>
+                <td>Excelente: el dominio exacto para el que nació el modelo.</td>
+                <td>Funcional, pero sin acuerdo sobre cómo nombrar «promulgar» o «derogar», las
+                  búsquedas se arruinan.</td>
+                <td><code>Legislation</code> estructura el contenedor, pero no entiende qué dice
+                  adentro.</td>
+              </tr>
+            </tbody>
+          </table>
+          <figcaption><span class="fnum">Figura 3.3.</span> Cada enfoque previo resuelve una parte y
+            deja otra intacta: las 5W1H identifican las dimensiones pero no construyen arquitectura;
+            RDF construye la conexión pero sin vocabulario base; las ontologías construyen vocabularios
+            de lujo pero sin un piso común.</figcaption>
+        </figure>
+
+        <p>El patrón de las fallas es nítido. Todas levantaron <strong>techos</strong> espléndidos;
+          ninguna construyó el <strong>piso</strong>. Y un piso es justo lo que aporta el eje K: una
+          capa fundacional, por debajo de todos los vocabularios, lo bastante sutil para no estorbar la
+          jerga de médicos o arquitectos y lo bastante firme como para que la información fluya sin
+          traductores. Las preguntas cognitivas —que el <a href="01-torre-de-babel.html">capítulo
+          1</a> postuló como universales y que el <a href="06-raices.html">capítulo 6</a> fundamentará
+          en detalle— son ese piso. Veamos, entonces, cómo K abraza las ontologías existentes en lugar
+          de competir con ellas.</p>
+
+        <h2>K como zócalo para las ontologías existentes</h2>
+
+        <p>Quizá la promesa de mayor impacto industrial del eje K es que <strong>no obliga a ninguna
+          empresa a reinventar su terminología</strong>. Los diccionarios masivos que ya rigen en el
+          mundo —Schema.org, QUDT, SNOMED, CIDOC CRM, Biolink— se mapean dentro de K como subconjuntos
+          de datos, manteniendo intactas sus relaciones internas. WQuestions no llega a competir con
+          estas herramientas ni a reemplazarlas: su objetivo explícito es <strong>abrazarlas</strong>.</p>
+
+        <p>Esta integración pacífica ocurre en tres niveles técnicos.</p>
+
+        <div class="rejilla-3 revelar">
+          <div class="tarjeta">
+            <h4><span class="eje eje--k">1</span>&nbsp; Importar URIs canónicas</h4>
+            <p style="margin:0;font-size:.93rem">En vez de transcribir un diccionario entero, el
+              sistema aloja los conceptos esenciales y ancla a cada uno su URI internacional como
+              validador de identidad.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--k">2</span>&nbsp; Mapear dialectos locales</h4>
+            <p style="margin:0;font-size:.93rem">Cada organización define alias que apuntan al término
+              oficial. La jerga interna sigue viva, pero por debajo todo señala al concepto
+              canónico.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--k">3</span>&nbsp; Federar equivalencias</h4>
+            <p style="margin:0;font-size:.93rem">Cuando dos autoridades describen lo mismo con URIs
+              distintas, K declara una equivalencia explícita y se vuelve la red de traducción entre
+              ellas.</p>
+          </div>
+        </div>
+
+        <h3>Nivel 1 · Importar URIs canónicas</h3>
+
+        <p>En lugar de copiar un diccionario completo, el sistema aloja los conceptos que necesita y
+          ancla a cada uno su URI internacional:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">JSON</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="json">{
+  "concepto": "infarto_agudo_de_miocardio",
+  "eje": "K",
+  "uri_snomed": "http://snomed.info/id/22298006",
+  "uri_icd10": "I21",
+  "etiqueta_es": "infarto agudo de miocardio",
+  "etiqueta_en": "acute myocardial infarction"
+}</code></pre>
+        </div>
+
+        <p>El beneficio es inmediato: cuando el software de un laboratorio y el de un hospital
+          referencian la misma URI, la sincronización de los historiales es perfecta, por más que una
+          base esté en español y la otra en inglés.</p>
+
+        <h3>Nivel 2 · Mapear el vocabulario de dominio</h3>
+
+        <p>En la práctica, las empresas se resisten a usar términos canónicos largos o formales:
+          prefieren su jerga. K lo resuelve permitiendo que cada organización defina alias que apunten
+          al término oficial. Si en una clínica los médicos registran la enfermedad con las siglas
+          «IAM», el sistema lo mapea así:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(iam_clinica_norte, alias_de, infarto_agudo_de_miocardio)   ∈ M(K, K)</code></pre>
+        </div>
+
+        <p>Con esa única instrucción, todas las búsquedas que el médico haga tecleando «IAM» apuntarán
+          limpiamente al concepto global de SNOMED. Conviene adelantar que este principio sentará una
+          decisión de diseño de fondo —<strong>D9</strong>, que veremos en los capítulos de
+          lingüística computacional—: la idea rectora de que <strong>el usuario final nunca debe verse
+          obligado a tocar etiquetas canónicas</strong>. El usuario emplea su vocabulario natural; la
+          capa estructural se encarga de la traducción matemática. K es la maquinaria que lo hace
+          posible.</p>
+
+        <h3>Nivel 3 · Federar conceptos equivalentes</h3>
+
+        <p>El caos semántico alcanza su punto máximo cuando dos entidades internacionales describen
+          exactamente la misma enfermedad pero publican URIs distintas. K resuelve el conflicto
+          permitiendo declarar una equivalencia explícita:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(snomed_infarto, equivalente_a, icd10_I21)   ∈ M(K, K)</code></pre>
+        </div>
+
+        <p>Con el tiempo, a medida que el sistema se alimenta, K se transforma orgánicamente en una
+          <strong>red maestra de equivalencias</strong> entre normas heterogéneas. Actúa como el puente
+          de traducción universal que las ontologías de dominio nunca lograron —o nunca quisieron—
+          construir entre ellas.</p>
+
+        <h3>El enchufe: las ontologías ponen los nodos; WQuestions, los cables</h3>
+
+        <p>El mecanismo no se limita a K. Una entidad de cualquier ontología externa se <em>enchufa</em>
+          en el eje que le corresponde por naturaleza —una persona de CIDOC CRM (<code>E21_Person</code>)
+          en Q, un evento de Schema.org en O, un lugar de GeoNames en L— conservando su URI canónica
+          como ancla de identidad. Lo que ninguna de esas ontologías sabe hacer por sí sola —el
+          problema que diseccionamos en «Tres puertas, ningún piso»— es <strong>vincular profundamente
+          nodos de catálogos distintos</strong>. Ahí entra WQuestions: las ontologías aportan los
+          <strong>nodos</strong>; el eje M aporta los <strong>cables</strong> que cruzan de una a
+          otra.</p>
+
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 320" class="svg-eje" role="img"
+                 aria-label="Tres ontologías distintas aportan nodos en sus ejes; WQuestions añade los predicados que los conectan en un solo grafo">
+              <!-- títulos de catálogos -->
+              <text x="110" y="34" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--tinta-suave)">CIDOC «E21_Person»</text>
+              <text x="330" y="34" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--tinta-suave)">Schema.org «Movie»</text>
+              <text x="550" y="34" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--tinta-suave)">GeoNames «Place»</text>
+
+              <!-- nodos URI de origen -->
+              <text x="110" y="58" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">serra</text>
+              <text x="330" y="58" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">pelicula_marea</text>
+              <text x="550" y="58" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">lisboa</text>
+
+              <!-- flechas URI -> eje -->
+              <line x1="110" y1="68" x2="110" y2="108" stroke="var(--tinta-tenue)" stroke-width="1.4" stroke-dasharray="3 3"/>
+              <line x1="330" y1="68" x2="330" y2="108" stroke="var(--tinta-tenue)" stroke-width="1.4" stroke-dasharray="3 3"/>
+              <line x1="550" y1="68" x2="550" y2="108" stroke="var(--tinta-tenue)" stroke-width="1.4" stroke-dasharray="3 3"/>
+              <text x="110" y="86" text-anchor="middle" font-size="9.5" fill="var(--tinta-tenue)">URI → Q</text>
+              <text x="330" y="86" text-anchor="middle" font-size="9.5" fill="var(--tinta-tenue)">URI → O</text>
+              <text x="550" y="86" text-anchor="middle" font-size="9.5" fill="var(--tinta-tenue)">URI → L</text>
+
+              <!-- cajas de eje -->
+              <rect x="62" y="112" width="96" height="64" rx="12" fill="var(--eje-q-suave)" stroke="var(--eje-q)" stroke-width="1.8"/>
+              <rect x="282" y="112" width="96" height="64" rx="12" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="1.8"/>
+              <rect x="502" y="112" width="96" height="64" rx="12" fill="var(--eje-l-suave)" stroke="var(--eje-l)" stroke-width="1.8"/>
+
+              <rect x="74" y="124" width="26" height="26" rx="6" fill="var(--eje-q)"/>
+              <text x="87" y="142" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">Q</text>
+              <text x="110" y="170" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">quién</text>
+
+              <rect x="294" y="124" width="26" height="26" rx="6" fill="var(--eje-o)"/>
+              <text x="307" y="142" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">O</text>
+              <text x="330" y="170" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">qué</text>
+
+              <rect x="514" y="124" width="26" height="26" rx="6" fill="var(--eje-l)"/>
+              <text x="527" y="142" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">L</text>
+              <text x="550" y="170" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">dónde</text>
+
+              <!-- cables M: O -> Q (agente) y O -> L (lugar_de) -->
+              <line x1="282" y1="144" x2="158" y2="144" stroke="var(--eje-m)" stroke-width="2.4" marker-end="url(#flechaK)" opacity="0"/>
+              <path d="M282 138 L162 138" fill="none" stroke="var(--eje-m)" stroke-width="2.4"/>
+              <polygon points="162,138 172,133 172,143" fill="var(--eje-m)"/>
+              <text x="222" y="128" text-anchor="middle" font-size="11" font-weight="700" fill="var(--eje-m)" font-family="var(--mono)">agente</text>
+
+              <path d="M378 138 L498 138" fill="none" stroke="var(--eje-m)" stroke-width="2.4"/>
+              <polygon points="498,138 488,133 488,143" fill="var(--eje-m)"/>
+              <text x="438" y="128" text-anchor="middle" font-size="11" font-weight="700" fill="var(--eje-m)" font-family="var(--mono)">lugar_de</text>
+
+              <!-- T colgando del O -->
+              <line x1="330" y1="176" x2="330" y2="216" stroke="var(--eje-m)" stroke-width="2.4"/>
+              <polygon points="330,216 325,206 335,206" fill="var(--eje-m)"/>
+              <text x="362" y="200" font-size="11" font-weight="700" fill="var(--eje-m)" font-family="var(--mono)">momento</text>
+              <rect x="292" y="218" width="76" height="32" rx="9" fill="var(--eje-t-suave)" stroke="var(--eje-t)" stroke-width="1.8"/>
+              <rect x="300" y="226" width="20" height="16" rx="4" fill="var(--eje-t)"/>
+              <text x="310" y="238" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff">T</text>
+              <text x="346" y="238" text-anchor="middle" font-size="11" fill="var(--tinta)" font-family="var(--mono)">2026</text>
+
+              <!-- leyenda M -->
+              <line x1="248" y1="290" x2="280" y2="290" stroke="var(--eje-m)" stroke-width="2.4"/>
+              <text x="286" y="294" font-size="11.5" fill="var(--eje-m)" font-weight="600">M · los cables que cruzan de un catálogo a otro</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 3.4.</span> El hecho «<em>La película</em> Marea
+            <em>fue dirigida por Serra (CIDOC) en Lisboa (GeoNames) en 2026</em>» queda como un solo
+            grafo. Cada catálogo sigue siendo dueño de sus nodos y sus URIs; WQuestions solo añade la
+            capa de predicados <span class="eje-rotulo"><span class="eje eje--m">M</span></span> que
+            los estándares dejaron sin estandarizar —y con eso neutraliza la fragmentación—.</figcaption>
+        </figure>
+
+        <h2>Cuatro dominios, cuatro vistas de K</h2>
+
+        <p>Para terminar de materializar la función del eje categórico, resulta ilustrativo ver qué
+          información específica almacena K en distintos sectores. Recorramos nuestros cuatro ejemplos
+          y añadamos el entorno de la inteligencia artificial como caso de estudio.</p>
+
+        <div class="columnas">
+          <p><b>☕ El espresso.</b> En K guardaríamos los tipos de bebida (<code>espresso</code>,
+            <code>cortado</code>, <code>americano</code>), las especies de grano
+            (<code>cafe_arabica</code>, <code>cafe_robusta</code>), los grados de tueste
+            (<code>tueste_claro</code>, <code>tueste_medio</code>, <code>tueste_oscuro</code>) y los
+            métodos de extracción. Buena parte de estos identificadores existe en Schema.org; el léxico
+            de tueste o terroir suele importarse de Wikidata.</p>
+
+          <p><b>🏀 El baloncesto.</b> El eje alojaría las taxonomías de jugadas
+            (<code>triple_anotado</code>, <code>tiro_libre</code>, <code>mate</code>), las posiciones
+            de pista (<code>posicion_escolta</code>, <code>posicion_alero</code>,
+            <code>posicion_pivot</code>) y las zonificaciones del campo (<code>zona_de_tres</code>,
+            <code>pintura</code>). Parte emana de la federación; el resto es jerga analítica de las
+            empresas de estadística deportiva.</p>
+
+          <p><b>🎬 El cine.</b> Aquí vivirían los géneros (<code>genero_drama</code>,
+            <code>genero_comedia</code>, <code>genero_documental</code>), los formatos
+            (<code>largometraje</code>, <code>cortometraje</code>, <code>serie</code>) y los roles de
+            autoría (<code>rol_direccion</code>, <code>rol_guion</code>, <code>rol_fotografia</code>).
+            Schema.org y bases especializadas de cine aportan catálogos maduros, consumibles vía
+            API.</p>
+
+          <p><b>🏛️ La ordenanza.</b> K clasificaría la jerarquía institucional
+            (<code>municipalidad</code>, <code>gerencia</code>, <code>concejo</code>), la tipología de
+            actos administrativos (<code>ordenanza_municipal</code>, <code>decreto_de_alcaldia</code>,
+            <code>resolucion</code>) y la escala de jurisdicciones (<code>nivel_nacional</code>,
+            <code>nivel_regional</code>, <code>nivel_municipal</code>).</p>
+
+          <p><b>🤖 La llamada a un modelo de lenguaje.</b> K ordenaría las arquitecturas subyacentes
+            (<code>transformer</code>, <code>mamba</code>, <code>mixture_of_experts</code>), las
+            familias comerciales, los tipos de tarea que pide el usuario (<code>resumir</code>,
+            <code>clasificar</code>, <code>traducir</code>, <code>generar_codigo</code>) y la modalidad
+            de entrega (<code>sincrono</code>, <code>streaming</code>, <code>batch</code>). Es un
+            dominio fascinante porque su vocabulario está en plena expansión: cada laboratorio inventa
+            sus propios términos comerciales, y K ofrece el sustrato donde todas esas convenciones
+            podrán converger a medida que la industria madure.</p>
+        </div>
+
+        <h2>D1 · La plantilla y la instancia</h2>
+
+        <p>Para blindar la consistencia de la base de datos existe una regla estricta que gobierna la
+          frontera entre el eje abstracto K y los ejes del mundo físico —en particular el eje O—. Es un
+          principio que se respeta sin excepciones y, además, es la <strong>primera decisión de diseño
+          que el libro registra formalmente</strong>.</p>
+
+        <div class="caja caja--decision revelar">
+          <p class="caja-tit"><span class="codigo-d">D1</span> La plantilla y la instancia</p>
+          <p style="margin:0">En el eje <strong>K</strong> habitan exclusivamente los conceptos
+            <strong>atemporales y categóricos</strong> (las plantillas). En el eje <strong>O</strong>
+            —y en el resto de los pilares— habitan las entidades <strong>creadas, situadas
+            geográficamente e instanciadas</strong> (los objetos derivados).</p>
+        </div>
+
+        <aside class="nota-margen">
+          <span class="etq">Sobre la numeración Dn</span>
+          Las decisiones de diseño se numeran con <strong>D</strong> seguida de un número (D1, D2,
+          D3…). Cada una se enuncia formalmente al aparecer por primera vez y luego se referencia por
+          su número. Las irás encontrando en orden a medida que el modelo se construye.
+        </aside>
+
+        <p>La pregunta operativa que un desarrollador debe hacerse ante cualquier dato nuevo es
+          directa: <em>¿este individuo tiene una fecha de creación concreta, una historia propia o una
+          ubicación geográfica comprobable?</em> Si la respuesta es sí, su lugar es el eje O. Si carece
+          de esas coordenadas, pertenece a K.</p>
+
+        <p>Observemos la diferencia en la práctica:</p>
+
+        <div class="caja caja--definicion revelar">
+          <p class="caja-tit">K (la plantilla atemporal) frente a O (la instancia situada)</p>
+          <div class="rejilla-2" style="margin:.4rem 0 0">
+            <div>
+              <p style="margin:0 0 .3rem;font-weight:700;color:var(--eje-k)">Pertenece a K</p>
+              <ul style="margin:0">
+                <li>La <em>receta del espresso</em>: una fórmula replicable. No caduca ni tiene
+                  ubicación física.</li>
+                <li>El concepto de <em>«modelo de lenguaje de arquitectura transformer»</em>: teoría
+                  informática pura.</li>
+              </ul>
+            </div>
+            <div>
+              <p style="margin:0 0 .3rem;font-weight:700;color:var(--eje-o)">Pertenece a O</p>
+              <ul style="margin:0">
+                <li>El <em>café que Lucía extrajo esta mañana</em>: ocurrió a las 08:14, salió algo
+                  amargo, dejó la taza sucia.</li>
+                <li>La <em>versión ejecutable Lumen-2026-05, lanzada el 14 de mayo</em>: tiene fecha,
+                  consume energía, corre en servidores.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <p>Esta dualidad produce un patrón arquitectónico muy robusto: existe siempre una
+          <strong>plantilla teórica anclada en K</strong>, a partir de la cual se genera una
+          <strong>instancia concreta en O</strong>, unidas por el cordón umbilical de
+          <code>instancia_de</code>. La receta que escribe un barista vive abstractamente como tipo;
+          pero cada vez que alguien enciende la máquina y la ejecuta, el sistema crea un nuevo
+          evento-instancia, con su propio factor de escala —qué grano se usó, cuántas tazas, el horario
+          exacto del servicio—.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple"># La plantilla teórica (atemporal) — vive en K
+(receta_espresso) ∈ K
+  grano_base   : cafe_arabica
+  dosis_base   : 18 g
+  metodo       : extraccion_presion
+
+# El evento instanciado (situado) — vive en O
+(extraccion_311)  ∈ O
+  instancia_de : receta_espresso
+  agente       : barista_lucia
+  rendimiento  : 36 ml
+  cuando       : 2026-05-14T08:14:00</code></pre>
+        </div>
+
+        <p>Esa danza constante entre la plantilla atemporal de K y la ocurrencia situada de O es uno
+          de los patrones de modelado más poderosos en aplicaciones comerciales a gran escala. Lo
+          veremos reaparecer una y otra vez cuando lleguemos a los casos prácticos de la
+          <a href="14-spa.html">Parte V</a>.</p>
+
+        <h2>Trampa de programación: la categoría guardada como texto</h2>
+
+        <div class="caja caja--alerta revelar">
+          <p class="caja-tit">El atajo que envenena la base</p>
+          <p>El atajo de todos los días: <code>estado = "promulgada"</code>,
+            <code>posicion = "escolta"</code>, guardados como texto libre en una columna. Parece
+            inofensivo hasta que el sistema crece: un operador escribe <code>"Escolta"</code>, otro
+            <code>"escolta "</code> con un espacio, un tercero <code>"shooting guard"</code>, y la
+            consulta «dame todos los escoltas» devuelve la mitad. No hay validación, no hay traducción,
+            y no hay forma de saber que <code>"IAM"</code> e <code>"infarto agudo de miocardio"</code>
+            son lo mismo. La categoría, tratada como <em>string</em>, <strong>pierde su
+            identidad</strong>.</p>
+          <p style="margin-bottom:0">El eje K lo corrige tratando cada categoría como un
+            <strong>individuo formal</strong> con su URI canónica: <code>posicion_escolta</code> es un
+            nodo único, no una cadena de caracteres. Las búsquedas son exactas, los alias
+            (<code>"escolta"</code>, <code>"2"</code>) apuntan al mismo concepto, los idiomas conviven,
+            y los diccionarios internacionales se enchufan sin reescribir nada. Un valor de una lista
+            cerrada nunca debería ser texto libre: debería ser un punto en K.</p>
+        </div>
+
+        <h2>Resumen del capítulo</h2>
+
+        <p>El eje K opera como el segundo gran zócalo fundacional de la arquitectura, el complemento
+          abstracto de los pilares físicos (Q, O, L, T). Hemos establecido que:</p>
+
+        <ul>
+          <li>Aloja <strong>tipos conceptuales, unidades de medida, estados enumerativos y
+            nomenclaturas oficiales</strong> —las cuatro familias—.</li>
+          <li>Posee una rica <strong>estructura interna</strong>: los conceptos se vinculan entre sí
+            generando redes semánticas, no listas planas.</li>
+          <li>Proporciona el terreno donde aterrizan las <strong>ontologías industriales
+            existentes</strong> (Schema.org, QUDT, SNOMED, CIDOC CRM, Biolink), importando su rigor
+            sin exigir que el usuario final hable en código.</li>
+          <li>Dota al sistema de inteligencia habilitando la <strong>inferencia transitiva</strong>
+            mediante el uso cruzado de <code>instancia_de</code> y <code>subtipo_de</code>.</li>
+          <li>Garantiza el orden con la regla fronteriza <strong>D1</strong>, que separa la
+            <strong>plantilla atemporal</strong> de la <strong>instancia situada</strong>.</li>
+        </ul>
+
+        <p>Con la formalización de K, el universo de individuos que el sistema puede modelar está casi
+          mapeado. Las cajas de Q, O, L, T y K forman el grupo de cinco ejes encargados de dar hogar a
+          <strong>todas las cosas materiales del mundo y a todas sus categorías teóricas</strong>.</p>
+
+        <p>Pero para cuantificar la realidad de forma matemática queda un último eje fundamental en
+          este bloque: <span class="eje-rotulo"><span class="eje eje--n">N</span></span>, el de las
+          magnitudes y los números. Y ese eje esconde más complejidad de la que aparenta, porque rige
+          una regla física inviolable del diseño de datos serios: <strong>un número desnudo no
+          significa nada; todo número válido viene acoplado a una unidad de medida</strong>. El único
+          lugar donde pueden habitar las unidades es el zócalo categórico de K. Por esa interdependencia
+          arquitectónica, K tenía que presentarse con todo detalle antes de que nos atreviéramos a
+          hablar de números. A ese eje dedicamos el capítulo siguiente.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="02-cuatro-pilares.html"><span class="dir">← Anterior</span><span class="tit">Quién, qué, dónde, cuándo</span></a>
+      <a class="sig" href="04-cuanto.html"><span class="dir">Siguiente →</span><span class="tit">Cuánto: el eje cuantitativo (N)</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

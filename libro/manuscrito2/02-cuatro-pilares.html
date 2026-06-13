@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 2 · Quién, qué, dónde, cuándo — WQuestions</title>
+  <meta name="description" content="Los cuatro pilares de todo hecho —quién, qué, dónde, cuándo— y las trampas que cada uno esconde.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'2'">
+      <header class="portada-cap">
+        <p class="parte">Parte II · Las siete coordenadas</p>
+        <div class="num-cap">02</div>
+        <h1>Quién, qué, dónde, cuándo</h1>
+        <p class="lede">Cuatro preguntas bastan para levantar el esqueleto de cualquier hecho.
+          Y cada una, vista de cerca, esconde una trampa que arruina los sistemas que la ignoran.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Lucía dejó la taza sobre la barra a las ocho y catorce de la mañana.
+          La frase tiene nueve palabras y la entiendes sin pensar: alguien hizo algo, con una cosa,
+          en un sitio, en un instante. No hubo esfuerzo consciente, pero tu mente acaba de ejecutar
+          una hazaña silenciosa. En menos de lo que dura un parpadeo separó la escena en cuatro
+          piezas de naturaleza completamente distinta y le asignó a cada una su casillero exacto:
+          <strong>una persona que actúa</strong> (Lucía), <strong>una cosa que cambia de estado</strong>
+          (la taza), <strong>un lugar físico</strong> (la barra) y <strong>un momento del reloj</strong>
+          (las 08:14).</p>
+
+        <p>Y no solo las separó: las encajó sin equivocarse. A nadie le pasaría por la cabeza que
+          «la barra» sea la persona, ni que «las ocho y catorce» sea el objeto que Lucía sostuvo.
+          Esa operación de descomponer un hecho y colocar cada fragmento en su lugar correcto es,
+          literalmente, la materia prima de todo este libro. Las cuatro preguntas que tu cerebro
+          acaba de responder a ciegas —<em>quién</em>, <em>qué</em>, <em>dónde</em>, <em>cuándo</em>—
+          son los <strong>cuatro pilares</strong>: las dimensiones que comparecen en cualquier
+          descripción de algo que sucede, sin importar el idioma ni el grado de tecnicismo. Si falta
+          uno, la historia se siente incompleta. Si están los cuatro, tienes al menos el armazón de
+          un hecho.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Por qué cuatro y no seis</span>
+          La <a href="00-introduccion.html">introducción</a> hablaba de seis preguntas infantiles.
+          Aquí aislamos las cuatro que fijan el escenario básico de un suceso. <em>Cuánto</em>,
+          <em>cuál</em> y <em>cómo</em> llegan en los capítulos siguientes, cuando estos cuatro se
+          queden cortos.
+        </aside>
+
+        <p>En este capítulo recorreremos los cuatro pilares uno a uno. Todavía no como ejes
+          matemáticos formales —eso vendrá cuando construyamos la arquitectura en la
+          <a href="07-hecho-atomico.html">Parte III</a>—, sino como <strong>preguntas con
+          personalidad propia</strong>. Cada una esconde rarezas, decisiones de diseño y
+          convenciones que solemos pasar por alto. Comprenderlas a fondo ahora nos ahorrará
+          incontables dolores de cabeza cuando empecemos a modelar bases de datos de verdad.</p>
+
+        <p>Para que el recorrido sea concreto, cruzaremos cada pilar con cuatro escenas que nos
+          acompañarán toda la sección: un <strong>espresso</strong> servido en una cafetería, una
+          <strong>jugada de baloncesto</strong>, una <strong>película</strong> y una
+          <strong>ordenanza municipal</strong>. Cuatro mundos sin relación aparente; verás que
+          responden a las mismas cuatro preguntas con la misma facilidad.</p>
+
+        <!-- FIGURA 2.1: descomposición de la oración en los cuatro ejes -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 300" class="svg-eje" role="img"
+                 aria-label="La oración sobre Lucía descompuesta en los cuatro pilares: quién, qué, dónde y cuándo">
+              <!-- la oración, con cada fragmento coloreado por eje -->
+              <text x="30" y="40" font-size="17" fill="var(--tinta)" font-family="var(--serif)" font-style="italic">
+                <tspan fill="var(--eje-q)" font-weight="700">Lucía</tspan>
+                <tspan fill="var(--tinta-suave)"> dejó </tspan>
+                <tspan fill="var(--eje-o)" font-weight="700">la taza</tspan>
+                <tspan fill="var(--tinta-suave)"> sobre </tspan>
+                <tspan fill="var(--eje-l)" font-weight="700">la barra</tspan>
+              </text>
+              <text x="30" y="66" font-size="17" fill="var(--tinta)" font-family="var(--serif)" font-style="italic">
+                <tspan fill="var(--tinta-suave)">a las </tspan>
+                <tspan fill="var(--eje-t)" font-weight="700">08:14</tspan>
+                <tspan fill="var(--tinta-suave)"> de la mañana.</tspan>
+              </text>
+
+              <!-- líneas guía hacia cada casillero -->
+              <path d="M55 50 C 55 110, 95 110, 95 150" fill="none" stroke="var(--eje-q)" stroke-width="1.5" opacity=".5"/>
+              <path d="M175 50 C 175 120, 255 120, 255 150" fill="none" stroke="var(--eje-o)" stroke-width="1.5" opacity=".5"/>
+              <path d="M330 50 C 330 110, 425 110, 425 150" fill="none" stroke="var(--eje-l)" stroke-width="1.5" opacity=".5"/>
+              <path d="M120 74 C 120 130, 585 110, 585 150" fill="none" stroke="var(--eje-t)" stroke-width="1.5" opacity=".5"/>
+
+              <!-- casilleros -->
+              <g font-family="var(--sans)">
+                <!-- Q -->
+                <rect x="30" y="152" width="148" height="120" rx="10" fill="var(--eje-q-suave)" stroke="var(--eje-q)" stroke-width="1.5"/>
+                <rect x="44" y="166" width="26" height="26" rx="6" fill="var(--eje-q)"/>
+                <text x="57" y="184" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">Q</text>
+                <text x="80" y="180" font-size="13" font-weight="700" fill="var(--eje-q)">quién</text>
+                <text x="80" y="195" font-size="10.5" fill="var(--tinta-tenue)">agente</text>
+                <text x="44" y="226" font-size="14" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">Lucía</text>
+                <text x="44" y="252" font-size="10.5" fill="var(--tinta-suave)">quien ejecuta</text>
+                <text x="44" y="266" font-size="10.5" fill="var(--tinta-suave)">la acción</text>
+
+                <!-- O -->
+                <rect x="190" y="152" width="148" height="120" rx="10" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="1.5"/>
+                <rect x="204" y="166" width="26" height="26" rx="6" fill="var(--eje-o)"/>
+                <text x="217" y="184" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">O</text>
+                <text x="240" y="180" font-size="13" font-weight="700" fill="var(--eje-o)">qué</text>
+                <text x="240" y="195" font-size="10.5" fill="var(--tinta-tenue)">objeto</text>
+                <text x="204" y="226" font-size="14" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">taza_311</text>
+                <text x="204" y="252" font-size="10.5" fill="var(--tinta-suave)">la cosa que</text>
+                <text x="204" y="266" font-size="10.5" fill="var(--tinta-suave)">cambia de estado</text>
+
+                <!-- L -->
+                <rect x="350" y="152" width="148" height="120" rx="10" fill="var(--eje-l-suave)" stroke="var(--eje-l)" stroke-width="1.5"/>
+                <rect x="364" y="166" width="26" height="26" rx="6" fill="var(--eje-l)"/>
+                <text x="377" y="184" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">L</text>
+                <text x="400" y="180" font-size="13" font-weight="700" fill="var(--eje-l)">dónde</text>
+                <text x="400" y="195" font-size="10.5" fill="var(--tinta-tenue)">lugar</text>
+                <text x="364" y="226" font-size="13.5" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">barra_central</text>
+                <text x="364" y="252" font-size="10.5" fill="var(--tinta-suave)">el sitio físico</text>
+                <text x="364" y="266" font-size="10.5" fill="var(--tinta-suave)">del suceso</text>
+
+                <!-- T -->
+                <rect x="510" y="152" width="148" height="120" rx="10" fill="var(--eje-t-suave)" stroke="var(--eje-t)" stroke-width="1.5"/>
+                <rect x="524" y="166" width="26" height="26" rx="6" fill="var(--eje-t)"/>
+                <text x="537" y="184" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">T</text>
+                <text x="560" y="180" font-size="13" font-weight="700" fill="var(--eje-t)">cuándo</text>
+                <text x="560" y="195" font-size="10.5" fill="var(--tinta-tenue)">tiempo</text>
+                <text x="524" y="226" font-size="14" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">08:14</text>
+                <text x="524" y="252" font-size="10.5" fill="var(--tinta-suave)">el instante en</text>
+                <text x="524" y="266" font-size="10.5" fill="var(--tinta-suave)">que ocurre</text>
+              </g>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 2.1.</span> La misma operación que tu mente hace sola:
+            cada fragmento de la oración aterriza en uno de los cuatro pilares. <em>Lucía</em> al eje
+            <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>, <em>la taza</em> al
+            <span class="eje-rotulo"><span class="eje eje--o">O</span></span>, <em>la barra</em> al
+            <span class="eje-rotulo"><span class="eje eje--l">L</span></span> y <em>las 08:14</em> al
+            <span class="eje-rotulo"><span class="eje eje--t">T</span></span>. Nadie los confunde, y
+            ese acuerdo tácito es lo que vamos a volver arquitectura.</figcaption>
+        </figure>
+
+        <h2>Q — Quién: la pregunta por el agente</h2>
+
+        <p>A primera vista, <em>quién</em> parece el más inofensivo de los cuatro. Quieres saber quién
+          hizo algo, quién recibió la acción o sobre quién recae la responsabilidad. La respuesta
+          canónica que esperas es <strong>un agente capaz de ejecutar una acción</strong>: una
+          persona, un grupo o una organización formal.</p>
+
+        <p>Cruzado con nuestras cuatro escenas, el panorama es plácido:</p>
+
+        <ul>
+          <li><span class="eje-rotulo"><span class="eje eje--q">Q</span></span>&nbsp;<b>☕ Espresso</b> — ¿Quién extrajo el café? La barista, <code>barista_lucia</code>.</li>
+          <li><span class="eje-rotulo"><span class="eje eje--q">Q</span></span>&nbsp;<b>🏀 Baloncesto</b> — ¿Quién anotó el triple? La escolta, <code>rivas</code> (y, con más detalle, quién dio la asistencia: <code>navarro</code>).</li>
+          <li><span class="eje-rotulo"><span class="eje eje--q">Q</span></span>&nbsp;<b>🎬 Cine</b> — ¿Quién dirigió la película? La directora, <code>serra</code>.</li>
+          <li><span class="eje-rotulo"><span class="eje eje--q">Q</span></span>&nbsp;<b>🏛️ Ordenanza</b> — ¿Quién la promulgó? La <code>municipalidad_centro</code>, por mano del <code>alcalde_reyes</code>.</li>
+        </ul>
+
+        <p>Hasta aquí, ninguna fricción. Pero la pregunta se vuelve fascinante apenas la sacamos de
+          su zona de confort y la confrontamos con la realidad de los datos.</p>
+
+        <h3>Un agente, varios agentes, agentes en disputa</h3>
+
+        <p>Piensa en aquella canasta. La hemos atribuido a <code>rivas</code>, que anotó, y a
+          <code>navarro</code>, que asistió. Pero «¿quién hizo la jugada?» admite respuestas en
+          capas: quien lanzó, quien pasó, quien provocó la falta que abrió el espacio. Las
+          estadísticas oficiales deciden a quién acreditarle el punto, igual que un reglamento
+          decide a quién atribuir un autogol. El reglamento zanja la disputa; pero traducir esa
+          decisión a una estructura de datos —«este evento tiene <em>un</em> agente principal y
+          <em>varios</em> agentes secundarios con roles distintos»— está lejos de ser trivial.</p>
+
+        <p>El cine lo lleva al extremo. ¿Quién «hizo» <code>pelicula_marea</code>? La directora
+          <code>serra</code> y la guionista <code>haddad</code> responden ambas a «¿quién?», pero con
+          roles legalmente distintos: dirección y guion no son lo mismo, ni siquiera ocurren en el
+          mismo momento. El problema empieza cuando un sistema mete a todos en un único campo
+          genérico llamado <code>autor</code>. Cuando esa base de datos intenta compartir la
+          información con otra, si nadie sabe qué convención interna usó cada una, los datos chocan
+          —exactamente el conflicto de la <a href="01-torre-de-babel.html">torre de Babel</a>.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Autor vs. ejecutor</span>
+          La receta del espresso —dosis, temperatura, presión— pudo diseñarla un tostador hace años;
+          quien la <em>ejecuta</em> esta mañana es Lucía. Ambos responden a «¿quién?», pero uno
+          aporta el conocimiento y el otro el acto. Confundirlos es un clásico de los sistemas
+          heredados.
+        </aside>
+
+        <p>Y aún hay una distinción más fina, de naturaleza temporal. ¿Quién «hace» el espresso que
+          tienes delante? Lucía lo extrajo esta mañana, pero la receta exacta —18 gramos de café,
+          agua a 93 °C, nueve bares de presión— la fijó alguien más, tiempo atrás. Hay una diferencia
+          de fondo entre el <em>autor</em> (quien diseñó el procedimiento) y el <em>ejecutor</em>
+          (quien lo materializa hoy). Las dos personas son respuestas legítimas a «¿quién?», pero
+          pertenecen a momentos y a naturalezas de acción distintas.</p>
+
+        <h3>El caso límite: cuando una cosa actúa</h3>
+
+        <p>Y aquí aparece un caso que merece tratarse con cuidado. ¿Qué ocurre con el <em>quién</em>
+          cuando el que ejecuta la acción no es una persona ni una empresa, sino un objeto inanimado?
+          La máquina de espresso que arranca sola al alcanzar la temperatura de trabajo; el reloj de
+          posesión que detiene la jugada al agotarse los segundos; el motor de recomendación que
+          decide sugerirte cierta película. Al hablar, les concedemos agencia sin titubear:
+          <em>la máquina se cebó sola</em>, <em>el reloj cortó la jugada</em>, <em>el algoritmo
+          eligió</em>.</p>
+
+        <p>Sin embargo, a nivel de arquitectura de la información, estos objetos no pertenecen por
+          naturaleza al eje <em>quién</em>; su domicilio de origen es el eje <em>qué</em>, porque son
+          cosas o sistemas. Lo que sucede en estos casos es que,
+          <strong>en situaciones muy específicas, un objeto asume temporalmente la capacidad de
+          agencia</strong>.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Adelanto · Agencia contextual</p>
+          <p>La <strong>agencia</strong> —la capacidad de hacer algo— no es una propiedad estática
+            que un objeto posea siempre, sino una <strong>propiedad puramente contextual</strong>.
+            Según la situación, un objeto pasivo puede «vestirse» de agente y ocupar transitoriamente
+            el eje <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>, sin dejar de ser,
+            en su origen, un habitante del eje <span class="eje-rotulo"><span class="eje eje--o">O</span></span>.</p>
+          <p style="margin-bottom:0">A este principio lo llamaremos <strong>agencia contextual</strong>,
+            y volverá como una de nuestras decisiones de diseño más fuertes —la formalizaremos como la
+            regla <strong>D5</strong> en el <a href="09-situaciones.html">capítulo 9</a>—. Por ahora basta
+            con dejar el nombre puesto: una cosa puede actuar, pero solo dentro del marco que se lo permite.</p>
+        </div>
+
+        <p>Esta observación, en apariencia menor, tiene un peso enorme en el diseño de software.
+          Decide si tu modelo puede registrar honestamente frases tan cotidianas como «el sistema
+          rechazó el pago» sin mentir sobre la naturaleza del sistema. Mira la misma máquina de
+          espresso bajo sus dos lecturas: en reposo es un objeto del eje
+          <span class="eje-rotulo"><span class="eje eje--o">O</span></span>; pero en el instante en
+          que se ceba sola, ese mismo objeto ocupa, transitoriamente, el eje
+          <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>:</p>
+
+        <div class="triple">
+          <span class="nodo nodo--o"><span>maquina_espresso</span><small>O</small></span>
+          <span class="enlace">en reposo<span class="firma">objeto</span></span>
+          <span class="nodo nodo--o"><span>habitante del eje O</span><small>O</small></span>
+        </div>
+        <div class="triple">
+          <span class="nodo nodo--q"><span>maquina_espresso</span><small>Q</small></span>
+          <span class="enlace">se cebó<span class="firma">M(O→Q) contextual</span></span>
+          <span class="nodo nodo--o"><span>taza_311</span><small>O</small></span>
+        </div>
+
+        <p>El identificador no cambió —sigue siendo la misma máquina—; lo que cambió fue el eje que
+          ocupa, y solo mientras dura la acción. Volveremos sobre ello; por ahora, sigamos hacia la
+          pregunta más resbaladiza de todas.</p>
+
+        <h2>O — Qué: la pregunta por la cosa</h2>
+
+        <p>El <em>qué</em> es profundamente engañoso porque la gramática parece exigirle una sola
+          respuesta concreta, pero en la práctica abre la puerta a entidades de tipos
+          irreconciliables. Si preguntas «¿Qué pasó?», esperas un evento. Si preguntas «¿Qué sirvió
+          la barista?», buscas un objeto material. Si preguntas «¿Qué situación atraviesa el equipo?»,
+          pides un contexto complejo. Las tres son gramaticalmente correctas, las tres aterrizan en el
+          eje <em>qué</em>, y las tres apuntan a estructuras de datos que no se parecen en nada.</p>
+
+        <p>Para no perder la cordura adoptaremos un criterio funcional y deliberadamente amplio:
+          <strong>el eje <em>qué</em> aloja absolutamente todo lo que no sea un agente, un lugar o un
+          momento</strong>. Y, al hacerlo, hay que reconocer que dentro de ese gran contenedor
+          conviven al menos tres familias muy distintas.</p>
+
+        <div class="rejilla-3 revelar">
+          <div class="tarjeta">
+            <h4 style="color:var(--eje-o)">① Objetos</h4>
+            <p style="margin:0;font-size:.95rem">Cosas —tangibles o no— que existen por sí mismas,
+              persisten en el tiempo y pueden mencionarse en muchas situaciones. La
+              <code>taza_311</code> que sirvió Lucía; el balón del partido; el guion de
+              <code>pelicula_marea</code>; el texto publicado de la <code>ordenanza_142</code>.</p>
+          </div>
+          <div class="tarjeta">
+            <h4 style="color:var(--eje-o)">② Eventos</h4>
+            <p style="margin:0;font-size:.95rem">Hechos que ocurren, con un inicio y un fin claros;
+              la materia prima de las noticias. La extracción del espresso; el lanzamiento
+              <code>triple_088</code>; el rodaje de <code>escena_42</code>; el acto de promulgar la
+              ordenanza.</p>
+          </div>
+          <div class="tarjeta">
+            <h4 style="color:var(--eje-o)">③ Situaciones</h4>
+            <p style="margin:0;font-size:.95rem">Marcos amplios y duraderos dentro de los cuales
+              ocurren muchos eventos pequeños interconectados. El servicio de toda una mañana;
+              el <code>partido_halcones_lobos</code> completo; el rodaje entero de la película; el
+              período de vigencia de la ordenanza.</p>
+          </div>
+        </div>
+
+        <p>Aquí asoma una intuición de diseño sutil pero crítica: estas tres familias no están
+          separadas por muros impenetrables. Un evento se transforma en objeto cuando otro dato lo
+          menciona —«<strong>ese triple</strong> fue revisado por los árbitros»—; ahí, la jugada deja
+          de <em>ocurrir</em> y pasa a ser una cosa a la que apuntamos. Y, en sentido inverso, una
+          situación gigantesca puede verse como un evento simple desde un nivel aún mayor —«<strong>el
+          partido</strong> se suspendió por un corte de luz»—. El eje <em>qué</em> tiene una
+          flexibilidad inherente respecto de la escala: lo que en un nivel del modelo es un evento
+          activo, en un nivel superior es un objeto pasivo al que se hace referencia.</p>
+
+        <p>Esa flexibilidad es una ventaja arquitectónica enorme. Permite tratar de forma uniforme
+          cosas que la programación tradicional se ve obligada a separar en tablas distintas y
+          difíciles de cruzar. Pero —cuidado— también es una trampa mortal.</p>
+
+        <div class="caja caja--alerta revelar">
+          <p class="caja-tit">Trampa: aplanar un evento hasta volverlo un objeto mudo</p>
+          <p style="margin-bottom:0">La maleabilidad entre objeto, evento y situación es poderosa, y
+            por eso es peligrosa. Reducir un evento rico —con sus agentes, su instante, sus
+            magnitudes— a una simple cadena de texto destruye información que luego nadie podrá
+            recuperar. El proceso disciplinado de «cosificar» un evento sin perder su contenido tiene
+            nombre técnico: <strong>reificación</strong>, y lo desmenuzaremos en la
+            <a href="07-hecho-atomico.html">Parte III</a>. Por ahora, basta con desconfiar de todo
+            campo que guarde «lo que pasó» como una frase suelta.</p>
+        </div>
+
+        <p>Asimilemos la intuición con nuestras cuatro escenas. Verás que el eje <em>qué</em> aparece
+          tres veces en cada una, operando en registros distintos sin romperse:</p>
+
+        <div class="tabla-envoltura">
+          <table>
+            <caption>El mismo eje <b>O</b> en tres registros, sobre cuatro dominios.</caption>
+            <thead>
+              <tr><th>Escena</th><th>Objeto</th><th>Evento</th><th>Situación</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><b>☕ Espresso</b></td><td>la taza servida</td><td>la extracción del café</td><td>el servicio de la mañana</td></tr>
+              <tr><td><b>🏀 Baloncesto</b></td><td>el balón</td><td>el triple anotado</td><td>los cuarenta minutos de partido</td></tr>
+              <tr><td><b>🎬 Cine</b></td><td>el guion</td><td>el rodaje de una escena</td><td>la producción entera</td></tr>
+              <tr><td><b>🏛️ Ordenanza</b></td><td>el texto publicado</td><td>el acto de promulgación</td><td>el período en que rige</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>En cada fila usamos el mismo eje <em>qué</em> tres veces, en tres niveles. El modelo no se
+          confunde ni se quiebra: simplemente aloja cada cosa en el registro que le corresponde.</p>
+
+        <h2>L — Dónde: la pregunta por el lugar</h2>
+
+        <p>El <em>dónde</em> suele ser el más físico y concreto de los cuatro, y precisamente por esa
+          aparente simpleza es el que más a menudo los programadores dan por sentado. Pero detrás de
+          él se esconde una decisión semántica que, si no se toma de forma explícita, arruina
+          cualquier cruce de información.</p>
+
+        <p>En el habla cotidiana manejamos dos «dónde» radicalmente distintos. El primero es el
+          <strong>lugar físico estricto</strong>: una coordenada, una dirección, una ciudad, un
+          recinto. La barra de la cafetería, la cancha del polideportivo, el plató donde se rodó
+          <code>escena_42</code>, el despacho del alcalde. El segundo es el
+          <strong>lugar organizacional o administrativo</strong>: un departamento, un ministerio, una
+          franquicia, un club. La <code>gerencia_transito</code>, la <code>municipalidad_centro</code>,
+          el club al que pertenecen los Halcones.</p>
+
+        <p>Ambos responden con total naturalidad a «¿dónde?», pero técnicamente apuntan a realidades
+          de estructura incompatible. Una ciudad es un polígono geográfico; una gerencia es un
+          organigrama de personas e intenciones. Si los mezclamos en el diseño —si guardamos
+          <code>plaza_central</code> y <code>gerencia_transito</code> en una misma columna genérica
+          llamada <code>ubicacion</code>— perdemos para siempre la capacidad de separar
+          <em>dónde ocurre algo físicamente</em> de <em>a qué estructura administrativa pertenece</em>.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">La regla del lugar</p>
+          <p style="margin-bottom:0">Explicita siempre la <strong>naturaleza</strong> del lugar. El eje
+            <span class="eje-rotulo"><span class="eje eje--l">L</span></span> se reserva de forma
+            estricta para los lugares físicos. Una organización, cuando <em>ejecuta</em> una acción,
+            se traslada al eje <span class="eje-rotulo"><span class="eje eje--q">Q</span></span> y
+            actúa como agente —ecos de la agencia contextual—; cuando funciona como mero contenedor
+            administrativo, puede aparecer en <span class="eje-rotulo"><span class="eje eje--l">L</span></span>,
+            pero etiquetada de forma obligatoria con una marca de «organización». La distinción se
+            volverá nítida cuando veamos el código; por ahora, basta con tenerla mapeada.</p>
+        </div>
+
+        <p>Veamos cómo conviven los lugares en nuestras escenas —y nota que, dentro de un mismo hecho,
+          varios «dónde» de escalas distintas coexisten sin estorbarse:</p>
+
+        <ul>
+          <li><span class="eje-rotulo"><span class="eje eje--l">L</span></span>&nbsp;<b>☕ Espresso</b> — ¿Dónde se extrajo? En la barra. ¿Dónde se sirvió? En la mesa del fondo. ¿De qué tradición proviene el método? De una región cafetera entera. Tres escalas físicas conviviendo.</li>
+          <li><span class="eje-rotulo"><span class="eje eje--l">L</span></span>&nbsp;<b>🏀 Baloncesto</b> — ¿Dónde se lanzó el triple? Desde la esquina derecha, más allá de la línea. ¿Dónde se jugó el partido? En un pabellón, dentro de una ciudad. Escalas anidadas.</li>
+          <li><span class="eje-rotulo"><span class="eje eje--l">L</span></span>&nbsp;<b>🎬 Cine</b> — ¿Dónde se rodó la escena? En un plató de la ciudad. ¿Dónde transcurre <em>dentro</em> de la ficción? En un puerto imaginario. El lugar real y el lugar narrado no coinciden.</li>
+          <li><span class="eje-rotulo"><span class="eje eje--l">L</span></span>&nbsp;<b>🏛️ Ordenanza</b> — ¿Dónde se firmó? En el despacho municipal (lugar físico). ¿Dónde tiene jurisdicción? En todo el distrito (lugar político).</li>
+        </ul>
+
+        <p>Conviene dejar asentada una observación de fondo: el pilar <em>dónde</em> está diseñado por
+          naturaleza para soportar <strong>jerarquías y anidamientos</strong>. La barra está dentro de
+          la cafetería, la cafetería pertenece a un barrio, el barrio se inscribe en la ciudad y la
+          ciudad en el país. A nivel lógico, las cuatro respuestas son correctas para «¿dónde
+          ocurrió?» aplicada al <em>mismo</em> hecho; todo depende del nivel de zoom que pida la
+          consulta. El modelo que construimos tendrá que navegar esas escalas hacia arriba y hacia
+          abajo sin generar ambigüedad.</p>
+
+        <h2>T — Cuándo: la pregunta por el tiempo</h2>
+
+        <p>Llegamos al último de los cuatro pilares base, y al que solemos tratar con más ligereza,
+          dando por hecho que se resuelve con un formato de fecha (<code>AAAA-MM-DD</code>). La
+          realidad es que el <em>cuándo</em> es el eje más rico y lleno de sutilezas lógicas de todo
+          el modelo. El lenguaje natural tiene muchísimas maneras de expresar el tiempo, y las fechas
+          de calendario son apenas una de ellas.</p>
+
+        <p>Volvamos a la mañana de Lucía. Si alguien la cuenta diciendo «la taza la dejó <em>hace un
+          rato</em>», ¿cómo lo guardamos? Si el sistema almacena solo el dato frío
+          <code>2026-06-12T08:14</code>, destruye información: se pierde que la acción se vivió como
+          reciente respecto del momento en que se habló. Pero si guarda literalmente la cadena «hace
+          un rato», el motor se vuelve inútil, porque no puede calcular antigüedades ni ordenar
+          eventos. La salida razonable es guardar la marca absoluta para el cómputo y, en una capa
+          complementaria, conservar la expresión relativa como contexto asociado.</p>
+
+        <p>El problema se ahonda apenas salimos del calendario. En la música, una entrada no se sitúa
+          «a las 20:03», sino «en el <strong>compás 17</strong>»: el tiempo no lo dicta un reloj de
+          cuarzo, sino un compás interno. En el análisis de una película, una revelación ocurre «al
+          <strong>final del segundo acto</strong>»: tiempo narrativo, medido por la posición dentro
+          del relato. En una historia clínica, una crisis aparece «<strong>tres horas después</strong>
+          de la última dosis»: tiempo relativo, anclado a un evento previo. Y en lo jurídico, la
+          <code>ordenanza_142</code> entra en vigor «<strong>a los treinta días</strong> de su
+          publicación»: tiempo derivado por una regla.</p>
+
+        <p>Si atendemos al uso real de la información, descubrimos que <em>cuándo</em> debe soportar,
+          como mínimo, cinco tipos de tiempo:</p>
+
+        <div class="rejilla-2 revelar">
+          <div class="tarjeta"><h4 style="color:var(--eje-t)">1 · Tiempo absoluto</h4>
+            <p style="margin:0;font-size:.95rem">Fechas y horas exactas atadas al calendario
+              gregoriano. El día en que se rodó la película; las 08:14 del espresso.</p></div>
+          <div class="tarjeta"><h4 style="color:var(--eje-t)">2 · Tiempo relativo</h4>
+            <p style="margin:0;font-size:.95rem">Expresiones relacionales —«antes de», «durante»,
+              «inmediatamente después de»— atadas a otro hecho comprobable.</p></div>
+          <div class="tarjeta"><h4 style="color:var(--eje-t)">3 · Tiempo de reloj corto</h4>
+            <p style="margin:0;font-size:.95rem">Marcadores internos de un evento cerrado: el minuto
+              38 del cuarto periodo, los segundos de posesión.</p></div>
+          <div class="tarjeta"><h4 style="color:var(--eje-t)">4 · Tiempo cíclico</h4>
+            <p style="margin:0;font-size:.95rem">Patrones de repetición: cada lunes, el primer día
+              de cada mes, la apertura diaria de la cafetería.</p></div>
+          <div class="tarjeta" style="grid-column:1/-1"><h4 style="color:var(--eje-t)">5 · Tiempo no-reloj</h4>
+            <p style="margin:0;font-size:.95rem">Escalas abstractas sin relación con el cronómetro:
+              el compás de una partitura, la página de un libro, el «final del segundo acto», el paso
+              número cuatro de un manual.</p></div>
+        </div>
+
+        <p>Un eje <em>cuándo</em> robusto tiene que aceptar los cinco formatos y, más importante aún,
+          reconocer cuál se está usando en cada transacción. La estrategia que adoptaremos formalmente
+          más adelante es la <strong>pluralidad de tiempos</strong>: no forzaremos toda la información
+          a pasar por un único reloj universal, sino que el eje funcionará como un espacio donde
+          conviven múltiples escalas temporales, todas válidas, cada una bajo su propio sistema de
+          coordenadas.</p>
+
+        <h3>Cómo ordenar sin aplastar: reificar el instante</h3>
+
+        <p>Esa pluralidad plantea de inmediato una pregunta operativa: si conviven varios relojes,
+          ¿cómo ordena el sistema los eventos sin reducirlos a uno solo? La regla de normalización es
+          deliberadamente humilde: <strong>no traducir</strong>. El compás 17 no se convierte a un
+          horario de cuarzo —eso destruiría su naturaleza—; en su lugar, cada instante no-reloj se
+          reifica con tres datos estándar.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple"># un instante musical, reificado en tres datos (no se "traduce" a reloj)
+(entrada_coro, escala, "musical")        ∈ M(O, K)   # a qué sistema temporal pertenece
+(entrada_coro, posicion, 17)             ∈ M(O, N)   # ordinal: ordenable DENTRO de su escala
+(entrada_coro, valor_nativo, "compás 17") ∈ M(O, O)   # la expresión original, intacta
+
+# y cuando el mundo provee un puente real, se declara como hecho explícito:
+(entrada_coro, sonó_en, 2026-05-14T20:03:14) ∈ M(O, T)  # no una conversión inventada</code></pre>
+        </div>
+
+        <ul>
+          <li><code>escala</code> — a qué sistema temporal pertenece (<code>musical</code>,
+            <code>narrativo</code>, <code>paginado</code>, <code>reloj_absoluto</code>). Impide
+            comparar peras con manzanas: el motor nunca ordenará un compás contra una fecha por
+            accidente.</li>
+          <li><code>posicion</code> — un ordinal numérico que lo vuelve <strong>ordenable dentro de su
+            propia escala</strong> (compás 17 → <code>17</code>; página 240 → <code>240</code>;
+            «final del segundo acto» → <code>acto 2, 1.0</code>). Es la clave de orden.</li>
+          <li><code>valor_nativo</code> — la expresión original, preservada tal cual («compás 17»,
+            «p. 240», «final del segundo acto»), para no perder fidelidad.</li>
+        </ul>
+
+        <p>Con esto, ordenar es trivial <em>dentro</em> de una escala —se ordena por
+          <code>posicion</code> filtrando por <code>escala</code>— y honesto <em>entre</em> escalas:
+          no se mezclan, salvo que exista un puente real. Y los puentes existen cuando el mundo los
+          provee: la grabación de un concierto ata el <code>compás 17</code> de la escala musical a
+          las <code>20:03:14</code> de la escala absoluta mediante un hecho explícito, no una
+          conversión inventada. El modelo conserva la naturaleza del dato y, a la vez, gana la
+          capacidad de secuenciar que el negocio necesita.</p>
+
+        <p class="cita-destacada revelar">El tiempo no es un único río que todo lo arrastra, sino un
+          delta de cauces que rara vez se tocan; el modelo no los funde, los deja correr en
+          paralelo.<cite>La pluralidad de tiempos</cite></p>
+
+        <h3>Lo que era cierto y dejó de serlo</h3>
+
+        <aside class="nota-margen">
+          <span class="etq">Dos nombres, un fenómeno</span>
+          La teoría de bases de datos lo llama <strong>bitemporalidad</strong>; la lingüística
+          estructural, <strong>vigencia</strong>. Ambos describen lo mismo: un dato verdadero dentro
+          de una ventana de tiempo y falso fuera de ella.
+        </aside>
+
+        <p>A todo lo anterior se suma una complicación fascinante que solo dejaremos planteada. Un
+          dato puede ser plenamente <strong>válido</strong> durante un período y dejar de serlo en el
+          siguiente. La cafetería abrió en la <code>plaza_central</code> entre 2019 y 2025; si
+          preguntas hoy dónde está, la respuesta es otra dirección. «¿Dónde queda la cafetería?» no es
+          un bloque de piedra: es un flujo de valores, cada uno con su propia fecha de caducidad. Ese
+          fenómeno —un dato verdadero solo dentro de una ventana temporal— será un componente
+          explícito de nuestro diseño final.</p>
+
+        <p>Cerremos el pilar aplicándolo a las cuatro escenas:</p>
+
+        <ul>
+          <li><span class="eje-rotulo"><span class="eje eje--t">T</span></span>&nbsp;<b>☕ Espresso</b> — Tiempo absoluto (se sirvió a las 08:14), cíclico (la cafetería abre cada mañana) y relativo interno («retirar la taza cuando la extracción llegue a 36 ml»).</li>
+          <li><span class="eje-rotulo"><span class="eje eje--t">T</span></span>&nbsp;<b>🏀 Baloncesto</b> — El triple cae en el minuto 38 del cuarto periodo: tiempo de reloj corto, que solo cobra sentido respecto del inicio del partido.</li>
+          <li><span class="eje-rotulo"><span class="eje eje--t">T</span></span>&nbsp;<b>🎬 Cine</b> — La revelación ocurre «al final del segundo acto» (tiempo narrativo); el rodaje de esa escena tiene una fecha de calendario (tiempo absoluto). Dos líneas conviviendo en paralelo.</li>
+          <li><span class="eje-rotulo"><span class="eje eje--t">T</span></span>&nbsp;<b>🏛️ Ordenanza</b> — Se firmó ayer (tiempo absoluto); entra en vigor a los treinta días (tiempo derivado por regla). Dos relojes operando sobre el mismo objeto.</li>
+        </ul>
+
+        <h2>Cuando un pilar se confunde: una IA en libertad</h2>
+
+        <p>Antes de cerrar el capítulo conceptual, vale la pena diseccionar un caso real. Es la clase
+          de anécdota que circula por los foros de tecnología y que, por lo común del fallo, se ha
+          vuelto casi un ejemplo de manual sobre los límites de la inteligencia artificial sin
+          estructura.</p>
+
+        <p>Imagina a alguien que sale del trabajo con la bicicleta pinchada. Saca el teléfono y le
+          dicta a su asistente:</p>
+
+        <blockquote>
+          <p>Tengo la bici con una rueda reventada y la quiero llevar al taller de reparación, que me
+            queda a tres cuadras de aquí. ¿Me conviene ir caminando o en bici?</p>
+        </blockquote>
+
+        <p>La respuesta del modelo fue desconcertante:</p>
+
+        <blockquote>
+          <p>Si te queda tan cerca, ve caminando sin problema. Son apenas tres cuadras, es más
+            saludable y de paso no gastas energía pedaleando.</p>
+        </blockquote>
+
+        <p>El consejo es un disparate físico: no se lleva una bicicleta al taller yendo a pie —la
+          bicicleta <em>es</em> lo que hay que transportar—. Pero el error no nace de una «estupidez»
+          del algoritmo, sino de un problema muy concreto: una <strong>mala asignación de roles a los
+          cuatro pilares</strong>. La estadística llenó las cajas, pero las llenó mal.</p>
+
+        <p>Una lectura humana y estructuralmente correcta de la escena reparte así las variables:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">lectura correcta</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="text">Q (quién)                  : la persona            (agente)
+O (qué, lo que se mueve)    : la bicicleta          (paciente)   ← el centro de la escena
+L (dónde, destino)          : el taller, a 3 cuadras
+T (cuándo)                  : ahora
+M (con_finalidad)           : reparar la bicicleta              ← le da sentido a todo</code></pre>
+        </div>
+
+        <p>El verbo núcleo de la situación es <em>llevar</em>. La persona es, sin duda, el agente; pero
+          el <strong>paciente</strong> —la cosa física que sufre el transporte— es la bicicleta. Y la
+          finalidad ineludible de la maniobra es someter esa bicicleta a una reparación. Si quitas la
+          finalidad de la ecuación, la pregunta «¿caminando o en bici?» pierde todo su sentido.</p>
+
+        <p>¿Qué entendió, en cambio, el modelo basado en pura correlación estadística? Su reparto de
+          roles fue, con toda probabilidad, este:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">lectura del modelo (errónea)</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="text">Q (quién)                  : la persona            (agente)
+O (qué, lo que se mueve)    : la persona            (¡la misma!) ← la bicicleta desapareció
+L (dónde, destino)          : el taller, a 3 cuadras
+T (cuándo)                  : ahora
+M (con_finalidad)           : trasladarse al taller             ← finalidad real, perdida</code></pre>
+        </div>
+
+        <p>Bajo esa lectura, la bicicleta se cae de su rol legítimo de paciente y queda empujada a un
+          rol de <strong>instrumento opcional</strong> («puedes ir en bici o no»). La finalidad real
+          —repararla— se diluye y la sustituye el mero acto de llegar a unas coordenadas. Como el
+          modelo evalúa que la distancia es mínima, sus pesos probabilísticos concluyen que caminar es
+          lo más eficiente y saludable. Impecable… salvo que el objeto central de la frase se evaporó.</p>
+
+        <div class="caja caja--alerta revelar">
+          <p class="caja-tit">El fallo no es de cálculo: es de modelado del mundo</p>
+          <p style="margin-bottom:0">El sistema perdió el rastro de una asignación estructural básica:
+            en este contexto, la bicicleta <strong>es</strong> el objeto central del eje
+            <span class="eje-rotulo"><span class="eje eje--o">O</span></span>, no un accesorio. Apenas
+            esa pieza se cae del tablero, toda la cadena de razonamiento posterior se derrumba —y el
+            modelo ni siquiera percibe el error.</p>
+        </div>
+
+        <p>Es aquí donde la promesa central de este libro cobra fuerza industrial. Si pudiéramos
+          entregarles los hechos del mundo a los asistentes de IA con una estructura donde los cuatro
+          pilares fueran <strong>explícitos</strong> —el agente siempre en
+          <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>, el paciente en
+          <span class="eje-rotulo"><span class="eje eje--o">O</span></span>, el lugar en
+          <span class="eje-rotulo"><span class="eje eje--l">L</span></span> y el momento en
+          <span class="eje-rotulo"><span class="eje eje--t">T</span></span>—, esta clase de absurdos
+          desaparecería. Y no porque hubiéramos fabricado un algoritmo más listo, sino porque la
+          propia <strong>arquitectura impediría la asignación incorrecta</strong>.</p>
+
+        <div class="columnas">
+          <p>Un sistema con bases firmes «sabe», por diseño, que un verbo transitivo como
+            <em>llevar</em> exige obligatoriamente un paciente, y que ese paciente debe registrarse en
+            el eje <span class="eje-rotulo"><span class="eje eje--o">O</span></span>. Si el paciente no
+            está, el sistema detecta que la orden está incompleta y, en lugar de alucinar una
+            respuesta, se detiene a pedir una aclaración.</p>
+          <p>La estadística deja de gobernar a ciegas; la estructura toma el control y le pone límites
+            seguros. Las cajas vacías se vuelven preguntas, no invenciones. Esto —dar al modelo un
+            esqueleto que no se puede llenar mal— es justo lo que la industria de la IA necesita con
+            más urgencia hoy. Y volveremos a ello en la <a href="24-llms.html">Parte VI</a>.</p>
+        </div>
+
+        <h2>Los cuatro pilares y lo que falta</h2>
+
+        <p>Si repasamos las cuatro preguntas —<em>quién</em>, <em>qué</em>, <em>dónde</em>,
+          <em>cuándo</em>— y volvemos a la mañana de Lucía, las cuatro piezas están ahí, haciendo un
+          trabajo de ordenamiento preciso. Lucía (quién) dejó la taza (qué) sobre la barra (dónde) a
+          las 08:14 (cuándo). La escena queda sólidamente descrita.</p>
+
+        <p>¿Bastan para modelar la realidad entera? Para una frase así, sí. Pero no transcurrirá mucho
+          tiempo en un entorno de producción antes de toparnos con registros donde estas cuatro cajas
+          se quedan cortas. Hagamos crecer un poco la escena:</p>
+
+        <blockquote>
+          <p>Lucía sirvió, para celebrar la reapertura, un espresso doble que costó tres euros con
+            cincuenta.</p>
+        </blockquote>
+
+        <p>El hecho base es el mismo, pero el caudal de información acaba de escalar. De pronto hay que
+          procesar un <strong>precio</strong> (3,50). Entró en juego un <strong>motivo</strong> claro
+          de la acción (celebrar la reapertura). Aparece una <strong>clasificación más fina</strong>
+          del objeto: no es un café cualquiera, es un <em>espresso doble</em>. Y, de paso, la frase
+          deja entrever que la taza pertenece a la categoría <em>bebida de café</em> —un detalle que
+          nuestros cuatro pilares todavía no permiten declarar, porque el eje
+          <span class="eje-rotulo"><span class="eje eje--q">Q</span></span> guarda individuos
+          concretos, no define categorías abstractas.</p>
+
+        <p>Conceptos como <em>«bebida de café»</em>, <em>«espresso doble»</em> o <em>«euro»</em> no
+          son cosas palpables. Son <strong>clases</strong>, arquetipos. Y, por definición, no encajan
+          limpiamente en ninguno de los cuatro pilares que acabamos de estudiar.</p>
+
+        <!-- FIGURA 2.2: los cuatro pilares y los huecos que abren K, N, M -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 250" class="svg-eje" role="img"
+                 aria-label="Los cuatro pilares cubren la escena básica; tres preguntas nuevas cubren lo que falta">
+              <!-- columna izquierda: lo que SÍ cubren -->
+              <text x="20" y="28" font-size="12.5" font-weight="700" fill="var(--tinta-suave)" font-family="var(--sans)" letter-spacing="1">LO QUE LOS CUATRO PILARES CUBREN</text>
+              <g font-family="var(--sans)" font-size="12.5">
+                <rect x="20" y="44" width="22" height="22" rx="5" fill="var(--eje-q)"/><text x="31" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Q</text><text x="52" y="60" fill="var(--tinta)">quién · <tspan font-family="var(--mono)" font-size="11">barista_lucia</tspan></text>
+                <rect x="20" y="74" width="22" height="22" rx="5" fill="var(--eje-o)"/><text x="31" y="90" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">O</text><text x="52" y="90" fill="var(--tinta)">qué · <tspan font-family="var(--mono)" font-size="11">taza_311</tspan></text>
+                <rect x="20" y="104" width="22" height="22" rx="5" fill="var(--eje-l)"/><text x="31" y="120" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">L</text><text x="52" y="120" fill="var(--tinta)">dónde · <tspan font-family="var(--mono)" font-size="11">barra_central</tspan></text>
+                <rect x="20" y="134" width="22" height="22" rx="5" fill="var(--eje-t)"/><text x="31" y="150" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">T</text><text x="52" y="150" fill="var(--tinta)">cuándo · <tspan font-family="var(--mono)" font-size="11">08:14</tspan></text>
+              </g>
+              <text x="20" y="190" font-size="11.5" fill="var(--tinta-suave)" font-family="var(--serif)" font-style="italic">El esqueleto de un hecho. Necesario…</text>
+
+              <!-- separador -->
+              <line x1="330" y1="40" x2="330" y2="210" stroke="var(--linea)" stroke-width="1.5"/>
+              <text x="345" y="120" font-size="26" font-weight="700" fill="var(--acento-2)" font-family="var(--display)">＋</text>
+
+              <!-- columna derecha: lo que NO -->
+              <text x="382" y="28" font-size="12.5" font-weight="700" fill="var(--tinta-suave)" font-family="var(--sans)" letter-spacing="1">LO QUE EXIGE PREGUNTAS NUEVAS</text>
+              <g font-family="var(--sans)" font-size="12.5">
+                <rect x="382" y="44" width="22" height="22" rx="5" fill="var(--eje-k)"/><text x="393" y="60" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">K</text><text x="414" y="60" fill="var(--tinta)">cuál · «espresso doble», «bebida de café»</text>
+                <rect x="382" y="74" width="22" height="22" rx="5" fill="var(--eje-n)"/><text x="393" y="90" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">N</text><text x="414" y="90" fill="var(--tinta)">cuánto · 3,50 €</text>
+                <rect x="382" y="104" width="22" height="22" rx="5" fill="var(--eje-m)"/><text x="393" y="120" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">M</text><text x="414" y="120" fill="var(--tinta)">cómo · sirvió, costó, con_finalidad…</text>
+              </g>
+              <text x="382" y="190" font-size="11.5" fill="var(--tinta-suave)" font-family="var(--serif)" font-style="italic">…pero arquitectónicamente insuficiente.</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 2.2.</span> Los cuatro pilares levantan el esqueleto
+            de cualquier hecho —son <em>necesarios</em>—, pero la frase enriquecida revela tres huecos
+            que ninguno de ellos cubre: la <strong>clase</strong> del objeto
+            (<span class="eje-rotulo"><span class="eje eje--k">K</span></span>), su
+            <strong>magnitud</strong> (<span class="eje-rotulo"><span class="eje eje--n">N</span></span>)
+            y las <strong>conexiones</strong> que lo amarran todo
+            (<span class="eje-rotulo"><span class="eje eje--m">M</span></span>). Necesarios, pero
+            insuficientes.</figcaption>
+        </figure>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Idea clave</p>
+          <p style="margin:0;font-size:1.05rem">Los cuatro pilares son <strong>estrictamente
+            necesarios, pero arquitectónicamente insuficientes</strong>. Describen <em>dónde</em> y
+            <em>cuándo</em> actúa <em>quién</em> sobre <em>qué</em>; no saben decir de qué
+            <em>tipo</em> es cada cosa, <em>cuánto</em> mide, ni <em>cómo</em> se enlaza con el resto.</p>
+        </div>
+
+        <p>De ahí emerge el resto del modelo. Necesitamos, como mínimo, una quinta pregunta
+          —<em>cuál</em>, es decir, qué tipo de cosa es esto— con eje propio: el zócalo categórico
+          donde habitarán los tipos, las familias y los conceptos abstractos. A ella hay que sumarle
+          una sexta —<em>cuánto</em>— para las métricas, con sus propias trampas de conversión de
+          unidades; y una séptima —<em>cómo</em>— encargada de articular las conexiones y atributos
+          que amarran todo el modelo.</p>
+
+        <p>De esas tres, la primera y más delicada de todo el sistema es el <strong>eje
+          categórico</strong>. Es, paradójicamente, el que soporta la mayor carga de trabajo en los
+          sistemas del mundo real, y es allí donde la arquitectura de WQuestions se integra
+          pacíficamente con los gigantes de la industria —Schema.org, QUDT, SNOMED, CIDOC CRM—,
+          usándolos como aliados en lugar de competir con ellos: el vocabulario común que nos asegura
+          no volver a levantar, nunca más, la torre de Babel de los datos. A ese zócalo —el eje
+          <span class="eje-rotulo"><span class="eje eje--k">K</span></span>, <em>cuál</em>— dedicamos
+          el capítulo siguiente.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="01-torre-de-babel.html"><span class="dir">← Anterior</span><span class="tit">La torre de Babel de los datos</span></a>
+      <a class="sig" href="03-clase.html"><span class="dir">Siguiente →</span><span class="tit">Cuál: el zócalo categórico (K)</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

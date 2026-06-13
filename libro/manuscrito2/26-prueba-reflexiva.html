@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 26 · La prueba reflexiva — WQuestions</title>
+  <meta name="description" content="La prueba más exigente del modelo: que se describa a sí mismo. Un prototipo donde los ejes, los predicados y el esquema viven como tripletas en el mismo grafo, y agregar un campo nuevo cuesta cinco hechos y cero código.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'26'">
+      <header class="portada-cap">
+        <p class="parte">Parte VI · IA, futuro y cierre</p>
+        <div class="num-cap">26</div>
+        <h1>La prueba reflexiva</h1>
+        <p class="lede">La carga más exigente no es modelar otro dominio: es pedirle al modelo que
+          se describa a sí mismo. Si las preguntas son universales, también la maquinaria que las
+          procesa debería poder expresarse en preguntas.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Imagina una pantalla partida en dos. A la izquierda, una aplicación de
+          gestión cualquiera: un menú lateral, un formulario de venta con sus campos, una grilla con
+          los últimos registros. Nada que un programador no haya construido cien veces. A la derecha,
+          en un panel angosto, una lista que crece a cada clic: <span class="nodo nodo--o"><span>venta</span><small>O</small></span>
+          <span class="enlace" style="display:inline-flex">tiene_campo</span>
+          <span class="nodo nodo--o"><span>campo_venta_monto</span><small>O</small></span>, y debajo otra,
+          y otra. Ese panel no describe la aplicación: <em>es</em> la aplicación. Cada opción del
+          menú, cada campo del formulario, cada columna de la grilla que ves a la izquierda existe
+          porque a la derecha hay una tripleta que lo afirma. Lo que estás mirando es un programa
+          hecho enteramente de hechos WQuestions, y a su lado, los hechos que lo sostienen.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Hilo del libro</span>
+          A lo largo de la Parte&nbsp;V sometimos el modelo a ocho dominios industriales y cuatro
+          escenarios de estrés (<a href="23-cuatro-dominios.html">capítulo 23</a>). Esta es una carga
+          de otra naturaleza: no apunta hacia afuera, sino hacia dentro.
+        </aside>
+
+        <p>A lo largo de este libro hemos apretado WQuestions desde muchos ángulos. Lo apretó el
+          lenguaje, con sus nominalizaciones y sus modismos, en el <a href="13-bajo-presion.html">capítulo
+          13</a>. Lo apretaron ocho dominios que no se parecen en nada, del spa a la operación minera.
+          Lo apretó un sistema de verdad, en producción, cuando hicimos arqueología del
+          <a href="22-yaku.html">yaku</a>. Y lo apretaron, a propósito, cuatro dominios incómodos
+          elegidos para que crujiera. Todas esas presiones tienen algo en común: vienen de fuera. El
+          modelo describe un mundo —ventas, pacientes, partidos, contratos— y la pregunta es si el
+          mundo cabe en sus siete ejes.</p>
+
+        <p>Queda una presión más, y es la más exigente de todas: pedirle al modelo que <strong>se
+          describa a sí mismo</strong>. No modelar un dominio externo, sino construir una herramienta
+          —un programa con menús, formularios, tipos de dato y reglas de comportamiento— cuya
+          estructura, cuyos tipos y cuya conducta sean, ellos mismos, hechos WQuestions. Si la tesis
+          del libro es cierta, si las preguntas son la base universal de la información, entonces la
+          propia maquinaria que manipula información tendría que poder expresarse en esas preguntas.
+          Este capítulo cuenta qué pasó cuando lo intentamos. No venimos a presumir de una varita
+          mágica; venimos, como en el capítulo 13, con honradez: a mostrar qué aguantó, qué se dobló
+          para aguantarlo y qué quedó al descubierto.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">La prueba reflexiva</p>
+          <p style="margin:0;font-size:1.05rem">Un modelo de la información merece confianza cuando es
+            capaz de <strong>describirse con sus propios medios</strong>. Si los ejes, los predicados,
+            las signaturas y el esquema de la herramienta viven como tripletas dentro del mismo grafo
+            que todo lo demás, el modelo deja de ser una teoría aplicada a los datos y pasa a ser
+            datos él mismo.</p>
+        </div>
+
+        <h2>Una aplicación hecha de preguntas</h2>
+
+        <p>Construimos, sobre el prototipo, una pequeña aplicación de gestión: un menú navegable,
+          formularios para dar de alta y editar, grillas para consultar, y entidades de negocio
+          —personas, productos, ventas, compras— con sus campos. Lo decisivo no es la aplicación; es
+          <strong>de qué está hecha</strong>. Cada opción del menú, cada campo de cada formulario,
+          cada tipo de dato, cada relación entre entidades y cada acción que el programa ejecuta es
+          una tripleta <code>(sujeto, rol, valor)</code> en un único grafo.</p>
+
+        <p>El menú es un objeto reificado que <code>tiene_opcion</code> a otros objetos; cada opción
+          <code>tiene_accion</code> una acción; cada acción es <code>instancia_de</code> un verbo
+          —<code>mostrar_texto</code>, <code>abrir_formulario</code>, <code>abrir_grilla</code>,
+          <code>guardar</code>— que un evaluador genérico interpreta. El esquema de una entidad
+          también es dato: la entidad <code>tiene_campo</code> a descriptores que declaran su etiqueta,
+          su <code>tipo_dato</code> y su <code>orden</code>. Un registro es un individuo
+          <code>instancia_de</code> su tipo, con un hecho por campo. No hay, en ninguna parte, una
+          tabla <code>venta</code> con columnas fijas ni una clase <code>Formulario</code> con
+          atributos cableados. Hay hechos, y un motor que los lee.</p>
+
+        <div class="bloque-codigo revelar">
+          <div class="barra"><span class="lenguaje">tripletas · el menú es dato</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(menu_principal, instancia_de, menu)             ∈ M(O, K)
+(menu_principal, tiene_opcion, opcion_ventas)    ∈ M(O, O)
+(opcion_ventas,  etiqueta,     "Ventas")         ∈ M(O, K)
+(opcion_ventas,  tiene_accion, abrir_grilla_venta) ∈ M(O, O)
+(abrir_grilla_venta, instancia_de, abrir_grilla) ∈ M(O, K)
+(abrir_grilla_venta, sobre,        venta)         ∈ M(O, K)</code></pre>
+        </div>
+
+        <p>La consecuencia se ve en la pantalla del propio programa, en ese panel de la derecha que
+          abrió el capítulo: al lado de cada vista, un <strong>inspector</strong> muestra las
+          tripletas que la sostienen. Lo que ves es, literalmente, lo que hay en el grafo. La interfaz
+          no es una capa que traduce una base de datos a botones; es una proyección directa de los
+          hechos.</p>
+
+        <p class="cita-destacada revelar">Lo que ves en la pantalla es, sin intermediarios, lo que hay
+          en el grafo.<cite>El principio del inspector</cite></p>
+
+        <!-- FIGURA SVG: el grafo que se contiene a sí mismo -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 360" class="svg-eje" role="img"
+                 aria-label="El grafo del modelo reflejándose sobre sí mismo: el modelo se describe con sus propios ejes">
+              <defs>
+                <marker id="fl26" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" fill="var(--eje-m)"/>
+                </marker>
+              </defs>
+
+              <!-- anillo de los ejes (el modelo) -->
+              <text x="330" y="26" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--tinta-suave)" letter-spacing=".06em">EL MODELO SE DESCRIBE CON SUS PROPIOS EJES</text>
+
+              <!-- nodos de eje en círculo -->
+              <!-- Q -->
+              <circle cx="330" cy="80" r="22" fill="var(--eje-q)"/>
+              <text x="330" y="86" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">Q</text>
+              <!-- O -->
+              <circle cx="470" cy="135" r="22" fill="var(--eje-o)"/>
+              <text x="470" y="141" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">O</text>
+              <!-- N -->
+              <circle cx="500" cy="250" r="22" fill="var(--eje-n)"/>
+              <text x="500" y="256" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">N</text>
+              <!-- K -->
+              <circle cx="330" cy="180" r="26" fill="var(--eje-k)"/>
+              <text x="330" y="187" text-anchor="middle" font-size="19" font-weight="700" fill="#fff">K</text>
+              <!-- T -->
+              <circle cx="160" cy="250" r="22" fill="var(--eje-t)"/>
+              <text x="160" y="256" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">T</text>
+              <!-- L -->
+              <circle cx="190" cy="135" r="22" fill="var(--eje-l)"/>
+              <text x="190" y="141" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">L</text>
+
+              <!-- los ejes mismos son instancias de "eje" (un concepto K) -->
+              <line x1="330" y1="102" x2="330" y2="154" stroke="var(--eje-m)" stroke-width="2" marker-end="url(#fl26)" opacity=".8"/>
+              <line x1="452" y1="151" x2="352" y2="171" stroke="var(--eje-m)" stroke-width="2" marker-end="url(#fl26)" opacity=".7"/>
+              <line x1="483" y1="234" x2="354" y2="186" stroke="var(--eje-m)" stroke-width="2" marker-end="url(#fl26)" opacity=".7"/>
+              <line x1="178" y1="234" x2="306" y2="186" stroke="var(--eje-m)" stroke-width="2" marker-end="url(#fl26)" opacity=".7"/>
+              <line x1="208" y1="151" x2="306" y2="172" stroke="var(--eje-m)" stroke-width="2" marker-end="url(#fl26)" opacity=".7"/>
+
+              <text x="350" y="132" font-size="10.5" fill="var(--eje-m)" font-family="var(--mono)">instancia_de</text>
+
+              <!-- K central: "eje" -->
+              <text x="330" y="222" text-anchor="middle" font-size="11.5" fill="var(--tinta)" font-family="var(--mono)">concepto: «eje»</text>
+
+              <!-- el grafo se contiene: flecha curva que vuelve sobre sí misma -->
+              <path d="M330,206 C330,300 560,330 600,250 C628,196 560,150 494,150"
+                    fill="none" stroke="var(--eje-m)" stroke-width="2.2" stroke-dasharray="6 5"
+                    marker-end="url(#fl26)" opacity=".55"/>
+              <text x="470" y="330" text-anchor="middle" font-size="11" fill="var(--eje-m)" font-style="italic" font-family="var(--sans)">el grafo contiene su propia descripción</text>
+
+              <!-- nodo "lexicon" como dato también -->
+              <rect x="78" y="300" width="150" height="40" rx="8" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="1.4"/>
+              <text x="153" y="318" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-k)" font-family="var(--sans)">lexicon · predicados</text>
+              <text x="153" y="333" text-anchor="middle" font-size="10" fill="var(--tinta-suave)" font-family="var(--sans)">también son tripletas</text>
+              <line x1="200" y1="300" x2="290" y2="200" stroke="var(--eje-m)" stroke-width="1.6" stroke-dasharray="3 3" opacity=".5"/>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 26.1.</span> El modelo reflejándose a sí mismo. Cada
+            uno de los siete ejes es, a su vez, una <code>instancia_de</code> el concepto «eje» —una
+            clase del eje <span class="eje eje--k">K</span>—, y el lexicon y los predicados viven como
+            tripletas en el mismo grafo. La flecha de trazos que regresa sobre el anillo es la
+            reflexión: el grafo contiene su propia descripción.</figcaption>
+        </figure>
+
+        <h2>La prueba reina</h2>
+
+        <p>Toda la apuesta se puede resumir en una sola operación. Si la estructura y el comportamiento
+          son de verdad datos, entonces <strong>agregar estructura debería costar insertar hechos, no
+          escribir código</strong>. Esa es la prueba reina: ¿cuánto cuesta agregar un campo nuevo a
+          una entidad que ya existe?</p>
+
+        <p>Lo medimos en vivo, con el sistema corriendo, agregando el campo «Documento» a la entidad
+          <code>venta</code>. Estas son las tripletas que insertamos, y nada más:</p>
+
+        <div class="bloque-codigo revelar">
+          <div class="barra"><span class="lenguaje">tripletas · campo nuevo = 5 hechos</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(campo_venta_documento, instancia_de, campo)   ∈ M(O, K)
+(venta, tiene_campo, campo_venta_documento)    ∈ M(K, O)
+(campo_venta_documento, tipo_dato, texto)      ∈ M(O, K)
+(campo_venta_documento, orden, 5)              ∈ M(O, N)
+(campo_venta_documento, rol, documento)        ∈ M(O, K)</code></pre>
+        </div>
+
+        <p>Cinco tripletas. Ninguna línea de código en el motor, en el servidor ni en la interfaz. Al
+          recargar, el formulario dibujó el campo, la grilla le sumó la columna y el guardado lo
+          persistió, porque las tres operaciones leen el esquema del grafo en lugar de conocerlo de
+          antemano. Ese número —cinco hechos, cero código— es el resultado central del experimento, y
+          la confirmación más limpia de la primera mitad de la tesis: <strong>la estructura es
+          dato</strong>.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Por qué importa</span>
+          En un sistema convencional, «agregar un campo» toca la migración de la base, el modelo del
+          servidor, el formulario, la grilla y a menudo la API. Cinco lugares, cinco oportunidades de
+          error. Aquí, un solo lugar: el grafo.
+        </aside>
+
+        <!-- FIGURA: antes / después — campo nuevo = 5 tripletas, 0 código -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <div class="rejilla-2" style="margin:0;align-items:stretch">
+              <div class="tarjeta" style="border-left:4px solid var(--eje-q)">
+                <h4 style="color:var(--eje-q);margin-top:0">Sistema convencional</h4>
+                <p style="font-size:.9rem;color:var(--tinta-suave);margin:.2rem 0 .8rem">Agregar el campo
+                  «Documento» toca cinco lugares, y cada uno necesita código:</p>
+                <ul class="limpia" style="font-family:var(--sans);font-size:.86rem;line-height:1.7;margin:0">
+                  <li>↳ <code>ALTER TABLE venta</code> (migración)</li>
+                  <li>↳ atributo en el modelo del servidor</li>
+                  <li>↳ campo en la plantilla del formulario</li>
+                  <li>↳ columna en la grilla</li>
+                  <li>↳ validación y serialización en la API</li>
+                </ul>
+                <p style="font-family:var(--sans);font-weight:700;font-size:.92rem;color:var(--eje-q);margin:.9rem 0 0">
+                  5 archivos · despliegue nuevo</p>
+              </div>
+              <div class="tarjeta" style="border-left:4px solid var(--eje-k)">
+                <h4 style="color:var(--eje-k);margin-top:0">WQuestions reflexivo</h4>
+                <p style="font-size:.9rem;color:var(--tinta-suave);margin:.2rem 0 .8rem">El mismo campo,
+                  como hechos en el grafo. Sin tocar el motor:</p>
+                <div style="display:flex;flex-direction:column;gap:.35rem;font-family:var(--mono);font-size:.78rem">
+                  <span class="eje-rotulo"><span class="eje eje--o">O</span> campo_venta_documento <small style="color:var(--tinta-tenue)">· instancia_de campo</small></span>
+                  <span class="eje-rotulo"><span class="eje eje--k">K</span> venta <small style="color:var(--tinta-tenue)">· tiene_campo</small></span>
+                  <span class="eje-rotulo"><span class="eje eje--k">K</span> tipo_dato <small style="color:var(--tinta-tenue)">· texto</small></span>
+                  <span class="eje-rotulo"><span class="eje eje--n">N</span> orden <small style="color:var(--tinta-tenue)">· 5</small></span>
+                  <span class="eje-rotulo"><span class="eje eje--k">K</span> rol <small style="color:var(--tinta-tenue)">· documento</small></span>
+                </div>
+                <p style="font-family:var(--sans);font-weight:700;font-size:.92rem;color:var(--eje-k);margin:.9rem 0 0">
+                  5 tripletas · 0 líneas de código</p>
+              </div>
+            </div>
+          </div>
+          <figcaption><span class="fnum">Figura 26.2.</span> La prueba reina, antes y después. A la
+            izquierda, el campo nuevo se reparte en cinco archivos y exige un despliegue. A la derecha,
+            es un puñado de hechos que el motor ya sabe leer. El color de cada hecho marca el eje de su
+            valor.</figcaption>
+        </figure>
+
+        <h2>Lo que la carga confirmó</h2>
+
+        <p>Más allá del número, el experimento puso a prueba tres ideas que el libro había defendido en
+          abstracto. Las tres aguantaron en concreto.</p>
+
+        <h3>El comportamiento también es dato</h3>
+
+        <p>Una y otra vez, a lo largo del libro, apareció la figura del <em>evaluador externo</em>: el
+          motor que recorre el grafo y ejecuta lo que los hechos prescriben, separado del grafo, que
+          solo almacena. Aquí ese evaluador dejó de ser una promesa y pasó a ser código que corre: un
+          despachador genérico que, dado un verbo (un tipo del eje <span class="eje eje--k">K</span>),
+          ejecuta la conducta asociada.</p>
+
+        <div class="bloque-codigo revelar">
+          <div class="barra"><span class="lenguaje">python · el despachador no conoce dominios</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">def ejecutar(self, accion):
+    """El motor no sabe qué es 'venta' ni 'compra'.
+    Lee el verbo de la acción y delega en el manejador del verbo."""
+    verbo = self.grafo.objeto(accion, "instancia_de")     # p.ej. abrir_grilla
+    manejador = self.verbos[verbo]                          # tabla genérica
+    objetivo = self.grafo.objeto(accion, "sobre")          # p.ej. venta
+    return manejador(objetivo)                              # nada cableado
+
+# Agregar la transacción "compras" no toca este código:
+# basta declarar el verbo, la entidad y sus campos como hechos.</code></pre>
+        </div>
+
+        <p>Agregar una transacción entera nueva —«compras», hermana de «ventas»— costó esencialmente
+          datos, no motor. El comportamiento vive en el grafo y se interpreta desde afuera, tal como
+          el modelo prometía.</p>
+
+        <h3>El grafo compartido cae solo</h3>
+
+        <p>El <a href="01-torre-de-babel.html">capítulo 1</a> abrió con la torre de Babel: cada
+          sistema con su esquema, incapaz de hablar con el de al lado. El antídoto del libro es un
+          único piso de hechos donde las entidades se reúsan. Lo comprobamos modelando «cliente» y
+          «proveedor» no como tipos distintos, sino como <strong>roles contextuales</strong>: el
+          nombre del campo en la venta o en la compra. Es la agencia contextual de la decisión
+          <span class="codigo-d" style="font-family:var(--mono);font-weight:700;background:var(--eje-o);color:#fff;border-radius:4px;padding:.05rem .4rem;font-size:.8rem">D5</span>
+          en acción.</p>
+
+        <div class="triple revelar">
+          <span class="nodo nodo--q"><span>ana</span><small>Q</small></span>
+          <span class="enlace">cliente<span class="firma">M(O→Q)</span></span>
+          <span class="nodo nodo--o"><span>venta_204</span><small>O</small></span>
+        </div>
+        <div class="triple revelar">
+          <span class="nodo nodo--q"><span>ana</span><small>Q</small></span>
+          <span class="enlace">proveedor<span class="firma">M(O→Q)</span></span>
+          <span class="nodo nodo--o"><span>compra_57</span><small>O</small></span>
+        </div>
+
+        <p>La misma persona, <code>ana</code>, es cliente de una venta y proveedora de una compra sin
+          duplicarse: un solo individuo, dos papeles según el contexto. El anti-Babel no fue una
+          aspiración que hubo que forzar; cayó solo en cuanto dejamos de modelar el rol como un tipo.</p>
+
+        <h3>La vigencia es la forma natural del «editar»</h3>
+
+        <aside class="nota-margen">
+          <span class="etq">Referencia</span>
+          La bitemporalidad —reificar las propiedades que cambian con un rango de inicio y fin— se
+          enuncia formalmente en el <a href="09-situaciones.html">capítulo 9</a>. Aquí solo la usamos.
+        </aside>
+
+        <p>La edición de un dato se implementó sin borrar nada: editar un valor es asentar un hecho
+          nuevo y leer el más reciente. Es bitemporalidad en miniatura —la vigencia de la decisión
+          <span class="codigo-d" style="font-family:var(--mono);font-weight:700;background:var(--eje-o);color:#fff;border-radius:4px;padding:.05rem .4rem;font-size:.8rem">D6</span>—:
+          historial gratis, ninguna sobreescritura destructiva. Y resultó ser la forma <em>natural</em>
+          de implementar el «update» de un CRUD, no un agregado teórico que hubo que justificar.</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">Tres promesas, cobradas</p>
+          <p style="margin:0">El evaluador externo, el grafo compartido y la bitemporalidad eran, hasta
+            aquí, decisiones de diseño defendidas sobre la pizarra. El experimento reflexivo las cobró
+            las tres a la vez, en un solo programa pequeño: comportamiento que se interpreta, entidades
+            que se reúsan por contexto y un historial que aparece sin esfuerzo.</p>
+        </div>
+
+        <h2>La auto-corrección: <code>instancia_de</code> pasa a <code>V→K</code></h2>
+
+        <p>El experimento no solo validó: <strong>forzó una corrección del prototipo</strong>, y vale
+          la pena contarla, porque es el método del libro operando sobre sí mismo. Para clasificar a
+          una persona —decir «Ana es un cliente»— hace falta el hecho <code>(ana, instancia_de,
+          cliente)</code>. Pero <code>ana</code> vive en el eje <span class="eje eje--q">Q</span>, es
+          un agente, y el prototipo había restringido <code>instancia_de</code> a sujetos del eje
+          <span class="eje eje--o">O</span>. La carga reveló la contradicción de inmediato.</p>
+
+        <p>Lo irónico es que este mismo libro, en el <a href="03-clase.html">capítulo 3</a>, ya escribía
+          sin parpadear hechos como estos:</p>
+
+        <div class="bloque-codigo revelar">
+          <div class="barra"><span class="lenguaje">tripletas · clasificar es universal</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(barista_lucia,  instancia_de, profesion_barista) ∈ M(Q, K)
+(municipalidad_centro, instancia_de, organizacion) ∈ M(Q, K)
+(barra_central,  instancia_de, punto_de_servicio)  ∈ M(L, K)
+(espresso_311,   instancia_de, espresso)           ∈ M(O, K)</code></pre>
+        </div>
+
+        <p>Sujetos en <span class="eje eje--q">Q</span>, en <span class="eje eje--l">L</span>, en
+          <span class="eje eje--o">O</span>: la teoría siempre supuso que clasificar es una operación
+          universal. El prototipo estaba, sencillamente, <em>detrás</em> de su propia teoría. La
+          corrección fue generalizar <code>instancia_de</code> de <code>O→K</code> a
+          <code>V→K</code>, donde <strong>V</strong> es un comodín que significa «cualquier eje de
+          valor».</p>
+
+        <div class="caja caja--definicion revelar">
+          <p class="caja-tit">El comodín V</p>
+          <p style="margin:0"><strong>V</strong> denota cualquiera de los seis ejes de valor
+            (<span class="eje eje--q">Q</span> <span class="eje eje--o">O</span>
+            <span class="eje eje--l">L</span> <span class="eje eje--t">T</span>
+            <span class="eje eje--n">N</span> <span class="eje eje--k">K</span>), por oposición al eje
+            estructural <span class="eje eje--m">M</span> de los predicados. Una signatura
+            <code>V→K</code> dice: «el sujeto puede ser un individuo de cualquier eje de valor, y el
+            objeto es una clase». Es la forma de declarar que una operación —como clasificar— no
+            pertenece a un eje particular.</p>
+        </div>
+
+        <p>Ese comodín no resuelve solo este caso. Es exactamente el mecanismo que el
+          <a href="28-que-falta.html">capítulo 28</a> reclama para relajar otras signaturas demasiado
+          estrechas —pensemos en <code>paciente</code> o <code>partes</code>, hoy fijadas a
+          <code>O→Q</code> cuando deberían admitir <code>O→V</code>—. La fricción, sometida a carga, no
+          abrió un agujero en el modelo: lo empujó a alinearse con lo que ya afirmaba.</p>
+
+        <p class="cita-destacada revelar">La presión no abrió un agujero en el modelo: lo empujó a
+          alinearse con lo que ya afirmaba.<cite>Sobre la auto-corrección</cite></p>
+
+        <h2>Las fricciones nuevas: dos cerradas, una abierta</h2>
+
+        <p>La presión reflexiva destapó tres fronteras que los ocho dominios industriales no habían
+          tocado. Dos las cerramos dentro del mismo experimento; la tercera quedó señalada como
+          trabajo pendiente.</p>
+
+        <div class="columnas">
+          <p><strong>El texto libre.</strong> Los siete ejes son semánticos, no tipos primitivos: no
+            existe un eje «string». Un nombre como «Ana», el contenido de un mensaje, el número de un
+            documento —texto arbitrario— no tienen casa propia. La decisión, fiel a la teoría, fue
+            alojar el texto libre como un <strong>literal en <span class="eje eje--k">K</span>,
+            minteado y único</strong>, con su valor en la etiqueta y una marca que lo distingue de una
+            <em>categoría controlada</em>. Así, dos personas llamadas «Ana» no terminan compartiendo un
+            mismo individuo.</p>
+          <p><strong>El catálogo como dato.</strong> El catálogo canónico tipa con fuerza el núcleo del
+            modelo, pero los campos que el usuario define como datos pasaban sin validar, bajo política
+            liberal. La carga lo expuso: el tipado del esquema vivía a medias en el código. Lo cerramos
+            haciendo que <strong>cada campo derive su signatura de sus propios datos</strong> —dominio
+            del eje de la entidad, rango de su <code>tipo_dato</code>— y la registre en el catálogo.
+            Escribir en un campo dinámico ahora se valida como un rol canónico.</p>
+        </div>
+
+        <div class="caja caja--definicion revelar">
+          <p class="caja-tit">Literal en K · categoría controlada en K</p>
+          <p style="margin:0 0 .6rem">Dos cosas conviven en el eje <span class="eje eje--k">K</span> y
+            conviene no confundirlas:</p>
+          <div class="rejilla-2" style="margin:.2rem 0 0;gap:.9rem">
+            <div>
+              <p style="margin:0;font-weight:600;color:var(--eje-k)">Literal</p>
+              <p style="margin:.2rem 0 0;font-size:.92rem">Texto arbitrario. Minteado y <em>único</em>:
+                cada «Ana» es su propio nodo. No se comparte ni se reúsa entre sistemas.</p>
+            </div>
+            <div>
+              <p style="margin:0;font-weight:600;color:var(--eje-k)">Categoría controlada</p>
+              <p style="margin:.2rem 0 0;font-size:.92rem">Vocabulario cerrado —unidades monetarias,
+                estados de un trámite—. Es una clase nombrada y <em>compartida</em>; el mismo nodo
+                vale para todos.</p>
+            </div>
+          </div>
+        </div>
+
+        <p>El catálogo canónico es invisible para el usuario final —es el lexicon su interfaz, como fija
+          la decisión
+          <span class="codigo-d" style="font-family:var(--mono);font-weight:700;background:var(--eje-o);color:#fff;border-radius:4px;padding:.05rem .4rem;font-size:.8rem">D8</span>—,
+          pero la carga reflexiva lo obligó a abarcar también lo que el usuario crea sobre la marcha. El
+          tipado dejó de vivir en Python y pasó a vivir en el grafo:</p>
+
+        <div class="bloque-codigo revelar">
+          <div class="barra"><span class="lenguaje">tripletas · el campo declara su propia signatura</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(rol_documento, dominio, O)        ∈ M(K, K)
+(rol_documento, rango,   K)        ∈ M(K, K)
+(rol_documento, etiqueta_en, "Documento") ∈ M(K, K)
+# el motor valida el guardado leyendo estas tres tripletas:
+# venta (O) escribe documento (K) → coincide con dominio O, rango K → válido</code></pre>
+        </div>
+
+        <p><strong>El humano.</strong> Queda en pie la tercera frontera, y no es del modelo, sino del
+          lector. Cuando <em>todo</em> es <code>(sujeto, rol, valor)</code>, se pierde el andamiaje de
+          tablas y formularios con nombre que normalmente carga el significado. El poder de la
+          abstracción reflexiva tiene un peaje cognitivo. El inspector —«lo que ves es lo que hay»—
+          re-concreta lo suficiente para no ahogarse, pero la pieza que falta es hacer de las
+          <strong>vistas y proyecciones con nombre</strong> ciudadanas del grafo: datos, no accidente
+          de la interfaz. Es trabajo pendiente, y reaparece como tal en el capítulo que sigue.</p>
+
+        <div class="caja caja--alerta revelar">
+          <p class="caja-tit">La frontera que no cerramos</p>
+          <p style="margin:0">Un sistema donde todo es una tripleta gana en uniformidad lo que pierde en
+            asideros. El programador acostumbrado a una tabla <code>venta</code> con columnas a la vista
+            tiene, de pronto, solo hechos. La re-concreción —darle nombre y forma a las vistas, dentro
+            del propio grafo— no es un lujo cosmético: es lo que vuelve usable un modelo que, por
+            construcción, disuelve las categorías familiares.</p>
+        </div>
+
+        <h2>Honradez intelectual</h2>
+
+        <p>Conviene nombrar el vértigo, porque es un hallazgo y no un defecto del lector. Un modelo
+          capaz de describirse a sí mismo es, por construcción, mareante: en el límite no hay «tablas»
+          ni «pantallas», solo preguntas sobre preguntas. ¿Qué es un campo? Una clase. ¿Qué es esa
+          clase? Una instancia del concepto «campo». ¿Y ese concepto? Otro nodo del grafo, descrito por
+          más tripletas. La torre no tiene fondo, y al principio eso desconcierta.</p>
+
+        <p>Pero ese mareo no invalida la propuesta; la confirma. Y, al mismo tiempo, explica por qué un
+          modelo así necesita prosa, ejemplos y una capa de re-concreción para que las personas puedan
+          usarlo. Es, en el fondo, la razón de ser de este libro: <strong>el grafo es operable; el
+          texto es lo que lo vuelve comprensible</strong>.</p>
+
+        <p>Que el modelo pueda describir su propia herramienta es la evidencia más fuerte que el
+          prototipo produjo. Más que ocho dominios distintos, es el modelo hablando de sí mismo sin
+          salirse de sus siete ejes: corrigiéndose cuando una signatura quedó corta, absorbiendo como
+          datos lo que un sistema convencional cablearía en código, y midiendo su propia ambición en un
+          número limpio —cinco hechos, cero líneas—.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">El saldo de la prueba reflexiva</p>
+          <p style="margin:0">La primera mitad de la tesis —<strong>estructura y comportamiento son
+            datos</strong>— queda saldada, y medida. Lo que sigue es la otra mitad: el inventario
+            honesto de lo que todavía falta para que esto deje de ser un prototipo y se vuelva
+            infraestructura de uso diario. Antes de ese inventario, sin embargo, hay una pregunta que
+            un grafo compartido vuelve urgente: si todos los hechos viven en un mismo piso, ¿quién
+            puede ver —y preguntar— qué?</p>
+        </div>
+
+        <p>A esa pregunta —la seguridad y la privacidad del grafo compartido— dedicamos el próximo
+          capítulo. Y al inventario de lo pendiente, el siguiente.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="25-aplicaciones.html"><span class="dir">← Anterior</span><span class="tit">Aplicaciones futuras</span></a>
+      <a class="sig" href="27-seguridad.html"><span class="dir">Siguiente →</span><span class="tit">Seguridad y privacidad</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

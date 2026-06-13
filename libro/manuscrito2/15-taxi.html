@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 15 · Un servicio on-demand — WQuestions</title>
+  <meta name="description" content="Un viaje en taxi como cadena de situaciones encadenadas y agentes múltiples —pasajero, plataforma de software, conductor y vehículo— donde la agencia contextual, la vigencia y los cables del porqué entran en acción.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'15'">
+      <header class="portada-cap">
+        <p class="parte">Parte V · En la práctica</p>
+        <div class="num-cap">15</div>
+        <h1>Un servicio on-demand</h1>
+        <p class="lede">El spa fue un estanque quieto. Aquí entramos a los rápidos: un viaje en taxi
+          donde deciden cuatro protagonistas a la vez —uno de ellos un programa—, las situaciones se
+          encadenan al segundo y el precio sube porque empieza a llover.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Camila Duarte sale de un edificio frente a la plaza a las 22:40 de un
+          viernes, abre la aplicación en el teléfono y toca «Pedir viaje». Veintiocho minutos después
+          baja del auto en la terminal de buses. Para ella ocurrió una sola cosa: pidió un taxi y
+          llegó. Pero en los servidores de la plataforma, entre el toque del botón y el portazo final,
+          pasaron muchas: el sistema rastreó conductores cerca, eligió a uno, el conductor aceptó,
+          condujo hasta la plaza, recogió a Camila, la llevó a la terminal y cerró el viaje. Cada paso
+          dejó su huella, movió un cobro, alteró un mapa de tráfico y —si algo hubiera salido mal—
+          habría abierto un reclamo que alguien en soporte tendría que reconstruir meses más tarde.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">El salto del capítulo anterior</span>
+          El spa de <em>Serena Termas</em> nos dio una venta que ocurre en un punto del tiempo. Un
+          servicio on-demand nos da algo distinto: un proceso que cambia de estado una y otra vez en
+          minutos, con varios protagonistas entrando y saliendo de escena.
+        </aside>
+
+        <p>Visto desde la ingeniería de datos, <strong>un viaje en taxi no es un evento: es una cadena
+          de seis situaciones que ocurren una tras otra</strong>, donde entran y salen distintos
+          protagonistas, con relojes cronometrados al segundo y con reglas de precio que dependen del
+          clima y de la demanda en tiempo real. El capítulo anterior fue modelar un estanque quieto:
+          el cliente llega, se relaja, paga y se va. Este nos lanza a la corriente, y nos obliga a
+          poner en práctica tres cosas que hasta ahora vimos sobre todo en teoría: la <em>agencia
+          contextual</em>, la <em>vigencia</em> de lo que cambia y los cables del <em>porqué</em>.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Lo que pone a prueba este capítulo</p>
+          <p style="margin:0">Tres tensiones que el spa no tenía. <strong>Agentes múltiples:</strong>
+            no solo personas deciden, también un programa. <strong>Situaciones encadenadas:</strong>
+            media docena de eventos enganchados por orden y por causa, agrupados bajo una unidad
+            comercial. <strong>Causalidad de mercado:</strong> el precio sube por la lluvia, y hay que
+            poder explicarle a un pasajero, meses después, exactamente por qué.</p>
+        </div>
+
+        <h2>Rumbo en una página</h2>
+
+        <p>Fijemos el negocio antes de modelarlo. <em>Rumbo</em> es una plataforma de transporte que
+          conecta a quien necesita moverse con quien tiene un auto y tiempo. No posee vehículos ni
+          emplea conductores en relación de dependencia: opera el <em>algoritmo</em> que los empareja
+          y cobra una comisión por cada viaje. Esa frase aparentemente trivial —«opera el algoritmo»—
+          es la que vuelve interesante el dominio, porque el algoritmo toma decisiones con
+          consecuencias legales y económicas, y eso lo convierte en un agente de pleno derecho.</p>
+
+        <p>En el viaje que seguiremos intervienen cuatro protagonistas. Conviene presentarlos con sus
+          identificadores, porque a partir de aquí los nombraremos por ellos:</p>
+
+        <div class="rejilla-2 revelar">
+          <div class="tarjeta">
+            <p class="emoji">🧍</p>
+            <h4>La pasajera · <code>pasajera_duarte</code></h4>
+            <p style="margin:0;font-size:.93rem">Camila Duarte. El agente humano que solicita el
+              servicio, lo recibe y, al final, lo califica.</p>
+          </div>
+          <div class="tarjeta">
+            <p class="emoji">🤖</p>
+            <h4>La plataforma · <code>plataforma_rumbo</code></h4>
+            <p style="margin:0;font-size:.93rem">El software que decide a qué conductor asignarle el
+              pedido. No es un programa pasivo: es quien <em>asigna</em>.</p>
+          </div>
+          <div class="tarjeta">
+            <p class="emoji">🧑‍✈️</p>
+            <h4>El conductor · <code>conductor_salas</code></h4>
+            <p style="margin:0;font-size:.93rem">Iván Salas. El agente humano que acepta el viaje,
+              recoge a la pasajera y la traslada.</p>
+          </div>
+          <div class="tarjeta">
+            <p class="emoji">🚗</p>
+            <h4>El vehículo · <code>vehiculo_4821</code></h4>
+            <p style="margin:0;font-size:.93rem">La máquina física —placa 4821— que hace posible el
+              traslado. El <em>instrumento</em> del trabajo.</p>
+          </div>
+        </div>
+
+        <h2>Cuatro protagonistas, una sola transacción</h2>
+
+        <p>Si le preguntas a cualquiera <em>«¿quién participa en el viaje?»</em>, la respuesta obvia
+          es: Camila y su conductor, Iván. Pero en el modelo hay dos participantes más que suelen
+          pasar inadvertidos. Uno es <strong>la plataforma</strong> —un agente de software que toma
+          decisiones autónomas—; el otro, <strong>el vehículo</strong>, la máquina que ejecuta el
+          traslado. Para que la base de datos sea auditable, los cuatro tienen que dejar rastro.</p>
+
+        <p>Aquí entra en acción una de las decisiones de diseño más liberadoras de la arquitectura: la
+          <em>agencia contextual</em> (D5). El rol de <code>agente</code> no está reservado a los
+          humanos; lo puede ocupar quien <em>ejecute la acción del verbo</em>, sea persona,
+          organización, sensor o software. Y el verbo central de este viaje —<em>asignar</em>— no lo
+          ejecutó Camila ni Iván: lo ejecutó el algoritmo. Fue él quien decidió, a las 22:41, darle
+          <em>ese</em> pedido a <em>ese</em> conductor. Negarle la condición de agente sería falsear
+          quién tomó la decisión.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Agencia contextual · D5</span>
+          La regla se enunció al hablar de situaciones: el rol <code>agente</code> lo pueden ocupar
+          humanos, organizaciones, software o sensores, según el verbo. Una plataforma que
+          <em>asigna</em> es tan agente como un barista que sirve un café. Aquí no la redefinimos; la
+          ponemos a trabajar.
+        </aside>
+
+        <p>Observa cómo se acomodan los cuatro participantes en la situación de asignación. Tres caen
+          en el eje <code>Q</code> —la pasajera (en cuyo nombre se asigna), la plataforma (que asigna)
+          y el conductor (a quien se asigna)— y uno, el vehículo, cae en <code>O</code> como
+          instrumento:</p>
+
+        <!-- FIGURA SVG 15.1: la asignación multi-agente, quién hace qué -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 360" class="svg-eje" role="img"
+                 aria-label="La situación de asignación con cuatro participantes: la plataforma de software como agente en el eje quién, la solicitud previa como tema en el eje qué, el conductor como beneficiario en quién, el vehículo como instrumento en qué; tres viven en Q y uno en O">
+              <!-- nodo central: la situación asignar -->
+              <rect x="248" y="150" width="164" height="60" rx="13" fill="var(--eje-o)" opacity=".14"></rect>
+              <rect x="248" y="150" width="164" height="60" rx="13" fill="none" stroke="var(--eje-o)" stroke-width="2"></rect>
+              <text x="330" y="176" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">asignar</text>
+              <text x="330" y="195" text-anchor="middle" font-size="11" fill="var(--tinta-suave)" font-family="var(--mono)">asignacion_7732</text>
+              <text x="330" y="232" text-anchor="middle" font-size="10.5" fill="var(--tinta-tenue)" font-family="var(--sans)">una situación reificada en O · el nudo de cuatro cables</text>
+
+              <!-- AGENTE: plataforma (Q) arriba izquierda -->
+              <g font-family="var(--sans)">
+                <rect x="20" y="24" width="190" height="56" rx="11" fill="var(--eje-q)" opacity=".12"></rect>
+                <rect x="32" y="36" width="22" height="22" rx="6" fill="var(--eje-q)"></rect>
+                <text x="43" y="52" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Q</text>
+                <text x="62" y="48" font-size="11.5" font-weight="700" fill="var(--eje-q)">agente · quien asigna</text>
+                <text x="62" y="68" font-size="11" fill="var(--tinta-suave)" font-family="var(--mono)">plataforma_rumbo</text>
+              </g>
+              <text x="222" y="86" font-size="10.5" font-weight="700" fill="var(--eje-m)" font-family="var(--sans)">agente</text>
+              <line x1="180" y1="80" x2="270" y2="150" stroke="var(--eje-q)" stroke-width="2.2"></line>
+
+              <!-- BENEFICIARIO: conductor (Q) arriba derecha -->
+              <g font-family="var(--sans)">
+                <rect x="450" y="24" width="190" height="56" rx="11" fill="var(--eje-q)" opacity=".12"></rect>
+                <rect x="462" y="36" width="22" height="22" rx="6" fill="var(--eje-q)"></rect>
+                <text x="473" y="52" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Q</text>
+                <text x="492" y="48" font-size="11.5" font-weight="700" fill="var(--eje-q)">beneficiario · a quién</text>
+                <text x="492" y="68" font-size="11" fill="var(--tinta-suave)" font-family="var(--mono)">conductor_salas</text>
+              </g>
+              <text x="430" y="86" font-size="10.5" font-weight="700" fill="var(--eje-m)" font-family="var(--sans)">beneficiario</text>
+              <line x1="480" y1="80" x2="390" y2="150" stroke="var(--eje-q)" stroke-width="2.2"></line>
+
+              <!-- TEMA: solicitud (O) abajo izquierda -->
+              <g font-family="var(--sans)">
+                <rect x="20" y="280" width="190" height="56" rx="11" fill="var(--eje-o)" opacity=".12"></rect>
+                <rect x="32" y="292" width="22" height="22" rx="6" fill="var(--eje-o)"></rect>
+                <text x="43" y="308" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">O</text>
+                <text x="62" y="304" font-size="11.5" font-weight="700" fill="var(--eje-o)">tema · qué se asigna</text>
+                <text x="62" y="324" font-size="11" fill="var(--tinta-suave)" font-family="var(--mono)">solicitud_7732</text>
+              </g>
+              <text x="214" y="276" font-size="10.5" font-weight="700" fill="var(--eje-m)" font-family="var(--sans)">tema</text>
+              <line x1="180" y1="288" x2="270" y2="210" stroke="var(--eje-o)" stroke-width="2.2"></line>
+
+              <!-- INSTRUMENTO: vehículo (O) abajo derecha -->
+              <g font-family="var(--sans)">
+                <rect x="450" y="280" width="190" height="56" rx="11" fill="var(--eje-o)" opacity=".12"></rect>
+                <rect x="462" y="292" width="22" height="22" rx="6" fill="var(--eje-o)"></rect>
+                <text x="473" y="308" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">O</text>
+                <text x="492" y="304" font-size="11.5" font-weight="700" fill="var(--eje-o)">instrumento · con qué</text>
+                <text x="492" y="324" font-size="11" fill="var(--tinta-suave)" font-family="var(--mono)">vehiculo_4821</text>
+              </g>
+              <text x="424" y="276" font-size="10.5" font-weight="700" fill="var(--eje-m)" font-family="var(--sans)">instrumento</text>
+              <line x1="480" y1="288" x2="390" y2="210" stroke="var(--eje-o)" stroke-width="2.2"></line>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 15.1.</span> Un solo evento, cuatro participantes con
+            roles distintos. La plataforma de software entra en <code>Q</code> como <em>agente</em>,
+            igual que entraría una persona: para el modelo, quien decide es agente, sea de carne o de
+            código. El vehículo entra en <code>O</code> como <em>instrumento</em>. Los dos humanos
+            ocupan sus papeles esperables. Que el algoritmo y el conductor compartan el eje
+            <code>Q</code> es, precisamente, la decisión D5 en funcionamiento.</figcaption>
+        </figure>
+
+        <p>Construir esa situación en el prototipo no exige redactar las tripletas a mano. Una llamada
+          consulta el lexicon, desambigua el verbo y enchufa los cuatro cables, validando que cada uno
+          aterrice en su eje correcto:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">asignacion = ingest_situation(u, lex, "asignar",
+    roles={
+        "agente":       plataforma_rumbo,   # Q · el algoritmo decide  ← D5
+        "tema":         solicitud_7732,     # O · qué se asigna: el pedido de Camila
+        "beneficiario": conductor_salas,    # Q · a quién: al conductor
+        "instrumento":  vehiculo_4821,      # O · con qué: el auto
+        "momento":      t_2241,             # T · la hora exacta
+    },
+    sit_id="asignacion_7732",
+)</code></pre>
+        </div>
+
+        <div class="caja caja--alerta revelar">
+          <p class="caja-tit">¿Y si mañana hay que auditar al GPS?</p>
+          <p style="margin:0">El vehículo vive en <code>O</code> como instrumento porque, casi siempre,
+            actúa por orden de un humano. Pero si un día el coche tomara una decisión propia —un
+            piloto automático que frena solo, un sensor que reporta una falla—, no hay que rediseñar
+            nada: se crea un agente <code>gps_4821</code> en <code>Q</code>, vinculado al vehículo
+            físico de <code>O</code>, y ese agente pasa a ocupar el rol del verbo que ejecutó. El
+            modelo no obliga a elegir entre humano y máquina: la agencia depende del verbo, no de la
+            sustancia de quien actúa.</p>
+        </div>
+
+        <h2>La cadena de las seis situaciones</h2>
+
+        <p>Cronológicamente, el viaje de Camila genera seis situaciones reificadas —seis nodos
+          independientes en el grafo—, cada una con su hora y sus participantes:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">la cadena</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="text">solicitar  →  asignar  →  aceptar  →  recoger  →  trasladar  →  completar
+  22:40       22:41       22:42       22:51        22:53         23:08</code></pre>
+        </div>
+
+        <p>Esas flechas no son adorno tipográfico: son cables reales del modelo, <code>precede</code>
+          y su inverso <code>sigue_a</code>. La consecuencia es enorme. El sistema conoce el orden
+          exacto de los eventos sin tener que restar marcas de reloj cada vez que se le pregunta. Si
+          alguien quiere saber <em>«¿qué pasó justo después de que Iván aceptara?»</em>, el motor sigue
+          el cable al nodo siguiente y responde de inmediato, sin aritmética de fechas. El orden
+          temporal está cosido a la estructura, no calculado a posteriori.</p>
+
+        <p>Pero el tiempo no es lo único que liga estos eventos. Algunos ocurren <em>a causa</em> de
+          otro. La plataforma no asignó el viaje a Iván por azar a las 22:41: lo hizo
+          <strong>porque</strong> Camila tocó el botón un minuto antes. Esa relación no es temporal —es
+          causal—, y para guardarla el modelo no tiene un eje «por qué», sino cuatro cables distintos
+          (D7). Aquí el adecuado es <code>motivado_por</code>:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(asignacion_7732, sigue_a,      solicitud_7732)   # cable temporal: el orden
+(asignacion_7732, motivado_por, solicitud_7732)   # cable causal: el porqué</code></pre>
+        </div>
+
+        <p>Y que Iván recoja a Camila no es solo «el siguiente paso en el tiempo»: es una obligación
+          nacida del momento en que aceptó. Por eso la recogida lleva los dos cables a la vez, y no se
+          estorban entre sí:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(recogida_7732, sigue_a,      aceptacion_7732)   # ← cable temporal
+(recogida_7732, motivado_por, solicitud_7732)    # ← cable de motivo</code></pre>
+        </div>
+
+        <aside class="nota-margen">
+          <span class="etq">El porqué no es un eje · D7</span>
+          El capítulo del «por qué» mostró que el porqué se reparte en cuatro cables —
+          <code>causado_por</code>, <code>motivado_por</code>, <code>con_finalidad</code>,
+          <code>justificado_por</code>. Una asignación está <em>motivada</em> por un pedido; un alza
+          de tarifa está <em>causada</em> por un estado del mercado. Distinguirlos es lo que vuelve la
+          auditoría posible.
+        </aside>
+
+        <p>Los dos cables sirven a públicos distintos. El temporal alimenta los cálculos operativos
+          —cuánto tardó la plataforma en asignar, cuántos minutos esperó la pasajera, qué velocidad
+          media tuvo el traslado—. El causal alimenta al auditor, que no quiere saber <em>cuándo</em>
+          sino <em>por qué</em> se tomó cada decisión. Tenerlos separados, y a la vez en el mismo
+          grafo, es lo que permite responder ambas preguntas sin reconstruir nada.</p>
+
+        <p>Falta una pieza. Si estos seis eventos quedaran sueltos en el servidor, serían huérfanos:
+          ninguno sabría a qué viaje pertenece. Por eso los agrupamos bajo una <strong>unidad
+          comercial</strong>: creamos un nodo <code>viaje_7732</code> y colgamos de él las seis
+          situaciones con el cable <code>parte_de</code>. Ese nodo es la entidad de negocio real —a él
+          se le pega la factura, a él acude soporte si hay un reclamo—; las seis situaciones son su
+          interior cronológico.</p>
+
+        <!-- FIGURA SVG 15.2: la cadena del viaje, situaciones encadenadas (precede) -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 700 366" class="svg-eje" role="img"
+                 aria-label="Las seis situaciones del viaje encadenadas: solicitar, asignar, aceptar, recoger, trasladar y completar, unidas por el cable temporal sigue_a; un cable motivado_por conecta la asignación con la solicitud; todas cuelgan de viaje_7732 por parte_de">
+              <defs>
+                <marker id="ft15" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto">
+                  <path d="M0 0 L9 4.5 L0 9 z" fill="var(--eje-t)"></path>
+                </marker>
+                <marker id="fc15" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto">
+                  <path d="M0 0 L9 4.5 L0 9 z" fill="var(--eje-m)"></path>
+                </marker>
+                <marker id="fp15" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+                  <path d="M0 0 L8 4 L0 8 z" fill="var(--eje-o)"></path>
+                </marker>
+              </defs>
+
+              <!-- carpeta maestra: viaje_7732 -->
+              <rect x="250" y="20" width="200" height="50" rx="12" fill="var(--eje-o)" opacity=".16"></rect>
+              <rect x="250" y="20" width="200" height="50" rx="12" fill="none" stroke="var(--eje-o)" stroke-width="2.2"></rect>
+              <text x="350" y="42" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">viaje_7732</text>
+              <text x="350" y="59" text-anchor="middle" font-size="10" fill="var(--tinta-suave)" font-family="var(--sans)">la unidad comercial · a ella va la factura</text>
+
+              <!-- seis cajitas de situación, dos filas de tres -->
+              <g font-family="var(--mono)" font-size="11.5">
+                <!-- fila 1 -->
+                <rect x="22" y="150" width="120" height="46" rx="10" fill="var(--eje-t)" opacity=".12"></rect>
+                <rect x="22" y="150" width="120" height="46" rx="10" fill="none" stroke="var(--eje-t)" stroke-width="1.6"></rect>
+                <text x="82" y="172" text-anchor="middle" font-weight="700" fill="var(--tinta)">solicitar</text>
+                <text x="82" y="187" text-anchor="middle" font-size="10" fill="var(--tinta-suave)">22:40</text>
+
+                <rect x="170" y="150" width="120" height="46" rx="10" fill="var(--eje-t)" opacity=".12"></rect>
+                <rect x="170" y="150" width="120" height="46" rx="10" fill="none" stroke="var(--eje-t)" stroke-width="1.6"></rect>
+                <text x="230" y="172" text-anchor="middle" font-weight="700" fill="var(--tinta)">asignar</text>
+                <text x="230" y="187" text-anchor="middle" font-size="10" fill="var(--tinta-suave)">22:41</text>
+
+                <rect x="318" y="150" width="120" height="46" rx="10" fill="var(--eje-t)" opacity=".12"></rect>
+                <rect x="318" y="150" width="120" height="46" rx="10" fill="none" stroke="var(--eje-t)" stroke-width="1.6"></rect>
+                <text x="378" y="172" text-anchor="middle" font-weight="700" fill="var(--tinta)">aceptar</text>
+                <text x="378" y="187" text-anchor="middle" font-size="10" fill="var(--tinta-suave)">22:42</text>
+
+                <!-- fila 2 -->
+                <rect x="466" y="150" width="120" height="46" rx="10" fill="var(--eje-t)" opacity=".12"></rect>
+                <rect x="466" y="150" width="120" height="46" rx="10" fill="none" stroke="var(--eje-t)" stroke-width="1.6"></rect>
+                <text x="526" y="172" text-anchor="middle" font-weight="700" fill="var(--tinta)">recoger</text>
+                <text x="526" y="187" text-anchor="middle" font-size="10" fill="var(--tinta-suave)">22:51</text>
+
+                <rect x="318" y="262" width="120" height="46" rx="10" fill="var(--eje-t)" opacity=".12"></rect>
+                <rect x="318" y="262" width="120" height="46" rx="10" fill="none" stroke="var(--eje-t)" stroke-width="1.6"></rect>
+                <text x="378" y="284" text-anchor="middle" font-weight="700" fill="var(--tinta)">trasladar</text>
+                <text x="378" y="299" text-anchor="middle" font-size="10" fill="var(--tinta-suave)">22:53</text>
+
+                <rect x="466" y="262" width="120" height="46" rx="10" fill="var(--eje-t)" opacity=".12"></rect>
+                <rect x="466" y="262" width="120" height="46" rx="10" fill="none" stroke="var(--eje-t)" stroke-width="1.6"></rect>
+                <text x="526" y="284" text-anchor="middle" font-weight="700" fill="var(--tinta)">completar</text>
+                <text x="526" y="299" text-anchor="middle" font-size="10" fill="var(--tinta-suave)">23:08</text>
+              </g>
+
+              <!-- cables sigue_a (temporales) -->
+              <line x1="142" y1="173" x2="166" y2="173" stroke="var(--eje-t)" stroke-width="2" marker-end="url(#ft15)"></line>
+              <line x1="290" y1="173" x2="314" y2="173" stroke="var(--eje-t)" stroke-width="2" marker-end="url(#ft15)"></line>
+              <line x1="438" y1="173" x2="462" y2="173" stroke="var(--eje-t)" stroke-width="2" marker-end="url(#ft15)"></line>
+              <!-- recoger -> trasladar (baja a fila 2) -->
+              <path d="M526 196 L526 230 L438 230 L438 262" fill="none" stroke="var(--eje-t)" stroke-width="2" marker-end="url(#ft15)"></path>
+              <!-- trasladar -> completar -->
+              <line x1="438" y1="285" x2="462" y2="285" stroke="var(--eje-t)" stroke-width="2" marker-end="url(#ft15)"></line>
+              <text x="150" y="142" font-size="9.5" fill="var(--eje-t)" font-family="var(--sans)" font-weight="700">sigue_a</text>
+
+              <!-- cable motivado_por: asignar -> solicitar (curva) -->
+              <path d="M186 196 C170 224, 110 224, 96 196" fill="none" stroke="var(--eje-m)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#fc15)"></path>
+              <text x="98" y="236" font-size="9.5" fill="var(--eje-m)" font-family="var(--sans)" font-weight="700">motivado_por</text>
+
+              <!-- parte_de: de cada situación hacia la carpeta (solo dos representativos para no saturar) -->
+              <line x1="82" y1="150" x2="300" y2="70" stroke="var(--eje-o)" stroke-width="1.3" stroke-dasharray="2 4" opacity=".55" marker-end="url(#fp15)"></line>
+              <line x1="526" y1="262" x2="408" y2="70" stroke="var(--eje-o)" stroke-width="1.3" stroke-dasharray="2 4" opacity=".55" marker-end="url(#fp15)"></line>
+              <text x="565" y="120" font-size="9.5" fill="var(--eje-o)" font-family="var(--sans)" font-weight="700">parte_de</text>
+
+              <text x="350" y="346" text-anchor="middle" font-size="10.5" fill="var(--tinta-tenue)" font-family="var(--sans)">El orden se sigue por T (sigue_a); la causa, por M (motivado_por); la pertenencia, por O (parte_de). Tres relaciones, un grafo.</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 15.2.</span> El viaje como cadena de situaciones
+            encadenadas. Las flechas continuas son el cable temporal <code>sigue_a</code>: dan el
+            orden sin aritmética de relojes. La flecha punteada magenta es <code>motivado_por</code>,
+            el cable causal que ata la asignación al pedido que la provocó. Las líneas tenues hacia
+            arriba son <code>parte_de</code>: cada situación cuelga de <code>viaje_7732</code>, la
+            unidad comercial. Reconstruir el viaje entero es, literalmente, recorrer estos cables.</figcaption>
+        </figure>
+
+        <p>Conviene detenerse en que tres preguntas distintas conviven sobre las mismas seis
+          situaciones, y cada una se responde siguiendo un cable que vive en un eje diferente:</p>
+
+        <div class="columnas">
+          <p><span class="eje-rotulo"><span class="eje eje--t">T</span> ¿en qué orden?</span> &nbsp;El
+            cable <code>sigue_a</code> es asunto del eje del tiempo. Da la secuencia sin restar relojes:
+            preguntar «¿qué vino después de aceptar?» es seguir una flecha, no calcular una diferencia
+            de horas. Es lo que alimenta toda métrica operativa —espera de la pasajera, duración del
+            traslado, latencia de la asignación.</p>
+          <p><span class="eje-rotulo"><span class="eje eje--m">M</span> ¿por qué ocurrió?</span> &nbsp;El
+            cable <code>motivado_por</code> es un predicado del eje <em>cómo</em>, el que enlaza hechos
+            con hechos. No dice cuándo, sino qué provocó qué: la asignación existe porque hubo una
+            solicitud. Es lo que un auditor persigue cuando reconstruye una decisión.
+            <span class="eje-rotulo"><span class="eje eje--o">O</span> ¿de qué viaje es parte?</span>
+            &nbsp;Y el cable <code>parte_de</code> ata cada situación a la unidad comercial en el eje
+            de los objetos. Tres ejes, tres preguntas, un mismo grafo.</p>
+        </div>
+
+        <h2>Tarifa dinámica · explicar el caos del mercado</h2>
+
+        <p>Hay un rasgo de este negocio que tensa de verdad la estructura de datos: el precio no es
+          fijo. Cuando llueve, o cuando hay más pasajeros que autos disponibles, la tarifa sube. Un
+          mismo trayecto que ayer costó 18 unidades hoy cuesta 30. El reto no es <em>cobrar</em> ese
+          recargo —eso lo hace cualquier sistema— sino <em>explicarlo</em> seis meses después, cuando
+          la pasajera escribe enfadada preguntando por qué le cobraron casi el doble.</p>
+
+        <p>Un sistema mediocre pegaría a la factura un número suelto: <code>multiplicador: 1.67</code>.
+          Funciona para el cobro y arruina la auditoría. Ese número no sabe <em>por qué</em> era 1.67;
+          no recuerda que esa noche llovía sobre la plaza ni que había tres veces más pedidos que
+          autos. La explicación se evaporó en el instante mismo del cobro.</p>
+
+        <p>La solución del modelo es <strong>reificar el estado del mercado</strong>: convertir «esa
+          noche, en esa zona, había pico de demanda y lluvia» en un objeto con identidad propia en
+          <code>O</code>, y atar la tarifa a él con el cable causal <code>causado_por</code> (D7). El
+          estado deja de ser un adjetivo perdido y pasa a ser un hecho consultable, con su lugar, su
+          hora y su intensidad:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># 1 · El estado de la calle como objeto con identidad
+estado_mercado = u.add_individual(Individual(id="pico_demanda_2240", axis=Axis.O))
+u.assert_fact(estado_mercado, "instancia_de", "estado_alta_demanda")
+u.assert_fact(estado_mercado, "lugar_de",     zona_plaza)        # L · dónde
+u.assert_fact(estado_mercado, "momento",      t_2240)            # T · cuándo
+u.assert_fact(estado_mercado, "factor_clima", lluvia)            # K · por qué subió
+u.assert_fact(estado_mercado, "multiplicador", n_1_67)           # N · cuánto
+
+# 2 · La tarifa, atada a su causa
+tarifa = u.add_individual(Individual(id="tarifa_7732", axis=Axis.O))
+u.assert_fact(tarifa, "paga_de",     viaje_7732)
+u.assert_fact(tarifa, "monto",       n_30_00)
+u.assert_fact(tarifa, "moneda",      moneda_local)
+u.assert_fact(tarifa, "causado_por", estado_mercado)   # ← el porqué, como cable</code></pre>
+        </div>
+
+        <p>La diferencia, a la hora de operar el negocio, es nítida. Visto como tripletas, el recargo
+          ya no es un número anónimo, sino un hecho que apunta a su causa:</p>
+
+        <div class="triple" style="flex-wrap:wrap;justify-content:center">
+          <span class="nodo nodo--o"><span>tarifa_7732</span><small>O</small></span>
+          <span class="enlace">causado_por<span class="firma">M(O→O)</span></span>
+          <span class="nodo nodo--o"><span>pico_demanda_2240</span><small>O</small></span>
+          <span class="enlace">factor_clima<span class="firma">M(O→K)</span></span>
+          <span class="nodo nodo--k"><span>lluvia</span><small>K</small></span>
+        </div>
+
+        <p>Cuando Camila escriba <em>«¿por qué pagué 30 si la otra vez fueron 18?»</em>, el sistema no
+          necesita que un empleado bucee en registros de tráfico. Sigue el cable <code>causado_por</code>
+          y responde solo: <em>«La tarifa se calculó por un estado de alta demanda registrado a las
+          22:40 en la zona de la plaza, con un factor de lluvia, que aplicó un multiplicador de
+          1.67»</em>. La justificación estaba guardada como un hecho, no reconstruida a mano.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Un porqué no es un campo: es un cable a un hecho</p>
+          <p style="margin:0">La tentación es modelar el recargo como una columna numérica. Pero un
+            número no se puede auditar: no recuerda su causa. Al reificar el estado del mercado y
+            unirlo con <code>causado_por</code>, el «por qué subió» deja de ser folclore de soporte y
+            se vuelve un dato de primera clase, con su lugar, su hora y su factor. La auditoría más
+            temida del rubro se convierte en seguir un cable.</p>
+        </div>
+
+        <h2>Cuando algo se cancela · el arte de no borrar nada</h2>
+
+        <p>El rubro del transporte vive de cancelaciones. Alguien pide un auto y se arrepiente; un
+          conductor acepta y se le pincha una llanta. La pregunta perenne de quien programa es: ¿qué
+          hago con el viaje cancelado? ¿Lo borro? ¿Lo marco en rojo? Ambas respuestas destruyen
+          información. Borrar deja un hueco; sobrescribir miente sobre el pasado.</p>
+
+        <p>La convención del modelo es la <strong>inmutabilidad</strong>: nunca se borra, nunca se
+          reescribe la historia. Una cancelación no es un cambio sobre el viaje viejo —es <em>un evento
+          nuevo</em> que lo apunta. Y ese principio es exactamente la <em>vigencia</em> (D6) en su
+          forma más concreta: el estado del viaje no se modifica en su lugar, sino que se registra como
+          un hecho fechado que abre un intervalo de validez.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Vigencia · D6</span>
+          La regla se enunció con las propiedades que cambian en el tiempo: en vez de sobrescribir, se
+          reifican con rango <code>inicio</code>/<code>fin</code>. Un viaje que pasa de
+          <code>solicitado</code> a <code>cancelado</code> no pierde su pasado: gana una línea nueva,
+          fechada. La verdad de cada instante queda intacta para siempre.
+        </aside>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># La cancelación es un evento nuevo, con su autor y su hora
+cancelacion = ingest_situation(u, lex, "cancelar",
+    roles={
+        "agente":  pasajera_duarte,    # Q · quién canceló (queda registrado)
+        "tema":    viaje_7732,         # O · qué se cancela: el viaje
+        "momento": t_2243,             # T · cuándo
+    },
+    sit_id="cancelacion_7732",
+)
+u.assert_fact(cancelacion, "cancela", viaje_7732)   # el cable hacia el original</code></pre>
+        </div>
+
+        <p>El cambio de estado del viaje no machaca un campo: se asienta como un hecho con vigencia,
+          igual que un libro contable que solo agrega asientos y jamás tacha. El estado anterior
+          conserva su intervalo cerrado; el nuevo abre el suyo:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(viaje_7732, estado, solicitado,  inicio=22:40, fin=22:43)   # vigente y luego cerrado
+(viaje_7732, estado, cancelado,   inicio=22:43, fin=∞)        # el estado vigente ahora</code></pre>
+        </div>
+
+        <p>Nacieron varios hechos nuevos —la situación de cancelación con su autor y su hora, el cable
+          <code>cancela</code> y la línea de estado fechada— y ninguno destruyó nada. El viaje sigue
+          entero en el grafo, solo que ahora su estado vigente es <code>cancelado</code>. Cuando la
+          empresa calcule los viajes facturables del día, el código simplemente ignora los que tengan
+          estado vigente <code>cancelado</code>. La base de datos se vuelve un registro histórico
+          indestructible: perfecto para una disputa legal, donde la pregunta no es «¿cuál es el estado
+          hoy?» sino «¿en qué estado exacto estaba a las 22:42?».</p>
+
+        <h2>Tres consultas operativas</h2>
+
+        <p>El valor de un sistema se mide por la facilidad con que responde lo que de verdad importa al
+          cierre del día. Veamos tres preguntas críticas del rubro, resueltas como recorridos del
+          grafo en lugar de cadenas de tablas.</p>
+
+        <p><b>Consulta 1 · ¿Adónde llevó Iván a Camila?</b><br>
+          El motor busca un patrón —las situaciones de clase <code>trasladar</code> donde el agente
+          sea Iván y la pasajera sea Camila— y proyecta el destino. No hay tablas que unir: hay un
+          patrón que se satisface.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">r = query(u, Pattern(
+    fixed={"agente": conductor_salas, "pasajero": pasajera_duarte},
+    ask={"destino": Var()},
+    type_constraint=u.ind("traslado"),
+))
+# → terminal_buses</code></pre>
+        </div>
+
+        <p><b>Consulta 2 · ¿Cuántos viajes completó Iván esta noche?</b><br>
+          Un conteo sobre el patrón de viajes con agente Iván y estado vigente <code>completado</code>.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">n = count(u, Pattern(
+    fixed={"agente": conductor_salas, "estatus_factual": u.ind("completado")},
+    type_constraint=u.ind("viaje"),
+))</code></pre>
+        </div>
+
+        <p>Repara en algo que conviene no dejar pasar: este conteo es <em>estructuralmente idéntico</em>
+          al que usamos en el spa para contar los circuitos pagados de Lucía. Cambian los nombres de
+          los roles y de las clases —<code>conductor_salas</code> en vez de <code>lucia</code>,
+          <code>viaje</code> en vez de <code>circuito_termal</code>— pero la maquinaria es la misma.
+          La uniformidad del modelo permite reciclar la misma consulta entre un spa de barrio y una
+          plataforma transnacional, dos negocios sin nada en común salvo su forma profunda.</p>
+
+        <p><b>Consulta 3 · ¿Por qué la tarifa fue de 30?</b><br>
+          Se siguen los hechos de la tarifa y se filtra el cable causal. La respuesta es el estado del
+          mercado que la provocó —no un número opaco, sino un hecho con lugar y hora.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">hechos = u.facts_about(u.ind("tarifa_7732"))
+causa  = [f for f in hechos if f.role == "causado_por"]
+# → pico_demanda_2240   (alta demanda + lluvia, 22:40, zona de la plaza)</code></pre>
+        </div>
+
+        <h2>El antes y el después · del esquema fragmentado al grafo único</h2>
+
+        <p><b>Antes, en SQL.</b> El esquema clásico de un servicio de transporte reparte la realidad
+          en tablas separadas que no se hablan solas: <code>viajes</code>, <code>conductores</code>,
+          <code>pasajeros</code>, <code>tarifas</code>, <code>eventos_viaje</code>. Reconstruir la
+          cadena completa —qué ocurrió, en qué orden y por qué el precio subió— obliga a encadenar
+          <code>JOIN</code> en cascada y luego ordenar en código por marca de tiempo. Y la pregunta
+          que de verdad duele —<em>«¿cuál fue la causa concreta de que esa tarifa subiera a 30 ese
+          minuto?»</em>— sencillamente no tiene respuesta: no existe una tabla de causas; el motivo
+          —lluvia, alta demanda— se perdió o agoniza en un campo de texto libre que nadie consulta con
+          coherencia.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">sql</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="sql">-- Antes: el viaje, sus eventos y su tarifa viven en tablas distintas;
+-- el orden se reconstruye ordenando por timestamp y el "porqué" no existe.
+CREATE TABLE viajes        (id INTEGER PRIMARY KEY, pasajero_id INT, conductor_id INT, estado TEXT);
+CREATE TABLE eventos_viaje (id INTEGER PRIMARY KEY, viaje_id INT, tipo TEXT, ts TIMESTAMP);
+CREATE TABLE tarifas       (id INTEGER PRIMARY KEY, viaje_id INT, monto NUMERIC, multiplicador NUMERIC);
+
+SELECT e.tipo, e.ts
+FROM eventos_viaje e
+JOIN viajes v ON v.id = e.viaje_id
+WHERE v.id = 7732
+ORDER BY e.ts;                      -- el orden se calcula; no está en la estructura
+-- ¿la causa del multiplicador 1.67? No hay columna que lo diga.</code></pre>
+        </div>
+
+        <p><b>Después, en WQuestions.</b> La misma realidad es un grafo único. <code>viaje_7732</code>
+          agrupa las seis situaciones reificadas —<code>solicitar</code>, <code>asignar</code>,
+          <code>aceptar</code>, <code>recoger</code>, <code>trasladar</code>, <code>completar</code>—
+          con cables <code>parte_de</code> y <code>sigue_a</code>. La tarifa es un objeto en
+          <code>O</code> unido al estado de alta demanda por <code>causado_por</code>. Reconstruir el
+          viaje es seguir los cables desde <code>viaje_7732</code>; obtener la causa del precio es leer
+          un solo hecho. No hay <code>JOIN</code>, no hay pegamento en código que ordene por fecha, no
+          hay pregunta que el esquema no admita —porque el motivo nunca fue un número: siempre fue un
+          evento con identidad.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># Después: la cadena se recorre por el cable; la causa se lee como un hecho.
+cadena = u.follow(u.ind("viaje_7732"), "parte_de")        # las seis situaciones
+causa  = u.facts_about(u.ind("tarifa_7732"), role="causado_por")   # un solo paso</code></pre>
+        </div>
+
+        <p class="cita-destacada revelar">En un servicio on-demand, el porqué de un precio no es una
+          columna: es un evento con lugar y hora. Reificar el estado del mercado, y no esconderlo en un
+          número, es lo que convierte el peor dolor de cabeza de soporte en una sola consulta.<cite>La lección del taxi</cite></p>
+
+        <h2>Lo que el taxi enseñó que el spa ocultaba</h2>
+
+        <p>El spa fue un cliente amable: una venta que ocurre en un punto del tiempo. El servicio
+          on-demand exigió más, y el modelo lo sostuvo sin un solo parche. Cerremos con el balance de
+          lo que demostró el prototipo al absorber este dominio de punta a punta.</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">El veredicto del segundo dominio industrial</p>
+          <ul class="limpia" style="margin:0">
+            <li style="margin-bottom:.6rem"><b>Agentes de software (D5).</b> Le dimos poder de decisión
+              al algoritmo: la plataforma ocupa el rol de <code>agente</code> en <code>Q</code>, junto
+              al conductor humano. El modelo no distingue de qué sustancia está hecho quien decide;
+              solo le importa que ejecute el verbo.</li>
+            <li style="margin-bottom:.6rem"><b>Situaciones encadenadas.</b> Seis eventos enganchados por
+              orden (<code>sigue_a</code>) y por causa (<code>motivado_por</code>), todos agrupados bajo
+              una unidad comercial (<code>parte_de</code>). El orden vive en la estructura, no en una
+              resta de relojes.</li>
+            <li style="margin-bottom:.6rem"><b>Los porqués del mercado (D7).</b> «La lluvia» y «el alza»
+              dejaron de ser folclore: se reificaron como un estado en <code>O</code> y se ataron al
+              precio con <code>causado_por</code>. La tarifa más reclamada del rubro se explica sola.</li>
+            <li><b>Inmutabilidad y vigencia (D6).</b> Una cancelación no borra ni reescribe: agrega un
+              evento y un estado fechado. El grafo se vuelve un registro histórico que responde no solo
+              «¿cómo está hoy?» sino «¿cómo estaba a las 22:42?».</li>
+          </ul>
+        </div>
+
+        <p>La prueba de código superó a la simulación: no hubo que inventar un rol nuevo ni torcer el
+          catálogo de la arquitectura para sostener una operación que cambia de estado una docena de
+          veces en media hora y multiplica precios con la lluvia. En el próximo capítulo subimos otra
+          vez la apuesta, pero en una dirección distinta. En una historia clínica no hay viajes
+          rápidos ni tarifas que suban con el clima: hay diagnósticos, fármacos, contraindicaciones,
+          protocolos y una densidad de información donde un error no cuesta dinero, sino salud. Veamos
+          cómo el modelo, que ya domó un comercio y una plataforma, se enfrenta al peso de la medicina
+          sin doblarse.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="14-spa.html"><span class="dir">← Anterior</span><span class="tit">Un sistema de ventas</span></a>
+      <a class="sig" href="16-clinica.html"><span class="dir">Siguiente →</span><span class="tit">Una historia clínica</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

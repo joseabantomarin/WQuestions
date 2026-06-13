@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 28 · Qué falta — WQuestions</title>
+  <meta name="description" content="La propuesta está completa en lo conceptual; falta hacerla real. Una hoja de ruta honesta: motor de inferencia, bitemporalidad completa, persistencia industrial, tooling, lexicon poblado y comunidad. El libro como semilla, no como punto final.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'28'">
+      <header class="portada-cap">
+        <p class="parte">Parte VI · IA, futuro y cierre</p>
+        <div class="num-cap">28</div>
+        <h1>Qué falta</h1>
+        <p class="lede">La propuesta está completa donde más cuesta estarlo: en lo conceptual. Lo que
+          queda no es pensar el modelo, sino hacerlo real. Esta es la lista, sin maquillaje.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Imagina que cierras este libro y decides que la idea merece existir de
+          verdad. Clonas el repositorio, levantas el prototipo, cargas un dominio propio —tu spa, tu
+          clínica, el sistema de tu empresa— y empiezas a registrar hechos. Funciona: los hechos
+          entran como tripletas tipadas, el lexicon traduce tu vocabulario, las consultas responden. Y
+          entonces, casi de inmediato, chocas con una pared. Quieres que el sistema dispare solo la
+          regla <em>«a la séptima sesión, la octava es gratis»</em>; el prototipo guarda la regla como
+          dato, pero no la <em>ejecuta</em>. Quieres preguntarle no qué era cierto, sino qué sabía el
+          sistema en abril; la respuesta a medias te dice que esa versión del pasado no se conservó.
+          Ninguna de esas paredes es teórica. Son, exactamente, lo que falta.</p>
+
+        <p>Este capítulo cambia de registro a propósito. No es una recapitulación ni una mirada
+          inspiradora al horizonte; es un <strong>mapa de implementación</strong>. Hasta aquí el libro
+          presentó la propuesta entera y la sometió a prueba: un prototipo en Python con sus pruebas en
+          verde, ocho dominios industriales modelados que confirman que el catálogo se sostiene en
+          territorios disímiles y —en el <a href="26-prueba-reflexiva.html">capítulo&nbsp;26</a>— el
+          experimento reflexivo, donde el modelo bastó para describir su propia herramienta y se
+          corrigió a sí mismo bajo carga. Lo que sigue es el inventario honesto de la distancia que
+          separa eso de una pieza de infraestructura que cualquiera pueda adoptar un martes por la
+          tarde.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Para quién</span>
+          Este capítulo está escrito para tres lectores: quien quiera contribuir al núcleo, quien
+          evalúe adoptarlo temprano en su organización, y quien solo necesite medir, con honestidad,
+          cuánto camino queda. Si buscas la visión, salta al <a href="29-conclusion.html">cierre</a>;
+          si buscas la lista de tareas, estás en la página correcta.
+        </aside>
+
+        <p>Lo organizo en seis frentes. De cada uno digo tres cosas: <strong>qué falta</strong>,
+          <strong>qué tan urgente es</strong> y <strong>qué requiere para resolverlo</strong>. Donde el
+          experimento reflexivo ya adelantó terreno lo señalo, porque eso mueve el punto de partida.
+          Y cierro con la pieza que pesa más que todas las demás juntas, y que el autor no controla
+          solo.</p>
+
+        <!-- FIGURA 28.1 · roadmap resuelto vs pendiente -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 680 392" class="svg-eje" role="img"
+                 aria-label="Mapa de los seis frentes que separan el prototipo de la infraestructura: cada uno mostrado con la fracción ya resuelta y la fracción pendiente.">
+              <!-- encabezados de columna -->
+              <text x="232" y="22" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-k)">resuelto / adelantado</text>
+              <text x="520" y="22" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-q)">pendiente</text>
+              <line x1="376" y1="30" x2="376" y2="372" stroke="var(--linea)" stroke-width="1" stroke-dasharray="3 4"/>
+
+              <!-- Frente 1 -->
+              <text x="14" y="58" font-size="12.5" font-weight="700" fill="var(--tinta)">1 · Motor de inferencia</text>
+              <rect x="160" y="46" width="216" height="16" rx="4" fill="var(--linea)" opacity=".5"/>
+              <rect x="160" y="46" width="58" height="16" rx="4" fill="var(--eje-k)" opacity=".82"/>
+              <text x="384" y="58" font-size="10.5" fill="var(--tinta-tenue)">evaluar reglas declarativas</text>
+              <text x="223" y="58" font-size="9" fill="#fff" font-weight="700">ejecuta verbos</text>
+
+              <!-- Frente 2 -->
+              <text x="14" y="106" font-size="12.5" font-weight="700" fill="var(--tinta)">2 · Bitemporalidad</text>
+              <rect x="160" y="94" width="216" height="16" rx="4" fill="var(--linea)" opacity=".5"/>
+              <rect x="160" y="94" width="108" height="16" rx="4" fill="var(--eje-t)" opacity=".82"/>
+              <text x="384" y="106" font-size="10.5" fill="var(--tinta-tenue)">transaction time a disco</text>
+              <text x="214" y="106" font-size="9" fill="#fff" font-weight="700">valid time</text>
+
+              <!-- Frente 3 -->
+              <text x="14" y="154" font-size="12.5" font-weight="700" fill="var(--tinta)">3 · Persistencia</text>
+              <rect x="160" y="142" width="216" height="16" rx="4" fill="var(--linea)" opacity=".5"/>
+              <rect x="160" y="142" width="92" height="16" rx="4" fill="var(--eje-o)" opacity=".82"/>
+              <text x="384" y="154" font-size="10.5" fill="var(--tinta-tenue)">backends plurales (Postgres…)</text>
+              <text x="206" y="154" font-size="9" fill="#fff" font-weight="700">SQLite</text>
+
+              <!-- Frente 4 -->
+              <text x="14" y="202" font-size="12.5" font-weight="700" fill="var(--tinta)">4 · Tooling</text>
+              <rect x="160" y="190" width="216" height="16" rx="4" fill="var(--linea)" opacity=".5"/>
+              <rect x="160" y="190" width="46" height="16" rx="4" fill="var(--eje-l)" opacity=".82"/>
+              <text x="384" y="202" font-size="10.5" fill="var(--tinta-tenue)">ingestor · parser · IDE · MCP</text>
+              <text x="183" y="202" font-size="9" fill="#fff" font-weight="700">inspector</text>
+
+              <!-- Frente 5 -->
+              <text x="14" y="250" font-size="12.5" font-weight="700" fill="var(--tinta)">5 · Lexicon poblado</text>
+              <rect x="160" y="238" width="216" height="16" rx="4" fill="var(--linea)" opacity=".5"/>
+              <rect x="160" y="238" width="20" height="16" rx="4" fill="var(--eje-m)" opacity=".82"/>
+              <text x="384" y="250" font-size="10.5" fill="var(--tinta-tenue)">miles de entradas, varios idiomas</text>
+              <text x="186" y="250" font-size="9" fill="var(--tinta-tenue)" font-weight="700">~10 verbos</text>
+
+              <!-- Frente 6 -->
+              <text x="14" y="298" font-size="12.5" font-weight="700" fill="var(--tinta)">6 · Comunidad</text>
+              <rect x="160" y="286" width="216" height="16" rx="4" fill="var(--linea)" opacity=".5"/>
+              <rect x="160" y="286" width="30" height="16" rx="4" fill="var(--eje-n)" opacity=".82"/>
+              <text x="384" y="298" font-size="10.5" fill="var(--tinta-tenue)">gobernanza, adopción, estándar</text>
+              <text x="194" y="298" font-size="9" fill="var(--tinta-tenue)" font-weight="700">repo</text>
+
+              <!-- leyenda inferior -->
+              <text x="14" y="352" font-size="11" fill="var(--tinta-suave)" font-style="italic">La barra llena mide lo ya logrado; el resto, la deuda. La prueba reflexiva</text>
+              <text x="14" y="368" font-size="11" fill="var(--tinta-suave)" font-style="italic">(Cap. 26) empujó las barras de los frentes 1, 3 y 4 hacia la derecha.</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 28.1.</span> Los seis frentes que separan el prototipo
+            de la infraestructura, cada uno con la fracción ya resuelta y la pendiente. Ningún frente
+            arranca de cero: en todos hay un piso operable. Lo que falta es altura, no cimiento.</figcaption>
+        </figure>
+
+        <h2>Frente 1 — El motor de inferencia</h2>
+
+        <p>Apareció una y otra vez a lo largo del libro: el evaluador externo que recorre el grafo y
+          dispara reglas. La regla <em>«siete sesiones cumplidas, la octava gratis»</em> del spa. La
+          verificación <em>«prescripción contra contraindicación»</em> de la clínica. El cálculo del
+          marcador a partir de cada canasta del partido. La cláusula de rescisión que se activa en un
+          contrato. Todas comparten la misma forma estructural: una condición declarativa sobre los
+          hechos del grafo y un consecuente que se efectúa cuando la condición se cumple.</p>
+
+        <p>El experimento reflexivo dio el <strong>primer medio paso</strong>: demostró que la conducta
+          puede vivir como dato y ejecutarse desde afuera —un evaluador genérico que despacha verbos
+          leyéndolos del grafo—. Lo que ese motor <strong>todavía no es</strong> es un evaluador de
+          <strong>reglas declarativas</strong>. Sabe ejecutar verbos; no sabe resolver «si se cumplen
+          estas condiciones sobre los hechos, deriva este hecho nuevo». Esa es la pieza ausente.</p>
+
+        <p>Hay al menos cuatro tecnologías candidatas para esa capa, cada una con su fortaleza y su
+          flanco débil:</p>
+
+        <div class="rejilla-2 revelar">
+          <div class="tarjeta">
+            <h4 style="color:var(--eje-k)">SHACL</h4>
+            <p style="margin:0;font-size:.93rem"><em>Shapes Constraint Language</em> (W3C, 2017),
+              pensado para validar grafos RDF. Excelente para chequear consistencia —«ningún paciente
+              con dos diagnósticos contradictorios vigentes»—; pobre para el razonamiento positivo.</p>
+          </div>
+          <div class="tarjeta">
+            <h4 style="color:var(--eje-o)">Datalog</h4>
+            <p style="margin:0;font-size:.93rem">Lenguaje lógico deductivo. Sobresale en razonamiento
+              composicional —«si X causa Y e Y causa Z, entonces X causa Z»—. Motores como Soufflé
+              alcanzan rendimiento industrial.</p>
+          </div>
+          <div class="tarjeta">
+            <h4 style="color:var(--eje-q)">Código de aplicación</h4>
+            <p style="margin:0;font-size:.93rem">Funciones en Python, Rust o Go que reciben el grafo y
+              producen el efecto. Lo más flexible y lo menos auditable. Es, en esencia, la forma que
+              tomó el evaluador de verbos del prototipo.</p>
+          </div>
+          <div class="tarjeta">
+            <h4 style="color:var(--eje-m)">LLM con <i>function calling</i></h4>
+            <p style="margin:0;font-size:.93rem">El propio modelo de lenguaje como evaluador, útil para
+              reglas borrosas o ambiguas. Apropiado para lo pragmático; inapto para el cumplimiento
+              estricto, por las razones que veremos enseguida.</p>
+          </div>
+        </div>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Qué falta · urgencia · qué requiere</p>
+          <p style="margin:0 0 .5rem"><b>Qué falta:</b> la capa de evaluación de reglas declarativas
+            sobre los hechos del grafo.</p>
+          <p style="margin:0 0 .5rem"><b>Urgencia: alta.</b> El prototipo ejecuta comportamiento, pero
+            todavía no <em>infiere</em>: almacena la regla del spa, no la dispara. Para la mayoría de
+            las aplicaciones útiles, eso es un bloqueador.</p>
+          <p style="margin:0"><b>Qué requiere:</b> una <em>API de motor de inferencia</em> que el
+            universo exponga —<code>u.evaluate(regla)</code>, <code>u.evaluate_all()</code>— cuyos
+            resultados sean, otra vez, hechos atómicos firmados por el evaluador. El primer paso es
+            elegir un motor de referencia —SHACL para validación, Datalog para inferencia— y montarlo
+            sobre el evaluador genérico que ya existe. Estimación: tres a seis meses para una primera
+            versión usable.</p>
+        </div>
+
+        <h3>El lugar de la IA en este frente</h3>
+
+        <p>La cuarta opción de la lista —usar un modelo de lenguaje— merece una aclaración, porque la
+          tentación es grande. ¿No podría una IA, incluso de pesos abiertos y autoalojada, hacer de
+          motor de inferencia, con un buen <em>prompt</em> y un modelo bien definido? Hay que separar
+          dos clases de regla. Para las <strong>borrosas</strong> —¿este reclamo es urgente?, ¿este
+          texto implica consentimiento?— la respuesta es sí, y ahí el LLM es la herramienta correcta.
+          Para las <strong>estrictas</strong> —las del spa, las del banco, las del contrato— la
+          respuesta es no, por cuatro razones que ningún <em>prompt</em> arregla.</p>
+
+        <div class="caja caja--alerta revelar">
+          <p class="caja-tit">Por qué un LLM no es el motor de las reglas estrictas</p>
+          <ol style="margin:.2rem 0 0;padding-left:1.2rem">
+            <li style="margin-bottom:.35rem">Es <strong>probabilístico</strong>, no determinista: la
+              misma entrada puede dar respuestas distintas.</li>
+            <li style="margin-bottom:.35rem">No entrega una <strong>derivación auditable</strong>, y la
+              tesis del modelo es justamente la auditabilidad: hechos firmados, bitemporales,
+              rastreables.</li>
+            <li style="margin-bottom:.35rem">Es poco confiable en <strong>conteo y agregación
+              exactos</strong> —contar canastas, sumar costos, cerrar una transitividad—.</li>
+            <li style="margin-bottom:0">Es caro de <strong>escalar</strong> y de
+              <strong>reproducir</strong> una decisión pasada idéntica.</li>
+          </ol>
+        </div>
+
+        <p>La forma productiva de sumar IA, entonces, no es ponerla de <em>runtime</em> sino de
+          <strong>autor</strong>. Que un LLM <strong>compile</strong> una regla escrita en lenguaje
+          natural —<em>«a las siete sesiones, la octava es gratis»</em>— a una regla declarativa en
+          Datalog o SHACL sobre los hechos del grafo, y que el <strong>motor determinista la
+          ejecute</strong>. El modelo bien definido vuelve esa compilación casi directa, porque los
+          roles ya están tipados y la regla mapea a patrones sobre hechos canónicos. Así se obtiene lo
+          mejor de los dos mundos: la flexibilidad del lenguaje natural para <em>escribir</em> reglas y
+          el rigor del motor para <em>ejecutarlas</em>. La IA entra dos veces —para convertir lenguaje
+          en hechos (lo vimos en el <a href="24-llms.html">capítulo&nbsp;24</a>) y para compilar
+          reglas—, pero el corazón de la inferencia estricta queda determinista y demostrable.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">A favor de lo abierto</span>
+          Un modelo autoalojado, con sus pesos fijados, es <em>más</em> reproducible que una API
+          cerrada que cambia bajo los pies. Y la reproducibilidad es exactamente lo que una auditoría
+          exige: la misma pregunta debe dar la misma respuesta dentro de cinco años.
+        </aside>
+
+        <p>En concreto, esa compilación se ve así. El modelo recibe la regla en español y el catálogo
+          tipado, y emite una regla declarativa que el motor ejecutará por su cuenta:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">prompt</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="text">SISTEMA. Compila la regla de negocio a Datalog sobre hechos WQuestions
+(sujeto, rol, valor). No la ejecutes; solo compílala.
+
+Catálogo: servicio_spa(S) con roles cliente, estatus_factual.
+Regla: "A las siete sesiones finalizadas de un cliente, la octava es gratis."</code></pre>
+        </div>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">datalog</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="text">sesion_ok(C, S)  :- instancia_de(S, servicio_spa),
+                    cliente(S, C), estatus_factual(S, finalizada).
+octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
+        </div>
+
+        <p>El modelo de lenguaje <em>escribió</em> la regla; el motor determinista la <em>ejecuta</em> y
+          firma cada hecho derivado. La IA nunca toca el dato en caliente. Y el hecho derivado entra al
+          grafo con la misma forma que cualquier otro: una tripleta tipada, con su autor y su
+          vigencia.</p>
+
+        <div class="triple">
+          <span class="nodo nodo--q"><span>cliente_paredes</span><small>Q</small></span>
+          <span class="enlace">octava_gratis<span class="firma">M(Q→K)</span></span>
+          <span class="nodo nodo--k"><span>beneficio_activo</span><small>K</small></span>
+        </div>
+
+        <h2>Frente 2 — Bitemporalidad completa</h2>
+
+        <p>Hoy el modelo soporta <strong>tiempo de validez</strong> (<em>valid time</em>): cada hecho
+          lleva su rango <code>[inicio, fin)</code>, y una consulta «en el momento T» recupera lo que
+          era cierto del mundo entonces. Esta es la mecánica de vigencia que el libro reifica con rangos
+          —la decisión <span class="codigo-d">D6</span>, enunciada en el
+          <a href="09-situaciones.html">capítulo&nbsp;9</a>—. Lo que <strong>falta</strong> es el
+          <strong>tiempo de transacción</strong> (<em>transaction time</em>): cuándo el sistema afirmó
+          ese hecho.</p>
+
+        <p>La diferencia importa cuando alguien pregunta no «¿qué era cierto?» sino «¿qué sabíamos?».
+          Toma un caso del banco. En mayo registramos que el plan mensual de un cliente venció el 31 de
+          marzo; en abril el cliente aparece, demuestra que había renovado y retrocedemos el plan. La
+          pregunta del auditor —«¿qué estaba en el sistema entre el 1 de abril y la fecha de la
+          corrección?»— solo se responde si el sistema preservó esa versión transitoria, la que era
+          falsa pero estuvo vigente como creencia del sistema durante semanas.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Dos relojes</span>
+          <em>Valid time</em> responde «qué era cierto en el mundo». <em>Transaction time</em> responde
+          «qué creía el sistema». Un dominio regulado necesita los dos a la vez: poder reconstruir no
+          solo la historia, sino la historia de lo que se sabía de la historia.
+        </aside>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Qué falta · urgencia · qué requiere</p>
+          <p style="margin:0 0 .5rem"><b>Qué falta:</b> cerrar el tiempo de transacción de punta a
+            punta. La estructura del hecho ya reserva un campo para él, pero la persistencia aún no lo
+            conserva en el viaje de ida y vuelta a disco. Queda como deuda concreta.</p>
+          <p style="margin:0 0 .5rem"><b>Urgencia: alta</b> para dominios regulados —finanzas, salud,
+            derecho—; baja para el resto. Cuando un dominio lo necesita, no es opcional. El destino es
+            un par de intervalos por hecho y consultas <em>as-of</em> duales:
+            <code>query(valido_en=T1, registrado_en=T2)</code>.</p>
+          <p style="margin:0"><b>Qué requiere:</b> una refactorización compatible del módulo del hecho
+            para llevar dos intervalos en lugar de uno, y de la capa de persistencia para preservarlos.
+            Snodgrass formalizó esto en los años noventa; las bases bitemporales modernas —Datomic,
+            XTDB— lo implementan en producción. Estimación: un mes de implementación, más pruebas sobre
+            un dominio regulado real.</p>
+        </div>
+
+        <h2>Frente 3 — Persistencia industrial</h2>
+
+        <p>El experimento reflexivo cambió el punto de partida de este frente: el prototipo
+          <strong>ya no vive solo en memoria</strong>. Su capa de persistencia guarda individuos y
+          hechos en <strong>SQLite</strong> y los recarga al arrancar. Bastan dos tablas: una de
+          individuos <code>(id, eje, payload_json)</code> y una de hechos
+          <code>(sujeto, rol, valor, inicio, fin, …)</code>. Es la prueba de que el modelo persiste sin
+          esfuerzo: la geometría de las tripletas se aplana a tabla casi sin pérdida.</p>
+
+        <p>Lo que <strong>falta</strong>, entonces, no es «persistencia» —ya existe— sino
+          <strong>persistencia industrial y plural</strong>: una interfaz <code>Storage</code>
+          abstracta de la que SQLite sea la primera implementación, y otros respaldos con perfiles
+          distintos según el caso de uso.</p>
+
+        <div class="tabla-envoltura revelar">
+          <table>
+            <thead>
+              <tr><th>Respaldo</th><th>Perfil</th><th>Estado</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>SQLite</b></td>
+                <td>Sistemas chicos, monousuario. El piso para empezar a construir.</td>
+                <td><span class="eje eje--k">✓</span> ya existe en el prototipo</td>
+              </tr>
+              <tr>
+                <td><b>Postgres + JSONB</b></td>
+                <td>Sistemas multiusuario medianos. Índices GIN sobre el <em>payload</em>, búsqueda de
+                  texto sobre etiquetas, particionado por tiempo de transacción para auditoría.</td>
+                <td>pendiente · prioritario</td>
+              </tr>
+              <tr>
+                <td><b>Kùzu / Neo4j</b></td>
+                <td>Sistemas que privilegian consultas de grafo —rutas, caminos transitivos—. Modelo
+                  más natural; curva de adopción mayor.</td>
+                <td>pendiente</td>
+              </tr>
+              <tr>
+                <td><b>RDF / SPARQL</b></td>
+                <td>Sistemas que quieran interoperar con la web semántica. Mapeo trivial: cada hecho es
+                  una tripleta RDF; la vigencia (<span class="codigo-d">D6</span>) se mapea con grafos
+                  nombrados.</td>
+                <td>pendiente</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">Qué falta · urgencia · qué requiere</p>
+          <p style="margin:0 0 .5rem"><b>Urgencia: media.</b> El piso —SQLite— ya permite construir; lo
+            que falta habilita escala y casos exigentes, no la operación básica.</p>
+          <p style="margin:0"><b>Qué requiere:</b> extraer la interfaz <code>Storage</code> del SQLite
+            actual y escribir al menos un segundo respaldo —Postgres—. El módulo del universo delega la
+            lectura y la escritura a esa interfaz, sin saber qué hay debajo. Estimación: dos a tres
+            meses para los dos respaldos primarios.</p>
+        </div>
+
+        <h2>Frente 4 — Tooling</h2>
+
+        <p>Una propuesta como WQuestions vive o muere por sus herramientas. Los conceptos pueden ser
+          impecables; si la fricción operativa es alta, nadie la adopta. La regla es vieja y cruel: la
+          mejor idea con mal tooling pierde frente a la idea mediocre con buen tooling. Aquí está la
+          lista, ordenada por prioridad.</p>
+
+        <div class="columnas">
+          <p><strong>4.1 — Ingestor de lexicon.</strong> Hoy las entradas del lexicon se escriben a
+            mano. Hace falta una herramienta que ingiera entradas desde recursos masivos ya
+            construidos —FrameNet, VerbNet, PropBank— y produzca entradas válidas del lexicon
+            WQuestions. Esto da, de un golpe, un piso de cobertura de miles de verbos sin trabajo
+            manual.</p>
+          <p><strong>4.2 — Parser de lenguaje natural a hechos.</strong> Hoy el análisis se hace vía
+            LLM con <i>function calling</i>. Hace falta también un parser <strong>local y
+            determinista</strong> para textos donde la latencia del modelo importa —sistemas de tiempo
+            real— o donde la privacidad lo exige —datos médicos que no deben salir de la sala—.
+            Combinar análisis sintáctico con el lexicon es trabajo concreto, no investigación abierta.</p>
+          <p><strong>4.3 — IDE / inspector.</strong> El experimento reflexivo entregó una
+            <strong>primera versión</strong>: un inspector que, junto a cada vista, muestra las
+            tripletas que la sostienen —«lo que ves es el dato»—. Falta el resto: explorar individuos y
+            vecinos a voluntad, consultar con patrones, seguir la cadena <code>causado_por</code> o
+            <code>justificado_por</code> de cualquier nodo, y —la pieza que el propio experimento
+            señaló como necesaria— <strong>vistas con nombre</strong> definidas como dato, para
+            re-concretar el grafo sin ahogar al modelador en la abstracción. La base existe; el salto
+            es de semanas, no de meses.</p>
+          <p><strong>4.4 — Validador de migración.</strong> Cuando un sistema heredado quiere migrar a
+            WQuestions, hay que verificar que su dialecto de dominio mapea bien al canónico. Una
+            herramienta de validación detecta los cuellos: roles sin signatura, ejes ambiguos,
+            vigencias inconsistentes. El paso «el dato registra su propia signatura», que la prueba
+            reflexiva ya introdujo, facilita esta herramienta.</p>
+          <p><strong>4.5 — Generador de servidor MCP.</strong> Dado un lexicon, generar
+            automáticamente el servidor MCP correspondiente. Esto convierte cada dominio en un
+            asistente conversacional sin escribir <em>glue code</em>. Trabajo de pocas semanas; impacto
+            desproporcionado en la adopción, porque baja a casi cero el costo de probar la propuesta
+            con datos propios.</p>
+        </div>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Urgencia del tooling</p>
+          <p style="margin:0"><b>Media en agregado, alta</b> en el caso del <strong>ingestor de
+            lexicon</strong> (4.1) y el <strong>generador MCP</strong> (4.5): son los dos que más
+            reducen el costo de que alguien pruebe la propuesta. Y la barrera de entrada es,
+            casi siempre, lo que decide si una idea se difunde o se queda en el libro que la enunció.</p>
+        </div>
+
+        <h2>Frente 5 — Lexicon poblado en varios idiomas</h2>
+
+        <p>El catálogo canónico del libro —la decisión <span class="codigo-d">D8</span>, que hace
+          invisible el catálogo y deja al lexicon como única interfaz— define 38 roles. El lexicon del
+          prototipo registra una decena de verbos. Para un sistema productivo, el lexicon de
+          <em>un solo idioma</em> necesita del orden de <strong>dos a cinco mil entradas</strong>: los
+          verbos frecuentes del español, sus formas nominales, las locuciones idiomáticas que la gente
+          usa sin pensar.</p>
+
+        <p>Lo que <strong>falta</strong> es trabajo lingüístico paciente. Por dominio o por familia
+          semántica —transferencia, comunicación, movimiento, percepción, estados— hay que poblar el
+          lexicon. FrameNet español, el corpus español de Universal Dependencies y AnCora son fuentes
+          legítimas para mecanizar parcialmente la tarea, pero no para eliminar el juicio humano que
+          cada entrada delicada exige.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Catálogo neutral</span>
+          El catálogo <span class="codigo-d">D8</span> es idiomáticamente neutral: nombres internos
+          como <code>agente</code>, <code>paciente</code> o <code>tema</code> son etiquetas que podrían
+          ser griegas o números. Lo que cambia entre idiomas es la <strong>capa de alias</strong> y los
+          <strong>patrones de polisemia</strong> propios de cada lengua.
+        </aside>
+
+        <p>Para la internacionalización, cada idioma necesita su propio lexicon, pero no su propio
+          catálogo: la espina es común y solo cambia la piel que la traduce. Esto es, a la vez, una
+          oportunidad y una carga. Oportunidad, porque un dominio modelado en español queda
+          inmediatamente disponible en cualquier idioma que tenga su lexicon. Carga, porque cada idioma
+          nuevo es un proyecto léxico sostenido, no un fin de semana.</p>
+
+        <div class="caja caja--alerta revelar">
+          <p class="caja-tit">Qué falta · urgencia · qué requiere</p>
+          <p style="margin:0 0 .5rem"><b>Urgencia: la cobertura del lexicon <em>es</em> la
+            usabilidad.</b> Sin verbos suficientes, el modelo se siente incompleto aunque sea correcto.
+            Es esfuerzo sostenido, no proyecto puntual: el lexicon nunca está «terminado», solo más o
+            menos completo.</p>
+          <p style="margin:0"><b>Qué requiere:</b> equipo lingüístico-computacional; idealmente,
+            colaboración con universidades que ya producen recursos léxicos; y un modelo de gobernanza
+            para aceptar contribuciones de terceros sin perder coherencia. Lo cual nos lleva,
+            naturalmente, al sexto frente.</p>
+        </div>
+
+        <h2>Frente 6 — Comunidad y gobernanza</h2>
+
+        <p>Aquí entramos en la pieza que el autor no controla. WQuestions, para volverse útil más allá
+          de un libro, necesita <strong>comunidad</strong>: gente modelando dominios, contribuyendo
+          lexicon, reportando fricciones, escribiendo herramientas, adoptándolo en proyectos reales.
+          Una arquitectura sin comunidad es una idea bonita en un PDF; una arquitectura con comunidad es
+          infraestructura. La diferencia no la firma el autor, la firman los demás.</p>
+
+        <p>Qué falta, en concreto:</p>
+
+        <ul class="limpia">
+          <li style="margin-bottom:.55rem"><b>Repositorio canónico</b> abierto, con licencia
+            permisiva. Una primera versión ya vive en un repositorio público mientras lees esto.</li>
+          <li style="margin-bottom:.55rem"><b>Proceso de contribución:</b> cómo proponer nuevas
+            entradas al catálogo, nuevos dominios al lexicon, parches al motor. Necesita criterios
+            escritos, no costumbres tácitas.</li>
+          <li style="margin-bottom:.55rem"><b>Foro o canal de discusión</b> para resolver las
+            fricciones que surjan al modelar dominios nuevos. Cada conversación cualifica el catálogo —y
+            el <a href="26-prueba-reflexiva.html">experimento reflexivo</a> es evidencia de que las
+            fricciones más valiosas aparecen cuando se somete el modelo a una carga real—.</li>
+          <li style="margin-bottom:.55rem"><b>Estandarización gradual:</b> una vez que varios proyectos
+            adopten el modelo, vale la pena llevar las partes más universales del catálogo a un proceso
+            formal —IETF, W3C, ISO—. Eso da estabilidad legal para el uso empresarial.</li>
+          <li><b>Dialectos de dominio</b> mantenidos por comunidades sectoriales —clínico, financiero,
+            legal, manufactura—, cada uno con su propia gobernanza dentro de la espina común.</li>
+        </ul>
+
+        <p class="cita-destacada revelar">Las arquitecturas duraderas no se imponen: se adoptan. Y se
+          adoptan cuando alguien que no es su autor decide que vale la pena empujarlas.<cite>La pieza
+          que el autor no controla</cite></p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Qué falta · urgencia · qué requiere</p>
+          <p style="margin:0 0 .5rem"><b>Urgencia: el reloj corre.</b> Si la comunidad no se forma en
+            el momento en que los LLMs con MCP se popularizan, alguna otra propuesta —menos cuidadosa—
+            ocupará el espacio. La ventana es de dos a cinco años.</p>
+          <p style="margin:0"><b>Qué requiere:</b> lo mismo que cualquier proyecto de código abierto
+            serio: un autor o equipo fundador dispuesto a moderar, a criticar contribuciones, a
+            sostener la coherencia y a decir que no cuando hace falta. Buena documentación. Casos de uso
+            ejemplares. Adoptantes tempranos visibles.</p>
+        </div>
+
+        <h2>La pila completa</h2>
+
+        <p>Conviene ver los seis frentes juntos, como capas de una misma pila. Cada capa puede
+          evolucionar por su cuenta —cambiar el respaldo de persistencia no obliga a tocar el lexicon, y
+          mejorar el motor de reglas no altera la aplicación que ve el usuario—. Esa independencia es,
+          en sí misma, una propiedad de diseño: el modelo del medio es el contrato estable que sostiene
+          todo lo demás.</p>
+
+        <!-- FIGURA 28.2 · la pila completa por capas -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 408" class="svg-eje" role="img"
+                 aria-label="La pila completa de WQuestions en cinco capas: persistencia abajo, encima el núcleo de siete ejes, encima el motor de reglas y el lexicon, encima el LLM vía MCP, y arriba la aplicación del usuario final.">
+              <!-- capa 5 · aplicación (arriba) -->
+              <rect x="120" y="20" width="420" height="52" rx="10" fill="var(--eje-q)" opacity=".14" stroke="var(--eje-q)" stroke-width="1.5"/>
+              <text x="330" y="44" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--eje-q)">Aplicación del usuario final</text>
+              <text x="330" y="62" text-anchor="middle" font-size="10.5" fill="var(--tinta-tenue)">menús, formularios, vistas — lo que la persona ve</text>
+
+              <!-- capa 4 · LLM/MCP -->
+              <rect x="120" y="84" width="420" height="52" rx="10" fill="var(--eje-m)" opacity=".14" stroke="var(--eje-m)" stroke-width="1.5"/>
+              <text x="330" y="108" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--eje-m)">LLM vía MCP</text>
+              <text x="330" y="126" text-anchor="middle" font-size="10.5" fill="var(--tinta-tenue)">lenguaje ↔ hechos · compila reglas · nunca toca el dato en caliente</text>
+
+              <!-- capa 3 · motor + lexicon -->
+              <rect x="120" y="148" width="204" height="52" rx="10" fill="var(--eje-o)" opacity=".14" stroke="var(--eje-o)" stroke-width="1.5"/>
+              <text x="222" y="170" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-o)">Motor de reglas</text>
+              <text x="222" y="187" text-anchor="middle" font-size="10" fill="var(--tinta-tenue)">SHACL · Datalog · firma</text>
+              <rect x="336" y="148" width="204" height="52" rx="10" fill="var(--eje-k)" opacity=".14" stroke="var(--eje-k)" stroke-width="1.5"/>
+              <text x="438" y="170" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-k)">Lexicon</text>
+              <text x="438" y="187" text-anchor="middle" font-size="10" fill="var(--tinta-tenue)">alias · polisemia · idiomas</text>
+
+              <!-- capa 2 · núcleo 7 ejes -->
+              <rect x="120" y="212" width="420" height="78" rx="10" fill="var(--eje-t)" opacity=".12" stroke="var(--eje-t)" stroke-width="1.5"/>
+              <text x="330" y="234" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--tinta)">Núcleo WQuestions · los 7 ejes</text>
+              <!-- chips de eje -->
+              <g font-size="12" font-weight="700" fill="#fff" text-anchor="middle">
+                <rect x="150" y="248" width="30" height="30" rx="7" fill="var(--eje-q)"/><text x="165" y="268">Q</text>
+                <rect x="196" y="248" width="30" height="30" rx="7" fill="var(--eje-o)"/><text x="211" y="268">O</text>
+                <rect x="242" y="248" width="30" height="30" rx="7" fill="var(--eje-l)"/><text x="257" y="268">L</text>
+                <rect x="288" y="248" width="30" height="30" rx="7" fill="var(--eje-t)"/><text x="303" y="268">T</text>
+                <rect x="334" y="248" width="30" height="30" rx="7" fill="var(--eje-n)"/><text x="349" y="268">N</text>
+                <rect x="380" y="248" width="30" height="30" rx="7" fill="var(--eje-k)"/><text x="395" y="268">K</text>
+                <rect x="426" y="248" width="30" height="30" rx="7" fill="var(--eje-m)"/><text x="441" y="268">M</text>
+              </g>
+              <text x="476" y="268" font-size="10.5" fill="var(--tinta-tenue)" text-anchor="start">el contrato estable</text>
+
+              <!-- capa 1 · persistencia (abajo) -->
+              <rect x="120" y="302" width="420" height="52" rx="10" fill="var(--eje-n)" opacity=".14" stroke="var(--eje-n)" stroke-width="1.5"/>
+              <text x="330" y="326" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--eje-n)">Persistencia</text>
+              <text x="330" y="344" text-anchor="middle" font-size="10.5" fill="var(--tinta-tenue)">SQLite (hoy) · Postgres · Kùzu · RDF — interfaz Storage</text>
+
+              <!-- flecha de bitemporalidad atravesando -->
+              <line x1="78" y1="216" x2="78" y2="350" stroke="var(--eje-t)" stroke-width="2.2" stroke-dasharray="5 4"/>
+              <text x="70" y="288" text-anchor="middle" font-size="10.5" font-weight="600" fill="var(--eje-t)" transform="rotate(-90 70 288)">bitemporalidad — atraviesa núcleo y persistencia</text>
+
+              <!-- nota inferior -->
+              <text x="330" y="384" text-anchor="middle" font-size="11" fill="var(--tinta-suave)" font-style="italic">Cada capa evoluciona por separado; el núcleo de los 7 ejes es el contrato que no se mueve.</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 28.2.</span> La pila completa. Abajo, la persistencia
+            (hoy SQLite, mañana plural tras una interfaz <code>Storage</code>); encima, el núcleo de los
+            siete ejes —el contrato estable—; encima, el motor de reglas y el lexicon; encima, el LLM
+            que traduce y compila vía MCP; arriba, la aplicación que ve la persona. La bitemporalidad
+            atraviesa el núcleo y la persistencia, porque el tiempo no es una capa: es una dimensión de
+            cada hecho.</figcaption>
+        </figure>
+
+        <p>Y si los seis frentes se miden por su grado de madurez, el panorama es honesto pero no
+          desalentador. Tres de ellos tienen un piso operable —persistencia, una primera versión de
+          inspector, el medio paso del motor—; tres están casi por construir —el lexicon a escala, la
+          comunidad, el tooling completo—. Nada está en cero; nada está cerca de cien.</p>
+
+        <figure class="figura revelar">
+          <div class="lienzo" data-chart>
+            <script type="application/json">
+            {"tipo":"barras","unidad":"%","max":100,
+             "datos":[
+               {"l":"Persistencia","v":60,"color":"o"},
+               {"l":"Motor reglas","v":35,"color":"k"},
+               {"l":"Bitemporal.","v":50,"color":"t"},
+               {"l":"Tooling","v":22,"color":"l"},
+               {"l":"Lexicon","v":12,"color":"m"},
+               {"l":"Comunidad","v":15,"color":"n"}
+             ]}
+            </script>
+          </div>
+          <figcaption><span class="fnum">Figura 28.3.</span> Madurez estimada por componente, en una
+            escala de cero a cien. La persistencia y la bitemporalidad parten con ventaja porque el
+            prototipo ya las tocó; el lexicon a escala y la comunidad son los frentes más jóvenes.
+            Pasa el cursor sobre las barras para ver las cifras. Es una estimación de autor, no una
+            medición: sirve para ver la <em>forma</em> del trabajo pendiente, no para presumir
+            precisión.</figcaption>
+        </figure>
+
+        <h2>Las fricciones documentadas que siguen abiertas</h2>
+
+        <p>Además de los seis frentes mayores, el prototipo expuso un puñado de fricciones puntuales del
+          catálogo al chocar con los dominios de estrés. El experimento reflexivo
+          (<a href="26-prueba-reflexiva.html">capítulo&nbsp;26</a>) <strong>cerró varias</strong> —el
+          texto libre, el tipado de los campos definidos por datos, el display derivado de hechos— y
+          entregó el comodín <code>V</code> —<em>cualquier eje de valor</em>—, que resuelve de raíz toda
+          la familia «esta signatura es demasiado estrecha». Lo que queda abierto es esto:</p>
+
+        <div class="tabla-envoltura revelar">
+          <table>
+            <thead>
+              <tr><th>Fricción</th><th>Origen</th><th>Parche propuesto</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>paciente</code> / <code>partes: O→Q</code> demasiado estrechos</td>
+                <td>química, fútbol</td>
+                <td>Relajar a <code>O→V</code> — el comodín <code>V</code> ya existe; es una línea</td>
+              </tr>
+              <tr>
+                <td><code>tema: O→O</code> rechaza K (obra, medicamento)</td>
+                <td>música, clínica</td>
+                <td><code>tema: O→V</code>, o un <code>tema_categorico: O→K</code></td>
+              </tr>
+              <tr>
+                <td>Patrones temporales finos; tiempo musical (compás, pulso)</td>
+                <td>clínica, música</td>
+                <td>Reificar como O con estructura</td>
+              </tr>
+              <tr>
+                <td>Reglas de derivación versionadas</td>
+                <td>contrato</td>
+                <td>Frente&nbsp;1 (motor) + vigencia (<span class="codigo-d">D6</span>) sobre las reglas</td>
+              </tr>
+              <tr>
+                <td>Vistas y proyecciones con nombre como dato</td>
+                <td>prueba reflexiva</td>
+                <td>El siguiente escalón de la re-concreción (Frente&nbsp;4.3)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Ninguna de estas fricciones bloquea el funcionamiento del modelo, y se repite un patrón: las
+          relajaciones del tipo «signatura demasiado estrecha» se resuelven con el comodín <code>V</code>
+          que el experimento ya introdujo, y varias otras quedan cubiertas por roles de dominio bajo la
+          política liberal del catálogo. Es <strong>la lista de mejoras concretas</strong>: se acumula a
+          medida que el modelo se prueba en territorios nuevos y se acorta a medida que se lo somete a
+          cargas exigentes. Una lista que crece y mengua a la vez es exactamente lo que cabe esperar de
+          una arquitectura viva.</p>
+
+        <h2>El libro como semilla</h2>
+
+        <p>Cerremos con la idea menos técnica del capítulo. Un libro no es una propuesta terminada: es
+          <strong>una invitación a que alguien la termine</strong>. Las arquitecturas que duraron
+          —Unix, TCP/IP, HTTP, SQL, RDF— empezaron como artículos, manifiestos, RFCs, libros: textos
+          que articulaban una idea con la claridad suficiente para que otros pudieran apropiársela y
+          empujarla adelante. Ninguna nació completa; todas nacieron <em>legibles</em>.</p>
+
+        <div class="caja caja--definicion revelar">
+          <p class="caja-tit">Lo que tienes en la mano al cerrar el libro</p>
+          <p style="margin:0">No es un producto. Es una <strong>base operable</strong>: suficiente para
+            entender la propuesta, ejecutarla, criticarla y extenderla. El catálogo está bien diseñado
+            pero incompleto; el lexicon está bosquejado; las herramientas son embrionarias; la
+            comunidad está por construirse. Y aun así, la propuesta no solo funciona en ocho dominios
+            distintos: <strong>funciona aplicada a sí misma</strong>.</p>
+        </div>
+
+        <p>Eso es lo que hace la diferencia entre una especulación y una semilla. El modelo bastó para
+          describir su propio menú, sus formularios, sus esquemas y su conducta, y para corregirse
+          cuando la carga reveló una signatura demasiado estrecha. La propuesta aguanta el peso que
+          prometió aguantar. Desde aquí, la tarea no es demostrarla —ya está demostrada en lo
+          esencial—, sino perfeccionarla: poblar el lexicon, montar el motor, escribir las herramientas,
+          formar la comunidad. Trabajo, no misterio.</p>
+
+        <p class="cita-destacada revelar">El catálogo está incompleto, el lexicon bosquejado, las
+          herramientas embrionarias. Pero la propuesta funciona aplicada a sí misma. Lo que falta es
+          construirla, no descubrirla.<cite>El estado del proyecto, sin maquillaje</cite></p>
+
+        <p>Queda una sola página antes del cierre, y es la que responde la pregunta que ha estado
+          latiendo bajo todo el libro: si esto es tanto trabajo, ¿por qué vale la pena? Por qué importan,
+          a fin de cuentas, las preguntas.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="27-seguridad.html"><span class="dir">← Anterior</span><span class="tit">Seguridad y privacidad</span></a>
+      <a class="sig" href="29-conclusion.html"><span class="dir">Siguiente →</span><span class="tit">Por qué importan las preguntas</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 8 · El espacio multidimensional — WQuestions</title>
+  <meta name="description" content="Las coordenadas no son una metáfora: son una geometría real, parcial, multivaluada y tipada. Cada situación es un punto; cada consulta, una restricción.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'8'">
+      <header class="portada-cap">
+        <p class="parte">Parte III · Cómo funcionan juntas</p>
+        <div class="num-cap">08</div>
+        <h1>El espacio multidimensional</h1>
+        <p class="lede">Las coordenadas no eran una figura retórica. Cuando un hecho se vuelve un punto
+          y una consulta se vuelve un corte, lo que parecía una imagen amable resulta ser una geometría
+          con leyes propias: parcial, multivaluada y tipada.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Abre una hoja de cálculo y reserva siete columnas, una por cada coordenada:
+          <strong>quién, qué, dónde, cuándo, cuánto, cuál</strong> y la columna de enlaces que las amarra,
+          <strong>cómo</strong>. Ahora pega, en filas sucesivas, hechos que no tienen nada que ver entre
+          sí: un café que se sirvió a las ocho y catorce, un triple anotado en el último cuarto, el
+          estreno de un largometraje, una ordenanza municipal de micromovilidad, la llamada de una usuaria
+          a un agente de inteligencia artificial. Cinco mundos ajenos, una sola rejilla. Y, fila tras fila,
+          la mayoría de las celdas en blanco. Esa hoja medio vacía, lejos de ser un borrador descuidado,
+          es la representación más honesta de lo que vamos a estudiar.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">De dónde venimos</span>
+          En el <a href="07-hecho-atomico.html">capítulo anterior</a> un hecho dejó de ser una fila para
+          volverse un evento atómico con varias lecturas. Aquí damos el paso siguiente: si cada hecho es
+          un punto, el conjunto de todos los hechos es un <em>espacio</em> con propiedades formales.
+        </aside>
+
+        <p>Esa rejilla, llevada a su conclusión natural, es lo que llamaremos el <strong>espacio
+          multidimensional</strong> de WQuestions. Tiene un eje por cada coordenada de valor —seis
+          dimensiones que fijan posición— y una urdimbre de enlaces que une las lecturas de cada hecho.
+          Los sucesos del mundo son puntos dentro de ese espacio. Habrá regiones congestionadas, donde los
+          hechos llenan casi todos sus ejes, y regiones casi desiertas. Pero todos, sin excepción, obedecen
+          a la misma física geométrica. Este capítulo trata de esa física. No la estudiamos por afición a
+          las matemáticas, sino porque pensar la base de datos como un espacio cambia, de raíz, cómo se
+          escribe una consulta y cómo un sistema automático audita lo que una organización sabe de sí misma.</p>
+
+        <h2>De la metáfora a la geometría</h2>
+
+        <p>Conviene decirlo sin rodeos, porque es la tesis del capítulo: <strong>las coordenadas no son
+          una metáfora</strong>. Cuando en los capítulos anteriores dijimos que un hecho «se ubica» en los
+          ejes de las preguntas, no estábamos adornando una idea con vocabulario espacial prestado.
+          Estábamos describiendo, con precisión, un espacio que admite definición formal y que se comporta
+          como tal. Si nos pusiéramos estrictos, diríamos que el universo de valores —llamémoslo
+          <code>V</code>— es la unión de todos los individuos que viven en los seis ejes de valor:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">notación</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="text">V  =  Q ∪ O ∪ L ∪ T ∪ N ∪ K          (el universo de valores)
+S  ⊆  Q × O × L × T × N × K          (una situación: un punto, posiblemente parcial)
+M                                     (los enlaces que conectan cada lectura del punto)</code></pre>
+        </div>
+
+        <p>Una <em>situación</em> es un punto de ese producto: una tupla con, a lo sumo, una lectura por
+          eje. Y el «a lo sumo» es el primer detalle que separa este espacio de los que verás en un libro
+          de cálculo. Pero antes de las diferencias, fijemos la intuición con un punto concreto. Toma el
+          espresso que la barista Lucía sirvió a las ocho y catorce: no es una abstracción, es un punto con
+          coordenadas legibles, una por eje, unidas por los enlaces de <em>cómo</em>.</p>
+
+        <!-- FIGURA SVG: una situación como punto en coordenadas paralelas -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 360" class="svg-eje" role="img"
+                 aria-label="La situación del espresso representada como un punto con una lectura en cada eje de valor, unidas por los enlaces de cómo">
+              <!-- leyenda M -->
+              <line x1="372" y1="18" x2="404" y2="18" stroke="var(--eje-m)" stroke-width="2.4" stroke-dasharray="5 4"/>
+              <text x="410" y="22" font-size="12" fill="var(--eje-m)" font-weight="600">M · cómo · los enlaces que unen las lecturas</text>
+
+              <!-- fila Q -->
+              <rect x="12" y="40" width="26" height="26" rx="6" fill="var(--eje-q)"/>
+              <text x="25" y="58" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">Q</text>
+              <text x="46" y="53" font-size="13" fill="var(--tinta)" font-weight="600">quién</text>
+              <text x="46" y="67" font-size="11" fill="var(--tinta-tenue)">agente</text>
+              <line x1="185" y1="53" x2="640" y2="53" stroke="var(--eje-q)" stroke-width="2" opacity=".32"/>
+              <text x="320" y="43" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">barista_lucia</text>
+              <circle cx="320" cy="53" r="6.5" fill="var(--eje-q)"/>
+
+              <!-- fila O -->
+              <rect x="12" y="96" width="26" height="26" rx="6" fill="var(--eje-o)"/>
+              <text x="25" y="114" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">O</text>
+              <text x="46" y="109" font-size="13" fill="var(--tinta)" font-weight="600">qué</text>
+              <text x="46" y="123" font-size="11" fill="var(--tinta-tenue)">evento</text>
+              <line x1="185" y1="109" x2="640" y2="109" stroke="var(--eje-o)" stroke-width="2" opacity=".32"/>
+              <text x="265" y="99" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">espresso_311</text>
+              <circle cx="265" cy="109" r="6.5" fill="var(--eje-o)"/>
+
+              <!-- fila L -->
+              <rect x="12" y="152" width="26" height="26" rx="6" fill="var(--eje-l)"/>
+              <text x="25" y="170" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">L</text>
+              <text x="46" y="165" font-size="13" fill="var(--tinta)" font-weight="600">dónde</text>
+              <text x="46" y="179" font-size="11" fill="var(--tinta-tenue)">lugar</text>
+              <line x1="185" y1="165" x2="640" y2="165" stroke="var(--eje-l)" stroke-width="2" opacity=".32"/>
+              <text x="470" y="155" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">barra_central</text>
+              <circle cx="470" cy="165" r="6.5" fill="var(--eje-l)"/>
+
+              <!-- fila T -->
+              <rect x="12" y="208" width="26" height="26" rx="6" fill="var(--eje-t)"/>
+              <text x="25" y="226" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">T</text>
+              <text x="46" y="221" font-size="13" fill="var(--tinta)" font-weight="600">cuándo</text>
+              <text x="46" y="235" font-size="11" fill="var(--tinta-tenue)">tiempo</text>
+              <line x1="185" y1="221" x2="640" y2="221" stroke="var(--eje-t)" stroke-width="2" opacity=".32"/>
+              <text x="550" y="211" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">08:14</text>
+              <circle cx="550" cy="221" r="6.5" fill="var(--eje-t)"/>
+
+              <!-- fila N -->
+              <rect x="12" y="264" width="26" height="26" rx="6" fill="var(--eje-n)"/>
+              <text x="25" y="282" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">N</text>
+              <text x="46" y="277" font-size="13" fill="var(--tinta)" font-weight="600">cuánto</text>
+              <text x="46" y="291" font-size="11" fill="var(--tinta-tenue)">número</text>
+              <line x1="185" y1="277" x2="640" y2="277" stroke="var(--eje-n)" stroke-width="2" opacity=".32"/>
+              <text x="385" y="267" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">36 ml</text>
+              <circle cx="385" cy="277" r="6.5" fill="var(--eje-n)"/>
+
+              <!-- fila K -->
+              <rect x="12" y="320" width="26" height="26" rx="6" fill="var(--eje-k)"/>
+              <text x="25" y="338" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">K</text>
+              <text x="46" y="333" font-size="13" fill="var(--tinta)" font-weight="600">cuál</text>
+              <text x="46" y="347" font-size="11" fill="var(--tinta-tenue)">clase</text>
+              <line x1="185" y1="333" x2="640" y2="333" stroke="var(--eje-k)" stroke-width="2" opacity=".32"/>
+              <text x="247" y="323" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">espresso</text>
+              <circle cx="247" cy="333" r="6.5" fill="var(--eje-k)"/>
+
+              <!-- conexión M -->
+              <polyline points="320,53 265,109 470,165 550,221 385,277 247,333" fill="none"
+                stroke="var(--eje-m)" stroke-width="2.4" stroke-dasharray="5 4" opacity=".6"/>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 8.1.</span> La situación <code>espresso_311</code> leída
+            como un punto en coordenadas paralelas: una lectura por eje de valor. La línea magenta no es un
+            séptimo eje de posición, sino la urdimbre de enlaces (<em>cómo</em>) que ata cada coordenada al
+            mismo hecho. Quitar un punto de un eje no rompe el dibujo: deja un eje sin lectura.</figcaption>
+        </figure>
+
+        <p>Ahora bien, en la inmensa mayoría de los puntos no habrá una lectura en cada eje. Y eso es lo
+          esperable, no un defecto. El triple de Rivas toca <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>,
+          <span class="eje-rotulo"><span class="eje eje--o">O</span></span> y <span class="eje-rotulo"><span class="eje eje--t">T</span></span>;
+          la llamada al agente de IA, por ocurrir «en la nube», deja vacío el eje <span class="eje-rotulo"><span class="eje eje--l">L</span></span>.
+          Por eso conviene pensar el espacio como una <strong>estructura parcial</strong>: cada hecho ocupa
+          solo las dimensiones que le importan y deja en paz las demás. La promesa del modelo nunca fue que
+          todo en la vida sea hipercomplejo. Fue que <em>cualquier</em> hecho, por excéntrico que sea, puede
+          encontrar su lugar exacto en este mapa de coordenadas.</p>
+
+        <h2>Tres propiedades formales</h2>
+
+        <p>Si trabajas con datos, la palabra «espacio multidimensional» evocará territorios conocidos: el
+          espacio vectorial ℝⁿ del álgebra, las tablas relacionales, los cubos OLAP del <em>business
+          intelligence</em>. Comparten la idea de varios ejes. Pero el espacio de WQuestions difiere de
+          todos ellos en tres propiedades que conviene nombrar con precisión, porque cada una desactiva una
+          incomodidad clásica del modelado de datos.</p>
+
+        <div class="rejilla-3 revelar">
+          <div class="tarjeta">
+            <h4><span class="eje eje--l">1</span>&nbsp; Parcial</h4>
+            <p style="margin:0;font-size:.95rem">En ℝⁿ todo punto tiene un valor obligatorio en cada eje:
+              no existe un punto «sin coordenada Y». Aquí, un eje sin lectura simplemente <em>no aplica</em>
+              para ese hecho. No hace falta inventar un <code>NULL</code> ni un «desconocido» de relleno
+              para que la estructura no se rompa: la ausencia es un estado legítimo.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--n">2</span>&nbsp; Multivaluada</h4>
+            <p style="margin:0;font-size:.95rem">En geometría clásica un punto tiene una sola coordenada X.
+              Aquí, gracias a los enlaces de <em>cómo</em>, un mismo hecho puede proyectar <em>varias</em>
+              lecturas sobre el mismo eje. Un partido tiene dos equipos; una llamada al agente pudo apoyarse
+              en cinco fuentes. En ℝⁿ eso sería ilegal; en datos reales es obligatorio.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--k">3</span>&nbsp; Tipada</h4>
+            <p style="margin:0;font-size:.95rem">En un gráfico escolar todos los ejes son la misma recta de
+              números. Aquí cada eje es de una especie distinta: <span class="eje eje--q">Q</span> guarda
+              agentes, <span class="eje eje--t">T</span> instantes, <span class="eje eje--n">N</span>
+              magnitudes, <span class="eje eje--k">K</span> conceptos. El espacio sabe que sumar una persona
+              con una fecha es un sinsentido, y protege la base contra ese cruce.</p>
+          </div>
+        </div>
+
+        <p>La tercera propiedad merece una observación que el resto del libro aprovechará. Que el espacio
+          sea <strong>tipado</strong> no es un detalle decorativo: es lo que permite que las consultas se
+          validen antes de ejecutarse. Si alguien pide «hechos donde <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>
+          sea anterior a 2026», el motor puede rechazar la pregunta sin tocar un solo dato, porque sabe que
+          en el eje de los agentes la relación «anterior a» carece de sentido. La geometría no solo almacena:
+          además, defiende su propia coherencia.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Idea clave</p>
+          <p style="margin:0">Un espacio <strong>parcial, multivaluado y tipado</strong> es exactamente lo
+            que el mundo necesitaba y lo que ℝⁿ se negaba a dar. La parcialidad admite la ignorancia honesta;
+            la multivaluación admite la pluralidad real; el tipado admite la diferencia de naturalezas. Las
+            tres juntas convierten una rejilla medio vacía en una herramienta de precisión.</p>
+        </div>
+
+        <h2>Las dimensiones son los roles, no los ejes</h2>
+
+        <p>Aquí cabe deshacer una confusión que el lenguaje de «ejes» arrastra. Cuando decimos que el
+          espacio tiene seis dimensiones de valor, podría parecer que la dimensionalidad de un hecho es,
+          como mucho, seis. No es así. Lo que da dimensión a una situación no son los seis ejes, sino los
+          <strong>roles</strong> que cada eje puede desplegar dentro de ese hecho. Un evento de baloncesto
+          no tiene «un quién»: tiene una anotadora y un asistente, dos roles distintos sobre el mismo eje
+          <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>. Un largometraje no tiene «un
+          autor»: tiene una directora y una guionista. Cada rol es una dimensión propia.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Sutileza</span>
+          Esto es lo que la multivaluación significa en serio: no «varios valores apilados sin orden», sino
+          <em>varios roles tipados</em> sobre un mismo eje, cada uno con su firma <code>M</code>. El eje
+          aporta la especie; el rol, la posición concreta dentro del hecho.
+        </aside>
+
+        <p>Míralo en el triple de Rivas. El eje <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>
+          aparece dos veces, pero no como duplicado: como dos coordenadas con roles distintos, cada una con
+          su propio enlace de <em>cómo</em>.</p>
+
+        <div class="triple" style="flex-wrap:wrap;justify-content:center">
+          <span class="nodo nodo--o"><span>triple_088</span><small>O</small></span>
+          <span class="enlace">anotadora<span class="firma">M(O→Q)</span></span>
+          <span class="nodo nodo--q"><span>rivas</span><small>Q</small></span>
+        </div>
+        <div class="triple" style="flex-wrap:wrap;justify-content:center">
+          <span class="nodo nodo--o"><span>triple_088</span><small>O</small></span>
+          <span class="enlace">asistente<span class="firma">M(O→Q)</span></span>
+          <span class="nodo nodo--q"><span>navarro</span><small>Q</small></span>
+        </div>
+
+        <p>Por eso la dimensionalidad real de un hecho es el número de roles que activa, no el número de
+          ejes que existen. El espacio de seis ejes es, en rigor, un espacio de dimensión abierta: cada
+          situación reificada puede abrir tantos roles como su naturaleza exija, y todos aterrizan, tipados,
+          sobre los mismos seis ejes de valor. Los ejes son el alfabeto; los roles, las palabras.</p>
+
+        <h2>La hoja dispersa, en acción</h2>
+
+        <p>Volvamos a la rejilla del principio, ahora con datos del repertorio. Cinco situaciones de cinco
+          dominios sin parentesco alguno, conviviendo en la misma estructura. Observa, sobre todo, las
+          celdas en blanco: no son un descuido, son la parcialidad funcionando.</p>
+
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <table>
+              <thead>
+                <tr>
+                  <th>La situación</th>
+                  <th><span class="eje eje--q">Q</span> quién</th>
+                  <th><span class="eje eje--o">O</span> qué</th>
+                  <th><span class="eje eje--l">L</span> dónde</th>
+                  <th><span class="eje eje--t">T</span> cuándo</th>
+                  <th><span class="eje eje--n">N</span> cuánto</th>
+                  <th><span class="eje eje--k">K</span> cuál</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>Espresso servido</b></td>
+                  <td><code>barista_lucia</code></td>
+                  <td><code>espresso_311</code></td>
+                  <td><code>barra_central</code></td>
+                  <td>08:14</td>
+                  <td>36 ml</td>
+                  <td><code>espresso</code></td>
+                </tr>
+                <tr>
+                  <td><b>Triple anotado</b></td>
+                  <td><code>rivas</code></td>
+                  <td><code>triple_088</code></td>
+                  <td><code>cancha_norte</code></td>
+                  <td>min. 38</td>
+                  <td>3 pts</td>
+                  <td><code>triple_anotado</code></td>
+                </tr>
+                <tr>
+                  <td><b>Estreno de cine</b></td>
+                  <td><code>serra</code></td>
+                  <td><code>pelicula_marea</code></td>
+                  <td><span style="color:var(--tinta-tenue)">—</span></td>
+                  <td>2026-09-12</td>
+                  <td><span style="color:var(--tinta-tenue)">—</span></td>
+                  <td><code>largometraje</code></td>
+                </tr>
+                <tr>
+                  <td><b>Ordenanza publicada</b></td>
+                  <td><code>alcalde_reyes</code></td>
+                  <td><code>ordenanza_142</code></td>
+                  <td><code>municipio_centro</code></td>
+                  <td>2026-05-14</td>
+                  <td><span style="color:var(--tinta-tenue)">—</span></td>
+                  <td><code>ordenanza_municipal</code></td>
+                </tr>
+                <tr>
+                  <td><b>Llamada a la IA</b></td>
+                  <td><span style="color:var(--tinta-tenue)">—</span></td>
+                  <td><code>sesion_ia_5521</code></td>
+                  <td><span style="color:var(--tinta-tenue)">—</span></td>
+                  <td>10:32</td>
+                  <td>4180 tok.</td>
+                  <td><code>modelo_lumen_2026</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <figcaption><span class="fnum">Figura 8.2.</span> La hoja dispersa: cinco situaciones de cinco
+            dominios ajenos en una sola estructura. El estreno no tiene lugar fijo ni magnitud; la llamada
+            al agente no tiene agente humano ni lugar físico. Las celdas vacías son la norma, no la
+            excepción: el espacio es parcial por diseño.</figcaption>
+        </figure>
+
+        <p>Lo notable no es que las cinco filas quepan en la misma tabla, sino que <strong>la estructura
+          sea idéntica para todas</strong>. Cualquier analista —y cualquier modelo de lenguaje— puede leer
+          esta rejilla y entender qué dice cada fila sin ser experto en café, en baloncesto ni en derecho
+          administrativo. Y esa uniformidad es lo que vuelve trivial la búsqueda. Si alguien pide «todo lo
+          que ocurrió el 14 de mayo de 2026», basta filtrar el eje <span class="eje-rotulo"><span class="eje eje--t">T</span></span>:
+          el sistema devolverá, en el mismo gesto, la ordenanza de la municipalidad. No hace falta tender un
+          puente entre el servidor del café, el de deportes y el legal. Todo vive en la misma geometría.</p>
+
+        <h2>Consultar es restringir la geometría</h2>
+
+        <p>Si los hechos son puntos en un espacio de seis ejes, entonces una consulta no es más que
+          <strong>imponer restricciones geométricas sobre las coordenadas</strong>. Fijar un eje a un valor
+          es trazar un hiperplano; pedir un rango es recortar una franja; quedarse con unos pocos ejes es
+          una proyección. En la práctica, casi todo lo que una organización pregunta cae en uno de tres
+          gestos.</p>
+
+        <div class="columnas">
+          <p><strong>Fijar un punto y soltar el resto.</strong> «Muéstrame todo lo que involucre a la
+            barista Lucía.» El motor clava una estaca en <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>
+            <code>= barista_lucia</code> y recoge todos los hechos que la tocan, sin importar el día, el
+            local ni el producto. Geométricamente: nos quedamos con el hiperplano que pasa por ese valor y
+            es libre en todos los demás ejes.</p>
+          <p><strong>Acotar un intervalo.</strong> «Dame los eventos entre el 1 y el 31 de mayo.» El motor
+            apoya una regla de medición sobre el eje <span class="eje-rotulo"><span class="eje eje--t">T</span></span>
+            y descarta cuanto caiga fuera de la franja, dejando libres a las personas y los lugares. Esto
+            solo es posible porque el eje está tipado: «entre dos fechas» tiene sentido en <span class="eje eje--t">T</span>,
+            no en <span class="eje eje--q">Q</span>.</p>
+          <p><strong>Cruzar varios cortes.</strong> «Todos los triples que Rivas anotó en el último cuarto.»
+            El motor corta por <span class="eje-rotulo"><span class="eje eje--q">Q</span></span> <code>= rivas</code>,
+            luego por <span class="eje-rotulo"><span class="eje eje--k">K</span></span> <code>= triple_anotado</code>,
+            luego por <span class="eje-rotulo"><span class="eje eje--t">T</span></span> <code>= cuarto 4</code>.
+            El resultado es el rincón donde los tres cortes se intersecan: una restricción compuesta.</p>
+        </div>
+
+        <p>La consulta de cruce, escrita como tripletas, deja ver su forma. No es una pregunta en lenguaje
+          de tablas, sino un conjunto de restricciones sobre un mismo punto:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(?evento, anotadora,   rivas)            ∈ M(O→Q)   ← corta el eje Q
+(?evento, clase,       triple_anotado)   ∈ M(O→K)   ← corta el eje K
+(?evento, cuarto,      4)                ∈ M(O→T)   ← corta el eje T
+─────────────────────────────────────────────────
+?evento  =  la intersección de los tres cortes</code></pre>
+        </div>
+
+        <p>La belleza técnica está en que el motor ejecuta <em>siempre la misma operación</em> —un corte
+          geométrico— sin que le importe si busca triples, diagnósticos o transacciones. Ahí se cumple la
+          promesa del modelo: un único lenguaje para interrogar al mundo entero.</p>
+
+        <p class="cita-destacada revelar">Una consulta deja de ser una orden en el dialecto de cada base
+          de datos y pasa a ser lo que siempre quiso ser: una restricción sobre las coordenadas de un
+          hecho.<cite>La geometría de la pregunta</cite></p>
+
+        <h2>Situaciones como nube de puntos</h2>
+
+        <p>Cuando una organización acumula millones de estos puntos parciales, el espacio deja de ser una
+          rejilla y se vuelve una nube. Y en esa nube, las situaciones se ordenan solas según cuántas
+          dimensiones activan y qué magnitud despliegan. La figura siguiente sitúa cinco situaciones del
+          repertorio en un plano de dos ejes elegidos a propósito: cuántas coordenadas llena cada hecho
+          (su densidad) frente a la magnitud numérica que registra. No es una afinidad ni una distancia
+          física —ya volveremos sobre eso—; es una manera de <em>ver</em> que los puntos no se reparten al
+          azar.</p>
+
+        <figure class="figura revelar">
+          <div class="lienzo" data-chart>
+            <script type="application/json">
+            {"tipo":"dispersion","alto":340,
+             "datos":[
+               {"x":6,"y":36,"l":"espresso_311 · 6 ejes, 36 ml","color":"o","r":10},
+               {"x":5,"y":3,"l":"triple_088 · 5 ejes, 3 pts","color":"q","r":9},
+               {"x":4,"y":1,"l":"pelicula_marea · 4 ejes","color":"k","r":8},
+               {"x":5,"y":1,"l":"ordenanza_142 · 5 ejes","color":"l","r":8},
+               {"x":4,"y":52,"l":"sesion_ia_5521 · 4 ejes, magnitud alta","color":"n","r":11}
+             ]}
+            </script>
+          </div>
+          <figcaption><span class="fnum">Figura 8.3.</span> Cinco situaciones del repertorio como puntos en
+            un plano de dispersión: en el eje horizontal, cuántas coordenadas llena cada hecho; en el
+            vertical, la magnitud numérica que registra (en escala relativa). Pasa el cursor sobre cada
+            punto para leer la situación. El café, denso y muy descrito, ocupa la esquina superior derecha;
+            el estreno, parcial y sin magnitud, queda abajo a la izquierda.</figcaption>
+        </figure>
+
+        <p>Esta es la <strong>densidad emergente</strong>: no una regla matemática, sino un fenómeno
+          orgánico. A medida que el sistema absorbe datos, ciertas regiones del espacio se pueblan mucho más
+          que otras. En un hospital, la zona donde se cruzan pacientes <span class="eje eje--q">Q</span>,
+          episodios <span class="eje eje--o">O</span>, fechas <span class="eje eje--t">T</span> y diagnósticos
+          <span class="eje eje--k">K</span> se vuelve un nodo brillante de información. Y cuando a ese mismo
+          hospital se le instala un asistente nuevo —un agente que toma citas por mensajería—, este empieza a
+          poblar su propio rincón vacío del espacio (sesiones <span class="eje eje--o">O</span>, latencias
+          <span class="eje eje--n">N</span>, modelos <span class="eje eje--k">K</span>) sin estorbar un solo
+          dato del sistema clínico. El día en que una paciente pregunta por mensajería «¿cuándo me toca la
+          consulta?», ambos sistemas se cruzan en un punto del mapa, sin necesidad de tender un túnel de
+          integración entre servidores.</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">Una densidad que se puede auditar</p>
+          <p style="margin:0">La densidad emergente tiene un uso inesperado: revela puntos ciegos. Si llegas
+            a una organización y su mapa muestra la región de «ventas» densamente poblada pero la de
+            «reclamos» misteriosamente vacía, sabes de inmediato qué parte del negocio no se está
+            registrando, sin leer una línea de documentación. La forma de la nube es un diagnóstico.</p>
+        </div>
+
+        <h2>Frente a ℝⁿ, las tablas y los cubos</h2>
+
+        <p>Conviene ahora contrastar este espacio, de frente, con las tres tecnologías multidimensionales
+          que más se le parecen. No para descartarlas —cada una resuelve su problema—, sino para fijar el
+          límite exacto donde WQuestions hace algo distinto.</p>
+
+        <div class="rejilla-3 revelar">
+          <div class="tarjeta">
+            <h4>El espacio vectorial ℝⁿ</h4>
+            <p style="margin:0;font-size:.93rem">Ejes homogéneos, puntos totales, distancias y sumas. Sirve
+              para medir y promediar. Pero exige una coordenada en cada eje y trata a todos los ejes como la
+              misma recta. WQuestions rompe ambas reglas: admite ejes vacíos y ejes de naturalezas distintas.</p>
+          </div>
+          <div class="tarjeta">
+            <h4>Las tablas relacionales</h4>
+            <p style="margin:0;font-size:.93rem">Una tabla por tipo de entidad, columnas fijas, claves
+              foráneas que se tienden a mano entre tablas. El cruce entre dominios es un proyecto de
+              integración. Aquí, en cambio, todo vive en un mismo espacio y el cruce es un corte más, no un
+              <em>join</em> que alguien tuvo que prever.</p>
+          </div>
+          <div class="tarjeta">
+            <h4>Los cubos OLAP</h4>
+            <p style="margin:0;font-size:.93rem">Un cubo por área (ventas, recursos humanos), con dimensiones
+              cerradas en su mundo. WQuestions es <em>un solo cubo maestro</em> donde la «industria» es apenas
+              un filtro más dentro del eje <span class="eje eje--k">K</span>. Mil cubos pequeños se vuelven un
+              único universo integrado.</p>
+          </div>
+        </div>
+
+        <p>El contraste con los <em>embeddings</em> de la inteligencia artificial merece párrafo aparte,
+          porque ahí la diferencia es de otra índole. Cuando un modelo «lee» una palabra, la convierte en un
+          vector denso de cientos de números para medir su cercanía a otras. Ese espacio es enormemente útil
+          —captura parecidos sutiles— pero es <strong>opaco</strong>: ningún humano lee esos millones de
+          cifras para saber por qué el modelo unió dos ideas. El espacio de WQuestions es lo contrario:
+          <strong>transparente y auditable</strong>, cada eje con una etiqueta legible. La IA usa los
+          <em>embeddings</em> para pensar rápido en privado; usa WQuestions para guardar el resultado de un
+          modo que una persona pueda inspeccionar y defender. No compiten: se complementan.</p>
+
+        <!-- PRECEDENTE: Gärdenfors -->
+        <div class="caja caja--precedente revelar">
+          <p class="caja-tit">Precedente · Los espacios conceptuales de Gärdenfors</p>
+          <p>El filósofo y científico cognitivo Peter Gärdenfors propuso, en <em>Conceptual Spaces</em>
+            (2000), que la mente representa los conceptos no como listas de símbolos ni como pesos de una
+            red, sino como regiones de un <strong>espacio geométrico de dimensiones de calidad</strong>:
+            el color, por ejemplo, vive en un espacio de tono, saturación y brillo, y «rojo» es una región
+            convexa dentro de él. Esa intuición —que el conocimiento tiene forma geométrica y que las
+            categorías son zonas, no etiquetas— es el antecedente más directo de este capítulo.</p>
+          <p style="margin:0">La diferencia es de propósito, y las dos visiones se dan la mano. Gärdenfors
+            modela cómo el cerebro <em>aprende y representa</em> un concepto general; WQuestions modela cómo
+            archivar los <em>hechos concretos</em> que usan esos conceptos. Sus dimensiones de calidad son
+            continuas y perceptuales; nuestros ejes son tipados y heterogéneos. Pero ambas comparten la
+            apuesta de fondo: que pensar en términos de espacio, y no de tabla, es la forma correcta de
+            organizar lo que sabemos.</p>
+        </div>
+
+        <h2>Tres cosas que este espacio no es</h2>
+
+        <p>Para que la metáfora geométrica no prometa de más, conviene cerrar el contorno con tres negaciones
+          deliberadas. La geometría es real, pero no hace todo lo que una geometría podría sugerir.</p>
+
+        <div class="rejilla-3 revelar">
+          <div class="tarjeta">
+            <h4>No mide distancias de afinidad</h4>
+            <p style="margin:0;font-size:.93rem">Que dos hechos compartan fecha no los vuelve «parecidos».
+              Este espacio cruza conexiones exactas; no calcula cuán semejante es un paciente a otro. Para
+              eso están, precisamente, los <em>embeddings</em>.</p>
+          </div>
+          <div class="tarjeta">
+            <h4>No exige una base de datos rara</h4>
+            <p style="margin:0;font-size:.93rem">El espacio de seis ejes es una forma de pensar y de
+              organizar el código. A la hora de persistir, sirve PostgreSQL, MongoDB o un grafo como Neo4j.
+              La geometría es independiente del motor.</p>
+          </div>
+          <div class="tarjeta">
+            <h4>No es una prisión de datos</h4>
+            <p style="margin:0;font-size:.93rem">Modelar Recursos Humanos hoy no te prohíbe modelar
+              Contabilidad mañana. Lo que modelas aterriza en el espacio; lo que no modelas, sencillamente
+              no se ve. El sistema es modular y abierto.</p>
+          </div>
+        </div>
+
+        <h2>Un espacio hecho para agentes</h2>
+
+        <p>Cerremos uniendo la geometría con quien va a recorrerla. Cuando un agente autónomo se conecta a
+          los datos de una organización, lo que hace, en términos del espacio, es <strong>navegar esta
+          geometría como un dron</strong>. Dar de alta un cliente es dibujar un punto nuevo. Investigar un
+          fraude es recortar una región y leer lo que hay dentro. Responder una pregunta es imponer una
+          restricción y devolver el corte. Las mismas tres operaciones de antes, ahora ejecutadas por una
+          máquina.</p>
+
+        <p>Y aquí está el cierre del argumento: este mapa de coordenadas —quién, qué, dónde, cuándo, cuánto,
+          cuál— es <strong>el mismo armazón cognitivo que el modelo de lenguaje ya usaba</strong> para
+          entender el mundo descrito en palabras. Al presentarle los datos estructurados de esta forma, el
+          agente no aterriza en un ecosistema extraño que debe aprender desde cero: se encuentra con un
+          universo digital que obedece a las mismas leyes que organizan su propio entrenamiento. Esa
+          compatibilidad entre la forma de la pregunta y la forma del dato es lo que vuelve rentable todo el
+          esfuerzo de modelar.</p>
+
+        <p>Pero la vida real reserva un nudo. En el eje <span class="eje-rotulo"><span class="eje eje--o">O</span></span>
+          habitan unos individuos especiales: las <strong>situaciones reificadas</strong> —un partido entero,
+          una sesión completa, un proceso de varios actos— donde miles de hechos menores convergen porque
+          hablan de lo mismo. Son los puntos que más roles abren y, por tanto, los de mayor dimensión real.
+          Cómo el modelo desata esos nudos sin que la estructura se desborde —cómo distingue una situación de
+          su contexto, y dónde entra la agencia— es justo el asunto del próximo capítulo.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="07-hecho-atomico.html"><span class="dir">← Anterior</span><span class="tit">El hecho atómico</span></a>
+      <a class="sig" href="09-situaciones.html"><span class="dir">Siguiente →</span><span class="tit">Situaciones, contextos y agencia</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

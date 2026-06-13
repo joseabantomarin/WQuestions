@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 24 · WQuestions y los modelos de lenguaje — WQuestions</title>
+  <meta name="description" content="El momento de WQuestions es 2026: la era del function calling, los agentes y MCP. El lexicon como function schema universal, cómo exponer el grafo vía MCP y qué se vuelve posible.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'24'">
+      <header class="portada-cap">
+        <p class="parte">Parte VI · IA, futuro y cierre</p>
+        <div class="num-cap">24</div>
+        <h1>WQuestions y los modelos de lenguaje</h1>
+        <p class="lede">Si esta arquitectura hubiera aparecido hace cinco años, no habría tenido con
+          quién hablar. En 2026 sí: la era del <em>function calling</em>, los agentes y MCP encontró,
+          sin buscarlo, la pieza que le faltaba. Las preguntas son ese vocabulario común.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Son las 08:11 de un martes. La doctora Paredes abre el asistente de su
+          sistema clínico antes de la primera consulta y escribe una sola línea: «¿qué medicación
+          venía tomando María Gonzales y desde cuándo?». Tres segundos después la pantalla responde,
+          en español llano, que María tomaba enalapril 10 mg cada mañana desde el 14 de mayo de 2026,
+          sin cambios hasta el 10 de enero de 2027, cuando se ajustó la dosis al rediagnosticarla con
+          hipertensión de grado&nbsp;2. Para la doctora la escena es trivial: una pregunta en
+          castellano, una respuesta en castellano. Pero entre el instante en que pulsó <em>Enter</em> y
+          el instante en que apareció el texto ocurrió un viaje de ida y vuelta entre dos lenguajes —el
+          natural y el estructurado— que vale la pena ver desde adentro.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Hilo del libro</span>
+          Esta es la misma sesión que apareció como <code>sesion_ia_5521</code> en los capítulos 3, 4 y
+          7: el modelo <code>modelo_lumen_2026</code>, la usuaria <code>paredes</code>, las herramientas
+          <code>busqueda_web</code> y <code>consulta_grafo</code>. Aquí, por fin, se ve trabajar.
+        </aside>
+
+        <p>Vista por dentro, esa interacción no fue un acto único sino una secuencia de seis pasos. El
+          modelo de lenguaje —da igual cuál: <code>modelo_lumen_2026</code> en nuestros ejemplos, pero
+          la mecánica es idéntica para cualquiera— recibió el texto y lo leyó como una <em>intención de
+          consulta</em>. Eligió, del catálogo de funciones que el sistema le expone, la adecuada:
+          <code>consultar_tratamiento(paciente, periodo)</code>. Tradujo el castellano a argumentos
+          estructurados: «María Gonzales» se volvió el identificador <code>maria_g</code>; «desde
+          cuándo» se volvió un periodo que abarca todo el histórico. Invocó la función, que por dentro
+          corrió un patrón sobre el grafo. El grafo respondió con la prescripción vigente y su historia,
+          usando la vigencia bitemporal (<a href="09-situaciones.html">D6</a>) para devolver
+          exactamente lo válido en cada momento. Y, al final, el modelo recompuso todo en una frase
+          fluida, con sus fechas y su conexión causal.</p>
+
+        <!-- FIGURA 24.1 — El pipeline LLM ↔ WQuestions -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 318" class="svg-eje" role="img"
+                 aria-label="El pipeline entre el usuario, el modelo de lenguaje, el lexicon, el grafo WQuestions y la respuesta: seis pasos en un circuito de ida y vuelta">
+              <defs>
+                <marker id="f24flecha" markerWidth="9" markerHeight="9" refX="7" refY="4.2" orient="auto">
+                  <path d="M0,0 L8,4.2 L0,8.4 Z" fill="var(--tinta-tenue)"/>
+                </marker>
+              </defs>
+
+              <!-- carril superior: ENTRADA (natural → estructurado) -->
+              <text x="20" y="26" font-size="11" font-weight="700" fill="var(--tinta-tenue)" letter-spacing=".06em">ENTRADA · de lo natural a lo estructurado</text>
+
+              <!-- usuario -->
+              <rect x="20" y="40" width="118" height="58" rx="10" fill="var(--eje-q-suave)" stroke="var(--eje-q)" stroke-width="1.5"/>
+              <text x="79" y="64" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-q)">Usuaria</text>
+              <text x="79" y="82" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">lenguaje natural</text>
+
+              <!-- LLM -->
+              <rect x="178" y="40" width="138" height="58" rx="10" fill="var(--eje-m-suave)" stroke="var(--eje-m)" stroke-width="1.5"/>
+              <text x="247" y="62" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-m)">Modelo (LLM)</text>
+              <text x="247" y="80" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">interpreta · elige función</text>
+
+              <!-- lexicon -->
+              <rect x="356" y="40" width="138" height="58" rx="10" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="1.5"/>
+              <text x="425" y="62" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-k)">Lexicon</text>
+              <text x="425" y="80" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">function schema · roles</text>
+
+              <!-- grafo -->
+              <rect x="534" y="40" width="106" height="58" rx="10" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="1.5"/>
+              <text x="587" y="62" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-o)">Grafo WQ</text>
+              <text x="587" y="80" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">estado · razona</text>
+
+              <!-- flechas entrada -->
+              <line x1="138" y1="69" x2="174" y2="69" stroke="var(--tinta-tenue)" stroke-width="1.6" marker-end="url(#f24flecha)"/>
+              <line x1="316" y1="69" x2="352" y2="69" stroke="var(--tinta-tenue)" stroke-width="1.6" marker-end="url(#f24flecha)"/>
+              <line x1="494" y1="69" x2="530" y2="69" stroke="var(--tinta-tenue)" stroke-width="1.6" marker-end="url(#f24flecha)"/>
+              <text x="156" y="62" text-anchor="middle" font-size="9.5" fill="var(--tinta-tenue)">①</text>
+              <text x="334" y="62" text-anchor="middle" font-size="9.5" fill="var(--tinta-tenue)">②③</text>
+              <text x="512" y="62" text-anchor="middle" font-size="9.5" fill="var(--tinta-tenue)">④</text>
+
+              <!-- carril inferior: SALIDA (estructurado → natural) -->
+              <text x="20" y="180" font-size="11" font-weight="700" fill="var(--tinta-tenue)" letter-spacing=".06em">SALIDA · de lo estructurado a lo natural</text>
+
+              <line x1="534" y1="201" x2="498" y2="201" stroke="var(--tinta-tenue)" stroke-width="1.6" marker-end="url(#f24flecha)"/>
+              <line x1="356" y1="201" x2="320" y2="201" stroke="var(--tinta-tenue)" stroke-width="1.6" marker-end="url(#f24flecha)"/>
+              <line x1="178" y1="201" x2="142" y2="201" stroke="var(--tinta-tenue)" stroke-width="1.6" marker-end="url(#f24flecha)"/>
+
+              <rect x="534" y="194" width="106" height="14" rx="7" fill="none"/>
+              <text x="587" y="172" text-anchor="middle" font-size="10.5" fill="var(--eje-o)">resultado</text>
+              <text x="516" y="195" text-anchor="middle" font-size="9.5" fill="var(--tinta-tenue)">⑤</text>
+              <text x="425" y="172" text-anchor="middle" font-size="10.5" fill="var(--eje-k)">tripletas</text>
+              <text x="247" y="172" text-anchor="middle" font-size="10.5" fill="var(--eje-m)">redacta prosa</text>
+              <text x="334" y="195" text-anchor="middle" font-size="9.5" fill="var(--tinta-tenue)">⑤</text>
+              <text x="156" y="195" text-anchor="middle" font-size="9.5" fill="var(--tinta-tenue)">⑥</text>
+
+              <!-- conectores verticales del circuito -->
+              <line x1="79" y1="98" x2="79" y2="201" stroke="var(--eje-q)" stroke-width="1.2" stroke-dasharray="3 4" opacity=".5"/>
+              <line x1="587" y1="98" x2="587" y2="194" stroke="var(--eje-o)" stroke-width="1.2" stroke-dasharray="3 4" opacity=".5"/>
+
+              <!-- franja de reparto de trabajo -->
+              <rect x="20" y="246" width="296" height="52" rx="9" fill="var(--eje-m-suave)" opacity=".55"/>
+              <text x="168" y="266" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-m)">El LLM: superficie lingüística</text>
+              <text x="168" y="284" text-anchor="middle" font-size="10" fill="var(--tinta-suave)">entender la pregunta · redactar la respuesta</text>
+
+              <rect x="344" y="246" width="296" height="52" rx="9" fill="var(--eje-o-suave)" opacity=".55"/>
+              <text x="492" y="266" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-o)">El grafo: profundidad estructural</text>
+              <text x="492" y="284" text-anchor="middle" font-size="10" fill="var(--tinta-suave)">guardar el estado · razonar sobre los hechos</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 24.1.</span> El circuito completo. La pregunta entra
+            como lenguaje natural (①), el modelo la interpreta y elige una función del lexicon (②③), el
+            lexicon la convierte en un patrón sobre el grafo (④), el grafo razona y devuelve hechos (⑤),
+            y el modelo los redacta de vuelta en prosa (⑥). El bloque de abajo nombra el reparto: el
+            LLM se ocupa de la <span class="eje-rotulo"><span class="eje eje--m">M</span></span>
+            superficie lingüística; el grafo, de la <span class="eje-rotulo"><span class="eje eje--o">O</span></span>
+            profundidad estructural.</figcaption>
+        </figure>
+
+        <p>Esa secuencia —usuario natural, modelo, función estructurada, grafo persistente, respuesta
+          natural— es la forma canónica del momento tecnológico de 2026. Y es exactamente aquello para
+          lo que WQuestions, sin habérselo propuesto, resulta estructuralmente diseñado. Este capítulo
+          defiende una tesis de tiempo: <strong>el momento de esta arquitectura es ahora</strong>,
+          porque solo ahora existe la pieza que traduce con soltura entre el lenguaje de las personas y
+          el conocimiento estructurado. Veremos por qué la pareja es complementaria y no casual, cómo se
+          expone el modelo a un LLM mediante <em>function calling</em> y MCP, y qué se vuelve posible
+          que antes era engorroso o sencillamente imposible.</p>
+
+        <h2>Por qué este es el momento, y no otro</h2>
+
+        <p>Los modelos de lenguaje de la generación 2024–2026 son fluidos como ninguna tecnología
+          anterior. Pero traen, dentro del mismo paquete, tres debilidades estructurales. No son fallos
+          de implementación que se corrijan con una versión más: son límites de lo que un modelo
+          generativo <em>es</em>.</p>
+
+        <div class="rejilla-3 revelar">
+          <div class="tarjeta">
+            <h4 style="color:var(--eje-q)">No retienen estado</h4>
+            <p style="margin:0;font-size:.93rem">Cuando la conversación termina, el modelo olvida. Si la
+              doctora Paredes vuelve mañana, él no recuerda qué pacientes mencionó hoy ni qué se decidió.
+              La continuidad se finge metiendo todo el historial en el <em>prompt</em>: caro en
+              <em>tokens</em> y difícil de mantener coherente.</p>
+          </div>
+          <div class="tarjeta">
+            <h4 style="color:var(--eje-o)">Confunden lo afirmado con lo verosímil</h4>
+            <p style="margin:0;font-size:.93rem">Un LLM puede ser convincentemente incorrecto. Ante una
+              consulta sobre María Gonzales puede <em>alucinar</em> un tratamiento plausible que jamás
+              existió. La frontera entre «el sistema lo registró» y «al modelo le suena bien» se borra en
+              la salida.</p>
+          </div>
+          <div class="tarjeta">
+            <h4 style="color:var(--eje-t)">No auditan su razonamiento</h4>
+            <p style="margin:0;font-size:.93rem">Si un asistente recomienda algo, el médico necesita
+              rastrear <em>por qué</em>: qué hecho lo disparó, qué regla lo justifica, qué evidencia lo
+              respalda. Texto fluido no es lo mismo que cadena trazable.</p>
+          </div>
+        </div>
+
+        <p>Ahora mira la otra columna del balance. WQuestions tiene, casi por construcción, las tres
+          propiedades complementarias. Persistencia inequívoca: el grafo guarda y no olvida. Distinción
+          entre lo afirmado y lo conjeturado: el cable <code>estatus_factual</code> marca cada hecho
+          como confirmado, previsto o hipotético. Y trazabilidad: las cuatro relaciones del «por qué»
+          —<code>causado_por</code>, <code>motivado_por</code>, <code>con_finalidad</code>,
+          <code>justificado_por</code> (<a href="10-por-que.html">D7</a>)— dejan el razonamiento por
+          escrito. A cambio, al grafo le falta justo lo que el LLM hace mejor: la fluidez lingüística,
+          la lectura de matices, la prosa que un humano lee con gusto.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Idea clave · una simbiosis, no una competencia</p>
+          <p style="margin:0">El LLM se ocupa de la <strong>superficie lingüística</strong> —entender la
+            pregunta, redactar la respuesta— y el grafo de la <strong>profundidad estructural</strong>
+            —almacenar el estado, razonar sobre los hechos, dejar trazas. Cada uno hace aquello en lo que
+            es fuerte; ninguno carga con lo que se le da mal. El error de la última década fue pedirle a
+            una sola tecnología las dos cosas.</p>
+        </div>
+
+        <p>De ahí la respuesta a la pregunta del título de la sección. Hace cinco años esta arquitectura
+          no tenía interlocutor: traducir entre datos estructurados y lenguaje natural exigía
+          <em>parsers</em> frágiles y reglas a mano. Hoy ese interlocutor existe, habla con fluidez y
+          —el punto decisivo— sabe invocar funciones por su cuenta. La simbiosis pasó de ser una
+          aspiración a ser operativa.</p>
+
+        <h2>El lexicon es un function schema</h2>
+
+        <p>Hay una observación que ya hizo el <a href="12-lexicon.html">capítulo 12</a> y que conviene
+          retomar en limpio, porque es la <strong>bisagra</strong> entre las dos mitades del sistema. Lo
+          recordarás así: una entrada del lexicon tiene exactamente la forma que los protocolos de
+          <em>function calling</em> esperan. Aquí no la repetiremos con el verbo <code>vender</code> de
+          aquel capítulo; tomemos el caso clínico que abre este, <code>prescribir</code>, y pongámoslo
+          al lado de su esquema.</p>
+
+        <p>Primero, la entrada del lexicon, tal como vive por dentro del modelo —vocabulario natural en
+          los <code>aliases</code>, roles canónicos en las claves:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">lexicon · entrada interna</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="text">verbo: prescribir
+  tipo_situacion: accion_prescribir
+  obligatorios: [agente, paciente, medicamento_prescrito]
+  opcionales:   [frecuencia, duracion, momento]
+  aliases:
+    agente:                ["doctor", "médico", "doctora"]
+    paciente:              ["paciente"]
+    medicamento_prescrito: ["fármaco", "medicación", "medicina"]
+    frecuencia:            ["cada cuánto", "tomas por día"]</code></pre>
+        </div>
+
+        <p>Y ahora el mismo objeto, serializado como el <em>tool schema</em> que un modelo recibe al
+          arrancar la conversación. No hay traducción manual: es la <strong>misma información</strong>
+          en otra envoltura.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tool schema · function calling / MCP</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="json">{
+  "name": "accion_prescribir",
+  "description": "Registrar una prescripción médica.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "agente":                { "type": "string", "eje": "Q", "description": "doctor, médico, doctora" },
+      "paciente":              { "type": "string", "eje": "Q", "description": "paciente" },
+      "medicamento_prescrito": { "type": "string", "eje": "K", "description": "fármaco, medicación, medicina" },
+      "frecuencia":            { "type": "string", "eje": "K", "description": "cada cuánto, tomas por día" },
+      "duracion":              { "type": "string", "eje": "K" },
+      "momento":               { "type": "string", "eje": "T" }
+    },
+    "required": ["agente", "paciente", "medicamento_prescrito"]
+  }
+}</code></pre>
+        </div>
+
+        <p>La correspondencia es uno a uno, y vale enumerarla para que no quede como una intuición
+          difusa. El <code>verbo</code> se vuelve el <code>name</code>. El <code>tipo_situacion</code> es
+          el tipo de objeto que la función devolverá al asentarse en el grafo. Los <code>aliases</code>
+          de cada rol alimentan la <code>description</code>, que es precisamente la pista que el modelo
+          lee para reconocer cómo se expresa ese rol en lenguaje natural. Los ejes de origen
+          —<span class="eje-rotulo"><span class="eje eje--q">Q</span></span>,
+          <span class="eje-rotulo"><span class="eje eje--o">O</span></span>,
+          <span class="eje-rotulo"><span class="eje eje--k">K</span></span>,
+          <span class="eje-rotulo"><span class="eje eje--t">T</span></span>— se convierten en
+          metadatos del esquema y aportan una validación semántica extra. Y la lista de
+          <code>obligatorios</code> es, literalmente, el campo <code>required</code>.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">D8 · capa 4</span>
+          El capítulo 12 describió el lexicon en tres capas: vocabulario del usuario, roles canónicos,
+          identificadores internos. El <em>tool schema</em> es la <strong>cuarta capa</strong> de
+          <a href="12-lexicon.html">D8</a>: la cara que el lexicon le presenta a una máquina. La fachada
+          mira ahora también hacia los modelos, sin que el catálogo interno cambie un ápice.
+        </aside>
+
+        <p>Lo que esa identidad implica en la práctica es contundente. Para exponer WQuestions a un LLM
+          <strong>no hay que escribir un adaptador a medida</strong>: hay que <em>exportar el lexicon</em>
+          como un catálogo de funciones. Las herramientas que ya existen para <em>function calling</em>
+          consumen ese catálogo sin tocar una línea. Lo que en otras arquitecturas es un proyecto de
+          integración, aquí es una función de serialización.</p>
+
+        <!-- FIGURA 24.2 — una entrada del lexicon = un tool -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 300" class="svg-eje" role="img"
+                 aria-label="Una entrada del lexicon a la izquierda y el tool JSON equivalente a la derecha, con flechas que muestran la correspondencia campo a campo coloreada por eje">
+              <defs>
+                <marker id="f24m2" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+                  <path d="M0,0 L7,4 L0,8 Z" fill="var(--tinta-tenue)"/>
+                </marker>
+              </defs>
+
+              <!-- panel lexicon -->
+              <rect x="14" y="14" width="266" height="272" rx="12" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="1.4"/>
+              <text x="30" y="40" font-size="12.5" font-weight="700" fill="var(--eje-k)">entrada del lexicon</text>
+
+              <text x="30" y="74" font-size="12.5" font-family="var(--mono)" fill="var(--tinta)">verbo:</text>
+              <text x="120" y="74" font-size="12.5" font-family="var(--mono)" font-weight="700" fill="var(--eje-m)">prescribir</text>
+
+              <text x="30" y="104" font-size="12.5" font-family="var(--mono)" fill="var(--tinta)">tipo:</text>
+              <text x="120" y="104" font-size="11.5" font-family="var(--mono)" fill="var(--eje-o)">accion_prescribir</text>
+
+              <text x="30" y="138" font-size="11.5" font-family="var(--mono)" fill="var(--eje-q)">agente</text>
+              <text x="30" y="162" font-size="11.5" font-family="var(--mono)" fill="var(--eje-q)">paciente</text>
+              <text x="30" y="186" font-size="11.5" font-family="var(--mono)" fill="var(--eje-k)">medicamento</text>
+              <text x="30" y="210" font-size="11.5" font-family="var(--mono)" fill="var(--eje-t)">momento</text>
+
+              <text x="30" y="244" font-size="11" fill="var(--tinta-suave)">obligatorios:</text>
+              <text x="30" y="262" font-size="10.5" font-family="var(--mono)" fill="var(--tinta-suave)">[agente, paciente,</text>
+              <text x="30" y="277" font-size="10.5" font-family="var(--mono)" fill="var(--tinta-suave)"> medicamento]</text>
+
+              <!-- panel tool -->
+              <rect x="380" y="14" width="266" height="272" rx="12" fill="var(--papel-2)" stroke="var(--linea)" stroke-width="1.4"/>
+              <text x="396" y="40" font-size="12.5" font-weight="700" fill="var(--tinta)">tool JSON</text>
+
+              <text x="396" y="74" font-size="12.5" font-family="var(--mono)" fill="var(--cod-func)">"name":</text>
+              <text x="486" y="74" font-size="12" font-family="var(--mono)" font-weight="700" fill="var(--eje-m)">"…prescribir"</text>
+
+              <text x="396" y="104" font-size="11" font-family="var(--mono)" fill="var(--cod-func)">(returns)</text>
+              <text x="486" y="104" font-size="11" font-family="var(--mono)" fill="var(--eje-o)">accion_…</text>
+
+              <text x="396" y="138" font-size="11.5" font-family="var(--mono)" fill="var(--eje-q)">"agente": Q</text>
+              <text x="396" y="162" font-size="11.5" font-family="var(--mono)" fill="var(--eje-q)">"paciente": Q</text>
+              <text x="396" y="186" font-size="11.5" font-family="var(--mono)" fill="var(--eje-k)">"medicamento": K</text>
+              <text x="396" y="210" font-size="11.5" font-family="var(--mono)" fill="var(--eje-t)">"momento": T</text>
+
+              <text x="396" y="244" font-size="11" fill="var(--tinta-suave)">"required":</text>
+              <text x="396" y="262" font-size="10.5" font-family="var(--mono)" fill="var(--tinta-suave)">[agente, paciente,</text>
+              <text x="396" y="277" font-size="10.5" font-family="var(--mono)" fill="var(--tinta-suave)"> medicamento]</text>
+
+              <!-- flechas de correspondencia -->
+              <line x1="282" y1="70" x2="378" y2="70" stroke="var(--eje-m)" stroke-width="1.6" marker-end="url(#f24m2)" opacity=".8"/>
+              <line x1="282" y1="100" x2="378" y2="100" stroke="var(--eje-o)" stroke-width="1.6" marker-end="url(#f24m2)" opacity=".8"/>
+              <line x1="282" y1="134" x2="378" y2="134" stroke="var(--eje-q)" stroke-width="1.4" marker-end="url(#f24m2)" opacity=".7"/>
+              <line x1="282" y1="182" x2="378" y2="182" stroke="var(--eje-k)" stroke-width="1.4" marker-end="url(#f24m2)" opacity=".7"/>
+              <line x1="282" y1="206" x2="378" y2="206" stroke="var(--eje-t)" stroke-width="1.4" marker-end="url(#f24m2)" opacity=".7"/>
+              <line x1="282" y1="258" x2="378" y2="258" stroke="var(--tinta-tenue)" stroke-width="1.4" marker-end="url(#f24m2)" opacity=".7"/>
+
+              <text x="330" y="60" text-anchor="middle" font-size="9" fill="var(--tinta-tenue)">name</text>
+              <text x="330" y="124" text-anchor="middle" font-size="9" fill="var(--tinta-tenue)">type · eje</text>
+              <text x="330" y="248" text-anchor="middle" font-size="9" fill="var(--tinta-tenue)">required</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 24.2.</span> La misma información, dos envolturas. Cada
+            campo del lexicon tiene su gemelo en el <em>tool</em> que el modelo recibe: el verbo es el
+            <code>name</code>, el tipo de situación es lo que la función retorna, cada rol es un parámetro
+            tipado por su eje y los obligatorios son el <code>required</code>. La correspondencia es
+            bidireccional: cada verbo del lexicon es una función invocable por un LLM, y cada función
+            expuesta al LLM corresponde a un verbo del lexicon.</figcaption>
+        </figure>
+
+        <h2>MCP: el cable estándar</h2>
+
+        <p>En 2024, Anthropic publicó la especificación de <strong>MCP</strong> —<em>Model Context
+          Protocol</em>—, un estándar abierto para que herramientas externas se expongan a los modelos
+          de lenguaje de forma uniforme. La idea es modesta y por eso poderosa: en vez de que cada
+          aplicación invente su propia manera de conectar un LLM a sus datos, MCP define un protocolo
+          común. Un <em>servidor MCP</em> declara qué funciones ofrece, qué argumentos acepta y qué tipo
+          de respuesta devuelve; cualquier modelo que «hable MCP» puede usar ese servidor sin una línea
+          de pegamento adicional.</p>
+
+        <p>Para WQuestions la consecuencia es casi una tautología: <strong>el servidor MCP de un sistema
+          WQuestions es el lexicon expuesto como funciones</strong>. Cada verbo se vuelve una herramienta
+          de ingesta; cada consulta-WH habitual se vuelve una herramienta de consulta; cada explicación
+          del «por qué» se vuelve una herramienta de auditoría. Mira cómo se ve el servidor del spa
+          —el mismo <code>Spa&nbsp;Oasis</code> de la <a href="14-spa.html">Parte&nbsp;V</a>— una vez
+          publicado:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">servidor MCP · Spa Oasis</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="text">Tools expuestas:
+
+  ingesta:
+    - registrar_sesion(cliente, lugar, inicio, fin)
+    - aplicar_promocion(cliente, promocion, momento)
+    - redimir_beneficio(cliente, beneficio)
+
+  consulta:
+    - sesiones_de_cliente(cliente, desde, hasta)   -> Lista[Sesion]
+    - cliente_califica_fidelidad(cliente)          -> bool
+    - clientes_con_intencion_de_contratar()        -> Lista[Cliente]
+
+  auditoria:
+    - por_que_este_cobro(pago)                      -> Explicacion
+    - estado_de_cliente_en(cliente, momento)       -> Estado</code></pre>
+        </div>
+
+        <p>Un asistente conversacional corporativo —piensa en un «asistente del director financiero», un
+          «asistente del médico de cabecera», un «asistente del periodista de investigación»— se
+          construye conectando un LLM a ese servidor. No hay <em>glue code</em> enmarañado: hay un
+          catálogo declarativo de funciones y un modelo que las elige según la conversación.</p>
+
+        <p class="cita-destacada revelar">El servidor MCP de un sistema WQuestions no es un componente
+          que haya que escribir; es el lexicon, mirado desde afuera.<cite>La economía de la integración</cite></p>
+
+        <h2>Tres casos de uso, ya posibles en 2026</h2>
+
+        <p>Conviene aterrizar la idea en escenarios concretos —no especulación, sino cosas técnicamente
+          factibles hoy— donde WQuestions encaja justo en el hueco que el LLM no llena solo.</p>
+
+        <h3>1 · Asistente operativo de un negocio</h3>
+
+        <p>El dueño del Spa Oasis, en lugar de revisar reportes, conversa con su sistema. Cada turno se
+          traduce a una o más llamadas a las funciones del lexicon del spa:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">conversación · dueño ↔ asistente</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="text">— ¿Cuántos clientes nuevos vinieron este mes?
+  → 23 clientes nuevos en mayo, 30 % más que abril. Los miércoles
+    concentraron el 40 % del crecimiento.
+
+— ¿Y cuáles de los nuevos están cerca del beneficio de fidelidad?
+  → Cinco están a una o dos sesiones del beneficio. Tres reservaron
+    para esta semana; los otros dos no aparecen hace más de diez días.
+
+— Mándales un mensaje a los que no vinieron.
+  → Borrador listo para Mariana C. y Tomás R. ¿Lo envío?</code></pre>
+        </div>
+
+        <p>El modelo <strong>no sabe de spas</strong>: sabe del lexicon. El grafo guarda el estado real;
+          la conversación es la <em>interfaz</em>, no la base de datos. Lo notable es lo que el dueño no
+          hace: jamás escribe SQL, jamás abre un tablero, jamás aprende un lenguaje de consulta. El
+          lexicon del spa <em>es</em> la API y el LLM es el traductor. El sistema se vuelve
+          <strong>operable conversacionalmente</strong> sin que el negocio renuncie a un gramo de su
+          rigor estructural.</p>
+
+        <h3>2 · Ingesta automática desde texto libre</h3>
+
+        <p>Un hospital tiene veinte años de historias clínicas en prosa. Migrarlas a un sistema
+          estructurado tradicional es un proyecto millonario que exige reescribir cada nota a mano. Con
+          WQuestions y un LLM el flujo se invierte. Toma una nota cualquiera:</p>
+
+        <p class="cita-destacada revelar" style="font-size:1.02rem">«Paciente femenina de 54 años,
+          refiere cefalea persistente de 3 días de evolución, presión arterial 145/92 mmHg al examen.
+          Se diagnostica HTA grado 1 y se inicia tratamiento con enalapril 10 mg cada mañana. Control en
+          30 días.»<cite>Una nota clínica típica</cite></p>
+
+        <p>Se procesa con un <em>prompt</em> que le entrega al modelo el lexicon clínico y le pide:
+          «extrae todas las situaciones de esta nota». El modelo emite —usando <em>function calling</em>
+          una vez por situación— los hechos atómicos ya tipados:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">ingesta · llamadas generadas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">ingest("consultar", roles={
+    "agente": dra_paredes, "paciente": maria_g,
+    "momento": fecha_nota, "motivo": cefalea,
+})
+ingest("medir", roles={
+    "agente": dra_paredes, "paciente": maria_g,
+    "medida_de": presion_arterial,
+    "monto": "145/92", "unidad": mmHg,
+})
+ingest("diagnosticar", roles={
+    "agente": dra_paredes, "paciente": maria_g,
+    "diagnosticado_como": hta_g1,
+})
+ingest("prescribir", roles={
+    "agente": dra_paredes, "paciente": maria_g,
+    "medicamento_prescrito": enalapril,
+    "frecuencia": cada_manana,
+})
+ingest("controlar", roles={
+    "paciente": maria_g, "agente": dra_paredes,
+    "momento": fecha_nota_mas_30,
+    "estatus_factual": previsto,
+})</code></pre>
+        </div>
+
+        <p>Cinco situaciones reificadas (<a href="09-situaciones.html">D4</a>), todas validadas contra
+          el catálogo. La prosa original queda como nota de respaldo; la estructura entra al grafo, donde
+          se vuelve consultable, agregable y auditable. Fíjate en la última llamada: el control futuro
+          entra con <code>estatus_factual: previsto</code>, no como un hecho consumado —el grafo
+          distingue lo que pasó de lo que está planeado, justo la distinción que un LLM por sí solo no
+          sostiene.</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">En la práctica · el número que importa</p>
+          <p style="margin:0">Una nota de 240 palabras (≈ 320 <em>tokens</em> en prosa) genera 24 hechos
+            atómicos cuya serialización pesa unos 80 <em>tokens</em>. <strong>Compresión de 4 a 1</strong>,
+            sin pérdida semántica y ganando estructura. Ahora multiplícalo por veinte años de
+            hospital.</p>
+        </div>
+
+        <h3>3 · Razonamiento entre dominios</h3>
+
+        <p>Una periodista económica —la misma <code>paredes</code> de nuestra sesión, pero ahora en su
+          faceta de investigación— estudia el efecto de una reforma tributaria sobre las ventas
+          minoristas. Tradicionalmente tendría que cruzar bases inconexas: el registro de ventas con un
+          esquema, los datos macro con otro, las noticias políticas en texto libre. Con WQuestions como
+          <strong>sustrato común</strong>, los tres dominios viven en el mismo grafo, cada uno con su
+          dialecto. Ella escribe una sola petición; el modelo la parte en dos consultas, una por
+          dominio, cada cual con su <code>type_constraint</code>:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">consulta · dos dominios, un grafo</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">noticias = query(Pattern(
+    fixed={"tema_categorico": impuesto_consumo},
+    type_constraint="noticia_politica",
+    ask={"agente": Var(), "momento": Var(), "contenido": Var()},
+))
+
+ventas = query(Pattern(
+    fixed={"sector": retail},
+    type_constraint="agregado_ventas_trimestral",
+    ask={"momento": Var(), "monto": Var()},
+))</code></pre>
+        </div>
+
+        <p>Las dos listas vuelven al modelo, que las correlaciona por cercanía temporal y compone una
+          respuesta narrativa. Es posible <strong>porque ambos dominios comparten el mismo modelo
+          subyacente</strong>: la periodista no necesita saber que detrás hay dos bases, dos esquemas y
+          dos sistemas. El grafo absorbió los dos, y el LLM razona sobre uno solo.</p>
+
+        <h2>La economía de tokens, en limpio</h2>
+
+        <p>Los modelos de 2026 manejan ventanas de contexto enormes —un millón de <em>tokens</em>, dos,
+          cuatro. El instinto fácil es volcar todo en prosa y dejar que el modelo encuentre lo que
+          necesita. Funciona, sí, pero gasta el presupuesto a una velocidad ingenua. Tres cifras,
+          tomadas de los dominios que modelamos en la Parte&nbsp;V:</p>
+
+        <figure class="figura revelar">
+          <div class="lienzo" data-chart>
+            <script type="application/json">
+            {"tipo":"barras","eje":"n","unidad":" tk","max":8000,
+             "datos":[
+               {"l":"Nota clínica · prosa","v":320},
+               {"l":"Nota clínica · grafo","v":80,"color":"k"},
+               {"l":"Mes del spa · prosa","v":8000},
+               {"l":"Mes del spa · grafo","v":1800,"color":"k"},
+               {"l":"Contrato · prosa","v":2500},
+               {"l":"Contrato · grafo","v":700,"color":"k"}
+             ]}
+            </script>
+          </div>
+          <figcaption><span class="fnum">Figura 24.3.</span> El mismo contenido, contado en
+            <em>tokens</em>: en prosa (rojo) y serializado como grafo WQuestions (verde). La nota clínica
+            comprime 4×; un mes de operación del spa con tres clientes, 4,4×; un contrato de alquiler con
+            sus cláusulas, 3,6×. Pasa el cursor sobre las barras para ver las cifras exactas.</figcaption>
+        </figure>
+
+        <p>Pero la compresión, con ser importante, no es lo que más cambia el cálculo. El segundo factor
+          pesa más: <strong>la ambigüedad</strong>. La prosa obliga al modelo a reinterpretar
+          coreferencias —«él», «el doctor», «la paciente mencionada»—, a inferir relaciones implícitas, a
+          reconstruir la estructura desde cero. Todas esas operaciones consumen atención: <em>tokens</em>
+          efectivos que no se invierten en razonar sobre el contenido sino en rearmar el esqueleto.</p>
+
+        <p>El grafo WQuestions entrega ese esqueleto <strong>ya reconstruido</strong>. El modelo puede
+          dedicar su capacidad a lo suyo: razonar, conectar, redactar con fluidez. La economía es doble
+          —menos <em>tokens</em> <em>y</em> mejor calidad de respuesta— y por eso no se reduce a una
+          partida en una factura de cómputo.</p>
+
+        <h2>Multi-agente, de forma nativa</h2>
+
+        <p>Recuerda la <a href="09-situaciones.html">agencia contextual</a> (D5): el rol
+          <code>agente</code> lo puede ocupar un humano, una organización, una pieza de software o un
+          sensor, según el verbo. Aquello no era adorno; es justo la propiedad que un futuro multi-agente
+          reclama. Imagina, a tres años vista, un sistema empresarial donde varios LLMs especializados
+          —uno clínico, uno financiero, uno legal— colaboran sobre el mismo grafo. Cada uno trae su
+          sub-lexicon; cada uno entra al grafo como <strong>agente</strong> cuando asienta un hecho:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas · agentes de software</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(diagnostico_001, agente, lim_clinico_v3)     ∈ M(O, Q)
+(asiento_001,     agente, lim_financiero_v2)  ∈ M(O, Q)
+(opinion_001,     agente, lim_legal_v1)       ∈ M(O, Q)</code></pre>
+        </div>
+
+        <p>El grafo registra <strong>quién dijo qué y cuándo</strong>, exactamente como registraría a un
+          médico de carne y hueso. Y conviene verlo como la tripleta que es —un cable del eje
+          <span class="eje-rotulo"><span class="eje eje--m">M</span></span> que sale del evento y aterriza
+          en el agente, sea humano o software:</p>
+
+        <div class="triple">
+          <span class="nodo nodo--o"><span>diagnostico_001</span><small>O</small></span>
+          <span class="enlace">agente<span class="firma">M(O→Q)</span></span>
+          <span class="nodo nodo--q"><span>lim_clinico_v3</span><small>Q</small></span>
+        </div>
+
+        <p>La trazabilidad es uniforme: el sistema audita a los humanos y a los modelos con la misma
+          maquinaria, sin un canal aparte para cada naturaleza de agente. Es D5 cobrando un sentido que,
+          cuando se enunció en el capítulo 9, todavía sonaba abstracto.</p>
+
+        <h2>WQuestions como infraestructura</h2>
+
+        <p>Cerremos con la idea más ambiciosa del libro, y la única que justifica todo el aparato
+          conceptual de las cinco primeras partes. <strong>WQuestions, expuesto vía MCP, es una pieza de
+          infraestructura para la IA conversacional empresarial.</strong> No un producto, no un
+          <em>framework</em>: una capa estructural sobre la que se construyen aplicaciones.</p>
+
+        <div class="columnas">
+          <p>La distinción no es retórica. Un producto se compra; un <em>framework</em> se aprende; una
+            <strong>infraestructura</strong> se da por sentada. Cuando alguien escribe una aplicación web
+            no piensa en TCP/IP; cuando un sistema mueve dinero no piensa en SWIFT; cuando una
+            conversación con un asistente fluye, nadie piensa en el grafo de abajo. La infraestructura es
+            justamente lo que se vuelve invisible porque funciona.</p>
+          <p>El proyecto, en su forma actual, todavía no está listo para serlo. Le faltan piezas
+            —persistencia industrial, motor de inferencia, bitemporalidad completa, un lexicon poblado con
+            miles de entradas verbales en varios idiomas— y el <a href="28-que-falta.html">capítulo 28</a>
+            las enumera sin disimulo. Pero la <em>arquitectura</em> está completa, y el momento histórico
+            empuja a favor.</p>
+        </div>
+
+        <p>Tres fuerzas se alinearon a la vez. Los modelos de lenguaje volvieron <em>operativa</em> la
+          simbiosis entre prosa y estructura. Protocolos como MCP <em>estandarizaron el cable</em>. Y el
+          costo de cómputo bajó hasta el punto en que un asistente conversacional con grafo persistente
+          es asequible para una empresa mediana. Hace cinco años faltaban las tres; hoy están las tres. De
+          ahí la tesis de tiempo con la que abrimos: el momento de WQuestions es ahora.</p>
+
+        <p>Lo que el <a href="25-aplicaciones.html">capítulo 25</a> explora es el lado expansivo de esta
+          misma idea: si WQuestions fuese infraestructura, ¿qué aplicaciones se vuelven posibles que antes
+          no lo eran? Algunas suenan a ciencia ficción; otras resultan obvias en cuanto se las nombra. Las
+          dejaremos sobre la mesa, sin disimular la especulación, porque ahí —y solo ahí— es donde este
+          libro se permite mirar hacia adelante.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="23-cuatro-dominios.html"><span class="dir">← Anterior</span><span class="tit">Música, química, fútbol, contratos</span></a>
+      <a class="sig" href="25-aplicaciones.html"><span class="dir">Siguiente →</span><span class="tit">Aplicaciones futuras</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

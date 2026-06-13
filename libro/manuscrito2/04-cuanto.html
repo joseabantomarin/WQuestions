@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 4 · Cuánto: el eje cuantitativo (N) — WQuestions</title>
+  <meta name="description" content="N como eje de valor: magnitudes y cardinalidad, el problema de las unidades, QUDT, las unidades emergentes de la IA y cuándo reificar una medición.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'4'">
+      <header class="portada-cap">
+        <p class="parte">Parte II · Las siete coordenadas</p>
+        <div class="num-cap">04</div>
+        <h1>Cuánto: el eje cuantitativo (N)</h1>
+        <p class="lede">Un número solo es ruido con apariencia de dato. El cuarto eje no guarda cosas:
+          guarda valores. Y el día en que un valor viaja sin su unidad, algo siempre se rompe.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">El barista deja la taza sobre la barra y, sin pensarlo, recita una cifra:
+          «dieciocho». Para él la frase está completa. Sabe que son dieciocho <em>gramos</em> de café
+          molido, porque lleva diez años pesando dosis y la balanza de la barra solo habla en gramos.
+          Pero si esos dieciocho viajaran por un cable hacia otro sistema —una app de inventario, un
+          panel de calidad, un agente que recomienda recetas— llegarían como un número desnudo. El
+          sistema receptor podría leerlos como mililitros, como segundos de extracción, como onzas. El
+          dato del barista es perfecto en su cabeza y peligroso en cuanto sale de ella. Ese desfase —entre
+          un número que «todos saben qué significa» y un número que de verdad lo dice— es el tema de este
+          capítulo.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Dónde estamos</span>
+          Ya tenemos los cuatro pilares del mundo físico (<span class="eje-rotulo"><span class="eje eje--q">Q</span></span>
+          <span class="eje-rotulo"><span class="eje eje--o">O</span></span>
+          <span class="eje-rotulo"><span class="eje eje--l">L</span></span>
+          <span class="eje-rotulo"><span class="eje eje--t">T</span></span>) y el zócalo de las clases
+          (<span class="eje-rotulo"><span class="eje eje--k">K</span></span>, <a href="03-clase.html">capítulo&nbsp;3</a>).
+          Falta el eje que aloja las magnitudes.
+        </aside>
+
+        <p>El café que prepara —llamémoslo <code>espresso_311</code>— es, por sí mismo, un manojo de
+          números: 18&nbsp;gramos de dosis, 36&nbsp;mililitros de bebida en taza, 93&nbsp;°C de
+          temperatura del agua, 9&nbsp;bar de presión y 27&nbsp;segundos de extracción. Cinco lecturas,
+          cinco unidades distintas. Ninguna de ellas es una «cosa» con identidad propia, como lo es la
+          taza o el propio barista. Son respuestas a una misma pregunta repetida cinco veces:
+          <strong>¿cuánto?</strong> Ese es el cuarto eje de valor, el eje <span class="eje-rotulo"><span class="eje eje--n">N</span> cuánto</span>,
+          y este capítulo lo desarma pieza por pieza.</p>
+
+        <h2>Por qué los números no caben en el eje de las cosas</h2>
+
+        <p>La objeción es razonable y conviene enfrentarla de inmediato: ¿para qué un eje exclusivo
+          para los números? ¿No bastaría con guardarlos dentro del eje de los objetos, junto a las tazas,
+          las máquinas y los granos de café? La respuesta es que no, y la razón se vuelve evidente apenas
+          intentas forzarlo.</p>
+
+        <p>Una taza es un individuo físico: tiene identidad, persiste en el tiempo, puede aparecer en
+          varios eventos —se llena, se sirve, se lava, se rompe— y sigue siendo <em>esa</em> taza. El
+          número 9, en cambio, no es una cosa. No existe un «9» guardado en algún cajón del universo al
+          que podamos apuntar. Lo que existe son innumerables hechos del mundo que <em>usan</em> el valor
+          9 para describir algo: los 9&nbsp;bar de presión de un espresso, los 9&nbsp;minutos de una
+          espera, los 9&nbsp;intentos de una herramienta. Cada aparición del 9 es del todo independiente
+          de las demás.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Idea clave · entidades contra valores</p>
+          <p style="margin:0">En los ejes <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>
+            <span class="eje-rotulo"><span class="eje eje--o">O</span></span>
+            <span class="eje-rotulo"><span class="eje eje--l">L</span></span> y
+            <span class="eje-rotulo"><span class="eje eje--k">K</span></span> cada elemento necesita una
+            <strong>identidad propia e inconfundible</strong> —un código interno, un UUID— para no
+            confundirse con ningún otro. El eje <span class="eje-rotulo"><span class="eje eje--n">N</span></span>
+            no necesita eso: para un número, <em>su valor es su identidad</em>. Cuando un servidor anota
+            que un agente respondió en 340&nbsp;milisegundos, nadie le inventa un código secreto al 340;
+            el dato puro basta.</p>
+        </div>
+
+        <p>Esta diferencia, que suena filosófica, tiene una consecuencia muy concreta en la arquitectura.
+          El eje <span class="eje-rotulo"><span class="eje eje--t">T</span></span> comparte la misma
+          naturaleza: las fechas y los instantes se comparan por su valor matemático, no por un
+          identificador interno. De ahí la regla que separa el universo en dos familias.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Idea clave · Ejes de entidad y ejes de valor</p>
+          <p style="margin:0"><strong>Q, O, L y K son ejes de entidades</strong> —físicas o
+            conceptuales— y cada elemento porta una identidad explícita. <strong>N y T son ejes de valor
+            puro</strong>: el dato <em>es</em> la identidad, y dos lecturas idénticas son, a todos los
+            efectos, la misma. Por eso un número o una fecha pueden almacenarse en bruto, pero un agente
+            o una clase nunca.</p>
+        </div>
+
+        <p>Conviene precisar, además, que <span class="eje-rotulo"><span class="eje eje--n">N</span></span>
+          responde a dos preguntas emparentadas pero distintas, y que el modelo no las confunde:</p>
+
+        <div class="rejilla-2 revelar">
+          <div class="tarjeta">
+            <h4><span class="eje eje--n">N</span>&nbsp; Magnitud</h4>
+            <p style="margin:0;font-size:.95rem">Una medida sobre una escala continua, que <em>siempre</em>
+              arrastra una unidad: 93&nbsp;°C, 9&nbsp;bar, 36&nbsp;ml, 27&nbsp;s. Preguntar «¿cuánto de
+              caliente?» exige nombrar la escala.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--n">N</span>&nbsp; Cardinalidad</h4>
+            <p style="margin:0;font-size:.95rem">Un conteo de cosas discretas, sin dimensión física:
+              4&nbsp;tazas, 3&nbsp;intentos de una herramienta, 1&nbsp;agente. La «unidad» aquí es la
+              cosa contada, y suele bastar con saber qué se cuenta.</p>
+          </div>
+        </div>
+
+        <h2>El número que viajó desnudo</h2>
+
+        <p>Hay un caso que la ingeniería repite en sus aulas como una fábula moral, y vale la pena
+          contarlo con datos frescos porque su moraleja es exactamente la regla de este eje.</p>
+
+        <div class="caja caja--alerta revelar">
+          <p class="caja-tit">La confusión de unidades que cuesta carísimo</p>
+          <p>El verano pasado, un equipo desplegó un sistema de monitoreo para una flota de turbinas
+            eólicas. Dos proveedores alimentaban el mismo tablero. El fabricante de los rotores reportaba
+            el <em>par de torsión</em> de cada eje en <strong>libra-pie</strong>; el módulo de control
+            que el equipo había escrito leía esos mismos campos asumiendo <strong>newton-metro</strong>.
+            Ninguno de los dos estaba equivocado por separado: cada cifra era correcta en su propia
+            unidad. Pero entre ambas hay un factor de 1,356, y nadie lo aplicó.</p>
+          <p style="margin-bottom:0">Durante semanas el sistema creyó que las turbinas trabajaban muy por
+            debajo de su límite y subió la consigna de carga. El error se acumuló en silencio hasta que
+            un rodamiento, sometido a un esfuerzo un 36&nbsp;% mayor del que el tablero mostraba, se
+            agrietó. Nadie hizo mal una sola multiplicación. El número, simplemente, había viajado sin su
+            unidad pegada —el mismo pecado que, a escala interplanetaria, desintegró al
+            <em>Mars Climate Orbiter</em> en 1999, cuando un módulo entregaba libra-fuerza y el otro
+            leía newtons.</p>
+        </div>
+
+        <p>La moraleja no es sobre aritmética. Es sobre diseño de datos, y se enuncia en una sola línea.</p>
+
+        <p class="cita-destacada revelar">Un número sin su unidad no es información: es ruido disfrazado
+          de dígitos.<cite>La regla del eje N</cite></p>
+
+        <p>De ahí la consecuencia arquitectónica que no admite excepciones: <strong>un valor en el eje
+          N nunca debe viajar solo</strong>. Tiene que ir siempre escoltado por su unidad. Y aquí los
+          ejes empiezan a trabajar en equipo, porque una unidad —<em>gramo</em>, <em>segundo</em>,
+          <em>bar</em>, <em>token</em>— no es un objeto físico ni un valor numérico: es una
+          <strong>categoría abstracta</strong>. Y las categorías, como vimos en el capítulo anterior,
+          viven en el eje <span class="eje-rotulo"><span class="eje eje--k">K</span></span>. El número
+          habita en N; la unidad que lo interpreta habita en K; un predicado los enlaza.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(espresso_311, presion,         9)        ∈ M(O, N)
+(espresso_311, unidad_presion,  bar)      ∈ M(O, K)
+
+(sesion_ia_5521, latencia_ms,   2100)     ∈ M(O, N)
+(sesion_ia_5521, unidad_lat,    milisegundo) ∈ M(O, K)</code></pre>
+        </div>
+
+        <p>A primera vista parece burocracia. ¿No es obvio que la presión de un espresso se mide en
+          bar? Hoy sí. Pero deja de serlo el día en que un nuevo proveedor de máquinas reporta la presión
+          en <em>kilopascales</em>, y tu sistema —que asumía bar en silencio— suma 9&nbsp;bar con
+          900&nbsp;kPa como si fueran la misma escala. La unidad explícita es el seguro contra ese día.</p>
+
+        <h2>Cuándo conviene reificar una medición</h2>
+
+        <p>Atar cada número a su unidad con un par de tripletas resuelve la mayoría de los casos. Pero
+          cuando una medición va a sufrir conversiones frecuentes, o cuando importa <em>de dónde salió</em>
+          —con qué instrumento, en qué momento, sobre qué evento—, la estrategia más limpia es
+          <strong>reificar la medición</strong>: elevar la medida misma al estatus de una entidad formal
+          en el eje <span class="eje-rotulo"><span class="eje eje--o">O</span></span>, con sus propias
+          propiedades.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Término</span>
+          <strong>Reificar</strong> es convertir lo que era una propiedad —un simple dato pegado a un
+          sujeto— en una entidad de pleno derecho, con identidad propia y capaz de tener, ella misma,
+          propiedades y relaciones.
+        </aside>
+
+        <p>Compara las dos formas de registrar la misma extracción de café. La versión <em>simple</em>
+          cuelga el valor y la unidad directamente del evento; la versión <em>reificada</em> crea una
+          entidad <code>medicion_temp_311</code> que reúne cantidad, unidad, instrumento y momento, y la
+          enlaza al evento del espresso. La figura las pone lado a lado.</p>
+
+        <!-- FIGURA SVG: medición simple vs. reificada -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 360" class="svg-eje" role="img"
+                 aria-label="Dos formas de modelar una medición: simple, con valor y unidad colgados del evento; y reificada, con la medición elevada a entidad en el eje O con cantidad, unidad, instrumento y momento.">
+              <!-- ===== columna izquierda: simple ===== -->
+              <text x="20" y="28" font-size="13" font-weight="700" fill="var(--tinta)">Medición simple</text>
+              <text x="20" y="44" font-size="11" fill="var(--tinta-tenue)">el valor cuelga del evento</text>
+
+              <!-- evento O -->
+              <rect x="20" y="62" width="160" height="44" rx="9" fill="var(--eje-o)" opacity=".14"/>
+              <rect x="20" y="62" width="160" height="44" rx="9" fill="none" stroke="var(--eje-o)" stroke-width="1.6"/>
+              <text x="100" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="var(--eje-o)">espresso_311</text>
+              <text x="100" y="98" text-anchor="middle" font-size="10" fill="var(--tinta-tenue)" font-family="var(--mono)">O · evento</text>
+
+              <!-- valor N -->
+              <line x1="100" y1="106" x2="100" y2="150" stroke="var(--eje-n)" stroke-width="1.8"/>
+              <text x="112" y="132" font-size="10" fill="var(--eje-n)" font-family="var(--mono)">temperatura</text>
+              <rect x="44" y="150" width="112" height="36" rx="8" fill="var(--eje-n)"/>
+              <text x="100" y="173" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">93</text>
+
+              <!-- unidad K -->
+              <line x1="100" y1="186" x2="100" y2="226" stroke="var(--eje-k)" stroke-width="1.8" stroke-dasharray="4 3"/>
+              <text x="112" y="210" font-size="10" fill="var(--eje-k)" font-family="var(--mono)">unidad</text>
+              <rect x="52" y="226" width="96" height="34" rx="17" fill="var(--eje-k)" opacity=".16"/>
+              <rect x="52" y="226" width="96" height="34" rx="17" fill="none" stroke="var(--eje-k)" stroke-width="1.6"/>
+              <text x="100" y="248" text-anchor="middle" font-size="12" font-weight="700" fill="var(--eje-k)">°C</text>
+              <text x="100" y="300" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">basta para un dato fijo</text>
+
+              <!-- separador -->
+              <line x1="330" y1="58" x2="330" y2="320" stroke="var(--linea)" stroke-width="1.4" stroke-dasharray="3 5"/>
+
+              <!-- ===== columna derecha: reificada ===== -->
+              <text x="360" y="28" font-size="13" font-weight="700" fill="var(--tinta)">Medición reificada</text>
+              <text x="360" y="44" font-size="11" fill="var(--tinta-tenue)">la medición es una entidad en O</text>
+
+              <!-- evento O -->
+              <rect x="360" y="62" width="150" height="42" rx="9" fill="var(--eje-o)" opacity=".14"/>
+              <rect x="360" y="62" width="150" height="42" rx="9" fill="none" stroke="var(--eje-o)" stroke-width="1.6"/>
+              <text x="435" y="80" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-o)">espresso_311</text>
+              <text x="435" y="96" text-anchor="middle" font-size="9.5" fill="var(--tinta-tenue)" font-family="var(--mono)">O · evento</text>
+
+              <!-- enlace a la medicion -->
+              <line x1="435" y1="104" x2="435" y2="132" stroke="var(--eje-m)" stroke-width="2" stroke-dasharray="5 4"/>
+              <text x="447" y="122" font-size="9.5" fill="var(--eje-m)" font-family="var(--mono)">tiene_medicion</text>
+
+              <!-- entidad medicion O -->
+              <rect x="372" y="132" width="276" height="150" rx="12" fill="var(--eje-o)" opacity=".07"/>
+              <rect x="372" y="132" width="276" height="150" rx="12" fill="none" stroke="var(--eje-o)" stroke-width="1.8"/>
+              <text x="510" y="152" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-o)">medicion_temp_311</text>
+              <text x="510" y="167" text-anchor="middle" font-size="9.5" fill="var(--tinta-tenue)" font-family="var(--mono)">O · medición reificada</text>
+
+              <!-- cantidad N -->
+              <circle cx="404" cy="196" r="5" fill="var(--eje-n)"/>
+              <text x="416" y="200" font-size="10.5" fill="var(--tinta)"><tspan font-family="var(--mono)" fill="var(--eje-n)">cantidad</tspan> = 93</text>
+              <!-- unidad K -->
+              <circle cx="404" cy="221" r="5" fill="var(--eje-k)"/>
+              <text x="416" y="225" font-size="10.5" fill="var(--tinta)"><tspan font-family="var(--mono)" fill="var(--eje-k)">unidad</tspan> = qudt:DEG_C</text>
+              <!-- instrumento O -->
+              <circle cx="404" cy="246" r="5" fill="var(--eje-o)"/>
+              <text x="416" y="250" font-size="10.5" fill="var(--tinta)"><tspan font-family="var(--mono)" fill="var(--eje-o)">instrumento</tspan> = sonda_pid</text>
+              <!-- momento T -->
+              <circle cx="404" cy="271" r="5" fill="var(--eje-t)"/>
+              <text x="416" y="275" font-size="10.5" fill="var(--tinta)"><tspan font-family="var(--mono)" fill="var(--eje-t)">momento</tspan> = 08:14:07</text>
+
+              <text x="510" y="308" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">trazable, convertible, auditable</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 4.1.</span> Dos maneras de modelar una misma medición.
+            A la izquierda, el valor (<span style="color:var(--eje-n)">N</span>) y la unidad
+            (<span style="color:var(--eje-k)">K</span>) cuelgan directamente del evento: suficiente
+            cuando el dato es fijo y obvio. A la derecha, la medición se eleva a entidad en
+            <span style="color:var(--eje-o)">O</span> y gana cantidad, unidad, instrumento y momento
+            propios: el dato pasa de número suelto a hecho trazable.</figcaption>
+        </figure>
+
+        <p>La versión reificada es lo que separa a un sistema que escupe «93» de uno que afirma, con
+          todas las letras: <em>«93&nbsp;°C, medidos por la sonda PID sobre la extracción
+          <code>espresso_311</code>, a las 08:14:07»</em>. El primero es un número flotando en el vacío;
+          el segundo es un hecho que puede auditarse, convertirse y agregarse sin riesgo.</p>
+
+        <h2>El catálogo oficial: QUDT</h2>
+
+        <p>Llegados aquí surge una duda práctica: ¿hace falta sentarse a escribir un diccionario con
+          todas las unidades del mundo? La respuesta es un no rotundo. Este es uno de esos raros problemas
+          que la industria ya resolvió de forma definitiva.</p>
+
+        <div class="caja caja--precedente revelar">
+          <p class="caja-tit">Precedente · QUDT</p>
+          <p style="margin:0">La ontología pública <strong>QUDT</strong>
+            (<em>Quantities, Units, Dimensions and Types</em>) <code>[18]</code> cataloga miles de
+            unidades reconocidas: sus dimensiones físicas, sus factores de conversión exactos y sus
+            identificadores oficiales (URIs). Para milisegundos usas <code>qudt:MilliSEC</code>; para un
+            archivo de computadora, <code>qudt:Byte</code>; para dinero, <code>qudt:USD</code>; para los
+            grados Celsius de nuestro espresso, <code>qudt:DEG_C</code>. Cuando WQuestions adopta una
+            unidad, no la inventa: se enlaza a este catálogo.</p>
+        </div>
+
+        <p>El enganche es directo: la categoría que vive en el eje <span class="eje-rotulo"><span class="eje eje--k">K</span></span>
+          —digamos <code>K:bar</code>— declara su anclaje canónico mediante una propiedad que apunta al
+          recurso de QUDT. Así, dos sistemas que jamás se han visto pueden coincidir en que ambos hablan
+          de <em>bar</em> porque ambos apuntan al mismo URI.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">json</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="json">{
+  "id": "K:bar",
+  "eje": "K",
+  "etiqueta": "bar (presión)",
+  "ancla_qudt": "http://qudt.org/vocab/unit/BAR",
+  "dimension": "presion",
+  "convertir_a_si": { "unidad": "qudt:PA", "factor": 100000 }
+}</code></pre>
+        </div>
+
+        <h2>Unidades que la IA tuvo que inventar</h2>
+
+        <p>Hay industrias tan recientes que QUDT todavía no tiene palabras para ellas. El ecosistema de
+          la inteligencia artificial es el ejemplo perfecto. ¿En qué unidad se mide la longitud de un
+          texto que un modelo procesa? ¿Cómo se cuantifica el «tamaño» de un modelo, o lo que cuesta cada
+          consulta? Algunas de estas magnitudes nacieron hace pocos años y aún carecen de nombre oficial
+          en cualquier catálogo formal.</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">La regla para una unidad sin catálogo</p>
+          <ol style="margin:.2rem 0 0 1.1rem;padding:0">
+            <li style="margin-bottom:.45rem">Si la unidad existe en QUDT, se usa QUDT. Sin discusión.</li>
+            <li style="margin-bottom:.45rem">Si es un concepto nacido ayer, el desarrollador define una
+              unidad nueva en el eje <span class="eje-rotulo"><span class="eje eje--k">K</span></span>,
+              la describe con precisión y, cuando es posible, le programa una fórmula que la convierta a
+              una unidad conocida.</li>
+          </ol>
+        </div>
+
+        <p>Para una sesión de agente como <code>sesion_ia_5521</code>, el eje
+          <span class="eje-rotulo"><span class="eje eje--k">K</span></span> tendría que alojar unidades
+          que ningún físico del siglo&nbsp;XX habría imaginado:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">unidades nuevas en K</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="text">K:token                   — fragmento de texto con que un modelo lee y escribe.
+K:parametro_modelo        — mide el "tamaño" de un modelo (p. ej. 7B, 70B).
+K:precision_clasificador  — tasa de acierto, escala continua entre 0 y 1.
+K:USD_por_millon_tokens   — unidad compuesta: con ella facturan los proveedores.</code></pre>
+        </div>
+
+        <p>La última es la más interesante: una <strong>unidad compuesta</strong> que entrelaza dinero
+          y capacidad de procesamiento. Un sistema maduro permite armar estas unidades híbridas y
+          guardarlas en K sin que la arquitectura tiemble, porque «dólar por millón de tokens» no es más
+          que una razón entre dos magnitudes que el eje ya sabe nombrar por separado.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Nota</span>
+          El precio por millón de tokens es además una magnitud <em>volátil</em>: cambia con cada nueva
+          versión del modelo. Por eso, igual que el dinero indexado por inflación, gana mucho cuando se
+          reifica con su fecha de denominación.
+        </aside>
+
+        <p>Y como toda magnitud volátil, su evolución se ve mejor en una serie temporal que en una
+          tabla. La caída del costo por millón de tokens en los modelos abiertos del último año cuenta,
+          por sí sola, buena parte de la historia económica de la IA reciente.</p>
+
+        <!-- CHART: costo por millón de tokens a lo largo del año -->
+        <figure class="figura revelar">
+          <div class="lienzo" data-chart>
+            <script type="application/json">
+            {"tipo":"lineas","unidad":" USD/Mtok","max":12,
+             "series":[
+               {"nombre":"Entrada","color":"n","datos":[{"x":"ene","y":10.0},{"x":"mar","y":7.5},{"x":"may","y":5.0},{"x":"jul","y":3.2},{"x":"sep","y":2.0},{"x":"nov","y":1.1}]},
+               {"nombre":"Salida","color":"k","datos":[{"x":"ene","y":4.0},{"x":"mar","y":3.0},{"x":"may","y":2.1},{"x":"jul","y":1.4},{"x":"sep","y":0.9},{"x":"nov","y":0.6}]}
+             ]}
+            </script>
+          </div>
+          <figcaption><span class="fnum">Figura 4.2.</span> Costo por millón de tokens de un modelo
+            abierto a lo largo de un año, en la unidad compuesta <code>K:USD_por_millon_tokens</code>.
+            Cada cifra es una magnitud con unidad y fecha; modelarlas así permite comparar precios entre
+            proveedores sin sumar peras con manzanas. Pasa el cursor sobre los puntos para ver los
+            valores.</figcaption>
+        </figure>
+
+        <h2>Cuando los ejes se sincronizan, las matemáticas dejan de ser ciegas</h2>
+
+        <p>En cuanto cada número lleva su unidad pegada, operaciones que antes eran trampas mortales se
+          vuelven seguras y automáticas. Tres ejemplos lo dejan claro.</p>
+
+        <div class="columnas">
+          <p><strong>Conversión.</strong> Imagina un tablero que recibe la latencia de cuatro agentes:
+            uno reporta en milisegundos, dos en microsegundos y otro en segundos. Si las unidades están
+            mapeadas en <span class="eje-rotulo"><span class="eje eje--k">K</span></span> con su factor
+            a la unidad base, el sistema convierte todo a una escala común antes de operar. La regla de
+            conversión vive centralizada en K, y nadie escribe traductores a mano.</p>
+          <p><strong>Agregación.</strong> Pídele a un sistema mal diseñado el promedio de «340&nbsp;ms,
+            1200&nbsp;µs y 0,7&nbsp;s» y sumará los números desnudos —340&nbsp;+&nbsp;1200&nbsp;+&nbsp;0,7—
+            para devolverte una cifra ridícula y falsa. Con unidades explícitas, el motor sabe que no
+            puede mezclar escalas y homogeneiza antes de calcular. Por increíble que parezca, la suma
+            ciega ocurre a diario en tableros corporativos.</p>
+          <p><strong>El tiempo dentro del dinero.</strong> Cien dólares de 2020 no son cien dólares de
+            hoy. Si modelas un contrato indexado, registrar «100&nbsp;USD» no alcanza: el número debe
+            arrastrar la unidad <em>y</em> la fecha de denominación. El valor del dinero cambia con el
+            tiempo, y el modelo lo gestiona apoyándose en la bitemporalidad que veremos más adelante.</p>
+        </div>
+
+        <p>El motor que intente sumar 100&nbsp;USD con 100&nbsp;JPY debe detenerse en seco, igual que se
+          negaría a sumar tazas con grados Celsius. La cantidad deja de ser un escalar y pasa a ser un
+          <strong>hecho completo y autoexplicativo</strong>: el par valor&nbsp;+&nbsp;unidad, con la
+          unidad anclada en K mediante su URI canónica.</p>
+
+        <h2>Incertidumbre: cuando «cuánto» no es un único número</h2>
+
+        <p>En el mundo real los números casi nunca son exactos. Un estudio sobre un modelo de lenguaje
+          informa una precisión del <em>78,3&nbsp;%&nbsp;±&nbsp;2,1&nbsp;%</em>; un agente no devuelve una
+          latencia fija sino una campana de valores con su media y sus percentiles. El eje
+          <span class="eje-rotulo"><span class="eje eje--n">N</span></span> está preparado para recibir
+          la respuesta a «¿cuánto?» en tres formatos.</p>
+
+        <div class="triple">
+          <span class="nodo nodo--n"><span>2100</span><small>N</small></span>
+          <span class="enlace">valor puntual<span class="firma">un escalar fijo</span></span>
+          <span class="nodo nodo--k"><span>milisegundo</span><small>K</small></span>
+        </div>
+        <div class="triple">
+          <span class="nodo nodo--n"><span>[1800, 2400]</span><small>N</small></span>
+          <span class="enlace">rango<span class="firma">piso y techo</span></span>
+          <span class="nodo nodo--k"><span>milisegundo</span><small>K</small></span>
+        </div>
+        <div class="triple">
+          <span class="nodo nodo--o"><span>latencia_5521</span><small>O</small></span>
+          <span class="enlace">distribución<span class="firma">M(O→O) reificada</span></span>
+          <span class="nodo nodo--o"><span>normal(μ=2100, σ=180)</span><small>O</small></span>
+        </div>
+
+        <ol style="margin:.4rem 0 1rem 1.1rem">
+          <li style="margin-bottom:.4rem"><strong>Valor puntual.</strong> Un número fijo y simple, con
+            su unidad: <code>2100&nbsp;ms</code>.</li>
+          <li style="margin-bottom:.4rem"><strong>Rango.</strong> Un intervalo con piso y techo:
+            <code>[1800&nbsp;ms, 2400&nbsp;ms]</code>, útil cuando solo conoces los extremos.</li>
+          <li><strong>Distribución.</strong> Aquí el modelo se pone serio: la distribución estadística se
+            <em>reifica</em> como entidad en el eje <span class="eje-rotulo"><span class="eje eje--o">O</span></span>
+            y gana propiedades —media, desviación, tipo de curva, tamaño de muestra—. El valor deja de
+            ser un punto y se vuelve un objeto con estructura.</li>
+        </ol>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Por qué esto importa con la IA</p>
+          <p style="margin:0">Si le haces dos veces la misma pregunta a un modelo generativo, obtienes
+            dos respuestas distintas: su «calidad» no es un número grabado en piedra, sino una
+            distribución de probabilidades. Cuando un informe anuncia que un modelo logra un 78,3&nbsp;%
+            de eficacia, te está dando el promedio de miles de pruebas. Modelar bien el dato significa que
+            el sistema <em>sepa</em> que ese 78,3&nbsp;% es la punta de un evento estadístico, no una
+            métrica plana.</p>
+        </div>
+
+        <h2>El espresso y el agente, eje a eje</h2>
+
+        <p>Conviene ver el eje <span class="eje-rotulo"><span class="eje eje--n">N</span></span> en acción
+          sobre nuestros dos casos vivos. Cada uno es, mirado de cerca, un pequeño enjambre de magnitudes
+          y conteos, cada cual con su unidad.</p>
+
+        <div class="rejilla-2 revelar">
+          <div class="tarjeta">
+            <p class="emoji">☕</p>
+            <h4>Una extracción de espresso</h4>
+            <p style="margin:0;font-size:.95rem">Dosis de 18&nbsp;g, agua a 93&nbsp;°C, presión de
+              9&nbsp;bar, extracción de 27&nbsp;s y un rendimiento de 36&nbsp;ml en taza. Cinco magnitudes
+              con cinco unidades físicas, más un conteo solitario —1&nbsp;taza— que es pura cardinalidad
+              y no necesita escala. Si llamáramos al café «intenso», ojo: eso no entra en N, porque la
+              intensidad percibida es una categoría del eje <span class="eje-rotulo"><span class="eje eje--k">K</span></span>,
+              no un número.</p>
+          </div>
+          <div class="tarjeta">
+            <p class="emoji">🤖</p>
+            <h4>Una sesión de agente de IA</h4>
+            <p style="margin:0;font-size:.95rem">Entrada de 4180&nbsp;tokens, salida de 920&nbsp;tokens,
+              latencia de 2100&nbsp;ms, costo de 0,015&nbsp;USD y precisión del 78,3&nbsp;%&nbsp;±&nbsp;2,1&nbsp;%.
+              Seis magnitudes, seis unidades —dos de ellas inventadas por la propia industria— y dos que
+              llegan con su margen de incertidumbre a cuestas. Ninguna de estas unidades existía en un
+              catálogo físico clásico.</p>
+          </div>
+        </div>
+
+        <p>La verdadera prueba llega cuando alguien hace una pregunta que cruza ambos mundos. Por
+          ejemplo: <em>«¿cuántos dólares y cuántos tokens cuesta pedirle al agente que redacte la ficha
+          técnica de un menú de cuarenta cafés?»</em>. Es una pregunta perfectamente razonable para un
+          negocio, y mezcla unidades de páginas, tokens, dólares y tiempo. Responderla exige que el
+          sistema sepa exactamente qué unidad acompaña a cada número y cómo se convierten entre sí. Sin
+          esa capa de inteligencia estructural, cualquier respuesta es una adivinanza disfrazada de
+          cálculo.</p>
+
+        <h2>La trampa de programación: el escalar pelado</h2>
+
+        <p>El error clásico —el que asoma en producción y cuesta dinero real— es guardar
+          <code>100</code> en una columna llamada <code>monto</code> y dar por sentado que «ya se sabe»
+          que son dólares. Un día el sistema integra un proveedor que factura en yenes; otro operario
+          carga <code>100</code> pensando en soles; y la suma <code>100 + 100</code> arroja
+          <code>200</code> de una moneda que no existe. Es la misma falla que, a otra escala, agrietó el
+          rodamiento de la turbina y desintegró una sonda en Marte.</p>
+
+        <div class="caja caja--alerta revelar">
+          <p class="caja-tit">La desnudez numérica está prohibida</p>
+          <p style="margin:0">Una magnitud jamás se almacena como un escalar pelado, sino como el par
+            <strong>valor&nbsp;+&nbsp;unidad</strong>, con la unidad anclada en
+            <span class="eje-rotulo"><span class="eje eje--k">K</span></span> por su URI canónica (QUDT).
+            Un motor que intente sumar <code>100&nbsp;USD</code> con <code>100&nbsp;JPY</code> se detiene
+            en seco, igual que se negaría a sumar peras con tornillos. El número, solo,
+            <em>miente por omisión</em>.</p>
+        </div>
+
+        <h2>El inventario de cajas está completo</h2>
+
+        <p>Con el eje <span class="eje-rotulo"><span class="eje eje--n">N</span></span> instalado, el
+          universo de catalogación queda formalmente cerrado. Tenemos los cuatro pilares del mundo físico
+          —quién, qué, dónde, cuándo—, el zócalo intelectual de las categorías
+          (<span class="eje-rotulo"><span class="eje eje--k">K</span></span>) y, ahora, el terreno firme
+          de las magnitudes (<span class="eje-rotulo"><span class="eje eje--n">N</span></span>). Ya están
+          listos los cajones para alojar cualquier valor que exista.</p>
+
+        <p>Recapitulemos lo construido antes de seguir:</p>
+
+        <div class="columnas">
+          <p><strong>1. N es un eje de valor puro.</strong> A diferencia de los objetos, un número es su
+            propia identidad y no necesita un código interno (UUID) para existir.</p>
+          <p><strong>2. La desnudez numérica está prohibida.</strong> Todo número entra con una unidad
+            pegada, y esa unidad habita siempre en el catálogo del eje K.</p>
+          <p><strong>3. La medición como evento.</strong> Si la unidad no es obvia, o si habrá
+            conversiones, la medición se reifica: se eleva a entidad formal en el eje O.</p>
+          <p><strong>4. Estándares mundiales.</strong> Usamos QUDT para no reinventar unidades básicas;
+            para los conceptos emergentes —token, parámetros, precisión— creamos unidades propias en K.</p>
+          <p><strong>5. Tolerancia estadística.</strong> El eje admite la incertidumbre como rango o como
+            distribución reificada, no solo como un promedio plano.</p>
+        </div>
+
+        <p>Lo que falta ya no son más cajones. Lo que falta son los <strong>cables</strong> que conecten
+          todos estos valores entre sí: las etiquetas que le explican a la máquina <em>cómo</em> un agente
+          se relaciona con un objeto, y cómo un objeto sostiene una magnitud. Esos cables viven en el eje
+          <span class="eje-rotulo"><span class="eje eje--m">M</span> cómo</span>, el de los predicados. Y
+          como veremos enseguida, la frontera entre «tener una propiedad» y «estar relacionado con algo»
+          es, a nivel informático, mucho más delgada de lo que dicta el sentido común: es solo cuestión
+          de cardinalidad.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="03-clase.html"><span class="dir">← Anterior</span><span class="tit">Cuál: el zócalo categórico (K)</span></a>
+      <a class="sig" href="05-predicados.html"><span class="dir">Siguiente →</span><span class="tit">Cómo: los predicados (P y M)</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>
