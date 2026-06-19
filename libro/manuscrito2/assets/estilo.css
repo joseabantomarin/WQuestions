@@ -465,6 +465,21 @@ td code { white-space: nowrap; }
 .tarjeta h4 { margin-top: 0; }
 .tarjeta .emoji { font-size: 1.5rem; line-height: 1; }
 
+/* Bloque de audios (resúmenes) */
+.audios { margin: 0 0 1.4rem; max-width: 46rem; background: var(--papel-2);
+  border: 1px solid var(--linea); border-left: 4px solid var(--acento);
+  border-radius: var(--radio-g); padding: 1rem 1.2rem 1.1rem; box-shadow: var(--sombra); }
+.audios-tit { font-family: var(--sans); font-weight: 700; font-size: .92rem; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--acento); margin: 0 0 .7rem;
+  display: flex; align-items: center; gap: .5rem; }
+.audios .pista { display: flex; align-items: center; gap: .9rem; flex-wrap: wrap; padding: .55rem 0; }
+.audios .pista + .pista { border-top: 1px solid var(--linea-fina); }
+.audios .pista-et { font-family: var(--sans); font-weight: 600; font-size: .98rem; color: var(--tinta);
+  min-width: 11rem; display: inline-flex; align-items: center; gap: .5rem; }
+.audios .pista-et .pt { width: .7rem; height: .7rem; border-radius: 50%; flex: 0 0 auto; }
+.audios audio { flex: 1; min-width: 15rem; height: 40px; }
+@media print { .audios { display: none; } }
+
 /* ---------------------------------------------------------------------------
    13. NAVEGACIÓN ENTRE CAPÍTULOS
    --------------------------------------------------------------------------- */
