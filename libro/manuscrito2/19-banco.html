@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 19 · El dominio más exigente: un banco — WQuestions</title>
+  <meta name="description" content="Donde las decisiones de diseño dejan de ser elegancia y se vuelven exigencia legal: transferencias, préstamos, fraude y productos financieros sobre el grafo de hechos.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'19'">
+      <header class="portada-cap">
+        <p class="parte">Parte V · En la práctica</p>
+        <div class="num-cap">19</div>
+        <h1>El dominio más exigente: un banco</h1>
+        <p class="lede">En casi todos los dominios, las decisiones de diseño son cuestión de buen
+          gusto. En un banco son cuestión de ley. Aquí veremos si el modelo soporta el peso del
+          dinero sin doblarse.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Son las 02:13 de un martes. En un servidor de un banco regional, un proceso
+          de cierre acaba de detenerse: dos cifras que llevaban diez años coincidiendo dejaron de
+          coincidir por catorce centavos. No es un error de cálculo; es un error de <em>historia</em>.
+          Alguien, en algún sistema satélite, sobrescribió un dato que un auditor necesitaba leer tal
+          como estaba la semana pasada, y ahora ese pasado ya no existe. Multiplica esos catorce
+          centavos por millones de operaciones y por la firma de un regulador que exige reconstruir
+          cualquier instante, y tendrás el motivo por el cual el dominio bancario es la prueba de fuego
+          de cualquier modelo de datos. No perdona la elegancia que no resiste una citación judicial.</p>
+
+        <p>Conviene fijar la escala. Una empresa mediana cualquiera guarda su operación en unas
+          ciento cincuenta tablas, un par de sistemas heredados y un programa de contabilidad. Un
+          banco regional de tamaño medio juega en otra liga: alrededor de mil quinientas tablas solo
+          para el núcleo, otro millar para tarjetas de crédito, otro tanto para seguros, y una nube
+          de aplicaciones satélite para microcréditos, prevención de fraude y la aplicación móvil.
+          Cada sistema tiene su propio dueño, sus propias reglas y, lo más corrosivo, su propio
+          idioma.</p>
+
+        <p>En el capítulo del spa demostramos que el modelo era ágil; en el del taxi, que aguantaba
+          la velocidad; en la historia clínica, que sabía repartir la verdad entre varios custodios.
+          El banco reúne las tres exigencias y añade una cuarta que las domina a todas: <strong>el
+          regulador</strong>. Aquí las decisiones de diseño que en otros capítulos eran preferencias
+          —no borrar nunca el pasado, tratar al software como un agente con responsabilidad— dejan de
+          ser lujos teóricos y se vuelven condiciones de supervivencia dictadas por la ley.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Alcance</span>
+          No vamos a modelar un banco entero —eso pediría otro libro—. Tomaremos cuatro situaciones
+          críticas y mostraremos que cada una cae, sin forcejeo, sobre la misma maquinaria que ya
+          conoces.
+        </aside>
+
+        <p>Este capítulo no aspira a ser un manual de <em>core banking</em>. Aspira a algo más
+          modesto y más contundente: tomar cuatro escenas —una transferencia, la vida entera de un
+          préstamo, una investigación de fraude y el catálogo de productos— y demostrar que el modelo
+          absorbe la complejidad industrial sin trucos. Si aguanta el dinero, aguanta cualquier cosa.</p>
+
+        <h2>La realidad honesta: cinco islas que no se hablan</h2>
+
+        <p>Antes de presumir de soluciones, describamos el enfermo. Quien trabaja en banca asentirá;
+          quien no, se asombrará. Por dentro, un banco no es un sistema: es un archipiélago de cinco
+          islas que apenas se saludan.</p>
+
+        <!-- FIGURA SVG: las cinco islas del banco -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 340" class="svg-eje" role="img"
+                 aria-label="Cinco islas tecnológicas de un banco que publican al grafo común sin fundirse">
+              <defs>
+                <marker id="flecha17a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+                  <path d="M0 0 L9 4.5 L0 9 z" fill="var(--eje-m)"></path>
+                </marker>
+              </defs>
+              <!-- grafo central -->
+              <circle cx="330" cy="170" r="58" fill="none" stroke="var(--eje-k)" stroke-width="2.2"></circle>
+              <text x="330" y="164" text-anchor="middle" font-size="14" font-weight="700" fill="var(--eje-k)">Grafo</text>
+              <text x="330" y="182" text-anchor="middle" font-size="11" fill="var(--tinta-suave)" font-family="var(--sans)">catálogo D8</text>
+              <!-- nodos internos del grafo -->
+              <circle cx="312" cy="150" r="3.2" fill="var(--eje-q)"></circle>
+              <circle cx="350" cy="152" r="3.2" fill="var(--eje-o)"></circle>
+              <circle cx="318" cy="190" r="3.2" fill="var(--eje-t)"></circle>
+              <circle cx="348" cy="188" r="3.2" fill="var(--eje-n)"></circle>
+              <line x1="312" y1="150" x2="350" y2="152" stroke="var(--eje-m)" stroke-width="1" opacity=".5"></line>
+              <line x1="350" y1="152" x2="348" y2="188" stroke="var(--eje-m)" stroke-width="1" opacity=".5"></line>
+              <line x1="318" y1="190" x2="348" y2="188" stroke="var(--eje-m)" stroke-width="1" opacity=".5"></line>
+
+              <!-- isla 1: core -->
+              <g font-family="var(--sans)">
+                <rect x="20" y="34" width="150" height="48" rx="9" fill="var(--eje-o)" opacity=".12"></rect>
+                <text x="95" y="56" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-o)">Núcleo bancario</text>
+                <text x="95" y="72" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">saldos · movimientos</text>
+                <line x1="170" y1="62" x2="276" y2="146" stroke="var(--eje-m)" stroke-width="1.8" stroke-dasharray="4 4" marker-end="url(#flecha17a)"></line>
+              </g>
+              <!-- isla 2: agencias -->
+              <g font-family="var(--sans)">
+                <rect x="20" y="146" width="150" height="48" rx="9" fill="var(--eje-l)" opacity=".12"></rect>
+                <text x="95" y="168" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-l)">Agencias</text>
+                <text x="95" y="184" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">simuladores · turnos</text>
+                <line x1="170" y1="170" x2="270" y2="170" stroke="var(--eje-m)" stroke-width="1.8" stroke-dasharray="4 4" marker-end="url(#flecha17a)"></line>
+              </g>
+              <!-- isla 3: contabilidad -->
+              <g font-family="var(--sans)">
+                <rect x="20" y="258" width="150" height="48" rx="9" fill="var(--eje-n)" opacity=".12"></rect>
+                <text x="95" y="280" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-n)">Contabilidad</text>
+                <text x="95" y="296" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">partidas · hojas</text>
+                <line x1="170" y1="282" x2="276" y2="196" stroke="var(--eje-m)" stroke-width="1.8" stroke-dasharray="4 4" marker-end="url(#flecha17a)"></line>
+              </g>
+              <!-- isla 4: promotores -->
+              <g font-family="var(--sans)">
+                <rect x="490" y="80" width="150" height="48" rx="9" fill="var(--eje-q)" opacity=".12"></rect>
+                <text x="565" y="102" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-q)">Promotores</text>
+                <text x="565" y="118" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">campo · planillas</text>
+                <line x1="490" y1="110" x2="386" y2="150" stroke="var(--eje-m)" stroke-width="1.8" stroke-dasharray="4 4" marker-end="url(#flecha17a)"></line>
+              </g>
+              <!-- isla 5: reporting -->
+              <g font-family="var(--sans)">
+                <rect x="490" y="212" width="150" height="48" rx="9" fill="var(--eje-t)" opacity=".12"></rect>
+                <text x="565" y="234" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-t)">Reportería</text>
+                <text x="565" y="250" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">tableros · regulador</text>
+                <line x1="490" y1="240" x2="386" y2="192" stroke="var(--eje-m)" stroke-width="1.8" stroke-dasharray="4 4" marker-end="url(#flecha17a)"></line>
+              </g>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 19.1.</span> Las cinco islas de un banco regional
+            —núcleo, agencias, contabilidad, promotores y reportería—, cada una con su tecnología y
+            su jerga. WQuestions no reemplaza a ninguna: cada isla <em>publica</em> sus hechos al
+            grafo común con su dialecto, mapeado una sola vez al catálogo D8. El archipiélago se
+            vuelve consultable sin disolverse.</figcaption>
+        </figure>
+
+        <ul class="limpia">
+          <li style="margin-bottom:.7rem"><b>Isla 1 · El núcleo.</b> El servidor central, el
+            <em>core bancario</em>. Allí viven los saldos, los movimientos oficiales y la contabilidad
+            pesada. Es la «verdad» que el Estado audita.</li>
+          <li style="margin-bottom:.7rem"><b>Isla 2 · Las agencias.</b> Cada sucursal corre
+            pequeños programas para simular créditos o repartir turnos. Toman decisiones todos los
+            días, pero rara vez le explican al núcleo <em>cómo</em> llegaron a ellas.</li>
+          <li style="margin-bottom:.7rem"><b>Isla 3 · Contabilidad.</b> El zoológico oculto. Una
+            parte vive en el servidor; otra, enorme, vive en hojas de cálculo que se ajustan a mano a
+            fin de mes. Cuando el núcleo y la contabilidad discrepan, suele ganar contabilidad —y casi
+            nadie sabe explicar por qué.</li>
+          <li style="margin-bottom:.7rem"><b>Isla 4 · Los promotores.</b> Los agentes de calle que
+            venden créditos anotan datos en planillas y papeles. Esa información valiosa del cliente
+            es «fantasma» hasta el día en que el crédito se aprueba y recién entonces ingresa al
+            banco.</li>
+          <li><b>Isla 5 · La reportería.</b> Cuando la gerencia pide un reporte que cruce las cuatro
+            islas anteriores, el equipo técnico tarda semanas en cavar un túnel temporal que junte
+            todo en un <em>data lake</em>. A veces los números no cuadran y el proyecto naufraga.</li>
+        </ul>
+
+        <p>¿Por qué ocurre? Porque cuando un banco intenta modernizarse, comete el mismo error:
+          obligar a todas las islas a hablar un único idioma robótico. Y reprogramar un sistema de
+          quince años para que hable «moderno» sale tan caro que los bancos prefieren dejarlo morir
+          en paz. El resultado es un empate técnico permanente: nadie migra, nadie se entiende.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">El giro de WQuestions</p>
+          <p style="margin:0">El modelo no le exige a la sucursal ni a contabilidad que cambien su
+            software. Solo les pide que <strong>traduzcan</strong> lo que ya hacen y lo publiquen al
+            mapa central —el grafo— usando su propia jerga. Contabilidad habla de «partidas»; la
+            agencia habla de «simulaciones». El <a href="14-lexicon.html">lexicon</a> traduce ambos
+            dialectos al catálogo universal una sola vez, y a partir de allí cada isla sigue operando
+            como siempre mientras la gerencia consulta el mapa en milisegundos.</p>
+        </div>
+
+        <h2>El banco sobre las siete coordenadas</h2>
+
+        <p>Para domar el caos, repartamos las piezas del banco en los ejes de valor. El ejercicio es
+          revelador por sí solo: lo que parecía una maraña de mil quinientas tablas se ordena en seis
+          preguntas.</p>
+
+        <div class="rejilla-2 revelar">
+          <div class="tarjeta">
+            <h4><span class="eje eje--q">Q</span>&nbsp; quién · agentes</h4>
+            <p style="margin:0;font-size:.95rem">Clientes físicos, empresas (personas jurídicas) y
+              —decisivo— los <strong>sistemas</strong>. El motor antifraude y el autorizador de la
+              red de tarjetas deciden solos; por lo tanto, viven en <code>Q</code> como agentes
+              activos con responsabilidad.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--o">O</span>&nbsp; qué · entidades y eventos</h4>
+            <p style="margin:0;font-size:.95rem">Cuentas, préstamos, movimientos de dinero, tarjetas,
+              asientos contables e investigaciones de fraude. Aquí se concentra el noventa por ciento
+              del peso del banco.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--l">L</span>&nbsp; dónde · lugares</h4>
+            <p style="margin:0;font-size:.95rem">Sucursales físicas, cajeros automáticos y lugares
+              virtuales como la aplicación móvil o la banca web. El canal importa: una operación por
+              cajero no se gobierna igual que una por app.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--t">T</span>&nbsp; cuándo · tiempos</h4>
+            <p style="margin:0;font-size:.95rem">Cuidado aquí: hay <strong>triple reloj</strong>. La
+              hora en que el cliente ordenó el pago, la hora en que el servidor lo procesó y la fecha
+              del cierre contable. El modelo anota los tres sin confundirlos.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--n">N</span>&nbsp; cuánto · magnitudes</h4>
+            <p style="margin:0;font-size:.95rem">Dinero, tasas de interés, plazos en meses y puntajes
+              de riesgo. Cada magnitud arrastra su unidad: ningún número anda suelto.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--k">K</span>&nbsp; cuál · clases</h4>
+            <p style="margin:0;font-size:.95rem">Tipos de cuenta, monedas (dólar, euro, sol), estados
+              de mora y códigos legales. El zócalo categórico que da sentido a todo lo demás.</p>
+          </div>
+        </div>
+
+        <p>Los predicados del eje <em>cómo</em> —el séptimo eje, <span class="eje eje--m">M</span>—
+          son los cables que conectan todo: <code>agente</code>, <code>parte_de</code>,
+          <code>cubierto_por</code>, <code>cancela</code>. Sin ellos las seis cajas serían seis
+          listas inertes. Con ellos, un hecho bancario se vuelve un punto navegable. Pasemos a verlo
+          funcionar.</p>
+
+        <h2>Caso 1 · Una transferencia y sus cinco agentes ocultos</h2>
+
+        <p>Para un humano, una transferencia es una frase de seis palabras: «Mariana le envía 480
+          dólares a Bruno». Para el sistema de un banco, ese gesto moviliza a cinco agentes y deja
+          dos registros espejo en contabilidad. Veamos cómo lo despliega el modelo.</p>
+
+        <!-- FIGURA SVG: la transferencia con cinco agentes y dos asientos -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 680 388" class="svg-eje" role="img"
+                 aria-label="Una transferencia como evento central con cinco agentes y dos asientos contables colgados por parte_de">
+              <defs>
+                <marker id="flecha17b" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+                  <path d="M0 0 L9 4.5 L0 9 z" fill="var(--eje-m)"></path>
+                </marker>
+              </defs>
+              <!-- evento central -->
+              <rect x="248" y="150" width="184" height="58" rx="12" fill="var(--eje-o)"></rect>
+              <text x="340" y="176" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff" font-family="var(--mono)">transferencia_7791</text>
+              <text x="340" y="194" text-anchor="middle" font-size="11" fill="#fff" opacity=".85" font-family="var(--sans)">acción transferir</text>
+
+              <!-- agente 1: ana/mariana inicia -->
+              <g font-family="var(--mono)" font-size="11.5">
+                <rect x="22" y="22" width="148" height="34" rx="8" fill="var(--eje-q)"></rect>
+                <text x="96" y="44" text-anchor="middle" fill="#fff" font-weight="600">mariana_q</text>
+                <line x1="170" y1="42" x2="252" y2="156" stroke="var(--eje-m)" stroke-width="1.8" marker-end="url(#flecha17b)"></line>
+                <text x="196" y="88" font-size="10" fill="var(--eje-m)" font-family="var(--sans)" font-weight="600">agente</text>
+              </g>
+              <!-- agente 2: bruno recibe -->
+              <g font-family="var(--mono)" font-size="11.5">
+                <rect x="510" y="22" width="148" height="34" rx="8" fill="var(--eje-q)"></rect>
+                <text x="584" y="44" text-anchor="middle" fill="#fff" font-weight="600">bruno_q</text>
+                <line x1="510" y1="42" x2="428" y2="156" stroke="var(--eje-m)" stroke-width="1.8" marker-end="url(#flecha17b)"></line>
+                <text x="470" y="88" font-size="10" fill="var(--eje-m)" font-family="var(--sans)" font-weight="600" text-anchor="end">beneficiario</text>
+              </g>
+              <!-- agente 3: sistema web autoriza -->
+              <g font-family="var(--mono)" font-size="11.5">
+                <rect x="14" y="170" width="150" height="34" rx="8" fill="var(--eje-q)" opacity=".8"></rect>
+                <text x="89" y="192" text-anchor="middle" fill="#fff" font-weight="600">banca_web_sys</text>
+                <line x1="164" y1="187" x2="246" y2="183" stroke="var(--eje-m)" stroke-width="1.8" marker-end="url(#flecha17b)"></line>
+                <text x="118" y="222" font-size="10" fill="var(--eje-m)" font-family="var(--sans)" font-weight="600" text-anchor="middle">autorizado_por</text>
+              </g>
+              <!-- agente 4: motor antifraude verifica -->
+              <g font-family="var(--mono)" font-size="11.5">
+                <rect x="516" y="170" width="150" height="34" rx="8" fill="var(--eje-q)" opacity=".8"></rect>
+                <text x="591" y="192" text-anchor="middle" fill="#fff" font-weight="600">antifraude_sys</text>
+                <line x1="516" y1="187" x2="434" y2="183" stroke="var(--eje-m)" stroke-width="1.8" marker-end="url(#flecha17b)"></line>
+                <text x="560" y="222" font-size="10" fill="var(--eje-m)" font-family="var(--sans)" font-weight="600" text-anchor="middle">verificado_por</text>
+              </g>
+
+              <!-- asiento débito (contabilidad = agente 5) -->
+              <g font-family="var(--mono)" font-size="11">
+                <rect x="120" y="296" width="190" height="62" rx="10" fill="none" stroke="var(--eje-n)" stroke-width="2"></rect>
+                <text x="215" y="318" text-anchor="middle" fill="var(--eje-n)" font-weight="700">asiento_debito_7791</text>
+                <text x="215" y="336" text-anchor="middle" fill="var(--tinta-suave)" font-family="var(--sans)" font-size="10.5">−480 USD · débito</text>
+                <text x="215" y="350" text-anchor="middle" fill="var(--tinta-tenue)" font-family="var(--sans)" font-size="10">cuenta interna Mariana</text>
+                <line x1="296" y1="296" x2="320" y2="210" stroke="var(--eje-m)" stroke-width="1.8" stroke-dasharray="4 3" marker-end="url(#flecha17b)"></line>
+              </g>
+              <!-- asiento crédito -->
+              <g font-family="var(--mono)" font-size="11">
+                <rect x="370" y="296" width="190" height="62" rx="10" fill="none" stroke="var(--eje-n)" stroke-width="2"></rect>
+                <text x="465" y="318" text-anchor="middle" fill="var(--eje-n)" font-weight="700">asiento_credito_7791</text>
+                <text x="465" y="336" text-anchor="middle" fill="var(--tinta-suave)" font-family="var(--sans)" font-size="10.5">+480 USD · crédito</text>
+                <text x="465" y="350" text-anchor="middle" fill="var(--tinta-tenue)" font-family="var(--sans)" font-size="10">cuenta interna Bruno</text>
+                <line x1="384" y1="296" x2="360" y2="210" stroke="var(--eje-m)" stroke-width="1.8" stroke-dasharray="4 3" marker-end="url(#flecha17b)"></line>
+              </g>
+              <text x="340" y="262" text-anchor="middle" font-size="10.5" fill="var(--eje-m)" font-family="var(--sans)" font-weight="600">parte_de</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 19.2.</span> La transferencia <code>transferencia_7791</code>
+            como evento central. Cuatro agentes la rodean —quien inicia, quien recibe, el sistema que
+            autoriza y el motor que verifica— y dos asientos contables cuelgan de ella por
+            <code>parte_de</code>; el departamento de contabilidad es el quinto agente, implícito en
+            las partidas. Nada de esto cabe en una sola fila de una tabla.</figcaption>
+        </figure>
+
+        <p>Primero declaramos el evento central. Observa que tres de sus enlaces apuntan a agentes y
+          que uno de ellos —el motor antifraude— no es una persona:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(transferencia_7791) ∈ O
+  instancia_de:     accion_transferir
+  agente:           mariana_q            # Agente 1 — inicia
+  beneficiario:     bruno_q              # Agente 2 — recibe
+  cuenta_origen:    cta_mariana_4410
+  cuenta_destino:   cta_bruno_8820
+  monto:            n_480_usd
+  lugar_de:         app_movil_banco
+  autorizado_por:   banca_web_sys        # Agente 3 — da el visto bueno
+  verificado_por:   antifraude_sys       # Agente 4 — descarta el robo
+  ts_orden:         2026-05-19T21:07:44  # reloj del cliente
+  ts_proceso:       2026-05-19T21:07:46  # reloj del servidor</code></pre>
+        </div>
+
+        <p>Pero la transferencia no termina ahí. Tras bambalinas, contabilidad —el quinto agente—
+          debe cuadrar sus libros. La partida doble es una ley de la profesión: a todo débito le
+          corresponde un crédito. En el modelo creamos dos <strong>subeventos</strong> y los colgamos
+          de la transferencia con el cable <code>parte_de</code>:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(asiento_debito_7791) ∈ O               # le retiramos saldo a Mariana
+  parte_de:         transferencia_7791
+  cuenta_contable:  ahorros_mariana_interna
+  monto:            n_480_usd
+  tipo_movimiento:  debito
+
+(asiento_credito_7791) ∈ O              # le abonamos saldo a Bruno
+  parte_de:         transferencia_7791
+  cuenta_contable:  ahorros_bruno_interna
+  monto:            n_480_usd
+  tipo_movimiento:  credito</code></pre>
+        </div>
+
+        <p>La misma escena, vista como tres hechos atómicos, queda así de explícita: el evento y sus
+          dos contrapartidas, unidos por un solo predicado.</p>
+
+        <div class="triple" style="flex-wrap:wrap;justify-content:center">
+          <span class="nodo nodo--o"><span>asiento_debito_7791</span><small>O</small></span>
+          <span class="enlace">parte_de<span class="firma">M(O→O)</span></span>
+          <span class="nodo nodo--o"><span>transferencia_7791</span><small>O</small></span>
+          <span class="enlace">parte_de<span class="firma">M(O→O)</span></span>
+          <span class="nodo nodo--o"><span>asiento_credito_7791</span><small>O</small></span>
+        </div>
+
+        <div class="caja caja--decision revelar">
+          <p class="caja-tit"><span class="codigo-d">D5</span> El software es un agente</p>
+          <p style="margin:0">El motor antifraude no es un campo ni una bandera <code>bool</code>:
+            es un agente del eje <code>Q</code> con responsabilidad sobre el hecho. Cuando
+            <code>antifraude_sys</code> deja pasar una operación, esa decisión queda firmada con su
+            nombre, igual que la firma de un cajero humano. Si mañana hay que rendir cuentas de por
+            qué pasó, el responsable está en el grafo, no perdido en un log que nadie guardó.</p>
+        </div>
+
+        <p>Y si esta operación resultara mal hecha, <strong>jamás la borramos</strong>. Creamos una
+          transferencia rectificativa que apunta a la vieja y la anula. La ley obliga a los bancos a
+          conservar el historial completo de los errores, no solo el resultado pulido; el modelo lo
+          hace por defecto, sin tablas de auditoría aparte. Volveremos sobre esto en el Caso 3.</p>
+
+        <h2>Caso 2 · La novela de un préstamo y la regla del tiempo</h2>
+
+        <p>Un préstamo no es un suceso de un segundo: es una novela que dura años. Se aprueba, se
+          pagan cuotas, el cliente se atrasa —entra en mora—, a veces la deuda se reestructura y, con
+          suerte, todo termina cancelado. En un sistema heredado, la celda «estado» del préstamo se
+          va borrando y reescribiendo, y con cada reescritura desaparece un capítulo de la historia.</p>
+
+        <p>Aquí aplicamos la regla de <strong>vigencia temporal</strong>. Cada vez que el préstamo
+          de Mariana cambia de estado, no borramos nada: inyectamos una línea nueva con su fecha de
+          inicio y su fecha de fin. El pasado se acumula, no se pierde.</p>
+
+        <div class="caja caja--decision revelar">
+          <p class="caja-tit"><span class="codigo-d">D6</span> Vigencia temporal: el pasado no se sobrescribe</p>
+          <p style="margin:0">Ningún hecho que pueda cambiar se guarda como un valor desnudo; se
+            guarda con un intervalo <code>[inicio, fin)</code>. Cambiar de estado no es modificar una
+            celda: es <em>cerrar</em> el intervalo vigente y <em>abrir</em> uno nuevo. La consecuencia
+            es que el grafo conserva, gratis, toda la trayectoria de cualquier atributo a lo largo del
+            tiempo.</p>
+        </div>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(prestamo_5503, estado, vigente,         inicio=2026-01-20, fin=2026-08-15)
+(prestamo_5503, estado, mora_30_dias,    inicio=2026-08-15, fin=2026-09-15)
+(prestamo_5503, estado, mora_60_dias,    inicio=2026-09-15, fin=2026-10-22)
+(prestamo_5503, estado, reestructurado,  inicio=2026-10-22, fin=hoy)</code></pre>
+        </div>
+
+        <p>Cinco años después, en plena audiencia, el juez pregunta: «¿En qué estado exacto se
+          encontraba este préstamo el 1 de septiembre de 2026?». La base filtra por fecha y responde
+          sin titubear: «Mora de treinta días». Sin la regla D6, los bancos tienen que construir
+          costosas tablas paralelas solo para almacenar estos fantasmas del pasado —y rezar para que
+          alguien las haya mantenido al día.</p>
+
+        <!-- FIGURA SVG: máquina de estados del préstamo -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 700 250" class="svg-eje" role="img"
+                 aria-label="Ciclo de vida de un préstamo como máquina de estados: vigente, mora 30, mora 60, reestructurado, cancelado">
+              <defs>
+                <marker id="flecha17c" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto">
+                  <path d="M0 0 L9 4.5 L0 9 z" fill="var(--eje-t)"></path>
+                </marker>
+              </defs>
+              <!-- estados -->
+              <g font-family="var(--mono)" font-size="11.5" text-anchor="middle">
+                <ellipse cx="78" cy="92" rx="62" ry="30" fill="var(--eje-o)" opacity=".9"></ellipse>
+                <text x="78" y="96" fill="#fff" font-weight="700">vigente</text>
+
+                <ellipse cx="252" cy="92" rx="62" ry="30" fill="var(--eje-n)" opacity=".9"></ellipse>
+                <text x="252" y="90" fill="#fff" font-weight="700">mora 30</text>
+                <text x="252" y="104" fill="#fff" font-size="9.5" font-family="var(--sans)" opacity=".85">días</text>
+
+                <ellipse cx="426" cy="92" rx="62" ry="30" fill="var(--eje-n)"></ellipse>
+                <text x="426" y="90" fill="#fff" font-weight="700">mora 60</text>
+                <text x="426" y="104" fill="#fff" font-size="9.5" font-family="var(--sans)" opacity=".85">días</text>
+
+                <ellipse cx="610" cy="92" rx="68" ry="30" fill="var(--eje-k)" opacity=".9"></ellipse>
+                <text x="610" y="96" fill="#fff" font-weight="700">reestructurado</text>
+
+                <ellipse cx="252" cy="206" rx="62" ry="28" fill="none" stroke="var(--eje-l)" stroke-width="2.2"></ellipse>
+                <text x="252" y="210" fill="var(--eje-l)" font-weight="700">cancelado</text>
+              </g>
+              <!-- transiciones -->
+              <g>
+                <line x1="140" y1="92" x2="186" y2="92" stroke="var(--eje-t)" stroke-width="2" marker-end="url(#flecha17c)"></line>
+                <line x1="314" y1="92" x2="360" y2="92" stroke="var(--eje-t)" stroke-width="2" marker-end="url(#flecha17c)"></line>
+                <line x1="488" y1="92" x2="538" y2="92" stroke="var(--eje-t)" stroke-width="2" marker-end="url(#flecha17c)"></line>
+                <!-- vigente -> cancelado -->
+                <path d="M70 122 Q110 200 188 206" fill="none" stroke="var(--eje-t)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#flecha17c)"></path>
+                <!-- reestructurado -> vigente (vuelve al ruedo) -->
+                <path d="M558 116 Q300 168 110 118" fill="none" stroke="var(--eje-m)" stroke-width="1.8" stroke-dasharray="3 4" opacity=".7" marker-end="url(#flecha17c)"></path>
+              </g>
+              <!-- etiquetas de transición -->
+              <g font-family="var(--sans)" font-size="10" fill="var(--tinta-suave)" text-anchor="middle">
+                <text x="163" y="82">+30 d</text>
+                <text x="337" y="82">+30 d</text>
+                <text x="513" y="82">acuerdo</text>
+                <text x="118" y="170">pago total</text>
+                <text x="330" y="150" fill="var(--eje-m)">reactiva el plan</text>
+              </g>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 19.3.</span> El ciclo de vida del préstamo como
+            máquina de estados. Cada transición (flechas en color <em>tiempo</em>) es un hecho nuevo
+            con vigencia D6 y su propio <code>motivado_por</code>; el rastro entero se preserva. La
+            reestructuración puede devolver el préstamo a estado vigente sin borrar la mora que
+            ocurrió: el pasado sigue ahí, fechado.</figcaption>
+        </figure>
+
+        <p>Hay un detalle fino que la figura insinúa. Una transición no es solo un cambio de
+          etiqueta: es un hecho que merece su propia causa. Por eso cada cambio de estado lleva un
+          enlace <code>motivado_por</code> que apunta al evento que lo provocó —un pago vencido, un
+          acuerdo firmado— y, cuando hace falta, un <code>justificado_por</code> que apunta al
+          documento legal. El «por qué» no es un eje, como vimos en su momento; es una relación entre
+          hechos, y aquí esa relación es la que un auditor leerá primero.</p>
+
+        <h2>Caso 3 · Investigación de fraude: reconstruir la noche del cargo</h2>
+
+        <p>Mariana llama indignada: alguien usó su tarjeta para pagar 1.840 dólares en una tienda de
+          electrónica al otro lado del país, de madrugada, mientras ella dormía. El banco debe abrir
+          una investigación. Y es justo aquí donde la arquitectura se separa de la competencia por una
+          distancia que no se cierra con más servidores.</p>
+
+        <p>El investigador no necesita el saldo de Mariana de <em>hoy</em>. Necesita viajar a la
+          noche del cargo y preguntar dos cosas que un modelo plano no sabe responder: ¿dónde creía el
+          banco que estaba Mariana esa noche?, y ¿qué decía su perfil de riesgo a esa hora exacta? La
+          respuesta correcta no es el valor actual del perfil; es el valor que el perfil <em>tenía
+          entonces</em>.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Bitemporalidad</span>
+          Qué ocurrió y qué sabía el sistema cuando ocurrió son dos ejes de tiempo distintos. El
+          esquema clásico los confunde en uno; la vigencia D6 los mantiene separados. Esa distinción,
+          abstracta en otros capítulos, aquí decide si el banco cobra o no el seguro.
+        </aside>
+
+        <p>Gracias a la vigencia, el perfil de riesgo de Mariana no es un dato que se pisa: es una
+          serie de versiones fechadas. El investigador recupera la versión que estaba activa la noche
+          del fraude:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(perfil_riesgo_mariana_v4, instancia_de, perfil_antifraude,
+                           inicio=2026-04-30, fin=2026-06-02)
+(perfil_riesgo_mariana_v4, score_riesgo, 0.27)
+(perfil_riesgo_mariana_v4, geo_habitual, ciudad_costa)</code></pre>
+        </div>
+
+        <p>Con eso a la vista, el investigador entiende por qué la tarjeta pasó esa noche: el
+          <code>score_riesgo</code> era bajo y el comercio no levantó alertas suficientes. Al
+          confirmar el robo, <strong>no borra</strong> el pago de la tienda —el cargo fue real y
+          movió dinero de verdad—. En su lugar crea un evento de reverso que apunta al original y deja
+          escrita la causa:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(reverso_cargo_3120, cancela,          autorizacion_original_3120)
+(reverso_cargo_3120, justificado_por,  investigacion_fraude_0457)
+(reverso_cargo_3120, monto,            n_1840_usd)
+(reverso_cargo_3120, ts_proceso,       2026-05-21T09:40:11)</code></pre>
+        </div>
+
+        <p>El historial queda intacto: el cargo fraudulento sigue allí, fechado, y a su lado el
+          reverso que lo neutraliza. El dinero vuelve y el banco conserva una prueba impecable para
+          presentar al seguro. Esto es lo que un sistema plano no puede ofrecer sin reconstrucciones
+          heroicas: la capacidad de mostrar no solo el resultado, sino la secuencia exacta de lo que
+          se supo y cuándo.</p>
+
+        <div class="caja caja--alerta revelar">
+          <p class="caja-tit">La trampa del <code>UPDATE</code></p>
+          <p style="margin:0">En el modelo plano, corregir un fraude tienta a ejecutar un
+            <code>UPDATE perfiles_riesgo SET nivel='alto'</code> y un <code>DELETE</code> del cargo
+            falso. Es la decisión que destruye el caso: al actualizar el perfil, se borra justamente
+            la prueba de que esa noche el sistema lo creía bajo; al borrar el cargo, se borra la
+            evidencia del robo. El reflejo más natural del programador es, aquí, el peor enemigo del
+            banco. El modelo lo previene haciendo que el <code>UPDATE</code> destructivo no sea
+            siquiera una operación disponible.</p>
+        </div>
+
+        <h2>Caso 4 · Una tarjeta «Platino» no es una idea: es un objeto</h2>
+
+        <p>Resolvamos, por último, un error de modelado tan común como costoso. Cuando el banco le
+          entrega a Mariana una «Tarjeta Platino», muchos programadores asumen que «Platino» es una
+          categoría abstracta y la guardan en la caja <code>K</code>. Es falso, y la falsedad tiene
+          consecuencias millonarias.</p>
+
+        <div class="caja caja--definicion revelar">
+          <p class="caja-tit">Producto como oferta reificada</p>
+          <p style="margin:0">La «Oferta Platino del primer trimestre de 2026» no es una etiqueta: es
+            un <strong>objeto real y reificado</strong> de la caja <code>O</code>, con un contrato
+            anexo, unas tasas, una cuota de manejo y una fecha de caducidad. El tipo <em>tarjeta
+            platino</em> sí vive en <code>K</code>; la <em>oferta concreta</em> que un cliente firmó,
+            no. Confundir la clase con la instancia es confundir la receta con el plato servido.</p>
+        </div>
+
+        <p>Cuando el banco entrega el plástico, conecta la tarjeta de Mariana a la oferta específica
+          que estaba vigente ese día —no a la idea de «tarjeta platino», sino al contrato exacto que
+          ella aceptó:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(oferta_platino_2026_t1) ∈ O            # el contrato de oferta del banco
+  instancia_de:         tipo_tarjeta_platino   # ← su clase en K
+  cuota_manejo_mensual: n_9_usd
+  tasa_anual:           n_38_pct
+  vigencia:             inicio=2026-01-01, fin=2026-06-30
+
+(tarjeta_mariana_2255) ∈ O              # el plástico que tiene Mariana
+  cliente:              mariana_q
+  cubierto_por:         oferta_platino_2026_t1</code></pre>
+        </div>
+
+        <p>¿Por qué es vital separar la oferta de la clase? Porque si en julio el banco lanza una
+          versión nueva de la tarjeta con cuota de manejo de doce dólares, la tarjeta de Mariana no
+          puede encarecerse por arte de magia: ella firmó el contrato de la oferta de enero, y ese
+          contrato sigue siendo un objeto congelado en el tiempo, con su propia vigencia. Al tratar
+          los productos financieros como objetos independientes y fechados, el banco se blinda contra
+          demandas multimillonarias por cambiar las reglas sin avisar.</p>
+
+        <div class="triple" style="flex-wrap:wrap;justify-content:center">
+          <span class="nodo nodo--o"><span>tarjeta_mariana_2255</span><small>O</small></span>
+          <span class="enlace">cubierto_por<span class="firma">M(O→O)</span></span>
+          <span class="nodo nodo--o"><span>oferta_platino_2026_t1</span><small>O</small></span>
+          <span class="enlace">instancia_de<span class="firma">M(O→K)</span></span>
+          <span class="nodo nodo--k"><span>tipo_tarjeta_platino</span><small>K</small></span>
+        </div>
+
+        <p class="cita-destacada revelar">En banca, los productos no son adjetivos: son contratos
+          firmados que el tiempo no debería poder reescribir.<cite>La lección del Caso 4</cite></p>
+
+        <h2>El antes y el después: del esquema fragmentado al grafo único</h2>
+
+        <p>Pongamos las dos arquitecturas frente a frente con una sola pregunta, deliberadamente
+          modesta: <em>¿cuáles fueron las dos contrapartidas contables de la transferencia 7791 y qué
+          perfil de riesgo tenía Mariana en ese instante exacto?</em></p>
+
+        <p><strong>Antes, en el modelo relacional.</strong> La información se reparte entre tablas
+          como <code>clientes</code>, <code>cuentas</code>, <code>transferencias</code>,
+          <code>asientos</code> y <code>perfiles_riesgo</code>. La primera mitad de la pregunta se
+          resuelve con un <em>join</em> de cuatro tablas —incómodo, pero posible—. La segunda mitad
+          fracasa, porque <code>perfiles_riesgo</code> solo guarda el registro <em>actual</em>. Para
+          saber qué decía el perfil la noche del cargo hay que rebuscar en tablas de auditoría
+          separadas, si es que alguien las creó; de lo contrario, la respuesta sencillamente no existe
+          en los datos.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">SQL</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="sql">-- Antes: perfiles_riesgo solo guarda el estado ACTUAL — la historia se pierde.
+CREATE TABLE transferencias (id INTEGER PRIMARY KEY, monto NUMERIC, ts TEXT);
+CREATE TABLE asientos       (id INTEGER PRIMARY KEY, transferencia_id INT, tipo TEXT, monto NUMERIC);
+CREATE TABLE perfiles_riesgo(cliente_id INTEGER PRIMARY KEY, nivel TEXT);  -- sin vigencia
+
+-- Las dos contrapartidas contables de la transferencia: sale bien.
+SELECT tipo, monto FROM asientos WHERE transferencia_id = 7791;
+
+-- "¿Qué nivel de riesgo tenía Mariana la noche del cargo?"
+-- Imposible: la tabla solo tiene el valor de hoy, no el de entonces.
+SELECT nivel FROM perfiles_riesgo WHERE cliente_id = 4410;</code></pre>
+        </div>
+
+        <p>Eso no es un defecto de un banco en particular: es el defecto estructural del modelo plano
+          frente a la bitemporalidad. <em>Qué ocurrió</em> y <em>qué sabía el sistema cuando
+          ocurrió</em> son dos ejes de tiempo distintos, y el esquema clásico los aplasta en una sola
+          columna.</p>
+
+        <div class="columnas">
+          <p><strong>Después, en WQuestions.</strong> La misma información vive como un grafo de
+            hechos. La transferencia <code>transferencia_7791</code> se liga por <code>parte_de</code>
+            a sus dos asientos; el perfil <code>perfil_riesgo_mariana_v4</code> lleva su propio rango
+            de vigencia <code>inicio=2026-04-30, fin=2026-06-02</code>. La pregunta entera se vuelve un
+            patrón de proyección: recoge los hechos cuyos extremos cuelgan de la transferencia y suma
+            el perfil cuyo intervalo temporal solapa con la marca de tiempo del cargo.</p>
+          <p>No hay <em>join</em> de cuatro tablas, no hay tabla de auditoría paralela —el tiempo es
+            un atributo de primer orden en cada hecho— y, sobre todo, no hay que migrar ningún esquema
+            para que funcione. El banco no abandona sus mil quinientas tablas: las deja publicar al
+            grafo. La consulta que antes era un proyecto de semanas pasa a ser una sola pregunta bien
+            formada, y la respuesta que antes «no existía en los datos» pasa a estar siempre
+            disponible, fechada al segundo.</p>
+        </div>
+
+        <h2>Lo que el banco le exigió al modelo</h2>
+
+        <p>Vale la pena cuantificar de qué tamaño es el problema que el modelo absorbe. Estas son las
+          tablas aproximadas que un banco regional dedica a cada frente —el orden de magnitud que
+          obliga a las cinco islas a existir:</p>
+
+        <figure class="figura revelar">
+          <div class="lienzo" data-chart>
+            <script type="application/json">
+            {"tipo":"barras","eje":"o","unidad":" tablas",
+             "datos":[
+               {"l":"Núcleo","v":1500},
+               {"l":"Tarjetas","v":1000},
+               {"l":"Seguros","v":1000},
+               {"l":"Satélites","v":260},
+               {"l":"Grafo WQ","v":1,"color":"k"}
+             ]}
+            </script>
+          </div>
+          <figcaption><span class="fnum">Figura 19.4.</span> Aproximación al número de tablas por
+            frente en un banco regional. WQuestions no reduce ese inventario: cada sistema sigue con
+            sus tablas. Lo que aporta es una sola superficie común —un grafo— donde todas publican, de
+            modo que el cruce entre frentes deja de costar semanas.</figcaption>
+        </figure>
+
+        <p>Reunamos lo que estas cuatro escenas pusieron a prueba. Ninguna pidió una extensión del
+          modelo; todas cayeron sobre la misma maquinaria que el libro venía construyendo:</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">El veredicto del dominio más exigente</p>
+          <ul class="limpia" style="margin:0">
+            <li style="margin-bottom:.6rem"><b>Agentes no humanos con responsabilidad.</b> Sistemas
+              que autorizan y verifican operaciones viven en el eje <code>Q</code> y firman sus
+              decisiones (D5). El motor antifraude rinde cuentas igual que un cajero.</li>
+            <li style="margin-bottom:.6rem"><b>Contabilidad de partida doble.</b> Eventos que se
+              ramifican en una cara operativa y dos caras contables sin perder el hilo que las une, a
+              través de <code>parte_de</code>.</li>
+            <li style="margin-bottom:.6rem"><b>Auditoría indestructible del pasado.</b> La vigencia
+              temporal (D6) preserva el rastro de estados, deudas y reglas obsoletas, y blinda al banco
+              ante juicios y auditorías sin tablas paralelas.</li>
+            <li><b>Productos como objetos fechados.</b> La oferta firmada se congela en el tiempo, de
+              modo que un cambio futuro de tarifas nunca reescribe un contrato vigente.</li>
+          </ul>
+        </div>
+
+        <p>El banco no logró tumbar al modelo. Y lo decisivo no es que «aguantara», sino <em>cómo</em>
+          lo hizo: las mismas reglas que en el spa parecían refinamientos elegantes resultaron ser, en
+          banca, las únicas que sobreviven al regulador. Cuando una decisión de diseño que nació por
+          gusto reaparece como exigencia legal en el dominio más duro, deja de ser una hipótesis. En
+          el próximo capítulo subiremos un peldaño en complejidad organizativa: un ERP donde una sola
+          venta atraviesa inventario, finanzas y logística a la vez.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="18-clinica.html"><span class="dir">← Anterior</span><span class="tit">Una historia clínica</span></a>
+      <a class="sig" href="20-erp.html"><span class="dir">Siguiente →</span><span class="tit">Un ERP multi-módulo</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

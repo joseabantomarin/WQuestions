@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 16 · Un sistema de ventas — WQuestions</title>
+  <meta name="description" content="El primer dominio industrial completo: un spa comercial modelado de punta a punta —servicios, ventas, comprobantes, impuesto al consumo y multi-divisa— donde la teoría se vuelve código.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'16'">
+      <header class="portada-cap">
+        <p class="parte">Parte V · En la práctica</p>
+        <div class="num-cap">16</div>
+        <h1>Un sistema de ventas</h1>
+        <p class="lede">Hasta aquí, ejemplos de una línea. A partir de ahora, un negocio entero:
+          un spa que vende servicios, emite comprobantes, paga impuestos y cobra en dos monedas.
+          Es donde la teoría se vuelve código que puedes ejecutar.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Son las 18:05 de un jueves en <em>Serena Termas</em>, un spa de barrio. Una
+          clienta —Lucía— acaba de salir de la cámara de vapor, se acerca al mostrador y pide pagar:
+          un circuito termal y un masaje descontracturante. La recepcionista teclea, el sistema
+          calcula el subtotal, le suma el impuesto al consumo, descuenta un cupón de fidelidad, cobra
+          la mitad en efectivo y la mitad con una tarjeta extranjera en otra moneda, e imprime una
+          boleta numerada que esa misma noche viajará al organismo tributario. Toda esa coreografía
+          —servicio, precio, impuesto, comprobante, divisa, fidelidad— ocurre en menos de un minuto y
+          deja un rastro que un contador, un auditor y el dueño tendrán que poder leer meses después.
+          Ese minuto es el examen de este capítulo.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">El giro de la Parte V</span>
+          Las cuatro primeras partes fueron un viaje conceptual con ejemplos aislados. La Parte V
+          cambia las reglas: cada capítulo toma una empresa real y la modela de punta a punta, con
+          código que puedes correr.
+        </aside>
+
+        <p>Hasta este punto, el libro te explicó cada decisión de diseño con escenas pequeñas y
+          autocontenidas: una venta de camiseta que se registra, una jugada de fútbol con dos agentes, una
+          ordenanza que entra en vigor a los treinta días. Eran lo bastante chicas para caber en una
+          página. Pero ninguna arquitectura merece llamarse <em>universal</em> si no sostiene un
+          negocio completo, con sus impuestos, sus comprobantes legales y sus monedas. Un spa parece
+          el dominio más inofensivo del mundo —toallas, vapor, música suave— y es justo por eso que
+          conviene empezar aquí: bajo esa superficie relajada se esconde un sistema de ventas con
+          casi todas las exigencias de un comercio formal.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Lo que pone a prueba este capítulo</p>
+          <p style="margin:0">Un mismo negocio nos obliga a usar, a la vez, casi todas las
+            herramientas de las Partes&nbsp;II y III: los siete ejes, los hechos atómicos, las
+            situaciones reificadas, el catálogo de roles y el lexicon. Y le añade lo que un comercio
+            real no perdona: <strong>autoridad tributaria, comprobantes numerados, impuesto al
+            consumo y cobros en varias divisas</strong>.</p>
+        </div>
+
+        <h2>Serena Termas en una página</h2>
+
+        <p>Fijemos el negocio antes de modelarlo. <em>Serena Termas</em> opera en una sede con dos
+          cámaras de vapor y una cámara seca a 58&nbsp;°C, una sala de masajes y una pequeña barra de
+          jugos. El catálogo es corto y claro:</p>
+
+        <div class="rejilla-3 revelar">
+          <div class="tarjeta">
+            <p class="emoji">♨️</p>
+            <h4>Circuito termal</h4>
+            <p style="margin:0;font-size:.93rem">Veinte minutos por cámara y una ducha helada de
+              cierre. Precio de lista: <b>S/&nbsp;80</b>. El producto estrella.</p>
+          </div>
+          <div class="tarjeta">
+            <p class="emoji">💆</p>
+            <h4>Masaje descontracturante</h4>
+            <p style="margin:0;font-size:.93rem">Cincuenta minutos con una terapeuta.
+              <b>S/&nbsp;140</b>. Se vende solo o como complemento del circuito.</p>
+          </div>
+          <div class="tarjeta">
+            <p class="emoji">🧃</p>
+            <h4>Barra de jugos</h4>
+            <p style="margin:0;font-size:.93rem">Bebidas y fruta. Aquí lo vendido no es un servicio
+              sino un <em>bien</em>: importa para el impuesto, como veremos.</p>
+          </div>
+        </div>
+
+        <p>Y, como todo comercio, tiene reglas de negocio que la contabilidad de juguete suele
+          maltratar:</p>
+
+        <ul class="limpia revelar">
+          <li style="margin-bottom:.5rem"><b>Fidelidad.</b> A la décima visita pagada, el circuito de
+            la undécima sale gratis.</li>
+          <li style="margin-bottom:.5rem"><b>Impuesto al consumo.</b> Cada venta lleva un impuesto del
+            18&nbsp;% que el spa cobra al cliente y luego entrega al fisco. No es ingreso del negocio:
+            es dinero en tránsito.</li>
+          <li style="margin-bottom:.5rem"><b>Comprobantes.</b> Toda venta exige un documento numerado
+            —boleta o factura— con una serie correlativa que la autoridad tributaria audita.</li>
+          <li><b>Multi-divisa.</b> La mitad de la clientela es de paso y paga con tarjetas en dólares;
+            la contabilidad lleva todo en la moneda local.</li>
+        </ul>
+
+        <p>Usaremos tres clientes para estresar el modelo: <b>Lucía Rentería</b>, fiel y a punto de
+          ganar su sesión gratis; <b>Martín Paredes</b>, un turista que paga en dos monedas; y
+          <b>Noa Cifuentes</b>, que pidió factura a nombre de su empresa. Tres personas bastan para
+          tropezar con casi todos los bordes interesantes.</p>
+
+        <h2>Paso 1 · Acomodar el negocio en los siete ejes</h2>
+
+        <p>El primer trabajo de quien modela datos es repartir las entidades del negocio en las
+          coordenadas correctas. Es la decisión que más se paga después: si una cosa cae en el eje
+          equivocado, el sistema cojea para siempre. Así se reparte <em>Serena Termas</em>.</p>
+
+        <!-- FIGURA SVG: el mapa del dominio spa sobre los siete ejes -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 392" class="svg-eje" role="img"
+                 aria-label="Mapa del dominio spa sobre los siete ejes: agentes en Q, ventas y servicios en O, sede y cámaras en L, momentos en T, precios e impuestos en N, tipos y comprobantes en K, y los predicados del eje cómo enlazándolo todo">
+              <!-- eje Q -->
+              <g font-family="var(--sans)">
+                <rect x="14" y="22" width="200" height="100" rx="11" fill="var(--eje-q)" opacity=".10"></rect>
+                <rect x="26" y="34" width="24" height="24" rx="6" fill="var(--eje-q)"></rect>
+                <text x="38" y="51" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">Q</text>
+                <text x="58" y="46" font-size="12.5" font-weight="700" fill="var(--eje-q)">quién · agentes</text>
+                <text x="26" y="74" font-size="11" fill="var(--tinta-suave)">Lucía, Martín, Noa (clientes)</text>
+                <text x="26" y="90" font-size="11" fill="var(--tinta-suave)">la recepcionista, la terapeuta</text>
+                <text x="26" y="106" font-size="11" fill="var(--tinta-suave)">la empresa Serena Termas, el fisco</text>
+              </g>
+              <!-- eje O -->
+              <g font-family="var(--sans)">
+                <rect x="230" y="22" width="200" height="100" rx="11" fill="var(--eje-o)" opacity=".10"></rect>
+                <rect x="242" y="34" width="24" height="24" rx="6" fill="var(--eje-o)"></rect>
+                <text x="254" y="51" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">O</text>
+                <text x="274" y="46" font-size="12.5" font-weight="700" fill="var(--eje-o)">qué · eventos y objetos</text>
+                <text x="242" y="74" font-size="11" fill="var(--tinta-suave)">la venta_4471, cada sesión</text>
+                <text x="242" y="90" font-size="11" fill="var(--tinta-suave)">los cobros, la boleta_4471</text>
+                <text x="242" y="106" font-size="11" fill="var(--tinta-suave)">el cupón, el contrato de fidelidad</text>
+              </g>
+              <!-- eje L -->
+              <g font-family="var(--sans)">
+                <rect x="446" y="22" width="200" height="100" rx="11" fill="var(--eje-l)" opacity=".10"></rect>
+                <rect x="458" y="34" width="24" height="24" rx="6" fill="var(--eje-l)"></rect>
+                <text x="470" y="51" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">L</text>
+                <text x="490" y="46" font-size="12.5" font-weight="700" fill="var(--eje-l)">dónde · lugares</text>
+                <text x="458" y="74" font-size="11" fill="var(--tinta-suave)">la sede, la cámara_vapor_2</text>
+                <text x="458" y="90" font-size="11" fill="var(--tinta-suave)">la sala de masajes, las duchas</text>
+                <text x="458" y="106" font-size="11" fill="var(--tinta-suave)">la barra de jugos</text>
+              </g>
+              <!-- eje T -->
+              <g font-family="var(--sans)">
+                <rect x="14" y="134" width="200" height="100" rx="11" fill="var(--eje-t)" opacity=".10"></rect>
+                <rect x="26" y="146" width="24" height="24" rx="6" fill="var(--eje-t)"></rect>
+                <text x="38" y="163" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">T</text>
+                <text x="58" y="158" font-size="12.5" font-weight="700" fill="var(--eje-t)">cuándo · tiempo</text>
+                <text x="26" y="186" font-size="11" fill="var(--tinta-suave)">la hora de cada venta</text>
+                <text x="26" y="202" font-size="11" fill="var(--tinta-suave)">la vigencia de cada promoción</text>
+                <text x="26" y="218" font-size="11" fill="var(--tinta-suave)">el tipo de cambio del día</text>
+              </g>
+              <!-- eje N -->
+              <g font-family="var(--sans)">
+                <rect x="230" y="134" width="200" height="100" rx="11" fill="var(--eje-n)" opacity=".10"></rect>
+                <rect x="242" y="146" width="24" height="24" rx="6" fill="var(--eje-n)"></rect>
+                <text x="254" y="163" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">N</text>
+                <text x="274" y="158" font-size="12.5" font-weight="700" fill="var(--eje-n)">cuánto · magnitudes</text>
+                <text x="242" y="186" font-size="11" fill="var(--tinta-suave)">S/ 80, S/ 140, el 18 %</text>
+                <text x="242" y="202" font-size="11" fill="var(--tinta-suave)">58 °C, el contador de 10 visitas</text>
+                <text x="242" y="218" font-size="11" fill="var(--tinta-suave)">US$ 22.50, la tasa 3.72</text>
+              </g>
+              <!-- eje K -->
+              <g font-family="var(--sans)">
+                <rect x="446" y="134" width="200" height="100" rx="11" fill="var(--eje-k)" opacity=".10"></rect>
+                <rect x="458" y="146" width="24" height="24" rx="6" fill="var(--eje-k)"></rect>
+                <text x="470" y="163" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">K</text>
+                <text x="490" y="158" font-size="12.5" font-weight="700" fill="var(--eje-k)">cuál · clases</text>
+                <text x="458" y="186" font-size="11" fill="var(--tinta-suave)">circuito_termal, masaje</text>
+                <text x="458" y="202" font-size="11" fill="var(--tinta-suave)">tipo_boleta, tipo_factura</text>
+                <text x="458" y="218" font-size="11" fill="var(--tinta-suave)">estados: pagada, anulada · soles, dólares</text>
+              </g>
+              <!-- eje M: banda inferior -->
+              <g font-family="var(--sans)">
+                <rect x="14" y="250" width="632" height="78" rx="11" fill="var(--eje-m)" opacity=".09"></rect>
+                <rect x="26" y="262" width="24" height="24" rx="6" fill="var(--eje-m)"></rect>
+                <text x="38" y="279" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">M</text>
+                <text x="58" y="274" font-size="12.5" font-weight="700" fill="var(--eje-m)">cómo · los predicados que enlazan los seis ejes</text>
+                <text x="58" y="296" font-size="11" fill="var(--tinta-suave)" font-family="var(--mono)">cliente · comprende · cubierto_por · grava · documentado_por · pagado_con</text>
+                <text x="58" y="314" font-size="11" fill="var(--tinta-suave)">Una venta no vive en ningún eje aislado: es el nudo donde todos se cruzan.</text>
+              </g>
+              <!-- líneas punteadas que sugieren el cruce hacia M -->
+              <line x1="114" y1="122" x2="160" y2="250" stroke="var(--eje-q)" stroke-width="1.4" stroke-dasharray="3 4" opacity=".5"></line>
+              <line x1="330" y1="122" x2="330" y2="250" stroke="var(--eje-o)" stroke-width="1.4" stroke-dasharray="3 4" opacity=".5"></line>
+              <line x1="546" y1="234" x2="500" y2="250" stroke="var(--eje-k)" stroke-width="1.4" stroke-dasharray="3 4" opacity=".5"></line>
+              <text x="330" y="354" text-anchor="middle" font-size="11.5" fill="var(--tinta-tenue)" font-family="var(--sans)">Serena Termas, repartido en sus siete coordenadas</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 16.1.</span> El dominio del spa sobre los siete ejes.
+            Nota un detalle: la empresa <code>Serena Termas</code> y el propio fisco viven en
+            <code>Q</code>, porque ambos son agentes que cobran y reciben dinero. Las cámaras viven en
+            <code>L</code> (son lugares donde ocurre la sesión) pero también en <code>O</code> (son
+            máquinas con temperatura y mantenimiento): una misma cosa puede habitar dos ejes según la
+            pregunta. La banda inferior, el eje <code>M</code>, no contiene entidades sino los cables
+            que las conectan.</figcaption>
+        </figure>
+
+        <aside class="nota-margen">
+          <span class="etq">Recordatorio · D1</span>
+          En <code>K</code> viven los conceptos atemporales —<code>circuito_termal</code>,
+          <code>soles</code>, el estado <code>pagada</code>—; en <code>O</code> y los demás pilares,
+          las instancias situadas: <em>esta</em> venta, de las 18:05. La distinción se enunció en el
+          capítulo de la clase.
+        </aside>
+
+        <p>Repara en la barra de jugos. Un servicio y un jugo parecen lo mismo en la caja
+          registradora, pero el fisco los trata distinto: el servicio es <em>prestación</em>, el jugo
+          es <em>bien</em>, y de eso depende qué impuesto aplica. Modelarlos como clases distintas en
+          <code>K</code> —<code>servicio_spa</code> frente a <code>bien_consumible</code>— no es
+          pedantería: es lo que permite, más tarde, declarar el impuesto correcto sin un solo
+          <em>if</em> incrustado en el código de la caja.</p>
+
+        <h2>El nudo central · la venta</h2>
+
+        <p>Si tuviéramos que elegir el evento alrededor del cual orbita todo el negocio, sería
+          <strong>la venta</strong>. Quién la hizo, qué incluyó, dónde, cuándo, cuánto sumó, qué
+          impuesto gravó, qué comprobante la respalda y cómo se pagó: la venta es el punto donde los
+          siete ejes se cruzan. Tal como vimos al tratar el hecho atómico (D3), no la guardamos como
+          una fila gorda, sino como una constelación de tripletas tipadas que se apilan.</p>
+
+        <p>La venta de las 18:05 a Lucía —un circuito más un masaje— se reifica como una situación en
+          <code>O</code> (D4: lo merece, porque agrupa varias partes, tiene fecha y participa en otras
+          relaciones) y se describe con esta lista de hechos atómicos:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(venta_4471) ∈ O
+  instancia_de     : transaccion_venta            # K · qué clase de cosa es
+  cliente          : lucia_renteria               # Q · quién compró
+  vendido_por      : serena_termas                # Q · qué agente vendió
+  lugar_de         : sede_central                 # L · dónde ocurrió
+  inicio           : 2026-06-11T18:05-05:00       # T · cuándo
+  comprende        : item_4471_a                  # O · una línea de la venta
+  comprende        : item_4471_b                  # O · otra línea
+  moneda_base      : soles                         # K · la moneda de la contabilidad
+  subtotal         : 220.00                        # N · antes de impuesto
+  impuesto_total   : 39.60                         # N · el 18 % del gravado
+  total            : 259.60                        # N · lo que se cobra
+  documentado_por  : boleta_4471                   # O · el comprobante legal
+  estatus_factual  : pagada                         # K · su estado</code></pre>
+        </div>
+
+        <p>Cada línea de la venta es a su vez un objeto en <code>O</code>, porque cada una tiene su
+          propio precio, su propia clase de producto y —esto es lo importante— su propio tratamiento
+          tributario. El masaje y el jugo no se gravan igual; meterlos en el mismo campo perdería esa
+          distinción para siempre.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(item_4471_a, instancia_de,   circuito_termal)     # un servicio
+(item_4471_a, parte_de,       venta_4471)
+(item_4471_a, precio_unitario, 80.00)              # N · soles
+(item_4471_a, gravado_con,    impuesto_consumo_18) # K · le aplica el 18 %
+
+(item_4471_b, instancia_de,   masaje_descontracturante)
+(item_4471_b, parte_de,       venta_4471)
+(item_4471_b, precio_unitario, 140.00)
+(item_4471_b, gravado_con,    impuesto_consumo_18)</code></pre>
+        </div>
+
+        <p>El cable <code>parte_de</code> hace de hilo: cada línea cuelga de su venta, y la venta de su
+          comprobante. Recorriendo ese hilo, el sistema reconstruye la jerarquía completa sin un solo
+          <code>JOIN</code>. Visto como tripleta, ese andamiaje se lee de un vistazo:</p>
+
+        <div class="triple" style="flex-wrap:wrap;justify-content:center">
+          <span class="nodo nodo--o"><span>item_4471_a</span><small>O</small></span>
+          <span class="enlace">parte_de<span class="firma">M(O→O)</span></span>
+          <span class="nodo nodo--o"><span>venta_4471</span><small>O</small></span>
+          <span class="enlace">documentado_por<span class="firma">M(O→O)</span></span>
+          <span class="nodo nodo--o"><span>boleta_4471</span><small>O</small></span>
+        </div>
+
+        <p>Y en el código real del prototipo, construir esa venta no exige redactar las tripletas a
+          mano: una llamada de pocas líneas consulta el lexicon, desambigua el verbo, crea la situación
+          y le enchufa los cables —validando que ninguno esté mal puesto.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">venta = ingest_situation(u, lex, "vender",
+    roles={
+        "cliente":     lucia,
+        "vendido_por": serena_termas,
+        "lugar_de":    sede_central,
+        "inicio":      t_venta,
+    },
+    complements=["circuito", "masaje"],     # el lexicon arma las dos líneas
+    extra={
+        "moneda_base":     soles,
+        "estatus_factual": pagada,
+    },
+    sit_id="venta_4471",
+)</code></pre>
+        </div>
+
+        <div class="caja caja--alerta revelar">
+          <p class="caja-tit">El sistema se niega a aceptar disparates</p>
+          <p style="margin:0">Si un programador distraído intentara poner a <code>lucia</code> en el rol
+            <code>lugar_de</code>, o un texto donde va una cantidad, <code>ingest_situation</code>
+            aborta de inmediato con un error de firma (<code>SignatureError</code>). El rol
+            <code>lugar_de</code> exige un habitante del eje <code>L</code>; una persona no lo es. La
+            validación no es opcional: es la frontera que impide que la basura entre al grafo.</p>
+        </div>
+
+        <h2>El impuesto al consumo · dinero que solo está de paso</h2>
+
+        <p>Aquí es donde un sistema de ventas se separa de un cuaderno de apuntes. Ese 18&nbsp;% que
+          aparece en la boleta no es ingreso del spa: es dinero que el negocio cobra <em>por cuenta
+          del fisco</em> y que tendrá que entregarle. Confundir ambas cosas —tratar el impuesto como
+          ganancia— es uno de los errores contables más caros que existen. El modelo lo mantiene
+          separado por construcción.</p>
+
+        <p>El impuesto no se guarda como un número suelto pegado a la venta, sino como un objeto con
+          identidad: sabe cuánto es, sobre qué base se calculó, qué tasa aplicó y a quién se le
+          debe.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(impuesto_4471) ∈ O
+  instancia_de   : impuesto_consumo_18    # K · qué tributo es
+  grava          : venta_4471             # O · sobre qué venta recae
+  base_imponible : 220.00                 # N · el subtotal gravado
+  tasa           : 0.18                   # N · la alícuota vigente
+  monto          : 39.60                  # N · lo que se debe
+  acreedor       : fisco                  # Q · a quién se le entrega
+  estatus_factual: por_remitir           # K · cobrado, aún no entregado</code></pre>
+        </div>
+
+        <p>Modelarlo así tiene una consecuencia inmediata y deliciosa: la pregunta del contador
+          <em>«¿cuánto impuesto debo entregar este mes?»</em> deja de ser un cálculo que alguien
+          reprograma cada vez que cambia la ley, y pasa a ser una simple suma sobre los objetos cuyo
+          <code>acreedor</code> es el fisco y cuyo estado sigue en <code>por_remitir</code>. Y cuando
+          la tasa cambie del 18&nbsp;% al 16&nbsp;%, las ventas viejas conservan su tasa congelada: se
+          calcularon con la alícuota que regía ese día, y esa verdad histórica no se reescribe.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Vigencia · D6</span>
+          Esa congelación es la regla de vigencia en acción. Una tasa de impuesto es una propiedad que
+          cambia en el tiempo; el modelo la reifica con rango <code>inicio</code>/<code>fin</code> en
+          lugar de sobrescribirla. Un comprobante emitido bajo la tasa antigua sigue siendo legalmente
+          coherente para siempre.
+        </aside>
+
+        <h2>El comprobante · cuando la ley pide un número correlativo</h2>
+
+        <p>Un comercio formal no puede limitarse a saber que vendió: debe emitir un documento numerado,
+          de una serie correlativa que la autoridad tributaria audita. Si la boleta 4470 existe y la
+          4472 existe, la 4471 <em>tiene</em> que existir; un hueco en la numeración es, para un
+          auditor, una venta sospechosamente desaparecida. El comprobante, por tanto, no es un adorno
+          de la venta: es un objeto de pleno derecho, con su propia clase, su propio número y su
+          propio destino regulatorio.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(boleta_4471) ∈ O
+  instancia_de   : tipo_boleta_venta      # K · boleta (consumidor final)
+  serie          : B001                    # K · la serie correlativa
+  numero         : 4471                    # N · correlativo dentro de la serie
+  respalda       : venta_4471             # O · qué venta documenta
+  emitido_por    : serena_termas          # Q · el emisor
+  receptor       : lucia_renteria         # Q · a nombre de quién
+  emitido_el     : 2026-06-11T18:06-05:00 # T
+  estatus_factual: emitida                 # K · emitida, anulada, etc.</code></pre>
+        </div>
+
+        <p>La distinción entre <em>boleta</em> y <em>factura</em> —una para el consumidor final, otra
+          a nombre de una empresa que descontará el impuesto— es, en el modelo, nada más que dos clases
+          distintas en <code>K</code>: <code>tipo_boleta_venta</code> y <code>tipo_factura_venta</code>.
+          Cuando Noa pidió factura a nombre de su empresa, el sistema no necesitó otra tabla ni otro
+          flujo: la misma maquinaria emitió un objeto de otra clase, con un campo extra para el
+          identificador tributario del receptor.</p>
+
+        <div class="caja caja--definicion revelar">
+          <p class="caja-tit">Comprobante de venta</p>
+          <p style="margin:0">Documento legal, numerado en serie correlativa, que respalda una
+            transacción ante la autoridad tributaria. En WQuestions es un objeto en <code>O</code> con
+            su clase (<code>tipo_boleta</code>, <code>tipo_factura</code>), su número, su emisor, su
+            receptor y un cable <code>respalda</code> hacia la venta. La numeración correlativa es una
+            <em>invariante auditable</em>: el grafo permite verificar que no falta ninguno.</p>
+        </div>
+
+        <h2>Multi-divisa · dos monedas, una contabilidad</h2>
+
+        <p>Martín, el turista, pagó su circuito en dos partes: la mitad en efectivo, en moneda local,
+          y la mitad con una tarjeta en dólares. La trampa clásica es guardar «pagó 22.50» sin decir
+          de qué moneda hablamos —el pecado capital de los sistemas que asumen una sola divisa—. En
+          WQuestions, un monto nunca viaja solo: siempre arrastra su unidad, que es un habitante de
+          <code>K</code>. Y un pago en otra moneda guarda, además, la tasa de cambio con la que se
+          convirtió, fechada en el día de la operación.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(cobro_4480_efectivo) ∈ O
+  instancia_de  : pago_recibido
+  paga          : venta_4480              # la venta de Martín
+  monto         : 40.00
+  moneda        : soles                   # K · moneda local
+  medio         : efectivo
+
+(cobro_4480_tarjeta) ∈ O
+  instancia_de  : pago_recibido
+  paga          : venta_4480
+  monto         : 10.75                   # N · lo que se cobró
+  moneda        : dolares                 # K · ¡otra unidad!
+  tasa_cambio   : 3.72                    # N · soles por dólar, ese día
+  equiv_base    : 40.00                   # N · su valor en moneda local
+  medio         : tarjeta_credito</code></pre>
+        </div>
+
+        <p>Como cada cantidad declara su unidad, el sistema nunca suma peras con manzanas. Para
+          totalizar la caja del día convierte cada cobro a la moneda base usando la tasa que ya quedó
+          guardada con él —no la de hoy, sino la del momento del cobro—, y la contabilidad cierra al
+          centavo aunque hayan entrado cuatro monedas distintas. La unidad como ciudadano de primera
+          clase, que el capítulo del eje cuantitativo defendió en abstracto, aquí se cobra su sueldo.</p>
+
+        <h2>El lexicon del spa · enseñarle a la máquina el idioma del negocio</h2>
+
+        <p>Para que la recepcionista no tenga que aprender jerga de bases de datos, configuramos el
+          lexicon con las palabras exactas del spa. El lexicon es el compilador del que habló la
+          Parte&nbsp;IV: traduce el vocabulario humano a los roles canónicos del modelo, y de paso
+          resuelve la polisemia. El verbo <em>«tomar»</em>, por ejemplo, significa cosas distintas
+          según lo que lo acompañe:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">lex.register(LexiconEntry(
+    verb="tomar",
+    situation_type="servicio_spa",
+    obligatory=["cliente", "lugar_de"],
+    pattern=("sesion",),            # "tomar una sesión" → activa esta regla
+))
+
+lex.register(LexiconEntry(
+    verb="tomar",
+    situation_type="accion_decidir",
+    obligatory=["agente", "objeto"],
+    pattern=("una_decision",),      # "tomar una decisión" → otra regla
+))</code></pre>
+        </div>
+
+        <p>Y le instalamos el «dialecto corporativo» del spa (D8/D9): un mapa entre las palabras que el
+          personal usa de verdad y las etiquetas canónicas que el catálogo conoce. El usuario final
+          nunca toca esas etiquetas internas; el sistema traduce por debajo.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">lex.register_domain_dialect("serena_termas", {
+    "cliente":        "agente",
+    "sesion":         "servicio_spa",
+    "boleta":         "tipo_boleta_venta",
+    "factura":        "tipo_factura_venta",
+    "sesion_gratis":  "beneficio_fidelidad",
+    "igv":            "impuesto_consumo_18",
+})</code></pre>
+        </div>
+
+        <p>Gracias a esto, la recepcionista puede escribirle al sistema <em>«emítele una boleta a Lucía
+          por una sesión, con su sesión gratis aplicada»</em> y el grafo lo traduce a sus identificadores
+          internos sin que ella sepa que existen.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">La interfaz es el lexicon, no el catálogo</p>
+          <p style="margin:0">El catálogo canónico —<code>impuesto_consumo_18</code>,
+            <code>tipo_boleta_venta</code>— es invisible para quien usa el negocio. Lo que ve es su
+            propio idioma: «IGV», «boleta», «sesión gratis». Dos spas con vocabularios distintos pueden
+            compartir el mismo catálogo y aun así cada uno hablar como siempre habló.</p>
+        </div>
+
+        <h2>Tres preguntas de negocio, resueltas como recorridos del grafo</h2>
+
+        <p>El valor de un sistema se mide por la facilidad con que responde las preguntas que de verdad
+          importan a fin de mes. Veamos tres clásicas de este spa y cómo el código las resuelve
+          recorriendo tripletas en vez de encadenar tablas.</p>
+
+        <p><b>Pregunta 1 · ¿Cuántos circuitos pagados lleva Lucía? ¿Le toca el gratis?</b><br>
+          No hay <code>JOIN</code> que escribir: el motor busca un patrón en el grafo —todas las ventas
+          de clase <code>circuito_termal</code> cuyo cliente sea Lucía y cuyo estado sea
+          <code>pagada</code>— y las cuenta.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">n = count(u, Pattern(
+    fixed={"cliente": lucia, "estatus_factual": u.ind("pagada")},
+    type_constraint=u.ind("circuito_termal"),
+))
+le_toca_gratis = n >= 10        # la regla de fidelidad, en una línea</code></pre>
+        </div>
+
+        <p>El modelo no <em>ejecuta</em> la regla de negocio por su cuenta —para eso hace falta un motor
+          externo o una IA—; lo que hace es entregar el dato prístino y estructurado para que ese motor
+          decida sin equivocarse. La división del trabajo es deliberada: el grafo guarda la verdad, la
+          lógica vive afuera.</p>
+
+        <p><b>Pregunta 2 · ¿Cuánto impuesto debo entregarle al fisco este mes?</b><br>
+          Una suma sobre todos los objetos impuesto cuyo acreedor es el fisco y que siguen pendientes
+          de remitir. La ley puede cambiar la tasa: las ventas viejas no se tocan, cada una ya guardó
+          la suya.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">deuda_fiscal = suma(u, "monto", Pattern(
+    fixed={"acreedor": fisco, "estatus_factual": u.ind("por_remitir")},
+    type_constraint=u.ind("impuesto_consumo_18"),
+))</code></pre>
+        </div>
+
+        <p><b>Pregunta 3 · ¿Quedó algún hueco en la numeración de boletas?</b><br>
+          La auditoría más temida del negocio se vuelve trivial: pide al grafo todos los números de la
+          serie <code>B001</code> y verifica que sean correlativos. Un salto delata una boleta
+          extraviada —o un fraude.</p>
+
+        <!-- FIGURA SVG: traza de una consulta como recorrido del grafo -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 318" class="svg-eje" role="img"
+                 aria-label="Traza de la consulta sobre cuánto impuesto entregar al fisco: el patrón fija acreedor y estado, restringe por tipo impuesto, recorre los objetos impuesto y suma sus montos">
+              <defs>
+                <marker id="flecha14q" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+                  <path d="M0 0 L9 4.5 L0 9 z" fill="var(--eje-m)"></path>
+                </marker>
+              </defs>
+              <!-- la pregunta -->
+              <rect x="14" y="18" width="632" height="40" rx="9" fill="var(--eje-t)" opacity=".10"></rect>
+              <text x="30" y="43" font-size="13" font-weight="700" fill="var(--eje-t)" font-family="var(--sans)">Pregunta:</text>
+              <text x="108" y="43" font-size="13" fill="var(--tinta)" font-family="var(--sans)">¿cuánto impuesto debo entregar este mes?  →  suma sobre N</text>
+
+              <!-- el patrón (filtros fijos) -->
+              <g font-family="var(--sans)">
+                <rect x="14" y="78" width="200" height="116" rx="11" fill="var(--eje-k)" opacity=".10"></rect>
+                <text x="30" y="100" font-size="12" font-weight="700" fill="var(--eje-k)">El patrón fija…</text>
+                <rect x="28" y="112" width="24" height="22" rx="6" fill="var(--eje-q)"></rect>
+                <text x="40" y="128" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Q</text>
+                <text x="58" y="127" font-size="11.5" fill="var(--tinta-suave)" font-family="var(--mono)">acreedor = fisco</text>
+                <rect x="28" y="142" width="24" height="22" rx="6" fill="var(--eje-k)"></rect>
+                <text x="40" y="158" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">K</text>
+                <text x="58" y="157" font-size="11.5" fill="var(--tinta-suave)" font-family="var(--mono)">estado = por_remitir</text>
+                <text x="28" y="184" font-size="10.5" fill="var(--tinta-tenue)">+ tipo: impuesto_consumo_18</text>
+              </g>
+
+              <!-- recorrido por los objetos impuesto -->
+              <line x1="214" y1="136" x2="262" y2="136" stroke="var(--eje-m)" stroke-width="2" marker-end="url(#flecha14q)"></line>
+
+              <g font-family="var(--mono)">
+                <!-- nodo impuesto 1 -->
+                <circle cx="320" cy="96" r="22" fill="none" stroke="var(--eje-o)" stroke-width="2.2"></circle>
+                <text x="320" y="93" text-anchor="middle" font-size="9.5" fill="var(--eje-o)">imp_</text>
+                <text x="320" y="104" text-anchor="middle" font-size="9.5" fill="var(--eje-o)">4471</text>
+                <text x="356" y="92" font-size="11" fill="var(--eje-n)" font-weight="700">39.60</text>
+                <!-- nodo impuesto 2 -->
+                <circle cx="320" cy="156" r="22" fill="none" stroke="var(--eje-o)" stroke-width="2.2"></circle>
+                <text x="320" y="153" text-anchor="middle" font-size="9.5" fill="var(--eje-o)">imp_</text>
+                <text x="320" y="164" text-anchor="middle" font-size="9.5" fill="var(--eje-o)">4480</text>
+                <text x="356" y="152" font-size="11" fill="var(--eje-n)" font-weight="700">7.20</text>
+                <!-- nodo impuesto 3 -->
+                <circle cx="320" cy="216" r="22" fill="none" stroke="var(--eje-o)" stroke-width="2.2"></circle>
+                <text x="320" y="213" text-anchor="middle" font-size="9.5" fill="var(--eje-o)">imp_</text>
+                <text x="320" y="224" text-anchor="middle" font-size="9.5" fill="var(--eje-o)">4492</text>
+                <text x="356" y="212" font-size="11" fill="var(--eje-n)" font-weight="700">25.20</text>
+              </g>
+
+              <!-- proyección a N y suma -->
+              <line x1="404" y1="96" x2="470" y2="150" stroke="var(--eje-n)" stroke-width="1.6" stroke-dasharray="3 4" opacity=".7"></line>
+              <line x1="404" y1="156" x2="470" y2="150" stroke="var(--eje-n)" stroke-width="1.6" stroke-dasharray="3 4" opacity=".7"></line>
+              <line x1="404" y1="216" x2="470" y2="150" stroke="var(--eje-n)" stroke-width="1.6" stroke-dasharray="3 4" opacity=".7"></line>
+
+              <g font-family="var(--sans)">
+                <rect x="470" y="118" width="176" height="64" rx="11" fill="var(--eje-n)" opacity=".12"></rect>
+                <rect x="484" y="132" width="24" height="22" rx="6" fill="var(--eje-n)"></rect>
+                <text x="496" y="148" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">N</text>
+                <text x="514" y="142" font-size="11.5" fill="var(--tinta-suave)">se proyecta y se suma</text>
+                <text x="514" y="166" font-size="15" font-weight="700" fill="var(--eje-n)" font-family="var(--mono)">= 72.00 soles</text>
+              </g>
+
+              <text x="330" y="268" text-anchor="middle" font-size="11.5" fill="var(--tinta-tenue)" font-family="var(--sans)">El patrón restringe; el motor recorre los hechos atómicos; la proyección agrega. Sin un solo JOIN.</text>
+              <line x1="60" y1="288" x2="600" y2="288" stroke="var(--linea-fina)" stroke-width="1"></line>
+              <text x="60" y="306" font-size="10.5" fill="var(--tinta-tenue)" font-family="var(--sans)">Los colores son los ejes: Q acreedor · K estado y tipo · O los objetos impuesto · N el monto que se agrega.</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 16.2.</span> Cómo se resuelve una pregunta saltando
+            tripletas. El patrón fija dos roles (acreedor en <code>Q</code>, estado en <code>K</code>)
+            y restringe por tipo; el motor recorre los objetos impuesto que encajan y proyecta su
+            campo <code>monto</code> sobre el eje <code>N</code>, donde los agrega. La misma mecánica
+            responde «cuántos circuitos» (un conteo) o «cuánto facturé» (otra suma): cambia la
+            proyección, no la maquinaria.</figcaption>
+        </figure>
+
+        <h2>El «por qué» de una venta · los cuatro cables</h2>
+
+        <p>En un negocio real, saber <em>qué</em> pasó no basta; a menudo hace falta saber <em>por
+          qué</em>. Tal como argumentó el capítulo del «por qué» (D7), no existe un eje «por qué»: el
+          porqué se reparte en cuatro cables distintos, y un sistema de ventas los necesita a casi
+          todos. Dos ejemplos del spa lo dejan claro.</p>
+
+        <div class="columnas">
+          <p><b>El descuento que tiene una causa normativa.</b> A Lucía se le aplicó su circuito gratis
+            de la décima visita. Ese descuento no es un capricho de la recepcionista: está
+            <em>justificado</em> por el contrato de fidelidad, una regla del negocio. El cable
+            <code>justificado_por</code> ata el descuento a la norma que lo autoriza, de modo que
+            cualquier auditor pueda rastrear por qué esa venta cobró menos —y comprobar que fue
+            legítimo, no un robo.</p>
+          <p><b>El cliente que casi compra.</b> Noa quiso contratar el plan mensual, pero no cerró ese
+            día. En una caja registradora común, ese dato se pierde. En WQuestions se guarda como una
+            <em>intención</em>: una situación con <code>modalidad</code> volitiva y estado
+            <code>intencionado</code>, no <code>real</code>. Cuando marketing pregunte «¿a quién
+            llamamos para ofrecer el plan?», Noa salta a la lista; cuando contabilidad pregunte «¿qué
+            planes están activos?», Noa no aparece y nadie le cobra por error.</p>
+        </div>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(descuento_4471, aplica_a,        venta_4471)
+(descuento_4471, justificado_por, contrato_fidelidad_lucia)   # ← regla normativa
+
+(intencion_noa_01, instancia_de,    contrato_plan_mensual)
+(intencion_noa_01, cliente,         noa_cifuentes)
+(intencion_noa_01, modalidad,       volitiva)                 # ← lo quería
+(intencion_noa_01, estatus_factual, intencionado)             # ← aún no es real</code></pre>
+        </div>
+
+        <p>La distinción entre lo intencionado y lo real es la misma que separa, en banca, una solicitud
+          de un préstamo desembolsado, o en una clínica un diagnóstico de sospecha de uno confirmado.
+          Que un spa la necesite tanto como un banco es, en sí mismo, una pequeña confirmación de que
+          el modelo capturó algo general.</p>
+
+        <h2>El antes y el después · del esquema fragmentado al grafo único</h2>
+
+        <p><b>Antes, en SQL.</b> En un esquema relacional clásico, <em>Serena Termas</em> vive
+          repartido en media docena de tablas que no se hablan solas: <code>clientes</code>,
+          <code>ventas</code>, <code>lineas_venta</code>, <code>pagos</code>, <code>comprobantes</code>,
+          <code>impuestos</code>. Responder «¿cuánto IGV debo este mes, descontando las ventas anuladas
+          y convertido todo a moneda local?» obliga a encadenar cinco <code>JOIN</code> frágiles,
+          filtrar por estado, cruzar tasas de cambio y dejar la mitad de la lógica enterrada en código
+          de aplicación que nadie documenta y que se rompe cada vez que cambia una regla.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">sql</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="sql">-- Antes: venta, línea, impuesto y comprobante viven en tablas distintas;
+-- la pregunta tributaria obliga a encadenarlas con JOINs frágiles.
+CREATE TABLE ventas       (id INTEGER PRIMARY KEY, cliente_id INT, estado TEXT, moneda TEXT);
+CREATE TABLE lineas_venta (id INTEGER PRIMARY KEY, venta_id INT, producto_id INT, precio NUMERIC);
+CREATE TABLE impuestos    (id INTEGER PRIMARY KEY, venta_id INT, tasa NUMERIC, monto NUMERIC);
+CREATE TABLE comprobantes (id INTEGER PRIMARY KEY, venta_id INT, serie TEXT, numero INT);
+
+SELECT SUM(i.monto) AS igv_por_pagar
+FROM impuestos i
+JOIN ventas v       ON v.id = i.venta_id
+JOIN comprobantes c ON c.venta_id = v.id
+WHERE v.estado = 'pagada'              -- ojo: ¿y las anuladas?
+  AND c.numero IS NOT NULL;           -- la lógica de moneda… vive en otra parte</code></pre>
+        </div>
+
+        <p><b>Después, en WQuestions.</b> La misma información es un grafo único de hechos atómicos:
+          cada impuesto es un objeto con su cable <code>acreedor → fisco</code> y su
+          <code>estatus_factual</code>. La pregunta se vuelve una suma sobre un patrón —sin migrar
+          esquema, sin <code>JOIN</code>, sin lógica escondida en procedimientos almacenados—. Y
+          cuando la tasa cambie, se edita un solo hecho en el catálogo; las ventas pasadas conservan la
+          suya y el resto del sistema ni se entera.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># Después: la misma pregunta, como un patrón sobre el grafo de hechos.
+igv_por_pagar = suma(u, "monto", Pattern(
+    fixed={"acreedor": fisco, "estatus_factual": u.ind("por_remitir")},
+    type_constraint=u.ind("impuesto_consumo_18")))</code></pre>
+        </div>
+
+        <p class="cita-destacada revelar">En un sistema de ventas, el impuesto no es un número: es una
+          deuda con un acreedor, una base y una fecha. Tratarlo como un objeto, y no como una columna,
+          es lo que convierte la auditoría en una consulta.<cite>La lección del spa</cite></p>
+
+        <h2>Cuánto se vendió · el negocio en una barra</h2>
+
+        <p>Un sistema de ventas que no sabe responder «¿qué se vendió más?» no merece el nombre. Como
+          cada línea de venta es un objeto con su clase de producto, totalizar por servicio es —otra
+          vez— una agregación sobre el grafo. Este fue el desglose de ingresos de un mes en
+          <em>Serena Termas</em>:</p>
+
+        <figure class="figura revelar">
+          <div class="lienzo" data-chart>
+            <script type="application/json">
+            {"tipo":"barras","eje":"n","unidad":" S/ mil",
+             "datos":[
+               {"l":"Circuito termal","v":18.4},
+               {"l":"Masaje","v":12.6,"color":"o"},
+               {"l":"Barra de jugos","v":3.1,"color":"l"},
+               {"l":"Planes mensuales","v":7.8,"color":"k"}
+             ]}
+            </script>
+          </div>
+          <figcaption><span class="fnum">Figura 16.3.</span> Ingresos del mes por línea de producto, en
+            miles de soles. El circuito termal sostiene el negocio; los planes mensuales aportan más
+            que la barra de jugos. Ninguna de estas cifras se calculó con una consulta nueva: las
+            cuatro son la misma suma sobre el grafo, agrupada por la clase del producto en
+            <code>K</code>.</figcaption>
+        </figure>
+
+        <h2>Balance · el spa fue un cliente amable</h2>
+
+        <p>Cerremos repasando qué demostró el prototipo al absorber este negocio de punta a punta:</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">El veredicto del primer dominio industrial</p>
+          <ul class="limpia" style="margin:0">
+            <li style="margin-bottom:.6rem"><b>Los siete ejes funcionan juntos.</b> Clientes y fisco en
+              <code>Q</code>, ventas y comprobantes en <code>O</code>, cámaras en <code>L</code>,
+              momentos y vigencias en <code>T</code>, precios, impuestos y tasas en <code>N</code>,
+              tipos y estados en <code>K</code>, y los predicados de <code>M</code> cosiéndolo todo.</li>
+            <li style="margin-bottom:.6rem"><b>El sistema de ventas, completo.</b> Comprobantes
+              numerados auditables, impuesto al consumo como dinero en tránsito, cobros en dos divisas
+              con su tasa fechada. Nada de esto pidió ingeniería nueva: cayó sobre la maquinaria
+              existente.</li>
+            <li style="margin-bottom:.6rem"><b>La historia se preserva (D6).</b> Una tasa de impuesto
+              que cambia no reescribe las boletas viejas; cada comprobante sigue siendo coherente con la
+              ley que regía el día en que se emitió.</li>
+            <li><b>Cero parches.</b> Todo el negocio se modeló con los roles base de la arquitectura y
+              un puñado de clases en el catálogo. Donde un sistema tradicional pediría media docena de
+              tablas y procedimientos almacenados, aquí bastaron tripletas y un lexicon.</li>
+          </ul>
+        </div>
+
+        <p>El spa parecía el dominio más inofensivo del libro y resultó ser un sistema de ventas
+          completo, con su autoridad tributaria mirando por encima del hombro. El modelo lo absorbió
+          sin doblarse. Pero un comercio de barrio opera a su propio ritmo: las ventas no llegan por
+          miles ni cambian de estado cada segundo. En el próximo capítulo subimos la apuesta hacia la
+          velocidad y la concurrencia: un servicio on-demand, donde un viaje en taxi cambia de estado
+          una docena de veces en quince minutos y miles ocurren a la vez.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="15-bajo-presion.html"><span class="dir">← Anterior</span><span class="tit">El modelo bajo presión</span></a>
+      <a class="sig" href="17-taxi.html"><span class="dir">Siguiente →</span><span class="tit">Un servicio on-demand</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

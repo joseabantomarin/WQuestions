@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 20 · Un ERP multi-módulo — WQuestions</title>
+  <meta name="description" content="Un ERP donde una sola venta atraviesa inventario, contabilidad, compras y recursos humanos a la vez: el mismo hecho visto por varios módulos, sin duplicación, gracias a las preguntas compartidas.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'20'">
+      <header class="portada-cap">
+        <p class="parte">Parte V · En la práctica</p>
+        <div class="num-cap">20</div>
+        <h1>Un ERP multi-módulo</h1>
+        <p class="lede">El banco demostró que el modelo resiste el peso del dinero. El ERP plantea un
+          reto distinto: una sola venta que, en el mismo instante, cuenta como cuatro cosas a la vez.
+          La prueba ya no es la presión, sino la interoperabilidad interna.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Son las 11:20 de un martes en <em>Viento Norte</em>, una fábrica mediana de
+          bombas de riego. La vendedora Ortiz cierra un pedido por teléfono: ocho bombas del modelo
+          K7 para Ferrocom, nueve mil seiscientos dólares. Cuelga, teclea una línea en el sistema y se
+          va a almorzar. En ese gesto de quince segundos acaban de ocurrir cuatro cosas distintas, y
+          ninguna es la venta entera. El almacén del norte debe descontar ocho unidades de su stock.
+          Contabilidad debe registrar un ingreso de nueve mil seiscientos dólares con su asiento. A
+          Ortiz le corresponde una comisión del cuatro por ciento. Y, río arriba, alguien tendrá que
+          reponer ocho bombas, lo que disparará una orden de producción que consumirá cobre y horas de
+          taller. Una frase, cuatro módulos. El examen de este capítulo es lograr que los cuatro vean
+          <em>el mismo hecho</em> sin que nadie lo copie.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Qué es un ERP</span>
+          Un <em>Enterprise Resource Planning</em> es el software que coordina la operación interna de
+          una empresa: inventario, contabilidad, compras, producción, recursos humanos, logística.
+          Históricamente, cada una de esas piezas nació como un sistema separado.
+        </aside>
+
+        <p>En los capítulos anteriores de esta parte, el modelo enfrentó adversarios de un solo
+          frente. El <a href="16-spa.html">spa</a> nos exigió agilidad; el <a href="17-taxi.html">taxi</a>,
+          velocidad; el <a href="18-clinica.html">historial clínico</a>, repartir la verdad entre varios
+          custodios; el <a href="19-banco.html">banco</a> añadió al regulador. El ERP no sube ninguno
+          de esos picos en particular. Su dificultad es de otra clase: la <strong>convivencia
+          simultánea</strong> de módulos que la industria siempre construyó como mundos aparte. Lo que
+          aquí se pone a prueba no es cuánto aguanta el modelo, sino si los módulos pueden hablarse sin
+          un traductor en el medio.</p>
+
+        <h2>La maldición de los módulos que no se hablan</h2>
+
+        <p>Quien haya trabajado cerca de un SAP, un Oracle o un Dynamics reconocerá la escena. Un ERP
+          tradicional es una federación de subsistemas, cada uno con su propio esquema, sus propias
+          tablas y sus propios procesos:</p>
+
+        <div class="rejilla-3 revelar">
+          <div class="tarjeta">
+            <h4><span class="eje eje--q">RR.&nbsp;HH.</span></h4>
+            <p style="margin:0;font-size:.93rem">Empleados, jerarquías, salarios, evaluaciones de
+              desempeño, comisiones.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--n">Finanzas</span></h4>
+            <p style="margin:0;font-size:.93rem">Asientos, presupuestos, cuentas por pagar y por
+              cobrar, cierres.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--o">Inventario</span></h4>
+            <p style="margin:0;font-size:.93rem">Stocks, movimientos de almacén, valorizaciones,
+              reposición.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--l">Ventas</span></h4>
+            <p style="margin:0;font-size:.93rem">Pedidos, clientes, listas de precios, comisiones de
+              fuerza de ventas.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--t">Compras</span></h4>
+            <p style="margin:0;font-size:.93rem">Órdenes a proveedores, aprobaciones, recepciones,
+              vencimientos.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--k">Manufactura</span></h4>
+            <p style="margin:0;font-size:.93rem">Lista de materiales (BOM), órdenes de producción,
+              consumos de insumos.</p>
+          </div>
+        </div>
+
+        <p>Cada uno de esos módulos vive, históricamente, en su propio archipiélago de tablas. Y la
+          consecuencia es bien conocida por cualquier consultor: <strong>las integraciones entre
+          módulos son el grueso del proyecto</strong>. Se estima que conectar los subsistemas
+          —lograr que la venta «avise» al inventario, que el inventario «avise» a contabilidad, que
+          contabilidad «avise» a recursos humanos— consume del orden del 60 al 70 por ciento del
+          esfuerzo total de una implementación. No se paga por modelar la venta; se paga por
+          coserla a todo lo demás.</p>
+
+        <figure class="figura revelar">
+          <div class="lienzo" data-chart>
+            <script type="application/json">
+            {"tipo":"barras","eje":"o","unidad":" % del esfuerzo",
+             "datos":[
+               {"l":"Modelar cada módulo","v":32},
+               {"l":"Integrar entre módulos","v":65,"color":"q"},
+               {"l":"Integración WQ","v":0,"color":"k"}
+             ]}
+            </script>
+          </div>
+          <figcaption><span class="fnum">Figura 20.1.</span> Reparto aproximado del esfuerzo en una
+            implementación de ERP clásica: el grueso no se va en describir cada módulo, sino en
+            integrarlos entre sí. La promesa de este capítulo es que esa barra —la integración— tiende
+            a cero cuando todos los hechos comparten la misma estructura atómica.</figcaption>
+        </figure>
+
+        <p>La razón profunda de ese costo es que cada módulo bautiza la realidad a su manera. Para
+          ventas, la operación de Ortiz es un <code>pedido</code> con un <code>cliente_id</code>; para
+          inventario, es un <code>movimiento</code> con un <code>sku</code> y un signo negativo; para
+          contabilidad, es un <code>asiento</code> con un <code>haber</code>. Tres nombres, tres
+          tablas, tres identidades para <em>el mismo suceso</em>. Y para volver a juntarlos —para
+          responder «¿cuánta comisión generó la venta que vació ocho bombas del almacén norte?»— hace
+          falta cruzar tres bases de datos con claves foráneas frágiles y, casi siempre, un proceso
+          <em>ETL</em> nocturno mantenido a mano.</p>
+
+        <p>Esto debería sonarte familiar. Es la misma torre de Babel del <a href="01-torre-de-babel.html">primer
+          capítulo</a>, pero esta vez no entre empresas distintas: <em>dentro</em> de una sola, entre
+          sus propios departamentos. La diferencia es que aquí la cura es más limpia, porque todos los
+          módulos pertenecen al mismo dueño y pueden, de entrada, hablar el mismo idioma.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">La apuesta del ERP</p>
+          <p style="margin:0">La integración entre módulos <strong>no exige ningún sistema de
+            unificación</strong>. Cuando todos los hechos del negocio comparten la estructura atómica
+            <code>(sujeto, rol, valor)</code>, el grafo <em>ya es</em> la integración. Una venta no
+            genera «registros en tres tablas distintas»: genera <strong>una situación reificada con
+            varias sub-situaciones ligadas por <code>parte_de</code></strong>, y todas viven en el
+            mismo grafo. Nadie copia el hecho; cada módulo lo mira desde su rol.</p>
+        </div>
+
+        <h2>El ERP sobre las siete coordenadas</h2>
+
+        <p>Antes de los escenarios, repartamos las piezas de la fábrica en los ejes de valor. El
+          ejercicio ordena, en seis preguntas, lo que en un ERP tradicional son docenas de tablas
+          inconexas.</p>
+
+        <div class="rejilla-2 revelar">
+          <div class="tarjeta">
+            <h4><span class="eje eje--q">Q</span>&nbsp; quién · agentes</h4>
+            <p style="margin:0;font-size:.95rem">Empleados, clientes y proveedores, y —decisivo— la
+              empresa misma. <code>vientonorte_sa</code> es una persona jurídica: un agente tan válido
+              como la vendedora Ortiz (D5). El director reporta a la empresa, no al vacío.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--o">O</span>&nbsp; qué · entidades y eventos</h4>
+            <p style="margin:0;font-size:.95rem">Productos, órdenes, asientos, comisiones, evaluaciones
+              de desempeño, movimientos de almacén. Todo lo que tiene fecha de creación, historia y
+              trazabilidad es una entidad de primera clase.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--l">L</span>&nbsp; dónde · lugares</h4>
+            <p style="margin:0;font-size:.95rem">Departamentos, almacenes, plantas, sucursales. Forman
+              una jerarquía territorial-organizacional que se arma con <code>parte_de</code>, igual que
+              cualquier otra.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--t">T</span>&nbsp; cuándo · tiempos</h4>
+            <p style="margin:0;font-size:.95rem">Fechas de pedido, períodos contables, vencimientos de
+              órdenes de compra, vigencias de salario. El tiempo gobierna los estados que cambian.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--n">N</span>&nbsp; cuánto · magnitudes</h4>
+            <p style="margin:0;font-size:.95rem">Unidades vendidas, montos, horas-hombre, kilos de
+              insumo. Cada número arrastra su unidad anclada en <code>K</code>: nada anda suelto.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--k">K</span>&nbsp; cuál · clases</h4>
+            <p style="margin:0;font-size:.95rem">Tipos de producto, categorías de empleado, estados de
+              orden, monedas. El zócalo categórico que da sentido a las magnitudes y los estados.</p>
+          </div>
+        </div>
+
+        <p>Y atravesando las seis cajas, los predicados del séptimo eje —<span class="eje eje--m">M</span>,
+          el <em>cómo</em>— son los cables que articulan todo: <code>agente</code>, <code>parte_de</code>,
+          <code>reporta_a</code>, <code>motivado_por</code>. Las decisiones de diseño que el ERP más
+          ejercita son cuatro, y conviene tenerlas a mano porque reaparecerán en cada escenario: la
+          <strong>D3</strong> (todo es tripleta atómica), la <strong>D4</strong> (una operación que
+          tocaría varios módulos se reifica como una situación con sub-situaciones), la
+          <strong>D6</strong> (los estados, salarios y precios que cambian guardan su historial) y la
+          <strong>D7</strong> (cada acción lleva su <code>motivado_por</code> y su
+          <code>justificado_por</code>: la auditoría es nativa, no un añadido).</p>
+
+        <h2>Caso 1 · El organigrama es un solo cable</h2>
+
+        <p>Todo ERP empieza por el organigrama. Una empresa tiene un director, sus gerentes, sus
+          equipos. En SAP esa estructura vive en una tabla llamada <code>HRP1001</code> con un esquema
+          gimnástico de «relaciones» genéricas que hay que decodificar con catálogos auxiliares. En
+          WQuestions es un único rol de dominio, <code>reporta_a</code>, y la jerarquía completa de
+          Viento Norte cabe en cuatro tripletas:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(vendedora_ortiz, reporta_a, gerente_duarte)
+(jefe_planta_cordero, reporta_a, gerente_duarte)
+(gerente_duarte, reporta_a, directora_salas)
+(directora_salas, reporta_a, vientonorte_sa)</code></pre>
+        </div>
+
+        <p>La última línea es la que delata la potencia del eje <code>Q</code>: la empresa también es
+          un agente. La directora no reporta a la nada; reporta a la persona jurídica
+          <code>vientonorte_sa</code>, que firma contratos y rinde cuentas igual que un humano (D5). La
+          pregunta «¿quién es el jefe del jefe de Ortiz?» es un recorrido transitivo de dos saltos
+          sobre <code>reporta_a</code>; «todo el árbol bajo Duarte» es la relación inversa recorrida en
+          forma recursiva. No hace falta una tabla de <em>cierre transitivo</em>: el motor la calcula
+          al vuelo.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Política liberal</span>
+          <code>reporta_a</code> no figura en el catálogo canónico de roles, pero el sistema lo acepta
+          sin protestar: es un rol de dominio, admitido por política liberal. El catálogo (D8) no
+          crece; el lexicon, sí. La diferencia se desarrolla en el <a href="14-lexicon.html">capítulo 14</a>.
+        </aside>
+
+        <p>Asignar a cada empleado un departamento físico es igual de directo, y aquí el departamento
+          es un lugar del eje <code>L</code>:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(vendedora_ortiz, trabaja_en, dpto_ventas)        # dpto_ventas ∈ L
+(jefe_planta_cordero, trabaja_en, dpto_produccion) # dpto_produccion ∈ L
+(dpto_ventas, parte_de, sede_central)             # la jerarquía territorial
+(almacen_norte, parte_de, sede_central)           # se arma con parte_de</code></pre>
+        </div>
+
+        <p>Si más adelante un departamento contuviera sub-departamentos, o una planta agrupara varias
+          líneas, usarías <code>parte_de</code> exactamente igual. La jerarquía de personas y la de
+          lugares se modelan con la misma maquinaria; solo cambia el eje sobre el que viven los nodos.</p>
+
+        <h2>Caso 2 · La lista de materiales (BOM) es <code>parte_de</code> recursivo</h2>
+
+        <p>Aquí el modelo luce. Una <em>lista de materiales</em> —el BOM, por <em>bill of
+          materials</em>— es la descomposición jerárquica de un producto en sus subproductos y, al
+          final, en su materia prima. Es uno de los conceptos más notoriamente incómodos de
+          implementar en bases relacionales: los MRP clásicos lo resuelven con tablas como
+          <code>mast</code>, <code>matl</code> y <code>caps</code> unidas por <em>joins</em> que pocos
+          disfrutan escribir.</p>
+
+        <p>Modelemos la bomba de riego K7. Tiene una carcasa de acero, un motor y un impulsor; el
+          motor, a su vez, lleva un bobinado de cobre. Cuatro niveles de anidamiento:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">texto</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="text">bomba_riego_k7  ────┬─── carcasa_acero
+                    ├─── impulsor_bronce
+                    └─── motor_electrico ───┬─── eje_motor
+                                            └─── bobinado_cobre ─── mp_cobre</code></pre>
+        </div>
+
+        <p>En WQuestions, cada arista de ese árbol es <strong>una sola tripleta</strong> con
+          <code>parte_de</code>:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(carcasa_acero,    parte_de, bomba_riego_k7)
+(impulsor_bronce,  parte_de, bomba_riego_k7)
+(motor_electrico,  parte_de, bomba_riego_k7)
+(eje_motor,        parte_de, motor_electrico)
+(bobinado_cobre,   parte_de, motor_electrico)
+(mp_cobre,         parte_de, bobinado_cobre)</code></pre>
+        </div>
+
+        <p>¿Y cuántas unidades de cada subproducto entran? Esa cantidad no es del producto: es del
+          <em>enlace</em>. Por eso se modela como un atributo de la relación, con su número y su
+          unidad ancladas:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">u.assert_fact(bobinado_cobre, "cantidad_en_bom",
+              n(2, "unidades", "n_2_uds_bobinado"))
+u.assert_fact(mp_cobre, "cantidad_en_bom",
+              n(0.4, "kg", "n_04_kg_cobre"))</code></pre>
+        </div>
+
+        <p>Para responder «¿qué materia prima necesita la bomba?» basta con recorrer
+          <code>parte_de</code> en forma recursiva hasta tocar las hojas del árbol. El recorrido no
+          conoce la profundidad de antemano y no le importa: la misma maquinaria sirve para una bomba
+          de cuatro niveles, un electrodoméstico de seis o un tablero electrónico de diez.</p>
+
+        <div class="triple" style="flex-wrap:wrap;justify-content:center">
+          <span class="nodo nodo--o"><span>mp_cobre</span><small>O</small></span>
+          <span class="enlace">parte_de<span class="firma">M(O→O)</span></span>
+          <span class="nodo nodo--o"><span>bobinado_cobre</span><small>O</small></span>
+          <span class="enlace">parte_de<span class="firma">M(O→O)</span></span>
+          <span class="nodo nodo--o"><span>motor_electrico</span><small>O</small></span>
+          <span class="enlace">parte_de<span class="firma">M(O→O)</span></span>
+          <span class="nodo nodo--o"><span>bomba_riego_k7</span><small>O</small></span>
+        </div>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">Una sola regla, dos jerarquías distintas</p>
+          <p style="margin:0">Fíjate en que <code>parte_de</code> ya hizo dos trabajos en este
+            capítulo: armó la jerarquía de <em>lugares</em> (el almacén es parte de la sede) y la de
+            <em>componentes</em> (el cobre es parte del bobinado). No son dos mecanismos parecidos:
+            son el <strong>mismo</strong> cable del eje <code>M</code>, recorrido sobre nodos de
+            distinto eje. La recursión arbitraria del BOM no pide ningún esquema especial; es un caso
+            particular de algo que el modelo ya tenía.</p>
+        </div>
+
+        <h2>Caso 3 · La venta cross-módulo: el patrón que vale oro</h2>
+
+        <p>Llegamos al caso emblemático, el que da título al capítulo. Volvamos a la llamada de las
+          11:20: ocho bombas K7 para Ferrocom por nueve mil seiscientos dólares. Ese único hecho toca,
+          a la vez, tres módulos:</p>
+
+        <ul class="limpia">
+          <li style="margin-bottom:.5rem"><b>Inventario:</b> hay que descontar 8 unidades del almacén
+            del norte.</li>
+          <li style="margin-bottom:.5rem"><b>Contabilidad:</b> hay que registrar el ingreso de 9.600
+            USD con su asiento.</li>
+          <li><b>Recursos humanos:</b> a Ortiz le corresponde una comisión del 4 % sobre la venta:
+            384 USD.</li>
+        </ul>
+
+        <p>En un ERP tradicional, esta venta dispara <em>tres procesos separados</em> que escriben en
+          tres tablas distintas, unidas por claves foráneas y convenciones de nombres. La pregunta de
+          auditoría más simple —«explícame qué pasó con esta venta»— obliga a cruzar las tres bases. En
+          WQuestions el modelado es directo: <strong>una situación reificada con tres
+          sub-situaciones</strong>. Esto es exactamente la D4 en acción —la operación que tocaría
+          varios módulos se reifica— y la figura lo muestra antes que el código.</p>
+
+        <!-- FIGURA SVG: la venta vista cross-módulo -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 700 392" class="svg-eje" role="img"
+                 aria-label="Una venta como situación central referida por tres sub-situaciones —inventario, contabilidad y comisión— colgadas por parte_de, cada módulo mira el mismo hecho desde su rol">
+              <defs>
+                <marker id="flecha18a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+                  <path d="M0 0 L9 4.5 L0 9 z" fill="var(--eje-m)"></path>
+                </marker>
+              </defs>
+
+              <!-- situación central: la venta -->
+              <rect x="256" y="166" width="188" height="62" rx="13" fill="var(--eje-o)"></rect>
+              <text x="350" y="192" text-anchor="middle" font-size="13.5" font-weight="700" fill="#fff" font-family="var(--mono)">venta_4417</text>
+              <text x="350" y="210" text-anchor="middle" font-size="11" fill="#fff" opacity=".88" font-family="var(--sans)">acción vender · 9 600 USD</text>
+
+              <!-- agente: ortiz -->
+              <g font-family="var(--mono)" font-size="11.5">
+                <rect x="276" y="40" width="148" height="34" rx="8" fill="var(--eje-q)"></rect>
+                <text x="350" y="62" text-anchor="middle" fill="#fff" font-weight="600">vendedora_ortiz</text>
+                <line x1="350" y1="74" x2="350" y2="162" stroke="var(--eje-m)" stroke-width="1.8" marker-end="url(#flecha18a)"></line>
+                <text x="362" y="120" font-size="10" fill="var(--eje-m)" font-family="var(--sans)" font-weight="600">agente</text>
+              </g>
+
+              <!-- módulo inventario (izq) -->
+              <g font-family="var(--mono)" font-size="10.5">
+                <rect x="22" y="300" width="196" height="74" rx="11" fill="none" stroke="var(--eje-o)" stroke-width="2"></rect>
+                <text x="120" y="322" text-anchor="middle" fill="var(--eje-o)" font-weight="700" font-size="11.5">mov_inventario_4417</text>
+                <text x="120" y="340" text-anchor="middle" fill="var(--tinta-suave)" font-family="var(--sans)" font-size="10.5">−8 unidades</text>
+                <text x="120" y="356" text-anchor="middle" fill="var(--tinta-tenue)" font-family="var(--sans)" font-size="10">origen: almacen_norte</text>
+                <text x="120" y="370" text-anchor="middle" fill="var(--eje-o)" font-family="var(--sans)" font-size="9.5" font-weight="600" opacity=".8">módulo · INVENTARIO</text>
+                <line x1="160" y1="300" x2="280" y2="222" stroke="var(--eje-m)" stroke-width="1.8" stroke-dasharray="4 3" marker-end="url(#flecha18a)"></line>
+              </g>
+
+              <!-- módulo contabilidad (centro) -->
+              <g font-family="var(--mono)" font-size="10.5">
+                <rect x="252" y="300" width="196" height="74" rx="11" fill="none" stroke="var(--eje-n)" stroke-width="2"></rect>
+                <text x="350" y="322" text-anchor="middle" fill="var(--eje-n)" font-weight="700" font-size="11.5">asiento_venta_4417</text>
+                <text x="350" y="340" text-anchor="middle" fill="var(--tinta-suave)" font-family="var(--sans)" font-size="10.5">+9 600 USD · ingreso</text>
+                <text x="350" y="356" text-anchor="middle" fill="var(--tinta-tenue)" font-family="var(--sans)" font-size="10">tipo: ingreso_por_venta</text>
+                <text x="350" y="370" text-anchor="middle" fill="var(--eje-n)" font-family="var(--sans)" font-size="9.5" font-weight="600" opacity=".8">módulo · CONTABILIDAD</text>
+                <line x1="350" y1="300" x2="350" y2="230" stroke="var(--eje-m)" stroke-width="1.8" stroke-dasharray="4 3" marker-end="url(#flecha18a)"></line>
+              </g>
+
+              <!-- módulo RR.HH. (der) -->
+              <g font-family="var(--mono)" font-size="10.5">
+                <rect x="482" y="300" width="196" height="74" rx="11" fill="none" stroke="var(--eje-q)" stroke-width="2"></rect>
+                <text x="580" y="322" text-anchor="middle" fill="var(--eje-q)" font-weight="700" font-size="11.5">comision_ortiz_4417</text>
+                <text x="580" y="340" text-anchor="middle" fill="var(--tinta-suave)" font-family="var(--sans)" font-size="10.5">+384 USD · 4 %</text>
+                <text x="580" y="356" text-anchor="middle" fill="var(--tinta-tenue)" font-family="var(--sans)" font-size="10">beneficiario: ortiz</text>
+                <text x="580" y="370" text-anchor="middle" fill="var(--eje-q)" font-family="var(--sans)" font-size="9.5" font-weight="600" opacity=".8">módulo · RR. HH.</text>
+                <line x1="540" y1="300" x2="420" y2="222" stroke="var(--eje-m)" stroke-width="1.8" stroke-dasharray="4 3" marker-end="url(#flecha18a)"></line>
+              </g>
+
+              <text x="350" y="274" text-anchor="middle" font-size="11" fill="var(--eje-m)" font-family="var(--sans)" font-weight="600">parte_de</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 20.2.</span> La venta <code>venta_4417</code> como
+            situación central, referida por tres sub-situaciones que cuelgan de ella por
+            <code>parte_de</code>: el movimiento de inventario, el asiento contable y la comisión. Tres
+            módulos miran <em>el mismo hecho</em> desde su rol —ninguno lo copia—. En un ERP clásico,
+            esto serían tres tablas y un <em>ETL</em> nocturno para volver a juntarlas.</figcaption>
+        </figure>
+
+        <p>Primero declaramos la situación articuladora con sus roles principales; luego colgamos de
+          ella, por <code>parte_de</code>, una sub-situación por módulo:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">venta = ingest_situation(u, lex, "vender", roles={
+    "agente":   vendedora_ortiz,
+    "tema":     bomba_riego_k7,
+    "cliente":  cliente_ferrocom,
+    "monto":    n(9600, "USD"),
+    "momento":  at("2026-07-15T11:20"),
+    "lugar_de": dpto_ventas,
+}, sit_id="venta_4417")
+
+# Sub-situación 1 — INVENTARIO: descuenta 8 unidades del almacén norte
+u.assert_fact(mov_inventario, "parte_de", venta)
+u.assert_fact(mov_inventario, "tema",     bomba_riego_k7)
+u.assert_fact(mov_inventario, "cantidad", n(8, "unidades"))
+u.assert_fact(mov_inventario, "origen",   almacen_norte)
+
+# Sub-situación 2 — CONTABILIDAD: registra el ingreso
+u.assert_fact(asiento_venta, "parte_de",        venta)
+u.assert_fact(asiento_venta, "monto",           n(9600, "USD"))
+u.assert_fact(asiento_venta, "tipo_movimiento", ingreso_por_venta)
+
+# Sub-situación 3 — RR. HH.: comisión del 4 % para Ortiz
+u.assert_fact(comision_ortiz, "parte_de",        venta)
+u.assert_fact(comision_ortiz, "beneficiario",    vendedora_ortiz)
+u.assert_fact(comision_ortiz, "monto",           n(384, "USD"))
+u.assert_fact(comision_ortiz, "calculado_segun", politica_comisiones_v2)</code></pre>
+        </div>
+
+        <p>Tres sub-situaciones, una situación articuladora, <strong>ningún cruce de tablas
+          necesario</strong>. Y como cada sub-situación tiene su propia identidad, podemos hacer
+          preguntas finas que en un ERP clásico exigirían su propio reporte. «Explícame todo lo que
+          pasó con la venta 4417» es una proyección directa por <code>parte_de</code>:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">sub_situaciones = [
+    f.subject for f in u.facts_with_role("parte_de")
+    if f.value.id == "venta_4417"
+]
+# → [mov_inventario_4417, asiento_venta_4417, comision_ortiz_4417]</code></pre>
+        </div>
+
+        <p>«¿Qué comisión generó esta venta?», «¿cuál es su asiento contable?», «¿de qué almacén salió
+          la mercancía?»: todas son recorridos de un salto sobre el mismo nodo central. Sin
+          <em>ETL</em>, sin sistema intermedio, sin tabla de unificación. Lo que en un ERP tradicional
+          es un proyecto de integración, aquí es la forma normal de escribir el hecho.</p>
+
+        <p class="cita-destacada revelar">La venta no se reparte en tres registros que después hay que
+          volver a unir. Es un solo hecho que cada módulo mira desde su rol: el grafo ya es la
+          integración.<cite>La lección del Caso 3</cite></p>
+
+        <h2>Caso 4 · La orden de compra y su aprobación bitemporal</h2>
+
+        <p>Río arriba de la venta hay que reponer stock, y eso dispara compras. Las órdenes grandes
+          —digamos 48.000 USD de cobre al proveedor— no se ejecutan al instante: pasan por un ciclo.
+          Alguien la redacta, alguien la manda a aprobación, alguien con autoridad la aprueba o la
+          rechaza. Cada estado tiene su fecha de entrada y su fecha de salida.</p>
+
+        <p>En sistemas tradicionales, esto vive en una columna <code>estado</code> que <strong>se
+          sobrescribe</strong> en cada transición. Cuando alguien pregunta «¿en qué estado estaba esta
+          orden el 20 de julio a la una de la tarde?», hay que rebuscar en la tabla de auditoría —si
+          existe— o estimarlo a partir de los <em>logs</em>. En WQuestions, el estado es un hecho con
+          vigencia temporal (D6): no se pisa, se acumula.</p>
+
+        <div class="caja caja--decision revelar">
+          <p class="caja-tit"><span class="codigo-d">D6</span> Vigencia: el estado se acumula, no se pisa</p>
+          <p style="margin:0">Ningún atributo que pueda cambiar se guarda como un valor desnudo, sino
+            con un intervalo <code>[inicio, fin)</code>. Cambiar de estado no es modificar una celda:
+            es <em>cerrar</em> el intervalo vigente y <em>abrir</em> uno nuevo. La consecuencia es que
+            el grafo conserva, gratis, toda la trayectoria del atributo a lo largo del tiempo.</p>
+        </div>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">u.assert_fact(oc_2208, "estado", borrador,
+              valid_from=t_creacion,    valid_to=t_envio_aprob)
+u.assert_fact(oc_2208, "estado", pendiente_aprobacion,
+              valid_from=t_envio_aprob, valid_to=t_aprobacion)
+u.assert_fact(oc_2208, "estado", aprobada,
+              valid_from=t_aprobacion)</code></pre>
+        </div>
+
+        <p>Tres tripletas en lugar de tres <code>update</code> destructivos. La consulta bitemporal
+          «¿en qué estado estaba el 20 de julio a las 13:00?» devuelve <code>pendiente_aprobacion</code>;
+          «¿y el 22 de julio?», devuelve <code>aprobada</code>. El historial completo es nativo, no un
+          módulo aparte. La aprobación misma, además, no es una simple marca: es una situación reificada
+          con su agente y su justificación normativa.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">aprobacion = ingest_situation(u, lex, "aprobar", roles={
+    "agente":          gerente_duarte,
+    "tema":            oc_2208,
+    "momento":         at("2026-07-21T15:30"),
+    "justificado_por": politica_aprobacion_oc_v4,
+}, sit_id="aprobacion_oc_2208")</code></pre>
+        </div>
+
+        <p>Duarte no aprueba «porque sí»: aprueba <strong>porque la política corporativa lo autoriza</strong>
+          para órdenes mayores a 30.000 USD. Aquí asoma la D7: el «por qué» no es un eje, sino una
+          relación entre hechos. La autorización se ata por <code>justificado_por</code> al documento
+          normativo, que es a su vez otro objeto reificado con su umbral y su vigencia. Y esto tiene una
+          consecuencia elegante: si mañana cambia el umbral, la política se reifica como versión nueva y
+          las aprobaciones viejas siguen apuntando a la anterior, sin alterar el historial.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Eco del banco</span>
+          Esta es la misma maquinaria de vigencia que en el <a href="19-banco.html">capítulo
+          anterior</a> reconstruía el estado de un préstamo en una audiencia. Lo que allí era exigencia
+          del regulador, aquí es simple buen gobierno de compras: la misma regla, dos motivaciones.
+        </aside>
+
+        <h2>Caso 5 · La orden de producción que consume insumos</h2>
+
+        <p>Las ocho bombas que salieron del almacén hay que reponerlas: la planta de Cordero va a
+          producir cincuenta. Cada bomba consume cierta cantidad de cobre (para el bobinado) y cierta
+          cantidad de horas-hombre de taller. El ERP necesita registrar tres cosas —la orden como
+          evento principal, el consumo de insumos y el consumo de mano de obra— y el patrón es,
+          felizmente, el mismo de la venta cross-módulo:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">op = ingest_situation(u, lex, "producir", roles={
+    "agente":   jefe_planta_cordero,
+    "tema":     bomba_riego_k7,
+    "cantidad": n(50, "unidades"),
+    "lugar_de": dpto_produccion,
+}, sit_id="op_3390")
+
+# Consumo de materia prima
+u.assert_fact(consumo_cobre, "parte_de", op)
+u.assert_fact(consumo_cobre, "tema",     mp_cobre)
+u.assert_fact(consumo_cobre, "cantidad", n(20, "kg"))
+
+# Consumo de mano de obra
+u.assert_fact(consumo_hh, "parte_de",      op)
+u.assert_fact(consumo_hh, "cantidad",      n(160, "horas"))
+u.assert_fact(consumo_hh, "ejecutado_por", jefe_planta_cordero)</code></pre>
+        </div>
+
+        <p>Lo notable es que la <strong>misma estructura</strong> que modela una bomba producida por
+          un equipo humano podría modelar, sin cambiar una línea, una reacción química industrial donde
+          <em>no hay agente humano</em> y los reactivos se transforman solos siguiendo su
+          estequiometría. El catálogo ya admite que el rol <code>agente</code> sea opcional cuando el
+          verbo lo permite (D5); por eso el mismo molde sirve para «Cordero ensambla» y para «la
+          mezcla reacciona». Ese caso límite —química sin agente— se explora en el
+          <a href="25-cuatro-dominios.html">capítulo 25</a>.</p>
+
+        <p>La consulta «¿cuántos kilos de cobre consumió esta orden?» es, otra vez, una proyección:
+          encuentra las sub-situaciones de <code>op_3390</code>, filtra por <code>tema = mp_cobre</code>
+          y suma sus <code>cantidad</code>. Tres operaciones simples sobre el grafo. Cero <em>ETL</em>.
+          Y nota lo que acaba de pasar entre bastidores: el cobre que esta orden consume es el mismo
+          <code>mp_cobre</code> que el BOM del Caso 2 declaró como hoja del árbol de la bomba. Inventario
+          de insumos y lista de materiales no son dos módulos que haya que sincronizar: son el mismo
+          nodo, visto desde dos preguntas.</p>
+
+        <h2>Caso 6 · El rastro bitemporal de un salario</h2>
+
+        <p>Cerramos con una situación que en cualquier ERP es notoriamente difícil. Ortiz fue
+          contratada el 10 de enero con un salario de 2.500 USD. El 1 de abril le subieron a 2.800. El
+          1 de agosto, tras una evaluación de desempeño con calificación «excelente», le subieron de
+          nuevo a 3.200. La pregunta que el modelo tiene que responder sin esfuerzo es la que hace todo
+          auditor laboral al revisar un legajo: <strong>¿cuál era el salario de Ortiz el 15 de marzo?
+          ¿Y el 15 de junio? ¿Y el 15 de septiembre?</strong></p>
+
+        <p>En un ERP tradicional, esto exige una tabla histórica auxiliar —<code>emp_salary_hist</code>
+          y parientes— que la mitad de las implementaciones nunca termina de mantener al día. En
+          WQuestions, es la misma D6 del Caso 4 aplicada a un número: <strong>tres tripletas</strong>
+          que conviven en el grafo.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">u.assert_fact(vendedora_ortiz, "salario_mensual", n(2500, "USD"),
+              valid_from=t_contrato, valid_to=t_aumento1)
+u.assert_fact(vendedora_ortiz, "salario_mensual", n(2800, "USD"),
+              valid_from=t_aumento1, valid_to=t_aumento2)
+u.assert_fact(vendedora_ortiz, "salario_mensual", n(3200, "USD"),
+              valid_from=t_aumento2)</code></pre>
+        </div>
+
+        <p>La consulta <code>query(..., at=fecha)</code> filtra por vigencia y devuelve el valor que
+          regía en ese instante, no el de hoy:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">texto</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="text">marzo       → 2 500 USD
+junio       → 2 800 USD
+septiembre  → 3 200 USD</code></pre>
+        </div>
+
+        <p>Y el último aumento no flota suelto: se conecta con su causa. La evaluación de desempeño es
+          un objeto reificado propio, y el ajuste de salario lleva un <code>motivado_por</code> que
+          apunta a ella (D7). Si el auditor pregunta «¿por qué le subieron el salario a Ortiz en
+          agosto?», el grafo responde sin gimnasia: porque <code>evaluacion_ortiz_2026</code>, con
+          calificación excelente, lo motivó.</p>
+
+        <div class="triple" style="flex-wrap:wrap;justify-content:center">
+          <span class="nodo nodo--o"><span>ajuste_salario_ortiz_3</span><small>O</small></span>
+          <span class="enlace">motivado_por<span class="firma">M(O→O)</span></span>
+          <span class="nodo nodo--o"><span>evaluacion_ortiz_2026</span><small>O</small></span>
+          <span class="enlace">calificacion<span class="firma">M(O→K)</span></span>
+          <span class="nodo nodo--k"><span>desempeno_excelente</span><small>K</small></span>
+        </div>
+
+        <h2>El antes y el después: del esquema fragmentado al grafo único</h2>
+
+        <p>Pongamos las dos arquitecturas frente a frente con una pregunta transversal deliberadamente
+          incómoda: <em>¿cuántas horas-hombre de producción demandó cada unidad que Ortiz vendió este
+          trimestre, y cuánto cobró ella de comisión por esa venta?</em></p>
+
+        <p><strong>Antes, en el modelo relacional.</strong> La información vive en islas:
+          <code>employees</code> y <code>emp_salary_hist</code> en RR.&nbsp;HH.; <code>sales_orders</code>
+          y <code>sales_commissions</code> en Ventas; <code>production_orders</code> y
+          <code>wh_stock_movements</code> en Manufactura e Inventario. La pregunta obliga a cruzar
+          cuatro tablas de tres módulos distintos con <em>joins</em> frágiles, claves foráneas de
+          convención y, casi siempre, una vista <em>ETL</em> que el equipo de inteligencia de negocio
+          mantiene a mano. Cualquier cambio de esquema en un módulo rompe el reporte en silencio.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">SQL</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="sql">-- Antes: cuatro tablas, tres módulos, joins por convención.
+-- Y la venta vive partida en tres registros que hay que volver a unir.
+SELECT  so.id              AS venta,
+        sc.monto           AS comision,
+        SUM(wh.horas)      AS horas_hombre
+FROM        sales_orders        so
+JOIN        sales_commissions   sc ON sc.order_id = so.id
+JOIN        production_orders    po ON po.product_id = so.product_id
+JOIN        wh_stock_movements  wh ON wh.po_id = po.id   -- FK frágil
+WHERE   so.seller_id = 'ORTIZ'
+  AND   so.fecha BETWEEN '2026-07-01' AND '2026-09-30'
+GROUP BY so.id, sc.monto;
+-- Si Manufactura renombra wh.po_id, el reporte calla y miente.</code></pre>
+        </div>
+
+        <div class="columnas">
+          <p><strong>Después, en WQuestions.</strong> La misma información ya existe como un único
+            grafo de hechos atómicos. La <code>venta_4417</code> es una situación reificada que
+            contiene, por <code>parte_de</code>, la comisión de Ortiz, el movimiento de inventario y
+            —a través de la orden de producción que repuso el stock— el consumo de horas-hombre. La
+            pregunta transversal es una proyección de unos pocos saltos: localiza las ventas de Ortiz
+            del trimestre, recorre sus sub-situaciones, lee <code>monto</code> en la comisión y
+            <code>cantidad</code> en el consumo de mano de obra.</p>
+          <p>No hay <em>join</em> de cuatro tablas, no hay vista <em>ETL</em> paralela, y sobre todo no
+            hay silos, porque <strong>nunca hubo fronteras de módulo</strong>: hubo una sola venta, y
+            el grafo la modeló entera. Un cambio de vocabulario en un módulo no rompe nada, porque no
+            existe el módulo como tabla separada: existe el rol, mapeado una sola vez en el lexicon. La
+            consulta que antes era un proyecto pasa a ser una sola pregunta bien formada.</p>
+        </div>
+
+        <h2>El veredicto del dominio multi-módulo</h2>
+
+        <p>El ERP es, probablemente, el dominio donde la promesa de WQuestions paga su dividendo más
+          concreto: <strong>la integración entre módulos deja de ser un proyecto y se vuelve
+          gratuita</strong>. Repasemos qué pidió cada escena y con qué la pagó el modelo, porque la
+          lista entera cae sobre maquinaria que el libro ya tenía construida:</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">Lo que el ERP puso a prueba</p>
+          <ul class="limpia" style="margin:0">
+            <li style="margin-bottom:.6rem"><b>La venta cross-módulo.</b> No genera «registros en tres
+              tablas»: genera una situación con tres sub-situaciones ligadas por <code>parte_de</code>
+              (D4). Cada módulo la mira desde su rol, ninguno la copia.</li>
+            <li style="margin-bottom:.6rem"><b>La lista de materiales.</b> No necesita esquemas
+              auxiliares; es <code>parte_de</code> recorrido en forma recursiva, el mismo cable que
+              arma la jerarquía de lugares.</li>
+            <li style="margin-bottom:.6rem"><b>El rastro bitemporal.</b> Estados de órdenes y salarios
+              que cambian no se sobrescriben; conservan su historial nativo con vigencia (D6). El
+              auditor reconstruye cualquier instante sin tablas paralelas.</li>
+            <li><b>La aprobación y el aumento.</b> No son <em>workflows</em> ni banderas externas: son
+              situaciones reificadas con su <code>justificado_por</code> y su <code>motivado_por</code>
+              (D7). La auditoría es nativa, no un añadido.</li>
+          </ul>
+        </div>
+
+        <p>Y todo se modeló con los mismos roles canónicos del catálogo (D8) más un puñado de roles de
+          dominio —<code>reporta_a</code>, <code>trabaja_en</code>, <code>calculado_segun</code>,
+          <code>cantidad_en_bom</code>, <code>ejecutado_por</code>— admitidos por la política liberal.
+          El motor no creció ni una línea para absorber el ERP. Lo único que creció fue el lexicon,
+          con un puñado de verbos nuevos —<code>vender</code>, <code>ordenar_compra</code>,
+          <code>aprobar</code>, <code>producir</code>, <code>contratar</code>,
+          <code>ajustar_salario</code>— y sus signaturas.</p>
+
+        <p>Si el banco demostró que el modelo soporta el peso del dinero, el ERP demuestra que soporta
+          el peso de la <em>coordinación</em>: muchas voces internas describiendo, cada una a su
+          manera, hechos que en el fondo son uno solo. El próximo capítulo cambia de terreno —de la
+          fábrica al aula— y trae un grafo de otra naturaleza: <a href="21-universidad.html">una
+          universidad</a>, donde los prerrequisitos forman cadenas que el modelo deberá recorrer como
+          un dependiente al que nunca le faltó un eslabón.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="19-banco.html"><span class="dir">← Anterior</span><span class="tit">El dominio más exigente: un banco</span></a>
+      <a class="sig" href="21-universidad.html"><span class="dir">Siguiente →</span><span class="tit">Una universidad</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

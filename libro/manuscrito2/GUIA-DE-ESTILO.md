@@ -184,28 +184,30 @@ Los **8 dominios industriales** de la Parte V (spa, taxi, clínica, banco, ERP, 
 | 8 | `08-espacio-multidimensional.html` | III | El espacio multidimensional |
 | 9 | `09-situaciones.html` | III | Situaciones, contextos y agencia |
 | 10 | `10-por-que.html` | III | El "por qué" no es un eje |
-| 11 | `11-verbo.html` | IV — Del lenguaje a los hechos | El verbo como signatura |
-| 12 | `12-lexicon.html` | IV | El lexicon como compilador |
-| 13 | `13-bajo-presion.html` | IV | El modelo bajo presión |
-| 14 | `14-spa.html` | V — En la práctica | Un sistema de ventas (spa) |
-| 15 | `15-taxi.html` | V | Un servicio on-demand (taxi) |
-| 16 | `16-clinica.html` | V | Una historia clínica |
-| 17 | `17-banco.html` | V | El dominio más exigente: un banco |
-| 18 | `18-erp.html` | V | Un ERP multi-módulo |
-| 19 | `19-universidad.html` | V | Una universidad |
-| 20 | `20-municipalidad.html` | V | Una municipalidad |
-| 21 | `21-minera.html` | V | Una operación minera |
-| 22 | `22-yaku.html` | V | Arqueología de un sistema real (yaku) |
-| 23 | `23-cuatro-dominios.html` | V | Música, química, fútbol, contratos |
-| 24 | `24-llms.html` | VI — IA, futuro y cierre | WQuestions y los LLMs |
-| 25 | `25-aplicaciones.html` | VI | Aplicaciones futuras |
-| 26 | `26-prueba-reflexiva.html` | VI | La prueba reflexiva |
-| 27 | `27-seguridad.html` | VI | Seguridad y privacidad |
-| 28 | `28-que-falta.html` | VI | Qué falta |
-| 29 | `29-conclusion.html` | VI | Conclusión: por qué importan |
-| 30 | `30-anexo-codigo.html` | Anexos | Anexo: el código |
-| 31 | `31-anexo-prototipo.html` | Anexos | Anexo: el prototipo |
-| 32 | `32-el-autor.html` | Anexos | El autor |
+| 11 | `11-identidad.html` | III | La identidad a través de los sistemas |
+| 12 | `12-puentes.html` | III | Puentes: objetos, bits, grafos y cadenas |
+| 13 | `13-verbo.html` | IV — Del lenguaje a los hechos | El verbo como signatura |
+| 14 | `14-lexicon.html` | IV | El lexicon como compilador |
+| 15 | `15-bajo-presion.html` | IV | El modelo bajo presión |
+| 16 | `16-spa.html` | V — En la práctica | Un sistema de ventas (spa) |
+| 17 | `17-taxi.html` | V | Un servicio on-demand (taxi) |
+| 18 | `18-clinica.html` | V | Una historia clínica (+ hospitalización, farmacia) |
+| 19 | `19-banco.html` | V | El dominio más exigente: un banco |
+| 20 | `20-erp.html` | V | Un ERP multi-módulo |
+| 21 | `21-universidad.html` | V | Una universidad |
+| 22 | `22-municipalidad.html` | V | Una municipalidad (+ trámites, expediente) |
+| 23 | `23-minera.html` | V | Una operación minera (+ comisionamiento, punchlists) |
+| 24 | `24-yaku.html` | V | Arqueología de un sistema real (yaku) |
+| 25 | `25-cuatro-dominios.html` | V | Música, química, fútbol, contratos |
+| 26 | `26-llms.html` | VI — IA, futuro y cierre | WQuestions y los LLMs |
+| 27 | `27-aplicaciones.html` | VI | Aplicaciones futuras |
+| 28 | `28-prueba-reflexiva.html` | VI | La prueba reflexiva |
+| 29 | `29-seguridad.html` | VI | Seguridad y privacidad |
+| 30 | `30-que-falta.html` | VI | Qué falta |
+| 31 | `31-conclusion.html` | VI | Conclusión: por qué importan |
+| 32 | `32-anexo-codigo.html` | Anexos | Anexo: el código |
+| 33 | `33-anexo-prototipo.html` | Anexos | Anexo: el prototipo |
+| 34 | `34-el-autor.html` | Anexos | El autor |
 
 ## 6. Sistema de color por eje
 
