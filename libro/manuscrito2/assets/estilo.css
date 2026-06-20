@@ -281,6 +281,24 @@ blockquote p:last-child { margin-bottom: 0; }
   text-transform: uppercase; color: var(--acento); margin-bottom: .25rem; }
 .nota-margen code { font-size: .82em; }
 
+/* Retrato del autor */
+.retrato-autor {
+  float: right; clear: right; width: clamp(150px, 34%, 230px);
+  margin: .35rem 0 1.1rem 1.6rem;
+}
+.retrato-autor img {
+  display: block; width: 100%; height: auto; border-radius: var(--radio-g);
+  border: 1px solid var(--linea); box-shadow: var(--sombra-g);
+  filter: saturate(.92);
+}
+.retrato-autor figcaption {
+  margin-top: .55rem; font-family: var(--sans); font-size: .74rem; line-height: 1.4;
+  letter-spacing: .02em; color: var(--tinta-tenue); text-align: center;
+}
+@media (max-width: 620px) {
+  .retrato-autor { float: none; width: min(230px, 70%); margin: .5rem auto 1.6rem; }
+}
+
 /* ---------------------------------------------------------------------------
    7. CAJAS (callouts)
    --------------------------------------------------------------------------- */
