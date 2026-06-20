@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 14 · El lexicon como compilador — WQuestions</title>
+  <meta name="description" content="El lexicon es el diccionario que traduce el lenguaje del usuario al catálogo canónico de roles. Es la interfaz: por fuera, vocabulario natural; por dentro, tipos exactos.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'14'">
+      <header class="portada-cap">
+        <p class="parte">Parte IV · Del lenguaje a los hechos</p>
+        <div class="num-cap">14</div>
+        <h1>El lexicon como compilador</h1>
+        <p class="lede">El catálogo de tipos es exacto pero ilegible; el lenguaje de las personas es
+          fluido pero ambiguo. Entre ambos hace falta un traductor. Ese traductor es el lexicon: la
+          única cara que el modelo le muestra al mundo.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Un vendedor de turno escribe en la tablet del local una sola palabra para
+          cerrar la operación: <em>tomar</em>. Lo hace cien veces al día y nunca duda. «El cliente
+          <strong>tomó</strong> la camiseta visitante talla M.» La frase es transparente para cualquier
+          hispanohablante. El problema empieza cuando esa misma palabra viaja por el resto del edificio.
+          En la sala de reuniones del primer piso, la gerente anota que el comité «<strong>tomó</strong>
+          una decisión sobre el nuevo proveedor». En la cancha del torneo que la tienda
+          patrocina, el relator narra que el delantero «<strong>tomó</strong> el balón en el área». Y en el
+          municipio de la esquina, un funcionario certifica que el alcalde le «<strong>tomó</strong>
+          juramento» al nuevo regidor. Cuatro veces el mismo verbo; cuatro hechos que no tienen nada en
+          común salvo seis letras.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Polisemia</span>
+          Que un signo cargue varios significados emparentados no es un defecto del español: es la
+          economía natural de cualquier lengua viva. El reto no es eliminarla, sino resolverla en el
+          lugar correcto.
+        </aside>
+
+        <p>Si el sistema del capítulo anterior tomara el verbo al pie de la letra, haría lo que hace un
+          parser ingenuo: leería <em>tomar</em>, dispararía una única firma —digamos
+          <code>tomar(agente, tema)</code>— y guardaría las cuatro frases como instancias del mismo
+          tipo de evento. El resultado sería una base de datos que cree que entregar una camiseta, deliberar en
+          comité, recibir un balón y administrar un juramento son la misma clase de cosa. Las consultas
+          posteriores heredarían el desastre: preguntar «¿qué decisiones se tomaron este mes?» devolvería
+          también las ventas y las jugadas. El error no se nota al escribir; se cobra al leer.</p>
+
+        <p>El capítulo 13 nos dejó con el verbo entendido como <strong>signatura</strong>: cada verbo
+          declara qué roles exige y de qué eje sale cada uno. Pero acabamos de ver que un verbo no basta
+          como llave. <em>Tomar</em> no es <em>una</em> signatura: es una <em>familia</em> de signaturas
+          que comparten ortografía. Para elegir la correcta hace falta mirar también qué acompaña al
+          verbo. Y ese trabajo —el de pasar del lenguaje a la firma exacta— no lo hace el verbo solo.
+          Lo hace una pieza dedicada, que es el verdadero protagonista de este capítulo.</p>
+
+        <h2>Dos lenguajes que no deberían tocarse</h2>
+
+        <p>Conviene nombrar con precisión los dos mundos que el capítulo 13 puso frente a frente. Por un
+          lado está el <strong>catálogo canónico</strong>: el conjunto cerrado y versionado de roles
+          —<code>agente</code>, <code>tema</code>, <code>beneficiario</code>, <code>experimentador</code>,
+          <code>causado_por</code>…— con sus firmas, sus ejes de origen y sus reglas de obligatoriedad.
+          Es exacto, estable y completamente ilegible para quien no diseñó el modelo. Ningún recepcionista,
+          ningún médico, ningún relator deportivo va a escribir <code>experimentador</code> para registrar
+          que a un cliente le encantó el postre.</p>
+
+        <p>Por el otro lado está el <strong>lenguaje del usuario</strong>: «vendedor», «comprador»,
+          «paciente», «socio», «el que pierde». Vocabulario vivo, distinto en cada gremio, lleno de
+          sinónimos y de polisemia. Es lo único que la gente sabe escribir, y es lo único que un modelo
+          de lenguaje recibe cuando lee una frase suelta. Si forzáramos a estos dos mundos a tocarse
+          —si el catálogo canónico fuera la interfaz— habríamos construido una pieza de ingeniería
+          impecable y socialmente inútil. La adopción se moriría en la primera capacitación.</p>
+
+        <p>La solución es interponer una capa de traducción entre ambos. Una capa que por fuera hable el
+          idioma del usuario y por dentro emita tipos canónicos. A esa capa la llamamos
+          <strong>lexicon</strong>, y su diseño descansa sobre dos decisiones que conviene enunciar de
+          frente.</p>
+
+        <div class="caja caja--decision revelar">
+          <p class="caja-tit"><span class="codigo-d">D8</span> El catálogo es invisible; el lexicon es la interfaz</p>
+          <p style="margin:0">El catálogo canónico de roles existe, es exacto y es la base sobre la que
+            se valida cada hecho —pero <strong>nunca se expone directamente</strong>. La única superficie
+            con la que el mundo exterior interactúa es el <strong>lexicon</strong>. Por dentro, los
+            ingenieros pueden renombrar un rol, fusionar dos o versionar el catálogo entero; por fuera,
+            nada cambia, porque la cara visible del sistema es el diccionario, no el catálogo.</p>
+        </div>
+
+        <p>Si D8 fija <em>qué pieza es la interfaz</em>, su consecuencia natural es una promesa hacia el
+          usuario final, que merece su propio número porque otras partes del libro la invocan:</p>
+
+        <div class="caja caja--decision revelar">
+          <p class="caja-tit"><span class="codigo-d">D9</span> El usuario nunca toca etiquetas canónicas</p>
+          <p style="margin:0">Un humano <strong>jamás</strong> debe verse obligado a escribir
+            <code>agente</code>, <code>beneficiario</code> o <code>experimentador</code> para que el
+            sistema funcione. El usuario emplea su propio vocabulario —«vendedor», «comprador»,
+            «cliente», «el que anota»— y el lexicon lo traduce en silencio a la etiqueta canónica
+            correspondiente. La complejidad del idioma se resuelve en el diccionario, no en la cabeza
+            de quien escribe.</p>
+        </div>
+
+        <aside class="nota-margen">
+          <span class="etq">Encapsulamiento</span>
+          D8 es, en el fondo, el viejo principio de ocultar la implementación detrás de una interfaz
+          estable. Lo que cambia es <em>qué</em> se encapsula: aquí no es una clase de código, sino el
+          vocabulario entero de un dominio.
+        </aside>
+
+        <p>El par D8–D9 reparte responsabilidades con nitidez. D8 mira hacia adentro: garantiza a los
+          ingenieros que pueden mover los engranajes —agregar roles, cambiar códigos internos,
+          reorganizar el catálogo— sin romperle nada a nadie, porque la fachada permanece. D9 mira hacia
+          afuera: garantiza a las personas que pueden seguir hablando como hablan. El lexicon es el
+          contrato que sostiene ambas promesas a la vez: <strong>estable hacia afuera, flexible hacia
+          adentro</strong>.</p>
+
+        <p class="cita-destacada revelar">El catálogo canónico es el corazón del sistema; el lexicon es
+          su rostro. Y al mundo solo se le muestra el rostro.<cite>El contrato de D8</cite></p>
+
+        <h2>El lexicon en capas</h2>
+
+        <p>Vale la pena ver la arquitectura completa de un vistazo antes de bajar al detalle de una
+          entrada. La frase del usuario entra por arriba con su vocabulario natural; el lexicon la
+          desambigua y la traduce a roles canónicos; el almacenamiento, ya en el fondo, solo trabaja
+          con identificadores internos. Tres capas, y cada una puede cambiar sin perturbar a las otras.</p>
+
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 420" class="svg-eje" role="img"
+                 aria-label="Las tres capas del lexicon: el usuario habla con vocabulario natural, el lexicon traduce a roles canónicos, el almacenamiento opera con identificadores internos">
+              <!-- CAPA 1: usuario -->
+              <rect x="40" y="24" width="580" height="86" rx="12" fill="none" stroke="var(--tinta-tenue)" stroke-width="1.4" stroke-dasharray="6 5"/>
+              <text x="58" y="48" font-size="12.5" font-weight="700" fill="var(--tinta-suave)" font-family="var(--sans)">CAPA 1 · EL USUARIO — habla su idioma</text>
+              <rect x="58" y="60" width="216" height="38" rx="9" fill="var(--eje-q)" opacity=".14"/>
+              <text x="166" y="84" text-anchor="middle" font-size="13.5" fill="var(--tinta)" font-style="italic" font-family="var(--display)">«el vendedor le facturó al cliente»</text>
+              <rect x="300" y="60" width="304" height="38" rx="9" fill="var(--eje-k)" opacity=".12"/>
+              <text x="452" y="84" text-anchor="middle" font-size="13.5" fill="var(--tinta)" font-style="italic" font-family="var(--display)">«la enfermera vacunó al paciente»</text>
+
+              <!-- flechas hacia abajo -->
+              <line x1="166" y1="112" x2="166" y2="148" stroke="var(--eje-m)" stroke-width="2.2"/>
+              <polygon points="166,154 161,144 171,144" fill="var(--eje-m)"/>
+              <line x1="452" y1="112" x2="452" y2="148" stroke="var(--eje-m)" stroke-width="2.2"/>
+              <polygon points="452,154 447,144 457,144" fill="var(--eje-m)"/>
+
+              <!-- CAPA 2: lexicon -->
+              <rect x="40" y="158" width="580" height="120" rx="12" fill="var(--eje-m)" opacity=".07"/>
+              <rect x="40" y="158" width="580" height="120" rx="12" fill="none" stroke="var(--eje-m)" stroke-width="1.8"/>
+              <text x="58" y="182" font-size="12.5" font-weight="700" fill="var(--eje-m)" font-family="var(--sans)">CAPA 2 · EL LEXICON — traduce</text>
+              <text x="330" y="182" text-anchor="middle" font-size="11" fill="var(--tinta-suave)" font-family="var(--mono)">aliases → canónico · resuelve polisemia · valida firma</text>
+              <!-- mini mapeos -->
+              <text x="74" y="214" font-size="12" fill="var(--tinta)" font-family="var(--mono)">"vendedor"</text>
+              <line x1="158" y1="210" x2="214" y2="210" stroke="var(--tinta-tenue)" stroke-width="1.4"/>
+              <polygon points="220,210 211,205 211,215" fill="var(--tinta-tenue)"/>
+              <rect x="226" y="200" width="78" height="22" rx="6" fill="var(--eje-q)"/>
+              <text x="265" y="215" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff" font-family="var(--mono)">agente</text>
+
+              <text x="74" y="248" font-size="12" fill="var(--tinta)" font-family="var(--mono)">"cliente"</text>
+              <line x1="158" y1="244" x2="214" y2="244" stroke="var(--tinta-tenue)" stroke-width="1.4"/>
+              <polygon points="220,244 211,239 211,249" fill="var(--tinta-tenue)"/>
+              <rect x="226" y="234" width="120" height="22" rx="6" fill="var(--eje-q)"/>
+              <text x="286" y="249" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff" font-family="var(--mono)">beneficiario</text>
+
+              <text x="390" y="214" font-size="12" fill="var(--tinta)" font-family="var(--mono)">"factura"</text>
+              <line x1="468" y1="210" x2="524" y2="210" stroke="var(--tinta-tenue)" stroke-width="1.4"/>
+              <polygon points="530,210 521,205 521,215" fill="var(--tinta-tenue)"/>
+              <rect x="536" y="200" width="64" height="22" rx="6" fill="var(--eje-o)"/>
+              <text x="568" y="215" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff" font-family="var(--mono)">tema</text>
+
+              <text x="390" y="248" font-size="12" fill="var(--tinta)" font-family="var(--mono)">"vacuna"</text>
+              <line x1="468" y1="244" x2="524" y2="244" stroke="var(--tinta-tenue)" stroke-width="1.4"/>
+              <polygon points="530,244 521,239 521,249" fill="var(--tinta-tenue)"/>
+              <rect x="536" y="234" width="64" height="22" rx="6" fill="var(--eje-o)"/>
+              <text x="568" y="249" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff" font-family="var(--mono)">tema</text>
+
+              <!-- flecha hacia abajo -->
+              <line x1="330" y1="280" x2="330" y2="316" stroke="var(--eje-m)" stroke-width="2.2"/>
+              <polygon points="330,322 325,312 335,312" fill="var(--eje-m)"/>
+
+              <!-- CAPA 3: almacenamiento -->
+              <rect x="40" y="326" width="580" height="74" rx="12" fill="none" stroke="var(--tinta-tenue)" stroke-width="1.4" stroke-dasharray="6 5"/>
+              <text x="58" y="350" font-size="12.5" font-weight="700" fill="var(--tinta-suave)" font-family="var(--sans)">CAPA 3 · EL ALMACENAMIENTO — solo identificadores</text>
+              <text x="330" y="382" text-anchor="middle" font-size="12.5" fill="var(--tinta)" font-family="var(--mono)">(accion_facturar, agente=usr_91, tema=fac_0042, beneficiario=usr_77)  ∈ K</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 14.1.</span> Las tres capas del lexicon. Arriba, el
+            usuario escribe con el vocabulario de su gremio. En el centro, el lexicon traduce cada alias
+            al rol canónico (en magenta, el eje <strong>M</strong>: la traducción <em>es</em> trabajo de
+            predicados) y valida la firma. Abajo, el almacenamiento solo ve tipos e identificadores
+            internos. Cualquiera de las tres capas puede cambiar sin tocar a las otras: eso es D8 hecho
+            geometría.</figcaption>
+        </figure>
+
+        <h2>Autopsia de una entrada</h2>
+
+        <p>Bajemos al detalle. Una entrada del lexicon es una «página» del diccionario, y cada pieza
+          tiene un trabajo concreto. Tomemos un verbo del mundo de la tienda —el local de la escena
+          inicial despacha camisetas al público— y desarmemos su entrada de <code>vender</code>:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">lexicon</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="json">{
+  "verbo": "vender",
+  "tipo_situacion": "accion_vender",
+  "roles": {
+    "agente":       { "canonico": "agente",       "aliases": ["vendedor", "el que vende", "el que despacha"] },
+    "tema":         { "canonico": "tema",         "aliases": ["producto", "lo vendido", "camiseta"] },
+    "beneficiario": { "canonico": "beneficiario", "aliases": ["comprador", "cliente", "el que compra"] },
+    "por_cuanto":   { "canonico": "por_cuanto",   "aliases": ["precio", "monto", "importe"] }
+  },
+  "obligatorios": ["agente", "tema", "beneficiario", "por_cuanto"],
+  "opcionales":   ["momento", "lugar_de", "moneda", "instrumento"],
+  "ejemplo": "El vendedor le vendió una camiseta al cliente por 49.90 dólares"
+}</code></pre>
+        </div>
+
+        <p>Son seis piezas, y conviene leerlas como lo que son: la declaración de una función con su
+          manual de uso adjunto.</p>
+
+        <ol>
+          <li><strong><code>verbo</code></strong>. La llave que activa la entrada. Puede ser una palabra
+            suelta (<code>vender</code>) o un patrón compuesto (<code>tomar [decisión]</code>), como
+            veremos al resolver la polisemia.</li>
+          <li><strong><code>tipo_situacion</code></strong>. El código interno exacto con el que el evento
+            se ancla en la caja <strong>K</strong>. Es el motor oculto; el usuario nunca lo ve ni lo
+            escribe.</li>
+          <li><strong><code>roles</code> y sus <code>aliases</code></strong>. Aquí vive D9. El rol
+            canónico es <code>agente</code>, pero la lista de aliases le enseña al sistema que «vendedor»,
+            «el que vende» y «el que despacha» significan lo mismo. Gracias a eso, «el vendedor le vendió una camiseta
+            al cliente» y «el agente transfirió un producto al beneficiario» producen el
+            <em>idéntico</em> registro.</li>
+          <li><strong><code>obligatorios</code> y <code>opcionales</code></strong>. Las reglas de
+            seguridad de la firma. Dictan qué roles no pueden faltar para que el hecho se acepte. Una
+            venta sin precio se rechaza; una venta sin lugar, no.</li>
+          <li><strong><code>ejemplo</code></strong>. Una frase humana real. No es adorno: el motor de
+            pruebas —y, cada vez más, el modelo de lenguaje— lee este ejemplo para aprender cómo se usa
+            el verbo en la práctica.</li>
+        </ol>
+
+        <p>Visto así, el lexicon deja de parecerse a un glosario y empieza a parecerse a otra cosa: a un
+          <strong>compilador</strong>. Un compilador toma código fuente legible para humanos y lo traduce
+          a instrucciones exactas que la máquina ejecuta, verificando de paso que los tipos cuadren. El
+          lexicon hace exactamente eso con el lenguaje: toma una frase, la traduce a una tripleta tipada
+          y comprueba que la firma se cumpla. El «código fuente» es el español; el «binario» es el hecho
+          atómico del capítulo 7.</p>
+
+        <h2>El idioma de los modelos: function calling</h2>
+
+        <p>Aquí ocurre una de esas convergencias que parecen casualidad y no lo son. Los modelos de
+          lenguaje de uso corporativo —entre ellos Claude, de Anthropic— se conectan al software de la
+          empresa mediante un mecanismo estándar: el <em>function calling</em>, o uso de herramientas.
+          El patrón es simple. La aplicación le entrega al modelo un catálogo en formato JSON que
+          describe cada herramienta disponible, sus parámetros y cuáles son obligatorios. Cuando un
+          usuario pide algo en lenguaje natural, el modelo elige la herramienta adecuada y emite una
+          llamada estructurada, con cada parámetro en su sitio.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Convergencia</span>
+          Que la lingüística formal de los años noventa y el <em>function calling</em> de los modelos
+          actuales hayan llegado a la misma forma —nombre, descripción, parámetros tipados,
+          obligatorios— no es coincidencia: ambos resuelven el mismo problema, mapear lenguaje a acción
+          verificable.
+        </aside>
+
+        <p>Lo notable es que ese formato JSON es <strong>estructuralmente idéntico</strong> a una entrada
+          del lexicon. Tomemos la misma entrada de <code>vender</code> y reescribámosla en el esquema que
+          un modelo espera recibir:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tool schema (function calling)</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="json">{
+  "name": "accion_vender",
+  "description": "Registrar una venta: transferencia de un bien con compensación monetaria",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "agente":       { "type": "string", "eje": "Q", "description": "vendedor, el que vende, el que despacha" },
+      "tema":         { "type": "string", "eje": "O", "description": "producto, camiseta, lo vendido" },
+      "beneficiario": { "type": "string", "eje": "Q", "description": "comprador, cliente, el que compra" },
+      "por_cuanto":   { "type": "number", "eje": "N", "description": "precio, monto, importe" },
+      "momento":      { "type": "string", "eje": "T", "description": "cuándo ocurrió" },
+      "lugar_de":     { "type": "string", "eje": "L", "description": "dónde ocurrió" }
+    },
+    "required": ["agente", "tema", "beneficiario", "por_cuanto"]
+  }
+}</code></pre>
+        </div>
+
+        <p>Las correspondencias son uno a uno, y vale la pena nombrarlas para que no quede como una
+          impresión vaga:</p>
+
+        <div class="columnas">
+          <p>El <code>tipo_situacion</code> del lexicon se vuelve el <code>name</code> de la herramienta.
+            Los <code>aliases</code> de cada rol se vuelven la <code>description</code>, que es justamente
+            la pista que el modelo usa para saber qué significa el parámetro. El eje de origen
+            (<span class="eje-rotulo"><span class="eje eje--q">Q</span></span>,
+            <span class="eje-rotulo"><span class="eje eje--o">O</span></span>,
+            <span class="eje-rotulo"><span class="eje eje--n">N</span></span>…) determina el
+            <code>type</code> y aporta una validación semántica extra.</p>
+          <p>Y la lista de <code>obligatorios</code> es, literalmente, el campo <code>required</code> del
+            esquema. No hay que traducir nada a mano ni mantener dos artefactos en paralelo: el lexicon
+            <em>es</em> el catálogo de herramientas. Exponerlo a un modelo es serializarlo a JSON y
+            entregarlo. Lo que en otras arquitecturas es un proyecto de integración, aquí es una función
+            de exportación.</p>
+        </div>
+
+        <p>El efecto práctico es que una frase suelta se convierte en un hecho estructurado sin que nadie
+          escriba un parser. El <em>prompt</em> que recibe el modelo es casi todo catálogo:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">prompt</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="text">SISTEMA. Eres un extractor de hechos WQuestions. Dada una frase en español,
+devuelve SOLO un JSON con la situación y sus roles canónicos.
+
+Catálogo (verbo → situación · roles obligatorios):
+  vender → accion_vender · [agente, tema, beneficiario, por_cuanto]
+  tomar  → accion_consumir · [agente, tema]
+
+Frase del usuario: "El vendedor le vendió una camiseta al cliente por 49.90 dólares"</code></pre>
+        </div>
+
+        <p>Y la respuesta llega lista para asentarse en el grafo, ya traducida a roles canónicos:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">respuesta del modelo</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="json">{
+  "tipo_situacion": "accion_vender",
+  "agente": "vendedor_17",
+  "tema": "camiseta_88",
+  "beneficiario": "cliente_1042",
+  "por_cuanto": 49.90
+}</code></pre>
+        </div>
+
+        <p>Esa salida es exactamente el conjunto de tripletas tipadas del capítulo 7. Cada par
+          rol–valor se vuelve un cable; por ejemplo, el <code>beneficiario</code> se lee como una
+          tripleta del eje M que sale del evento y aterriza en una persona:</p>
+
+        <div class="triple">
+          <span class="nodo nodo--o"><span>venta_001</span><small>O</small></span>
+          <span class="enlace">beneficiario<span class="firma">M(O→Q)</span></span>
+          <span class="nodo nodo--q"><span>cliente_1042</span><small>Q</small></span>
+        </div>
+
+        <p>Y una vez asentada, la situación completa se descompone en los cables que ya conocemos:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(venta_001, instancia_de,  accion_vender)   ∈ M(O, K)
+(venta_001, agente,        vendedor_17)     ∈ M(O, Q)
+(venta_001, tema,          camiseta_88)     ∈ M(O, O)
+(venta_001, beneficiario,  cliente_1042)    ∈ M(O, Q)
+(venta_001, por_cuanto,    49.90)           ∈ M(O, N)</code></pre>
+        </div>
+
+        <p>El modelo nunca vio la palabra <code>por_cuanto</code> hasta que el lexicon se la nombró; el
+          usuario nunca la verá en absoluto. Esa es la promesa de D9 cumplida de extremo a extremo: el
+          español entra por arriba, la tripleta canónica sale por abajo, y la etiqueta interna jamás se
+          le exige a una persona.</p>
+
+        <h2>Resolver la polisemia: tomar, otra vez</h2>
+
+        <p>Volvamos a la escena del principio. Tenemos cuatro frases que comparten el verbo
+          <em>tomar</em> y no comparten nada más. ¿Cómo evita el lexicon confundirlas? La respuesta es
+          decepcionantemente directa, y por eso funciona: <strong>una entrada distinta para cada
+          significado</strong>. El lexicon no busca una regla mágica que cubra todos los usos de
+          <em>tomar</em>; declara una lista de patrones, cada uno apuntando a su propio tipo de
+          situación, y deja que el complemento decida.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">lexicon · polisemia de «tomar»</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="json">{
+  "tomar [decisión | acuerdo | resolución]": {
+    "tipo_situacion": "accion_decidir",
+    "obligatorios": ["agente", "tema"],
+    "ejemplo": "El comité tomó una decisión sobre el nuevo proveedor"
+  },
+  "tomar [el balón | la pelota | el pase]": {
+    "tipo_situacion": "accion_recuperar_posesion",
+    "obligatorios": ["agente", "tema"],
+    "ejemplo": "El delantero tomó el balón en el área"
+  },
+  "tomar [juramento]": {
+    "tipo_situacion": "acto_juramentacion",
+    "obligatorios": ["agente", "paciente"],
+    "ejemplo": "El alcalde le tomó juramento al nuevo regidor"
+  },
+  "tomar": {
+    "tipo_situacion": "accion_consumir",
+    "obligatorios": ["agente", "tema"],
+    "ejemplo": "El cliente tomó un refresco en la cafetería del estadio"
+  }
+}</code></pre>
+        </div>
+
+        <p>El procedimiento de resolución es, otra vez, el de un compilador: el sistema intenta encajar
+          la frase <strong>desde el patrón más específico hacia el más general</strong>. Si aparece
+          «tomar el balón», gana la entrada de fútbol. Si aparece «tomar juramento», gana el acto
+          de juramentación. Y solo cuando ningún patrón con complemento coincide —«tomar un refresco»—
+          cae la regla genérica de consumir. El orden importa: lo específico siempre primero, lo
+          genérico como red de seguridad. La figura siguiente lo muestra con los colores de cada eje
+          para que se vea adónde va a parar cada hecho.</p>
+
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 680 372" class="svg-eje" role="img"
+                 aria-label="Resolución de polisemia del verbo tomar: cuatro patrones de complemento conducen a cuatro tipos de situación distintos en el eje K">
+              <!-- raíz -->
+              <rect x="278" y="20" width="124" height="40" rx="10" fill="var(--eje-m)" opacity=".16"/>
+              <rect x="278" y="20" width="124" height="40" rx="10" fill="none" stroke="var(--eje-m)" stroke-width="1.8"/>
+              <text x="340" y="38" text-anchor="middle" font-size="14" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">tomar</text>
+              <text x="340" y="53" text-anchor="middle" font-size="10" fill="var(--tinta-suave)" font-family="var(--sans)">¿qué complemento?</text>
+
+              <!-- 4 ramas -->
+              <!-- rama 1 -->
+              <path d="M300 60 C 200 84, 120 96, 96 118" fill="none" stroke="var(--tinta-tenue)" stroke-width="1.6"/>
+              <text x="150" y="92" text-anchor="middle" font-size="11" fill="var(--tinta-suave)" font-family="var(--mono)" font-style="italic">…decisión</text>
+              <!-- rama 2 -->
+              <path d="M324 60 C 300 86, 286 96, 282 118" fill="none" stroke="var(--tinta-tenue)" stroke-width="1.6"/>
+              <text x="300" y="96" text-anchor="middle" font-size="11" fill="var(--tinta-suave)" font-family="var(--mono)" font-style="italic">…el balón</text>
+              <!-- rama 3 -->
+              <path d="M356 60 C 396 86, 432 96, 452 118" fill="none" stroke="var(--tinta-tenue)" stroke-width="1.6"/>
+              <text x="420" y="96" text-anchor="middle" font-size="11" fill="var(--tinta-suave)" font-family="var(--mono)" font-style="italic">…juramento</text>
+              <!-- rama 4 (genérica) -->
+              <path d="M384 60 C 520 82, 600 96, 616 118" fill="none" stroke="var(--tinta-tenue)" stroke-width="1.6" stroke-dasharray="5 4"/>
+              <text x="582" y="92" text-anchor="middle" font-size="11" fill="var(--tinta-suave)" font-family="var(--sans)" font-style="italic">(sin patrón)</text>
+
+              <!-- nodos de situación, todos en K -->
+              <!-- 1 decidir -->
+              <rect x="22" y="120" width="148" height="56" rx="11" fill="var(--eje-k)" opacity=".14"/>
+              <rect x="22" y="120" width="148" height="56" rx="11" fill="none" stroke="var(--eje-k)" stroke-width="1.6"/>
+              <text x="96" y="142" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">accion_decidir</text>
+              <text x="96" y="160" text-anchor="middle" font-size="10" fill="var(--tinta-suave)" font-family="var(--sans)">comité · sala de reuniones</text>
+
+              <!-- 2 posesion -->
+              <rect x="200" y="120" width="164" height="56" rx="11" fill="var(--eje-k)" opacity=".14"/>
+              <rect x="200" y="120" width="164" height="56" rx="11" fill="none" stroke="var(--eje-k)" stroke-width="1.6"/>
+              <text x="282" y="142" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">recuperar_posesion</text>
+              <text x="282" y="160" text-anchor="middle" font-size="10" fill="var(--tinta-suave)" font-family="var(--sans)">delantero · cancha</text>
+
+              <!-- 3 juramento -->
+              <rect x="394" y="120" width="158" height="56" rx="11" fill="var(--eje-k)" opacity=".14"/>
+              <rect x="394" y="120" width="158" height="56" rx="11" fill="none" stroke="var(--eje-k)" stroke-width="1.6"/>
+              <text x="473" y="142" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">acto_juramentacion</text>
+              <text x="473" y="160" text-anchor="middle" font-size="10" fill="var(--tinta-suave)" font-family="var(--sans)">alcalde · municipio</text>
+
+              <!-- 4 consumir -->
+              <rect x="558" y="120" width="100" height="56" rx="11" fill="var(--eje-k)" opacity=".22"/>
+              <rect x="558" y="120" width="100" height="56" rx="11" fill="none" stroke="var(--eje-k)" stroke-width="2.2"/>
+              <text x="608" y="142" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">consumir</text>
+              <text x="608" y="160" text-anchor="middle" font-size="10" fill="var(--tinta-suave)" font-family="var(--sans)">cliente · refresco</text>
+
+              <!-- firmas de roles bajo cada nodo -->
+              <text x="96"  y="200" text-anchor="middle" font-size="11" fill="var(--tinta)" font-family="var(--mono)">[agente, tema]</text>
+              <text x="282" y="200" text-anchor="middle" font-size="11" fill="var(--tinta)" font-family="var(--mono)">[agente, tema]</text>
+              <text x="473" y="200" text-anchor="middle" font-size="11" fill="var(--tinta)" font-family="var(--mono)">[agente, paciente]</text>
+              <text x="608" y="200" text-anchor="middle" font-size="11" fill="var(--tinta)" font-family="var(--mono)">[agente, tema]</text>
+
+              <!-- banda K -->
+              <line x1="22" y1="226" x2="658" y2="226" stroke="var(--eje-k)" stroke-width="2" opacity=".4"/>
+              <rect x="22" y="236" width="26" height="26" rx="6" fill="var(--eje-k)"/>
+              <text x="35" y="254" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">K</text>
+              <text x="56" y="248" font-size="12.5" fill="var(--tinta)" font-weight="600">cuál · el zócalo de tipos</text>
+              <text x="56" y="262" font-size="10.5" fill="var(--tinta-tenue)">cada situación aterriza como una clase distinta</text>
+
+              <!-- nota de orden -->
+              <text x="340" y="312" text-anchor="middle" font-size="12" fill="var(--tinta-suave)" font-family="var(--sans)">El parser prueba de lo <tspan font-weight="700" fill="var(--tinta)">específico</tspan> (izquierda, con patrón) a lo <tspan font-weight="700" fill="var(--tinta)">genérico</tspan> (derecha, sin patrón).</text>
+              <text x="340" y="334" text-anchor="middle" font-size="11" fill="var(--tinta-tenue)" font-family="var(--sans)">Un mismo verbo, cuatro firmas, cuatro tipos: la polisemia se resuelve en el diccionario, no en la base de datos.</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 14.2.</span> Resolución de la polisemia de <em>tomar</em>.
+            El complemento (decisión, balón, juramento, o ninguno) desambigua entre cuatro unidades
+            léxicas que conducen a cuatro tipos de situación distintos en el eje
+            <span class="eje-rotulo"><span class="eje eje--k">K</span></span>, cada uno con su propia
+            firma de roles. El patrón genérico (a trazos) actúa solo como red de seguridad.</figcaption>
+        </figure>
+
+        <p>La consecuencia arquitectónica es la que da título al capítulo. La complejidad del lenguaje no
+          se elimina —sería imposible— sino que se <strong>traslada al lugar correcto</strong>: al
+          diccionario. Un modelador de datos puede registrar un nuevo significado de <em>tomar</em>
+          —«tomar un préstamo», por ejemplo— agregando una entrada de texto, sin tocar una sola línea
+          del núcleo. La base de datos sigue siendo ignorante sobre el español; el lexicon hace todo el
+          trabajo lingüístico.</p>
+
+        <h2>Dos clases de alias: por rol y por dominio</h2>
+
+        <p>Hasta aquí los aliases han sido <strong>por rol</strong>: dentro de la entrada de
+          <code>vender</code>, «vendedor» equivale a <code>agente</code>. Pero hay un segundo nivel de
+          traducción, indispensable para que el modelo funcione de verdad en una empresa. Hay palabras
+          que aplican <em>transversalmente</em> a todo un dominio, sin importar qué verbo se use. Una tienda
+          siempre habla de «vendedor», «boleta» y «caja»; una clínica siempre habla de «paciente»,
+          «historia» y «diagnóstico». Repetir esos aliases en cada entrada sería absurdo. Para eso el
+          lexicon admite <strong>dialectos de dominio</strong>: un pequeño archivo de traducción que se
+          carga encima del catálogo base.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">dialecto de dominio</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="json">{
+  "dominio": "tienda_central",
+  "aliases_de_dominio": {
+    "vendedor":      "agente",
+    "boleta":        "comprobante",
+    "caja":          "lugar_de",
+    "catálogo":      "catalogo",
+    "despachar":     "verbo_vender",
+    "talla":         "atributo_medida"
+  }
+}</code></pre>
+        </div>
+
+        <p>Con este dialecto cargado, un vendedor puede escribir «despaché una camiseta talla M en la caja
+          dos» y el sistema traduce «despaché» al verbo <code>vender</code>, «caja» al rol
+          <code>lugar_de</code> y «talla» al atributo de medida —todo sin que ninguna entrada de
+          verbo mencione la palabra «caja». El núcleo permanece intacto, pero la tienda, la clínica y el
+          municipio sienten, cada uno, que el software fue hecho a su medida. Es el mismo motor universal
+          hablando tres jergas distintas.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Capas de alias</span>
+          Los aliases por rol son <em>locales</em> a un verbo; los de dominio son <em>globales</em> a un
+          gremio. El lexicon consulta primero el dialecto cargado y luego la entrada del verbo: lo
+          específico del dominio puede afinar lo genérico del catálogo.
+        </aside>
+
+        <h2>A hombros de gigantes</h2>
+
+        <p>Sería ingenuo —y arrogante— presentar el lexicon como una invención sin ancestros. La
+          lingüística computacional lleva tres décadas construyendo catálogos inmensos con esta misma
+          lógica de verbos, roles y firmas. Cualquier implementación seria del lexicon debería
+          alimentarse de ellos en lugar de empezar de cero.</p>
+
+        <div class="caja caja--precedente revelar">
+          <p class="caja-tit">Precedente · FrameNet, VerbNet y PropBank</p>
+          <p><strong>FrameNet</strong> (Universidad de Berkeley, años noventa) clasifica el idioma en
+            <em>escenarios conceptuales</em> o <em>frames</em>. Su escenario de «Comercio» define roles
+            predefinidos como <em>Buyer</em>, <em>Seller</em> y <em>Goods</em> —casi calcados de nuestra
+            entrada de <code>vender</code>. Sus más de mil doscientos escenarios son una mina para poblar
+            la caja <strong>K</strong> con tipos de situación ya pensados por lingüistas.</p>
+          <p><strong>VerbNet</strong> (Universidad de Pensilvania) agrupa miles de verbos del inglés que
+            comparten una misma estructura lógica —verbos de transferencia, verbos de encuentro, verbos
+            de cambio de estado— de modo que un verbo nuevo hereda la firma de su clase en lugar de
+            definirse a mano.</p>
+          <p style="margin:0"><strong>PropBank</strong> prioriza la cobertura: etiqueta masivamente
+            textos reales con roles genéricos (<code>Arg0</code> a <code>Arg5</code>). Es menos elegante,
+            pero su escala lo convierte en la base preferida para <em>entrenar</em> modelos modernos a
+            extraer estructura argumental.</p>
+        </div>
+
+        <p>WQuestions no compite con estas obras: actúa como una <strong>capa de agregación</strong> por
+          encima de ellas. Se pueden extraer las signaturas de FrameNet, alinear las clases de VerbNet y
+          usar los datos de PropBank para entrenar el extractor. El camino, en buena medida, ya está
+          pavimentado; lo que aporta el lexicon es atarlo todo a un catálogo único de roles tipados por
+          eje, y exponerlo con una sola interfaz.</p>
+
+        <h2>Un vistazo al catálogo en acción</h2>
+
+        <p>Para que esto no quede en abstracto, vale la pena ver varias entradas juntas, de dominios sin
+          relación entre sí. Mientras las recorres, fíjate en tres cosas: que los roles se
+          <em>reciclan</em>, que los aliases cambian con el gremio aunque el esqueleto no, y que los
+          casos «raros» —verbos sin agente, verbos invertidos— encajan sin forzar nada.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">lexicon · cuatro dominios</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="json">{
+  "vacunar": {
+    "tipo_situacion": "accion_vacunar",
+    "roles": {
+      "agente":      ["enfermera", "personal sanitario"],
+      "paciente":    ["paciente", "vacunado"],
+      "tema":        ["vacuna", "antígeno"]
+    },
+    "obligatorios": ["agente", "paciente", "tema"],
+    "ejemplo": "La enfermera vacunó a 47 niños con la triple viral el sábado"
+  },
+
+  "multar": {
+    "tipo_situacion": "accion_multar",
+    "roles": {
+      "agente":          ["autoridad", "ente regulador"],
+      "paciente":        ["multado", "infractor"],
+      "monto":           ["importe de la multa"],
+      "justificado_por": ["norma aplicada", "artículo"]
+    },
+    "obligatorios": ["agente", "paciente", "monto", "justificado_por"],
+    "ejemplo": "La municipalidad multó al local por ocupar la vereda"
+  },
+
+  "invocar": {
+    "tipo_situacion": "accion_invocar_funcion",
+    "roles": {
+      "agente":      ["llamador", "cliente API", "el modelo"],
+      "tema":        ["función invocada", "herramienta"]
+    },
+    "obligatorios": ["agente", "tema"],
+    "ejemplo": "El modelo invocó la función accion_vender con los parámetros extraídos"
+  },
+
+  "llover": {
+    "tipo_situacion": "evento_meteorologico",
+    "roles": {
+      "lugar_de":    ["región", "ciudad"],
+      "intensidad":  ["leve", "moderada", "torrencial"]
+    },
+    "obligatorios": [],
+    "notas": "Verbo impersonal: no exige agente ni ningún rol obligatorio.",
+    "ejemplo": "Llovió torrencialmente sobre la ciudad durante seis horas"
+  }
+}</code></pre>
+        </div>
+
+        <p>El catálogo entero, mirado en perspectiva, revela tres cosas que valen oro para quien
+          implementa.</p>
+
+        <div class="rejilla-3 revelar">
+          <div class="tarjeta">
+            <h4><span class="eje eje--q">1</span>&nbsp; Los mismos cables, siempre</h4>
+            <p style="margin:0;font-size:.93rem">Vacunar, multar, invocar y vender comparten un puñado de
+              roles —<code>agente</code>, <code>tema</code>, <code>paciente</code>,
+              <code>lugar_de</code>—. El catálogo base de roles basta para dominios que no se parecen en
+              nada.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--o">2</span>&nbsp; Los aliases son el poder</h4>
+            <p style="margin:0;font-size:.93rem">Lo que distingue salud de banca no son los códigos
+              internos, sino las palabras naturales. «Enfermera» y «autoridad» mapean ambos a
+              <code>agente</code>; «vacuna» y «factura», ambos a <code>tema</code>. La base de datos
+              ignora el negocio.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--k">3</span>&nbsp; Lo raro también encaja</h4>
+            <p style="margin:0;font-size:.93rem"><code>llover</code> no tiene agente y se modela sin
+              forzar nada: la lista de obligatorios queda vacía. Un agente de IA como
+              <code>invocar</code> ocupa el mismo rol <code>agente</code> que un humano, tal como anticipó
+              la regla de agencia contextual.</p>
+          </div>
+        </div>
+
+        <p>Un sistema empresarial maduro puede tener un lexicon de varios miles de entradas. Las que
+          acabas de ver son apenas el cimiento, pero ya muestran el patrón: el conocimiento del dominio
+          vive en texto declarativo, no en código, y crece agregando entradas, no reescribiendo el
+          motor.</p>
+
+        <h2>Qué gana quien lo implementa</h2>
+
+        <p>Conviene cerrar nombrando, sin diplomacias, la diferencia entre tener un lexicon y no tenerlo.</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">El lexicon en producción</p>
+          <p><strong>Habla el idioma real de tu gente.</strong> Sin lexicon, habría que enseñarle a cada
+            empleado los campos robóticos del sistema. Con él, un vendedor escribe «el cliente tomó
+            la camiseta visitante» y el hecho queda registrado en la jerga de la tienda, sin capacitación.</p>
+          <p><strong>Es la puerta de entrada de la IA.</strong> El lexicon ya tiene la forma de un
+            catálogo de <em>function calling</em>. Un modelo conectado a él empieza a redactar y auditar
+            hechos sin que nadie reprograme el sistema: basta serializarlo y entregarlo.</p>
+          <p><strong>Desambigua antes de escribir en disco.</strong> La polisemia —el caos de
+            <em>tomar</em>— se resuelve en el diccionario. La base de datos recibe siempre hechos
+            limpios, ya etiquetados con su tipo exacto en <strong>K</strong>.</p>
+          <p style="margin:0"><strong>Escala agregando texto.</strong> Abrir un dominio nuevo —logística,
+            por decir— no exige crear cuarenta tablas: exige añadir un bloque de verbos al lexicon. El
+            motor central hereda ese conocimiento de inmediato.</p>
+        </div>
+
+        <p>La genialidad de los siete ejes es el corazón del modelo, sí. Pero su <strong>adopción</strong>
+          —el que una clínica, un banco o una tienda lo usen sin sentir que cambiaron de idioma— depende
+          entera y exclusivamente de este traductor. El catálogo es el motor; el lexicon es el volante.
+          Y nadie conduce agarrando el motor.</p>
+
+        <p class="cita-destacada revelar">Un compilador no le pide al programador que escriba en binario.
+          El lexicon no le pide al usuario que escriba en canónico. Esa es toda la diferencia entre un
+          modelo elegante y un modelo que la gente usa.<cite>La tesis del capítulo</cite></p>
+
+        <p>Nos queda un frente abierto. El lexicon resuelve la polisemia y la jerga, pero el lenguaje
+          guarda trampas más finas: la negación, la modalidad, el tiempo verbal que no coincide con el
+          tiempo del hecho, las metáforas que ningún diccionario anticipa. Es hora de poner el modelo
+          completo —ejes, hecho atómico, lexicon— a prueba contra los casos que de verdad duelen. Eso es
+          el próximo capítulo.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="13-verbo.html"><span class="dir">← Anterior</span><span class="tit">El verbo como signatura</span></a>
+      <a class="sig" href="15-bajo-presion.html"><span class="dir">Siguiente →</span><span class="tit">El modelo bajo presión</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

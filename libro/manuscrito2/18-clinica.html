@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 18 · Una historia clínica — WQuestions</title>
+  <meta name="description" content="Un dominio nuevo desde cero: una consulta médica con diagnóstico, prescripción y control futuro. La metodología de elicitación, el arte de qué reificar y la vigencia de un diagnóstico en el tiempo.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'18'">
+      <header class="portada-cap">
+        <p class="parte">Parte V · En la práctica</p>
+        <div class="num-cap">18</div>
+        <h1>Una historia clínica</h1>
+        <p class="lede">El spa y el taxi eran negocios transaccionales: eventos que ocurren, se
+          cobran y se olvidan. La medicina es lo contrario. Aquí lo valioso no es la cita, sino el
+          conocimiento denso que nace dentro de ella —y que tiene que sobrevivir décadas.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Son las 09:40 de un martes en un consultorio de cardiología. El paciente
+          —el mismo Vega que meses atrás entró por urgencias con una fibrilación— llega ahora a un
+          control de rutina. No hay drama: se sienta, cuenta que duerme mal y que a veces siente el
+          corazón «a destiempo», la doctora le toma la presión, repasa su última analítica, confirma
+          que la hipertensión que arrastra desde el episodio agudo sigue ahí pero algo peor, ajusta
+          la dosis de un fármaco, anota una contraindicación que el paciente no conocía y agenda otro
+          control en treinta días. Quince minutos. Cuando Vega sale por la puerta, la cita ya
+          terminó; pero casi nada de lo que importa terminó con ella. El diagnóstico seguirá vigente
+          un año, la prescripción habrá que reevaluarla mes a mes, la alergia recién descubierta
+          deberá gritar cada vez que alguien intente recetarle ese fármaco. Esos quince minutos
+          dejaron un sedimento que un médico distinto, en un hospital distinto, dentro de cinco años,
+          tendrá que poder leer sin ambigüedad. Ese sedimento es el examen de este capítulo.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">El cambio de marcha</span>
+          Los dos dominios anteriores eran <em>transaccionales</em>: la venta del spa, el viaje del
+          taxi. El valor estaba en la línea de tiempo. En la medicina el valor está en el peso
+          intelectual de cada decisión, y ese peso no caduca cuando termina la cita.
+        </aside>
+
+        <p>Hasta aquí, la Parte V ha modelado negocios cuyo corazón es la transacción. Una sesión de
+          spa empieza, termina, se cobra y el mundo sigue girando; un viaje en taxi ocurre, se paga y
+          se archiva. Modelarlos fue, en buena medida, aprender a usar bien las herramientas y luego
+          repetir la fórmula cambiando las palabras del lexicon. La medicina no concede esa comodidad.
+          Una consulta es un evento, sí, pero a nadie le interesa cuánto duró: lo que interesa es el
+          <strong>contenido</strong> que se produjo dentro —un diagnóstico, una receta, una alerta de
+          alergia, un control programado—, y ese contenido tiene que vivir mucho más que la cita que
+          lo engendró.</p>
+
+        <p>Por eso este capítulo cambia de foco. No vamos a presumir de soluciones ya hechas: vamos a
+          mostrar <em>cómo se modela un dominio nuevo desde cero</em>. La medicina es el banco de
+          pruebas perfecto para esa metodología porque es un campo en el que nadie llega con el
+          esquema resuelto: hay que elicitarlo, decisión a decisión, viendo dónde la intuición
+          humana acierta y dónde la rigidez del modelo nos corrige a tiempo.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">La pregunta que gobierna el capítulo</p>
+          <p style="margin:0">¿Aguanta el modelo un dominio para el que <em>no</em> fue diseñado, sin
+            inventar maquinaria nueva? La apuesta: una consulta médica completa —síntoma, medición,
+            diagnóstico, prescripción y control futuro, con su incertidumbre clínica, su evidencia y
+            su vigencia en el tiempo— cae sobre los mismos siete ejes, las mismas situaciones
+            reificadas y el mismo lexicon que ya conoces. La fricción será mínima. Donde la haya, la
+            mostraré sin maquillaje.</p>
+        </div>
+
+        <h2>Cómo se elicita un dominio que no conoces</h2>
+
+        <p>Modelar un dominio nuevo no empieza escribiendo tripletas. Empieza con tres preguntas que
+          uno le hace al negocio, en este orden, antes de tocar el teclado. Son la columna vertebral
+          de la metodología, y conviene enunciarlas porque sirven igual para una clínica que para una
+          aseguradora o una fábrica.</p>
+
+        <div class="rejilla-3 revelar">
+          <div class="tarjeta">
+            <p class="emoji">🗂️</p>
+            <h4>¿Cuál es el evento ancla?</h4>
+            <p style="margin:0;font-size:.93rem">El acontecimiento alrededor del cual orbita todo lo
+              demás. En el spa era la venta; aquí es <b>la consulta</b>. De él colgarán las demás
+              piezas.</p>
+          </div>
+          <div class="tarjeta">
+            <p class="emoji">🧩</p>
+            <h4>¿Qué nace dentro del evento?</h4>
+            <p style="margin:0;font-size:.93rem">Los «objetos de información» que la consulta produce:
+              síntoma, medición, diagnóstico, prescripción, control. Cada uno con vida propia.</p>
+          </div>
+          <div class="tarjeta">
+            <p class="emoji">🔮</p>
+            <h4>¿Sobre qué se preguntará mañana?</h4>
+            <p style="margin:0;font-size:.93rem">La prueba decisiva de qué merece volverse entidad. Si
+              alguien va a interrogar un dato en el futuro, ese dato necesita identidad propia.</p>
+          </div>
+        </div>
+
+        <p>La tercera pregunta es la más sutil y la dejaremos para el final del capítulo, porque es la
+          que de verdad separa a quien modela bien de quien acumula campos. Por ahora basta con la
+          primera: el evento ancla. En medicina, ese evento es la consulta.</p>
+
+        <h2>La consulta como carpeta maestra</h2>
+
+        <p>Igual que en el taxi un <code>viaje</code> abrazaba a todos sus pasos menudos, la consulta
+          médica actúa como una gran carpeta articuladora. Una revisión típica produce cinco piezas
+          internas, y conviene nombrarlas como las nombraría el propio médico:</p>
+
+        <div class="columnas">
+          <p><b>1 · El síntoma.</b> Lo que dice el paciente, en sus palabras: «duermo mal y siento el
+            corazón a destiempo». Subjetivo, fechado, con una intensidad que mañana querremos
+            comparar.<br>
+            <b>2 · La medición.</b> Los números crudos que toma la doctora: presión en 148/95. Objetivos,
+            con unidad y momento.<br>
+            <b>3 · El diagnóstico.</b> La conclusión clínica: hipertensión de grado 2. Una inferencia,
+            no un hecho duro, y con fecha de caducidad.</p>
+          <p><b>4 · La prescripción.</b> La conducta indicada: subir el antihipertensivo a 20&nbsp;mg,
+            una vez al día. Tiene un porqué, una finalidad y un control de seguridad.<br>
+            <b>5 · El control.</b> El plan a futuro: nueva cita en treinta días. No es algo que pasó,
+            sino algo <em>previsto</em>, y el sistema debe saber distinguirlo de lo real.</p>
+        </div>
+
+        <p>En el modelo, estas cinco piezas <strong>no son campos de texto</strong> de la consulta.
+          Son cinco situaciones reificadas independientes que cuelgan del evento ancla con el viejo y
+          confiable cable <code>parte_de</code>. La consulta reúne; cada pieza vive su propia vida.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(consulta_8842) ∈ O
+  instancia_de : consulta_cardiologia    # K · qué clase de evento es
+  agente       : dra_navarro             # Q · quién atiende
+  paciente     : vega                    # Q · a quién se atiende
+  lugar_de     : consultorio_card_2      # L · dónde ocurre
+  inicio       : 2026-06-09T09:40-05:00  # T · cuándo
+  motivo       : control_hipertension    # K · por qué viene
+
+(sintoma_8842    ∈ O,  parte_de,  consulta_8842)
+(medicion_8842   ∈ O,  parte_de,  consulta_8842)
+(diag_hta_8842   ∈ O,  parte_de,  consulta_8842)
+(prescrip_8842   ∈ O,  parte_de,  consulta_8842)
+(control_8842    ∈ O,  parte_de,  consulta_8842)</code></pre>
+        </div>
+
+        <p>La arquitectura no se inmuta: una entidad grande que contiene un racimo de sub-situaciones,
+          exactamente como la venta del spa contenía sus líneas. Que la consulta merezca reificarse no
+          es un capricho —cumple de sobra las condiciones para volverse situación en <code>O</code>:
+          agrupa varias partes, está fechada, tiene participantes con roles y, sobre todo, otras cosas
+          le harán referencia—. Lo que vuelve fascinante a la medicina no es el contenedor, sino el
+          interior de cada pieza.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Recordatorio · D4</span>
+          Reificar la consulta —convertir el evento en una entidad de pleno derecho en <code>O</code>—
+          es justo lo que la regla de situaciones autoriza cuando un evento agrupa partes, lleva
+          participantes y será referenciado por otros hechos. La condición se enunció al tratar las
+          situaciones; aquí la cobramos.
+        </aside>
+
+        <!-- FIGURA SVG 1: la consulta reificada con sus participantes y sub-situaciones -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 392" class="svg-eje" role="img"
+                 aria-label="La consulta reificada en el centro, con sus participantes en los ejes quién, dónde y cuándo, y sus cinco sub-situaciones colgando con el cable parte de">
+              <defs>
+                <marker id="flecha16a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+                  <path d="M0 0 L9 4.5 L0 9 z" fill="var(--eje-m)"></path>
+                </marker>
+              </defs>
+
+              <!-- nodo central: la consulta (O) -->
+              <circle cx="330" cy="120" r="52" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="2.4"></circle>
+              <text x="330" y="113" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-o)">consulta_8842</text>
+              <text x="330" y="131" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">el evento ancla · O</text>
+
+              <!-- participantes: Q paciente -->
+              <g font-family="var(--sans)">
+                <rect x="22" y="24" width="150" height="40" rx="9" fill="var(--eje-q)" opacity=".12"></rect>
+                <rect x="32" y="33" width="22" height="22" rx="6" fill="var(--eje-q)"></rect>
+                <text x="43" y="49" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Q</text>
+                <text x="62" y="42" font-size="11" font-weight="700" fill="var(--eje-q)">paciente</text>
+                <text x="62" y="57" font-size="10.5" fill="var(--tinta-suave)" font-family="var(--mono)">vega</text>
+                <line x1="172" y1="48" x2="282" y2="100" stroke="var(--eje-q)" stroke-width="1.6" stroke-dasharray="3 4" opacity=".7"></line>
+              </g>
+              <!-- participantes: Q agente -->
+              <g font-family="var(--sans)">
+                <rect x="22" y="98" width="150" height="40" rx="9" fill="var(--eje-q)" opacity=".12"></rect>
+                <rect x="32" y="107" width="22" height="22" rx="6" fill="var(--eje-q)"></rect>
+                <text x="43" y="123" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Q</text>
+                <text x="62" y="116" font-size="11" font-weight="700" fill="var(--eje-q)">agente</text>
+                <text x="62" y="131" font-size="10.5" fill="var(--tinta-suave)" font-family="var(--mono)">dra_navarro</text>
+                <line x1="172" y1="118" x2="278" y2="118" stroke="var(--eje-q)" stroke-width="1.6" stroke-dasharray="3 4" opacity=".7"></line>
+              </g>
+              <!-- participantes: L lugar -->
+              <g font-family="var(--sans)">
+                <rect x="488" y="40" width="150" height="40" rx="9" fill="var(--eje-l)" opacity=".12"></rect>
+                <rect x="498" y="49" width="22" height="22" rx="6" fill="var(--eje-l)"></rect>
+                <text x="509" y="65" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">L</text>
+                <text x="528" y="58" font-size="11" font-weight="700" fill="var(--eje-l)">lugar_de</text>
+                <text x="528" y="73" font-size="10.5" fill="var(--tinta-suave)" font-family="var(--mono)">consultorio_2</text>
+                <line x1="488" y1="62" x2="382" y2="104" stroke="var(--eje-l)" stroke-width="1.6" stroke-dasharray="3 4" opacity=".7"></line>
+              </g>
+              <!-- participantes: T tiempo -->
+              <g font-family="var(--sans)">
+                <rect x="488" y="100" width="150" height="40" rx="9" fill="var(--eje-t)" opacity=".12"></rect>
+                <rect x="498" y="109" width="22" height="22" rx="6" fill="var(--eje-t)"></rect>
+                <text x="509" y="125" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">T</text>
+                <text x="528" y="118" font-size="11" font-weight="700" fill="var(--eje-t)">inicio</text>
+                <text x="528" y="133" font-size="10.5" fill="var(--tinta-suave)" font-family="var(--mono)">09:40 · 9 jun</text>
+                <line x1="488" y1="120" x2="382" y2="120" stroke="var(--eje-t)" stroke-width="1.6" stroke-dasharray="3 4" opacity=".7"></line>
+              </g>
+
+              <!-- cinco sub-situaciones colgando con parte_de -->
+              <g font-family="var(--sans)">
+                <!-- síntoma -->
+                <rect x="20" y="232" width="116" height="58" rx="10" fill="var(--eje-o)" opacity=".10"></rect>
+                <text x="78" y="256" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-o)">síntoma</text>
+                <text x="78" y="272" text-anchor="middle" font-size="9.5" fill="var(--tinta-suave)">lo que dice</text>
+                <line x1="78" y1="232" x2="300" y2="166" stroke="var(--eje-m)" stroke-width="1.6" marker-end="url(#flecha16a)"></line>
+                <!-- medición -->
+                <rect x="148" y="232" width="116" height="58" rx="10" fill="var(--eje-o)" opacity=".10"></rect>
+                <text x="206" y="256" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-o)">medición</text>
+                <text x="206" y="272" text-anchor="middle" font-size="9.5" fill="var(--tinta-suave)">148/95</text>
+                <line x1="206" y1="232" x2="312" y2="170" stroke="var(--eje-m)" stroke-width="1.6" marker-end="url(#flecha16a)"></line>
+                <!-- diagnóstico -->
+                <rect x="276" y="232" width="116" height="58" rx="10" fill="var(--eje-k)" opacity=".12"></rect>
+                <text x="334" y="256" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-k)">diagnóstico</text>
+                <text x="334" y="272" text-anchor="middle" font-size="9.5" fill="var(--tinta-suave)">HTA grado 2</text>
+                <line x1="334" y1="232" x2="332" y2="172" stroke="var(--eje-m)" stroke-width="1.6" marker-end="url(#flecha16a)"></line>
+                <!-- prescripción -->
+                <rect x="404" y="232" width="116" height="58" rx="10" fill="var(--eje-o)" opacity=".10"></rect>
+                <text x="462" y="256" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-o)">prescripción</text>
+                <text x="462" y="272" text-anchor="middle" font-size="9.5" fill="var(--tinta-suave)">20 mg / día</text>
+                <line x1="462" y1="232" x2="350" y2="170" stroke="var(--eje-m)" stroke-width="1.6" marker-end="url(#flecha16a)"></line>
+                <!-- control -->
+                <rect x="532" y="232" width="116" height="58" rx="10" fill="var(--eje-t)" opacity=".12"></rect>
+                <text x="590" y="256" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-t)">control</text>
+                <text x="590" y="272" text-anchor="middle" font-size="9.5" fill="var(--tinta-suave)">previsto · +30 d</text>
+                <line x1="590" y1="232" x2="362" y2="166" stroke="var(--eje-m)" stroke-width="1.6" marker-end="url(#flecha16a)"></line>
+              </g>
+
+              <!-- rótulo del cable -->
+              <rect x="250" y="200" width="160" height="22" rx="6" fill="var(--eje-m)" opacity=".12"></rect>
+              <text x="330" y="215" text-anchor="middle" font-size="11" font-weight="700" fill="var(--eje-m)" font-family="var(--mono)">parte_de  M(O→O)</text>
+
+              <line x1="60" y1="320" x2="600" y2="320" stroke="var(--linea-fina)" stroke-width="1"></line>
+              <text x="60" y="340" font-size="10.5" fill="var(--tinta-tenue)" font-family="var(--sans)">Q los participantes · L el consultorio · T el momento · O / K las cinco piezas · M el cable que las cuelga del ancla.</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 18.1.</span> La consulta reificada como evento ancla.
+            Arriba, sus participantes repartidos en los ejes (<code>vega</code> y la doctora en
+            <code>Q</code>, el consultorio en <code>L</code>, el momento en <code>T</code>). Abajo,
+            las cinco sub-situaciones que nacen dentro de ella y cuelgan con <code>parte_de</code>.
+            La consulta no «guarda» el diagnóstico como un campo: lo <em>articula</em> como una
+            entidad vecina con vida propia.</figcaption>
+        </figure>
+
+        <h2>El bache: cuando el eje O se queda corto</h2>
+
+        <p>Aquí apareció la primera fricción real al programar el prototipo de este dominio, y vale la
+          pena contarla porque enseña más que cualquier acierto. La intuición humana, al modelar la
+          medición de presión, dice: «el <em>tema</em> de esta medición es la presión arterial». Y al
+          modelar la receta: «el <em>tema</em> de esta prescripción es el fármaco». Parece obvio.</p>
+
+        <p>Pero detente. <strong>«Presión arterial» y «el antihipertensivo» no son objetos físicos con
+          identidad propia.</strong> No puedes guardar «la presión arterial universal» en un cajón:
+          es una <em>magnitud</em>, una categoría teórica. La caja de pastillas que Vega compra en la
+          farmacia sí es un objeto del eje <code>O</code> —tiene lote, vencimiento, ubicación—, pero
+          el concepto científico del fármaco es una <em>clase</em>, un habitante del eje
+          <code>K</code>. El instinto humano mezcla, sin notarlo, lo físico con lo conceptual.</p>
+
+        <p>El catálogo estricto del modelo no se deja engañar. El cable <code>tema</code> tiene una
+          firma que solo admite conectar <code>O</code> con <code>O</code>. Si intento usarlo para
+          apuntar de una medición (en <code>O</code>) hacia la magnitud presión (en <code>K</code>),
+          el sistema aborta con un error de firma y me regaña por mezclar peras con manzanas.</p>
+
+        <div class="caja caja--alerta revelar">
+          <p class="caja-tit">El modelo se niega a aceptar el disparate</p>
+          <p style="margin:0">Conectar una situación de <code>O</code> con una clase de <code>K</code>
+            usando un cable cuya firma exige <code>O→O</code> lanza un <code>SignatureError</code>.
+            No es un estorbo: es la frontera que impide que un dato mal tipado entre al grafo. El
+            error no estaba en el modelo; estaba en mi cabeza, que confunde el objeto concreto con la
+            idea abstracta todo el tiempo. La rigidez de las matemáticas me salvó de un desastre
+            semántico que más tarde habría confundido a cualquier máquina que leyera el expediente.</p>
+        </div>
+
+        <p>¿La salida? No forzar el cable genérico, sino declarar <em>cables de dominio</em>: roles
+          propios de la medicina, diseñados de fábrica para apuntar hacia el eje <code>K</code>. Son
+          parte de la elicitación: cada industria muy técnica reclama un puñado de cables exclusivos
+          para sus conceptos abstractos.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># Mal · forzar el cable genérico "tema" hacia una clase → SignatureError
+# Bien · declarar cables de dominio cuya firma apunta a K
+
+u.assert_fact(medicion_8842, "medida_evaluada",      presion_arterial)  # O → K
+u.assert_fact(prescrip_8842, "medicamento_prescrito", antihipertensivo) # O → K</code></pre>
+        </div>
+
+        <div class="triple" style="flex-wrap:wrap;justify-content:center">
+          <span class="nodo nodo--o"><span>prescrip_8842</span><small>O</small></span>
+          <span class="enlace">medicamento_prescrito<span class="firma">M(O→K)</span></span>
+          <span class="nodo nodo--k"><span>antihipertensivo</span><small>K</small></span>
+        </div>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">Dos lecciones de la fricción</p>
+          <ul class="limpia" style="margin:0">
+            <li style="margin-bottom:.5rem"><b>El catálogo universal cubre casi todo, pero no todo.</b>
+              Los roles base sirven para la inmensa mayoría de los hechos; cada dominio altamente
+              técnico —medicina, química, derecho— pedirá unos pocos cables propios para sus
+              abstracciones. Eso es esperado, no un fallo.</li>
+            <li><b>El error fue del modelador, no del modelo.</b> La firma estricta no es burocracia:
+              es la que distingue «la caja de pastillas» (objeto, <code>O</code>) del «fármaco como
+              concepto» (clase, <code>K</code>). Sin esa distinción, una IA no podría razonar sobre
+              interacciones farmacológicas.</li>
+          </ul>
+        </div>
+
+        <h2>Diseccionar un diagnóstico: duda, evidencia y tiempo</h2>
+
+        <p>Un diagnóstico es la pieza más rica de toda la consulta, porque cruza a la vez tres
+          dimensiones que un sistema de juguete suele aplastar en un solo campo de texto. El modelo
+          las resuelve por separado, sin esfuerzo.</p>
+
+        <h3>1 · El nivel de duda</h3>
+
+        <p>Un diagnóstico casi nunca es una verdad tallada en piedra: es lo que la doctora
+          <em>cree</em> en ese instante, con la evidencia que tiene. Para no perder esa incertidumbre
+          clínica, decoramos la situación con su modalidad epistémica y un estado factual que puede
+          ser <em>sospechado</em>, <em>confirmado</em> o <em>descartado</em>. La diferencia entre
+          «sospecho una arritmia» y «confirmo una arritmia» no es un matiz de prosa: cambia qué se
+          puede recetar y qué hay que vigilar.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(diag_hta_8842, modalidad,       epistemica)   # K · pertenece al saber, no al deseo
+(diag_hta_8842, estatus_factual, confirmado)    # K · sospechado | confirmado | descartado</code></pre>
+        </div>
+
+        <p>Esta es la misma distinción que en el spa separaba la venta real de la mera intención de
+          compra, o que en banca separa una solicitud de un préstamo desembolsado. Que un dato pueda
+          ser «todavía no seguro» sin por eso ser falso es una necesidad que aparece en cada dominio
+          serio.</p>
+
+        <h3>2 · La evidencia</h3>
+
+        <p>Un diagnóstico no nace de la nada: nace de los números. Si la doctora escribe
+          «hipertensión», es porque vio la medición de presión. Esa conexión de causa y efecto no se
+          pierde en un comentario: se ata con un cable causal. Tal como argumentó el capítulo del
+          «por qué», no hay un eje «por qué»; el porqué se reparte en cables distintos, y aquí el que
+          corresponde es el que apunta a la <em>razón</em> que motivó la conclusión.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(diag_hta_8842, motivado_por, medicion_8842)   # M · la medición es la evidencia</code></pre>
+        </div>
+
+        <p>Con ese único cable, la medición deja de ser un número flotando y se vuelve la
+          <strong>evidencia</strong> del diagnóstico. Si un auditor médico o una máquina revisan el
+          expediente y preguntan «¿en qué se basó este diagnóstico?», la respuesta no exige
+          interpretar prosa: se lee siguiendo el cable. La justificación viaja con el dato.</p>
+
+        <h3>3 · El viaje en el tiempo</h3>
+
+        <p>Esta es la dimensión que separa el software hospitalario de verdad del software de juguete.
+          Los diagnósticos caducan y mutan. Supongamos que tras el episodio agudo, en marzo, a Vega se
+          le asignó hipertensión de grado&nbsp;1. En esta consulta de junio la doctora confirma que
+          empeoró: ahora es grado&nbsp;2. Si se reescribiera el diagnóstico viejo encima del nuevo, se
+          borraría la historia del paciente —un crimen, no solo de negligencia clínica, sino de
+          imposibilidad forense—.</p>
+
+        <p>La regla de vigencia entra a salvarnos. No se sobrescribe nada: se guardan <strong>ambos</strong>
+          diagnósticos, cada uno con su rango de validez, y se los conecta para que la cronología sea
+          legible.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Vigencia · D6</span>
+          Una propiedad que cambia en el tiempo —el grado de una hipertensión— no se edita: se reifica
+          con un rango <code>inicio</code>/<code>fin</code>. La verdad pasada se conserva intacta. Esa
+          es la regla de vigencia, enunciada al tratar las situaciones; aquí decide si el sistema
+          puede o no responder a un juez.
+        </aside>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># El diagnóstico viejo: válido desde marzo, cerrado cuando se emite el nuevo
+u.assert_fact(diag_marzo, "diagnostico_asignado", hta_grado_1,
+              valid_from="2026-03-12", valid_to="2026-06-09")
+
+# El diagnóstico nuevo: vigente desde hoy, sin fin (sigue activo)
+u.assert_fact(diag_hta_8842, "diagnostico_asignado", hta_grado_2,
+              valid_from="2026-06-09")
+
+# Y se enlazan, para que la cronología no quede a interpretación
+u.assert_fact(diag_hta_8842, "rectifica", diag_marzo)   # M · este corrige a aquel</code></pre>
+        </div>
+
+        <p>El premio de modelarlo así es una capacidad forense que viene de fábrica. Si mañana hay una
+          demanda y el juez pregunta <em>«¿qué sabía el hospital sobre este paciente en abril?»</em>,
+          la base de datos no devuelve el estado de hoy: devuelve exactamente la verdad clínica que
+          regía en abril —grado&nbsp;1—, ignorando todo lo que se supo después. Una consulta con un
+          filtro temporal basta.</p>
+
+        <!-- FIGURA SVG 2: la vigencia del diagnóstico en el tiempo (D6) -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 312" class="svg-eje" role="img"
+                 aria-label="Línea de tiempo de la vigencia de un diagnóstico: hipertensión grado 1 válida de marzo a junio, sustituida por grado 2 desde junio, con una consulta en abril que devuelve grado 1">
+              <!-- eje de tiempo -->
+              <line x1="40" y1="250" x2="620" y2="250" stroke="var(--eje-t)" stroke-width="2"></line>
+              <polygon points="620,250 612,246 612,254" fill="var(--eje-t)"></polygon>
+              <text x="612" y="278" text-anchor="end" font-size="11" fill="var(--eje-t)" font-family="var(--sans)">tiempo →</text>
+
+              <!-- marcas de tiempo -->
+              <g font-family="var(--mono)" font-size="10.5" fill="var(--tinta-suave)" text-anchor="middle">
+                <line x1="110" y1="245" x2="110" y2="255" stroke="var(--eje-t)" stroke-width="1.4"></line>
+                <text x="110" y="270">mar 2026</text>
+                <line x1="300" y1="245" x2="300" y2="255" stroke="var(--eje-t)" stroke-width="1.4"></line>
+                <text x="300" y="270">abr 2026</text>
+                <line x1="470" y1="245" x2="470" y2="255" stroke="var(--eje-t)" stroke-width="1.4"></line>
+                <text x="470" y="270">jun 2026</text>
+                <line x1="590" y1="245" x2="590" y2="255" stroke="var(--eje-t)" stroke-width="1.4"></line>
+                <text x="590" y="270">hoy</text>
+              </g>
+
+              <!-- barra diagnóstico grado 1 (vigente mar→jun) -->
+              <rect x="110" y="92" width="360" height="40" rx="9" fill="var(--eje-k)" opacity=".16" stroke="var(--eje-k)" stroke-width="1.6"></rect>
+              <text x="290" y="110" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-k)" font-family="var(--sans)">HTA grado 1</text>
+              <text x="290" y="125" text-anchor="middle" font-size="10" fill="var(--tinta-suave)" font-family="var(--mono)">valid_from: mar · valid_to: jun</text>
+
+              <!-- barra diagnóstico grado 2 (vigente jun→hoy, abierto) -->
+              <rect x="470" y="148" width="150" height="40" rx="9" fill="var(--eje-o)" opacity=".16" stroke="var(--eje-o)" stroke-width="1.6"></rect>
+              <text x="545" y="166" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-o)" font-family="var(--sans)">HTA grado 2</text>
+              <text x="545" y="181" text-anchor="middle" font-size="10" fill="var(--tinta-suave)" font-family="var(--mono)">valid_from: jun · sin fin</text>
+
+              <!-- conector rectifica -->
+              <path d="M 470 132 C 500 138, 460 150, 482 150" fill="none" stroke="var(--eje-m)" stroke-width="1.8" stroke-dasharray="4 3"></path>
+              <text x="470" y="210" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--eje-m)" font-family="var(--mono)">rectifica</text>
+
+              <!-- consulta puntual en abril -->
+              <line x1="300" y1="60" x2="300" y2="250" stroke="var(--eje-q)" stroke-width="1.6" stroke-dasharray="2 4"></line>
+              <circle cx="300" cy="112" r="6" fill="var(--eje-q)"></circle>
+              <g font-family="var(--sans)">
+                <rect x="222" y="30" width="156" height="34" rx="8" fill="var(--eje-q)" opacity=".12"></rect>
+                <text x="300" y="46" text-anchor="middle" font-size="11" font-weight="700" fill="var(--eje-q)">consulta · at = abril</text>
+                <text x="300" y="59" text-anchor="middle" font-size="10" fill="var(--tinta-suave)">devuelve → grado 1</text>
+              </g>
+
+              <text x="40" y="300" font-size="10.5" fill="var(--tinta-tenue)" font-family="var(--sans)">El eje del tiempo es T; las dos verdades son clases en K · O; el cable que las une es M. Nada se sobrescribió.</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 18.2.</span> La vigencia del diagnóstico (D6) sobre la
+            línea de tiempo. El grado&nbsp;1 fue válido de marzo a junio; el grado&nbsp;2 lo sustituye
+            desde junio, con su ventana abierta. El cable <code>rectifica</code> conecta ambos. Una
+            consulta fechada en abril (la línea vertical) atraviesa solo la barra del grado&nbsp;1 y
+            devuelve esa verdad —no la de hoy—. La reconstrucción del pasado es una proyección, no un
+            archivo de respaldo.</figcaption>
+        </figure>
+
+        <h2>La prescripción y la tormenta de los porqués</h2>
+
+        <p>Cuando la doctora ajusta el fármaco, se activan a la vez varias de las fuerzas causales que
+          el modelo distingue. Una receta no es un dato suelto: es una decisión con un motivo, una
+          finalidad y un control de seguridad, y el modelo guarda cada uno en su propio cable en lugar
+          de fundirlos en un comentario.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">pres = ingest_situation(u, lex, "prescribir",
+    roles={
+        "agente":               dra_navarro,
+        "paciente":             vega,
+        "medicamento_prescrito": antihipertensivo,   # O → K
+        "dosis":                "20 mg",
+        "frecuencia":           cada_manana,
+    },
+    sit_id="prescrip_8842",
+)
+
+u.assert_fact(pres, "motivado_por",      diag_hta_8842)        # ← por qué se receta
+u.assert_fact(pres, "con_finalidad",     meta_presion_objetivo) # ← para qué se receta
+u.assert_fact(pres, "verificado_contra", regla_renal_alerta)    # ← qué ley clínica la valida</code></pre>
+        </div>
+
+        <p>Tres respuestas profundas a tres preguntas distintas. La doctora no receta por gusto: lo
+          hace <em>motivada</em> por el diagnóstico, <em>con la finalidad</em> de llevar la presión a
+          una meta, y <em>verificando</em> contra un manual de farmacología que el ajuste no dañe los
+          riñones de un paciente que ya viene comprometido. Tres cables, tres porqués, ningún campo
+          de texto ambiguo.</p>
+
+        <div class="caja caja--definicion revelar">
+          <p class="caja-tit">Contraindicación como objeto, no como código</p>
+          <p style="margin:0">La regla de seguridad —<em>«no combinar este fármaco con tal condición
+            renal»</em>— no es una línea escondida en el código de la aplicación. Es un evento
+            reificado más en el eje <code>O</code>, con su clase, su fármaco implicado, su condición
+            disparadora y su orden. Como cualquier norma, tiene autor y fecha de vigencia. Vive en el
+            grafo, a la vista, y por eso es auditable.</p>
+        </div>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(regla_renal_alerta) ∈ O
+  instancia_de        : contraindicacion_clinica   # K · qué clase de norma es
+  medicamento_implicado: antihipertensivo          # K · sobre qué fármaco recae
+  condicion_gatillo   : funcion_renal_reducida      # K · qué condición la dispara
+  orden_oficial       : revisar_antes_de_recetar    # K · qué exige
+  vigente_desde       : 2025-01-01                   # T · desde cuándo rige
+  emitida_por         : guia_cardiologia_nacional    # Q · qué autoridad la dicta</code></pre>
+        </div>
+
+        <p>Con la regla viviendo en el grafo, la base de datos se vuelve inteligente sin volverse
+          rígida. Cuando la doctora presiona «recetar», un motor externo —o una IA— escanea el grafo,
+          encuentra esta norma, comprueba la función renal del paciente y, si hace falta, levanta una
+          alerta antes de que el daño ocurra. El grafo guarda la verdad; la lógica que la aplica vive
+          afuera. Esa separación es deliberada, igual que en el spa: el modelo no <em>ejecuta</em> la
+          regla de negocio, la deja <em>legible</em> para que quien la ejecute no se equivoque.</p>
+
+        <h2>El control futuro: cuando el dato aún no es real</h2>
+
+        <p>La quinta pieza, el control a treinta días, parece trivial y esconde una sutileza
+          importante. Todavía no ocurrió: es un plan. Si el sistema lo guardara como un hecho
+          consumado, contaminaría cualquier informe —contaríamos como «atendida» una cita que no
+          existe—. El modelo lo marca como <em>previsto</em>, no como <em>real</em>, exactamente con la
+          misma maquinaria de modalidad que usamos para el diagnóstico sospechado o para la intención
+          de compra del spa.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(control_8842) ∈ O
+  instancia_de    : consulta_cardiologia
+  paciente        : vega
+  agente          : dra_navarro
+  inicio_previsto : 2026-07-09           # T · la fecha agendada
+  estatus_factual : previsto             # K · ¡aún no es real!
+  motivado_por    : diag_hta_8842        # M · se controla esta hipertensión</code></pre>
+        </div>
+
+        <p>Gracias a ese único rótulo, el sistema responde sin tropezar tanto «¿qué citas tiene Vega
+          agendadas?» (donde el control aparece) como «¿cuántos pacientes atendió la doctora en
+          junio?» (donde no aparece, porque aún no sucedió). Lo previsto y lo real conviven en el mismo
+          grafo sin confundirse.</p>
+
+        <h2>La historia clínica como serie temporal</h2>
+
+        <p>Hasta aquí hemos diseccionado <em>una</em> consulta. Pero Vega no es una consulta: es un
+          paciente con años de roce con el sistema sanitario. El mismo Vega que entró por urgencias con
+          una fibrilación, el que en marzo recibió su primer diagnóstico de hipertensión, el que hoy
+          vuelve al control de cardiología, y el que —lo veremos enseguida— pasará unos días ingresado.
+          Su identidad es una sola, cosida con el mismo <code>vega</code> que ya recorre la tienda y la
+          clínica; lo que cambia es el rosario de situaciones que cuelgan de ella a lo largo del
+          tiempo. Eso es una <strong>historia clínica</strong>: no un documento, sino una serie
+          temporal de episodios.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Una sola identidad</span>
+          El <code>vega</code> que compra en la tienda y el <code>vega</code> que se atiende en
+          cardiología son la misma entidad en <code>Q</code>. La historia clínica no «posee» al
+          paciente: lo <em>referencia</em>. Por eso un mismo identificador puede cruzar módulos —tienda,
+          urgencias, consulta, ingreso— sin duplicarse jamás.
+        </aside>
+
+        <p>En el modelo, la historia no es una tabla con una fila por visita. Es la proyección de todas
+          las situaciones cuyo <code>paciente</code> es <code>vega</code>, ordenadas por su eje
+          <code>T</code> y filtradas por la vigencia que cada hecho declara. Cada episodio —una urgencia,
+          una analítica, una consulta, un ingreso— es una situación reificada más en <code>O</code> que
+          referencia al mismo paciente y se sitúa en el tiempo. Recuperar «la historia de Vega» es
+          barrer el grafo por ese nodo y leer la cinta cronológica.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple"># Cada episodio es una situación que apunta al MISMO paciente, situada en T
+(urgencias_2403, paciente, vega)   # T: 2026-02-14 · la fibrilación
+(analitica_2511, paciente, vega)   # T: 2026-03-05 · sangre y lípidos
+(consulta_3019, paciente, vega)    # T: 2026-03-12 · 1er dx de HTA grado 1
+(consulta_8842, paciente, vega)    # T: 2026-06-09 · el control de hoy
+(ingreso_9120,  paciente, vega)    # T: 2026-06-14 · el ingreso (más abajo)
+
+# La historia = proyección por paciente, ordenada por T, con la vigencia de cada hecho
+historia = u.timeline(vega, valid_at="2026-06-19")</code></pre>
+        </div>
+
+        <p>La clave es que esa cinta es <strong>bitemporal</strong>: no solo registra <em>cuándo</em>
+          ocurrió cada episodio (el tiempo del eje <code>T</code>), sino <em>desde cuándo y hasta cuándo
+          se tuvo por cierta</em> cada afirmación clínica. Es la misma vigencia (D6) que salvó al
+          diagnóstico de pisarse a sí mismo, ahora aplicada a la historia entera. Por eso podemos
+          preguntar dos cosas distintas: «¿qué le pasó a Vega en abril?» (un corte por el tiempo del
+          hecho) y «¿qué <em>creía saber</em> el hospital sobre Vega en abril?» (un corte por el tiempo
+          del registro). Un expediente de juguete confunde ambas; el grafo las distingue de fábrica.</p>
+
+        <!-- FIGURA SVG 4: línea de tiempo de la historia clínica longitudinal -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 300" class="svg-eje" role="img"
+                 aria-label="Línea de tiempo de la historia clínica de Vega: urgencias en febrero, analítica en marzo, primera consulta con diagnóstico grado 1 en marzo, control de hoy con grado 2 en junio e ingreso hospitalario en junio, todos colgando del mismo paciente">
+              <!-- nodo paciente, raíz de la historia -->
+              <rect x="22" y="118" width="120" height="44" rx="10" fill="var(--eje-q)" opacity=".14" stroke="var(--eje-q)" stroke-width="1.8"></rect>
+              <text x="82" y="138" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-q)" font-family="var(--sans)">vega</text>
+              <text x="82" y="153" text-anchor="middle" font-size="9.5" fill="var(--tinta-suave)" font-family="var(--sans)">una sola identidad · Q</text>
+
+              <!-- eje de tiempo -->
+              <line x1="160" y1="220" x2="630" y2="220" stroke="var(--eje-t)" stroke-width="2"></line>
+              <polygon points="630,220 622,216 622,224" fill="var(--eje-t)"></polygon>
+              <text x="624" y="244" text-anchor="end" font-size="11" fill="var(--eje-t)" font-family="var(--sans)">tiempo →</text>
+
+              <!-- episodios -->
+              <g font-family="var(--sans)">
+                <!-- urgencias -->
+                <line x1="210" y1="220" x2="210" y2="100" stroke="var(--linea-fina)" stroke-width="1" stroke-dasharray="2 3"></line>
+                <circle cx="210" cy="220" r="5.5" fill="var(--eje-o)"></circle>
+                <rect x="166" y="70" width="92" height="36" rx="8" fill="var(--eje-o)" opacity=".12"></rect>
+                <text x="212" y="86" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--eje-o)">urgencias</text>
+                <text x="212" y="99" text-anchor="middle" font-size="9" fill="var(--tinta-suave)">fibrilación</text>
+                <text x="210" y="236" text-anchor="middle" font-size="9.5" fill="var(--tinta-suave)" font-family="var(--mono)">14 feb</text>
+
+                <!-- analítica -->
+                <line x1="300" y1="220" x2="300" y2="130" stroke="var(--linea-fina)" stroke-width="1" stroke-dasharray="2 3"></line>
+                <circle cx="300" cy="220" r="5.5" fill="var(--eje-o)"></circle>
+                <rect x="258" y="112" width="84" height="30" rx="8" fill="var(--eje-o)" opacity=".12"></rect>
+                <text x="300" y="131" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--eje-o)">analítica</text>
+                <text x="300" y="236" text-anchor="middle" font-size="9.5" fill="var(--tinta-suave)" font-family="var(--mono)">5 mar</text>
+
+                <!-- consulta marzo: dx grado 1 -->
+                <line x1="382" y1="220" x2="382" y2="100" stroke="var(--linea-fina)" stroke-width="1" stroke-dasharray="2 3"></line>
+                <circle cx="382" cy="220" r="5.5" fill="var(--eje-k)"></circle>
+                <rect x="338" y="70" width="92" height="36" rx="8" fill="var(--eje-k)" opacity=".14"></rect>
+                <text x="384" y="86" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--eje-k)">consulta</text>
+                <text x="384" y="99" text-anchor="middle" font-size="9" fill="var(--tinta-suave)">dx HTA gr. 1</text>
+                <text x="382" y="236" text-anchor="middle" font-size="9.5" fill="var(--tinta-suave)" font-family="var(--mono)">12 mar</text>
+
+                <!-- control junio: dx grado 2 -->
+                <line x1="500" y1="220" x2="500" y2="130" stroke="var(--linea-fina)" stroke-width="1" stroke-dasharray="2 3"></line>
+                <circle cx="500" cy="220" r="5.5" fill="var(--eje-k)"></circle>
+                <rect x="456" y="112" width="92" height="30" rx="8" fill="var(--eje-k)" opacity=".14"></rect>
+                <text x="502" y="131" text-anchor="middle" font-size="10" font-weight="700" fill="var(--eje-k)">dx gr. 2</text>
+                <text x="500" y="236" text-anchor="middle" font-size="9.5" fill="var(--tinta-suave)" font-family="var(--mono)">9 jun · hoy</text>
+
+                <!-- ingreso junio -->
+                <line x1="590" y1="220" x2="590" y2="100" stroke="var(--linea-fina)" stroke-width="1" stroke-dasharray="2 3"></line>
+                <circle cx="590" cy="220" r="5.5" fill="var(--eje-t)"></circle>
+                <rect x="546" y="70" width="92" height="36" rx="8" fill="var(--eje-t)" opacity=".14"></rect>
+                <text x="592" y="86" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--eje-t)">ingreso</text>
+                <text x="592" y="99" text-anchor="middle" font-size="9" fill="var(--tinta-suave)">contenedor</text>
+                <text x="590" y="236" text-anchor="middle" font-size="9.5" fill="var(--tinta-suave)" font-family="var(--mono)">14 jun</text>
+              </g>
+
+              <!-- cable paciente: del nodo al eje -->
+              <path d="M 142 140 C 165 160, 175 200, 200 215" fill="none" stroke="var(--eje-q)" stroke-width="1.6" stroke-dasharray="3 4" opacity=".7"></path>
+              <text x="150" y="186" font-size="9.5" font-weight="700" fill="var(--eje-q)" font-family="var(--mono)">paciente</text>
+
+              <text x="22" y="288" font-size="10.5" fill="var(--tinta-tenue)" font-family="var(--sans)">Todos los episodios cuelgan del mismo nodo Q; el orden lo da T; cada afirmación lleva su propia vigencia D6.</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 18.4.</span> La historia clínica de Vega como serie
+            temporal de episodios. La identidad del paciente (<code>vega</code>, en <code>Q</code>) es
+            una sola; cada urgencia, analítica, consulta o ingreso es una situación independiente en
+            <code>O</code> que la referencia y se ordena por su eje <code>T</code>. La bitemporalidad
+            (D6) permite leer la cinta «como ocurrió» o «como se creía» en cualquier fecha pasada.</figcaption>
+        </figure>
+
+        <h2>La hospitalización: una situación-marco que contiene eventos</h2>
+
+        <p>El control de hoy detectó algo que no tranquiliza: la presión no cede y el paciente refiere
+          mareos. La doctora decide ingresarlo unos días para vigilancia. Y aquí aparece una estructura
+          que la consulta ya insinuó pero que el ingreso lleva al extremo: una <strong>situación-marco
+          que contiene a otras</strong>. Si la consulta era una carpeta de cinco piezas, la
+          hospitalización es una <em>carpeta de carpetas</em>, una caja con paredes de tiempo dentro de
+          la cual ocurren decenas de eventos menudos —admisión, asignación de cama, signos vitales cada
+          turno, rondas médicas, cada dosis administrada, la evolución diaria— hasta que se cierra con
+          el alta.</p>
+
+        <p>El instinto erróneo sería crear una tabla <code>hospitalizaciones</code> con columnas para
+          «cama», «fecha de alta» y un campo de texto «notas». El modelo no necesita nada de eso. El
+          ingreso es una situación más en <code>O</code>, con su propio identificador fresco, y todo lo
+          que ocurre dentro le cuelga con el mismo cable de siempre: <code>parte_de</code>. La
+          hospitalización no es un registro: es un <em>contenedor</em>.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(ingreso_9120) ∈ O
+  instancia_de : hospitalizacion           # K · qué clase de marco es
+  paciente     : vega                       # Q · a quién se ingresa
+  agente       : dra_navarro                # Q · quién lo indica
+  servicio     : cardiologia                # K · bajo qué servicio
+  cama         : cama_4b_307                # O · la cama asignada (objeto físico)
+  inicio       : 2026-06-14T11:20-05:00     # T · cuándo se admite
+  estatus      : en_curso                   # K · admitido | en_curso | de_alta
+
+# Todo lo que ocurre adentro cuelga del marco con parte_de
+(admision_9120,    ∈ O,  parte_de,  ingreso_9120)   # T: 14 jun 11:20
+(signos_9120_t1,   ∈ O,  parte_de,  ingreso_9120)   # T: 14 jun, ronda mañana
+(ronda_9120_d1,    ∈ O,  parte_de,  ingreso_9120)   # T: 14 jun, visita médica
+(adm_farmaco_9120, ∈ O,  parte_de,  ingreso_9120)   # T: 14 jun, dosis administrada
+(evolucion_9120_d2,∈ O,  parte_de,  ingreso_9120)   # T: 15 jun, nota de evolución
+(alta_9120,        ∈ O,  parte_de,  ingreso_9120)   # T: 17 jun, cierre del marco</code></pre>
+        </div>
+
+        <p>Fíjate en la cama: <code>cama_4b_307</code> es un objeto físico en <code>O</code> —tiene
+          ubicación, ocupación, mantenimiento—, no una etiqueta. Que el ingreso la referencie por
+          <code>L</code>/<code>O</code> y no la copie como texto es lo que permite responder «¿qué camas
+          están libres en cardiología ahora mismo?» sin inventar otra tabla. El servicio
+          (<code>cardiologia</code>), en cambio, es una clase en <code>K</code>: no se interroga su
+          identidad, se usa como categoría.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">El marco también caduca · D6</span>
+          El ingreso tiene <code>inicio</code> pero su <code>fin</code> queda abierto hasta el alta.
+          Mientras está <code>en_curso</code>, su ventana de vigencia no se cierra; el alta no borra el
+          ingreso, le pone <code>fin</code>. Así, «¿quién estaba internado el 15 de junio?» es de nuevo
+          una proyección temporal, no un volcado de la tabla de hoy.
+        </aside>
+
+        <p>El premio de modelar el ingreso como marco es que cada evento interior conserva su contexto
+          sin repetirlo. La dosis administrada el 14 de junio no necesita arrastrar «paciente Vega,
+          servicio cardiología, cama 307»: todo eso se hereda subiendo por <code>parte_de</code> hasta
+          el marco. La trazabilidad es estructural, no copiada.</p>
+
+        <!-- FIGURA SVG 5: la hospitalización como contenedor de eventos en el tiempo -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 340" class="svg-eje" role="img"
+                 aria-label="La hospitalización dibujada como una caja con paredes de tiempo que contiene, en orden, la admisión, la asignación de cama y servicio, los signos vitales y rondas, la medicación administrada, la evolución y, al cierre, el alta, todos unidos al marco por parte de">
+              <!-- caja contenedora con paredes de tiempo -->
+              <rect x="40" y="56" width="580" height="200" rx="14" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="2.2" stroke-dasharray="1 0"></rect>
+              <text x="58" y="44" font-size="13" font-weight="700" fill="var(--eje-o)" font-family="var(--sans)">ingreso_9120 · la hospitalización (marco · O)</text>
+
+              <!-- pared izquierda: admisión / inicio -->
+              <line x1="40" y1="56" x2="40" y2="256" stroke="var(--eje-t)" stroke-width="3"></line>
+              <text x="36" y="280" text-anchor="middle" font-size="10" font-weight="700" fill="var(--eje-t)" font-family="var(--mono)">14 jun</text>
+              <text x="36" y="294" text-anchor="middle" font-size="9" fill="var(--tinta-suave)" font-family="var(--sans)">admisión</text>
+              <!-- pared derecha: alta / fin -->
+              <line x1="620" y1="56" x2="620" y2="256" stroke="var(--eje-t)" stroke-width="3"></line>
+              <text x="620" y="280" text-anchor="middle" font-size="10" font-weight="700" fill="var(--eje-t)" font-family="var(--mono)">17 jun</text>
+              <text x="620" y="294" text-anchor="middle" font-size="9" fill="var(--tinta-suave)" font-family="var(--sans)">alta</text>
+
+              <!-- eventos internos -->
+              <g font-family="var(--sans)">
+                <!-- admisión -->
+                <rect x="58" y="96" width="100" height="48" rx="9" fill="var(--eje-o)" opacity=".14"></rect>
+                <text x="108" y="116" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--eje-o)">admisión</text>
+                <text x="108" y="131" text-anchor="middle" font-size="8.5" fill="var(--tinta-suave)">cama 4B-307</text>
+                <!-- signos vitales -->
+                <rect x="172" y="96" width="100" height="48" rx="9" fill="var(--eje-n)" opacity=".16"></rect>
+                <text x="222" y="116" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--eje-n)">signos</text>
+                <text x="222" y="131" text-anchor="middle" font-size="8.5" fill="var(--tinta-suave)">por turno</text>
+                <!-- rondas -->
+                <rect x="286" y="96" width="100" height="48" rx="9" fill="var(--eje-q)" opacity=".14"></rect>
+                <text x="336" y="116" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--eje-q)">ronda</text>
+                <text x="336" y="131" text-anchor="middle" font-size="8.5" fill="var(--tinta-suave)">visita médica</text>
+                <!-- medicación -->
+                <rect x="400" y="96" width="100" height="48" rx="9" fill="var(--eje-k)" opacity=".16"></rect>
+                <text x="450" y="116" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--eje-k)">medicación</text>
+                <text x="450" y="131" text-anchor="middle" font-size="8.5" fill="var(--tinta-suave)">administrada</text>
+                <!-- evolución -->
+                <rect x="514" y="96" width="96" height="48" rx="9" fill="var(--eje-o)" opacity=".14"></rect>
+                <text x="562" y="116" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--eje-o)">evolución</text>
+                <text x="562" y="131" text-anchor="middle" font-size="8.5" fill="var(--tinta-suave)">nota diaria</text>
+              </g>
+
+              <!-- cable parte_de: de cada evento al rótulo del marco -->
+              <g stroke="var(--eje-m)" stroke-width="1.5" fill="none">
+                <line x1="108" y1="144" x2="330" y2="196"></line>
+                <line x1="222" y1="144" x2="330" y2="196"></line>
+                <line x1="336" y1="144" x2="332" y2="196"></line>
+                <line x1="450" y1="144" x2="334" y2="196"></line>
+                <line x1="562" y1="144" x2="334" y2="196"></line>
+              </g>
+              <rect x="248" y="196" width="164" height="24" rx="6" fill="var(--eje-m)" opacity=".14"></rect>
+              <text x="330" y="212" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--eje-m)" font-family="var(--mono)">parte_de  M(O→O)</text>
+
+              <text x="40" y="326" font-size="10.5" fill="var(--tinta-tenue)" font-family="var(--sans)">Las paredes son el eje T (admisión → alta); el interior son eventos en O; el cable que los cuelga del marco es M.</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 18.5.</span> La hospitalización como situación-marco. Las
+            paredes verticales son el eje <code>T</code> (la admisión abre la caja, el alta la cierra);
+            dentro ocurren, en orden, la asignación de cama, los signos vitales, las rondas, la
+            medicación administrada y las notas de evolución. Todos cuelgan del marco con
+            <code>parte_de</code> y heredan su contexto sin repetirlo. Un contenedor, no un registro.</figcaption>
+        </figure>
+
+        <h2>El enlace con la farmacia interna: prescripción, dispensación, administración</h2>
+
+        <p>Hay un eslabón que el software hospitalario de juguete casi siempre rompe: lo que la doctora
+          <em>receta</em> no es lo que el paciente <em>recibe</em>. Entre la prescripción y el cuerpo de
+          Vega hay una cadena de custodia que cruza el módulo clínico con el de farmacia, exactamente
+          como en un ERP el módulo de ventas conversa con el de inventario. Tres situaciones distintas,
+          encadenadas, cada una con su autor y su momento: la <strong>prescripción</strong> (la doctora
+          ordena), la <strong>dispensación</strong> (la farmacia entrega un lote concreto) y la
+          <strong>administración</strong> (la enfermería lo aplica al paciente).</p>
+
+        <p>El detalle que lo cambia todo es el <em>lote</em>. La farmacia no entrega «el
+          antihipertensivo» —un concepto en <code>K</code>—; entrega una caja física de un lote
+          concreto, con su vencimiento y su trazabilidad, igual que en minería un saco de mineral
+          arrastra su lote de origen. Si mañana ese lote se retira por un defecto de fabricación, el
+          grafo debe poder responder en segundos: «¿a qué pacientes se les administró algo de este
+          lote?». Esa pregunta solo tiene respuesta si el lote es un objeto en <code>O</code>, no un
+          texto en un comentario.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple"># El lote es un OBJETO físico en O, con su vencimiento y su clase de fármaco
+(lote_av2207) ∈ O
+  instancia_de : lote_farmaceutico        # K · qué clase de objeto es
+  es_de        : antihipertensivo         # K · de qué fármaco (concepto)
+  vence        : 2027-09-30                # T · caducidad del lote
+  custodia     : farmacia_central         # Q · quién lo guarda
+
+# La cadena de custodia: tres situaciones encadenadas, cada una con su momento
+(prescrip_8842) ∈ O    # ya existía: la doctora ordena (consulta de hoy)
+(dispensa_9133) ∈ O
+  instancia_de : dispensacion             # K
+  cumple       : prescrip_8842            # M · qué orden satisface
+  agente       : farmacia_central         # Q · quién dispensa
+  lote_entregado: lote_av2207             # O · qué lote concreto sale
+  cantidad     : 14                        # N · unidades entregadas
+  inicio       : 2026-06-14T12:05-05:00    # T
+(adm_farmaco_9120) ∈ O
+  instancia_de : administracion_farmaco   # K
+  cumple       : dispensa_9133            # M · qué dispensación consume
+  agente       : enf_rojas                # Q · quién la aplica
+  paciente     : vega                     # Q · a quién
+  lote_usado   : lote_av2207              # O · trazabilidad del lote hasta el cuerpo
+  parte_de     : ingreso_9120             # M · ocurre dentro de la hospitalización
+  inicio       : 2026-06-14T20:00-05:00    # T</code></pre>
+        </div>
+
+        <p>La cadena se lee de un tirón siguiendo los cables <code>cumple</code>: la administración
+          consume una dispensación, que satisface una prescripción. No hay tablas que cruzar ni claves
+          foráneas que adivinar; la trazabilidad es el propio tejido del grafo. Y como cada eslabón
+          referencia el mismo <code>lote_av2207</code>, la pregunta forense del retiro de lote se
+          contesta con una sola proyección.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># Retiro de lote: ¿a qué pacientes llegó algo de lote_av2207?
+afectados = u.subjects_where("lote_usado", lote_av2207, role="paciente")
+# → [vega, ...]   en segundos, cruzando clínica y farmacia sin un solo JOIN</code></pre>
+        </div>
+
+        <div class="triple" style="flex-wrap:wrap;justify-content:center">
+          <span class="nodo nodo--o"><span>adm_farmaco_9120</span><small>O</small></span>
+          <span class="enlace">cumple<span class="firma">M(O→O)</span></span>
+          <span class="nodo nodo--o"><span>dispensa_9133</span><small>O</small></span>
+          <span class="enlace">cumple<span class="firma">M(O→O)</span></span>
+          <span class="nodo nodo--o"><span>prescrip_8842</span><small>O</small></span>
+        </div>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Cross-módulo sin pegamento</p>
+          <p style="margin:0">Clínica y farmacia son «módulos» distintos solo en la cabeza del
+            organigrama. En el grafo son el mismo tejido: la prescripción vive en el módulo clínico, el
+            lote en el de farmacia, y el cable <code>cumple</code> los une sin que nadie escriba código
+            de integración. Es la misma lección que dará el capítulo del ERP, anticipada aquí: la
+            trazabilidad del lote es a la farmacia lo que la del mineral será a la minera.</p>
+        </div>
+
+        <!-- FIGURA SVG 6: la cadena prescripción → dispensación → administración con el lote -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 300" class="svg-eje" role="img"
+                 aria-label="La cadena de farmacia interna: la prescripción de la doctora satisfecha por una dispensación de la farmacia con un lote concreto, consumida por una administración de la enfermería al paciente, con el mismo lote trazado a lo largo de toda la cadena">
+              <!-- tres eslabones -->
+              <g font-family="var(--sans)">
+                <!-- prescripción -->
+                <rect x="28" y="60" width="160" height="74" rx="12" fill="var(--eje-o)" opacity=".12" stroke="var(--eje-o)" stroke-width="1.8"></rect>
+                <text x="108" y="86" text-anchor="middle" font-size="12" font-weight="700" fill="var(--eje-o)">prescripción</text>
+                <text x="108" y="103" text-anchor="middle" font-size="9.5" fill="var(--tinta-suave)" font-family="var(--mono)">prescrip_8842</text>
+                <text x="108" y="120" text-anchor="middle" font-size="9.5" fill="var(--eje-q)">dra_navarro · ordena</text>
+
+                <!-- dispensación -->
+                <rect x="250" y="60" width="160" height="74" rx="12" fill="var(--eje-o)" opacity=".12" stroke="var(--eje-o)" stroke-width="1.8"></rect>
+                <text x="330" y="86" text-anchor="middle" font-size="12" font-weight="700" fill="var(--eje-o)">dispensación</text>
+                <text x="330" y="103" text-anchor="middle" font-size="9.5" fill="var(--tinta-suave)" font-family="var(--mono)">dispensa_9133</text>
+                <text x="330" y="120" text-anchor="middle" font-size="9.5" fill="var(--eje-q)">farmacia · entrega</text>
+
+                <!-- administración -->
+                <rect x="472" y="60" width="160" height="74" rx="12" fill="var(--eje-o)" opacity=".12" stroke="var(--eje-o)" stroke-width="1.8"></rect>
+                <text x="552" y="86" text-anchor="middle" font-size="12" font-weight="700" fill="var(--eje-o)">administración</text>
+                <text x="552" y="103" text-anchor="middle" font-size="9.5" fill="var(--tinta-suave)" font-family="var(--mono)">adm_farmaco_9120</text>
+                <text x="552" y="120" text-anchor="middle" font-size="9.5" fill="var(--eje-q)">enf_rojas · aplica</text>
+              </g>
+
+              <!-- cables cumple (la cadena va de derecha a izquierda: cada uno cumple al anterior) -->
+              <defs>
+                <marker id="flecha18b" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+                  <path d="M0 0 L9 4.5 L0 9 z" fill="var(--eje-m)"></path>
+                </marker>
+              </defs>
+              <line x1="250" y1="97" x2="190" y2="97" stroke="var(--eje-m)" stroke-width="1.8" marker-end="url(#flecha18b)"></line>
+              <text x="220" y="50" text-anchor="middle" font-size="10" font-weight="700" fill="var(--eje-m)" font-family="var(--mono)">cumple</text>
+              <line x1="472" y1="97" x2="412" y2="97" stroke="var(--eje-m)" stroke-width="1.8" marker-end="url(#flecha18b)"></line>
+              <text x="442" y="50" text-anchor="middle" font-size="10" font-weight="700" fill="var(--eje-m)" font-family="var(--mono)">cumple</text>
+
+              <!-- el lote, trazado a lo largo de dispensación y administración -->
+              <rect x="250" y="186" width="382" height="48" rx="10" fill="var(--eje-k)" opacity=".14" stroke="var(--eje-k)" stroke-width="1.6" stroke-dasharray="5 3"></rect>
+              <text x="441" y="206" text-anchor="middle" font-size="11" font-weight="700" fill="var(--eje-k)">lote_av2207 · vence 2027-09 · trazabilidad</text>
+              <text x="441" y="223" text-anchor="middle" font-size="9.5" fill="var(--tinta-suave)" font-family="var(--sans)">el mismo objeto físico atraviesa dispensación y administración</text>
+              <line x1="330" y1="134" x2="330" y2="186" stroke="var(--eje-k)" stroke-width="1.5" stroke-dasharray="3 3"></line>
+              <line x1="552" y1="134" x2="552" y2="186" stroke="var(--eje-k)" stroke-width="1.5" stroke-dasharray="3 3"></line>
+
+              <text x="28" y="284" font-size="10.5" fill="var(--tinta-tenue)" font-family="var(--sans)">Tres situaciones en O encadenadas por M (cumple); el lote, objeto en O clasificado por K, las cruza para la trazabilidad.</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 18.6.</span> La cadena de la farmacia interna. La
+            administración de la enfermería <em>cumple</em> una dispensación de la farmacia, que a su vez
+            <em>cumple</em> la prescripción de la doctora —tres situaciones en <code>O</code> encadenadas
+            por <code>cumple</code>—. El lote concreto (<code>lote_av2207</code>) atraviesa la
+            dispensación y la administración, de modo que un retiro de lote se resuelve con una sola
+            proyección, sin cruzar tablas entre el módulo clínico y el de farmacia.</figcaption>
+        </figure>
+
+        <h2>El lexicon de la clínica</h2>
+
+        <p>Para que la doctora —o el sistema que ella usa— no tenga que aprender jerga de bases de
+          datos, configuramos el lexicon con las palabras exactas de la medicina. El lexicon es el
+          compilador del que habló la Parte&nbsp;IV: traduce el vocabulario humano a los roles
+          canónicos y resuelve la polisemia. El verbo <em>«controlar»</em>, por ejemplo, significa
+          cosas distintas según lo que lo acompañe.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">lex.register(LexiconEntry(
+    verb="controlar",
+    situation_type="consulta_cardiologia",
+    obligatory=["agente", "paciente"],
+    pattern=("a_un_paciente",),        # "controlar a un paciente" → seguimiento clínico
+))
+
+lex.register(LexiconEntry(
+    verb="controlar",
+    situation_type="medicion_signo_vital",
+    obligatory=["agente", "medida_evaluada"],
+    pattern=("un_signo",),             # "controlar la presión" → una medición
+))</code></pre>
+        </div>
+
+        <p>Y le instalamos el dialecto del dominio: un mapa entre las palabras que el personal clínico
+          usa de verdad y las etiquetas canónicas del catálogo. El usuario final nunca toca esas
+          etiquetas internas —el sistema traduce por debajo, exactamente como el spa traducía «IGV» a
+          su clase de impuesto—.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">lex.register_domain_dialect("cardiologia_central", {
+    "presión":        "presion_arterial",
+    "el paciente":    "paciente",
+    "receta":         "prescripcion_medica",
+    "control":        "consulta_cardiologia",
+    "alergia":        "contraindicacion_clinica",
+    "la pastilla":    "antihipertensivo",
+})</code></pre>
+        </div>
+
+        <p>Gracias a esto, la doctora puede dictarle al sistema <em>«controlé al paciente, la presión
+          salió alta, le subí la pastilla y lo cito en un mes»</em> y el grafo lo traduce a sus
+          identificadores internos sin que ella sepa que existen. La interfaz es su idioma, no el
+          catálogo —tal como dejó establecido la Parte&nbsp;IV—.</p>
+
+        <h2>El antes y el después: del expediente fragmentado al grafo único</h2>
+
+        <p><b>Antes, en SQL.</b> En un sistema hospitalario típico, el expediente de Vega vive
+          repartido en cinco o seis tablas que no se hablan solas: <code>pacientes</code>,
+          <code>consultas</code>, <code>diagnosticos</code>, <code>prescripciones</code>,
+          <code>contraindicaciones</code> y —si el equipo fue cuidadoso— una tabla
+          <code>diagnostico_historial</code> para versionar los cambios. Cuando la doctora quiere
+          saber si el ajuste que acaba de recetar choca con una contraindicación <em>vigente</em>, el
+          sistema debe cruzar <code>prescripciones</code> con <code>contraindicaciones</code>; y para
+          saber si la hipertensión sigue activa, otro <code>JOIN</code> contra
+          <code>diagnostico_historial</code> filtrando por fechas. La respuesta no está en ninguna
+          tabla sola: vive en el pegamento que el programador escribe y reescribe cada vez que la
+          lógica clínica cambia.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">sql</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="sql">-- Antes: el diagnóstico vigente vive en otra tabla, versionado por fechas;
+-- la pregunta clínica obliga a encadenar JOINs y filtrar por rango temporal.
+CREATE TABLE diagnosticos          (id INTEGER PRIMARY KEY, paciente_id INT, codigo TEXT);
+CREATE TABLE diagnostico_historial (id INTEGER PRIMARY KEY, diag_id INT,
+                                    grado TEXT, valido_desde DATE, valido_hasta DATE);
+CREATE TABLE prescripciones        (id INTEGER PRIMARY KEY, paciente_id INT, farmaco_id INT);
+
+SELECT h.grado
+FROM diagnostico_historial h
+JOIN diagnosticos d ON d.id = h.diag_id
+WHERE d.paciente_id = :paciente
+  AND h.valido_desde <= :fecha            -- la lógica temporal,
+  AND (h.valido_hasta IS NULL OR h.valido_hasta > :fecha);  -- a mano, cada vez</code></pre>
+        </div>
+
+        <p><b>Después, en WQuestions.</b> La misma información es un grafo único de hechos atómicos:
+          <code>diag_hta_8842</code> cuelga de <code>consulta_8842</code> con <code>parte_de</code>,
+          lleva sus propias fechas de validez internas, y <code>prescrip_8842</code> apunta a
+          <code>regla_renal_alerta</code> con <code>verificado_contra</code>. La pregunta —¿esta
+          prescripción choca con una contraindicación vigente?— es una proyección sobre el grafo con
+          un filtro temporal: el motor entrega solo los hechos cuya ventana de validez cubre la fecha
+          consultada. No hay <code>JOIN</code> entre tablas ni código de pegamento; la vigencia y las
+          relaciones causales ya estaban tejidas en el mismo tejido de datos desde el primer hecho.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># Después: el diagnóstico vigente a una fecha es una proyección con filtro temporal.
+vigente = u.value_at(vega, "diagnostico_asignado", at="2026-04-15")  # → hta_grado_1</code></pre>
+        </div>
+
+        <p class="cita-destacada revelar">En medicina, un diagnóstico no es un campo de texto: es una
+          creencia fechada, con su evidencia detrás y su caducidad delante. Tratarlo como una entidad,
+          y no como una columna que se sobrescribe, es lo que convierte un expediente en algo que un
+          juez puede leer.<cite>La lección de la clínica</cite></p>
+
+        <h2>Cuánto pesó el dominio entero</h2>
+
+        <p>Vale la pena medir la huella, porque desmiente el prejuicio de que tanta expresividad debe
+          costar un diluvio de datos. Toda la consulta de Vega —las cinco piezas, los tres porqués de
+          la receta, los dos diagnósticos versionados, la contraindicación y el control previsto— se
+          guardó como un puñado modesto de hechos atómicos. Comparado con lo que un esquema relacional
+          necesita para sostener la misma riqueza histórica, la diferencia es notable.</p>
+
+        <figure class="figura revelar">
+          <div class="lienzo" data-chart>
+            <script type="application/json">
+            {"tipo":"barras","eje":"n","unidad":" hechos",
+             "datos":[
+               {"l":"Identidad y participantes","v":9},
+               {"l":"Síntoma + medición","v":11,"color":"o"},
+               {"l":"Diagnóstico (con D6)","v":16,"color":"k"},
+               {"l":"Prescripción + porqués","v":15,"color":"m"},
+               {"l":"Contraindicación + control","v":13,"color":"t"}
+             ]}
+            </script>
+          </div>
+          <figcaption><span class="fnum">Figura 18.3.</span> Huella de la consulta por bloque, en
+            hechos atómicos. La pieza más cara es el diagnóstico, justamente porque carga la vigencia
+            (D6): guardar dos verdades históricas en vez de pisar una sola cuesta unos hechos de más
+            —y vale cada uno—. El total ronda las seis decenas de tripletas: un volumen ridículo
+            frente a la maraña de tablas, historiales y procedimientos que el mismo caso exige en SQL.</figcaption>
+        </figure>
+
+        <h2>La pepita metodológica: el arte de saber qué reificar</h2>
+
+        <p>Llegamos a la tercera pregunta de la elicitación, la que dejamos pendiente al abrir el
+          capítulo, porque es la que de verdad separa a quien modela bien. A la hora de diseñar un
+          dominio nuevo, ¿cómo decides qué dato merece convertirse en una entidad con identidad propia
+          en <code>O</code> y qué dato debe quedarse como un número callado en <code>N</code> o una
+          etiqueta inerte en <code>K</code>?</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">La regla, en una línea</p>
+          <p style="margin:0;font-size:1.05rem">Si crees que en el futuro <strong>alguien va a hacer
+            una pregunta o una afirmación sobre ese dato</strong>, reifícalo. Si nadie va a
+            interrogarlo nunca, déjalo como valor.</p>
+        </div>
+
+        <p>Es una regla simple y brutal, y se aplica caso por caso. Mira cómo decide cada pieza de
+          esta consulta su propio destino:</p>
+
+        <div class="columnas">
+          <p><b>¿Reificamos el síntoma?</b> Sí. Mañana el médico querrá saber cuándo empezó, qué tan
+            intenso era y si mejoró. Se vuelve entidad en <code>O</code>.<br>
+            <b>¿Reificamos la medición de presión?</b> Sí. Mañana la conectaremos como evidencia de un
+            diagnóstico. Entidad en <code>O</code>.<br>
+            <b>¿Reificamos la contraindicación?</b> Sí. Tiene autor, fecha de vigencia y condición
+            disparadora; alguien la consultará. Entidad en <code>O</code>.</p>
+          <p><b>¿Reificamos «cada mañana»?</b> No. Es un valor terminal. Nadie va a interrogar al
+            concepto «cada mañana». Se queda como etiqueta en <code>K</code>.<br>
+            <b>¿Reificamos «20&nbsp;mg»?</b> No. Es una cantidad con su unidad. Vive en <code>N</code> y
+            ahí muere.<br>
+            <b>¿Reificamos «148/95»?</b> El número, no; pero la <em>medición</em> que lo contiene, sí
+            —porque la medición sí será interrogada—.</p>
+        </div>
+
+        <p>El costo de reificar es de unos pocos bytes en el servidor. El costo de <em>no</em> hacerlo
+          —y descubrir, años después, que un regulador exige el historial completo de un dato que
+          guardaste como texto plano— se mide en una refactorización carísima y, en medicina, en algo
+          peor que dinero. Por eso, ante la duda, esta regla se inclina siempre hacia reificar.</p>
+
+        <h2>Balance: un dominio nuevo, casi sin fricción</h2>
+
+        <p>Cerremos repasando qué demostró el prototipo al absorber, desde cero, un dominio para el que
+          la arquitectura no había sido diseñada.</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">El veredicto de la clínica</p>
+          <ul class="limpia" style="margin:0">
+            <li style="margin-bottom:.6rem"><b>La carpeta maestra funcionó.</b> La consulta abrazó sus
+              cinco sub-situaciones con <code>parte_de</code>, igual que la venta abrazó sus líneas. Ni
+              una tabla paralela, ni un esquema nuevo.</li>
+            <li style="margin-bottom:.6rem"><b>La única fricción fue sana.</b> El error de firma al
+              mezclar <code>O</code> con <code>K</code> no fue un fallo del modelo: fue el modelo
+              corrigiendo al modelador. Se resolvió declarando un puñado de cables de dominio.</li>
+            <li style="margin-bottom:.6rem"><b>El diagnóstico se modeló completo.</b> Su duda
+              (modalidad), su evidencia (<code>motivado_por</code>) y su caducidad (D6) se guardaron en
+              dimensiones separadas, sin aplastarse en un campo de texto.</li>
+            <li style="margin-bottom:.6rem"><b>La historia se preserva (D6).</b> Dos diagnósticos
+              contrarios conviven sin que se pierda el rastro forense. El sistema puede responder qué
+              se sabía en cualquier fecha pasada.</li>
+            <li><b>El método quedó explícito.</b> Evento ancla, piezas que nacen dentro, y la regla de
+              qué reificar. Esa receta de elicitación sirve para el próximo dominio, sea cual sea.</li>
+          </ul>
+        </div>
+
+        <p>La clínica parecía exigir una arquitectura especializada y resultó caber en la misma que ya
+          conocíamos, con un par de cables propios y ni una sola excepción estructural. Pero hubo una
+          exigencia que aquí solo asomó —la de que varios custodios distintos, en hospitales distintos,
+          puedan leer y escribir sobre el mismo paciente sin pisarse— y que en el próximo capítulo se
+          vuelve la ley. Subimos al dominio más implacable de todos: un banco, donde no borrar el
+          pasado deja de ser buen gusto y pasa a ser una condición que dicta el regulador.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="17-taxi.html"><span class="dir">← Anterior</span><span class="tit">Un servicio on-demand</span></a>
+      <a class="sig" href="19-banco.html"><span class="dir">Siguiente →</span><span class="tit">El dominio más exigente: un banco</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

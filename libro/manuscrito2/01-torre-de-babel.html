@@ -54,7 +54,7 @@
         <aside class="nota-margen">
           <span class="etq">Hilo conductor</span>
           La paciente <code>vega</code> reaparece en el cierre del libro. Cuando lleguemos a
-          la <a href="29-conclusion.html">conclusión</a>, esta misma escena se resolverá: la
+          la <a href="31-conclusion.html">conclusión</a>, esta misma escena se resolverá: la
           consulta que aquí es imposible será una sola línea.
         </aside>
 
@@ -228,6 +228,139 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
             problema no es que existan ontologías: es que cada departamento, empresa y disciplina
             construye la suya <em>cerrada</em>, aislándose del resto.</p>
         </div>
+
+        <h2>El elefante en la habitación oscura</h2>
+
+        <p>Hay una vieja parábola que describe esta torre de Babel mejor que cualquier diagrama de
+          arquitectura. En una habitación a oscuras encierran a un elefante, y entran a tientas
+          varios hombres que jamás han tocado uno. El primero palpa una pata y, convencido,
+          anuncia: «esto es una columna». El segundo abraza la trompa y lo corrige: «no, es una
+          gruesa manguera». Un tercero acaricia la oreja y jura que es un abanico; otro topa con
+          el colmillo y asegura que es una lanza pulida; el último se aferra a la cola y sentencia
+          que es una cuerda. Ninguno miente. Cada uno informa con honestidad lo que sus manos
+          encontraron. Y, sin embargo, todos se equivocan, porque confunden <em>la parte que
+          tocaron</em> con <em>el animal entero</em>.</p>
+
+        <p>Esa es, exactamente, la situación de nuestros sistemas. El punto de venta toca la pata
+          y la nombra <code>vendedor_id</code>; contabilidad abraza la trompa y la llama
+          <code>cuentas_por_cobrar</code>; analítica acaricia la oreja y la registra como
+          <code>evento</code>; inventario topa con el colmillo y anota <code>movimiento</code>.
+          Cada ontología de dominio es uno de esos ciegos: palpa una región de la misma realidad,
+          la describe con rigor impecable dentro de su alcance y la bautiza con un nombre que no
+          se parece a ningún otro. La torre de Babel no nace de la mentira ni de la incompetencia;
+          nace de que <strong>cada quien toma su vista parcial por la totalidad</strong>.</p>
+
+        <p>Pero el elefante existe. Hay un animal completo debajo de las cinco descripciones
+          incompatibles, y la pregunta decisiva es qué lo reconstruye. La respuesta es el corazón
+          de este libro: lo que devuelve el animal entero no es una sexta ontología más fina, sino
+          un repertorio de preguntas anterior a todas ellas. «¿Quién?», «¿qué?», «¿dónde?»,
+          «¿cuándo?», «¿cuánto?» y «¿cuál?» no tocan una parte del elefante: son las coordenadas
+          que sitúan cualquier parte dentro del mismo cuerpo. La pata y la trompa dejan de ser
+          objetos rivales y pasan a ser dos respuestas —al «qué» y al «dónde»— de un único hecho.</p>
+
+        <!-- FIGURA SVG: el elefante en la oscuridad, observadores parciales, capa de preguntas -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 640 372" class="svg-eje" role="img"
+                 aria-label="Cuatro observadores-sistema tocan cada uno una parte distinta del mismo elefante y la nombran diferente; debajo, la capa de preguntas reconstruye el animal completo">
+              <!-- título superior -->
+              <text x="320" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="var(--tinta-suave)" font-family="var(--sans)">UNA realidad · cuatro nombres incompatibles</text>
+
+              <!-- el elefante (silueta sencilla, contorno) -->
+              <g stroke="var(--eje-o)" stroke-width="2.2" fill="var(--eje-o-suave)" stroke-linejoin="round">
+                <!-- cuerpo -->
+                <path d="M232 120 q-14 -34 26 -42 q70 -16 130 4 q26 8 40 -2 q10 -8 18 2 q8 10 -4 18 q-12 8 -22 6 q6 20 0 40 l0 30 q0 8 -10 8 l-14 0 q-10 0 -10 -10 l0 -22 q-40 12 -86 4 l0 22 q0 8 -10 8 l-14 0 q-10 0 -10 -10 l0 -30 q-22 -16 -22 -38 z"/>
+              </g>
+              <!-- oreja -->
+              <path d="M300 92 q-22 -6 -26 22 q-2 22 22 26 q14 -26 4 -48 z" fill="var(--eje-l-suave)" stroke="var(--eje-l)" stroke-width="2"/>
+              <!-- trompa -->
+              <path d="M388 84 q22 -6 30 10 q8 18 -2 40 q-6 14 6 22" fill="none" stroke="var(--eje-n)" stroke-width="6" stroke-linecap="round"/>
+              <!-- colmillo -->
+              <path d="M392 118 q18 6 30 22" fill="none" stroke="var(--eje-t)" stroke-width="4" stroke-linecap="round"/>
+              <!-- patas resaltadas (columna) -->
+              <rect x="246" y="150" width="14" height="40" rx="3" fill="var(--eje-q-suave)" stroke="var(--eje-q)" stroke-width="2"/>
+              <!-- ojo -->
+              <circle cx="378" cy="100" r="2.6" fill="var(--tinta)"/>
+
+              <!-- etiquetas parciales de los observadores -->
+              <g font-family="var(--mono)" font-size="10.5">
+                <line x1="253" y1="150" x2="200" y2="118" stroke="var(--eje-q)" stroke-width="1.3"/>
+                <rect x="92" y="100" width="116" height="34" rx="7" fill="var(--eje-q-suave)" stroke="var(--eje-q)" stroke-width="1.3"/>
+                <text x="150" y="115" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--eje-q)" font-family="var(--sans)">PUNTO DE VENTA</text>
+                <text x="150" y="128" text-anchor="middle" fill="var(--tinta)">«es una columna»</text>
+
+                <line x1="284" y1="108" x2="240" y2="64" stroke="var(--eje-l)" stroke-width="1.3"/>
+                <rect x="132" y="44" width="116" height="34" rx="7" fill="var(--eje-l-suave)" stroke="var(--eje-l)" stroke-width="1.3"/>
+                <text x="190" y="59" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--eje-l)" font-family="var(--sans)">ANALÍTICA</text>
+                <text x="190" y="72" text-anchor="middle" fill="var(--tinta)">«es un abanico»</text>
+
+                <line x1="414" y1="100" x2="470" y2="62" stroke="var(--eje-n)" stroke-width="1.3"/>
+                <rect x="430" y="44" width="124" height="34" rx="7" fill="var(--eje-n-suave)" stroke="var(--eje-n)" stroke-width="1.3"/>
+                <text x="492" y="59" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--acento-2-hov)" font-family="var(--sans)">CONTABILIDAD</text>
+                <text x="492" y="72" text-anchor="middle" fill="var(--tinta)">«es una manguera»</text>
+
+                <line x1="420" y1="138" x2="476" y2="120" stroke="var(--eje-t)" stroke-width="1.3"/>
+                <rect x="446" y="104" width="116" height="34" rx="7" fill="var(--eje-t-suave)" stroke="var(--eje-t)" stroke-width="1.3"/>
+                <text x="504" y="119" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--eje-t)" font-family="var(--sans)">INVENTARIO</text>
+                <text x="504" y="132" text-anchor="middle" fill="var(--tinta)">«es una lanza»</text>
+              </g>
+
+              <!-- línea divisoria -->
+              <line x1="60" y1="232" x2="580" y2="232" stroke="var(--linea)" stroke-width="1.4" stroke-dasharray="5 5"/>
+              <text x="320" y="252" text-anchor="middle" font-size="12" font-weight="700" fill="var(--acento-2-hov)" font-family="var(--sans)">La capa de preguntas reconstruye el animal completo</text>
+
+              <!-- los seis chips de pregunta como armazón -->
+              <g font-family="var(--sans)">
+                <g>
+                  <rect x="64" y="276" width="80" height="64" rx="9" fill="var(--eje-q-suave)" stroke="var(--eje-q)" stroke-width="1.6"/>
+                  <text x="104" y="302" text-anchor="middle" font-size="18" font-weight="700" fill="var(--eje-q)">Q</text>
+                  <text x="104" y="324" text-anchor="middle" font-size="11" font-weight="600" fill="var(--tinta)">quién</text>
+                </g>
+                <g>
+                  <rect x="152" y="276" width="80" height="64" rx="9" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="1.6"/>
+                  <text x="192" y="302" text-anchor="middle" font-size="18" font-weight="700" fill="var(--eje-o)">O</text>
+                  <text x="192" y="324" text-anchor="middle" font-size="11" font-weight="600" fill="var(--tinta)">qué</text>
+                </g>
+                <g>
+                  <rect x="240" y="276" width="80" height="64" rx="9" fill="var(--eje-l-suave)" stroke="var(--eje-l)" stroke-width="1.6"/>
+                  <text x="280" y="302" text-anchor="middle" font-size="18" font-weight="700" fill="var(--eje-l)">L</text>
+                  <text x="280" y="324" text-anchor="middle" font-size="11" font-weight="600" fill="var(--tinta)">dónde</text>
+                </g>
+                <g>
+                  <rect x="328" y="276" width="80" height="64" rx="9" fill="var(--eje-t-suave)" stroke="var(--eje-t)" stroke-width="1.6"/>
+                  <text x="368" y="302" text-anchor="middle" font-size="18" font-weight="700" fill="var(--eje-t)">T</text>
+                  <text x="368" y="324" text-anchor="middle" font-size="11" font-weight="600" fill="var(--tinta)">cuándo</text>
+                </g>
+                <g>
+                  <rect x="416" y="276" width="80" height="64" rx="9" fill="var(--eje-n-suave)" stroke="var(--eje-n)" stroke-width="1.6"/>
+                  <text x="456" y="302" text-anchor="middle" font-size="18" font-weight="700" fill="var(--acento-2-hov)">N</text>
+                  <text x="456" y="324" text-anchor="middle" font-size="11" font-weight="600" fill="var(--tinta)">cuánto</text>
+                </g>
+                <g>
+                  <rect x="504" y="276" width="80" height="64" rx="9" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="1.6"/>
+                  <text x="544" y="302" text-anchor="middle" font-size="18" font-weight="700" fill="var(--eje-k)">K</text>
+                  <text x="544" y="324" text-anchor="middle" font-size="11" font-weight="600" fill="var(--tinta)">cuál</text>
+                </g>
+              </g>
+
+              <!-- flechas de las partes hacia las preguntas -->
+              <g stroke-width="1.4" fill="none" opacity=".5">
+                <path d="M253 168 C 180 210, 110 240, 104 274" stroke="var(--eje-q)"/>
+                <path d="M320 150 C 280 210, 220 240, 200 274" stroke="var(--eje-o)"/>
+                <path d="M290 110 C 290 200, 280 240, 280 274" stroke="var(--eje-l)"/>
+                <path d="M418 130 C 420 210, 390 240, 372 274" stroke="var(--eje-t)"/>
+                <path d="M410 96 C 470 200, 470 240, 456 274" stroke="var(--eje-n)"/>
+              </g>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 1.4.</span> El elefante en la habitación oscura.
+            Cada sistema toca una parte del mismo animal y la nombra distinto —«columna»,
+            «abanico», «manguera», «lanza»—: así nace la torre de Babel. Las ontologías de dominio
+            capturan vistas parciales; <em>las preguntas son el animal completo</em>. La capa de
+            coordenadas (<code>quién</code>, <code>qué</code>, <code>dónde</code>, <code>cuándo</code>,
+            <code>cuánto</code>, <code>cuál</code>) no añade otra parte: reconstruye el todo
+            situando cada parte dentro del mismo cuerpo.</figcaption>
+        </figure>
 
         <h2>La causa de todo el problema</h2>
 

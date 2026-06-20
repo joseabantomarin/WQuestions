@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El autor — WQuestions</title>
+  <meta name="description" content="José Roberto Abanto Marín: tres décadas modelando datos, curiosidad científica y mirada filosófica reunidas en un solo libro.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En esta página</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'34'">
+      <header class="portada-cap">
+        <p class="parte">Anexos</p>
+        <div class="num-cap">34</div>
+        <h1>El autor</h1>
+        <p class="lede">Detrás de toda arquitectura hay una biografía. Esta es, en pocas líneas, la
+          de quien pasó tres décadas buscando la capa donde la información deja de depender de la
+          aplicación que la consulta.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada"><strong>José Roberto Abanto Marín</strong> nació en Celendín, en la
+          sierra norte del Perú, en 1973. Lleva cerca de treinta y cinco años construyendo sistemas
+          a la medida —el oficio paciente de traducir un negocio en estructuras que una máquina pueda
+          sostener— y de esa práctica larga, más que de cualquier teoría previa, nace este libro.</p>
+
+        <p>Es el creador de <strong>Ghenesis</strong>, un <em>framework</em> de orientación
+          <em>meta-driven</em> cuya idea rectora es sencilla de enunciar y difícil de llevar hasta el
+          final: persistir la lógica de negocio en la propia base de datos. Formularios, reportes,
+          módulos enteros viven allí como datos, no como código, de modo que pueden administrarse y
+          reconfigurarse sin volver a tocar la aplicación. Esa obsesión —separar el <em>qué</em> del
+          <em>cómo</em>, encontrar el estrato donde el conocimiento se vuelve independiente del
+          programa que lo interroga— recorre toda su trayectoria y desemboca, casi por su propio peso,
+          en las páginas anteriores.</p>
+
+        <p class="cita-destacada revelar">Toda mi vida profesional ha sido la misma pregunta repetida
+          en dominios distintos: ¿dónde está la capa en la que el dato deja de pertenecerle a la
+          aplicación?<cite>José Roberto Abanto Marín</cite></p>
+
+        <p>Apasionado de las bases de datos, de los modelos de inteligencia artificial y de la
+          ciencia en general, encuentra en la física cuántica y en los enigmas del universo algo más
+          que un pasatiempo: la confirmación de una sospecha que también gobierna su trabajo, la de
+          que aquello que parece irreductiblemente complejo esconde, en algún nivel, una estructura
+          más simple. La filosofía, lejos de ser ornamento, es para él una herramienta de taller: la
+          disciplina con que se reconocen los patrones, las abstracciones y los paradigmas que se
+          asoman, una y otra vez, en cada problema técnico.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Una línea</span>
+          Tres décadas de práctica, una curiosidad científica que nunca se apagó y el hábito
+          filosófico de mirar bajo la superficie: las tres vertientes confluyen en una sola tesis.
+        </aside>
+
+        <p>Estas tres líneas —la práctica de tres décadas modelando datos, la curiosidad científica y
+          la mirada filosófica— transcurrieron durante años en cauces paralelos. <em>WQuestions, Las
+          preguntas como coordenadas</em> es el primer libro en el que el autor las reúne
+          deliberadamente alrededor de una única idea arquitectónica: que las preguntas que cualquier
+          niño domina antes de aprender a leer bastan para organizar, con precisión técnica, la
+          información de cualquier dominio del mundo.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Una sola obsesión, muchos disfraces</p>
+          <p style="margin:0">Si algo une a Ghenesis con WQuestions no es una tecnología, sino una
+            convicción: que existe un nivel anterior a toda aplicación donde la información se
+            describe a sí misma. Encontrar ese nivel, y volverlo infraestructura utilizable, ha sido
+            el trabajo de una vida.</p>
+        </div>
+
+        <p style="font-family:var(--display);font-style:italic;font-size:1.4rem;color:var(--tinta);margin-top:2.6rem;text-align:center">
+          Gracias por haber llegado hasta aquí.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="33-anexo-prototipo.html"><span class="dir">← Anterior</span><span class="tit">Anexo: el prototipo</span></a>
+      <a class="sig" href="index.html"><span class="dir">Volver al índice →</span><span class="tit">Índice</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

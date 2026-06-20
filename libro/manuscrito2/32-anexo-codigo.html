@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anexo: el código — WQuestions</title>
+  <meta name="description" content="Referencia técnica de WQuestions: estructuras de datos, catálogo de ejes y predicados, las cuatro APIs del prototipo y los formatos de serialización.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'32'">
+      <header class="portada-cap">
+        <p class="parte">Anexos</p>
+        <div class="num-cap">32</div>
+        <h1>Anexo: el código</h1>
+        <p class="lede">Una hoja de ruta técnica para quien va a implementar. Aquí están, en un solo
+          lugar, las estructuras de datos, el catálogo de ejes y predicados, las cuatro APIs del
+          prototipo y los formatos en que viaja un hecho. Menos relato, más referencia.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">A lo largo del libro el código apareció a cuentagotas: una llamada aquí
+          para ilustrar la reificación de una situación, una consulta allá para mostrar la
+          bitemporalidad. Ese goteo es deliberado en el cuerpo del texto —cada fragmento llega cuando
+          la idea que lo justifica está fresca—, pero estorba a quien se sienta a programar. Este
+          anexo invierte la prioridad: consolida en un único sitio las piezas técnicas, ordenadas no
+          por el hilo narrativo sino por su función. Es un manual de referencia, no un capítulo para
+          leer de corrido.</p>
+
+        <p>La buena noticia, que este anexo deja a la vista mejor que ninguna otra página, es que hay
+          poco que memorizar. El núcleo del modelo cabe en un puñado de estructuras de datos y cuatro
+          funciones. Todo lo demás —los ocho dominios industriales, los cuatro escenarios de estrés,
+          la aplicación que se describe a sí misma— se construye combinando esas pocas piezas. Si solo
+          vas a leer una sección, que sea el catálogo de predicados: ahí está el vocabulario con el que
+          se escribe cualquier hecho.</p>
+
+        <div class="caja caja--practica">
+          <p class="caja-tit">Sobre los identificadores de este anexo</p>
+          <p style="margin-bottom:0">Los ejemplos usan el repertorio del libro —la venta de Marco,
+            el gol de Messi, la película de Serra, la ordenanza de micromovilidad, la sesión de IA,
+            el episodio del paciente Vega— para que reconozcas los casos. Las <em>estructuras</em>
+            (los campos de un hecho, la forma de un patrón, las firmas de las APIs) son las del
+            prototipo real, que vive en <code>prototipo/wq/</code>. Cambia los nombres a tu dominio;
+            la maquinaria no cambia.</p>
+        </div>
+
+        <h2>Las cuatro APIs del núcleo</h2>
+
+        <p>Todo el modelado de dominios pasa por cuatro funciones. Dos escriben en el grafo, dos lo
+          interrogan. No hay una quinta función «importante» escondida: con estas se cubren los ocho
+          dominios de la Parte&nbsp;V de punta a punta.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># ── ESCRITURA ──────────────────────────────────────────────────────────────
+
+ingest_situation(u, lex, verbo, *, roles={}, complements=[], extra={}, sit_id=None)
+#   Reifica una situación en el universo `u`. Resuelve `verbo` contra el
+#   lexicon `lex`, valida los roles obligatorios de su signatura y asienta
+#   los hechos atómicos. `complements` desambigua la polisemia; `extra`
+#   admite metadatos como `estatus_factual`. Devuelve el Individual creado.
+
+u.assert_fact(sujeto, rol, valor, *, valid_from=None, valid_to=None)
+#   Asienta un hecho atómico directo (una tripleta). `valid_from`/`valid_to`
+#   activan la bitemporalidad (D6). Nunca sobreescribe: cada llamada agrega.
+
+# ── LECTURA ────────────────────────────────────────────────────────────────
+
+query(u, Pattern(fixed={}, ask={}, type_constraint=None), *, at=None)
+#   Resuelve un patrón contra el grafo. Devuelve una lista de bindings (un
+#   dict por coincidencia). `at` proyecta la consulta a un instante de
+#   tiempo de validez. Las variables a resolver se declaran con `Var()`.
+
+count(u, Pattern(...), *, at=None)
+#   Igual que `query`, pero devuelve solo la cardinalidad (un entero).</code></pre>
+        </div>
+
+        <aside class="nota-margen">
+          <span class="etq">Nota</span>
+          El primer argumento de las cuatro APIs es siempre el universo <code>u</code>: el contenedor
+          del grafo. En un sistema con varios espacios (por inquilino, por entorno) cada
+          <code>u</code> es uno de ellos. El <a href="29-seguridad.html">capítulo 29</a> usa esa
+          frontera para el control de acceso.
+        </aside>
+
+        <p>Junto a <code>count</code> conviven agregadores del mismo molde —<code>suma</code>,
+          <code>promedio</code>— que aplican una función sobre el rol numérico de las coincidencias.
+          Comparten la firma exacta de <code>count</code>, cambiando solo qué devuelven; por eso no
+          merecen entrada propia.</p>
+
+        <h2>Estructuras de datos</h2>
+
+        <p>El grafo se apoya en cuatro tipos. Conviene leerlos antes que cualquier código de dominio:
+          todo lo demás los manipula.</p>
+
+        <h3>El eje (<code>Axis</code>) y el individuo (<code>Individual</code>)</h3>
+
+        <p>Cada nodo del grafo es un <code>Individual</code> anclado a uno de los seis ejes de valor.
+          El eje no es decorativo: determina qué pregunta responde el nodo y, por tanto, qué
+          predicados puede recibir. El séptimo eje, <strong>M</strong> (cómo), no etiqueta nodos: es
+          el de los cables que los unen.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">class Axis(Enum):
+    Q = "quien"      # agente
+    O = "que"        # objeto, evento, situación
+    L = "donde"      # lugar
+    T = "cuando"     # tiempo
+    N = "cuanto"     # número, magnitud
+    K = "cual"       # clase, categoría
+    # M (cómo) no es eje de nodos: es el eje de los predicados (cables).
+
+@dataclass
+class Individual:
+    id: str                 # identificador estable y único
+    axis: Axis              # a qué eje pertenece
+    label: str = ""         # rótulo legible (opcional)</code></pre>
+        </div>
+
+        <aside class="nota-margen">
+          <span class="etq">Recuerda</span>
+          En <strong>K</strong> viven los conceptos atemporales —las plantillas, como
+          <code>venta</code> o <code>largometraje</code>—; en <strong>O</strong> y los pilares,
+          las entidades situadas, como <code>venta_001</code> (D1). El predicado
+          <code>instancia_de</code> es el puente entre ambos mundos.
+        </aside>
+
+        <h3>El hecho (<code>Fact</code>)</h3>
+
+        <p>La unidad atómica del modelo es la tripleta tipada <code>(sujeto, rol, valor)</code> (D3).
+          En el prototipo es un <code>Fact</code>. Los campos <code>valid_from</code> y
+          <code>valid_to</code> implementan la vigencia (D6): un hecho no se borra ni se edita: se
+          cierra con un <code>valid_to</code> y se asienta otro que lo reemplaza.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">@dataclass
+class Fact:
+    subject: Individual           # el nodo del que se predica
+    role:    str                  # el cable (predicado del eje M)
+    value:   Union[Individual, str, int, float]   # nodo o literal
+    valid_from: datetime = None   # inicio de vigencia (D6)
+    valid_to:   datetime = None   # fin de vigencia; None = abierto al futuro</code></pre>
+        </div>
+
+        <p>Un literal (un número, una cadena) puede ocupar la casilla del valor cuando el destino es
+          una magnitud o un texto; cuando el valor es otra entidad del grafo, es un
+          <code>Individual</code>. Esa es la única bifurcación de tipo en toda la estructura.</p>
+
+        <h3>El patrón de consulta (<code>Pattern</code> y <code>Var</code>)</h3>
+
+        <p>Una consulta es un patrón con tres ranuras. <code>fixed</code> ata roles a valores
+          concretos (lo que ya sabes); <code>ask</code> declara con <code>Var()</code> las variables
+          a resolver (lo que preguntas); <code>type_constraint</code> restringe el tipo del sujeto vía
+          <code>instancia_de</code>.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">class Var:
+    """Marca una ranura a resolver dentro de un patrón."""
+
+@dataclass
+class Pattern:
+    fixed:  dict = field(default_factory=dict)   # roles atados a valores
+    ask:    dict = field(default_factory=dict)   # roles con Var() a resolver
+    type_constraint: Individual = None           # filtra por instancia_de</code></pre>
+        </div>
+
+        <h3>La entrada de lexicon (<code>LexiconEntry</code>)</h3>
+
+        <p>El lexicon es el compilador que traduce un verbo del lenguaje a la signatura de una
+          situación (D8). Cada <code>LexiconEntry</code> declara qué tipo de situación produce el
+          verbo, qué roles son obligatorios y —si el verbo es polisémico— qué complemento la dispara.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">@dataclass
+class LexiconEntry:
+    verb:           str            # el verbo de superficie ("servir", "anotar"…)
+    situation_type: str            # la clase de situación que produce (→ K)
+    obligatory:     list           # roles que la signatura exige
+    pattern:        tuple = ()     # complemento que dispara esta acepción
+    notes:          str = ""       # acepción genérica / aclaración</code></pre>
+        </div>
+
+        <h2>Catálogo de los ejes</h2>
+
+        <p>Las seis preguntas de valor más el eje de los predicados. Cada hecho fija una posición en
+          este espacio: una lectura por eje, cosida por los cables de <strong>M</strong>.</p>
+
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 640 360" class="svg-eje" role="img"
+                 aria-label="Los siete ejes de WQuestions: seis de valor más el eje de predicados">
+              <!-- Q -->
+              <rect x="14" y="20" width="30" height="30" rx="7" fill="var(--eje-q)"/>
+              <text x="29" y="41" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">Q</text>
+              <text x="56" y="34" font-size="14" font-weight="700" fill="var(--tinta)">quién</text>
+              <text x="56" y="49" font-size="11.5" fill="var(--tinta-tenue)">agente — quien actúa</text>
+              <text x="430" y="42" font-size="12" fill="var(--tinta-suave)" font-family="var(--mono)">vendedor_17</text>
+
+              <!-- O -->
+              <rect x="14" y="68" width="30" height="30" rx="7" fill="var(--eje-o)"/>
+              <text x="29" y="89" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">O</text>
+              <text x="56" y="82" font-size="14" font-weight="700" fill="var(--tinta)">qué</text>
+              <text x="56" y="97" font-size="11.5" fill="var(--tinta-tenue)">objeto, evento, situación</text>
+              <text x="430" y="90" font-size="12" fill="var(--tinta-suave)" font-family="var(--mono)">venta_001</text>
+
+              <!-- L -->
+              <rect x="14" y="116" width="30" height="30" rx="7" fill="var(--eje-l)"/>
+              <text x="29" y="137" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">L</text>
+              <text x="56" y="130" font-size="14" font-weight="700" fill="var(--tinta)">dónde</text>
+              <text x="56" y="145" font-size="11.5" fill="var(--tinta-tenue)">lugar</text>
+              <text x="430" y="138" font-size="12" fill="var(--tinta-suave)" font-family="var(--mono)">tienda_centro</text>
+
+              <!-- T -->
+              <rect x="14" y="164" width="30" height="30" rx="7" fill="var(--eje-t)"/>
+              <text x="29" y="185" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">T</text>
+              <text x="56" y="178" font-size="14" font-weight="700" fill="var(--tinta)">cuándo</text>
+              <text x="56" y="193" font-size="11.5" fill="var(--tinta-tenue)">tiempo</text>
+              <text x="430" y="186" font-size="12" fill="var(--tinta-suave)" font-family="var(--mono)">16:32</text>
+
+              <!-- N -->
+              <rect x="14" y="212" width="30" height="30" rx="7" fill="var(--eje-n)"/>
+              <text x="29" y="233" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">N</text>
+              <text x="56" y="226" font-size="14" font-weight="700" fill="var(--tinta)">cuánto</text>
+              <text x="56" y="241" font-size="11.5" fill="var(--tinta-tenue)">número, magnitud</text>
+              <text x="430" y="234" font-size="12" fill="var(--tinta-suave)" font-family="var(--mono)">49.90</text>
+
+              <!-- K -->
+              <rect x="14" y="260" width="30" height="30" rx="7" fill="var(--eje-k)"/>
+              <text x="29" y="281" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">K</text>
+              <text x="56" y="274" font-size="14" font-weight="700" fill="var(--tinta)">cuál</text>
+              <text x="56" y="289" font-size="11.5" fill="var(--tinta-tenue)">clase, categoría</text>
+              <text x="430" y="282" font-size="12" fill="var(--tinta-suave)" font-family="var(--mono)">venta</text>
+
+              <!-- M separador -->
+              <line x1="14" y1="312" x2="626" y2="312" stroke="var(--linea)" stroke-width="1"/>
+              <rect x="14" y="322" width="30" height="30" rx="7" fill="var(--eje-m)"/>
+              <text x="29" y="343" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">M</text>
+              <text x="56" y="336" font-size="14" font-weight="700" fill="var(--tinta)">cómo</text>
+              <text x="56" y="351" font-size="11.5" fill="var(--tinta-tenue)">predicado, conexión — el cable que cose las seis lecturas</text>
+
+              <!-- linea M punteada cosiendo las lecturas -->
+              <polyline points="420,38 420,86 420,134 420,182 420,230 420,278" fill="none"
+                stroke="var(--eje-m)" stroke-width="2" stroke-dasharray="4 4" opacity=".5"/>
+              <circle cx="420" cy="38" r="3.5" fill="var(--eje-q)"/>
+              <circle cx="420" cy="86" r="3.5" fill="var(--eje-o)"/>
+              <circle cx="420" cy="134" r="3.5" fill="var(--eje-l)"/>
+              <circle cx="420" cy="182" r="3.5" fill="var(--eje-t)"/>
+              <circle cx="420" cy="230" r="3.5" fill="var(--eje-n)"/>
+              <circle cx="420" cy="278" r="3.5" fill="var(--eje-k)"/>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 32.1.</span> Los siete ejes. Seis fijan el valor de
+            un hecho —una lectura por eje, a la derecha el ejemplo de <code>venta_001</code>—; el
+            séptimo, <strong>M</strong>, no aloja nodos: es el de los predicados que cosen las seis
+            lecturas en un hecho consultable.</figcaption>
+        </figure>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:.5rem .9rem;margin:1.4rem 0">
+          <span class="eje-rotulo"><span class="eje eje--q">Q</span> quién <span style="color:var(--tinta-tenue)">· agente</span></span>
+          <span class="eje-rotulo"><span class="eje eje--o">O</span> qué <span style="color:var(--tinta-tenue)">· objeto / evento</span></span>
+          <span class="eje-rotulo"><span class="eje eje--l">L</span> dónde <span style="color:var(--tinta-tenue)">· lugar</span></span>
+          <span class="eje-rotulo"><span class="eje eje--t">T</span> cuándo <span style="color:var(--tinta-tenue)">· tiempo</span></span>
+          <span class="eje-rotulo"><span class="eje eje--n">N</span> cuánto <span style="color:var(--tinta-tenue)">· número</span></span>
+          <span class="eje-rotulo"><span class="eje eje--k">K</span> cuál <span style="color:var(--tinta-tenue)">· clase</span></span>
+          <span class="eje-rotulo"><span class="eje eje--m">M</span> cómo <span style="color:var(--tinta-tenue)">· predicado</span></span>
+        </div>
+
+        <h2>Catálogo de predicados canónicos</h2>
+
+        <p>Los predicados son los cables del eje <strong>M</strong>. Propiedades y relaciones se
+          unifican: ambas son cables; solo difieren en cardinalidad —funcional (un solo valor) o
+          múltiple (D2)—. La firma de cada predicado declara de qué eje sale y a cuál llega; la
+          escribimos <code>M(O→Q)</code>: «desde un nodo O hacia un nodo Q». El motor solo valida este
+          repertorio canónico; cualquier rol que un dominio invente —por la política liberal del
+          catálogo— se acepta sin declararlo.</p>
+
+        <p>Conviene mostrar primero la forma del cable con el componente insignia. El hecho «Messi es
+          el autor de <code>gol_001</code>» es una tripleta cuyo cable es <code>agente</code>:</p>
+
+        <div class="triple">
+          <span class="nodo nodo--o"><span>gol_001</span><small>O</small></span>
+          <span class="enlace">agente<span class="firma">M(O→Q)</span></span>
+          <span class="nodo nodo--q"><span>messi</span><small>Q</small></span>
+        </div>
+
+        <h3>Predicados de rol (signatura de las situaciones)</h3>
+
+        <p>Estos cables conectan una situación (O) con sus participantes. Son los roles que un
+          <code>LexiconEntry</code> declara obligatorios. El rol <code>agente</code> es contextual: lo
+          puede ocupar un humano, una organización, un software o un sensor, según el verbo (D5).</p>
+
+        <div class="tabla-envoltura">
+          <table>
+            <caption>Predicados de rol más usados. La firma indica eje de origen → eje de destino.</caption>
+            <thead>
+              <tr><th>Predicado</th><th>Firma</th><th>Conecta</th><th>Ejemplo</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>agente</code></td><td>M(O→Q)</td><td>situación → quien actúa</td><td><code>gol_001 · agente · messi</code></td></tr>
+              <tr><td><code>paciente</code></td><td>M(O→Q)</td><td>situación → quien la recibe</td><td><code>diagnostico_771 · paciente · vega</code></td></tr>
+              <tr><td><code>beneficiario</code></td><td>M(O→Q)</td><td>situación → a favor de quién</td><td><code>asig_001 · beneficiario · luis</code></td></tr>
+              <tr><td><code>tema</code></td><td>M(O→O)</td><td>situación → su objeto</td><td><code>canc_001 · tema · viaje_088</code></td></tr>
+              <tr><td><code>instrumento</code></td><td>M(O→O)</td><td>situación → con qué</td><td><code>asig_001 · instrumento · vehiculo_12</code></td></tr>
+              <tr><td><code>lugar_de</code></td><td>M(O→L)</td><td>situación → dónde</td><td><code>venta_001 · lugar_de · tienda_centro</code></td></tr>
+              <tr><td><code>momento</code></td><td>M(O→T)</td><td>situación → cuándo (puntual)</td><td><code>venta_001 · momento · t_16_32</code></td></tr>
+              <tr><td><code>inicio</code> / <code>fin</code></td><td>M(O→T)</td><td>situación → ventana temporal</td><td><code>sesion_ia_5521 · inicio · t0</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Predicados estructurales</h3>
+
+        <p>Cables que arman la jerarquía y la categorización del grafo. <code>instancia_de</code> es el
+          más importante de todo el modelo: ancla una entidad situada (O) a su plantilla atemporal (K),
+          y es el que lee <code>type_constraint</code> en una consulta.</p>
+
+        <div class="tabla-envoltura">
+          <table>
+            <caption>Predicados estructurales: categorización y composición.</caption>
+            <thead>
+              <tr><th>Predicado</th><th>Firma</th><th>Significa</th><th>Ejemplo</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>instancia_de</code></td><td>M(O→K)</td><td>esta entidad es un caso de esta clase</td><td><code>venta_001 · instancia_de · venta</code></td></tr>
+              <tr><td><code>subclase_de</code></td><td>M(K→K)</td><td>esta clase especializa a otra</td><td><code>venta · subclase_de · transaccion</code></td></tr>
+              <tr><td><code>parte_de</code></td><td>M(O→O)</td><td>esta entidad compone a otra mayor</td><td><code>escena_42 · parte_de · pelicula_marea</code></td></tr>
+              <tr><td><code>estatus_factual</code></td><td>M(O→K)</td><td>estado de la situación</td><td><code>viaje_088 · estatus_factual · cancelado</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <aside class="nota-margen">
+          <span class="etq">Por qué importa</span>
+          <code>estatus_factual</code> es la clave de la inmutabilidad: en vez de borrar un viaje
+          cancelado, se asienta un hecho que lo marca <code>cancelado</code>. El dato viejo sobrevive;
+          la historia queda completa.
+        </aside>
+
+        <h3>Predicados del «por qué» (D7)</h3>
+
+        <p>No hay un eje «por qué». El porqué se reparte en cuatro cables distintos, y la distinción no
+          es cosmética: confundir la causa con la finalidad es un error de modelado. Las cuatro pueden
+          coexistir sobre la misma situación sin pisarse.</p>
+
+        <div class="tabla-envoltura">
+          <table>
+            <caption>Los cuatro predicados en que se descompone el «por qué» (D7).</caption>
+            <thead>
+              <tr><th>Predicado</th><th>Responde</th><th>Apunta a</th><th>Ejemplo</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>causado_por</code></td><td>¿qué lo produjo?</td><td>causa eficiente</td><td>tarifa elevada → estado de alta demanda</td></tr>
+              <tr><td><code>motivado_por</code></td><td>¿por qué razón?</td><td>motivo del agente</td><td>prescripción → diagnóstico</td></tr>
+              <tr><td><code>con_finalidad</code></td><td>¿para qué?</td><td>fin perseguido</td><td>prescripción → objetivo terapéutico</td></tr>
+              <tr><td><code>justificado_por</code></td><td>¿con qué fundamento?</td><td>norma o autoridad</td><td>ordenanza → competencia municipal</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Predicados de trazabilidad</h3>
+
+        <p>Como el modelo nunca borra, necesita cables que registren la enmienda: cuál hecho reemplaza
+          a cuál. Son la firma de la inmutabilidad (D6) en el grafo.</p>
+
+        <div class="tabla-envoltura">
+          <table>
+            <caption>Predicados que registran la enmienda sin destruir el dato previo.</caption>
+            <thead>
+              <tr><th>Predicado</th><th>Significa</th><th>Ejemplo</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>rectifica</code></td><td>corrige un hecho anterior conservándolo</td><td>rediagnóstico → diagnóstico previo</td></tr>
+              <tr><td><code>cancela</code></td><td>anula una situación previa</td><td>cancelación → viaje original</td></tr>
+              <tr><td><code>verificado_contra</code></td><td>se validó frente a una regla</td><td>prescripción → regla de contraindicación</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="caja caja--idea">
+          <p class="caja-tit">La política liberal del catálogo</p>
+          <p style="margin-bottom:0">Este catálogo es <em>canónico</em>, no <em>cerrado</em>. El motor
+            valida estrictamente los predicados de arriba, pero deja pasar cualquier rol de dominio que
+            un negocio necesite: <code>medicamento_prescrito</code>, <code>medida_de</code>,
+            <code>diagnosticado_como</code>, <code>equipo</code>, <code>frecuencia</code>,
+            <code>duracion</code>, <code>monto</code>… Ninguno está declarado en el núcleo y todos
+            funcionan. Es la decisión que mantiene el motor pequeño mientras el lexicon crece.</p>
+        </div>
+
+        <h2>Recetario por dominio</h2>
+
+        <p>Lo que sigue es el código publicado en la Parte&nbsp;V, consolidado y agrupado por la
+          maniobra que ilustra. Sirve como banco de patrones: cuando te topes con un caso parecido en
+          tu dominio, copia el molde y cambia los identificadores.</p>
+
+        <h3>Reificar una situación con polisemia</h3>
+
+        <p>Vender una camiseta es una situación con vendedor, cliente, lugar y momento. El
+          parámetro <code>complements</code> resuelve la ambigüedad del verbo: «vender» puede ser
+          vender un producto o «venderse» (delatarse); el complemento lo decide.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">vta = ingest_situation(u, lex, "vender",
+    roles={
+        "agente":   vendedor_17,
+        "lugar_de": tienda_centro,
+        "momento":  t_16_32,
+    },
+    complements=["camiseta"],          # dispara la acepción correcta
+    extra={"estatus_factual": cerrada},
+    sit_id="venta_001",
+)</code></pre>
+        </div>
+
+        <p>La desambiguación se sostiene en el lexicon: tres acepciones del mismo verbo, cada una con
+          su <code>pattern</code> disparador y su <code>situation_type</code>. El parser elige de la
+          más específica a la más general.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">lex.register(LexiconEntry(
+    verb="vender",
+    situation_type="transaccion_venta",
+    obligatory=["agente", "objeto"],
+    pattern=("camiseta",),                # dispara con el complemento "camiseta"
+))
+
+lex.register(LexiconEntry(
+    verb="vender",
+    situation_type="accion_delatar",
+    obligatory=["agente", "paciente"],
+    pattern=("se",),                      # locución idiomática «venderse»
+))
+
+lex.register(LexiconEntry(
+    verb="vender",
+    situation_type="accion_vender",
+    obligatory=["agente", "tema"],
+    notes="genérico — ceder a cambio de un precio",
+))</code></pre>
+        </div>
+
+        <h3>El dialecto de dominio: hablar el idioma del negocio</h3>
+
+        <p>Un dialecto mapea el vocabulario del comercio a los roles canónicos. El usuario dice
+          «vendedor», «venta», «artículo»; el sistema traduce a <code>agente</code>,
+          <code>transaccion_venta</code>, <code>objeto</code> sin que se entere (D9).</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">lex.register_domain_dialect("tienda_aurora", {
+    "vendedor":  "agente",
+    "venta":     "transaccion_venta",
+    "articulo":  "objeto",
+    "fidelidad": "beneficio_fidelidad",
+})</code></pre>
+        </div>
+
+        <h3>Consultar: patrón fijo + restricción de tipo</h3>
+
+        <p>«¿Cuántas camisetas vendió Marco hoy?» es un conteo con sujeto fijo y restricción de tipo.
+          El patrón ata <code>agente</code> y <code>estatus_factual</code>, y restringe a la clase
+          <code>transaccion_venta</code>.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">n = count(u, Pattern(
+    fixed={"agente": vendedor_17, "estatus_factual": cerrada},
+    type_constraint=u.ind("transaccion_venta"),
+))
+# n == 8</code></pre>
+        </div>
+
+        <p>Y una decisión de negocio —«a la séptima, una gratis»— no es código del motor: es Python que
+          consume el resultado de la consulta. La regla vive en la aplicación, no en el grafo.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">califica = n >= 7
+# True</code></pre>
+        </div>
+
+        <h3>Consulta bitemporal: la misma pregunta, distinto instante (D6)</h3>
+
+        <p>La misma consulta sobre el mismo individuo devuelve respuestas distintas según el
+          <code>at=</code> que recibe. La directora Serra vivió en <code>ciudad_a</code> hasta 2025 y
+          luego se mudó a <code>ciudad_b</code>; el grafo recuerda ambas residencias.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">res_2022 = query(u, Pattern(
+    fixed={"agente": serra},
+    ask={"lugar_de": Var()},
+    type_constraint=u.ind("residencia"),
+), at=datetime(2022, 6, 1, tzinfo=timezone.utc))
+# res_2022[0]["lugar_de"].id == "ciudad_a"
+
+res_2027 = query(u, ..., at=datetime(2027, 6, 1, tzinfo=timezone.utc))
+# res_2027[0]["lugar_de"].id == "ciudad_b"</code></pre>
+        </div>
+
+        <h3>Software como agente (D5)</h3>
+
+        <p>El rol <code>agente</code> no exige un humano. Al asignar un viaje, el agente es la
+          <em>app</em>: cuatro participantes con roles distintos —app (agente, Q), solicitud previa
+          (tema, O), conductor (beneficiario, Q), vehículo (instrumento, O)—.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">asig = ingest_situation(u, lex, "asignar", roles={
+    "agente":       app,            # ¡la APP ocupa el rol Q!
+    "tema":         sol,            # asigna la solicitud previa
+    "beneficiario": luis,           # al conductor disponible
+    "instrumento":  vehiculo_12,    # con su vehículo
+    "momento":      at(1),
+}, sit_id="asig_001")</code></pre>
+        </div>
+
+        <h3>Causalidad emergente: explicar un valor</h3>
+
+        <p>Una tarifa elevada no se afirma porque sí: queda explicada por <code>causado_por</code>
+          apuntando a un estado de alta demanda, que a su vez se reifica con su lugar y su momento.
+          Recuperar la explicación es un salto del grafo.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">estado_demanda = u.add_individual(Individual(
+    id="alta_demanda_2026_05_16_14_30", axis=Axis.O,
+    label="alta demanda 16/5 14:30"))
+u.assert_fact(estado_demanda, "instancia_de", alta_demanda)
+u.assert_fact(estado_demanda, "lugar_de", plaza_mayor)
+u.assert_fact(estado_demanda, "momento", at(0))
+
+tarifa = u.add_individual(Individual(id="tarifa_viaje_088", axis=Axis.O))
+u.assert_fact(tarifa, "instancia_de", category("tarifa"))
+u.assert_fact(tarifa, "monto", n_25_usd)
+u.assert_fact(tarifa, "causado_por", estado_demanda)</code></pre>
+        </div>
+
+        <p>Y la consulta inversa —«¿por qué costó tanto?»— recorre los hechos de la tarifa buscando el
+          cable <code>causado_por</code>:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">explicaciones = u.facts_about(tarifa)
+causa = [f for f in explicaciones if f.role == "causado_por"]
+# causa[0].value.id == "alta_demanda_2026_05_16_14_30"</code></pre>
+        </div>
+
+        <h3>Nunca borramos: la cancelación como hecho nuevo</h3>
+
+        <p>Cancelar no destruye nada. Es una situación nueva que <code>cancela</code> la previa y le
+          pone <code>estatus_factual: cancelado</code>. El historial sobrevive intacto.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">canc = ingest_situation(u, lex, "cancelar", roles={
+    "agente":   valeria,
+    "tema":     viaje_088,
+    "momento":  at(62),
+}, sit_id="canc_001")
+u.assert_fact(canc, "cancela", viaje_088)
+u.assert_fact(viaje_088, "estatus_factual", cancelado)</code></pre>
+        </div>
+
+        <h3>Rediagnóstico con vigencia y trazabilidad</h3>
+
+        <p>Un diagnóstico se reemplaza por otro vía bitemporalidad. El primero es válido entre la
+          consulta y el rediagnóstico; el segundo, desde ahí en adelante (sin <code>valid_to</code>).
+          La relación <code>rectifica</code> deja el rastro del cambio.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># Diagnóstico original (vigente hasta el rediagnóstico)
+u.assert_fact(diag, "diagnosticado_como", hta_g1,
+              valid_from=t_consulta, valid_to=t_redx)
+
+# Rediagnóstico (vigente desde t_redx, abierto al futuro)
+u.assert_fact(diag2, "diagnosticado_como", hta_g2,
+              valid_from=t_redx)
+u.assert_fact(diag2, "rectifica", diag)</code></pre>
+        </div>
+
+        <h3>Roles de dominio que apuntan a K</h3>
+
+        <p>«El medicamento prescrito» no es un objeto físico individual (O), sino una categoría
+          farmacológica (K). El catálogo declara <code>tema: O→O</code>, así que el dominio agrega su
+          propio rol <code>medicamento_prescrito: O→K</code> gracias a la política liberal. Lo mismo
+          con <code>medida_de</code>.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># El medicamento prescrito es una categoría (K), no un objeto.
+u.assert_fact(pres, "medicamento_prescrito", enalapril)
+
+# La variable medida también es una categoría.
+u.assert_fact(medicion, "medida_de", presion_arterial)</code></pre>
+        </div>
+
+        <h3>El «por qué» en triple: motivo, finalidad y verificación</h3>
+
+        <p>Tres cables del porqué (D7) sobre una misma prescripción, sin pisarse:
+          <code>motivado_por</code> apunta al diagnóstico, <code>con_finalidad</code> al objetivo
+          terapéutico, <code>verificado_contra</code> a la regla que confirma que no contradice una
+          contraindicación.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">pres = ingest_situation(u, lex, "prescribir", roles={
+    "agente":                dra_torres,
+    "paciente":              vega,
+    "medicamento_prescrito": enalapril,
+    "frecuencia":            cada_manana,
+    "duracion":              indefinida,
+    "momento":               at(0),
+})
+
+u.assert_fact(pres, "motivado_por",      diag)       # por qué se prescribió
+u.assert_fact(pres, "con_finalidad",     objetivo)   # para qué se prescribió
+u.assert_fact(pres, "verificado_contra", regla_contraindicacion)</code></pre>
+        </div>
+
+        <h3>Recuperar una cadena por composición</h3>
+
+        <p>Un partido completo es una entidad superior que contiene sus jugadas vía
+          <code>parte_de</code>. Filtrar por ese cable devuelve toda la cadena de una sola pasada.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">partes = [f.subject for f in u.facts_with_role("parte_de")
+          if f.value.id == "partido_arg_per_2026"]
+# devuelve todas las jugadas registradas del partido</code></pre>
+        </div>
+
+        <h3>Estado derivado: no se asienta, se calcula</h3>
+
+        <p>El marcador de un partido no es un hecho que alguien escriba: emerge de contar los goles
+          de cada equipo. La consulta es un doble conteo con una composición final.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">goles_argentina = count(u, Pattern(
+    fixed={"equipo": argentina},
+    type_constraint=u.ind("gol_jugada_abierta"),
+))
+goles_peru = count(u, Pattern(
+    fixed={"equipo": peru},
+    type_constraint=u.ind("gol_jugada_abierta"),
+))
+marcador = f"{goles_argentina} - {goles_peru}"</code></pre>
+        </div>
+
+        <h3>Un LLM ingiere una nota en lenguaje natural</h3>
+
+        <p>Como el lexicon expone las signaturas de los verbos como <em>function schemas</em>, un
+          modelo de lenguaje puede leer una nota clínica y producir una invocación
+          <code>ingest_situation</code> por verbo identificado. La extracción es directa: el modelo no
+          inventa el esquema, lo lee del lexicon.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">ingest_situation("consultar", roles={
+    "agente": dra_torres, "paciente": vega,
+    "momento": fecha_nota, "motivo": cefalea,
+})
+ingest_situation("medir", roles={
+    "agente": dra_torres, "paciente": vega,
+    "medida_de": presion_arterial,
+    "monto": "145/92", "unidad": mmHg,
+})
+ingest_situation("diagnosticar", roles={
+    "agente": dra_torres, "paciente": vega,
+    "diagnosticado_como": hta_g1,
+})
+ingest_situation("prescribir", roles={
+    "agente": dra_torres, "paciente": vega,
+    "medicamento_prescrito": enalapril,
+    "frecuencia": cada_manana,
+})
+ingest_situation("controlar", roles={
+    "paciente": vega, "agente": dra_torres,
+    "momento": fecha_nota_mas_30,
+    "estatus_factual": previsto,
+})</code></pre>
+        </div>
+
+        <h3>Una consulta que cruza dominios</h3>
+
+        <p>El mismo grafo permite cruzar territorios que en sistemas tradicionales jamás se hablarían.
+          Aquí, dos consultas paralelas —una a un dominio público (una ordenanza), otra a uno de
+          telemetría (sesiones de IA)— que la aplicación combina en una respuesta única.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">normas = query(u, Pattern(
+    fixed={"tema_categorico": micromovilidad},
+    type_constraint=u.ind("ordenanza_municipal"),
+    ask={"agente": Var(), "momento": Var(), "entra_en_vigor": Var()},
+))
+
+uso = query(u, Pattern(
+    fixed={"modelo": modelo_lumen_2026},
+    type_constraint=u.ind("sesion_ia"),
+    ask={"momento": Var(), "tokens_salida": Var()},
+))</code></pre>
+        </div>
+
+        <h2>Formatos: cómo viaja un hecho</h2>
+
+        <p>El mismo hecho se puede mirar en tres representaciones. Todas dicen lo mismo; cambian la
+          audiencia. La <em>tripleta</em> es para leer; el <em>JSON</em> es para transmitir; el
+          <em>function schema</em> es para que un LLM lo invoque.</p>
+
+        <h3>Forma tripleta (para leer)</h3>
+
+        <p>La notación canónica del libro. Cada línea es un hecho atómico; el comentario tras
+          <code>∈</code> recuerda la firma del cable. Esta forma es la que aparece en las figuras y la
+          que conviene tener en la cabeza al modelar.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(venta_001) ∈ O                                  # la situación
+(venta_001, instancia_de, venta)          ∈ M(O, K)
+(venta_001, agente,       vendedor_17)    ∈ M(O, Q)
+(venta_001, objeto,       camiseta_88)    ∈ M(O, O)
+(venta_001, lugar_de,     tienda_centro)  ∈ M(O, L)
+(venta_001, momento,      16:32)          ∈ M(O, T)
+(venta_001, monto_usd,    49.90)          ∈ M(O, N)   # USD
+(venta_001, estatus_factual, cerrada)     ∈ M(O, K)</code></pre>
+        </div>
+
+        <h3>Forma JSON (para transmitir)</h3>
+
+        <p>La serialización por la que viaja un hecho entre sistemas. Cada hecho lleva su sujeto, su
+          rol y su valor; el valor distingue entre referencia a otro nodo (<code>ref</code>) y literal
+          (<code>lit</code>) con su eje. La bitemporalidad va en <code>valido</code>.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">json</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="json">{
+  "sujeto": "venta_001",
+  "eje_sujeto": "O",
+  "hechos": [
+    {"rol": "instancia_de", "valor": {"ref": "venta", "eje": "K"}},
+    {"rol": "agente",       "valor": {"ref": "vendedor_17", "eje": "Q"}},
+    {"rol": "objeto",       "valor": {"ref": "camiseta_88", "eje": "O"}},
+    {"rol": "lugar_de",     "valor": {"ref": "tienda_centro", "eje": "L"}},
+    {"rol": "momento",      "valor": {"lit": "2026-05-14T16:32:00-05:00", "eje": "T"}},
+    {"rol": "monto_usd",    "valor": {"lit": 49.90, "eje": "N", "unidad": "Currency:USD"}}
+  ],
+  "valido": {"desde": "2026-05-14T16:32:00-05:00", "hasta": null}
+}</code></pre>
+        </div>
+
+        <h3>Forma function schema (para que un LLM lo invoque)</h3>
+
+        <p>El lexicon proyecta cada verbo como una herramienta que un modelo de lenguaje puede llamar.
+          Los roles obligatorios de la signatura se vuelven parámetros requeridos; los opcionales,
+          opcionales. Así el LLM no improvisa el esquema: lo recibe.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">json</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="json">{
+  "name": "ingest_vender_camiseta",
+  "description": "Registra que un vendedor vendió una camiseta a un cliente.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "agente":   {"type": "string", "description": "quién la vendió (Q)"},
+      "objeto":   {"type": "string", "description": "qué se vendió (O)"},
+      "lugar_de": {"type": "string", "description": "dónde se vendió (L)"},
+      "momento":  {"type": "string", "format": "date-time"},
+      "monto_usd": {"type": "number", "description": "importe en dólares (N)"}
+    },
+    "required": ["agente", "objeto"]
+  }
+}</code></pre>
+        </div>
+
+        <h2>Lo que se ve al mirarlo todo junto</h2>
+
+        <p>Reunir el código disperso revela patrones que el flujo capítulo a capítulo diluye. Cinco
+          regularidades valen la pena nombrar, porque explican por qué el modelo escala sin
+          engordar.</p>
+
+        <div class="rejilla-2 revelar">
+          <div class="tarjeta">
+            <h4><span class="eje eje--q">1</span>&nbsp; La API es diminuta</h4>
+            <p style="margin:0;font-size:.95rem">Cuatro funciones —<code>ingest_situation</code>,
+              <code>assert_fact</code>, <code>query</code>, <code>count</code>— modelan ocho dominios
+              completos. No hay doscientas funciones que aprender; hay cuatro.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--o">2</span>&nbsp; Las llamadas son uniformes</h4>
+            <p style="margin:0;font-size:.95rem">El patrón visual es siempre el mismo: verbo,
+              diccionario de roles, opcionales al final. Una vez que reconoces la silueta, el código
+              se lee como prosa.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--l">3</span>&nbsp; El verbo va primero</h4>
+            <p style="margin:0;font-size:.95rem">Se elige el verbo y después los roles, no al revés.
+              Refleja la signatura tipada del verbo: primero el contrato, después los argumentos.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--t">4</span>&nbsp; La política liberal trabaja sola</h4>
+            <p style="margin:0;font-size:.95rem">Roles que ningún capítulo declara
+              —<code>medicamento_prescrito</code>, <code>equipo</code>, <code>frecuencia</code>— el
+              motor los acepta. Valida lo canónico; deja pasar lo de dominio.</p>
+          </div>
+          <div class="tarjeta" style="grid-column:1/-1">
+            <h4><span class="eje eje--n">5</span>&nbsp; Inmutabilidad y bitemporalidad por defecto</h4>
+            <p style="margin:0;font-size:.95rem">Casi todo fragmento importante asienta con
+              <code>valid_from</code>/<code>valid_to</code>, marca <code>estatus_factual</code> o
+              <code>rectifica</code> sin borrar. El modelo no tiene una operación «update»: tiene
+              «asentar un hecho nuevo que reemplaza al previo conservando el historial».</p>
+          </div>
+        </div>
+
+        <p class="cita-destacada revelar">El motor no crece con cada dominio nuevo; el lexicon y los
+          datos sí. Esa es la propiedad que mantiene corto el núcleo a pesar de cubrir un spa, un
+          banco, una historia clínica y un partido con la misma maquinaria.<cite>La economía del
+          modelo</cite></p>
+
+        <p>Esas cinco regularidades, juntas, explican por qué el núcleo de modelado cabe en poco más
+          de dos mil líneas a pesar de la diversidad de territorios que cubre. Y anticipan la prueba
+          más exigente, la del <a href="28-prueba-reflexiva.html">capítulo 28</a>: una aplicación con
+          menús, formularios y entidades enteras que se levantó sobre este mismo núcleo casi sin
+          agregarle código, porque también su estructura y su conducta son, al final, datos. El
+          siguiente anexo abre esa caja y muestra el prototipo por dentro.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="31-conclusion.html"><span class="dir">← Anterior</span><span class="tit">Por qué importan las preguntas</span></a>
+      <a class="sig" href="33-anexo-prototipo.html"><span class="dir">Siguiente →</span><span class="tit">Anexo: el prototipo</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

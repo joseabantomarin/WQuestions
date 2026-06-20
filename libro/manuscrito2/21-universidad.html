@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 21 · Una universidad — WQuestions</title>
+  <meta name="description" content="Donde los prerrequisitos forman un grafo dirigido acíclico, los planes de estudio se recorren como caminos y la matrícula, los créditos y las notas se modelan con preguntas.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'21'">
+      <header class="portada-cap">
+        <p class="parte">Parte V · En la práctica</p>
+        <div class="num-cap">21</div>
+        <h1>Una universidad</h1>
+        <p class="lede">Aquí la dificultad no es el volumen ni la ley, sino la <em>forma</em>: el saber
+          se ordena en un grafo de dependencias y una vida académica dura décadas. Veamos si el
+          modelo sabe recorrer caminos.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Es lunes de matrícula y Tomás Quiroz tiene quince navegadores abiertos. Cursa
+          el cuarto semestre de Ciencia de la Computación y quiere inscribirse en <em>Algoritmos</em>,
+          el curso que todos dicen que «abre puertas». El portal de matrícula lo rechaza con un mensaje
+          escueto: <em>«No cumple prerrequisitos»</em>. Pero Tomás está seguro de haber aprobado lo que
+          hacía falta. ¿Le falta <em>Estructuras de Datos</em>, que aprobó el ciclo pasado? ¿O es la
+          rama de matemática, <em>Cálculo</em>, que arrastra desde primero? El sistema no se lo dice:
+          solo sabe responder sí o no, nunca <em>por dónde</em>. Y detrás de ese silencio se esconde el
+          problema técnico que define a una universidad como dominio.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Por qué este dominio</span>
+          El banco era el dominio de la <em>ley</em>; el ERP, el de la <em>integración</em>. La
+          universidad es el dominio de la <em>forma</em>: dependencias que se encadenan y un reloj que
+          no se detiene en cinco años, sino en cincuenta.
+        </aside>
+
+        <p>Porque una universidad no se parece a un comercio ni a un banco. Sus dos rasgos propios son
+          de otra naturaleza. El primero: <strong>los tiempos son largos</strong>. Una carrera dura
+          cinco años, pero el historial de un egresado lo acompaña toda la vida: la nota de un curso
+          que rindió a los veinte le sirve para un posgrado a los cuarenta. El segundo, y el que da
+          título a este capítulo: <strong>las cosas dependen unas de otras</strong>. No puedes tomar
+          <em>Algoritmos</em> sin antes haber pasado por <em>Estructuras de Datos</em>, y a esa no
+          llegas sin <em>Programación</em>. La malla curricular es, literalmente, un grafo de
+          dependencias.</p>
+
+        <p>Cualquier sistema académico serio tiene que poder responder, sin sudar, preguntas como
+          estas:</p>
+
+        <ul>
+          <li>¿Qué cursos <em>puede</em> tomar Tomás este semestre, dado lo que ya aprobó?</li>
+          <li>¿Qué nota sacó Lucía en <em>Cálculo I</em> antes de su reclamo? ¿Y después de la
+            rectificación?</li>
+          <li>¿Quiénes seguían matriculados en <em>Bases de Datos</em> el 1 de mayo?</li>
+          <li>¿Qué cadena de prerrequisitos arrastra <em>Aprendizaje de Máquina</em>, y cuáles de ellos
+            le faltan a Tomás?</li>
+          <li>¿Quiénes integraron el jurado de la tesis de Renata?</li>
+        </ul>
+
+        <p>En una base relacional clásica, cada una de estas preguntas pide algo distinto: una tabla
+          histórica aquí, un <code>WITH RECURSIVE</code> allá, un procedimiento almacenado que replica
+          en código la lógica del recorrido. En WQuestions, como veremos, <strong>cada una es un
+          recorrido de uno o dos saltos sobre el mismo grafo de hechos</strong>. No hay máquina
+          distinta para cada pregunta: hay un solo mapa y muchas rutas sobre él.</p>
+
+        <h2>La universidad sobre las siete coordenadas</h2>
+
+        <p>Antes de los casos, repartamos las piezas del mundo académico entre los ejes de valor. El
+          ejercicio ordena de un golpe lo que en un sistema heredado vive disperso en una veintena de
+          tablas:</p>
+
+        <div class="rejilla-2 revelar">
+          <div class="tarjeta">
+            <h4><span class="eje eje--q">Q</span>&nbsp; quién · agentes</h4>
+            <p style="margin:0;font-size:.95rem">Estudiantes, docentes, autoridades, miembros de
+              jurado y la propia universidad como persona jurídica. Una sola persona puede aparecer en
+              muchos roles: Renata es estudiante, jefa de práctica y tesista a la vez.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--o">O</span>&nbsp; qué · entidades y eventos</h4>
+            <p style="margin:0;font-size:.95rem">Carreras, planes, cursos, matrículas, evaluaciones,
+              reclamos, tesis, defensas y graduaciones. Cada uno con identidad propia y trazabilidad.
+              Aquí vive el grueso del peso académico.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--l">L</span>&nbsp; dónde · lugares</h4>
+            <p style="margin:0;font-size:.95rem">Facultades, aulas, laboratorios, auditorios y campus.
+              Forman jerarquías como cualquier organización territorial: el aula es parte del pabellón,
+              el pabellón del campus.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--t">T</span>&nbsp; cuándo · tiempos</h4>
+            <p style="margin:0;font-size:.95rem">Inicio y fin de cada ciclo, momento exacto de una
+              matrícula, fecha de un examen, día de una defensa. El reloj académico es largo y no
+              olvida: una nota de hace veinte años sigue siendo consultable.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--n">N</span>&nbsp; cuánto · magnitudes</h4>
+            <p style="margin:0;font-size:.95rem">Créditos, notas numéricas, horas semanales, montos de
+              pensión. Cada magnitud arrastra su unidad: cuatro créditos no son cuatro puntos ni cuatro
+              horas.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--k">K</span>&nbsp; cuál · clases</h4>
+            <p style="margin:0;font-size:.95rem">Tipos de carrera, estados de matrícula
+              (vigente / retirado), modalidades de evaluación y niveles cualitativos
+              (aprobado / desaprobado). El zócalo categórico que da sentido al resto.</p>
+          </div>
+        </div>
+
+        <p>Y el séptimo eje, <span class="eje eje--m">M</span> —el <em>cómo</em>—, aporta los cables
+          que amarran todo: <code>parte_de</code> arma las jerarquías, <code>requiere_prereq</code>
+          teje la malla, <code>agente</code> ata cada persona a su situación. Sin esos enlaces, las
+          seis cajas anteriores serían seis listas inertes. Con ellos, una vida académica entera se
+          vuelve un grafo navegable. Recorrámoslo.</p>
+
+        <h2>Caso 1 · La estructura académica como jerarquía</h2>
+
+        <p>El plan de estudios de Tomás tiene una forma de árbol que el modelo absorbe sin esfuerzo.
+          La carrera contiene años; cada año, ciclos; cada ciclo, cursos. Una sola relación,
+          <code>parte_de</code>, expresa los cuatro niveles:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(carrera_cc) ∈ O                         # Ciencia de la Computación
+(plan_2024)        parte_de  carrera_cc        # la malla vigente desde 2024
+(ciclo_2026_i)     parte_de  plan_2024         # el ciclo en curso
+(cc_310_algoritmos) parte_de ciclo_2026_i      # un curso del ciclo
+(cc_310_algoritmos) creditos  n_4_cr           # arrastra su magnitud (N)
+(cc_310_algoritmos) docente   prof_salazar     # apunta a un agente (Q)
+(cc_310_algoritmos) dictado_en lab_b2          # y a un lugar (L)</code></pre>
+        </div>
+
+        <p>Cada nivel es una entidad en <code>O</code>, y <em>es parte de</em> el nivel superior.
+          Tres tripletas de jerarquía y la columna vertebral de la carrera queda armada. Cuando Tomás
+          pregunta «¿qué cursos hay en mi ciclo actual?», la consulta es un único salto: trae todas
+          las entidades de <code>O</code> cuyo <code>parte_de</code> sea <code>ciclo_2026_i</code>. Y
+          cada curso, además de colgar de su ciclo, lleva sus propios atributos —créditos, docente,
+          aula, código, sílabo— sin que ninguno necesite una tabla aparte. Todo el inventario
+          académico tiene la misma forma.</p>
+
+        <div class="triple">
+          <span class="nodo nodo--o"><span>cc_310_algoritmos</span><small>O</small></span>
+          <span class="enlace">parte_de<span class="firma">M(O→O)</span></span>
+          <span class="nodo nodo--o"><span>ciclo_2026_i</span><small>O</small></span>
+          <span class="enlace">parte_de<span class="firma">M(O→O)</span></span>
+          <span class="nodo nodo--o"><span>plan_2024</span><small>O</small></span>
+        </div>
+
+        <h2>Caso 2 · Los prerrequisitos como grafo dirigido acíclico</h2>
+
+        <p>Llegamos al corazón del capítulo. La malla curricular —qué curso exige haber pasado por
+          cuál— es por su propia naturaleza un <strong>grafo dirigido acíclico</strong>, un DAG: las
+          aristas tienen sentido (de requisito a curso), no hay ciclos (ningún curso puede exigirse a
+          sí mismo, ni directa ni indirectamente) y las dependencias se cruzan (un curso puede tener
+          varios requisitos, y un requisito puede habilitar varios cursos).</p>
+
+        <div class="caja caja--definicion revelar">
+          <p class="caja-tit">DAG · grafo dirigido acíclico</p>
+          <p style="margin:0">Un conjunto de nodos unidos por flechas con sentido, sin que ninguna ruta
+            te devuelva al punto de partida. Es la estructura natural de toda dependencia ordenada: las
+            tareas de un proyecto, las versiones de un documento, las migraciones de una base de datos
+            —y los prerrequisitos de una carrera—. Que no haya ciclos es justo lo que garantiza que
+            siempre exista un orden válido para avanzar.</p>
+        </div>
+
+        <p>En un sistema relacional, esto se modela con una tabla <code>curso_prereq(curso, prereq)</code>
+          y se consulta con SQL recursivo. En WQuestions, <strong>cada prerrequisito es una sola
+          tripleta</strong>. Tomamos un fragmento real de la malla de Tomás —dos líneas que confluyen,
+          la de matemática y la de programación:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple"># línea de programación
+(cc_210_estructuras) requiere_prereq  cc_101_progra
+(cc_220_basesdatos)  requiere_prereq  cc_210_estructuras
+(cc_310_algoritmos)  requiere_prereq  cc_210_estructuras
+
+# línea de matemática
+(ma_120_calculo)     requiere_prereq  ma_110_discreta
+(ma_230_probabilidad) requiere_prereq ma_120_calculo
+
+# el curso que las une: necesita las DOS ramas a la vez
+(cc_310_algoritmos)  requiere_prereq  ma_120_calculo
+(cc_420_aprendizaje) requiere_prereq  cc_310_algoritmos
+(cc_420_aprendizaje) requiere_prereq  ma_230_probabilidad</code></pre>
+        </div>
+
+        <p><em>Algoritmos</em> (<code>cc_310</code>) exige <strong>dos</strong> requisitos simultáneos
+          —uno de cada rama—, y <em>Aprendizaje de Máquina</em> (<code>cc_420</code>), la cima de la
+          carrera, exige otros dos. El modelo lo absorbe sin pestañear porque
+          <code>requiere_prereq</code> es un cable múltiple: un mismo curso puede emitir varias flechas
+          de requisito, cada una su propio hecho atómico, independiente de las demás. No hay que
+          inventar una «tabla de dependencias compuestas»; basta apilar tripletas.</p>
+
+        <!-- FIGURA SVG: el DAG de prerrequisitos -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 700 372" class="svg-eje" role="img"
+                 aria-label="Grafo dirigido acíclico de prerrequisitos: ocho cursos como nodos y las flechas requiere_prereq que los enlazan, con dos ramas que confluyen en Algoritmos y luego en Aprendizaje de Máquina">
+              <defs>
+                <marker id="flecha19a" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto">
+                  <path d="M0 0 L9 4.5 L0 9 z" fill="var(--eje-m)"></path>
+                </marker>
+              </defs>
+
+              <!-- aristas (debajo de los nodos) -->
+              <g stroke="var(--eje-m)" stroke-width="2" fill="none" opacity=".82">
+                <!-- progra -> estructuras -->
+                <line x1="148" y1="64" x2="148" y2="138" marker-end="url(#flecha19a)"></line>
+                <!-- estructuras -> bases de datos -->
+                <line x1="120" y1="186" x2="78" y2="244" marker-end="url(#flecha19a)"></line>
+                <!-- estructuras -> algoritmos -->
+                <line x1="196" y1="170" x2="318" y2="180" marker-end="url(#flecha19a)"></line>
+                <!-- discreta -> calculo -->
+                <line x1="540" y1="64" x2="540" y2="138" marker-end="url(#flecha19a)"></line>
+                <!-- calculo -> probabilidad -->
+                <line x1="566" y1="186" x2="606" y2="244" marker-end="url(#flecha19a)"></line>
+                <!-- calculo -> algoritmos -->
+                <line x1="492" y1="170" x2="382" y2="180" marker-end="url(#flecha19a)"></line>
+                <!-- algoritmos -> aprendizaje -->
+                <line x1="338" y1="220" x2="312" y2="290" marker-end="url(#flecha19a)"></line>
+                <!-- probabilidad -> aprendizaje -->
+                <line x1="606" y1="290" x2="392" y2="312" marker-end="url(#flecha19a)"></line>
+              </g>
+
+              <!-- rótulos de rama -->
+              <text x="148" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="var(--eje-o)" opacity=".75">rama · programación</text>
+              <text x="540" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="var(--eje-t)" opacity=".75">rama · matemática</text>
+
+              <!-- NODOS -->
+              <g font-family="var(--mono)" font-size="11" text-anchor="middle">
+                <!-- CC-101 Programación -->
+                <rect x="88" y="34" width="120" height="32" rx="8" fill="var(--eje-o)"></rect>
+                <text x="148" y="54" fill="#fff" font-weight="600">CC-101 Progra.</text>
+
+                <!-- CC-210 Estructuras -->
+                <rect x="80" y="138" width="136" height="32" rx="8" fill="var(--eje-o)" opacity=".9"></rect>
+                <text x="148" y="158" fill="#fff" font-weight="600">CC-210 Estruct.</text>
+
+                <!-- CC-220 Bases de datos -->
+                <rect x="6" y="244" width="136" height="32" rx="8" fill="var(--eje-o)" opacity=".8"></rect>
+                <text x="74" y="264" fill="#fff" font-weight="600">CC-220 BB.DD.</text>
+
+                <!-- MA-110 Discreta -->
+                <rect x="480" y="34" width="120" height="32" rx="8" fill="var(--eje-t)"></rect>
+                <text x="540" y="54" fill="#fff" font-weight="600">MA-110 Discreta</text>
+
+                <!-- MA-120 Cálculo -->
+                <rect x="482" y="138" width="116" height="32" rx="8" fill="var(--eje-t)" opacity=".9"></rect>
+                <text x="540" y="158" fill="#fff" font-weight="600">MA-120 Cálculo</text>
+
+                <!-- MA-230 Probabilidad -->
+                <rect x="556" y="244" width="138" height="32" rx="8" fill="var(--eje-t)" opacity=".8"></rect>
+                <text x="625" y="264" fill="#fff" font-weight="600">MA-230 Probab.</text>
+
+                <!-- CC-310 Algoritmos (confluencia) -->
+                <rect x="296" y="172" width="108" height="48" rx="10" fill="var(--eje-k)"></rect>
+                <text x="350" y="192" fill="#fff" font-weight="700">CC-310</text>
+                <text x="350" y="208" fill="#fff" font-size="10" font-family="var(--sans)">Algoritmos</text>
+
+                <!-- CC-420 Aprendizaje (cima) -->
+                <rect x="262" y="290" width="128" height="48" rx="10" fill="var(--eje-m)"></rect>
+                <text x="326" y="310" fill="#fff" font-weight="700">CC-420</text>
+                <text x="326" y="326" fill="#fff" font-size="10" font-family="var(--sans)">Aprend. Máquina</text>
+              </g>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 21.1.</span> La malla de Tomás como grafo dirigido
+            acíclico. Cada curso es un individuo de <code>O</code>; cada flecha es una tripleta
+            <code>requiere_prereq</code> (en color <em>cómo</em>). Las dos ramas —programación y
+            matemática— confluyen en <em>Algoritmos</em>, que requiere ambas a la vez, y la carrera
+            culmina en <em>Aprendizaje de Máquina</em>, que depende de <em>Algoritmos</em> y de
+            <em>Probabilidad</em>. Cada dependencia es un hecho atómico independiente.</figcaption>
+        </figure>
+
+        <p>Ahora podemos resolver el drama del lunes. La pregunta «¿qué cursos puede tomar Tomás este
+          ciclo?» se vuelve un recorrido directo sobre el grafo. Para cada curso del ciclo, el motor
+          mira sus flechas <code>requiere_prereq</code> y verifica que <strong>todos</strong> los
+          requisitos tengan, en el historial de Tomás, una evaluación con estado <em>aprobado</em>. Si
+          falta uno solo, el curso queda excluido. Y —esto es lo que el portal del lunes no sabía
+          hacer— el mismo recorrido puede <em>devolver el requisito que falta</em>, no solo un «no».</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">El recorrido de elegibilidad, en una frase</p>
+          <p style="margin:0">Un curso es elegible para un estudiante si, y solo si, el conjunto de los
+            destinos de sus aristas <code>requiere_prereq</code> está contenido en el conjunto de
+            cursos que ese estudiante aprobó. Es una operación de conjuntos sobre el grafo: sin
+            <em>join</em>, sin SQL recursivo, sin procedimiento almacenado. La diferencia entre los dos
+            conjuntos es, además, la lista exacta de lo que le falta.</p>
+        </div>
+
+        <p>Apliquémoslo. Tomás aprobó <em>Programación</em>, <em>Estructuras de Datos</em> y
+          <em>Discreta</em>, pero no <em>Cálculo</em>. <em>Algoritmos</em> exige
+          <code>cc_210_estructuras</code> ✓ y <code>ma_120_calculo</code> ✗. El recorrido devuelve un
+          único faltante: Cálculo. El portal podría haberle dicho, en vez de un «no» mudo: <em>«Te
+          falta Cálculo I para habilitar Algoritmos»</em>. El grafo conocía la respuesta desde el
+          principio; solo había que recorrerlo en lugar de comparar banderas.</p>
+
+        <h2>Caso 3 · La matrícula que cambia de estado sin perder el pasado</h2>
+
+        <p>Tomás se matricula en <em>Bases de Datos</em> el 10 de marzo. Lucía también, dos días
+          después. Pero a mediados de abril Lucía se retira del curso. ¿Cómo guardamos esto sin perder
+          información? La tentación clásica —y el error más común— es poner una columna
+          <code>estado</code> en la tabla de matrículas y <em>actualizarla</em> cuando alguien se
+          retira. El problema aparece en julio, cuando la secretaría pregunta: «¿quiénes estaban
+          matriculados el 1 de abril?». La respuesta fiel ya no existe: el <code>UPDATE</code> borró el
+          estado anterior.</p>
+
+        <p>En WQuestions los dos estados <strong>conviven</strong> en el grafo, separados por
+          vigencia. No se sobrescribe nada: se cierra el intervalo del estado viejo y se abre el del
+          nuevo.</p>
+
+        <div class="caja caja--decision revelar">
+          <p class="caja-tit"><span class="codigo-d">D6</span> Vigencia: el pasado no se sobrescribe</p>
+          <p style="margin:0">Como vimos al modelar el banco, ningún atributo que pueda cambiar se
+            guarda como un valor desnudo, sino con un intervalo <code>[inicio, fin)</code>. Cambiar el
+            estado de una matrícula no es modificar una celda: es cerrar el intervalo vigente y abrir
+            uno nuevo. La consecuencia es que el grafo conserva, gratis, toda la trayectoria de la
+            matrícula a lo largo del tiempo.</p>
+        </div>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(matricula_lucia_bd, estado, vigente,
+                     inicio=2026-03-12, fin=2026-04-18)
+(matricula_lucia_bd, estado, retirada,
+                     inicio=2026-04-18, fin=hoy)</code></pre>
+        </div>
+
+        <p>La pregunta «¿estaba Lucía matriculada el 1 de abril?» se responde directo: una consulta
+          con <code>al=2026-04-01</code> filtra por vigencia y devuelve <em>vigente</em>. La misma
+          consulta con <code>al=2026-05-01</code> devuelve <em>retirada</em>. Sin tabla histórica
+          auxiliar, sin esfuerzo extra. La matrícula nunca se borra: cambia de estado y el historial
+          queda fechado para siempre.</p>
+
+        <h2>Caso 4 · Una persona, muchos roles</h2>
+
+        <p>Una verdad incómoda del mundo académico: las personas no son una sola cosa. Renata Ferro es
+          estudiante de quinto año <em>y</em>, al mismo tiempo, jefa de práctica del curso de
+          Programación. En unos años será docente titular; más adelante, directora de tesis; quizá,
+          decana. Es <strong>la misma persona</strong> —un solo individuo en <code>Q</code>—, pero
+          ocupa roles distintos en situaciones distintas.</p>
+
+        <p>En un sistema tradicional esto se vuelve un dolor de cabeza: una tabla <code>estudiantes</code>,
+          otra <code>docentes</code>, claves cruzadas y un proceso de sincronización para el día en que
+          un estudiante se convierte en profesor. En WQuestions el problema <strong>no existe</strong>,
+          y la razón es una decisión de diseño que ya conoces:</p>
+
+        <div class="caja caja--decision revelar">
+          <p class="caja-tit"><span class="codigo-d">D5</span> Agencia contextual</p>
+          <p style="margin:0">El rol de agente lo determina el verbo de la situación, no un «tipo» fijo
+            de la persona. Renata es <code>renata_q</code>: aparece como agente en una matrícula (rol
+            <em>estudiante</em>), como agente en una asignación docente (rol <em>jefa de práctica</em>),
+            como agente en una tesis (rol <em>tesista</em>). El sistema no distingue entre tipos de
+            personas; distingue entre tipos de situaciones. Cada rol vive en su situación.</p>
+        </div>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple"># Renata como estudiante
+(matricula_renata_ml, agente, renata_q)
+(matricula_renata_ml, tema,   cc_420_aprendizaje)
+
+# Renata como jefa de práctica
+(asignacion_jp_2026, agente, renata_q)
+(asignacion_jp_2026, rol,    rol_jefe_practica)     # ← rol de dominio (K)
+(asignacion_jp_2026, tema,   cc_101_progra)
+
+# Renata como tesista
+(tesis_renata, agente, renata_q)
+(tesis_renata, instancia_de, defensa_tesis)</code></pre>
+        </div>
+
+        <p>Cuando alguien pregunta «¿qué hizo Renata este año?», la consulta es una sola: trae todas
+          las situaciones donde <code>renata_q</code> sea <code>agente</code> y proyecta su
+          <code>instancia_de</code>. La respuesta sale del grafo de forma natural y abarca lo
+          académico, lo docente y lo investigativo en una sola lista. No hubo que unir tres tablas de
+          tres «tipos» de persona, porque nunca hubo tres tipos: hubo una persona y tres situaciones.</p>
+
+        <h2>Caso 5 · La cadena nota → reclamo → rectificación</h2>
+
+        <p>Llegamos al caso emblemático de la trazabilidad académica. Lucía rinde el examen final de
+          <em>Cálculo I</em> el 15 de julio. La Dra. Bravo corrige y le pone 12. Lucía revisa, no está
+          de acuerdo con la corrección de un ejercicio y presenta un reclamo formal el 20 de julio. La
+          docente lo revisa, le da la razón y el 25 de julio rectifica la nota a 15.</p>
+
+        <p>En un sistema tradicional, la nota se <strong>sobrescribe</strong>. El historial —si
+          existe— vive en una tabla auxiliar que casi nadie consulta. Cuando años después alguien
+          quiere reconstruir el incidente —un decano que atiende una queja, un comité de calidad que
+          audita—, el rastro está borroso. En WQuestions, las tres situaciones <strong>conviven</strong>
+          en el grafo, y la causa que las encadena queda explícita.</p>
+
+        <p>Aquí entra en juego una decisión que el libro ya estableció: el «por qué» no es un eje, sino
+          una relación entre hechos, repartida en cuatro cables distintos.</p>
+
+        <div class="caja caja--decision revelar">
+          <p class="caja-tit"><span class="codigo-d">D7</span> El porqué, repartido en cuatro cables</p>
+          <p style="margin:0">No hay un eje «por qué»: la causalidad se expresa con
+            <code>causado_por</code>, <code>motivado_por</code>, <code>con_finalidad</code> y
+            <code>justificado_por</code>. La rectificación está <code>motivado_por</code> el reclamo
+            (esa fue su razón) y <code>rectifica</code> la evaluación original (ese es su blanco). La
+            graduación, más adelante, estará <code>justificado_por</code> la defensa. El audit trail no
+            es una tabla aparte: es la propia topología del grafo.</p>
+        </div>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple"># 1. la evaluación inicial (situación reificada)
+(eval_lucia_calc) ∈ O
+  instancia_de: evaluar_examen
+  agente:       dra_bravo
+  paciente:     lucia_q
+  tema:         ma_120_calculo
+  momento:      2026-07-15
+
+# 2. el reclamo: otra situación, agente = Lucía
+(reclamo_lucia) ∈ O
+  instancia_de: reclamar_nota
+  agente:       lucia_q
+  tema:         eval_lucia_calc
+  momento:      2026-07-20
+
+# 3. la rectificación: causa explícita y blanco explícito
+(rectif_lucia) ∈ O
+  instancia_de:  rectificar_nota
+  agente:        dra_bravo
+  motivado_por:  reclamo_lucia        # ← por qué se hizo
+  rectifica:     eval_lucia_calc      # ← qué corrige
+  momento:       2026-07-25</code></pre>
+        </div>
+
+        <p>¿Y la nota vigente? Cambia con la misma vigencia D6 del Caso 3. La calificación era 12 entre
+          el 15 y el 25 de julio; desde el 25 es 15. Las dos versiones existen, fechadas:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(eval_lucia_calc, nota_vigente, n_12,
+                  inicio=2026-07-15, fin=2026-07-25)
+(eval_lucia_calc, nota_vigente, n_15,
+                  inicio=2026-07-25, fin=hoy)</code></pre>
+        </div>
+
+        <p>La consulta con <code>al=2026-07-18</code> devuelve 12; con <code>al=2026-07-30</code>,
+          devuelve 15. El reclamo sigue en el grafo, consultable años después, y la cadena causal está
+          a la vista: la rectificación está <code>motivado_por</code> el reclamo y <code>rectifica</code>
+          la evaluación original. Si dentro de cinco años alguien revisa el caso de Lucía, el grafo le
+          entrega la historia completa sin gimnasia alguna.</p>
+
+        <div class="caja caja--alerta revelar">
+          <p class="caja-tit">La trampa del <code>UPDATE</code> en las notas</p>
+          <p style="margin:0">Corregir una nota tienta a ejecutar <code>UPDATE notas SET valor=15
+            WHERE id=…</code>. Es la decisión que destruye la trazabilidad: al actualizar la celda, se
+            borra la prueba de que alguna vez la nota fue 12 y de que un reclamo la cambió. El reflejo
+            más natural del programador es, también aquí, el peor enemigo de la institución. El modelo
+            lo previene: la nota anterior no se modifica, se le cierra el intervalo de vigencia y queda
+            en el grafo.</p>
+        </div>
+
+        <h2>Caso 6 · Una defensa de tesis con director y jurado</h2>
+
+        <p>El último escenario es la defensa de tesis de Renata. Una tesis es una situación de larga
+          duración —un año, en su caso— con varios participantes que no juegan el mismo papel:</p>
+
+        <div class="columnas">
+          <p>La <strong>tesista</strong> es Renata, la agente principal. El <strong>director</strong> es
+            el Dr. Acuña, un rol específico del dominio. Y el <strong>jurado</strong> lo componen tres
+            personas con funciones distintas: la Decana Ortiz como presidenta, la Dra. Bravo como vocal
+            y el Dr. Lima como secretario. En un sistema tradicional, todo esto pide una tabla
+            <code>tesis_participantes</code> con una columna discriminadora de <code>tipo</code>, y
+            cada consulta tiene que filtrar por ese código.</p>
+          <p>En WQuestions, <strong>cada rol es una tripleta separada</strong>. No hay tabla puente ni
+            columna discriminadora: el rol <em>es</em> el nombre del cable. Preguntar «¿quién presidió
+            el jurado de Renata?» es leer un solo enlace, <code>jurado_presidente</code>, sin filtrar
+            ninguna columna de tipo. La forma del dato coincide con la forma de la pregunta.</p>
+        </div>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(tesis_renata,  agente,              renata_q)
+(tesis_renata,  director_tesis,      dr_acuna)
+(defensa_renata, parte_de,           tesis_renata)
+(defensa_renata, jurado_presidente,  decana_ortiz)
+(defensa_renata, jurado_vocal,       dra_bravo)
+(defensa_renata, jurado_secretario,  dr_lima)
+(defensa_renata, momento,            2026-12-04)
+
+# la graduación: justificada por la defensa exitosa
+(graduacion_renata, instancia_de,    graduar)
+(graduacion_renata, agente,          renata_q)
+(graduacion_renata, justificado_por, defensa_renata)</code></pre>
+        </div>
+
+        <p>Roles como <code>director_tesis</code>, <code>jurado_presidente</code>,
+          <code>jurado_vocal</code> y <code>jurado_secretario</code> no figuran en el catálogo canónico
+          —ese catálogo invisible que vimos al hablar del lexicon—. No importa: la política liberal del
+          modelo los acepta sin protestar, y mientras el dominio universitario los use de forma
+          consistente, el motor opera con ellos como si fueran canónicos. La graduación, por su parte,
+          queda <code>justificado_por</code> la defensa: Renata se graduó <em>porque</em> defendió con
+          éxito su tesis. El grafo deja la cadena causal escrita, sin un solo campo añadido al motor.</p>
+
+        <p class="cita-destacada revelar">En una universidad, un expediente no es una foto del presente:
+          es la película completa de una vida que el tiempo no debería poder reescribir.<cite>La lección
+          del expediente académico</cite></p>
+
+        <h2>El antes y el después: del esquema fragmentado al grafo único</h2>
+
+        <p>Pongamos las dos arquitecturas frente a frente con la pregunta que abrió el capítulo, ahora
+          en su forma más exigente: <em>¿qué cadena de prerrequisitos arrastra «Aprendizaje de
+          Máquina», cuáles de ellos ya aprobó Tomás y cuál le falta?</em></p>
+
+        <p><strong>Antes, en el modelo relacional.</strong> La información se reparte entre
+          <code>alumnos</code>, <code>cursos</code>, <code>prerequisitos</code>, <code>matriculas</code>
+          y <code>notas</code>. Para expandir el árbol de dependencias de un curso hay que escribir un
+          <code>WITH RECURSIVE</code> sobre <code>prerequisitos</code>, y luego cruzarlo con
+          <code>matriculas</code> y <code>notas</code> mediante varios <em>joins</em>. Cada vez que la
+          malla cambia —y cambia cada pocos años—, la consulta hay que revisarla con lupa.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">SQL</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="sql">-- Antes: el árbol de prerrequisitos exige SQL recursivo.
+WITH RECURSIVE cadena(curso) AS (
+    SELECT prereq FROM prerequisitos WHERE curso = 'cc_420_aprendizaje'
+  UNION
+    SELECT p.prereq
+    FROM prerequisitos p
+    JOIN cadena c ON p.curso = c.curso
+)
+SELECT c.curso,
+       CASE WHEN n.estado = 'aprobado' THEN 'ok' ELSE 'FALTA' END
+FROM cadena c
+LEFT JOIN notas n
+       ON n.curso = c.curso AND n.alumno = 'tomas_q';
+-- ...y todavía falta cruzar vigencias para la malla histórica.</code></pre>
+        </div>
+
+        <p><strong>Después, en WQuestions.</strong> La misma información vive como un solo grafo. Cada
+          prerrequisito es una tripleta <code>requiere_prereq</code>; cada curso aprobado es un nodo
+          alcanzable desde Tomás. La cadena completa de dependencias de <em>Aprendizaje de Máquina</em>
+          se obtiene con un recorrido hacia atrás sobre las flechas <code>requiere_prereq</code> —sin
+          SQL recursivo, sin procedimiento almacenado—. Determinar qué le falta es restar dos
+          conjuntos: la cadena de requisitos menos su subgrafo de aprobados. Y el grafo no distingue
+          entre malla vigente y malla histórica: la bitemporalidad ya lo cubre, así que la misma
+          consulta sirve para el plan de hoy y para el de hace diez años.</p>
+
+        <h2>Qué quedó probado en este capítulo</h2>
+
+        <p>La universidad es, probablemente, el dominio donde el <strong>timeline largo</strong> y los
+          <strong>grafos de dependencia</strong> dejan de ser un detalle accesorio y se vuelven el
+          problema central. El modelo absorbió ambas cosas con su maquinaria estándar, sin un solo
+          añadido al motor:</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">El veredicto del dominio de la forma</p>
+          <ul class="limpia" style="margin:0">
+            <li style="margin-bottom:.6rem"><b>Dependencias como grafo.</b> La malla curricular es un
+              DAG, y cada prerrequisito un hecho atómico. La pregunta «¿qué puedo tomar?» es un
+              recorrido sobre el grafo que, de paso, devuelve lo que falta —no un sí o no mudo.</li>
+            <li style="margin-bottom:.6rem"><b>Historial intacto de por vida.</b> La vigencia (D6) deja
+              matrículas, notas y estados con su trayectoria completa durante toda la vida académica del
+              egresado. La trampa del <code>UPDATE</code> nunca llega a ser una operación disponible.</li>
+            <li style="margin-bottom:.6rem"><b>Una persona, muchos roles.</b> La agencia contextual
+              (D5) permite que Renata sea estudiante, jefa de práctica y tesista a la vez: el grafo no
+              distingue tipos de personas, sino tipos de situaciones.</li>
+            <li><b>Cadenas causales explícitas.</b> El porqué repartido en cables (D7) deja a la vista
+              que una rectificación se hizo por un reclamo, o que una graduación se justifica por una
+              defensa. El audit trail es la topología misma del grafo.</li>
+          </ul>
+        </div>
+
+        <p>Y, una vez más, <strong>el motor no creció ni una línea</strong> para absorber el dominio.
+          Lo único que creció fue el lexicon: un puñado de verbos —<code>matricular</code>,
+          <code>dictar</code>, <code>evaluar</code>, <code>reclamar</code>, <code>rectificar_nota</code>,
+          <code>graduar</code>, <code>defender_tesis</code>— con sus signaturas, más un dialecto de
+          dominio que mapea «estudiante», «docente», «tesista» o «director de tesis» a sus roles. En el
+          próximo capítulo dejamos el campus y cruzamos a lo público: una municipalidad, donde las
+          fechas de vigencia de una norma deciden la vida de un barrio entero.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="20-erp.html"><span class="dir">← Anterior</span><span class="tit">Un ERP multi-módulo</span></a>
+      <a class="sig" href="22-municipalidad.html"><span class="dir">Siguiente →</span><span class="tit">Una municipalidad</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

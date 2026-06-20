@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 13 · El verbo como signatura — WQuestions</title>
+  <meta name="description" content="Cada verbo es una firma de función: declara qué situación activa, qué roles exige y de qué eje viene cada uno. La costura natural entre la lengua y los datos.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'13'">
+      <header class="portada-cap">
+        <p class="parte">Parte IV · Del lenguaje a los hechos</p>
+        <div class="num-cap">13</div>
+        <h1>El verbo como signatura</h1>
+        <p class="lede">Antes de inventar un esquema de datos, el idioma ya traía uno. Cada verbo es una
+          declaración de función disfrazada de palabra: dice qué situación crea, qué roles exige y de
+          qué caja debe venir cada uno.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Corre el minuto 87 y la selección pierde por un gol.
+          Un relator de radio describe la jugada para miles de personas que no pueden ver la
+          cancha: <em>«Messi recibe de Di María en la frontal del área, recorta sobre la marca y</em>
+          <strong>marca</strong><em> el gol con la zurda»</em>. En el instante en que pronuncia
+          ese verbo —<em>marca</em>— ocurre algo que damos por sentado y que, sin embargo, es casi
+          milagroso: cada oyente reconstruye en su cabeza el mismo evento. Sabe que <em>hubo</em> un
+          remate, que <em>alguien</em> lo ejecutó, que <em>algo</em> entró en el arco, que pasó <em>en</em>
+          un sitio y <em>en</em> un momento. El verbo no transmitió una imagen; transmitió un molde, y
+          cada cerebro lo rellenó.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Hilo del libro</span>
+          Este es el capítulo bisagra de la Parte IV. En el <a href="07-hecho-atomico.html">capítulo 7</a>
+          fijamos el átomo —la tripleta tipada (D3)—; en el <a href="09-situaciones.html">capítulo 9</a>,
+          cómo un evento se reifica como situación con roles. Aquí mostramos por qué el lenguaje ya venía
+          organizado de esa misma forma.
+        </aside>
+
+        <p>Ese molde es el tema de este capítulo. La tesis es sencilla de enunciar y tiene
+          consecuencias enormes: <strong>cada verbo es una firma de función</strong>. No describe una
+          acción suelta, sino un <em>tipo</em> de situación, y trae de fábrica una declaración de qué
+          participantes admite y de qué eje debe venir cada uno. Si en los capítulos anteriores
+          construimos un modelo de datos sobre las preguntas, ahora descubriremos que el idioma —sin
+          que nadie se lo pidiera— ya estaba estructurado sobre esos mismos ejes. El verbo es la
+          costura natural entre la lengua que hablamos y los datos que guardamos.</p>
+
+        <h2>El argumento fantasma de Davidson</h2>
+
+        <p>Para entender por qué un verbo es una <em>firma</em> y no una simple etiqueta, conviene
+          empezar por un problema que parecía trivial y resultó ser un abismo. Tomemos un verbo de
+          cine y una oración mínima:</p>
+
+        <p class="cita-destacada">Serra dirigió la película.<cite>Una oración de dos argumentos… o eso parece</cite></p>
+
+        <p>La tentación del ingeniero clásico es tratar el verbo como una función de dos casillas:
+          <code>dirigir(serra, pelicula_marea)</code>. Limpio y cerrado. Pero el lenguaje no se queda
+          quieto, y la realidad tampoco. Apenas añadimos las circunstancias que cualquier ficha
+          técnica registra, la oración crece:</p>
+
+        <p style="font-family:var(--display);font-style:italic;font-size:1.15rem;color:var(--tinta);margin:1.2rem 0;padding-left:1.1rem;border-left:3px solid var(--eje-o)">
+          Serra dirigió la película en los estudios del norte, durante el otoño de 2025, con un
+          presupuesto ajustado, para retratar el duelo de su madre.</p>
+
+        <p>¿Qué hacemos con esto? ¿Convertimos <code>dirigir</code> en una función de seis casillas?
+          ¿Y mañana, cuando alguien diga «con dos cámaras» o «bajo presión del estudio», la
+          ampliamos a ocho? Bajo esa lógica, el verbo tendría que reescribir su definición interna
+          cada vez que a un hablante se le ocurre un detalle nuevo. Es absurdo: una función cuya
+          aridad depende del humor del narrador no es una función, es un caos.</p>
+
+        <div class="caja caja--precedente revelar">
+          <p class="caja-tit">Precedente · El argumento eventivo de Davidson (1967)</p>
+          <p>En <em>«The Logical Form of Action Sentences»</em>, el filósofo <strong>Donald
+            Davidson</strong> propuso una salida elegante. En toda oración de acción existe un
+            argumento que no pronunciamos pero que está presente: <strong>el evento mismo</strong>.
+            La oración no afirma sólo que Serra y la película están en cierta relación; afirma que
+            <em>existió un evento e de tipo dirigir</em>, y que ese <em>e</em> tuvo a Serra como
+            quien lo realiza, a la película como lo realizado, a los estudios como lugar, al otoño
+            como tiempo. En notación lógica, «dirigió … en … durante …» se vuelve
+            <code>∃e [ dirigir(e) ∧ agente(e, serra) ∧ tema(e, pelicula) ∧ lugar(e, estudios) ∧ … ]</code>.</p>
+          <p style="margin-bottom:0">La consecuencia es decisiva: cada circunstancia es una
+            <em>conjunción independiente</em> colgada del mismo evento. Añadir «para retratar el
+            duelo» no cambia el verbo: agrega una cláusula más. El verbo conserva siempre su forma;
+            los detalles se enchufan.</p>
+        </div>
+
+        <p>Una década más tarde, lingüistas como Terence Parsons llevaron la idea a su forma actual,
+          la que hoy llamamos <strong>neodavidsoniana</strong>: incluso el sujeto y el objeto directo
+          dejan de ser argumentos «del verbo» y pasan a engancharse al evento mediante roles
+          explícitos —<em>agente</em>, <em>tema</em>, <em>lugar</em>—. El verbo deja de ser un
+          predicado con casillas fijas y se convierte en algo más limpio: un predicado de un solo
+          argumento, el evento, alrededor del cual orbitan los participantes.</p>
+
+        <p>Quien haya leído el <a href="09-situaciones.html">capítulo 9</a> reconocerá el dibujo de
+          inmediato. Lo que la filosofía del lenguaje llamó «argumento eventivo» es exactamente lo
+          que nosotros llamamos <strong>reificación</strong>: convertir la acción en un individuo del
+          eje <span class="eje-rotulo"><span class="eje eje--o">O</span></span> y colgarle sus
+          participantes como hechos atómicos. No es una analogía forzada. Es la misma operación,
+          descrita dos veces: una por los lógicos en 1967, otra por nosotros desde la ingeniería de
+          datos. Cuando dos disciplinas que no se hablan llegan a la misma estructura, conviene
+          prestar atención.</p>
+
+        <h2>El verbo no es una acción: es un molde</h2>
+
+        <p>De aquí sale el primer concepto que conviene fijar. Un verbo como <em>marcar</em>,
+          <em>dirigir</em> o <em>llover</em> no nombra una acción que ocurrió una vez en el mundo.
+          Nombra un <strong>molde</strong>: un tipo, una categoría de situación. Por eso los verbos no
+          viven en el eje de las cosas que pasan
+          (<span class="eje-rotulo"><span class="eje eje--o">O</span></span>), sino en el eje de los
+          conceptos (<span class="eje-rotulo"><span class="eje eje--k">K</span></span>) —tal como
+          fijamos en la primera decisión de diseño del libro: en K viven las plantillas atemporales;
+          en O, las instancias situadas.</p>
+
+        <p>Cuando alguien habla y emplea un verbo en una oración concreta, ocurren dos cosas, casi
+          instantáneas y rigurosamente mecánicas:</p>
+
+        <div class="rejilla-2 revelar">
+          <div class="tarjeta">
+            <h4><span class="eje eje--o">1</span>&nbsp; Se fabrica una instancia</h4>
+            <p style="margin:0;font-size:.95rem">El sistema crea una situación nueva y fresca en la
+              caja <span class="eje eje--o">O</span>, con su propio identificador único. Es el evento
+              <em>e</em> de Davidson, ahora con código de barras.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--k">2</span>&nbsp; Se la clasifica</h4>
+            <p style="margin:0;font-size:.95rem">El sistema conecta esa instancia con su molde en
+              <span class="eje eje--k">K</span> para registrar de qué <em>tipo</em> de situación se
+              trata. Ese cable se llama <code>instancia_de</code>.</p>
+          </div>
+        </div>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(gol_001)                          ∈ O          // la instancia fresca
+(gol_001, instancia_de, marcar)    ∈ M(O, K)   // su molde vive en K</code></pre>
+        </div>
+
+        <p>Ese segundo hecho —el cable que une la instancia con su molde— es la primera tripleta de
+          toda situación, y conviene verla con la forma insignia del modelo:</p>
+
+        <div class="triple">
+          <span class="nodo nodo--o"><span>gol_001</span><small>O</small></span>
+          <span class="enlace">instancia_de<span class="firma">M(O→K)</span></span>
+          <span class="nodo nodo--k"><span>marcar</span><small>K</small></span>
+        </div>
+
+        <p>A quien programe, esto le sonará idéntico a la relación entre una clase y un objeto. El
+          verbo <em>marcar</em> es la función —o la clase— que vive en la biblioteca; cada vez que un
+          hablante la usa, el sistema la <em>invoca</em> y crea una ejecución concreta en memoria,
+          anotando qué participantes recibió. El verbo permanece; las instancias se multiplican.</p>
+
+        <h2>La signatura: un contrato de tipos</h2>
+
+        <p>Si el verbo es una función, entonces tiene una <strong>signatura</strong>: la declaración
+          formal de qué argumentos acepta, cuáles son obligatorios, cuáles opcionales y —esto es lo
+          decisivo— de qué <em>tipo</em> es cada uno. En un lenguaje de programación moderno
+          escribiríamos algo como esto, y nadie se sorprendería:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">firma del verbo · marcar</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">def marcar(agente: Q, tema: O, *, lugar: L = None,
+           momento: T = None, asistido_por: Q = None) -> Situacion:
+    """Crea una situación de tipo 'marcar' y le engancha sus participantes."""</code></pre>
+        </div>
+
+        <p>Cada parámetro lleva su anotación de tipo, y ese tipo es uno de nuestros ejes. El
+          <em>agente</em> debe venir de la caja de los que actúan
+          (<span class="eje eje--q">Q</span>); el <em>tema</em>, de la caja de las cosas y eventos
+          (<span class="eje eje--o">O</span>); el <em>lugar</em>, de la caja de las locaciones
+          (<span class="eje eje--l">L</span>). Los parámetros con valor por defecto son los
+          opcionales. Esto no es una metáfora suelta: es, literalmente, un <strong>contrato de
+          tipos</strong> entre la oración y el almacén de datos.</p>
+
+        <div class="caja caja--definicion revelar">
+          <p class="caja-tit">Definición · Signatura de un verbo</p>
+          <p style="margin:0">La <strong>signatura</strong> (o <em>firma tipada</em>) de un verbo es
+            la declaración del conjunto de roles que admite, cuáles son obligatorios y cuáles
+            opcionales, y de qué eje debe provenir el valor de cada uno. Activar un verbo significa
+            crear una instancia de su molde y enganchar valores a esos roles, respetando los tipos.
+            Es el mismo contrato que valida una llamada a función: argumentos faltantes o del tipo
+            equivocado se rechazan en la puerta.</p>
+        </div>
+
+        <p>Cada verbo del idioma tiene la suya. Algunas son austeras y solitarias. El verbo
+          <em>llover</em>, por ejemplo, no exige agente —nadie «hace» la lluvia— y deja todo lo demás
+          en opcional:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">firmas · de la más simple a la más compleja</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">llover  ( momento?: T, lugar?: L, intensidad?: N )                         → Situacion
+soñar   ( experimentador: Q, tema: O, momento?: T )                        → Situacion
+marcar  ( agente: Q, tema: O, lugar?: L, momento?: T, asistido_por?: Q )   → Situacion
+dirigir ( agente: Q, tema: O, lugar?: L, momento?: T, con_finalidad?: O )  → Situacion</code></pre>
+        </div>
+
+        <p>El signo de interrogación marca lo opcional. Nótese que <em>soñar</em> no pide un
+          <em>agente</em> sino un <em>experimentador</em>: quien sueña no actúa sobre el mundo, vive un
+          estado mental. La signatura captura esa diferencia fina con un rol distinto, y veremos en un
+          momento de dónde sale ese catálogo de roles.</p>
+
+        <!-- FIGURA 11.1 — el verbo como signatura (verbo → roles tipados) -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 372" class="svg-eje" role="img"
+                 aria-label="El verbo marcar representado como una firma de función: una caja central que despliega ranuras tipadas, cada una conectada al eje del que debe venir su valor">
+              <!-- título de la firma -->
+              <rect x="20" y="22" width="250" height="48" rx="12" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="2.5"/>
+              <text x="145" y="44" text-anchor="middle" font-size="15" font-weight="700" fill="var(--eje-k)" font-family="var(--mono)">marcar</text>
+              <text x="145" y="61" text-anchor="middle" font-size="10.5" fill="var(--tinta-tenue)">molde · vive en K</text>
+
+              <!-- llave / símbolo de despliegue -->
+              <text x="300" y="52" text-anchor="middle" font-size="22" fill="var(--tinta-tenue)" font-family="var(--mono)">⟿</text>
+
+              <!-- columna de ranuras (parámetros) -->
+              <g font-family="var(--mono)" font-size="12">
+                <!-- agente -->
+                <rect x="338" y="26" width="150" height="40" rx="9" fill="var(--eje-q-suave)" stroke="var(--eje-q)" stroke-width="2"/>
+                <text x="350" y="44" fill="var(--tinta)">agente</text>
+                <text x="476" y="44" text-anchor="end" font-size="11" fill="var(--eje-q)" font-weight="700">: Q</text>
+                <text x="350" y="58" font-size="9" fill="var(--tinta-tenue)" font-family="var(--sans)">obligatorio</text>
+
+                <!-- tema -->
+                <rect x="338" y="76" width="150" height="40" rx="9" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="2"/>
+                <text x="350" y="94" fill="var(--tinta)">tema</text>
+                <text x="476" y="94" text-anchor="end" font-size="11" fill="var(--eje-o)" font-weight="700">: O</text>
+                <text x="350" y="108" font-size="9" fill="var(--tinta-tenue)" font-family="var(--sans)">obligatorio</text>
+
+                <!-- lugar -->
+                <rect x="338" y="126" width="150" height="40" rx="9" fill="var(--eje-l-suave)" stroke="var(--eje-l)" stroke-width="2" stroke-dasharray="5 4"/>
+                <text x="350" y="144" fill="var(--tinta)">lugar?</text>
+                <text x="476" y="144" text-anchor="end" font-size="11" fill="var(--eje-l)" font-weight="700">: L</text>
+                <text x="350" y="158" font-size="9" fill="var(--tinta-tenue)" font-family="var(--sans)">opcional</text>
+
+                <!-- momento -->
+                <rect x="338" y="176" width="150" height="40" rx="9" fill="var(--eje-t-suave)" stroke="var(--eje-t)" stroke-width="2" stroke-dasharray="5 4"/>
+                <text x="350" y="194" fill="var(--tinta)">momento?</text>
+                <text x="476" y="194" text-anchor="end" font-size="11" fill="var(--eje-t)" font-weight="700">: T</text>
+                <text x="350" y="208" font-size="9" fill="var(--tinta-tenue)" font-family="var(--sans)">opcional</text>
+
+                <!-- asistido_por -->
+                <rect x="338" y="226" width="150" height="40" rx="9" fill="var(--eje-q-suave)" stroke="var(--eje-q)" stroke-width="2" stroke-dasharray="5 4"/>
+                <text x="350" y="244" fill="var(--tinta)">asistido_por?</text>
+                <text x="476" y="244" text-anchor="end" font-size="11" fill="var(--eje-q)" font-weight="700">: Q</text>
+                <text x="350" y="258" font-size="9" fill="var(--tinta-tenue)" font-family="var(--sans)">opcional</text>
+              </g>
+
+              <!-- ejes de destino a la derecha -->
+              <g font-family="var(--sans)">
+                <!-- conectores -->
+                <g stroke-width="1.8" fill="none" opacity=".6">
+                  <line x1="488" y1="46"  x2="566" y2="46"  stroke="var(--eje-q)"/>
+                  <line x1="488" y1="96"  x2="566" y2="120" stroke="var(--eje-o)"/>
+                  <line x1="488" y1="146" x2="566" y2="178" stroke="var(--eje-l)"/>
+                  <line x1="488" y1="196" x2="566" y2="232" stroke="var(--eje-t)"/>
+                  <line x1="488" y1="246" x2="566" y2="46"  stroke="var(--eje-q)" stroke-dasharray="4 4"/>
+                </g>
+                <!-- chips de eje -->
+                <g font-weight="700" font-size="13" fill="#fff" text-anchor="middle">
+                  <rect x="566" y="32" width="28" height="28" rx="7" fill="var(--eje-q)"/><text x="580" y="51">Q</text>
+                  <rect x="566" y="106" width="28" height="28" rx="7" fill="var(--eje-o)"/><text x="580" y="125">O</text>
+                  <rect x="566" y="164" width="28" height="28" rx="7" fill="var(--eje-l)"/><text x="580" y="183">L</text>
+                  <rect x="566" y="218" width="28" height="28" rx="7" fill="var(--eje-t)"/><text x="580" y="237">T</text>
+                </g>
+                <g font-size="10.5" fill="var(--tinta-tenue)" text-anchor="start">
+                  <text x="600" y="51">quién</text>
+                  <text x="600" y="125">qué</text>
+                  <text x="600" y="183">dónde</text>
+                  <text x="600" y="237">cuándo</text>
+                </g>
+              </g>
+
+              <!-- pie -->
+              <text x="338" y="300" font-size="11" fill="var(--tinta-tenue)" font-family="var(--sans)">— — — borde discontinuo = parámetro opcional</text>
+              <text x="338" y="320" font-size="11" fill="var(--tinta-tenue)" font-family="var(--sans)">→ Situacion: la llamada produce una instancia en O</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 13.1.</span> El verbo <code>marcar</code> como firma
+            de función. La caja izquierda es el molde en <span class="eje eje--k">K</span>; al
+            invocarlo despliega sus ranuras tipadas. Cada ranura declara su eje de destino —el
+            <em>agente</em> sólo admite valores de <span class="eje eje--q">Q</span>, el <em>lugar</em>
+            de <span class="eje eje--l">L</span>—. El borde discontinuo marca los roles opcionales.</figcaption>
+        </figure>
+
+        <h2>Tres superpoderes que regala el contrato</h2>
+
+        <p>Tratar el verbo como un contrato de tipos —y no como una palabra de diccionario— no es un
+          adorno conceptual. Concede tres garantías que, en una base de datos tradicional, costarían
+          cientos de líneas de validación escritas a mano.</p>
+
+        <div class="rejilla-3 revelar">
+          <div class="tarjeta">
+            <p class="emoji">🛡️</p>
+            <h4>Rechazo de sinsentidos</h4>
+            <p style="margin:0;font-size:.93rem">Si alguien intenta registrar <em>«la cancha marcó el
+              gol»</em>, el sistema aborta antes de guardar nada. La firma de <em>marcar</em> exige
+              que el <em>agente</em> venga de <span class="eje eje--q">Q</span>, y una cancha vive en
+              <span class="eje eje--l">L</span>. No hace falta saber de fútbol: la matemática del
+              tipo lo frena en seco.</p>
+          </div>
+          <div class="tarjeta">
+            <p class="emoji">🌊</p>
+            <h4>Tolerancia a lo incompleto</h4>
+            <p style="margin:0;font-size:.93rem">Decir sólo <em>«llovió»</em> es una oración perfecta.
+              No obligamos a nadie a rellenar <em>dónde</em> y <em>cuándo</em> si no le interesan: la
+              firma los declara opcionales. La base de datos traga información parcial sin romperse.</p>
+          </div>
+          <div class="tarjeta">
+            <p class="emoji">🔌</p>
+            <h4>Modificadores con borde</h4>
+            <p style="margin:0;font-size:.93rem"><em>Marcar</em> admite un <em>asistido_por</em>;
+              <em>llover</em> admite una <em>intensidad</em>. Si alguien escribe <em>«marcó con una
+              intensidad de tres milímetros por hora»</em>, el sistema lo rechaza. La firma decide qué
+              modificadores son legales, sin reglas escritas caso por caso.</p>
+          </div>
+        </div>
+
+        <p>Estas tres propiedades son, en el fondo, la misma propiedad mirada desde tres ángulos: el
+          tipo del argumento contiene la verdad sobre lo que es admisible. El verbo, al declarar sus
+          tipos, hace de aduana. Y como la aduana es declarativa —vive en la firma, no en el código de
+          la aplicación—, vale para cualquier dominio sin que nadie reescriba el motor.</p>
+
+        <h2>De dónde salen los roles: un catálogo cerrado</h2>
+
+        <p>Habrás notado que las palabras <code>agente</code>, <code>tema</code>,
+          <code>experimentador</code>, <code>lugar</code> no aparecen al azar: se repiten de verbo en
+          verbo. No las inventamos en cada ejemplo. Provienen de un <strong>catálogo cerrado y
+          deliberadamente pequeño</strong> de roles —los <em>cables conectores</em> del eje
+          <span class="eje eje--m">M</span>—, heredado casi sin cambios de lo que la lingüística lleva
+          medio siglo refinando bajo el nombre de <em>roles temáticos</em>.</p>
+
+        <div class="caja caja--precedente revelar">
+          <p class="caja-tit">Precedente · FrameNet y VerbNet: el verbo trae sus papeles</p>
+          <p>La intuición de que un verbo predefine sus participantes no es nuestra. El proyecto
+            <strong>FrameNet</strong> (Charles Fillmore, Universidad de California en Berkeley) parte
+            de una idea hermosa: comprender una palabra es invocar un <em>marco</em> (<em>frame</em>),
+            una escena estereotipada con sus papeles. El marco <em>Commerce_buy</em> trae de fábrica
+            sus huecos —comprador, vendedor, mercancía, dinero— y verbos como <em>comprar</em>,
+            <em>adquirir</em> o <em>pagar</em> son distintas maneras de iluminar la misma escena.</p>
+          <p style="margin-bottom:0"><strong>VerbNet</strong> (Karin Kipper-Schuler) lo lleva al plano
+            operativo: clasifica miles de verbos del inglés en clases que comparten roles temáticos y
+            restricciones de selección —exactamente lo que aquí llamamos <em>tipo del argumento</em>—.
+            Nuestro catálogo es un primo cercano y minimalista de estos dos: en lugar de miles de
+            marcos, un núcleo de unas pocas decenas de roles que se reutilizan en todos los dominios.</p>
+        </div>
+
+        <p>¿Cuántos roles hacen falta para modelar el mundo? Menos de los que uno imagina. El núcleo
+          canónico ronda las cuatro decenas de roles, y con ellos alcanza para describir fútbol,
+          cine, medicina, banca, química o derecho. La razón es la misma que hace universales a las
+          preguntas: el cerebro humano, sea cual sea la profesión de su dueño, procesa la realidad con
+          un repertorio reducido y estable de papeles. He aquí las familias principales, sin pretensión
+          de listarlas todas:</p>
+
+        <div class="columnas">
+          <p><strong>Participantes.</strong> El corazón del catálogo, salido directo de la lingüística.
+            <code>agente</code> (quien actúa con intención),
+            <code>paciente</code> (quien recibe o sufre la acción),
+            <code>tema</code> (la cosa o sub-situación sobre la que recae),
+            <code>beneficiario</code> (el destinatario),
+            <code>experimentador</code> (quien vive un estado mental) e
+            <code>instrumento</code> (lo que media la acción). El agente apunta a
+            <span class="eje eje--q">Q</span>; el tema, a <span class="eje eje--o">O</span>.</p>
+          <p><strong>Circunstancias.</strong> Los ejes de posición se enchufan con roles propios:
+            <code>lugar</code>, <code>origen</code> y <code>destino</code> apuntan a
+            <span class="eje eje--l">L</span>; <code>momento</code>, <code>inicio</code> y
+            <code>fin</code> apuntan a <span class="eje eje--t">T</span>; <code>monto</code>,
+            <code>cantidad</code> y <code>unidad</code> recogen el <em>cuánto</em> en
+            <span class="eje eje--n">N</span> (con la unidad apuntando a una categoría en
+            <span class="eje eje--k">K</span>).</p>
+          <p><strong>Modales y del «por qué».</strong> Roles como <code>estatus_factual</code> o
+            <code>polaridad</code> distinguen lo real de lo planeado, lo afirmado de lo negado. Y como
+            vimos en el <a href="10-por-que.html">capítulo 10</a>, el «por qué» se reparte en cuatro
+            cables —<code>causado_por</code>, <code>motivado_por</code>, <code>con_finalidad</code>,
+            <code>justificado_por</code> (D7)—, todos del tipo
+            <span class="eje eje--o">O</span>→<span class="eje eje--o">O</span>.</p>
+        </div>
+
+        <aside class="nota-margen">
+          <span class="etq">Adelanto</span>
+          ¿Y si un dominio necesita un rol que el catálogo no trae —un químico que pide
+          <code>reactivo</code>, un banco que pide <code>cuenta_origen</code>? El sistema lo admite sin
+          pedir permiso. El catálogo es un núcleo estable, no una camisa de fuerza; el
+          <a href="14-lexicon.html">capítulo 14</a> detalla esa política de extensión.
+        </aside>
+
+        <p>La virtud de cerrar el catálogo es la interoperabilidad: si <em>todos</em> los verbos de
+          <em>todos</em> los dominios reparten sus participantes entre el mismo puñado de roles
+          canónicos, entonces «el agente de una venta» y «el agente de un diagnóstico» son la misma
+          pregunta, respondida en industrias distintas. Esa uniformidad es lo que permite que un
+          agente de inteligencia artificial aprenda los roles una sola vez y luego entienda cualquier
+          base de datos del mundo.</p>
+
+        <h2>El mapeo mecánico: una oración, paso a paso</h2>
+
+        <p>Ya tenemos las piezas. Veamos ahora la maquinaria completa en marcha, desarmando una
+          oración fresca y cargada de detalle —del mundo del cine— con un procedimiento tan simple que
+          raya en lo tonto:</p>
+
+        <p class="cita-destacada">Serra filmó la escena del faro al amanecer en la costa para cerrar
+          el segundo acto.<cite>La oración que vamos a compilar</cite></p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">El procedimiento, en cinco pasos</p>
+          <ol style="margin:.2rem 0 0;padding-left:1.3rem;line-height:1.65">
+            <li><strong>Detectar el molde.</strong> El verbo principal es <em>filmó</em> (de
+              <em>filmar</em>). El sistema busca su firma en el lexicon.</li>
+            <li><strong>Reificar la situación.</strong> Crea una instancia vacía en
+              <span class="eje eje--o">O</span> y le asigna un identificador:
+              <code>filmacion_042</code>.</li>
+            <li><strong>Anclar el molde.</strong> Registra de qué trata el evento con
+              <code>instancia_de</code> hacia <span class="eje eje--k">K</span>.</li>
+            <li><strong>Enchufar los roles.</strong> Reparte cada fragmento de la oración en la ranura
+              que la firma dejó abierta, respetando los tipos.</li>
+            <li><strong>Descender a los subeventos.</strong> Si un fragmento esconde otro verbo
+              («para cerrar…»), repite el procedimiento y engánchalo.</li>
+          </ol>
+        </div>
+
+        <p>El paso 4 es el corazón mecánico. El sistema lee la oración y asigna cada constituyente a su
+          rol y su eje, guiándose por la firma del verbo:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">reparto de roles · paso 4</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">Serra                 → quien filma      → agente         → eje Q
+la escena del faro    → lo filmado       → tema           → eje O
+al amanecer           → el tiempo        → momento        → eje T
+en la costa           → el sitio         → lugar          → eje L
+para cerrar el acto   → el objetivo      → con_finalidad  → eje O (¡otro verbo!)</code></pre>
+        </div>
+
+        <p>Cada línea de ese reparto se convierte, sin intervención humana, en un hecho atómico
+          —una tripleta tipada— colgado del evento central. La oración entera se vuelve una pila de
+          átomos sobre un mismo sujeto:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas · la oración compilada</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(filmacion_042, instancia_de,  accion_filmar)        ∈ M(O, K)
+(filmacion_042, agente,        serra)                ∈ M(O, Q)
+(filmacion_042, tema,          escena_42)            ∈ M(O, O)
+(filmacion_042, momento,       2025-10-03T05:40:00)  ∈ M(O, T)
+(filmacion_042, lugar_de,      costa_norte)          ∈ M(O, L)
+(filmacion_042, con_finalidad, cierre_acto_001)      ∈ M(O, O)
+(filmacion_042, estatus_factual, real)               ∈ M(O, K)</code></pre>
+        </div>
+
+        <p>Dos de esas líneas, leídas como tripletas insignia, dejan ver el contrato en acción: el
+          rol obliga al valor a venir de un eje concreto, y el sistema lo verifica al afirmar.</p>
+
+        <div class="triple">
+          <span class="nodo nodo--o"><span>filmacion_042</span><small>O</small></span>
+          <span class="enlace">agente<span class="firma">M(O→Q)</span></span>
+          <span class="nodo nodo--q"><span>serra</span><small>Q</small></span>
+        </div>
+        <div class="triple">
+          <span class="nodo nodo--o"><span>filmacion_042</span><small>O</small></span>
+          <span class="enlace">lugar_de<span class="firma">M(O→L)</span></span>
+          <span class="nodo nodo--l"><span>costa_norte</span><small>L</small></span>
+        </div>
+
+        <p>Y el paso 5 resuelve la cláusula final. «Para cerrar el segundo acto» no es una cosa: es
+          otra situación, con su propio verbo (<em>cerrar</em>). El sistema no se inmuta, porque para
+          él todas las situaciones son individuos iguales del eje <span class="eje eje--o">O</span>.
+          Repite el procedimiento y crea un subevento:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas · el subevento de finalidad</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(cierre_acto_001, instancia_de, accion_cerrar)       ∈ M(O, K)
+(cierre_acto_001, agente,       serra)               ∈ M(O, Q)
+(cierre_acto_001, tema,         segundo_acto_marea)  ∈ M(O, O)
+(cierre_acto_001, estatus_factual, intencionada)     ∈ M(O, K)</code></pre>
+        </div>
+
+        <p>Una oración del lenguaje natural se ha transformado en once hechos validados, sin perder un
+          matiz, sin un solo campo de «texto libre» y sin que ningún programador haya tenido que
+          diseñar una tabla a la medida del cine. El verbo determinó el tipo; el sujeto se volvió
+          agente; los complementos cayeron en sus roles canónicos; la subordinada generó una
+          subsituación. Mecánico de principio a fin.</p>
+
+        <!-- FIGURA 11.2 — la oración convertida en situación con roles -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 412" class="svg-eje" role="img"
+                 aria-label="La oración sobre la filmación, reificada como el evento central filmacion_042 en el eje O, con sus participantes colgados por roles canónicos coloreados según su eje, y un subevento de finalidad">
+              <!-- enlaces principales -->
+              <g stroke-width="2" opacity=".55" fill="none">
+                <line x1="330" y1="206" x2="330" y2="58"  stroke="var(--eje-k)"/>
+                <line x1="330" y1="206" x2="120" y2="92"  stroke="var(--eje-q)"/>
+                <line x1="330" y1="206" x2="540" y2="92"  stroke="var(--eje-o)"/>
+                <line x1="330" y1="206" x2="68"  y2="206" stroke="var(--eje-t)"/>
+                <line x1="330" y1="206" x2="592" y2="206" stroke="var(--eje-l)"/>
+                <line x1="330" y1="206" x2="120" y2="322" stroke="var(--eje-k)"/>
+                <line x1="330" y1="206" x2="540" y2="322" stroke="var(--eje-o)" stroke-dasharray="6 4"/>
+              </g>
+              <!-- rótulos de rol -->
+              <g font-size="11" font-family="var(--sans)" fill="var(--tinta-tenue)" text-anchor="middle">
+                <text x="345" y="135">instancia_de</text>
+                <text x="205" y="142">agente</text>
+                <text x="455" y="142">tema</text>
+                <text x="178" y="196">momento</text>
+                <text x="478" y="196">lugar_de</text>
+                <text x="200" y="278">estatus</text>
+                <text x="452" y="270">con_finalidad</text>
+              </g>
+              <!-- nodo central O -->
+              <circle cx="330" cy="206" r="48" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="2.5"/>
+              <text x="330" y="201" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">filmacion_042</text>
+              <text x="330" y="217" text-anchor="middle" font-size="10" fill="var(--tinta-tenue)">situación · O</text>
+              <!-- satélites -->
+              <g font-family="var(--mono)" font-size="11.5" text-anchor="middle">
+                <!-- instancia_de K -->
+                <rect x="258" y="36" width="144" height="34" rx="9" fill="var(--eje-k-suave)" stroke="var(--eje-k)"/>
+                <text x="330" y="57" fill="var(--tinta)" font-size="10.5">accion_filmar</text>
+                <!-- agente Q -->
+                <rect x="58" y="74" width="124" height="34" rx="9" fill="var(--eje-q-suave)" stroke="var(--eje-q)"/>
+                <text x="120" y="95" fill="var(--tinta)">serra</text>
+                <!-- tema O -->
+                <rect x="478" y="74" width="124" height="34" rx="9" fill="var(--eje-o-suave)" stroke="var(--eje-o)"/>
+                <text x="540" y="95" fill="var(--tinta)">escena_42</text>
+                <!-- momento T -->
+                <rect x="8" y="188" width="120" height="34" rx="9" fill="var(--eje-t-suave)" stroke="var(--eje-t)"/>
+                <text x="68" y="209" fill="var(--tinta)" font-size="10">05:40 ☀</text>
+                <!-- lugar L -->
+                <rect x="532" y="188" width="120" height="34" rx="9" fill="var(--eje-l-suave)" stroke="var(--eje-l)"/>
+                <text x="592" y="209" fill="var(--tinta)" font-size="10.5">costa_norte</text>
+                <!-- estatus K -->
+                <rect x="58" y="304" width="124" height="34" rx="9" fill="var(--eje-k-suave)" stroke="var(--eje-k)"/>
+                <text x="120" y="325" fill="var(--tinta)">real</text>
+              </g>
+              <!-- subevento de finalidad: otra situación O -->
+              <circle cx="540" cy="338" r="40" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="2" stroke-dasharray="6 4"/>
+              <text x="540" y="334" text-anchor="middle" font-size="11" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">cierre_acto</text>
+              <text x="540" y="349" text-anchor="middle" font-size="9" fill="var(--tinta-tenue)">subevento · O</text>
+              <!-- pie -->
+              <text x="20" y="396" font-size="11" fill="var(--tinta-tenue)" font-family="var(--sans)">Cada cable es un hecho atómico; el subevento de finalidad esconde otro verbo (cerrar), reificado a su vez.</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 13.2.</span> La oración «Serra filmó la escena del
+            faro…» convertida en situación. El verbo se reifica como <code>filmacion_042</code> en
+            <span class="eje eje--o">O</span>; el sujeto se vuelve <em>agente</em> en
+            <span class="eje eje--q">Q</span>; cada complemento cae en su rol y su eje. La cláusula de
+            finalidad genera un <strong>subevento</strong> —otra situación en O— enganchado por
+            <code>con_finalidad</code>.</figcaption>
+        </figure>
+
+        <p>Lo notable es que el procedimiento no sabe nada de cine. Apliquemos exactamente la misma
+          tubería a un verbo de un dominio sin parentesco, para comprobarlo. Una transmisión de radio
+          deportiva:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas · «Messi le pasó el balón a Di María en el minuto 87 con la zurda»</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(pase_001, instancia_de, accion_pasar)           ∈ M(O, K)
+(pase_001, agente,       messi)                  ∈ M(O, Q)
+(pase_001, beneficiario, di_maria)               ∈ M(O, Q)
+(pase_001, objeto_pase,  balon_partido_001)      ∈ M(O, O)
+(pase_001, instrumento,  pierna_izquierda)       ∈ M(O, O)
+(pase_001, parte_de,     partido_arg_per_2026)   ∈ M(O, O)
+(pase_001, momento,      minuto_87)              ∈ M(O, T)</code></pre>
+        </div>
+
+        <p>El verbo <em>pasar</em> no se parece en nada a <em>filmar</em> —pide un
+          <em>beneficiario</em> donde el otro pedía una <em>finalidad</em>—. Pero la tubería que los
+          procesó fue idéntica: detectar el molde, reificar, anclar, enchufar. Esa es la prueba de
+          que el motor no necesita reescribirse para cada negocio. Lo que cambia entre la clínica, el
+          banco y el restaurante son las <em>firmas</em>, no la maquinaria que las aplica.</p>
+
+        <h2>Las preguntas-WH son ranuras vacías</h2>
+
+        <p>El cierre elegante de todo esto aparece cuando, en vez de <em>afirmar</em> un hecho,
+          <em>preguntamos</em>. Las palabras interrogativas que abren este libro —<em>quién, qué,
+          dónde, cuándo</em>— no son magia. Son, simplemente, una ranura de la firma a la que le
+          hemos borrado el valor y dejado una incógnita. Preguntar es invocar el verbo con un hueco.</p>
+
+        <p>Tomemos el evento <code>filmacion_042</code> ya guardado. Cada pregunta humana se traduce a
+          un patrón donde un rol queda abierto, y el eje de ese rol le dice al sistema dónde buscar la
+          respuesta:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">preguntas como patrones con un hueco</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">¿Quién filmó la escena?    { tipo: accion_filmar, tema: escena_42, agente: ? }   → busca en Q
+¿Qué filmó Serra?          { tipo: accion_filmar, agente: serra,  tema: ? }      → busca en O
+¿Cuándo la filmó?          { tipo: accion_filmar, tema: escena_42, momento: ? }  → busca en T
+¿Para qué la filmó?        { tipo: accion_filmar, tema: escena_42, con_finalidad: ? } → busca en O</code></pre>
+        </div>
+
+        <p class="cita-destacada revelar">Guardar un hecho y preguntar por él son la misma operación
+          vista por sus dos caras: en una se completan las ranuras de la firma; en la otra, se deja una
+          vacía y se busca con qué llenarla.<cite>La simetría entre afirmar y preguntar</cite></p>
+
+        <p>Esa simetría no es casual: es la consecuencia directa de tratar el verbo como un contrato de
+          tipos. La pregunta <em>«¿quién?»</em> es legible para la máquina precisamente porque el rol
+          <code>agente</code> declara que su valor vive en <span class="eje eje--q">Q</span>; el
+          sistema sabe en qué caja rebuscar sin que nadie se lo explique. Las preguntas con las que un
+          niño desarma el mundo y las consultas con las que un programa interroga una base de datos
+          resultan ser, una vez más, la misma cosa.</p>
+
+        <h2>El efecto matrioshka: oraciones sobre oraciones</h2>
+
+        <p>Queda un nivel de dificultad que derriba a la mayoría de los modelos de datos: ¿qué hacemos
+          cuando una oración habla <em>sobre otra oración</em>? Es el caso del rumor, la cita, la
+          creencia, el reporte. Un ejemplo del cine, en plena rueda de prensa:</p>
+
+        <p style="font-family:var(--display);font-style:italic;font-size:1.15rem;color:var(--tinta);margin:1.2rem 0;padding-left:1.1rem;border-left:3px solid var(--eje-q)">
+          La guionista afirmó que el estudio había recortado el final.</p>
+
+        <p>El verbo principal es <em>afirmar</em>, y la «cosa afirmada» no es un objeto que se pueda
+          tocar: es <strong>otra situación completa</strong> —un recorte hecho por el estudio—. Para
+          nuestro modelo esto no representa ninguna dificultad nueva, porque todas las situaciones son
+          individuos del mismo eje <span class="eje eje--o">O</span>. El <em>tema</em> de
+          <em>afirmar</em> apunta, sin más, a otro evento:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas · una situación dentro de otra</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(afirmacion_201, instancia_de,  accion_afirmar)        ∈ M(O, K)
+(afirmacion_201, agente,        haddad)                ∈ M(O, Q)
+(afirmacion_201, tema,          recorte_final_001)     ∈ M(O, O)   // ¡el tema es otro evento!
+
+(recorte_final_001, instancia_de,   accion_recortar)   ∈ M(O, K)
+(recorte_final_001, agente,         estudio_norte)     ∈ M(O, Q)
+(recorte_final_001, tema,           final_pelicula)    ∈ M(O, O)
+(recorte_final_001, estatus_factual, reportado)        ∈ M(O, K)   // ← clave</code></pre>
+        </div>
+
+        <p>El último cable es oro puro. <code>estatus_factual: reportado</code> le dice a la base de
+          datos que el sistema <em>no tiene evidencia</em> de que el estudio recortara el final;
+          guarda el hecho de que <em>alguien lo afirmó</em>, sin comprometerse con su verdad. Gracias a
+          esa marca, podemos representar oraciones cada vez más profundas —«la productora negó que la
+          guionista afirmara que el estudio recortó el final»— apilando situaciones como muñecas
+          rusas, sin programar una sola regla nueva. La recursión sale gratis, porque el eje
+          <span class="eje eje--o">O</span> no distingue entre un evento simple y un evento que contiene
+          otros.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Idea clave</p>
+          <p style="margin:0">Como todo verbo se reifica en un individuo de
+            <span class="eje eje--o">O</span>, y el rol <code>tema</code> puede apuntar a cualquier
+            individuo de <span class="eje eje--o">O</span>, las situaciones se contienen unas a otras
+            sin límite. La composición del lenguaje —oraciones dentro de oraciones— se hereda sin coste:
+            es la misma estructura recursiva, ahora en los datos.</p>
+        </div>
+
+        <h2>El verbo es el contrato maestro</h2>
+
+        <p>Cerremos fijando la idea en piedra. Cuando guardamos un verbo en nuestra arquitectura no
+          estamos archivando una palabra de diccionario: estamos depositando un <strong>contrato de
+          tipos</strong>. El verbo declara qué participantes son obligatorios, cuáles opcionales y de
+          qué caja —<span class="eje eje--q">Q</span>, <span class="eje eje--o">O</span>,
+          <span class="eje eje--l">L</span>, <span class="eje eje--t">T</span>…— debe venir cada dato.
+          Si entra basura, la frena en la puerta; si entran datos limpios, ejecuta su ensamblaje en
+          cinco pasos y los archiva sin pérdida.</p>
+
+        <p>Y aquí asoma la conexión más profunda del libro. Sesenta años de filosofía del lenguaje
+          —Davidson, Parsons— descubrieron que el cerebro reifica eventos. Décadas de lingüística
+          computacional —FrameNet, VerbNet— catalogaron que cada verbo trae sus papeles tipados.
+          Nosotros, desde la ingeniería de datos, llegamos a la única forma de base de datos universal
+          que no colapsa: reificar, tipar, apilar. Que tres caminos independientes desemboquen en la
+          misma estructura no es coincidencia. Es la señal de que la forma de la lengua y la forma de
+          los datos, cuando ambas se diseñan bien, son la misma forma.</p>
+
+        <p>Pero para que esta aduana funcione hace falta un documento donde estén escritos, uno por
+          uno, los contratos de todos los verbos: sus firmas, sus roles, sus tipos, y —crucial— las
+          mil formas en que un humano puede nombrar el mismo verbo. Ese documento maestro no es un
+          apéndice gramatical aburrido: es el motor traductor que permite a una inteligencia artificial
+          hablar con los discos duros de una empresa usando lenguaje natural. Se llama el
+          <strong>lexicon</strong>, y es el tema del próximo capítulo.</p>
+
+        <p style="font-family:var(--display);font-style:italic;font-size:1.4rem;color:var(--tinta);margin-top:2.4rem">
+          De la firma del verbo, al compilador que la aplica.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="12-puentes.html"><span class="dir">← Anterior</span><span class="tit">Puentes: objetos, bits, grafos y cadenas</span></a>
+      <a class="sig" href="14-lexicon.html"><span class="dir">Siguiente →</span><span class="tit">El lexicon como compilador</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

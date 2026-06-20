@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 12 · Puentes: objetos, bits, grafos y cadenas — WQuestions</title>
+  <meta name="description" content="Dónde encaja WQuestions en la tecnología que el lector ya conoce: la POO, los bits, las bases de grafos (RDF, Datomic, XTDB, Neo4j) y la blockchain. Mapas, analogías y dónde se rompen.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'12'">
+      <header class="portada-cap">
+        <p class="parte">Parte III · Cómo funcionan juntas</p>
+        <div class="num-cap">12</div>
+        <h1>Puentes: objetos, bits, grafos y cadenas</h1>
+        <p class="lede">Nada de esto es magia, y nada es del todo nuevo. WQuestions se asienta sobre
+          cuatro ideas que el lector técnico ya domina —la programación orientada a objetos, el bit,
+          el grafo y la cadena de bloques—. Este capítulo tiende los puentes, y dice con franqueza
+          dónde el puente sostiene y dónde se rompe.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Imagina a un programador con quince años de oficio leyendo este libro por
+          encima del hombro de un colega. Hacia el capítulo 7 levanta una ceja. «¿Tripletas? —dice—.
+          Eso ya existe. Yo modelo con clases y objetos desde que aprendí a programar; mis datos viven
+          en tablas que se consultan en milisegundos; y eso de los hechos que no se pueden borrar suena
+          a blockchain, una moda que ya pasó.» Tiene razón en cada observación, y por eso vale la pena
+          tomárselo en serio. WQuestions no se inventó en un vacío: respira el mismo aire que la
+          programación orientada a objetos, los bits, las bases de grafos y los libros mayores
+          inmutables. Este capítulo se dedica a contestarle, una objeción a la vez.</p>
+
+        <p>El método será siempre el mismo. Para cada tecnología familiar tenderemos un
+          <strong>puente</strong> —un mapa que muestra qué pieza de WQuestions corresponde a qué pieza
+          que el lector ya conoce— y luego marcaremos con honestidad el punto exacto donde el puente
+          deja de sostener peso. Porque la analogía sirve para entrar, pero engaña si se la lleva
+          demasiado lejos. Cuatro puentes, cuatro secciones.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Para quién</span>
+          Si no programas, puedes leer este capítulo en superficie: cada sección abre con la idea
+          intuitiva. Si vienes del oficio, las tablas y los bloques de código están escritos para ti,
+          y conviene que los discutas con tu propio escepticismo a cuestas.
+        </aside>
+
+        <h2>Puente uno · Objetos: la programación orientada a objetos</h2>
+
+        <p>La primera reacción de cualquier ingeniero es la más natural: «esto ya lo hago con clases».
+          Y en parte lleva razón. La programación orientada a objetos (POO) lleva medio siglo
+          organizando el software alrededor de la misma intuición que WQuestions —que el mundo se
+          describe con <em>cosas</em> que pertenecen a <em>categorías</em> y que se <em>relacionan</em>
+          entre sí—. El parecido es tan profundo que conviene hacerlo explícito antes de señalar la
+          grieta.</p>
+
+        <p>Tres conceptos de la POO tienen un gemelo casi perfecto en el modelo. Cuando un programador
+          escribe <code>v = Venta(...)</code>, está <em>instanciando</em>: fabricando un individuo a
+          partir de un molde. Nosotros decimos exactamente lo mismo con el cable
+          <code>instancia_de</code>, que ancla un sujeto del eje O en su clase del eje K. Cuando una
+          clase <code>VentaOnline</code> <em>hereda</em> de <code>Venta</code>, declara que todo lo
+          que vale para una venta vale para una venta en línea; nosotros lo escribimos con
+          <code>subtipo_de</code> entre dos conceptos del eje K. Y los <em>atributos</em> y
+          <em>asociaciones</em> de un objeto —su <code>monto</code>, su <code>vendedor</code>— no son
+          otra cosa que nuestros predicados del eje M.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(venta_online,  subtipo_de,    venta)          ∈ M(K, K)   // herencia
+(venta_001,     instancia_de,  venta_online)   ∈ M(O, K)   // instanciación
+(venta_001,     vendedor,      vendedor_17)     ∈ M(O, Q)   // asociación
+(venta_001,     monto_usd,     49.90)           ∈ M(O, N)   // atributo</code></pre>
+        </div>
+
+        <p>Para fijar el paralelo, traduzcamos la misma entidad —nuestra venta canónica— a una clase de
+          Python y, justo al lado, a las tripletas equivalentes. Mira primero el código que el
+          programador escéptico reconoce a primera vista:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">class Venta:
+    def __init__(self, id, vendedor, cliente, articulo, monto, momento):
+        self.id       = id
+        self.vendedor = vendedor      # asociación  → Vendedor
+        self.cliente  = cliente       # asociación  → Cliente
+        self.articulo = articulo      # asociación  → Articulo
+        self.monto    = monto         # atributo    (float)
+        self.momento  = momento       # atributo    (datetime)
+
+    def aplicar_descuento(self, pct):     # comportamiento, acoplado al dato
+        self.monto *= (1 - pct / 100)
+
+v = Venta("venta_001", vendedor_17, cliente_1042,
+          camiseta_88, 49.90, "2026-05-14T16:32")</code></pre>
+        </div>
+
+        <p>Y ahora la misma venta como hechos atómicos. Fíjate en que <em>no hay método</em>: el dato
+          está separado de lo que se le hace.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(venta_001, instancia_de, venta)          ∈ M(O, K)
+(venta_001, vendedor,     vendedor_17)    ∈ M(O, Q)
+(venta_001, cliente,      cliente_1042)   ∈ M(O, Q)
+(venta_001, objeto,       camiseta_88)    ∈ M(O, O)
+(venta_001, monto_usd,    49.90)          ∈ M(O, N)
+(venta_001, momento,      2026-05-14T16:32) ∈ M(O, T)</code></pre>
+        </div>
+
+        <p>Línea por línea, los atributos de la clase reaparecen como tripletas. La figura siguiente
+          pone las dos representaciones frente a frente: a la izquierda, el objeto como caja cerrada
+          con sus casillas; a la derecha, el mismo hecho desplegado como estrella de nodos en el grafo.</p>
+
+        <!-- FIGURA 12.1 · clase POO vs grafo de tripletas -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 680 360" class="svg-eje" role="img"
+                 aria-label="A la izquierda, un objeto de la POO como caja cerrada con datos y un método; a la derecha, la misma venta desplegada como grafo de tripletas, con el dato separado del comportamiento.">
+              <!-- título izquierda -->
+              <text x="150" y="30" text-anchor="middle" font-size="13" font-weight="700" fill="var(--tinta-suave)">POO · objeto = caja cerrada</text>
+              <!-- caja objeto -->
+              <rect x="36" y="48" width="228" height="226" rx="12" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="2.5"/>
+              <text x="150" y="72" text-anchor="middle" font-size="12" font-weight="700" font-family="var(--mono)" fill="var(--eje-o)">Venta · venta_001</text>
+              <line x1="52" y1="84" x2="248" y2="84" stroke="var(--eje-o)" stroke-width="1" opacity=".4"/>
+              <g font-family="var(--mono)" font-size="11" fill="var(--tinta)">
+                <text x="52" y="104">vendedor = vendedor_17</text>
+                <text x="52" y="124">cliente  = cliente_1042</text>
+                <text x="52" y="144">objeto   = camiseta_88</text>
+                <text x="52" y="164">monto    = 49.90</text>
+                <text x="52" y="184">momento  = 16:32</text>
+              </g>
+              <line x1="52" y1="200" x2="248" y2="200" stroke="var(--eje-o)" stroke-width="1" opacity=".4"/>
+              <rect x="52" y="212" width="196" height="46" rx="7" fill="var(--eje-m-suave)" stroke="var(--eje-m)" stroke-dasharray="4 3"/>
+              <text x="150" y="232" text-anchor="middle" font-size="11" font-family="var(--mono)" fill="var(--eje-m)">aplicar_descuento()</text>
+              <text x="150" y="248" text-anchor="middle" font-size="9" fill="var(--tinta-tenue)">comportamiento acoplado</text>
+
+              <!-- flecha de equivalencia -->
+              <text x="340" y="160" text-anchor="middle" font-size="22" fill="var(--tinta-tenue)">→</text>
+              <text x="340" y="180" text-anchor="middle" font-size="9" fill="var(--tinta-tenue)">se despliega</text>
+
+              <!-- título derecha -->
+              <text x="540" y="30" text-anchor="middle" font-size="13" font-weight="700" fill="var(--tinta-suave)">WQuestions · grafo abierto</text>
+              <!-- nodo central -->
+              <circle cx="540" cy="160" r="40" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="2.5"/>
+              <text x="540" y="158" text-anchor="middle" font-size="11" font-weight="700" font-family="var(--mono)" fill="var(--eje-o)">venta_001</text>
+              <text x="540" y="172" text-anchor="middle" font-size="9" fill="var(--tinta-tenue)">O</text>
+              <!-- satélites -->
+              <g stroke-width="1.8" opacity=".55" fill="none">
+                <line x1="540" y1="120" x2="540" y2="70"  stroke="var(--eje-q)"/>
+                <line x1="576" y1="142" x2="650" y2="100" stroke="var(--eje-q)"/>
+                <line x1="580" y1="170" x2="660" y2="180" stroke="var(--eje-o)"/>
+                <line x1="572" y1="186" x2="648" y2="232" stroke="var(--eje-n)"/>
+                <line x1="514" y1="192" x2="470" y2="248" stroke="var(--eje-t)"/>
+                <line x1="502" y1="142" x2="430" y2="100" stroke="var(--eje-k)"/>
+              </g>
+              <g font-family="var(--mono)" font-size="9.5" text-anchor="middle">
+                <rect x="488" y="52" width="104" height="26" rx="7" fill="var(--eje-q-suave)" stroke="var(--eje-q)"/><text x="540" y="69" fill="var(--tinta)">vendedor_17</text>
+                <rect x="606" y="84" width="68" height="26" rx="7" fill="var(--eje-q-suave)" stroke="var(--eje-q)"/><text x="640" y="101" fill="var(--tinta)" font-size="8.5">cliente</text>
+                <rect x="606" y="166" width="74" height="26" rx="7" fill="var(--eje-o-suave)" stroke="var(--eje-o)"/><text x="643" y="183" fill="var(--tinta)" font-size="8.5">camiseta</text>
+                <rect x="612" y="220" width="62" height="26" rx="7" fill="var(--eje-n-suave)" stroke="var(--eje-n)"/><text x="643" y="237" fill="var(--tinta)">49.90</text>
+                <rect x="426" y="236" width="62" height="26" rx="7" fill="var(--eje-t-suave)" stroke="var(--eje-t)"/><text x="457" y="253" fill="var(--tinta)">16:32</text>
+                <rect x="394" y="84" width="64" height="26" rx="7" fill="var(--eje-k-suave)" stroke="var(--eje-k)"/><text x="426" y="101" fill="var(--tinta)">venta</text>
+              </g>
+              <text x="540" y="318" text-anchor="middle" font-size="10" fill="var(--tinta-tenue)">los datos son cables; el comportamiento vive aparte</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 12.1.</span> La misma venta, dos veces. A la izquierda,
+            el objeto de la POO: una caja que encierra datos <em>y</em> el método que los manipula, con
+            su esquema fijado en el código. A la derecha, la venta desplegada como grafo: cada atributo
+            es un cable tipado y el comportamiento ya no vive dentro del dato.</figcaption>
+        </figure>
+
+        <h3>Dónde se rompe el puente</h3>
+
+        <p>La analogía es buena para entrar, y traicionera si se la lleva más allá. Hay dos diferencias
+          que no son de grado, sino de naturaleza, y conviene nombrarlas sin rodeos.</p>
+
+        <p><strong>La primera: la POO acopla datos y comportamiento; WQuestions los desacopla.</strong>
+          Un objeto <code>Venta</code> guarda el monto <em>y</em> sabe aplicarse un descuento: el dato y
+          el código que lo toca viven en la misma caja. Eso es elegante para programar, pero ata la
+          información a un lenguaje y a una versión del software. Nuestras tripletas no saben hacer
+          nada: son afirmaciones inertes sobre el mundo. El comportamiento —cómo calcular un descuento,
+          cómo validar una venta— vive en otra capa, separado del hecho. Un dato que no carga lógica es
+          un dato que cualquier sistema puede leer sin importar en qué lenguaje fue escrito.</p>
+
+        <p><strong>La segunda: la POO fija el esquema en el código (mundo cerrado); WQuestions es de
+          mundo abierto.</strong> En cuanto compilas la clase <code>Venta</code>, sus campos quedan
+          tallados en piedra. Si mañana el negocio quiere registrar el lote de inventario del artículo,
+          alguien debe abrir el archivo, añadir un atributo, recompilar y migrar los datos viejos.
+          Añadir un cable nuevo a un sujeto del grafo, en cambio, es escribir una tripleta más; no hay
+          esquema que recompilar porque el esquema nunca estuvo cerrado. Esta es, en una frase, la
+          diferencia entre un mundo que solo admite lo previsto y uno que admite lo que la realidad
+          traiga.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Idea clave</p>
+          <p style="margin:0">La POO encierra datos y comportamiento en una caja cuyo esquema se fija al
+            compilar —<strong>mundo cerrado</strong>—. WQuestions deja los datos como tripletas inertes
+            y abiertas, y manda el comportamiento a otra capa —<strong>mundo abierto</strong>—. No es
+            que una sea correcta y la otra no: sirven a propósitos distintos. La POO optimiza la
+            ejecución de un programa; WQuestions optimiza que muchos programas distintos compartan los
+            mismos hechos.</p>
+        </div>
+
+        <p>Un último hilo conecta esta sección con el capítulo anterior. En la POO, dos variables que
+          apuntan al mismo objeto comparten su <em>referencia</em> —ese puntero invisible que distingue
+          «el mismo objeto» de «un objeto igual»—. Esa referencia es, ni más ni menos, lo que en el
+          <a href="11-identidad.html">capítulo 11</a> llamamos el identificador único: el ancla que
+          permite a un hecho hablar de <code>venta_001</code> y a otro, en otro sistema, hablar de la
+          misma venta sin confundirla con su gemela. El puntero del objeto y el UID del grafo cumplen
+          la misma función: dar identidad estable a una cosa.</p>
+
+        <!-- TABLA POO ↔ WQuestions -->
+        <p>Resumamos el puente entero en una sola tabla. A la izquierda, el vocabulario que el ingeniero
+          ya domina; a la derecha, su correspondiente en el modelo.</p>
+
+        <table>
+          <thead>
+            <tr><th>Programación orientada a objetos</th><th>WQuestions</th><th>Comentario</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Clase</td><td>Concepto del eje <span class="eje eje--k">K</span></td><td>El molde, la categoría atemporal.</td></tr>
+            <tr><td>Instanciación (<code>new Venta()</code>)</td><td>Cable <code>instancia_de</code></td><td>Fabricar un individuo del molde.</td></tr>
+            <tr><td>Herencia (<code>extends</code>)</td><td>Cable <code>subtipo_de</code></td><td>Especializar una categoría.</td></tr>
+            <tr><td>Atributo / campo</td><td>Predicado funcional del eje <span class="eje eje--m">M</span></td><td>Un valor por sujeto.</td></tr>
+            <tr><td>Asociación / referencia</td><td>Predicado del eje <span class="eje eje--m">M</span> a otra entidad</td><td>Un cable hacia otro nodo.</td></tr>
+            <tr><td>Referencia de objeto (puntero)</td><td>Identificador único (UID)</td><td>Misma función: identidad estable.</td></tr>
+            <tr><td>Método (comportamiento)</td><td><em>—</em> (vive en otra capa)</td><td>El modelo desacopla el dato del código.</td></tr>
+            <tr><td>Esquema fijado al compilar</td><td>Esquema abierto y extensible</td><td>Mundo cerrado vs. mundo abierto.</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Puente dos · Bits</h2>
+
+        <p>Pasada la primera objeción, el programador afina la segunda, y es más visceral. «Vale —dice—,
+          entiendo el mapa con la POO. Pero descomponer cada venta en seis, diez, veinte tripletas
+          parece un caos. Donde yo guardaba una fila ahora tengo veinte líneas. Eso es muchísimo más
+          almacenamiento, y leer veinte líneas para entender una venta es agotador.» La objeción es
+          legítima, y la respuesta exige cambiar de escala mental.</p>
+
+        <p class="cita-destacada revelar">Las tripletas son al conocimiento lo que los bits son a todo
+          lo digital: atómicas, uniformes, abrumadoras de a una, e imprescindibles en masa.<cite>El
+          principio del bit</cite></p>
+
+        <p>Detengámonos en esa frase, porque es la clave de la sección. Una fotografía, vista por dentro,
+          son millones de unos y ceros. A ningún ingeniero se le ocurriría quejarse de que «un bit no
+          dice nada» o de que «son demasiados para leerlos». El bit no se diseñó para que un humano lo
+          lea de a uno: se diseñó para ser la unidad <em>uniforme</em> y <em>atómica</em> sobre la que
+          se construye todo lo digital, precisamente porque su simplicidad permite operar billones de
+          ellos a velocidad de máquina. La tripleta aspira a ser exactamente eso para el conocimiento:
+          el átomo uniforme de la digitalización del <em>significado</em>.</p>
+
+        <!-- FIGURA 12.2 · foto = millones de bits / escena = miles de tripletas -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 680 250" class="svg-eje" role="img"
+                 aria-label="Una fotografía se descompone en millones de bits; una escena se descompone en miles de tripletas. Misma idea de átomo uniforme aplicada a la imagen y al significado.">
+              <!-- izquierda: foto → bits -->
+              <text x="150" y="30" text-anchor="middle" font-size="13" font-weight="700" fill="var(--tinta-suave)">una foto</text>
+              <rect x="56" y="46" width="120" height="92" rx="8" fill="var(--eje-l-suave)" stroke="var(--eje-l)" stroke-width="2"/>
+              <circle cx="92" cy="74" r="11" fill="var(--eje-n)" opacity=".6"/>
+              <polygon points="70,128 110,86 138,118 156,100 168,128" fill="var(--eje-l)" opacity=".5"/>
+              <text x="116" y="172" text-anchor="middle" font-size="18" fill="var(--tinta-tenue)">↓</text>
+              <text x="116" y="196" text-anchor="middle" font-size="11" fill="var(--tinta-suave)">millones de bits</text>
+              <g font-family="var(--mono)" font-size="9" fill="var(--eje-n)">
+                <text x="44" y="222">0110100101110010</text>
+                <text x="44" y="234">1011001110100101</text>
+              </g>
+
+              <!-- centro: signo de igual conceptual -->
+              <text x="340" y="120" text-anchor="middle" font-size="16" fill="var(--tinta-tenue)">misma idea</text>
+              <line x1="290" y1="135" x2="390" y2="135" stroke="var(--tinta-tenue)" stroke-width="1" stroke-dasharray="3 3" opacity=".5"/>
+
+              <!-- derecha: escena → tripletas -->
+              <text x="540" y="30" text-anchor="middle" font-size="13" font-weight="700" fill="var(--tinta-suave)">una escena</text>
+              <g stroke-width="1.6" opacity=".5" fill="none" stroke="var(--eje-m)">
+                <line x1="540" y1="92" x2="500" y2="60"/>
+                <line x1="540" y1="92" x2="582" y2="60"/>
+                <line x1="540" y1="92" x2="490" y2="120"/>
+                <line x1="540" y1="92" x2="592" y2="120"/>
+              </g>
+              <circle cx="540" cy="92" r="16" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="2"/>
+              <circle cx="500" cy="56" r="9" fill="var(--eje-q-suave)" stroke="var(--eje-q)" stroke-width="1.6"/>
+              <circle cx="582" cy="56" r="9" fill="var(--eje-q-suave)" stroke="var(--eje-q)" stroke-width="1.6"/>
+              <circle cx="488" cy="122" r="9" fill="var(--eje-n-suave)" stroke="var(--eje-n)" stroke-width="1.6"/>
+              <circle cx="592" cy="122" r="9" fill="var(--eje-t-suave)" stroke="var(--eje-t)" stroke-width="1.6"/>
+              <text x="540" y="172" text-anchor="middle" font-size="18" fill="var(--tinta-tenue)">↓</text>
+              <text x="540" y="196" text-anchor="middle" font-size="11" fill="var(--tinta-suave)">miles de tripletas</text>
+              <g font-family="var(--mono)" font-size="9" fill="var(--eje-o)">
+                <text x="468" y="222">(venta_001, vendedor, …)</text>
+                <text x="468" y="234">(venta_001, monto_usd, …)</text>
+              </g>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 12.2.</span> Una foto se digitaliza en millones de bits;
+            una escena se digitaliza en miles de tripletas. En ambos casos, la unidad es minúscula y
+            abrumadora de a una, pero es justo esa atomicidad uniforme la que vuelve la información
+            operable a escala de máquina.</figcaption>
+        </figure>
+
+        <p>Queda el miedo al almacenamiento, que es el más concreto. ¿No ocupa una barbaridad guardar
+          cada hecho como una tripleta de texto larga, con su sujeto y su predicado repetidos miles de
+          veces? La respuesta es que <em>no</em>, y la razón merece detallarse, porque deshace un
+          malentendido común.</p>
+
+        <p>Las bases especializadas en tripletas —los <em>triple stores</em>— jamás guardan el texto
+          literal que tú escribes. Aplican <strong>codificación por diccionario</strong>: cada cadena
+          que se repite (un predicado como <code>monto_usd</code>, un valor como <code>vendedor_17</code>)
+          se almacena <em>una sola vez</em> en una tabla y, de ahí en adelante, se referencia por un
+          número entero corto. Donde tú ves <code>vendedor_17</code> mil veces, la máquina ve un
+          entero mil veces —y los enteros se comprimen casi a la nada cuando se repiten—. A eso se suma
+          el <strong>almacenamiento columnar</strong>, que guarda juntos todos los valores de una misma
+          posición, donde la redundancia es máxima y la compresión, brutal.</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">En la práctica</p>
+          <p style="margin:0">El predicado <code>instancia_de</code> puede aparecer en cien millones de
+            tripletas. En disco no son cien millones de copias de la palabra: es <em>un</em> entero,
+            repetido en una columna que el compresor reduce a casi nada. La máquina nunca «lee» la
+            tripleta como texto humano; opera sobre enteros. Lo que para ti es prosa, para ella son
+            índices. El temor al tamaño nace de imaginar el grafo como un archivo de texto gigante, y
+            esa imagen es falsa.</p>
+        </div>
+
+        <p>El programador escéptico empieza a aflojar. Las tripletas no son un derroche: son la versión
+          del bit aplicada al significado, y la industria del almacenamiento ya resolvió hace décadas
+          el problema de comprimir cosas atómicas y repetidas. Lo cual nos lleva, naturalmente, a las
+          bases de datos que hacen justo esto.</p>
+
+        <h2>Puente tres · Grafos: bases ya no relacionales, sino dirigidas al dato</h2>
+
+        <p>«Está bien —concede el ingeniero—, pero todo esto, ¿en qué motor lo corro? Yo tengo
+          PostgreSQL.» Aquí la respuesta es la más alentadora de todo el capítulo: no hace falta
+          inventar nada. La industria lleva veinte años construyendo bases de datos que abandonaron el
+          modelo de tablas para abrazar el modelo de la <strong>red de nodos y enlaces</strong> —el
+          grafo—. WQuestions no compite con ellas; encuentra en ellas su hogar natural. El contraste
+          con el modelo relacional ya lo desarrollamos en el <a href="08-espacio-multidimensional.html">capítulo
+          8</a>: aquí miramos las alternativas que sí encajan.</p>
+
+        <p>Esas tecnologías se agrupan en tres familias, y conviene conocerlas por su nombre, porque la
+          afinidad con WQuestions varía mucho de una a otra.</p>
+
+        <div class="columnas">
+          <p><b>Triple / RDF stores.</b> Son las más cercanas en espíritu: guardan el mundo,
+            literalmente, como tripletas <code>(sujeto, predicado, objeto)</code>, igual que nosotros.
+            Nacieron del estándar RDF de la web semántica. En esta familia están
+            <strong>Apache Jena</strong> (con su servidor Fuseki), <strong>GraphDB</strong>,
+            <strong>Blazegraph</strong>, <strong>Virtuoso</strong>, <strong>Amazon Neptune</strong> y
+            <strong>Stardog</strong>. Si WQuestions tuviera que elegir un motor de fábrica, sería uno de
+            estos: la unidad de almacenamiento <em>ya es</em> la tripleta.</p>
+
+          <p><b>Property graphs (grafos de propiedades).</b> En vez de tripletas puras, modelan el mundo
+            como nodos y aristas a los que se les cuelgan propiedades. Son extraordinariamente rápidos
+            para recorrer relaciones —«amigos de amigos», rutas, cadenas de suministro—. Los referentes
+            son <strong>Neo4j</strong>, <strong>Memgraph</strong> y <strong>TigerGraph</strong>. Encajan
+            bien, aunque su modelo de propiedades en la arista exige una traducción menor respecto de
+            nuestra tripleta canónica.</p>
+
+          <p><b>Datalog, inmutables y temporales.</b> Aquí ocurre la coincidencia más asombrosa del
+            capítulo. <strong>Datomic</strong> y <strong>XTDB</strong> guardan la información como
+            <em>datoms</em>: hechos de la forma <code>[entidad, atributo, valor, tiempo-de-transacción]</code>.
+            Léelo de nuevo. Es nuestra tripleta —entidad, predicado, valor— más una marca temporal.
+            Casi exactamente lo que el modelo propone. Y XTDB es <strong>bitemporal de fábrica</strong>:
+            distingue de raíz entre cuándo ocurrió un hecho en el mundo y cuándo el sistema se enteró,
+            que es justo la distinción de la vigencia (la regla D6 del <a href="09-situaciones.html">capítulo
+            9</a>).</p>
+        </div>
+
+        <aside class="nota-margen">
+          <span class="etq">Convergencia</span>
+          Que dos comunidades independientes —la de RDF y la de Datomic— hayan llegado, por caminos
+          distintos, a una unidad <code>(entidad, atributo, valor [, tiempo])</code> es la mejor señal
+          de que la tripleta no es un capricho del modelo, sino una forma natural a la que el problema
+          empuja por sí solo.
+        </aside>
+
+        <p>El <em>datom</em> de Datomic merece quedar escrito al lado de nuestra tripleta, porque el
+          parecido es difícil de exagerar:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">// WQuestions — tripleta tipada
+(venta_001, monto_usd, 49.90)                       ∈ M(O, N)
+
+// Datomic / XTDB — datom: tripleta + tiempo de transacción
+[venta_001  :monto_usd  49.90   tx-2026-05-14T16:32]
+
+// la única diferencia: ellos añaden el "cuándo lo supo el sistema" de fábrica</code></pre>
+        </div>
+
+        <p>Pongamos las tres familias en una tabla, marcando con claridad cuáles son las más afines al
+          modelo. La afinidad alta significa que adoptar WQuestions sobre ese motor casi no exige
+          traducción.</p>
+
+        <table>
+          <thead>
+            <tr><th>Familia</th><th>Unidad de dato</th><th>Ejemplos</th><th>Afinidad con WQuestions</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Triple / RDF stores</b></td>
+              <td>Tripleta <code>(s, p, o)</code></td>
+              <td>Jena/Fuseki, GraphDB, Blazegraph, Virtuoso, Amazon Neptune, Stardog</td>
+              <td><b>Muy alta</b> · la unidad ya es la tripleta</td>
+            </tr>
+            <tr>
+              <td><b>Datalog · inmutables · temporales</b></td>
+              <td>Datom <code>[e, a, v, t]</code></td>
+              <td>Datomic, XTDB (bitemporal de fábrica)</td>
+              <td><b>Máxima</b> · tripleta + tiempo, casi idéntica</td>
+            </tr>
+            <tr>
+              <td><b>Property graphs</b></td>
+              <td>Nodo + arista con propiedades</td>
+              <td>Neo4j, Memgraph, TigerGraph</td>
+              <td>Alta · recorrido veloz, traducción menor</td>
+            </tr>
+            <tr>
+              <td>Relacional (referencia, ver cap. 8)</td>
+              <td>Fila en una tabla de esquema fijo</td>
+              <td>PostgreSQL, MySQL, Oracle</td>
+              <td>Posible, pero forzada · tablas rígidas</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="caja caja--precedente revelar">
+          <p class="caja-tit">Precedente</p>
+          <p style="margin:0">El modelo de datos de <strong>Datomic</strong>, ideado por Rich Hickey, y
+            su sucesor de código abierto <strong>XTDB</strong> son los precedentes industriales más
+            directos de WQuestions en lo que toca al almacenamiento. Comparten tres convicciones
+            profundas: el dato es una tripleta (allí, un <em>datom</em>); los hechos no se sobrescriben
+            sino que se acumulan; y el tiempo es un eje de primera clase, no una columna más. Donde
+            WQuestions añade valor sobre ellos es en la <em>semántica</em>: tipar cada predicado por los
+            ejes de las preguntas, de modo que el grafo no solo sea consultable, sino interoperable
+            entre dominios y entendible por una IA sin manual.</p>
+        </div>
+
+        <h2>Puente cuatro · Cadenas: lo que tomamos de la blockchain</h2>
+
+        <p>Queda la objeción que el programador soltó al principio, casi con desdén: «esto de los hechos
+          que no se borran suena a blockchain, y eso fue una burbuja». Aquí conviene separar la
+          tecnología de moda de la <em>idea</em> que la hizo valiosa, porque la idea es excelente y
+          WQuestions la hereda casi de oficio.</p>
+
+        <p>Lo notable es que el modelo ya tiene, sin haberlo buscado, los dos cimientos de un libro
+          mayor al estilo blockchain. El primero: los <strong>hechos son inmutables</strong>. En
+          WQuestions nunca se borra ni se sobrescribe nada; corregir el mundo significa <em>afirmar un
+          hecho nuevo</em> que deja en evidencia al anterior, no pisarlo. El segundo: la
+          <strong>bitemporalidad</strong> de la regla D6 (capítulo 9), que fecha cada situación con su
+          rango de vigencia. Junta esas dos piezas y obtienes, sin agregar línea alguna, un
+          <strong>libro mayor de solo-anexar</strong> (<em>append-only</em>) y auditable: la historia
+          completa de cómo el sistema fue creyendo lo que cree, conservada intacta.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Idea clave</p>
+          <p style="margin:0">Inmutabilidad de los hechos + bitemporalidad (D6) = un libro mayor
+            <em>append-only</em> y auditable, <strong>gratis</strong>. No es algo que WQuestions deba
+            construir: es lo que ya es. La blockchain hizo célebre la idea de un registro que solo
+            crece y nunca se reescribe; el modelo la tenía desde su primera decisión de diseño.</p>
+        </div>
+
+        <p>Sobre esa base, importar el resto de la maquinaria de la blockchain es directo, y son tres
+          piezas que se agregan <em>encima</em> de lo que ya existe.</p>
+
+        <p><strong>Procedencia por hecho.</strong> Cada tripleta puede llevar pegada su propia
+          credencial: quién la afirmó, en qué momento, y una firma criptográfica que lo prueba. No es
+          metadato cosmético —es la diferencia entre un dato y un dato <em>de quién responde por él</em>.
+          Esto se modela, como todo, reificando: el acto de afirmar se vuelve una situación con su
+          agente, su instante y su firma.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">JSON</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="json">{
+  "hecho":      ["venta_001", "monto_usd", 49.90],
+  "afirmado_por": "vendedor_17",
+  "momento":      "2026-05-14T16:32:00-05:00",
+  "firma":        "0x9f2a…c4",
+  "hash_previo":  "0x71be…08",
+  "hash":         "0xa3d0…11"
+}</code></pre>
+        </div>
+
+        <p><strong>Hash-encadenado (Merkle).</strong> Si cada hecho guarda el <em>hash</em> del anterior
+          —como en el campo <code>hash_previo</code> de arriba—, la cadena entera se vuelve evidencia de
+          manipulación: alterar un hecho viejo rompe todos los hashes que vinieron después, y la
+          falsificación salta a la vista al instante. Es la misma garantía criptográfica que sostiene
+          una blockchain, aplicada a nuestro libro de hechos.</p>
+
+        <p><strong>Consenso y federación.</strong> Cuando el grafo deja de pertenecer a una sola empresa
+          y pasa a ser compartido entre varias —el sueño de la interoperabilidad con el que abrió este
+          libro—, hace falta un protocolo que decida qué hechos entran al registro común y quién puede
+          afirmar qué. Ahí entran las ideas de consenso y federación. Pero eso ya es terreno de la
+          seguridad del grafo compartido, que el <a href="29-seguridad.html">capítulo 29</a> trata a
+          fondo.</p>
+
+        <!-- FIGURA 12.3 · hechos hash-encadenados con su firmante -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 680 248" class="svg-eje" role="img"
+                 aria-label="Tres hechos sucesivos encadenados por hash: cada bloque guarda su hecho, su firmante y el hash del bloque anterior, formando una cadena a prueba de manipulación.">
+              <!-- firmante arriba -->
+              <g font-family="var(--mono)" font-size="9.5" text-anchor="middle">
+                <circle cx="110" cy="40" r="15" fill="var(--eje-q-suave)" stroke="var(--eje-q)" stroke-width="1.6"/><text x="110" y="44" fill="var(--eje-q)">Q</text>
+                <text x="110" y="72" fill="var(--tinta-suave)" font-size="9">vendedor_17</text>
+                <circle cx="340" cy="40" r="15" fill="var(--eje-q-suave)" stroke="var(--eje-q)" stroke-width="1.6"/><text x="340" y="44" fill="var(--eje-q)">Q</text>
+                <text x="340" y="72" fill="var(--tinta-suave)" font-size="9">auditor_03</text>
+                <circle cx="570" cy="40" r="15" fill="var(--eje-q-suave)" stroke="var(--eje-q)" stroke-width="1.6"/><text x="570" y="44" fill="var(--eje-q)">Q</text>
+                <text x="570" y="72" fill="var(--tinta-suave)" font-size="9">sistema_pos</text>
+              </g>
+              <!-- líneas firma → bloque -->
+              <g stroke="var(--eje-q)" stroke-width="1.4" stroke-dasharray="3 3" opacity=".6">
+                <line x1="110" y1="55" x2="110" y2="92"/>
+                <line x1="340" y1="55" x2="340" y2="92"/>
+                <line x1="570" y1="55" x2="570" y2="92"/>
+              </g>
+              <!-- tres bloques -->
+              <g>
+                <rect x="34" y="92" width="152" height="96" rx="10" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="2"/>
+                <text x="110" y="112" text-anchor="middle" font-size="10" font-weight="700" fill="var(--eje-o)">hecho #1</text>
+                <text x="110" y="132" text-anchor="middle" font-size="8.5" font-family="var(--mono)" fill="var(--tinta)">monto_usd = 49.90</text>
+                <text x="110" y="156" text-anchor="middle" font-size="8" font-family="var(--mono)" fill="var(--tinta-tenue)">prev: 0x00</text>
+                <text x="110" y="172" text-anchor="middle" font-size="8" font-family="var(--mono)" fill="var(--eje-m)">hash: 0x71be</text>
+              </g>
+              <g>
+                <rect x="264" y="92" width="152" height="96" rx="10" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="2"/>
+                <text x="340" y="112" text-anchor="middle" font-size="10" font-weight="700" fill="var(--eje-o)">hecho #2</text>
+                <text x="340" y="132" text-anchor="middle" font-size="8.5" font-family="var(--mono)" fill="var(--tinta)">corrige → 47.90</text>
+                <text x="340" y="156" text-anchor="middle" font-size="8" font-family="var(--mono)" fill="var(--tinta-tenue)">prev: 0x71be</text>
+                <text x="340" y="172" text-anchor="middle" font-size="8" font-family="var(--mono)" fill="var(--eje-m)">hash: 0xa3d0</text>
+              </g>
+              <g>
+                <rect x="494" y="92" width="152" height="96" rx="10" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="2"/>
+                <text x="570" y="112" text-anchor="middle" font-size="10" font-weight="700" fill="var(--eje-o)">hecho #3</text>
+                <text x="570" y="132" text-anchor="middle" font-size="8.5" font-family="var(--mono)" fill="var(--tinta)">medio_pago = …</text>
+                <text x="570" y="156" text-anchor="middle" font-size="8" font-family="var(--mono)" fill="var(--tinta-tenue)">prev: 0xa3d0</text>
+                <text x="570" y="172" text-anchor="middle" font-size="8" font-family="var(--mono)" fill="var(--eje-m)">hash: 0xc4f1</text>
+              </g>
+              <!-- flechas de encadenamiento -->
+              <g fill="var(--eje-m)">
+                <line x1="186" y1="140" x2="258" y2="140" stroke="var(--eje-m)" stroke-width="2.2"/>
+                <polygon points="264,140 254,135 254,145"/>
+                <line x1="416" y1="140" x2="488" y2="140" stroke="var(--eje-m)" stroke-width="2.2"/>
+                <polygon points="494,140 484,135 484,145"/>
+              </g>
+              <text x="340" y="222" text-anchor="middle" font-size="11" fill="var(--tinta-suave)">cada bloque encadena el hash del anterior · alterar uno rompe la cadena</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 12.3.</span> Tres hechos sucesivos sobre una misma venta,
+            cada uno firmado por su agente (arriba) y encadenado por el hash del anterior. El hecho #2
+            corrige el monto sin borrar el #1; el #3 añade información. Manipular cualquiera de ellos
+            rompería el encadenamiento, y la alteración quedaría a la vista.</figcaption>
+        </figure>
+
+        <p>Nótese el detalle del hecho #2 en la figura: corrige el monto a 47,90 <em>sin borrar</em> el
+          49,90 original. Eso es exactamente la inmutabilidad del modelo en acción, anudada con la
+          vigencia del <a href="09-situaciones.html">capítulo 9</a>: el hecho viejo cierra su rango, el
+          nuevo abre el suyo, y la cadena de hashes deja constancia firmada de quién hizo la corrección
+          y cuándo. Un auditor que llegue dentro de cinco años podrá reconstruir la verdad completa.</p>
+
+        <h2>El escéptico, convencido</h2>
+
+        <p>Volvamos al programador del comienzo, que ya no levanta la ceja. Las cuatro objeciones tenían
+          fundamento, y las cuatro tienen respuesta. WQuestions <em>se parece</em> a la POO en cómo
+          piensa las cosas y las categorías, pero la supera al desacoplar el dato del comportamiento y
+          abrir el esquema. <em>Se parece</em> a una avalancha de bits, y por la misma razón que los
+          bits funcionan: la atomicidad uniforme es lo que vuelve la información operable y comprimible
+          a escala. <em>Vive</em> en las bases de grafos que la industria ya construyó —y en Datomic y
+          XTDB casi sin traducción—. Y <em>hereda</em> lo mejor de la blockchain —el registro inmutable
+          y auditable— sin pagar el precio de la moda.</p>
+
+        <p class="cita-destacada revelar">WQuestions no pide tirar lo que ya sabes. Pide reconocer que
+          las preguntas estaban debajo de todo eso desde el principio.<cite>El sentido de los cuatro
+          puentes</cite></p>
+
+        <p>Ninguno de estos puentes es decorativo. Cada uno responde a un lector que llega con su propia
+          herramienta favorita y la pregunta legítima de «¿esto qué me aporta sobre lo que ya tengo?».
+          La respuesta, repetida cuatro veces, es la misma: WQuestions no reemplaza tu pila tecnológica;
+          le pone debajo una capa de significado —los ejes de las preguntas— que hace que tus objetos,
+          tus bits, tus grafos y tus cadenas por fin se entiendan entre sí. Con los cuatro puentes
+          tendidos, estamos listos para la última pieza del lenguaje a los hechos: cómo el verbo de una
+          frase se convierte en la signatura tipada de un predicado, que es el asunto del capítulo
+          siguiente.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="11-identidad.html"><span class="dir">← Anterior</span><span class="tit">La identidad a través de los sistemas</span></a>
+      <a class="sig" href="13-verbo.html"><span class="dir">Siguiente →</span><span class="tit">El verbo como signatura</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>
