@@ -42,18 +42,17 @@
 
       <div class="contenido">
 
-        <p class="entrada">Son las 08:14 de la mañana y la barista Lucía termina de servir un
-          espresso. Ese gesto, que dura tres segundos, esconde más datos de los que parece: hubo
-          alguien que lo preparó, una máquina que lo extrajo, una dosis de café molido, una
-          temperatura del agua, una presión, un tiempo de extracción, un rendimiento en mililitros y
-          una hora exacta. En los seis capítulos anteriores aprendimos a clasificar cada uno de esos
-          fragmentos en su eje: Lucía es un <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>,
-          la taza un <span class="eje-rotulo"><span class="eje eje--o">O</span></span>, los 36 ml un
+        <p class="entrada">Son las 16:32 de la tarde y el vendedor Marco cierra la
+          venta de una camiseta. Ese gesto, que dura tres segundos, esconde más datos de los que parece: hubo
+          alguien que la vendió, un cliente que la pagó, un artículo entregado, un monto en
+          dólares y una hora exacta. En los seis capítulos anteriores aprendimos a clasificar cada uno de esos
+          fragmentos en su eje: Marco es un <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>,
+          la camiseta un <span class="eje-rotulo"><span class="eje eje--o">O</span></span>, los 49.90 dólares un
           <span class="eje-rotulo"><span class="eje eje--n">N</span></span>. Pero clasificar no es
           describir. Tenemos las piezas separadas sobre la mesa; nos falta el gesto que las une.</p>
 
         <p>Ese gesto es el tema de este capítulo. Para que las siete coordenadas dejen de ser cajones
-          de un archivador y empiecen a contar la historia del espresso de Lucía, necesitamos una
+          de un archivador y empiecen a contar la historia de la venta de Marco, necesitamos una
           unidad mínima de afirmación: la pieza más pequeña con la que se puede decir <em>algo</em>
           sobre el mundo. La llamaremos el <strong>hecho atómico</strong>, y su forma es desconcertantemente
           simple.</p>
@@ -64,13 +63,13 @@
           un sujeto, un predicado y un objeto.</p>
 
         <div class="triple">
-          <span class="nodo nodo--o"><span>espresso_311</span><small>O</small></span>
+          <span class="nodo nodo--o"><span>venta_001</span><small>O</small></span>
           <span class="enlace">agente<span class="firma">M(O→Q)</span></span>
-          <span class="nodo nodo--q"><span>barista_lucia</span><small>Q</small></span>
+          <span class="nodo nodo--q"><span>vendedor_17</span><small>Q</small></span>
         </div>
 
-        <p>Se lee de izquierda a derecha como una oración del castellano: «el espresso 311 tiene como
-          agente a la barista Lucía». El <strong>sujeto</strong> y el <strong>objeto</strong> son
+        <p>Se lee de izquierda a derecha como una oración del castellano: «la venta 001 tiene como
+          agente al vendedor 17». El <strong>sujeto</strong> y el <strong>objeto</strong> son
           individuos que sacamos de alguna de las cajas de valor —un evento del eje O, una persona del
           eje Q, un número del eje N—. El <strong>predicado</strong> es el cable conector que vimos en
           el capítulo anterior: un habitante del eje M, el <em>cómo</em>, que une los dos extremos.
@@ -79,8 +78,8 @@
 
         <p>La afirmación que sostiene este capítulo —y que al principio cuesta creer— es esta:
           <strong>absolutamente toda la información que el sistema sabe del mundo se construye con esta
-          misma forma exacta</strong>, repetida una y otra vez. Las recetas, las jugadas de
-          baloncesto, las películas, las ordenanzas de un municipio, las llamadas a un agente de
+          misma forma exacta</strong>, repetida una y otra vez. Las ventas, las jugadas de
+          fútbol, las películas, las ordenanzas de un municipio, las llamadas a un agente de
           inteligencia artificial. Todo. El resto del capítulo se dedica a demostrarlo y, sobre todo,
           a explicar por qué esa terquedad por una sola forma es justamente lo que hace que el sistema
           no se rompa nunca.</p>
@@ -99,14 +98,14 @@
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="triple">(espresso_311,   barista,        barista_lucia)        ∈ M(O, Q)   ☕
-(triple_088,     anotadora,      rivas)                ∈ M(O, Q)   🏀
+          <pre><code data-lang="triple">(venta_001,      vendedor,       vendedor_17)          ∈ M(O, Q)   👕
+(gol_001,        agente,         messi)                ∈ M(O, Q)   ⚽
 (pelicula_marea, directora,      serra)                ∈ M(O, Q)   🎬
 (ordenanza_142,  fecha_publicacion, 2026-05-14)        ∈ M(O, T)   🏛️
 (sesion_ia_5521, tokens_entrada, 4180)                 ∈ M(O, N)   🤖</code></pre>
         </div>
 
-        <p>Cinco cables distintos —<code>barista</code>, <code>anotadora</code>, <code>directora</code>,
+        <p>Cinco cables distintos —<code>vendedor</code>, <code>agente</code>, <code>directora</code>,
           <code>fecha_publicacion</code>, <code>tokens_entrada</code>— y cinco pares de cajas distintos.
           Pero las cinco líneas son, estructuralmente, la misma línea. Esa uniformidad no es un capricho
           estético para que el código se vea ordenado: es la propiedad arquitectónica de la que cuelga
@@ -143,25 +142,25 @@
 
         <p>Cada cable lleva pegada su propia regla de seguridad, su <strong>signatura</strong>: la
           declaración de qué caja admite a la izquierda y qué caja admite a la derecha. El cable
-          <code>presion_bar</code> sabe de fábrica que conecta un objeto del eje O con un número del
+          <code>monto_usd</code> sabe de fábrica que conecta un objeto del eje O con un número del
           eje N. Esa es exactamente la parte <code>∈ M(O, N)</code> que aparece al final de cada línea.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="triple">(espresso_311, presion_bar, 9)          ∈ M(O, N)   // válido: 9 vive en la caja N
-(espresso_311, presion_bar, "intensa")  ✗ rechazada  // "intensa" no es un número</code></pre>
+          <pre><code data-lang="triple">(venta_001, monto_usd, 49.90)      ∈ M(O, N)   // válido: 49.90 vive en la caja N
+(venta_001, monto_usd, "caro")     ✗ rechazada  // "caro" no es un número</code></pre>
         </div>
 
         <p>Si un programador cansado, a las dos de la tarde, intenta registrar
-          <code>(espresso_311, presion_bar, "intensa")</code>, el sistema lo rechaza al instante: la
-          palabra «intensa» no habita la caja de los números. Esta protección, que ocurre en tiempo
+          <code>(venta_001, monto_usd, "caro")</code>, el sistema lo rechaza al instante: la
+          palabra «caro» no habita la caja de los números. Esta protección, que ocurre en tiempo
           real, es lo que convierte la tripleta en un bloque de información <em>seguro</em> y
           <em>validable</em>. Un dato absurdo no llega siquiera a guardarse.</p>
 
         <h3>Exigencia 2 — Independiente: cada hecho se sostiene solo</h3>
 
         <p>Cada hecho atómico debe tener sentido por sí mismo, sin depender de ningún otro. La tripleta
-          <code>(triple_088, anotadora, rivas)</code> significa exactamente lo mismo aunque nadie haya
+          <code>(gol_001, agente, messi)</code> significa exactamente lo mismo aunque nadie haya
           anotado todavía en qué minuto del partido ocurrió, o con qué resultado quedó el marcador.
           Quitar contexto no la corrompe; solo la deja menos detallada.</p>
 
@@ -173,44 +172,44 @@
         <h3>Exigencia 3 — Componible: los átomos se apilan</h3>
 
         <p>Aunque cada hecho es independiente, su verdadera potencia se libera cuando los apilas sobre
-          un mismo sujeto. Un espresso no se describe en una frase gigante; se describe con una lluvia
-          de átomos que comparten a <code>espresso_311</code> como sujeto, cada uno aportando una
+          un mismo sujeto. Una venta no se describe en una frase gigante; se describe con una lluvia
+          de átomos que comparten a <code>venta_001</code> como sujeto, cada uno aportando una
           coordenada distinta.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="triple">(espresso_311, instancia_de,   espresso)         ∈ M(O, K)
-(espresso_311, barista,        barista_lucia)    ∈ M(O, Q)
-(espresso_311, grano,          cafe_arabica)     ∈ M(O, K)
-(espresso_311, tueste,         tueste_medio)     ∈ M(O, K)
-(espresso_311, dosis_g,        18)               ∈ M(O, N)
-(espresso_311, temp_agua_c,    93)               ∈ M(O, N)
-(espresso_311, presion_bar,    9)                ∈ M(O, N)
-(espresso_311, extraccion_s,   27)               ∈ M(O, N)
-(espresso_311, rendimiento_ml, 36)               ∈ M(O, N)
-(espresso_311, momento,        2026-05-14T08:14:00-05:00)  ∈ M(O, T)</code></pre>
+          <pre><code data-lang="triple">(venta_001, instancia_de,  venta)            ∈ M(O, K)
+(venta_001, vendedor,      vendedor_17)      ∈ M(O, Q)
+(venta_001, cliente,       cliente_1042)     ∈ M(O, Q)
+(venta_001, objeto,        camiseta_88)      ∈ M(O, O)
+(venta_001, talla,         talla_m)          ∈ M(O, K)
+(venta_001, color,         azul)             ∈ M(O, K)
+(venta_001, cantidad,      1)                ∈ M(O, N)
+(venta_001, monto_usd,     49.90)            ∈ M(O, N)
+(venta_001, medio_pago,    tarjeta)          ∈ M(O, K)
+(venta_001, momento,       2026-05-14T16:32:00-05:00)  ∈ M(O, T)</code></pre>
         </div>
 
-        <p>Diez pequeñas piezas de Lego que, juntas, dibujan la taza entera: qué clase de café es,
-          quién lo hizo, con qué grano, a qué dosis, presión y temperatura, en cuántos segundos y a
-          qué hora. Cada pieza se entiende por separado; sumadas, forman el retrato completo del
-          espresso.</p>
+        <p>Diez pequeñas piezas de Lego que, juntas, dibujan la operación entera: qué se vendió,
+          quién la atendió, a qué cliente, en qué talla y color, cuántas unidades, por cuánto, con qué
+          medio de pago y a qué hora. Cada pieza se entiende por separado; sumadas, forman el retrato
+          completo de la venta.</p>
 
         <p>Lo verdaderamente revelador llega cuando el negocio quiere ser más preciso. Supongamos que
-          la cafetería decide auditar el lote de grano usado en cada taza, con su fecha de molienda.
-          En una base de datos tradicional esto obligaría a alterar la tabla de espressos, añadirle
+          la tienda decide auditar el lote de inventario del que salió cada artículo, con su fecha de
+          ingreso. En una base de datos tradicional esto obligaría a alterar la tabla de ventas, añadirle
           columnas y migrar miles de filas —tocar la estructura, con todo el riesgo que eso implica—.
           En nuestra arquitectura, <strong>la estructura no cambia jamás</strong>. Simplemente se
-          eleva el uso del grano a la categoría de evento (algo que ya aprendimos a llamar
+          eleva la entrega del artículo a la categoría de evento (algo que ya aprendimos a llamar
           <em>reificación</em>) y se le cuelgan sus propias tripletas:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="triple">(uso_grano_311, parte_de,    espresso_311)     ∈ M(O, O)
-(uso_grano_311, grano,       cafe_arabica)     ∈ M(O, K)
-(uso_grano_311, lote,        lote_2026_044)    ∈ M(O, K)
-(uso_grano_311, cantidad_g,  18)               ∈ M(O, N)
-(uso_grano_311, molido_el,   2026-05-14)       ∈ M(O, T)</code></pre>
+          <pre><code data-lang="triple">(entrega_001, parte_de,    venta_001)        ∈ M(O, O)
+(entrega_001, articulo,    camiseta_88)      ∈ M(O, O)
+(entrega_001, lote,        lote_2026_044)    ∈ M(O, K)
+(entrega_001, cantidad,    1)                ∈ M(O, N)
+(entrega_001, ingresado_el, 2026-05-02)      ∈ M(O, T)</code></pre>
         </div>
 
         <div class="caja caja--idea revelar">
@@ -248,32 +247,30 @@
           de las que se narran en una sola respiración:</p>
 
         <p style="font-family:var(--display);font-style:italic;font-size:1.2rem;color:var(--tinta);margin:1.4rem 0;padding-left:1.2rem;border-left:3px solid var(--eje-o)">
-          «Rivas anotó un triple en el último cuarto, a falta de dos minutos, gracias a una asistencia
-          de Navarro desde la esquina.»</p>
+          «Messi le pasó el balón a Di María en el minuto 87 con un toque de pierna izquierda.»</p>
 
-        <p>Esa frase es una veta de oro: tiene una anotadora (Rivas), una asistente (Navarro), un tipo
-          de jugada (triple), un momento (cuarto 4, minuto 38), un origen (la esquina) y un partido en
-          el que ocurre. Si quisiéramos meterla a la fuerza en una tripleta simple —
-          <code>(rivas, asistio_por, navarro)</code>— estaríamos tirando a la basura casi toda la
+        <p>Esa frase es una veta de oro: tiene un autor (Messi), un beneficiario (Di María), un objeto
+          (el balón), un momento (minuto 87) y un instrumento (la pierna izquierda). Si quisiéramos
+          meterla a la fuerza en una tripleta simple —
+          <code>(messi, paso_el_balon_a, di_maria)</code>— estaríamos tirando a la basura casi toda la
           información. ¿Cómo lo resolvemos sin violar la D3?</p>
 
         <p>Con la <strong>reificación</strong>, que ya asomó en capítulos anteriores. La maniobra es
-          elegante: elevamos esa jugada al estatus de <em>evento con nombre propio</em> dentro del eje
-          O —la bautizamos <code>triple_088</code>— y colgamos a cada participante con su propia
+          elegante: elevamos ese pase al estatus de <em>evento con nombre propio</em> dentro del eje
+          O —lo bautizamos <code>pase_001</code>— y colgamos a cada participante con su propia
           tripleta, todas apuntando a ese evento central.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="triple">(triple_088, instancia_de, triple_anotado)              ∈ M(O, K)
-(triple_088, anotadora,    rivas)                       ∈ M(O, Q)
-(triple_088, asistente,    navarro)                     ∈ M(O, Q)
-(triple_088, parte_de,     partido_halcones_lobos)      ∈ M(O, O)
-(triple_088, cuarto,       4)                           ∈ M(O, N)
-(triple_088, minuto,       38)                          ∈ M(O, N)
-(triple_088, origen,       esquina_derecha)             ∈ M(O, K)</code></pre>
+          <pre><code data-lang="triple">(pase_001, instancia_de,  accion_pasar)               ∈ M(O, K)
+(pase_001, agente,        messi)                      ∈ M(O, Q)
+(pase_001, beneficiario,  di_maria)                   ∈ M(O, Q)
+(pase_001, objeto_pase,   balon_partido_001)          ∈ M(O, O)
+(pase_001, minuto,        87)                         ∈ M(O, N)
+(pase_001, instrumento,   pierna_izquierda)           ∈ M(O, K)</code></pre>
         </div>
 
-        <p>Lo que era un nudo lingüístico imposible de meter en una fila de tabla se desarmó en siete
+        <p>Lo que era un nudo lingüístico imposible de meter en una fila de tabla se desarmó en seis
           hechos atómicos independientes, cada uno tipado, cada uno sostenido por sí solo. La estructura
           n-aria —un evento con muchos participantes— se preservó entera sin abandonar la forma de la
           tripleta. La figura siguiente muestra cómo se ve esa estrella de hechos alrededor del evento
@@ -283,7 +280,7 @@
         <figure class="figura figura--ancha revelar">
           <div class="lienzo">
             <svg viewBox="0 0 660 392" class="svg-eje" role="img"
-                 aria-label="La anotación de un triple reificada como evento central en el eje O, rodeada de siete participantes conectados por roles canónicos">
+                 aria-label="El pase de Messi reificado como evento central en el eje O, rodeado de seis participantes conectados por roles canónicos">
               <!-- enlaces -->
               <g stroke-width="2" opacity=".55" fill="none">
                 <line x1="330" y1="196" x2="150" y2="70"  stroke="var(--eje-k)"/>
@@ -291,53 +288,48 @@
                 <line x1="330" y1="196" x2="600" y2="196" stroke="var(--eje-q)"/>
                 <line x1="330" y1="196" x2="510" y2="322" stroke="var(--eje-o)"/>
                 <line x1="330" y1="196" x2="150" y2="322" stroke="var(--eje-n)"/>
-                <line x1="330" y1="196" x2="60"  y2="196" stroke="var(--eje-n)"/>
-                <line x1="330" y1="196" x2="330" y2="44"  stroke="var(--eje-k)"/>
+                <line x1="330" y1="196" x2="60"  y2="196" stroke="var(--eje-k)"/>
               </g>
               <!-- rótulos de rol sobre los enlaces -->
               <g font-size="11" font-family="var(--sans)" fill="var(--tinta-tenue)" text-anchor="middle">
                 <text x="232" y="120">instancia_de</text>
-                <text x="430" y="120">anotadora</text>
-                <text x="476" y="190">asistente</text>
-                <text x="430" y="272">parte_de</text>
+                <text x="430" y="120">agente</text>
+                <text x="470" y="190">beneficiario</text>
+                <text x="430" y="272">objeto_pase</text>
                 <text x="232" y="272">minuto</text>
-                <text x="178" y="190">cuarto</text>
-                <text x="330" y="120">origen</text>
+                <text x="178" y="190">instrumento</text>
               </g>
               <!-- nodo central O -->
               <circle cx="330" cy="196" r="44" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="2.5"/>
-              <text x="330" y="192" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">triple_088</text>
+              <text x="330" y="192" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">pase_001</text>
               <text x="330" y="208" text-anchor="middle" font-size="10" fill="var(--tinta-tenue)">evento · O</text>
               <!-- satélites -->
               <g font-family="var(--mono)" font-size="11.5" text-anchor="middle">
                 <!-- instancia_de K -->
                 <rect x="86" y="40" width="128" height="34" rx="9" fill="var(--eje-k-suave)" stroke="var(--eje-k)"/>
-                <text x="150" y="61" fill="var(--tinta)">triple_anotado</text>
-                <!-- anotadora Q -->
+                <text x="150" y="61" fill="var(--tinta)">accion_pasar</text>
+                <!-- agente Q -->
                 <rect x="452" y="40" width="116" height="34" rx="9" fill="var(--eje-q-suave)" stroke="var(--eje-q)"/>
-                <text x="510" y="61" fill="var(--tinta)">rivas</text>
-                <!-- asistente Q -->
+                <text x="510" y="61" fill="var(--tinta)">messi</text>
+                <!-- beneficiario Q -->
                 <rect x="548" y="178" width="104" height="34" rx="9" fill="var(--eje-q-suave)" stroke="var(--eje-q)"/>
-                <text x="600" y="199" fill="var(--tinta)">navarro</text>
-                <!-- parte_de O -->
+                <text x="600" y="199" fill="var(--tinta)">di_maria</text>
+                <!-- objeto_pase O -->
                 <rect x="430" y="304" width="160" height="34" rx="9" fill="var(--eje-o-suave)" stroke="var(--eje-o)"/>
-                <text x="510" y="325" fill="var(--tinta)" font-size="10">partido_h_l</text>
+                <text x="510" y="325" fill="var(--tinta)" font-size="10">balon_p_001</text>
                 <!-- minuto N -->
                 <rect x="98" y="304" width="104" height="34" rx="9" fill="var(--eje-n-suave)" stroke="var(--eje-n)"/>
-                <text x="150" y="325" fill="var(--tinta)">38</text>
-                <!-- cuarto N -->
-                <rect x="14" y="178" width="92" height="34" rx="9" fill="var(--eje-n-suave)" stroke="var(--eje-n)"/>
-                <text x="60" y="199" fill="var(--tinta)">4</text>
-                <!-- origen K -->
-                <rect x="262" y="10" width="136" height="34" rx="9" fill="var(--eje-k-suave)" stroke="var(--eje-k)"/>
-                <text x="330" y="31" fill="var(--tinta)" font-size="10">esquina_derecha</text>
+                <text x="150" y="325" fill="var(--tinta)">87</text>
+                <!-- instrumento K -->
+                <rect x="2" y="178" width="116" height="34" rx="9" fill="var(--eje-k-suave)" stroke="var(--eje-k)"/>
+                <text x="60" y="199" fill="var(--tinta)" font-size="9.5">pierna_izq</text>
               </g>
             </svg>
           </div>
-          <figcaption><span class="fnum">Figura 7.1.</span> La canasta de Rivas, reificada como el
-            individuo <code>triple_088</code> en el eje O, con sus siete participantes colgados por
-            roles canónicos —<em>anotadora</em>, <em>asistente</em>, <em>parte_de</em>, <em>cuarto</em>,
-            <em>minuto</em>, <em>origen</em>, <em>instancia_de</em>—. La estructura n-aria se conserva
+          <figcaption><span class="fnum">Figura 7.1.</span> El pase de Messi, reificado como el
+            individuo <code>pase_001</code> en el eje O, con sus seis participantes colgados por
+            roles canónicos —<em>agente</em>, <em>beneficiario</em>, <em>objeto_pase</em>,
+            <em>minuto</em>, <em>instrumento</em>, <em>instancia_de</em>—. La estructura n-aria se conserva
             entera sin abandonar la forma de la tripleta.</figcaption>
         </figure>
 
@@ -393,7 +385,7 @@
           <div class="barra"><span class="lenguaje">patrones</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="triple">(serra,          ?,           ?)         // "Dime todo lo que sepas de Serra"
 (?,              directora,   serra)      // "¿Qué obras dirigió Serra?"
-(?,              anotadora,   rivas)      // "Busca todas las canastas de Rivas"</code></pre>
+(?,              agente,      messi)      // "Busca todas las jugadas de Messi"</code></pre>
         </div>
 
         <p>Y si necesitas una consulta digna de un analista, no hay que aprender un lenguaje nuevo:
@@ -403,10 +395,10 @@
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">patrones</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="triple">(?canasta, anotadora, rivas)
-(?canasta, parte_de,  ?partido)
-(?partido, fecha,     [2026-01-01, 2026-12-31])
-// → "Todas las canastas de Rivas en partidos del año 2026"</code></pre>
+          <pre><code data-lang="triple">(?gol,     agente,   messi)
+(?gol,     parte_de, ?partido)
+(?partido, fecha,    [2026-01-01, 2026-12-31])
+// → "Todos los goles de Messi en partidos del año 2026"</code></pre>
         </div>
 
         <p>Así de simple. No hacen falta diagramas enrevesados ni consultas eternas: <strong>consultar
@@ -417,7 +409,7 @@
 
         <h2>El contraste con SQL</h2>
 
-        <p>Para medir la diferencia, traduzcamos esa última pregunta —<em>canastas de Rivas en
+        <p>Para medir la diferencia, traduzcamos esa última pregunta —<em>goles de Messi en
           2026</em>— al mundo relacional clásico. Allí los hechos no viven en una pizarra común, sino
           repartidos en tablas que muchas veces ni siquiera se diseñaron para conversar. Recuperar el
           dato obliga a coserlas con <code>JOIN</code>s, una operación que el grafo no necesita porque
@@ -425,18 +417,17 @@
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">SQL</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="sql">SELECT j.nombre, c.minuto
-FROM canastas c
-JOIN jugadoras j ON j.id = c.jugadora_id
-JOIN partidos  p ON p.id = c.partido_id
-WHERE j.nombre = 'Rivas'
-  AND c.tipo = 'triple'
+          <pre><code data-lang="sql">SELECT j.nombre, g.minuto
+FROM goles g
+JOIN jugadores j ON j.id = g.jugador_id
+JOIN partidos  p ON p.id = g.partido_id
+WHERE j.nombre = 'Messi'
   AND p.fecha BETWEEN '2026-01-01' AND '2026-12-31';</code></pre>
         </div>
 
         <p>No es que el SQL esté mal escrito; es que carga con un trabajo que el modelo de tripletas
           ni siquiera tiene. Cada <code>JOIN</code> es la cicatriz de una decisión previa de partir el
-          mundo en tablas; y si mañana el negocio quiere registrar la asistente de cada canasta, habrá
+          mundo en tablas; y si mañana el negocio quiere registrar el asistente de cada gol, habrá
           que alterar el esquema. En la pizarra de tripletas, recordemos, eso era una línea más.</p>
 
         <h2>El mismo átomo, viajando por el cable</h2>
@@ -444,20 +435,18 @@ WHERE j.nombre = 'Rivas'
         <p>Cuando un hecho necesita salir del sistema y viajar a otro —una API, un agente, otra
           empresa—, se serializa sin perder un solo eje. La <strong>reificación se vuelve un objeto
           JSON</strong> casi sin esfuerzo: el sujeto es el <code>id</code>, cada cable es una clave y
-          cada objeto es el valor. Así se ve la jugada de Rivas sobre el cable:</p>
+          cada objeto es el valor. Así se ve una venta sobre el cable:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">JSON</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="json">{
-  "id": "triple_088",
-  "instancia_de": "triple_anotado",
-  "anotadora": "rivas",
-  "asistente": "navarro",
-  "parte_de": "partido_halcones_lobos",
-  "cuarto": 4,
-  "minuto": 38,
-  "puntos": { "valor": 3, "unidad": "Unit:puntos" },
-  "origen": "esquina_derecha"
+  "id": "venta_74921",
+  "instancia_de": "venta",
+  "agente": "vendedor_17",
+  "cliente": "cliente_1042",
+  "objeto": "camiseta_88",
+  "monto": { "valor": 49.90, "unidad": "Currency:USD" },
+  "momento": "2026-05-14T16:32:00-05:00"
 }</code></pre>
         </div>
 
@@ -474,24 +463,24 @@ WHERE j.nombre = 'Rivas'
               <!-- columna 1: tripleta -->
               <text x="110" y="34" text-anchor="middle" font-size="12" font-weight="700" fill="var(--tinta-suave)">como tripleta</text>
               <rect x="14" y="56" width="192" height="44" rx="9" fill="var(--cod-fondo)"/>
-              <text x="24" y="83" font-size="11" font-family="var(--mono)" fill="var(--cod-texto)">(espresso_311,</text>
-              <text x="40" y="98" font-size="11" font-family="var(--mono)" fill="var(--cod-func)"> dosis_g, 18)</text>
+              <text x="24" y="83" font-size="11" font-family="var(--mono)" fill="var(--cod-texto)">(venta_001,</text>
+              <text x="40" y="98" font-size="11" font-family="var(--mono)" fill="var(--cod-func)"> monto_usd, 49.90)</text>
 
               <!-- columna 2: grafo -->
               <text x="330" y="34" text-anchor="middle" font-size="12" font-weight="700" fill="var(--tinta-suave)">como grafo</text>
               <circle cx="276" cy="120" r="30" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="2"/>
-              <text x="276" y="124" text-anchor="middle" font-size="9.5" font-family="var(--mono)" fill="var(--eje-o)">espresso_311</text>
-              <line x1="306" y1="120" x2="368" y2="120" stroke="var(--eje-m)" stroke-width="2"/>
-              <text x="337" y="112" text-anchor="middle" font-size="10" font-family="var(--sans)" fill="var(--eje-m)">dosis_g</text>
-              <polygon points="368,120 360,116 360,124" fill="var(--eje-m)"/>
-              <circle cx="398" cy="120" r="26" fill="var(--eje-n-suave)" stroke="var(--eje-n)" stroke-width="2"/>
-              <text x="398" y="124" text-anchor="middle" font-size="13" font-weight="700" font-family="var(--mono)" fill="var(--eje-n)">18</text>
+              <text x="276" y="124" text-anchor="middle" font-size="10" font-family="var(--mono)" fill="var(--eje-o)">venta_001</text>
+              <line x1="306" y1="120" x2="362" y2="120" stroke="var(--eje-m)" stroke-width="2"/>
+              <text x="337" y="112" text-anchor="middle" font-size="10" font-family="var(--sans)" fill="var(--eje-m)">monto_usd</text>
+              <polygon points="362,120 354,116 354,124" fill="var(--eje-m)"/>
+              <circle cx="398" cy="120" r="28" fill="var(--eje-n-suave)" stroke="var(--eje-n)" stroke-width="2"/>
+              <text x="398" y="124" text-anchor="middle" font-size="11" font-weight="700" font-family="var(--mono)" fill="var(--eje-n)">49.90</text>
 
               <!-- columna 3: json -->
               <text x="556" y="34" text-anchor="middle" font-size="12" font-weight="700" fill="var(--tinta-suave)">como JSON</text>
               <rect x="454" y="56" width="192" height="60" rx="9" fill="var(--cod-fondo)"/>
-              <text x="466" y="80" font-size="11" font-family="var(--mono)" fill="var(--cod-func)">"dosis_g"<tspan fill="var(--cod-puntu)">:</tspan> <tspan fill="var(--cod-num)">18</tspan></text>
-              <text x="466" y="100" font-size="9" font-family="var(--mono)" fill="var(--cod-tenue)">// dentro de espresso_311</text>
+              <text x="466" y="80" font-size="11" font-family="var(--mono)" fill="var(--cod-func)">"monto_usd"<tspan fill="var(--cod-puntu)">:</tspan> <tspan fill="var(--cod-num)">49.90</tspan></text>
+              <text x="466" y="100" font-size="9" font-family="var(--mono)" fill="var(--cod-tenue)">// dentro de venta_001</text>
 
               <!-- equivalencias -->
               <text x="230" y="124" text-anchor="middle" font-size="20" fill="var(--tinta-tenue)">≡</text>
@@ -501,8 +490,8 @@ WHERE j.nombre = 'Rivas'
                 Una sola afirmación. Tres ropajes. El mismo átomo.</text>
             </svg>
           </div>
-          <figcaption><span class="fnum">Figura 7.2.</span> El hecho «el espresso 311 lleva 18 gramos
-            de dosis» expresado como tripleta, como arista de un grafo y como par clave-valor en JSON.
+          <figcaption><span class="fnum">Figura 7.2.</span> El hecho «la venta 001 tiene un monto de
+            49.90 dólares» expresado como tripleta, como arista de un grafo y como par clave-valor en JSON.
             Las tres notaciones son intercambiables: el modelo no privilegia ninguna, porque todas
             describen la misma coordenada.</figcaption>
         </figure>
@@ -514,15 +503,27 @@ WHERE j.nombre = 'Rivas'
           misma: basta apilar tripletas sobre un sujeto, y reificar solo cuando un evento lo pide.</p>
 
         <div class="columnas">
-          <p><b>☕ El espresso.</b> Ya lo desmenuzamos: diez tripletas bastan para el retrato general
-            de la taza, y si la cafetería exige trazar el lote del grano, se reifica el uso del grano
-            sumando cinco tripletas más —sin tocar el diseño base—.</p>
+          <p><b>👕 La venta.</b> Ya la desmenuzamos: diez tripletas bastan para el retrato general
+            de la operación, y si la tienda exige trazar el lote de inventario, se reifica la entrega
+            del artículo sumando cinco tripletas más —sin tocar el diseño base—.</p>
 
-          <p><b>🏀 La canasta.</b> También la vimos reificada: siete hechos atómicos que conservan
-            anotadora, asistente, partido, cuarto, minuto y origen. Suficiente detalle táctico para
-            una casa de apuestas o un analista de rendimiento, sin reducir la jugada a una fila gris
-            de hoja de cálculo.</p>
+          <p><b>⚽ El gol.</b> El fútbol se describe apilando roles tácticos sobre el evento. Seis
+            hechos atómicos conservan al autor, al asistente, el partido, el minuto y la pierna.
+            Suficiente detalle para una casa de apuestas o un analista de rendimiento, sin reducir la
+            jugada a una fila gris de hoja de cálculo:</p>
+        </div>
 
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(gol_001, instancia_de, gol_jugada_abierta)    ∈ M(O, K)
+(gol_001, agente,       messi)                 ∈ M(O, Q)
+(gol_001, asistente,    di_maria)              ∈ M(O, Q)
+(gol_001, parte_de,     partido_arg_per_2026)  ∈ M(O, O)
+(gol_001, minuto,       87)                    ∈ M(O, N)
+(gol_001, pierna,       zurda)                 ∈ M(O, K)</code></pre>
+        </div>
+
+        <div class="columnas">
           <p><b>🎬 La película.</b> Una obra cinematográfica se describe apilando autoría —que tiene
             roles distintos: dirigir no es escribir— y composición recursiva, porque una escena es
             «parte de» la película:</p>

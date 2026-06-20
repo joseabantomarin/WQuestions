@@ -45,7 +45,7 @@
         <p class="entrada">Abre una hoja de cálculo y reserva siete columnas, una por cada coordenada:
           <strong>quién, qué, dónde, cuándo, cuánto, cuál</strong> y la columna de enlaces que las amarra,
           <strong>cómo</strong>. Ahora pega, en filas sucesivas, hechos que no tienen nada que ver entre
-          sí: un café que se sirvió a las ocho y catorce, un triple anotado en el último cuarto, el
+          sí: una venta que se registró a media tarde, un gol anotado en el segundo tiempo, el
           estreno de un largometraje, una ordenanza municipal de micromovilidad, la llamada de una usuaria
           a un agente de inteligencia artificial. Cinco mundos ajenos, una sola rejilla. Y, fila tras fila,
           la mayoría de las celdas en blanco. Esa hoja medio vacía, lejos de ser un borrador descuidado,
@@ -85,15 +85,15 @@ M                                     (los enlaces que conectan cada lectura del
 
         <p>Una <em>situación</em> es un punto de ese producto: una tupla con, a lo sumo, una lectura por
           eje. Y el «a lo sumo» es el primer detalle que separa este espacio de los que verás en un libro
-          de cálculo. Pero antes de las diferencias, fijemos la intuición con un punto concreto. Toma el
-          espresso que la barista Lucía sirvió a las ocho y catorce: no es una abstracción, es un punto con
-          coordenadas legibles, una por eje, unidas por los enlaces de <em>cómo</em>.</p>
+          de cálculo. Pero antes de las diferencias, fijemos la intuición con un punto concreto. Toma la
+          venta que el vendedor 17 registró a las cuatro y media de la tarde: no es una abstracción, es un
+          punto con coordenadas legibles, una por eje, unidas por los enlaces de <em>cómo</em>.</p>
 
         <!-- FIGURA SVG: una situación como punto en coordenadas paralelas -->
         <figure class="figura figura--ancha revelar">
           <div class="lienzo">
             <svg viewBox="0 0 660 360" class="svg-eje" role="img"
-                 aria-label="La situación del espresso representada como un punto con una lectura en cada eje de valor, unidas por los enlaces de cómo">
+                 aria-label="La situación de la venta representada como un punto con una lectura en cada eje de valor, unidas por los enlaces de cómo">
               <!-- leyenda M -->
               <line x1="372" y1="18" x2="404" y2="18" stroke="var(--eje-m)" stroke-width="2.4" stroke-dasharray="5 4"/>
               <text x="410" y="22" font-size="12" fill="var(--eje-m)" font-weight="600">M · cómo · los enlaces que unen las lecturas</text>
@@ -104,7 +104,7 @@ M                                     (los enlaces que conectan cada lectura del
               <text x="46" y="53" font-size="13" fill="var(--tinta)" font-weight="600">quién</text>
               <text x="46" y="67" font-size="11" fill="var(--tinta-tenue)">agente</text>
               <line x1="185" y1="53" x2="640" y2="53" stroke="var(--eje-q)" stroke-width="2" opacity=".32"/>
-              <text x="320" y="43" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">barista_lucia</text>
+              <text x="320" y="43" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">vendedor_17</text>
               <circle cx="320" cy="53" r="6.5" fill="var(--eje-q)"/>
 
               <!-- fila O -->
@@ -113,7 +113,7 @@ M                                     (los enlaces que conectan cada lectura del
               <text x="46" y="109" font-size="13" fill="var(--tinta)" font-weight="600">qué</text>
               <text x="46" y="123" font-size="11" fill="var(--tinta-tenue)">evento</text>
               <line x1="185" y1="109" x2="640" y2="109" stroke="var(--eje-o)" stroke-width="2" opacity=".32"/>
-              <text x="265" y="99" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">espresso_311</text>
+              <text x="265" y="99" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">venta_001</text>
               <circle cx="265" cy="109" r="6.5" fill="var(--eje-o)"/>
 
               <!-- fila L -->
@@ -122,7 +122,7 @@ M                                     (los enlaces que conectan cada lectura del
               <text x="46" y="165" font-size="13" fill="var(--tinta)" font-weight="600">dónde</text>
               <text x="46" y="179" font-size="11" fill="var(--tinta-tenue)">lugar</text>
               <line x1="185" y1="165" x2="640" y2="165" stroke="var(--eje-l)" stroke-width="2" opacity=".32"/>
-              <text x="470" y="155" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">barra_central</text>
+              <text x="470" y="155" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">tienda_centro</text>
               <circle cx="470" cy="165" r="6.5" fill="var(--eje-l)"/>
 
               <!-- fila T -->
@@ -131,7 +131,7 @@ M                                     (los enlaces que conectan cada lectura del
               <text x="46" y="221" font-size="13" fill="var(--tinta)" font-weight="600">cuándo</text>
               <text x="46" y="235" font-size="11" fill="var(--tinta-tenue)">tiempo</text>
               <line x1="185" y1="221" x2="640" y2="221" stroke="var(--eje-t)" stroke-width="2" opacity=".32"/>
-              <text x="550" y="211" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">08:14</text>
+              <text x="550" y="211" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">16:32</text>
               <circle cx="550" cy="221" r="6.5" fill="var(--eje-t)"/>
 
               <!-- fila N -->
@@ -140,7 +140,7 @@ M                                     (los enlaces que conectan cada lectura del
               <text x="46" y="277" font-size="13" fill="var(--tinta)" font-weight="600">cuánto</text>
               <text x="46" y="291" font-size="11" fill="var(--tinta-tenue)">número</text>
               <line x1="185" y1="277" x2="640" y2="277" stroke="var(--eje-n)" stroke-width="2" opacity=".32"/>
-              <text x="385" y="267" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">36 ml</text>
+              <text x="385" y="267" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">49.90 USD</text>
               <circle cx="385" cy="277" r="6.5" fill="var(--eje-n)"/>
 
               <!-- fila K -->
@@ -149,7 +149,7 @@ M                                     (los enlaces que conectan cada lectura del
               <text x="46" y="333" font-size="13" fill="var(--tinta)" font-weight="600">cuál</text>
               <text x="46" y="347" font-size="11" fill="var(--tinta-tenue)">clase</text>
               <line x1="185" y1="333" x2="640" y2="333" stroke="var(--eje-k)" stroke-width="2" opacity=".32"/>
-              <text x="247" y="323" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">espresso</text>
+              <text x="247" y="323" text-anchor="middle" font-size="12" fill="var(--tinta)" font-family="var(--mono)">venta</text>
               <circle cx="247" cy="333" r="6.5" fill="var(--eje-k)"/>
 
               <!-- conexión M -->
@@ -157,14 +157,14 @@ M                                     (los enlaces que conectan cada lectura del
                 stroke="var(--eje-m)" stroke-width="2.4" stroke-dasharray="5 4" opacity=".6"/>
             </svg>
           </div>
-          <figcaption><span class="fnum">Figura 8.1.</span> La situación <code>espresso_311</code> leída
+          <figcaption><span class="fnum">Figura 8.1.</span> La situación <code>venta_001</code> leída
             como un punto en coordenadas paralelas: una lectura por eje de valor. La línea magenta no es un
             séptimo eje de posición, sino la urdimbre de enlaces (<em>cómo</em>) que ata cada coordenada al
             mismo hecho. Quitar un punto de un eje no rompe el dibujo: deja un eje sin lectura.</figcaption>
         </figure>
 
         <p>Ahora bien, en la inmensa mayoría de los puntos no habrá una lectura en cada eje. Y eso es lo
-          esperable, no un defecto. El triple de Rivas toca <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>,
+          esperable, no un defecto. El gol de Messi toca <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>,
           <span class="eje-rotulo"><span class="eje eje--o">O</span></span> y <span class="eje-rotulo"><span class="eje eje--t">T</span></span>;
           la llamada al agente de IA, por ocurrir «en la nube», deja vacío el eje <span class="eje-rotulo"><span class="eje eje--l">L</span></span>.
           Por eso conviene pensar el espacio como una <strong>estructura parcial</strong>: cada hecho ocupa
@@ -225,8 +225,8 @@ M                                     (los enlaces que conectan cada lectura del
         <p>Aquí cabe deshacer una confusión que el lenguaje de «ejes» arrastra. Cuando decimos que el
           espacio tiene seis dimensiones de valor, podría parecer que la dimensionalidad de un hecho es,
           como mucho, seis. No es así. Lo que da dimensión a una situación no son los seis ejes, sino los
-          <strong>roles</strong> que cada eje puede desplegar dentro de ese hecho. Un evento de baloncesto
-          no tiene «un quién»: tiene una anotadora y un asistente, dos roles distintos sobre el mismo eje
+          <strong>roles</strong> que cada eje puede desplegar dentro de ese hecho. Un gol de fútbol
+          no tiene «un quién»: tiene un anotador y un asistente, dos roles distintos sobre el mismo eje
           <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>. Un largometraje no tiene «un
           autor»: tiene una directora y una guionista. Cada rol es una dimensión propia.</p>
 
@@ -237,19 +237,19 @@ M                                     (los enlaces que conectan cada lectura del
           aporta la especie; el rol, la posición concreta dentro del hecho.
         </aside>
 
-        <p>Míralo en el triple de Rivas. El eje <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>
+        <p>Míralo en el gol de Messi. El eje <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>
           aparece dos veces, pero no como duplicado: como dos coordenadas con roles distintos, cada una con
           su propio enlace de <em>cómo</em>.</p>
 
         <div class="triple" style="flex-wrap:wrap;justify-content:center">
-          <span class="nodo nodo--o"><span>triple_088</span><small>O</small></span>
-          <span class="enlace">anotadora<span class="firma">M(O→Q)</span></span>
-          <span class="nodo nodo--q"><span>rivas</span><small>Q</small></span>
+          <span class="nodo nodo--o"><span>gol_001</span><small>O</small></span>
+          <span class="enlace">anotador<span class="firma">M(O→Q)</span></span>
+          <span class="nodo nodo--q"><span>messi</span><small>Q</small></span>
         </div>
         <div class="triple" style="flex-wrap:wrap;justify-content:center">
-          <span class="nodo nodo--o"><span>triple_088</span><small>O</small></span>
+          <span class="nodo nodo--o"><span>gol_001</span><small>O</small></span>
           <span class="enlace">asistente<span class="firma">M(O→Q)</span></span>
-          <span class="nodo nodo--q"><span>navarro</span><small>Q</small></span>
+          <span class="nodo nodo--q"><span>di_maria</span><small>Q</small></span>
         </div>
 
         <p>Por eso la dimensionalidad real de un hecho es el número de roles que activa, no el número de
@@ -279,22 +279,22 @@ M                                     (los enlaces que conectan cada lectura del
               </thead>
               <tbody>
                 <tr>
-                  <td><b>Espresso servido</b></td>
-                  <td><code>barista_lucia</code></td>
-                  <td><code>espresso_311</code></td>
-                  <td><code>barra_central</code></td>
-                  <td>08:14</td>
-                  <td>36 ml</td>
-                  <td><code>espresso</code></td>
+                  <td><b>Venta registrada</b></td>
+                  <td><code>vendedor_17</code></td>
+                  <td><code>venta_001</code></td>
+                  <td><code>tienda_centro</code></td>
+                  <td>16:32</td>
+                  <td>49.90 USD</td>
+                  <td><code>venta</code></td>
                 </tr>
                 <tr>
-                  <td><b>Triple anotado</b></td>
-                  <td><code>rivas</code></td>
-                  <td><code>triple_088</code></td>
-                  <td><code>cancha_norte</code></td>
-                  <td>min. 38</td>
-                  <td>3 pts</td>
-                  <td><code>triple_anotado</code></td>
+                  <td><b>Gol marcado</b></td>
+                  <td><code>messi</code></td>
+                  <td><code>gol_001</code></td>
+                  <td><code>estadio_lima</code></td>
+                  <td>min. 87</td>
+                  <td>1 gol</td>
+                  <td><code>gol</code></td>
                 </tr>
                 <tr>
                   <td><b>Estreno de cine</b></td>
@@ -334,11 +334,11 @@ M                                     (los enlaces que conectan cada lectura del
 
         <p>Lo notable no es que las cinco filas quepan en la misma tabla, sino que <strong>la estructura
           sea idéntica para todas</strong>. Cualquier analista —y cualquier modelo de lenguaje— puede leer
-          esta rejilla y entender qué dice cada fila sin ser experto en café, en baloncesto ni en derecho
+          esta rejilla y entender qué dice cada fila sin ser experto en ventas, en fútbol ni en derecho
           administrativo. Y esa uniformidad es lo que vuelve trivial la búsqueda. Si alguien pide «todo lo
           que ocurrió el 14 de mayo de 2026», basta filtrar el eje <span class="eje-rotulo"><span class="eje eje--t">T</span></span>:
           el sistema devolverá, en el mismo gesto, la ordenanza de la municipalidad. No hace falta tender un
-          puente entre el servidor del café, el de deportes y el legal. Todo vive en la misma geometría.</p>
+          puente entre el servidor de la tienda, el de deportes y el legal. Todo vive en la misma geometría.</p>
 
         <h2>Consultar es restringir la geometría</h2>
 
@@ -349,20 +349,20 @@ M                                     (los enlaces que conectan cada lectura del
           gestos.</p>
 
         <div class="columnas">
-          <p><strong>Fijar un punto y soltar el resto.</strong> «Muéstrame todo lo que involucre a la
-            barista Lucía.» El motor clava una estaca en <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>
-            <code>= barista_lucia</code> y recoge todos los hechos que la tocan, sin importar el día, el
-            local ni el producto. Geométricamente: nos quedamos con el hiperplano que pasa por ese valor y
+          <p><strong>Fijar un punto y soltar el resto.</strong> «Muéstrame todo lo que involucre al
+            vendedor 17.» El motor clava una estaca en <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>
+            <code>= vendedor_17</code> y recoge todos los hechos que lo tocan, sin importar el día, la
+            tienda ni el producto. Geométricamente: nos quedamos con el hiperplano que pasa por ese valor y
             es libre en todos los demás ejes.</p>
           <p><strong>Acotar un intervalo.</strong> «Dame los eventos entre el 1 y el 31 de mayo.» El motor
             apoya una regla de medición sobre el eje <span class="eje-rotulo"><span class="eje eje--t">T</span></span>
             y descarta cuanto caiga fuera de la franja, dejando libres a las personas y los lugares. Esto
             solo es posible porque el eje está tipado: «entre dos fechas» tiene sentido en <span class="eje eje--t">T</span>,
             no en <span class="eje eje--q">Q</span>.</p>
-          <p><strong>Cruzar varios cortes.</strong> «Todos los triples que Rivas anotó en el último cuarto.»
-            El motor corta por <span class="eje-rotulo"><span class="eje eje--q">Q</span></span> <code>= rivas</code>,
-            luego por <span class="eje-rotulo"><span class="eje eje--k">K</span></span> <code>= triple_anotado</code>,
-            luego por <span class="eje-rotulo"><span class="eje eje--t">T</span></span> <code>= cuarto 4</code>.
+          <p><strong>Cruzar varios cortes.</strong> «Todos los goles que Messi anotó en el segundo tiempo.»
+            El motor corta por <span class="eje-rotulo"><span class="eje eje--q">Q</span></span> <code>= messi</code>,
+            luego por <span class="eje-rotulo"><span class="eje eje--k">K</span></span> <code>= gol</code>,
+            luego por <span class="eje-rotulo"><span class="eje eje--t">T</span></span> <code>= segundo tiempo</code>.
             El resultado es el rincón donde los tres cortes se intersecan: una restricción compuesta.</p>
         </div>
 
@@ -371,15 +371,15 @@ M                                     (los enlaces que conectan cada lectura del
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="triple">(?evento, anotadora,   rivas)            ∈ M(O→Q)   ← corta el eje Q
-(?evento, clase,       triple_anotado)   ∈ M(O→K)   ← corta el eje K
-(?evento, cuarto,      4)                ∈ M(O→T)   ← corta el eje T
+          <pre><code data-lang="triple">(?evento, anotador,    messi)            ∈ M(O→Q)   ← corta el eje Q
+(?evento, clase,       gol)              ∈ M(O→K)   ← corta el eje K
+(?evento, tiempo,      segundo)          ∈ M(O→T)   ← corta el eje T
 ─────────────────────────────────────────────────
 ?evento  =  la intersección de los tres cortes</code></pre>
         </div>
 
         <p>La belleza técnica está en que el motor ejecuta <em>siempre la misma operación</em> —un corte
-          geométrico— sin que le importe si busca triples, diagnósticos o transacciones. Ahí se cumple la
+          geométrico— sin que le importe si busca goles, diagnósticos o transacciones. Ahí se cumple la
           promesa del modelo: un único lenguaje para interrogar al mundo entero.</p>
 
         <p class="cita-destacada revelar">Una consulta deja de ser una orden en el dialecto de cada base
@@ -401,8 +401,8 @@ M                                     (los enlaces que conectan cada lectura del
             <script type="application/json">
             {"tipo":"dispersion","alto":340,
              "datos":[
-               {"x":6,"y":36,"l":"espresso_311 · 6 ejes, 36 ml","color":"o","r":10},
-               {"x":5,"y":3,"l":"triple_088 · 5 ejes, 3 pts","color":"q","r":9},
+               {"x":6,"y":50,"l":"venta_001 · 6 ejes, 49.90 USD","color":"o","r":10},
+               {"x":5,"y":3,"l":"gol_001 · 5 ejes, 1 gol","color":"q","r":9},
                {"x":4,"y":1,"l":"pelicula_marea · 4 ejes","color":"k","r":8},
                {"x":5,"y":1,"l":"ordenanza_142 · 5 ejes","color":"l","r":8},
                {"x":4,"y":52,"l":"sesion_ia_5521 · 4 ejes, magnitud alta","color":"n","r":11}
@@ -412,7 +412,7 @@ M                                     (los enlaces que conectan cada lectura del
           <figcaption><span class="fnum">Figura 8.3.</span> Cinco situaciones del repertorio como puntos en
             un plano de dispersión: en el eje horizontal, cuántas coordenadas llena cada hecho; en el
             vertical, la magnitud numérica que registra (en escala relativa). Pasa el cursor sobre cada
-            punto para leer la situación. El café, denso y muy descrito, ocupa la esquina superior derecha;
+            punto para leer la situación. La venta, densa y muy descrita, ocupa la esquina superior derecha;
             el estreno, parcial y sin magnitud, queda abajo a la izquierda.</figcaption>
         </figure>
 

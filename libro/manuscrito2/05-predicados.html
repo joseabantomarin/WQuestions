@@ -42,16 +42,17 @@
 
       <div class="contenido">
 
-        <p class="entrada">Sobre la barra hay un espresso recién servido, <code>espresso_311</code>, y
-          junto a él una pantalla donde un agente de inteligencia artificial acaba de cerrar una
-          consulta, <code>sesion_ia_5521</code>. Tienes delante todos los datos: sabes que el café lo
-          extrajo la barista Lucía, que pesó dieciocho gramos de café, que salió a noventa y tres
-          grados; sabes que la sesión de IA corrió sobre el modelo <code>modelo_lumen_2026</code>, que
+        <p class="entrada">En el mostrador acaba de cerrarse una venta, <code>venta_001</code>, y
+          junto a ella una pantalla donde un agente de inteligencia artificial acaba de cerrar una
+          consulta, <code>sesion_ia_5521</code>. Tienes delante todos los datos: sabes que la operación
+          la atendió el vendedor <code>vendedor_17</code>, que el comprador fue <code>cliente_1042</code>,
+          que lo vendido fue una camiseta <code>camiseta_88</code> y que el monto fue 49,90 dólares;
+          sabes que la sesión de IA corrió sobre el modelo <code>modelo_lumen_2026</code>, que
           consumió 4180 <em>tokens</em> de entrada y que invocó dos herramientas. Cada dato, por
           separado, ya tiene su casillero en alguno de los seis ejes que construimos en los capítulos
           anteriores. Y, sin embargo, si te detienes a mirarlos, son un montón de fichas sueltas sobre
-          la mesa. Nada dice todavía que el café sea <em>de</em> Lucía, ni que los dieciocho gramos
-          pertenezcan a <em>ese</em> espresso y no al de la mesa de al lado.</p>
+          el mostrador. Nada dice todavía que la venta sea <em>del</em> vendedor 17, ni que los 49,90
+          dólares pertenezcan a <em>esa</em> venta y no a la de la caja de al lado.</p>
 
         <p>Ese es el agujero que cierra este capítulo. Hemos llenado el universo de valores —personas,
           objetos, lugares, instantes, números, clases—, pero los valores, por sí solos, no se
@@ -75,49 +76,49 @@
 
         <h2>Una distinción que parece de sentido común</h2>
 
-        <p>Calentemos motores con cinco datos sueltos, repartidos entre el espresso de la barra y la
+        <p>Calentemos motores con cinco datos sueltos, repartidos entre la venta del mostrador y la
           sesión del agente de IA:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">cinco enlaces</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="text">1.  espresso_311  tiene de dosis        18 (gramos)
-2.  espresso_311  se sirvió a las       08:14
-3.  espresso_311  lo preparó            barista_lucia
+          <pre><code data-lang="text">1.  venta_001  tiene de monto         49.90 (USD)
+2.  venta_001  se cerró a las         08:14
+3.  venta_001  la atendió            vendedor_17
 4.  sesion_ia_5521  consumió de entrada  4180 (tokens)
 5.  sesion_ia_5521  usó la herramienta   busqueda_web, consulta_grafo</code></pre>
         </div>
 
         <p>Pídele a un programador que empieza que divida estos cinco enlaces en dos montones:
           <strong>propiedades</strong> (atributos propios de la cosa) y <strong>relaciones</strong>
-          (vínculos con otra cosa externa). Lo hará sin titubear. La <em>dosis</em> y los
+          (vínculos con otra cosa externa). Lo hará sin titubear. El <em>monto</em> y los
           <em>tokens</em> de entrada son, dirá, claramente propiedades: cifras que describen el objeto
-          por dentro. En cambio <em>lo preparó</em> y <em>usó la herramienta</em> son relaciones,
-          porque atan el sujeto a otra entidad separada —una barista, una herramienta de software—.
+          por dentro. En cambio <em>la atendió</em> y <em>usó la herramienta</em> son relaciones,
+          porque atan el sujeto a otra entidad separada —un vendedor, una herramienta de software—.
           La intuición es limpia: <em>propiedad = atributo interno; relación = puente hacia afuera</em>.</p>
 
         <p>Suena impecable. Pero basta someterla a un poco de presión arquitectónica para verla
           desmoronarse:</p>
 
         <ul>
-          <li>Decimos que <em>«lo preparó barista_lucia»</em> es una relación externa. ¿Y si
-            diseñamos la tabla con un campo interno <code>barista_responsable</code> cuyo valor es
-            Lucía? Bajo esa óptica, se vuelve una propiedad.</li>
-          <li>Decimos que <em>«la dosis es 18 gramos»</em> es una propiedad interna. Pero,
-            matemáticamente, podemos leerlo como que el espresso «está conectado» con el número
-            <code>18</code>, que vive con derechos propios en el eje
+          <li>Decimos que <em>«la atendió vendedor_17»</em> es una relación externa. ¿Y si
+            diseñamos la tabla con un campo interno <code>vendedor_responsable</code> cuyo valor es
+            el vendedor 17? Bajo esa óptica, se vuelve una propiedad.</li>
+          <li>Decimos que <em>«el monto es 49,90 dólares»</em> es una propiedad interna. Pero,
+            matemáticamente, podemos leerlo como que la venta «está conectada» con el número
+            <code>49.90</code>, que vive con derechos propios en el eje
             <span class="eje-rotulo"><span class="eje eje--n">N</span></span>. Bajo esa óptica, se
             vuelve una relación externa.</li>
-          <li>Decimos que <em>«se sirvió a las 08:14»</em> es casi un sello de tiempo, una propiedad.
+          <li>Decimos que <em>«se cerró a las 08:14»</em> es casi un sello de tiempo, una propiedad.
             Pero <code>08:14</code> es un instante que habita el eje
-            <span class="eje-rotulo"><span class="eje eje--t">T</span></span>: el espresso, en
+            <span class="eje-rotulo"><span class="eje eje--t">T</span></span>: la venta, en
             realidad, se relaciona con un punto del tiempo.</li>
         </ul>
 
         <p>Si miramos estos cinco enlaces con frialdad informática, aflora una verdad incómoda:
           <strong>la diferencia entre propiedad y relación no existe en la realidad material</strong>.
           Es una diferencia <em>gramatical</em>, sobre cómo los humanos redactamos las oraciones. A
-          veces usamos verbos posesivos («tiene 18 gramos») y a veces verbos relacionales («lo
-          preparó Lucía»). Para el disco que guarda el dato, la estructura técnica es idéntica: hay un
+          veces usamos verbos posesivos («tiene un monto de 49,90») y a veces verbos relacionales («la
+          atendió el vendedor 17»). Para el disco que guarda el dato, la estructura técnica es idéntica: hay un
           sujeto de partida, un cable conector y un objeto de destino.</p>
 
         <p class="cita-destacada revelar">La frontera entre tener un atributo y estar relacionado con
@@ -149,7 +150,7 @@
         </div>
 
         <p>Vista así, cada cable es una pequeña función tipada. Los enlaces de nuestras cuatro escenas
-          —espresso, agente de IA, baloncesto y cine— quedan con estas etiquetas de seguridad:</p>
+          —venta, agente de IA, fútbol y cine— quedan con estas etiquetas de seguridad:</p>
 
         <!-- FIGURA 5.1: la signatura tipada como enchufe entre dos ejes, cross-dominio -->
         <figure class="figura figura--ancha revelar">
@@ -170,32 +171,32 @@
 
               <!-- fila helper -->
               <g font-family="var(--mono)" font-size="12.5">
-                <!-- 1 dosis: O → N -->
-                <text x="20" y="64" fill="var(--eje-m)" font-weight="700">dosis</text>
+                <!-- 1 monto: O → N -->
+                <text x="20" y="64" fill="var(--eje-m)" font-weight="700">monto</text>
                 <rect x="232" y="50" width="30" height="22" rx="5" fill="var(--eje-o)"/>
                 <text x="247" y="65.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">O</text>
                 <line x1="270" y1="61" x2="424" y2="61" stroke="var(--eje-m)" stroke-width="2" marker-end="url(#flechaM)"/>
                 <rect x="430" y="50" width="30" height="22" rx="5" fill="var(--eje-n)"/>
                 <text x="445" y="65.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">N</text>
-                <text x="472" y="65.5" font-size="11" fill="var(--tinta-tenue)" font-family="var(--sans)">espresso → 18 g</text>
+                <text x="472" y="65.5" font-size="11" fill="var(--tinta-tenue)" font-family="var(--sans)">venta → 49.90</text>
 
-                <!-- 2 se_sirvio_a: O → T -->
-                <text x="20" y="106" fill="var(--eje-m)" font-weight="700">se_sirvio_a</text>
+                <!-- 2 se_cerro_a: O → T -->
+                <text x="20" y="106" fill="var(--eje-m)" font-weight="700">se_cerro_a</text>
                 <rect x="232" y="92" width="30" height="22" rx="5" fill="var(--eje-o)"/>
                 <text x="247" y="107.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">O</text>
                 <line x1="270" y1="103" x2="424" y2="103" stroke="var(--eje-m)" stroke-width="2" marker-end="url(#flechaM)"/>
                 <rect x="430" y="92" width="30" height="22" rx="5" fill="var(--eje-t)"/>
                 <text x="445" y="107.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">T</text>
-                <text x="472" y="107.5" font-size="11" fill="var(--tinta-tenue)" font-family="var(--sans)">espresso → 08:14</text>
+                <text x="472" y="107.5" font-size="11" fill="var(--tinta-tenue)" font-family="var(--sans)">venta → 08:14</text>
 
-                <!-- 3 preparado_por: O → Q -->
-                <text x="20" y="148" fill="var(--eje-m)" font-weight="700">preparado_por</text>
+                <!-- 3 atendida_por: O → Q -->
+                <text x="20" y="148" fill="var(--eje-m)" font-weight="700">atendida_por</text>
                 <rect x="232" y="134" width="30" height="22" rx="5" fill="var(--eje-o)"/>
                 <text x="247" y="149.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">O</text>
                 <line x1="270" y1="145" x2="424" y2="145" stroke="var(--eje-m)" stroke-width="2" marker-end="url(#flechaM)"/>
                 <rect x="430" y="134" width="30" height="22" rx="5" fill="var(--eje-q)"/>
                 <text x="445" y="149.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Q</text>
-                <text x="472" y="149.5" font-size="11" fill="var(--tinta-tenue)" font-family="var(--sans)">espresso → lucia</text>
+                <text x="472" y="149.5" font-size="11" fill="var(--tinta-tenue)" font-family="var(--sans)">venta → vendedor_17</text>
 
                 <!-- 4 tokens_entrada: O → N -->
                 <text x="20" y="190" fill="var(--eje-m)" font-weight="700">tokens_entrada</text>
@@ -218,7 +219,7 @@
 
               <!-- nota inferior -->
               <line x1="20" y1="262" x2="640" y2="262" stroke="var(--linea)" stroke-width="1"/>
-              <text x="20" y="286" font-size="12" fill="var(--eje-m)" font-family="var(--mono)" font-weight="700">dosis : O → N</text>
+              <text x="20" y="286" font-size="12" fill="var(--eje-m)" font-family="var(--mono)" font-weight="700">monto : O → N</text>
               <text x="20" y="306" font-size="11.5" fill="var(--tinta-suave)" font-style="italic" font-family="var(--serif)">El mismo cable, leído como función tipada: «de un objeto, hacia un número».</text>
             </svg>
           </div>
@@ -230,12 +231,12 @@
 
         <p>La signatura es la magia que convierte un montón de datos desordenados en una estructura
           <strong>predecible y validable</strong>. Si un programador comete un error y trata de
-          guardar <code>(espresso_311, dosis, "color rojo")</code>, el sistema lo bloquea solo: la
-          signatura de <code>dosis</code> exige que el destino esté en el eje
+          guardar <code>(venta_001, monto, "color rojo")</code>, el sistema lo bloquea solo: la
+          signatura de <code>monto</code> exige que el destino esté en el eje
           <span class="eje-rotulo"><span class="eje eje--n">N</span></span> —los números—, y «color
           rojo» es un texto. Esa capacidad de rechazar el absurdo desde el instante en que entra el
           dato es lo que separa la arquitectura sólida de WQuestions del caos de los grafos libres,
-          donde cualquiera puede conectar un espresso con un color usando el verbo «dosis» sin que
+          donde cualquiera puede conectar una venta con un color usando el verbo «monto» sin que
           nada chille.</p>
 
         <h2>La diferencia verdadera: ¿funcional o múltiple?</h2>
@@ -246,8 +247,8 @@
 
         <p>Vuelve a mirar las signaturas de la figura. Cuatro de ellas se comportan como lo que en
           matemáticas llamamos <strong>funciones</strong>: dado un sujeto concreto, el cable solo
-          puede conducir a <em>un único</em> destino en ese instante. Un espresso tiene <em>una</em>
-          dosis de café; se sirvió en <em>un</em> instante; lo preparó <em>una</em> barista; una
+          puede conducir a <em>un único</em> destino en ese instante. Una venta tiene <em>un</em>
+          monto; se cerró en <em>un</em> instante; la atendió <em>un</em> vendedor; una
           sesión de IA consumió <em>un</em> número exacto de <em>tokens</em> de entrada.</p>
 
         <p>El quinto cable —<code>uso_herramienta</code>— rompe la regla. Un mismo agente de IA pudo
@@ -263,15 +264,15 @@
             <h4 style="color:var(--eje-m)">Cable funcional — P</h4>
             <p style="margin:0 0 .5rem;font-size:.95rem">Admite <strong>un único destino</strong> por
               sujeto. Es lo que el sentido común llama una <em>propiedad</em>.</p>
-            <p style="margin:0;font-size:.9rem;color:var(--tinta-suave)"><code>dosis</code>,
-              <code>se_sirvio_a</code>, <code>tokens_entrada</code>, <code>latencia_ms</code>.</p>
+            <p style="margin:0;font-size:.9rem;color:var(--tinta-suave)"><code>monto</code>,
+              <code>se_cerro_a</code>, <code>tokens_entrada</code>, <code>latencia_ms</code>.</p>
           </div>
           <div class="tarjeta" style="border-left:4px solid var(--eje-m)">
             <h4 style="color:var(--eje-m)">Cable múltiple — M</h4>
             <p style="margin:0 0 .5rem;font-size:.95rem">Permite <strong>varios destinos</strong> a la
               vez. Es lo que el sentido común llama una <em>relación</em>.</p>
             <p style="margin:0;font-size:.9rem;color:var(--tinta-suave)"><code>uso_herramienta</code>,
-              <code>ingrediente</code>, <code>jugó_para</code>, <code>reparto</code>.</p>
+              <code>ingrediente</code>, <code>gol_anotado</code>, <code>reparto</code>.</p>
           </div>
         </div>
 
@@ -292,8 +293,8 @@
         <div class="caja caja--practica revelar">
           <p class="caja-tit">La lógica de actualización</p>
           <p>Si el cable es <strong>funcional (P)</strong> y llega información nueva, el sistema
-            <strong>borra y reemplaza</strong>. Si la barista corrige la dosis de
-            <code>espresso_311</code> de 18 a 19 gramos, el 18 desaparece; no acumulamos dos dosis.</p>
+            <strong>borra y reemplaza</strong>. Si el cajero corrige el monto de
+            <code>venta_001</code> de 49,90 a 45,90 dólares, el 49,90 desaparece; no acumulamos dos montos.</p>
           <p style="margin-bottom:0">Si el cable es <strong>múltiple (M)</strong> y llega información
             nueva, el sistema la <strong>agrega a la lista</strong>. Si el agente de IA invoca una
             tercera herramienta, esa herramienta se suma al historial sin borrar a las dos
@@ -301,7 +302,7 @@
         </div>
 
         <p>Y aquí viene el alivio para quien programa: <strong>el motor de consulta no hace la
-          diferencia</strong>. Da igual que preguntes «¿qué dosis tiene <code>espresso_311</code>?» o
+          diferencia</strong>. Da igual que preguntes «¿qué monto tiene <code>venta_001</code>?» o
           «¿con qué herramientas trabajó <code>sesion_ia_5521</code>?»: la máquina ejecuta exactamente
           el mismo código de búsqueda. Solo que en el primer caso te devuelve una respuesta y en el
           segundo, una lista.</p>
@@ -326,27 +327,27 @@
               <!-- ===== IZQUIERDA: FUNCIONAL (P) ===== -->
               <rect x="22" y="22" width="120" height="26" rx="13" fill="var(--eje-m-suave)" stroke="var(--eje-m)" stroke-width="1.5"/>
               <text x="82" y="39.5" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-m)">P · funcional</text>
-              <text x="22" y="70" font-size="12.5" fill="var(--tinta-suave)" font-family="var(--mono)">dosis : O → N</text>
+              <text x="22" y="70" font-size="12.5" fill="var(--tinta-suave)" font-family="var(--mono)">monto : O → N</text>
               <text x="22" y="88" font-size="11.5" fill="var(--tinta-tenue)" font-style="italic" font-family="var(--serif)">un único destino → BORRA Y REEMPLAZA</text>
 
               <!-- sujeto -->
               <rect x="40" y="120" width="118" height="40" rx="9" fill="var(--eje-o)"/>
-              <text x="99" y="138" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff" font-family="var(--mono)">espresso_311</text>
+              <text x="99" y="138" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff" font-family="var(--mono)">venta_001</text>
               <text x="99" y="153" text-anchor="middle" font-size="10" fill="#fff" opacity=".85">O · sujeto</text>
 
               <!-- destino viejo (tachado) -->
               <line x1="158" y1="140" x2="232" y2="206" stroke="var(--eje-m)" stroke-width="2" opacity=".3" marker-end="url(#fMtenue)" stroke-dasharray="4 3"/>
               <rect x="232" y="190" width="74" height="34" rx="8" fill="var(--papel-2)" stroke="var(--eje-n)" stroke-width="1.5" opacity=".55"/>
-              <text x="269" y="211" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-n)" opacity=".7" font-family="var(--mono)">18 g</text>
+              <text x="269" y="211" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-n)" opacity=".7" font-family="var(--mono)">49.90</text>
               <line x1="240" y1="207" x2="298" y2="207" stroke="var(--eje-q)" stroke-width="2.2"/>
 
               <!-- destino nuevo -->
               <line x1="158" y1="140" x2="232" y2="100" stroke="var(--eje-m)" stroke-width="2.4" marker-end="url(#fM2)"/>
               <rect x="232" y="80" width="74" height="38" rx="8" fill="var(--eje-n-suave)" stroke="var(--eje-n)" stroke-width="1.5"/>
-              <text x="269" y="104" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--eje-n)" font-family="var(--mono)">19 g</text>
+              <text x="269" y="104" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--eje-n)" font-family="var(--mono)">45.90</text>
 
-              <text x="40" y="270" font-size="11.5" fill="var(--tinta-suave)" font-family="var(--sans)">Llega <tspan font-weight="700">19 g</tspan>: el viejo</text>
-              <text x="40" y="288" font-size="11.5" fill="var(--tinta-suave)" font-family="var(--sans)"><tspan font-weight="700">18 g</tspan> se descarta. Queda</text>
+              <text x="40" y="270" font-size="11.5" fill="var(--tinta-suave)" font-family="var(--sans)">Llega <tspan font-weight="700">45.90</tspan>: el viejo</text>
+              <text x="40" y="288" font-size="11.5" fill="var(--tinta-suave)" font-family="var(--sans)"><tspan font-weight="700">49.90</tspan> se descarta. Queda</text>
               <text x="40" y="306" font-size="11.5" fill="var(--tinta-suave)" font-family="var(--sans)">una sola respuesta.</text>
 
               <!-- ===== DERECHA: MÚLTIPLE (M) ===== -->
@@ -434,7 +435,7 @@
             <h4><span class="eje eje--k">2</span>&nbsp; Un JSON único</h4>
             <p style="margin:0;font-size:.95rem">Cuando un agente de IA pide datos por
               <em>function calling</em>, los recibe siempre con la misma estructura limpia. No gasta
-              <em>tokens</em> averiguando si la dosis viene en un formato y la lista de herramientas en
+              <em>tokens</em> averiguando si el monto viene en un formato y la lista de herramientas en
               otro. La uniformidad abarata la integración.</p>
           </div>
           <div class="tarjeta">
@@ -445,15 +446,15 @@
           </div>
           <div class="tarjeta">
             <h4><span class="eje eje--q">4</span>&nbsp; Lenguaje natural, gratis</h4>
-            <p style="margin:0;font-size:.95rem">Cada verbo humano —«servir», «anotar», «dirigir»—
+            <p style="margin:0;font-size:.95rem">Cada verbo humano —«vender», «anotar», «dirigir»—
               exige ciertos roles. Como el sistema no separa propiedades de relaciones, leer
-              «Lucía sirvió un espresso» y volcarlo a cables uniformes es casi mecánico.</p>
+              «el vendedor 17 vendió una camiseta» y volcarlo a cables uniformes es casi mecánico.</p>
           </div>
         </div>
 
         <p>Esa última consecuencia merece subrayarse, porque es el puente hacia toda la Parte&nbsp;IV.
-          Cuando le decimos al sistema <em>«la escolta Rivas anotó un triple tras la asistencia de
-          Navarro»</em>, la máquina registra a la anotadora, el evento y la asistente usando la misma
+          Cuando le decimos al sistema <em>«Messi anotó el gol tras la asistencia de
+          Di María»</em>, la máquina registra al goleador, el evento y el asistente usando la misma
           estructura uniforme. Al no distinguir entre propiedades y relaciones, lee frases humanas casi
           como si leyera código de máquina.</p>
 
@@ -464,19 +465,19 @@
           considera «atributos estáticos» tiende a ser funcional; lo que son «piezas que se suman»
           tiende a ser múltiple.</p>
 
-        <h3>El espresso de la barra</h3>
+        <h3>La venta del mostrador</h3>
 
         <div class="bloque-codigo">
-          <div class="barra"><span class="lenguaje">signaturas · espresso</span><button class="copiar">⧉ copiar</button></div>
+          <div class="barra"><span class="lenguaje">signaturas · venta</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="triple"># funcionales (P) — respuesta única, borra y reemplaza
-dosis          : O → N    P   # 18 g
-temperatura    : O → N    P   # 93 °C
-extraccion     : O → N    P   # 27 s
-tueste         : O → K    P   # tueste_medio
+monto          : O → N    P   # 49.90
+atendida_por   : O → Q    P   # vendedor_17
+comprada_por   : O → Q    P   # cliente_1042
+categoria      : O → K    P   # venta
 
 # múltiples (M) — acumulan
-preparado_con  : O → O    M   # varios granos en una mezcla
-nota_de_cata   : O → K    M   # cacao, cítrico, caramelo…</code></pre>
+articulo       : O → O    M   # varios objetos en una venta
+etiqueta       : O → K    M   # camiseta, promocion…</code></pre>
         </div>
 
         <h3>La sesión del agente de IA</h3>
@@ -498,28 +499,28 @@ consultó_fuente : O → O   M   # la IA pudo leer 5 documentos</code></pre>
         <p>El consumo exacto en dinero es uno solo —funcional—; las herramientas invocadas y los
           documentos leídos durante la consulta pueden ser docenas —múltiples—.</p>
 
-        <h3>El partido de baloncesto</h3>
+        <h3>El partido de fútbol</h3>
 
         <div class="bloque-codigo">
-          <div class="barra"><span class="lenguaje">signaturas · baloncesto</span><button class="copiar">⧉ copiar</button></div>
+          <div class="barra"><span class="lenguaje">signaturas · fútbol</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="triple"># funcionales (P)
 resultado    : O → K    P   # victoria_local
-asistencia   : O → N    P   # 9120 espectadores
+asistencia   : O → N    P   # 52000 espectadores
 
 # múltiples (M)
-jugó_para    : O → Q    M   # SON SIEMPRE 2 equipos — y aun así, múltiple
-canasta      : O → O    M   # muchas canastas
-falta        : O → O    M   # decenas de faltas</code></pre>
+juega        : O → Q    M   # SON SIEMPRE 2 equipos — y aun así, múltiple
+gol_anotado  : O → O    M   # varios goles
+tarjeta      : O → O    M   # decenas de tarjetas</code></pre>
         </div>
 
         <div class="caja caja--alerta revelar">
-          <p class="caja-tit">La trampa de <code>jugó_para</code></p>
-          <p style="margin-bottom:0">El cable <code>jugó_para</code> engaña. Podrías creer que es
+          <p class="caja-tit">La trampa de <code>juega</code></p>
+          <p style="margin-bottom:0">El cable <code>juega</code> engaña. Podrías creer que es
             <strong>funcional</strong> porque el número de equipos en un partido <em>siempre</em> es
             exactamente dos: un número fijo. Pero es <strong>múltiple</strong>. La regla no trata sobre
             si el número es fijo o infinito, sino sobre si hay <strong>una única respuesta posible</strong>.
-            Como hay dos respuestas legítimas para el mismo partido —los Halcones <em>y</em> los
-            Lobos—, matemáticamente el cable es múltiple. «Fijo en dos» no es lo mismo que «único».</p>
+            Como hay dos respuestas legítimas para el mismo partido —Argentina <em>y</em>
+            Perú—, matemáticamente el cable es múltiple. «Fijo en dos» no es lo mismo que «único».</p>
         </div>
 
         <h2>Trampa de programación: la relación disfrazada de columna</h2>
@@ -544,18 +545,18 @@ falta        : O → O    M   # decenas de faltas</code></pre>
 
         <p>Antes de cerrar la Parte&nbsp;II hace falta presentar un predicado que merece trato aparte,
           porque será una bisagra del resto del libro. Hasta aquí hemos tratado cada hecho como un
-          punto suelto. Pero el mundo no viene en puntos sueltos: viene en escenas. La canasta de Rivas
+          punto suelto. Pero el mundo no viene en puntos sueltos: viene en escenas. El gol de Messi
           no flota en el vacío —ocurre <em>dentro</em> de un partido—. La escena 42 no es una isla
-          —es una pieza <em>de</em> la película <code>pelicula_marea</code>—. El gesto de servir el
-          espresso pertenece <em>al</em> servicio de toda la mañana.</p>
+          —es una pieza <em>de</em> la película <code>pelicula_marea</code>—. El acto de cobrar la
+          venta pertenece <em>a</em> la jornada de caja de toda la mañana.</p>
 
         <p>Ese vínculo de pertenencia tiene su propio cable. Es un predicado múltiple, de objeto a
           objeto, y lo llamamos <code>parte_de</code>:</p>
 
         <div class="triple">
-          <span class="nodo nodo--o"><span>triple_088</span><small>O</small></span>
+          <span class="nodo nodo--o"><span>gol_001</span><small>O</small></span>
           <span class="enlace">parte_de<span class="firma">M(O→O)</span></span>
-          <span class="nodo nodo--o"><span>partido_halcones_lobos</span><small>O</small></span>
+          <span class="nodo nodo--o"><span>partido_arg_per_2026</span><small>O</small></span>
         </div>
         <div class="triple">
           <span class="nodo nodo--o"><span>escena_42</span><small>O</small></span>
@@ -574,7 +575,7 @@ falta        : O → O    M   # decenas de faltas</code></pre>
           que <strong>habilita</strong>. Cuando muchos hechos pequeños cuelgan, por este predicado, de
           un mismo hecho contenedor, ese contenedor deja de ser un objeto cualquiera y se convierte en
           una <strong>situación</strong>: un marco amplio dentro del cual ocurren eventos
-          interconectados. El partido entero, el rodaje completo, el servicio de la mañana. Es la
+          interconectados. El partido entero, el rodaje completo, la jornada de caja. Es la
           entidad <em>compuesta</em> que vimos asomar al hablar del eje <em>qué</em>, y que ahora tiene
           el cable que la ensambla.</p>
 

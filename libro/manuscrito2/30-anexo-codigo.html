@@ -59,8 +59,8 @@
 
         <div class="caja caja--practica">
           <p class="caja-tit">Sobre los identificadores de este anexo</p>
-          <p style="margin-bottom:0">Los ejemplos usan el repertorio del libro —el espresso de Lucía,
-            el triple de Rivas, la película de Serra, la ordenanza de micromovilidad, la sesión de IA,
+          <p style="margin-bottom:0">Los ejemplos usan el repertorio del libro —la venta de Marco,
+            el gol de Messi, la película de Serra, la ordenanza de micromovilidad, la sesión de IA,
             el episodio del paciente Vega— para que reconozcas los casos. Las <em>estructuras</em>
             (los campos de un hecho, la forma de un patrón, las firmas de las APIs) son las del
             prototipo real, que vive en <code>prototipo/wq/</code>. Cambia los nombres a tu dominio;
@@ -144,8 +144,8 @@ class Individual:
         <aside class="nota-margen">
           <span class="etq">Recuerda</span>
           En <strong>K</strong> viven los conceptos atemporales —las plantillas, como
-          <code>espresso</code> o <code>largometraje</code>—; en <strong>O</strong> y los pilares,
-          las entidades situadas, como <code>espresso_311</code> (D1). El predicado
+          <code>venta</code> o <code>largometraje</code>—; en <strong>O</strong> y los pilares,
+          las entidades situadas, como <code>venta_001</code> (D1). El predicado
           <code>instancia_de</code> es el puente entre ambos mundos.
         </aside>
 
@@ -221,42 +221,42 @@ class LexiconEntry:
               <text x="29" y="41" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">Q</text>
               <text x="56" y="34" font-size="14" font-weight="700" fill="var(--tinta)">quién</text>
               <text x="56" y="49" font-size="11.5" fill="var(--tinta-tenue)">agente — quien actúa</text>
-              <text x="430" y="42" font-size="12" fill="var(--tinta-suave)" font-family="var(--mono)">barista_lucia</text>
+              <text x="430" y="42" font-size="12" fill="var(--tinta-suave)" font-family="var(--mono)">vendedor_17</text>
 
               <!-- O -->
               <rect x="14" y="68" width="30" height="30" rx="7" fill="var(--eje-o)"/>
               <text x="29" y="89" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">O</text>
               <text x="56" y="82" font-size="14" font-weight="700" fill="var(--tinta)">qué</text>
               <text x="56" y="97" font-size="11.5" fill="var(--tinta-tenue)">objeto, evento, situación</text>
-              <text x="430" y="90" font-size="12" fill="var(--tinta-suave)" font-family="var(--mono)">espresso_311</text>
+              <text x="430" y="90" font-size="12" fill="var(--tinta-suave)" font-family="var(--mono)">venta_001</text>
 
               <!-- L -->
               <rect x="14" y="116" width="30" height="30" rx="7" fill="var(--eje-l)"/>
               <text x="29" y="137" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">L</text>
               <text x="56" y="130" font-size="14" font-weight="700" fill="var(--tinta)">dónde</text>
               <text x="56" y="145" font-size="11.5" fill="var(--tinta-tenue)">lugar</text>
-              <text x="430" y="138" font-size="12" fill="var(--tinta-suave)" font-family="var(--mono)">barra_central</text>
+              <text x="430" y="138" font-size="12" fill="var(--tinta-suave)" font-family="var(--mono)">tienda_centro</text>
 
               <!-- T -->
               <rect x="14" y="164" width="30" height="30" rx="7" fill="var(--eje-t)"/>
               <text x="29" y="185" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">T</text>
               <text x="56" y="178" font-size="14" font-weight="700" fill="var(--tinta)">cuándo</text>
               <text x="56" y="193" font-size="11.5" fill="var(--tinta-tenue)">tiempo</text>
-              <text x="430" y="186" font-size="12" fill="var(--tinta-suave)" font-family="var(--mono)">08:14</text>
+              <text x="430" y="186" font-size="12" fill="var(--tinta-suave)" font-family="var(--mono)">16:32</text>
 
               <!-- N -->
               <rect x="14" y="212" width="30" height="30" rx="7" fill="var(--eje-n)"/>
               <text x="29" y="233" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">N</text>
               <text x="56" y="226" font-size="14" font-weight="700" fill="var(--tinta)">cuánto</text>
               <text x="56" y="241" font-size="11.5" fill="var(--tinta-tenue)">número, magnitud</text>
-              <text x="430" y="234" font-size="12" fill="var(--tinta-suave)" font-family="var(--mono)">36 ml</text>
+              <text x="430" y="234" font-size="12" fill="var(--tinta-suave)" font-family="var(--mono)">49.90</text>
 
               <!-- K -->
               <rect x="14" y="260" width="30" height="30" rx="7" fill="var(--eje-k)"/>
               <text x="29" y="281" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">K</text>
               <text x="56" y="274" font-size="14" font-weight="700" fill="var(--tinta)">cuál</text>
               <text x="56" y="289" font-size="11.5" fill="var(--tinta-tenue)">clase, categoría</text>
-              <text x="430" y="282" font-size="12" fill="var(--tinta-suave)" font-family="var(--mono)">espresso</text>
+              <text x="430" y="282" font-size="12" fill="var(--tinta-suave)" font-family="var(--mono)">venta</text>
 
               <!-- M separador -->
               <line x1="14" y1="312" x2="626" y2="312" stroke="var(--linea)" stroke-width="1"/>
@@ -277,7 +277,7 @@ class LexiconEntry:
             </svg>
           </div>
           <figcaption><span class="fnum">Figura 30.1.</span> Los siete ejes. Seis fijan el valor de
-            un hecho —una lectura por eje, a la derecha el ejemplo de <code>espresso_311</code>—; el
+            un hecho —una lectura por eje, a la derecha el ejemplo de <code>venta_001</code>—; el
             séptimo, <strong>M</strong>, no aloja nodos: es el de los predicados que cosen las seis
             lecturas en un hecho consultable.</figcaption>
         </figure>
@@ -301,13 +301,13 @@ class LexiconEntry:
           repertorio canónico; cualquier rol que un dominio invente —por la política liberal del
           catálogo— se acepta sin declararlo.</p>
 
-        <p>Conviene mostrar primero la forma del cable con el componente insignia. El hecho «Lucía es
-          la barista de <code>espresso_311</code>» es una tripleta cuyo cable es <code>agente</code>:</p>
+        <p>Conviene mostrar primero la forma del cable con el componente insignia. El hecho «Messi es
+          el autor de <code>gol_001</code>» es una tripleta cuyo cable es <code>agente</code>:</p>
 
         <div class="triple">
-          <span class="nodo nodo--o"><span>espresso_311</span><small>O</small></span>
+          <span class="nodo nodo--o"><span>gol_001</span><small>O</small></span>
           <span class="enlace">agente<span class="firma">M(O→Q)</span></span>
-          <span class="nodo nodo--q"><span>barista_lucia</span><small>Q</small></span>
+          <span class="nodo nodo--q"><span>messi</span><small>Q</small></span>
         </div>
 
         <h3>Predicados de rol (signatura de las situaciones)</h3>
@@ -323,13 +323,13 @@ class LexiconEntry:
               <tr><th>Predicado</th><th>Firma</th><th>Conecta</th><th>Ejemplo</th></tr>
             </thead>
             <tbody>
-              <tr><td><code>agente</code></td><td>M(O→Q)</td><td>situación → quien actúa</td><td><code>espresso_311 · agente · barista_lucia</code></td></tr>
+              <tr><td><code>agente</code></td><td>M(O→Q)</td><td>situación → quien actúa</td><td><code>gol_001 · agente · messi</code></td></tr>
               <tr><td><code>paciente</code></td><td>M(O→Q)</td><td>situación → quien la recibe</td><td><code>diagnostico_771 · paciente · vega</code></td></tr>
-              <tr><td><code>beneficiario</code></td><td>M(O→Q)</td><td>situación → a favor de quién</td><td><code>asig_001 · beneficiario · navarro</code></td></tr>
+              <tr><td><code>beneficiario</code></td><td>M(O→Q)</td><td>situación → a favor de quién</td><td><code>asig_001 · beneficiario · luis</code></td></tr>
               <tr><td><code>tema</code></td><td>M(O→O)</td><td>situación → su objeto</td><td><code>canc_001 · tema · viaje_088</code></td></tr>
               <tr><td><code>instrumento</code></td><td>M(O→O)</td><td>situación → con qué</td><td><code>asig_001 · instrumento · vehiculo_12</code></td></tr>
-              <tr><td><code>lugar_de</code></td><td>M(O→L)</td><td>situación → dónde</td><td><code>triple_088 · lugar_de · cancha_norte</code></td></tr>
-              <tr><td><code>momento</code></td><td>M(O→T)</td><td>situación → cuándo (puntual)</td><td><code>espresso_311 · momento · t_08_14</code></td></tr>
+              <tr><td><code>lugar_de</code></td><td>M(O→L)</td><td>situación → dónde</td><td><code>venta_001 · lugar_de · tienda_centro</code></td></tr>
+              <tr><td><code>momento</code></td><td>M(O→T)</td><td>situación → cuándo (puntual)</td><td><code>venta_001 · momento · t_16_32</code></td></tr>
               <tr><td><code>inicio</code> / <code>fin</code></td><td>M(O→T)</td><td>situación → ventana temporal</td><td><code>sesion_ia_5521 · inicio · t0</code></td></tr>
             </tbody>
           </table>
@@ -348,8 +348,8 @@ class LexiconEntry:
               <tr><th>Predicado</th><th>Firma</th><th>Significa</th><th>Ejemplo</th></tr>
             </thead>
             <tbody>
-              <tr><td><code>instancia_de</code></td><td>M(O→K)</td><td>esta entidad es un caso de esta clase</td><td><code>espresso_311 · instancia_de · espresso</code></td></tr>
-              <tr><td><code>subclase_de</code></td><td>M(K→K)</td><td>esta clase especializa a otra</td><td><code>espresso · subclase_de · cafe</code></td></tr>
+              <tr><td><code>instancia_de</code></td><td>M(O→K)</td><td>esta entidad es un caso de esta clase</td><td><code>venta_001 · instancia_de · venta</code></td></tr>
+              <tr><td><code>subclase_de</code></td><td>M(K→K)</td><td>esta clase especializa a otra</td><td><code>venta · subclase_de · transaccion</code></td></tr>
               <tr><td><code>parte_de</code></td><td>M(O→O)</td><td>esta entidad compone a otra mayor</td><td><code>escena_42 · parte_de · pelicula_marea</code></td></tr>
               <tr><td><code>estatus_factual</code></td><td>M(O→K)</td><td>estado de la situación</td><td><code>viaje_088 · estatus_factual · cancelado</code></td></tr>
             </tbody>
@@ -421,22 +421,21 @@ class LexiconEntry:
 
         <h3>Reificar una situación con polisemia</h3>
 
-        <p>Servir un espresso es una situación con cliente implícito, lugar y ventana temporal. El
-          parámetro <code>complements</code> resuelve la ambigüedad del verbo: «servir» puede ser
-          servir un café o servir a la mesa; el complemento lo decide.</p>
+        <p>Vender una camiseta es una situación con vendedor, cliente, lugar y momento. El
+          parámetro <code>complements</code> resuelve la ambigüedad del verbo: «vender» puede ser
+          vender un producto o «venderse» (delatarse); el complemento lo decide.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="python">esp = ingest_situation(u, lex, "servir",
+          <pre><code data-lang="python">vta = ingest_situation(u, lex, "vender",
     roles={
-        "agente":   barista_lucia,
-        "lugar_de": barra_central,
-        "inicio":   t_inicio,
-        "fin":      t_fin,
+        "agente":   vendedor_17,
+        "lugar_de": tienda_centro,
+        "momento":  t_16_32,
     },
-    complements=["espresso"],          # dispara la acepción correcta
-    extra={"estatus_factual": servido},
-    sit_id="espresso_311",
+    complements=["camiseta"],          # dispara la acepción correcta
+    extra={"estatus_factual": cerrada},
+    sit_id="venta_001",
 )</code></pre>
         </div>
 
@@ -447,54 +446,54 @@ class LexiconEntry:
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="python">lex.register(LexiconEntry(
-    verb="servir",
-    situation_type="preparacion_bebida",
-    obligatory=["agente", "lugar_de"],
-    pattern=("espresso",),                # dispara con el complemento "espresso"
+    verb="vender",
+    situation_type="transaccion_venta",
+    obligatory=["agente", "objeto"],
+    pattern=("camiseta",),                # dispara con el complemento "camiseta"
 ))
 
 lex.register(LexiconEntry(
-    verb="servir",
-    situation_type="atencion_mesa",
-    obligatory=["agente", "beneficiario"],
-    pattern=("la_mesa",),                 # locución del dominio
+    verb="vender",
+    situation_type="accion_delatar",
+    obligatory=["agente", "paciente"],
+    pattern=("se",),                      # locución idiomática «venderse»
 ))
 
 lex.register(LexiconEntry(
-    verb="servir",
-    situation_type="accion_servir",
+    verb="vender",
+    situation_type="accion_vender",
     obligatory=["agente", "tema"],
-    notes="genérico — proveer / ser útil",
+    notes="genérico — ceder a cambio de un precio",
 ))</code></pre>
         </div>
 
         <h3>El dialecto de dominio: hablar el idioma del negocio</h3>
 
-        <p>Un dialecto mapea el vocabulario del cliente a los roles canónicos. El usuario dice
-          «cliente», «consumo», «recarga»; el sistema traduce a <code>agente</code>,
-          <code>preparacion_bebida</code>, <code>beneficio_fidelidad</code> sin que se entere (D9).</p>
+        <p>Un dialecto mapea el vocabulario del comercio a los roles canónicos. El usuario dice
+          «vendedor», «venta», «artículo»; el sistema traduce a <code>agente</code>,
+          <code>transaccion_venta</code>, <code>objeto</code> sin que se entere (D9).</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="python">lex.register_domain_dialect("cafe_aurora", {
-    "cliente":     "agente",
-    "consumo":     "preparacion_bebida",
-    "tarjeta":     "contrato_servicio",
-    "cafe_gratis": "beneficio_fidelidad",
+          <pre><code data-lang="python">lex.register_domain_dialect("tienda_aurora", {
+    "vendedor":  "agente",
+    "venta":     "transaccion_venta",
+    "articulo":  "objeto",
+    "fidelidad": "beneficio_fidelidad",
 })</code></pre>
         </div>
 
         <h3>Consultar: patrón fijo + restricción de tipo</h3>
 
-        <p>«¿Cuántos espressos sirvió Lucía hoy?» es un conteo con sujeto fijo y restricción de tipo.
+        <p>«¿Cuántas camisetas vendió Marco hoy?» es un conteo con sujeto fijo y restricción de tipo.
           El patrón ata <code>agente</code> y <code>estatus_factual</code>, y restringe a la clase
-          <code>preparacion_bebida</code>.</p>
+          <code>transaccion_venta</code>.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="python">n = count(u, Pattern(
-    fixed={"agente": barista_lucia, "estatus_factual": servido},
-    type_constraint=u.ind("preparacion_bebida"),
+    fixed={"agente": vendedor_17, "estatus_factual": cerrada},
+    type_constraint=u.ind("transaccion_venta"),
 ))
 # n == 8</code></pre>
         </div>
@@ -538,7 +537,7 @@ res_2027 = query(u, ..., at=datetime(2027, 6, 1, tzinfo=timezone.utc))
           <pre><code data-lang="python">asig = ingest_situation(u, lex, "asignar", roles={
     "agente":       app,            # ¡la APP ocupa el rol Q!
     "tema":         sol,            # asigna la solicitud previa
-    "beneficiario": navarro,        # al conductor disponible
+    "beneficiario": luis,           # al conductor disponible
     "instrumento":  vehiculo_12,    # con su vehículo
     "momento":      at(1),
 }, sit_id="asig_001")</code></pre>
@@ -583,7 +582,7 @@ causa = [f for f in explicaciones if f.role == "causado_por"]
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="python">canc = ingest_situation(u, lex, "cancelar", roles={
-    "agente":   paredes,
+    "agente":   valeria,
     "tema":     viaje_088,
     "momento":  at(62),
 }, sit_id="canc_001")
@@ -656,26 +655,26 @@ u.assert_fact(pres, "verificado_contra", regla_contraindicacion)</code></pre>
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="python">partes = [f.subject for f in u.facts_with_role("parte_de")
-          if f.value.id == "partido_halcones_lobos"]
+          if f.value.id == "partido_arg_per_2026"]
 # devuelve todas las jugadas registradas del partido</code></pre>
         </div>
 
         <h3>Estado derivado: no se asienta, se calcula</h3>
 
-        <p>El marcador de un partido no es un hecho que alguien escriba: emerge de contar las canastas
+        <p>El marcador de un partido no es un hecho que alguien escriba: emerge de contar los goles
           de cada equipo. La consulta es un doble conteo con una composición final.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="python">puntos_halcones = count(u, Pattern(
-    fixed={"equipo": halcones},
-    type_constraint=u.ind("triple_anotado"),
-)) * 3
-puntos_lobos = count(u, Pattern(
-    fixed={"equipo": lobos},
-    type_constraint=u.ind("triple_anotado"),
-)) * 3
-marcador = f"{puntos_halcones} - {puntos_lobos}"</code></pre>
+          <pre><code data-lang="python">goles_argentina = count(u, Pattern(
+    fixed={"equipo": argentina},
+    type_constraint=u.ind("gol_jugada_abierta"),
+))
+goles_peru = count(u, Pattern(
+    fixed={"equipo": peru},
+    type_constraint=u.ind("gol_jugada_abierta"),
+))
+marcador = f"{goles_argentina} - {goles_peru}"</code></pre>
         </div>
 
         <h3>Un LLM ingiere una nota en lenguaje natural</h3>
@@ -747,13 +746,14 @@ uso = query(u, Pattern(
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="triple">(espresso_311) ∈ O                                   # la situación
-(espresso_311, instancia_de, espresso)        ∈ M(O, K)
-(espresso_311, agente,       barista_lucia)   ∈ M(O, Q)
-(espresso_311, lugar_de,     barra_central)   ∈ M(O, L)
-(espresso_311, momento,      08:14)           ∈ M(O, T)
-(espresso_311, rendimiento,  36)              ∈ M(O, N)   # ml
-(espresso_311, estatus_factual, servido)      ∈ M(O, K)</code></pre>
+          <pre><code data-lang="triple">(venta_001) ∈ O                                  # la situación
+(venta_001, instancia_de, venta)          ∈ M(O, K)
+(venta_001, agente,       vendedor_17)    ∈ M(O, Q)
+(venta_001, objeto,       camiseta_88)    ∈ M(O, O)
+(venta_001, lugar_de,     tienda_centro)  ∈ M(O, L)
+(venta_001, momento,      16:32)          ∈ M(O, T)
+(venta_001, monto_usd,    49.90)          ∈ M(O, N)   # USD
+(venta_001, estatus_factual, cerrada)     ∈ M(O, K)</code></pre>
         </div>
 
         <h3>Forma JSON (para transmitir)</h3>
@@ -765,16 +765,17 @@ uso = query(u, Pattern(
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">json</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="json">{
-  "sujeto": "espresso_311",
+  "sujeto": "venta_001",
   "eje_sujeto": "O",
   "hechos": [
-    {"rol": "instancia_de", "valor": {"ref": "espresso", "eje": "K"}},
-    {"rol": "agente",       "valor": {"ref": "barista_lucia", "eje": "Q"}},
-    {"rol": "lugar_de",     "valor": {"ref": "barra_central", "eje": "L"}},
-    {"rol": "momento",      "valor": {"lit": "2026-05-16T08:14:00Z", "eje": "T"}},
-    {"rol": "rendimiento",  "valor": {"lit": 36, "eje": "N", "unidad": "ml"}}
+    {"rol": "instancia_de", "valor": {"ref": "venta", "eje": "K"}},
+    {"rol": "agente",       "valor": {"ref": "vendedor_17", "eje": "Q"}},
+    {"rol": "objeto",       "valor": {"ref": "camiseta_88", "eje": "O"}},
+    {"rol": "lugar_de",     "valor": {"ref": "tienda_centro", "eje": "L"}},
+    {"rol": "momento",      "valor": {"lit": "2026-05-14T16:32:00-05:00", "eje": "T"}},
+    {"rol": "monto_usd",    "valor": {"lit": 49.90, "eje": "N", "unidad": "Currency:USD"}}
   ],
-  "valido": {"desde": "2026-05-16T08:14:00Z", "hasta": null}
+  "valido": {"desde": "2026-05-14T16:32:00-05:00", "hasta": null}
 }</code></pre>
         </div>
 
@@ -787,18 +788,18 @@ uso = query(u, Pattern(
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">json</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="json">{
-  "name": "ingest_servir_espresso",
-  "description": "Registra que un agente sirvió un espresso en un lugar.",
+  "name": "ingest_vender_camiseta",
+  "description": "Registra que un vendedor vendió una camiseta a un cliente.",
   "parameters": {
     "type": "object",
     "properties": {
-      "agente":   {"type": "string", "description": "quién lo sirvió (Q)"},
-      "lugar_de": {"type": "string", "description": "dónde se sirvió (L)"},
-      "inicio":   {"type": "string", "format": "date-time"},
-      "fin":      {"type": "string", "format": "date-time"},
-      "rendimiento": {"type": "number", "description": "ml extraídos (N)"}
+      "agente":   {"type": "string", "description": "quién la vendió (Q)"},
+      "objeto":   {"type": "string", "description": "qué se vendió (O)"},
+      "lugar_de": {"type": "string", "description": "dónde se vendió (L)"},
+      "momento":  {"type": "string", "format": "date-time"},
+      "monto_usd": {"type": "number", "description": "importe en dólares (N)"}
     },
-    "required": ["agente", "lugar_de"]
+    "required": ["agente", "objeto"]
   }
 }</code></pre>
         </div>

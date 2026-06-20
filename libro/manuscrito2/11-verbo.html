@@ -42,13 +42,13 @@
 
       <div class="contenido">
 
-        <p class="entrada">Faltan ocho segundos en el reloj y los Halcones pierden por un punto.
-          Una relatora de radio describe la jugada para miles de personas que no pueden ver la
-          cancha: <em>«Rivas recibe de Navarro en la esquina, se eleva sobre la marca y</em>
-          <strong>anota</strong><em> el triple sobre la bocina»</em>. En el instante en que pronuncia
-          ese verbo —<em>anota</em>— ocurre algo que damos por sentado y que, sin embargo, es casi
+        <p class="entrada">Corre el minuto 87 y la selección pierde por un gol.
+          Un relator de radio describe la jugada para miles de personas que no pueden ver la
+          cancha: <em>«Messi recibe de Di María en la frontal del área, recorta sobre la marca y</em>
+          <strong>marca</strong><em> el gol con la zurda»</em>. En el instante en que pronuncia
+          ese verbo —<em>marca</em>— ocurre algo que damos por sentado y que, sin embargo, es casi
           milagroso: cada oyente reconstruye en su cabeza el mismo evento. Sabe que <em>hubo</em> un
-          tiro, que <em>alguien</em> lo lanzó, que <em>algo</em> entró por el aro, que pasó <em>en</em>
+          remate, que <em>alguien</em> lo ejecutó, que <em>algo</em> entró en el arco, que pasó <em>en</em>
           un sitio y <em>en</em> un momento. El verbo no transmitió una imagen; transmitió un molde, y
           cada cerebro lo rellenó.</p>
 
@@ -125,7 +125,7 @@
 
         <h2>El verbo no es una acción: es un molde</h2>
 
-        <p>De aquí sale el primer concepto que conviene fijar. Un verbo como <em>anotar</em>,
+        <p>De aquí sale el primer concepto que conviene fijar. Un verbo como <em>marcar</em>,
           <em>dirigir</em> o <em>llover</em> no nombra una acción que ocurrió una vez en el mundo.
           Nombra un <strong>molde</strong>: un tipo, una categoría de situación. Por eso los verbos no
           viven en el eje de las cosas que pasan
@@ -154,21 +154,21 @@
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="triple">(triple_088)                          ∈ O          // la instancia fresca
-(triple_088, instancia_de, anotar)    ∈ M(O, K)   // su molde vive en K</code></pre>
+          <pre><code data-lang="triple">(gol_001)                          ∈ O          // la instancia fresca
+(gol_001, instancia_de, marcar)    ∈ M(O, K)   // su molde vive en K</code></pre>
         </div>
 
         <p>Ese segundo hecho —el cable que une la instancia con su molde— es la primera tripleta de
           toda situación, y conviene verla con la forma insignia del modelo:</p>
 
         <div class="triple">
-          <span class="nodo nodo--o"><span>triple_088</span><small>O</small></span>
+          <span class="nodo nodo--o"><span>gol_001</span><small>O</small></span>
           <span class="enlace">instancia_de<span class="firma">M(O→K)</span></span>
-          <span class="nodo nodo--k"><span>anotar</span><small>K</small></span>
+          <span class="nodo nodo--k"><span>marcar</span><small>K</small></span>
         </div>
 
         <p>A quien programe, esto le sonará idéntico a la relación entre una clase y un objeto. El
-          verbo <em>anotar</em> es la función —o la clase— que vive en la biblioteca; cada vez que un
+          verbo <em>marcar</em> es la función —o la clase— que vive en la biblioteca; cada vez que un
           hablante la usa, el sistema la <em>invoca</em> y crea una ejecución concreta en memoria,
           anotando qué participantes recibió. El verbo permanece; las instancias se multiplican.</p>
 
@@ -180,10 +180,10 @@
           escribiríamos algo como esto, y nadie se sorprendería:</p>
 
         <div class="bloque-codigo">
-          <div class="barra"><span class="lenguaje">firma del verbo · anotar</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="python">def anotar(agente: Q, tema: O, *, lugar: L = None,
+          <div class="barra"><span class="lenguaje">firma del verbo · marcar</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">def marcar(agente: Q, tema: O, *, lugar: L = None,
            momento: T = None, asistido_por: Q = None) -> Situacion:
-    """Crea una situación de tipo 'anotar' y le engancha sus participantes."""</code></pre>
+    """Crea una situación de tipo 'marcar' y le engancha sus participantes."""</code></pre>
         </div>
 
         <p>Cada parámetro lleva su anotación de tipo, y ese tipo es uno de nuestros ejes. El
@@ -212,7 +212,7 @@
           <div class="barra"><span class="lenguaje">firmas · de la más simple a la más compleja</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="triple">llover  ( momento?: T, lugar?: L, intensidad?: N )                         → Situacion
 soñar   ( experimentador: Q, tema: O, momento?: T )                        → Situacion
-anotar  ( agente: Q, tema: O, lugar?: L, momento?: T, asistido_por?: Q )   → Situacion
+marcar  ( agente: Q, tema: O, lugar?: L, momento?: T, asistido_por?: Q )   → Situacion
 dirigir ( agente: Q, tema: O, lugar?: L, momento?: T, con_finalidad?: O )  → Situacion</code></pre>
         </div>
 
@@ -225,10 +225,10 @@ dirigir ( agente: Q, tema: O, lugar?: L, momento?: T, con_finalidad?: O )  → S
         <figure class="figura figura--ancha revelar">
           <div class="lienzo">
             <svg viewBox="0 0 660 372" class="svg-eje" role="img"
-                 aria-label="El verbo anotar representado como una firma de función: una caja central que despliega ranuras tipadas, cada una conectada al eje del que debe venir su valor">
+                 aria-label="El verbo marcar representado como una firma de función: una caja central que despliega ranuras tipadas, cada una conectada al eje del que debe venir su valor">
               <!-- título de la firma -->
               <rect x="20" y="22" width="250" height="48" rx="12" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="2.5"/>
-              <text x="145" y="44" text-anchor="middle" font-size="15" font-weight="700" fill="var(--eje-k)" font-family="var(--mono)">anotar</text>
+              <text x="145" y="44" text-anchor="middle" font-size="15" font-weight="700" fill="var(--eje-k)" font-family="var(--mono)">marcar</text>
               <text x="145" y="61" text-anchor="middle" font-size="10.5" fill="var(--tinta-tenue)">molde · vive en K</text>
 
               <!-- llave / símbolo de despliegue -->
@@ -297,7 +297,7 @@ dirigir ( agente: Q, tema: O, lugar?: L, momento?: T, con_finalidad?: O )  → S
               <text x="338" y="320" font-size="11" fill="var(--tinta-tenue)" font-family="var(--sans)">→ Situacion: la llamada produce una instancia en O</text>
             </svg>
           </div>
-          <figcaption><span class="fnum">Figura 11.1.</span> El verbo <code>anotar</code> como firma
+          <figcaption><span class="fnum">Figura 11.1.</span> El verbo <code>marcar</code> como firma
             de función. La caja izquierda es el molde en <span class="eje eje--k">K</span>; al
             invocarlo despliega sus ranuras tipadas. Cada ranura declara su eje de destino —el
             <em>agente</em> sólo admite valores de <span class="eje eje--q">Q</span>, el <em>lugar</em>
@@ -314,10 +314,10 @@ dirigir ( agente: Q, tema: O, lugar?: L, momento?: T, con_finalidad?: O )  → S
           <div class="tarjeta">
             <p class="emoji">🛡️</p>
             <h4>Rechazo de sinsentidos</h4>
-            <p style="margin:0;font-size:.93rem">Si alguien intenta registrar <em>«la cancha anotó el
-              triple»</em>, el sistema aborta antes de guardar nada. La firma de <em>anotar</em> exige
+            <p style="margin:0;font-size:.93rem">Si alguien intenta registrar <em>«la cancha marcó el
+              gol»</em>, el sistema aborta antes de guardar nada. La firma de <em>marcar</em> exige
               que el <em>agente</em> venga de <span class="eje eje--q">Q</span>, y una cancha vive en
-              <span class="eje eje--l">L</span>. No hace falta saber de baloncesto: la matemática del
+              <span class="eje eje--l">L</span>. No hace falta saber de fútbol: la matemática del
               tipo lo frena en seco.</p>
           </div>
           <div class="tarjeta">
@@ -330,8 +330,8 @@ dirigir ( agente: Q, tema: O, lugar?: L, momento?: T, con_finalidad?: O )  → S
           <div class="tarjeta">
             <p class="emoji">🔌</p>
             <h4>Modificadores con borde</h4>
-            <p style="margin:0;font-size:.93rem"><em>Anotar</em> admite un <em>asistido_por</em>;
-              <em>llover</em> admite una <em>intensidad</em>. Si alguien escribe <em>«anotó con una
+            <p style="margin:0;font-size:.93rem"><em>Marcar</em> admite un <em>asistido_por</em>;
+              <em>llover</em> admite una <em>intensidad</em>. Si alguien escribe <em>«marcó con una
               intensidad de tres milímetros por hora»</em>, el sistema lo rechaza. La firma decide qué
               modificadores son legales, sin reglas escritas caso por caso.</p>
           </div>
@@ -367,7 +367,7 @@ dirigir ( agente: Q, tema: O, lugar?: L, momento?: T, con_finalidad?: O )  → S
         </div>
 
         <p>¿Cuántos roles hacen falta para modelar el mundo? Menos de los que uno imagina. El núcleo
-          canónico ronda las cuatro decenas de roles, y con ellos alcanza para describir baloncesto,
+          canónico ronda las cuatro decenas de roles, y con ellos alcanza para describir fútbol,
           cine, medicina, banca, química o derecho. La razón es la misma que hace universales a las
           preguntas: el cerebro humano, sea cual sea la profesión de su dueño, procesa la realidad con
           un repertorio reducido y estable de papeles. He aquí las familias principales, sin pretensión
@@ -569,15 +569,17 @@ para cerrar el acto   → el objetivo      → con_finalidad  → eje O (¡otro 
           deportiva:</p>
 
         <div class="bloque-codigo">
-          <div class="barra"><span class="lenguaje">tripletas · «Navarro asistió a Rivas en el último minuto»</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="triple">(asistencia_088, instancia_de, accion_asistir)              ∈ M(O, K)
-(asistencia_088, agente,       navarro)                     ∈ M(O, Q)
-(asistencia_088, beneficiario, rivas)                       ∈ M(O, Q)
-(asistencia_088, parte_de,     partido_halcones_lobos)      ∈ M(O, O)
-(asistencia_088, momento,      cuarto_4_min_38)             ∈ M(O, T)</code></pre>
+          <div class="barra"><span class="lenguaje">tripletas · «Messi le pasó el balón a Di María en el minuto 87 con la zurda»</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(pase_001, instancia_de, accion_pasar)           ∈ M(O, K)
+(pase_001, agente,       messi)                  ∈ M(O, Q)
+(pase_001, beneficiario, di_maria)               ∈ M(O, Q)
+(pase_001, objeto_pase,  balon_partido_001)      ∈ M(O, O)
+(pase_001, instrumento,  pierna_izquierda)       ∈ M(O, O)
+(pase_001, parte_de,     partido_arg_per_2026)   ∈ M(O, O)
+(pase_001, momento,      minuto_87)              ∈ M(O, T)</code></pre>
         </div>
 
-        <p>El verbo <em>asistir</em> no se parece en nada a <em>filmar</em> —pide un
+        <p>El verbo <em>pasar</em> no se parece en nada a <em>filmar</em> —pide un
           <em>beneficiario</em> donde el otro pedía una <em>finalidad</em>—. Pero la tubería que los
           procesó fue idéntica: detectar el molde, reificar, anclar, enchufar. Esa es la prueba de
           que el motor no necesita reescribirse para cada negocio. Lo que cambia entre la clínica, el
