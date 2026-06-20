@@ -112,9 +112,9 @@ Todos los capítulos comparten esta plantilla. `assets/` se enlaza con ruta rela
 
 ```html
 <div class="triple">
-  <span class="nodo nodo--o"><span>espresso_311</span><small>O</small></span>
+  <span class="nodo nodo--o"><span>venta_001</span><small>O</small></span>
   <span class="enlace">agente<span class="firma">M(O→Q)</span></span>
-  <span class="nodo nodo--q"><span>barista_lucia</span><small>Q</small></span>
+  <span class="nodo nodo--q"><span>vendedor_17</span><small>Q</small></span>
 </div>
 ```
 
@@ -125,8 +125,8 @@ Todos los capítulos comparten esta plantilla. `assets/` se enlaza con ruta rela
 ```html
 <div class="bloque-codigo">
   <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
-  <pre><code data-lang="triple">(espresso_311, agente, barista_lucia)   ∈ M(O, Q)
-(espresso_311, dosis_g, 18)             ∈ M(O, N)</code></pre>
+  <pre><code data-lang="triple">(venta_001, agente, vendedor_17)   ∈ M(O, Q)
+(venta_001, monto,  49.90)         ∈ M(O, N)</code></pre>
 </div>
 ```
 
@@ -160,8 +160,8 @@ Reemplaza al repertorio original. Hílalo de forma consistente por todo el libro
 
 | Dominio | Para ilustrar | Identificadores canónicos |
 |---|---|---|
-| ☕ **Espresso** | proceso, unidades (N), composición, reificación de medición | evento `espresso_311`; agente `barista_lucia`; producto `taza_311`; K: `espresso`, `cafe_arabica`, `tueste_medio`; N: dosis 18 g, agua 93 °C, presión 9 bar, extracción 27 s, rendimiento 36 ml |
-| 🏀 **Baloncesto** | evento con varios agentes, reificación n-aria, concurrencia, estado derivado | evento `triple_088`; anotadora `rivas`; asistente `navarro`; partido `partido_halcones_lobos`; T: cuarto 4, minuto 38; K: `triple_anotado`, `posicion_escolta` |
+| 👕 **Venta (camiseta)** | transacción cotidiana, composición (apilar tripletas), reificación, unidades (monto/moneda, cantidad, impuesto) | venta `venta_001`; vendedor `vendedor_17`; cliente `cliente_1042`; objeto `camiseta_88`; N: monto 49.90, moneda `Currency:USD`, cantidad, impuesto 18 %; T: `2026-05-14T16:32`; L: `tienda_centro`; K: `venta`, `camiseta` |
+| ⚽ **Fútbol (gol)** | evento con varios agentes, reificación n-aria, concurrencia, estado derivado | gol `gol_001` (agente `messi`, asistente `di_maria`, `parte_de partido_arg_per_2026`, minuto 87, pierna zurda); pase `pase_001` (agente `messi`, beneficiario `di_maria`, `objeto_pase balon_partido_001`, instrumento `pierna_izquierda`, minuto 87) |
 | 🎬 **Cine** | autoría (roles distintos), recursión/composición, tiempo narrativo | obra `pelicula_marea`; directora `serra`; guionista `haddad`; escena `escena_42` (`parte_de pelicula_marea`); T narrativo "final del segundo acto"; K: `largometraje`, `genero_drama` |
 | 🏛️ **Ordenanza municipal** | fechas, vigencia, entidades afectadas, tiempo derivado por reglas | `ordenanza_142` (micromovilidad); agente `municipalidad_centro` / `alcalde_reyes`; `fecha_publicacion`, `entra_en_vigor` (a los 30 días); `afecta_a`: `gerencia_transito`, `gerencia_fiscalizacion`; K: `ordenanza_municipal` |
 | 🤖 **Agente de IA** | telemetría moderna, unidades nuevas, K = modelos/herramientas | sesión `sesion_ia_5521`; modelo `modelo_lumen_2026`; usuaria `paredes`; N: tokens_entrada 4180, tokens_salida 920, latencia_ms 2100, costo_usd 0.015; herramientas `busqueda_web`, `consulta_grafo` |

@@ -94,11 +94,11 @@
 
         <p>El drama de urgencias es la versión extrema; pero el mecanismo que lo causa late en
           el sistema más banal. Para verlo en cámara lenta, bajemos a un escenario sin víctimas:
-          un café. A las 08:14, en la barra de una cafetería, la barista Lucía sirve un
-          espresso. Lo llamaremos <code>espresso_311</code>. Es <em>un</em> hecho del mundo,
-          uno solo. Y, sin embargo, si nos asomamos a los servidores del negocio, descubriremos
-          que sus distintos sistemas anotan ese mismo instante en cuatro lenguajes radicalmente
-          distintos.</p>
+          una tienda de ropa. A las 16:32, en la tienda del centro, el vendedor 17 le vende una
+          camiseta a un cliente. La llamaremos <code>venta_001</code>. Es <em>un</em> hecho del
+          mundo, uno solo. Y, sin embargo, si nos asomamos a los servidores del negocio,
+          descubriremos que sus distintos sistemas anotan ese mismo instante en cuatro lenguajes
+          radicalmente distintos.</p>
 
         <p>Para el <strong>punto de venta</strong> —la caja— lo que importa es la transacción y
           quiénes la protagonizan. El hecho se guarda como una fila en una base relacional:</p>
@@ -106,20 +106,20 @@
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">SQL · punto de venta</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="sql">INSERT INTO ventas
-  (id, cliente_id, producto_id, monto, fecha, barista_id)
-VALUES (311, 1042, 88, 3.40, '2026-05-14', 17);</code></pre>
+  (id, cliente_id, producto_id, monto, fecha, vendedor_id)
+VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
         </div>
 
-        <p>Para <strong>contabilidad</strong>, en cambio, la identidad de la barista o del
+        <p>Para <strong>contabilidad</strong>, en cambio, la identidad del vendedor o del
           cliente es irrelevante. Su única obsesión es que las cuentas cuadren por partida
           doble. El mismo evento se descompone en un asiento:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">asiento · contabilidad</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="text">asiento: 2026-05-14
-  debe:  caja                        3.40
-  haber: ventas_brutas              2.88
-  haber: impuesto_al_consumo        0.52</code></pre>
+  debe:  cuentas_por_cobrar        49.90
+  haber: ventas_brutas            42.29
+  haber: impuesto_al_consumo       7.61</code></pre>
         </div>
 
         <p>El equipo de <strong>analítica de producto</strong> ve otra cosa todavía. Le importa
@@ -132,15 +132,14 @@ VALUES (311, 1042, 88, 3.40, '2026-05-14', 17);</code></pre>
   "evento": "compra_completada",
   "id_usuario": "u_1042",
   "sku": "sku-88",
-  "ingreso": 3.40,
-  "canal": "mostrador",
+  "ingreso": 49.90,
+  "canal": "tienda_fisica",
   "id_sesion": "s_abcdef"
 }</code></pre>
         </div>
 
-        <p>Y para <strong>inventario</strong>, por fin, solo ocurrió una cosa: una dosis de café
-          en grano y un vaso salieron del almacén. El evento se reduce a un movimiento de
-          existencias:</p>
+        <p>Y para <strong>inventario</strong>, por fin, solo ocurrió una cosa: una camiseta
+          salió del almacén. El evento se reduce a un movimiento de existencias:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">JSON · inventario</span><button class="copiar">⧉ copiar</button></div>
@@ -148,8 +147,8 @@ VALUES (311, 1042, 88, 3.40, '2026-05-14', 17);</code></pre>
   "movimiento": "salida",
   "producto": 88,
   "cantidad": 1,
-  "almacen": "barra_central",
-  "ref": "vta-311"
+  "almacen": "tienda_central",
+  "ref": "vta-1"
 }</code></pre>
         </div>
 
@@ -157,7 +156,7 @@ VALUES (311, 1042, 88, 3.40, '2026-05-14', 17);</code></pre>
           y coherente para quien lo diseñó. La fractura aparece cuando la dirección pide una
           visión global. Si le entregas estas cuatro piezas a una computadora, no tiene ninguna
           forma <em>obvia</em> de saber que las cuatro hablan del mismo suceso. Contabilidad no
-          sabe quién sirvió el café; analítica no sabe de qué almacén salió; la caja no sabe
+          sabe quién vendió la camiseta; analítica no sabe de qué almacén salió; la caja no sabe
           separar el impuesto. Cada software capturó solo la <em>sombra</em> del evento que le
           interesaba y la archivó en su dialecto privado.</p>
 
@@ -168,8 +167,8 @@ VALUES (311, 1042, 88, 3.40, '2026-05-14', 17);</code></pre>
                  aria-label="Un único hecho del mundo proyecta cuatro sombras parciales, una por sistema, cada una con su propio vocabulario incompatible">
               <!-- el hecho central -->
               <circle cx="320" cy="58" r="30" fill="none" stroke="var(--eje-o)" stroke-width="2.4"/>
-              <text x="320" y="55" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">espresso</text>
-              <text x="320" y="70" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">_311</text>
+              <text x="320" y="55" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">venta</text>
+              <text x="320" y="70" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">_001</text>
               <text x="320" y="20" text-anchor="middle" font-size="12" fill="var(--tinta-suave)" font-weight="600">UN hecho del mundo</text>
 
               <!-- rayos hacia cada sistema -->
@@ -182,22 +181,22 @@ VALUES (311, 1042, 88, 3.40, '2026-05-14', 17);</code></pre>
               <g font-family="var(--mono)">
                 <rect x="40" y="174" width="150" height="116" rx="9" fill="var(--eje-q-suave)" stroke="var(--eje-q)" stroke-width="1.4"/>
                 <text x="115" y="194" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-q)" font-family="var(--sans)">PUNTO DE VENTA</text>
-                <text x="56" y="216" font-size="11" fill="var(--tinta)">barista_id 17</text>
+                <text x="56" y="216" font-size="11" fill="var(--tinta)">vendedor_id 17</text>
                 <text x="56" y="236" font-size="11" fill="var(--tinta)">cliente_id 1042</text>
-                <text x="56" y="256" font-size="11" fill="var(--tinta)">monto 3.40</text>
+                <text x="56" y="256" font-size="11" fill="var(--tinta)">monto 49.90</text>
                 <text x="56" y="278" font-size="10" fill="var(--tinta-tenue)" font-family="var(--sans)">¿quién? ¿cuánto?</text>
 
                 <rect x="200" y="174" width="140" height="116" rx="9" fill="var(--eje-n-suave)" stroke="var(--eje-n)" stroke-width="1.4"/>
                 <text x="270" y="194" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--acento-2-hov)" font-family="var(--sans)">CONTABILIDAD</text>
-                <text x="214" y="216" font-size="11" fill="var(--tinta)">caja 3.40</text>
-                <text x="214" y="236" font-size="11" fill="var(--tinta)">ventas 2.88</text>
-                <text x="214" y="256" font-size="11" fill="var(--tinta)">iva 0.52</text>
+                <text x="214" y="216" font-size="11" fill="var(--tinta)">cobrar 49.90</text>
+                <text x="214" y="236" font-size="11" fill="var(--tinta)">ventas 42.29</text>
+                <text x="214" y="256" font-size="11" fill="var(--tinta)">iva 7.61</text>
                 <text x="214" y="278" font-size="10" fill="var(--tinta-tenue)" font-family="var(--sans)">¿cuánto? ¿cuándo?</text>
 
                 <rect x="350" y="174" width="140" height="116" rx="9" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="1.4"/>
                 <text x="420" y="194" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-k)" font-family="var(--sans)">ANALÍTICA</text>
                 <text x="364" y="216" font-size="11" fill="var(--tinta)">evento compra</text>
-                <text x="364" y="236" font-size="11" fill="var(--tinta)">canal mostrador</text>
+                <text x="364" y="236" font-size="11" fill="var(--tinta)">canal tienda</text>
                 <text x="364" y="256" font-size="11" fill="var(--tinta)">u_1042</text>
                 <text x="364" y="278" font-size="10" fill="var(--tinta-tenue)" font-family="var(--sans)">¿qué? ¿dónde?</text>
 
@@ -205,14 +204,14 @@ VALUES (311, 1042, 88, 3.40, '2026-05-14', 17);</code></pre>
                 <text x="570" y="194" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-l)" font-family="var(--sans)">INVENTARIO</text>
                 <text x="514" y="216" font-size="11" fill="var(--tinta)">salida</text>
                 <text x="514" y="236" font-size="11" fill="var(--tinta)">producto 88</text>
-                <text x="514" y="256" font-size="11" fill="var(--tinta)">barra_central</text>
+                <text x="514" y="256" font-size="11" fill="var(--tinta)">tienda_central</text>
                 <text x="514" y="278" font-size="10" fill="var(--tinta-tenue)" font-family="var(--sans)">¿qué? ¿dónde?</text>
               </g>
             </svg>
           </div>
-          <figcaption><span class="fnum">Figura 1.1.</span> Un único hecho —el espresso que Lucía
-            sirvió a las 08:14— proyecta cuatro <em>sombras</em> parciales. Cada sistema captura
-            la cara que le importa (<code>barista_id</code>, <code>caja</code>,
+          <figcaption><span class="fnum">Figura 1.1.</span> Un único hecho —la camiseta que el
+            vendedor 17 vendió a las 16:32— proyecta cuatro <em>sombras</em> parciales. Cada sistema
+            captura la cara que le importa (<code>vendedor_id</code>, <code>cobrar</code>,
             <code>evento</code>, <code>movimiento</code>) y la escribe en su dialecto. Ninguna
             sombra sabe de las otras, aunque debajo todas respondan a las mismas preguntas.</figcaption>
         </figure>
@@ -333,22 +332,22 @@ VALUES (311, 1042, 88, 3.40, '2026-05-14', 17);</code></pre>
 
         <h2>La apuesta de este libro</h2>
 
-        <p>Volvamos al espresso una última vez. Si detuviéramos a cualquier persona en la calle
+        <p>Volvamos a la venta una última vez. Si detuviéramos a cualquier persona en la calle
           —sin nociones de bases de datos ni de código— y le pidiéramos describir lo que pasó en
-          esa barra, su respuesta natural sería algo muy parecido a esto:</p>
+          esa tienda, su respuesta natural sería algo muy parecido a esto:</p>
 
         <blockquote>
-          <p>«<em>Lucía</em> (<strong>quién</strong>) <em>sirvió</em> (<strong>qué</strong>)
-            <em>un espresso</em> (<strong>qué</strong>) <em>en la barra del centro</em>
-            (<strong>dónde</strong>) <em>esta mañana</em> (<strong>cuándo</strong>) <em>de 36
-            mililitros</em> (<strong>cuánto</strong>).»</p>
+          <p>«<em>El vendedor</em> (<strong>quién</strong>) <em>vendió</em> (<strong>qué</strong>)
+            <em>una camiseta</em> (<strong>qué</strong>) <em>en la tienda del centro</em>
+            (<strong>dónde</strong>) <em>esta tarde</em> (<strong>cuándo</strong>) <em>por casi
+            cincuenta dólares</em> (<strong>cuánto</strong>).»</p>
         </blockquote>
 
         <p>Sin el menor esfuerzo, cualquier ser humano produce una descripción
           <strong>estructurada, completa y combinable</strong>. La mente no percibe el mundo como
           un bloque de texto ni como una hoja de cálculo: descompone cualquier evento con un
           repertorio brevísimo de preguntas fundamentales. Y aquí está el giro: esas preguntas
-          son exactamente las coordenadas que las cuatro sombras del espresso estaban capturando
+          son exactamente las coordenadas que las cuatro sombras de la venta estaban capturando
           por separado, sin saberlo.</p>
 
         <!-- FIGURA SVG: las cuatro sombras convergen en las preguntas -->
@@ -396,39 +395,39 @@ VALUES (311, 1042, 88, 3.40, '2026-05-14', 17);</code></pre>
                 <rect x="500" y="55" width="30" height="30" rx="6" fill="var(--eje-q)"/>
                 <text x="515" y="75" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">Q</text>
                 <text x="538" y="68" font-size="12.5" font-weight="600" fill="var(--tinta)">quién</text>
-                <text x="538" y="82" font-size="10.5" fill="var(--tinta-tenue)">la barista Lucía</text>
+                <text x="538" y="82" font-size="10.5" fill="var(--tinta-tenue)">el vendedor 17</text>
 
                 <rect x="500" y="101" width="30" height="30" rx="6" fill="var(--eje-o)"/>
                 <text x="515" y="121" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">O</text>
                 <text x="538" y="114" font-size="12.5" font-weight="600" fill="var(--tinta)">qué</text>
-                <text x="538" y="128" font-size="10.5" fill="var(--tinta-tenue)">el espresso servido</text>
+                <text x="538" y="128" font-size="10.5" fill="var(--tinta-tenue)">la camiseta vendida</text>
 
                 <rect x="500" y="147" width="30" height="30" rx="6" fill="var(--eje-l)"/>
                 <text x="515" y="167" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">L</text>
                 <text x="538" y="160" font-size="12.5" font-weight="600" fill="var(--tinta)">dónde</text>
-                <text x="538" y="174" font-size="10.5" fill="var(--tinta-tenue)">la barra central</text>
+                <text x="538" y="174" font-size="10.5" fill="var(--tinta-tenue)">la tienda del centro</text>
 
                 <rect x="500" y="193" width="30" height="30" rx="6" fill="var(--eje-t)"/>
                 <text x="515" y="213" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">T</text>
                 <text x="538" y="206" font-size="12.5" font-weight="600" fill="var(--tinta)">cuándo</text>
-                <text x="538" y="220" font-size="10.5" fill="var(--tinta-tenue)">a las 08:14</text>
+                <text x="538" y="220" font-size="10.5" fill="var(--tinta-tenue)">a las 16:32</text>
 
                 <rect x="500" y="239" width="30" height="30" rx="6" fill="var(--eje-n)"/>
                 <text x="515" y="259" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">N</text>
                 <text x="538" y="252" font-size="12.5" font-weight="600" fill="var(--tinta)">cuánto</text>
-                <text x="538" y="266" font-size="10.5" fill="var(--tinta-tenue)">36 ml</text>
+                <text x="538" y="266" font-size="10.5" fill="var(--tinta-tenue)">49,90 USD</text>
 
                 <rect x="500" y="285" width="30" height="30" rx="6" fill="var(--eje-k)"/>
                 <text x="515" y="305" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">K</text>
                 <text x="538" y="298" font-size="12.5" font-weight="600" fill="var(--tinta)">cuál</text>
-                <text x="538" y="312" font-size="10.5" fill="var(--tinta-tenue)">clase: espresso</text>
+                <text x="538" y="312" font-size="10.5" fill="var(--tinta-tenue)">clase: camiseta</text>
               </g>
 
               <text x="89" y="320" text-anchor="middle" font-size="10.5" fill="var(--tinta-tenue)" font-family="var(--sans)">cuatro dialectos</text>
               <text x="565" y="340" text-anchor="middle" font-size="10.5" fill="var(--tinta-tenue)" font-family="var(--sans)">un solo armazón</text>
             </svg>
           </div>
-          <figcaption><span class="fnum">Figura 1.3.</span> Los cuatro dialectos del espresso no
+          <figcaption><span class="fnum">Figura 1.3.</span> Los cuatro dialectos de la venta no
             son cuatro realidades: son cuatro recortes de la misma. Debajo de todos late un único
             armazón de preguntas. Si los sistemas declararan <em>qué pregunta responde cada
             campo</em>, convergerían sin necesidad de conocerse entre sí.</figcaption>
@@ -477,17 +476,17 @@ VALUES (311, 1042, 88, 3.40, '2026-05-14', 17);</code></pre>
         </div>
 
         <p>Anticipando un poco la maquinaria que viene, así se ve un fragmento del hecho
-          <code>espresso_311</code> expresado ya en el formato del modelo —cada línea es una
+          <code>venta_001</code> expresado ya en el formato del modelo —cada línea es una
           tripleta que conecta el hecho con uno de sus valores, y la firma final declara a qué
           par de ejes pertenece:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas · WQuestions</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="triple">(espresso_311, agente,     barista_lucia)  ∈ M(O, Q)
-(espresso_311, lugar,      barra_central)  ∈ M(O, L)
-(espresso_311, instante,   08:14)          ∈ M(O, T)
-(espresso_311, rendimiento, 36)            ∈ M(O, N)
-(espresso_311, clase,      espresso)       ∈ M(O, K)</code></pre>
+          <pre><code data-lang="triple">(venta_001, agente,   vendedor_17)   ∈ M(O, Q)
+(venta_001, lugar,    tienda_centro) ∈ M(O, L)
+(venta_001, instante, 16:32)         ∈ M(O, T)
+(venta_001, monto,    49.90)         ∈ M(O, N)
+(venta_001, clase,    camiseta)      ∈ M(O, K)</code></pre>
         </div>
 
         <p>No te detengas todavía en la notación; el <a href="07-hecho-atomico.html">capítulo

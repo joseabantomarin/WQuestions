@@ -41,13 +41,13 @@
 
       <div class="contenido">
 
-        <p class="entrada">El barista deja la taza sobre la barra y, sin pensarlo, recita una cifra:
-          «dieciocho». Para él la frase está completa. Sabe que son dieciocho <em>gramos</em> de café
-          molido, porque lleva diez años pesando dosis y la balanza de la barra solo habla en gramos.
-          Pero si esos dieciocho viajaran por un cable hacia otro sistema —una app de inventario, un
-          panel de calidad, un agente que recomienda recetas— llegarían como un número desnudo. El
-          sistema receptor podría leerlos como mililitros, como segundos de extracción, como onzas. El
-          dato del barista es perfecto en su cabeza y peligroso en cuanto sale de ella. Ese desfase —entre
+        <p class="entrada">El vendedor entrega la camiseta sobre el mostrador y, sin pensarlo, recita una cifra:
+          «cuarenta y nueve noventa». Para él la frase está completa. Sabe que son cuarenta y nueve con
+          noventa <em>dólares</em>, porque lleva diez años cobrando en la tienda y la caja solo habla en
+          dólares. Pero si esos cuarenta y nueve noventa viajaran por un cable hacia otro sistema —una app
+          de inventario, un panel de ventas, un agente que recomienda promociones— llegarían como un número
+          desnudo. El sistema receptor podría leerlos como soles, como euros, como unidades vendidas. El
+          dato del vendedor es perfecto en su cabeza y peligroso en cuanto sale de ella. Ese desfase —entre
           un número que «todos saben qué significa» y un número que de verdad lo dice— es el tema de este
           capítulo.</p>
 
@@ -61,26 +61,26 @@
           Falta el eje que aloja las magnitudes.
         </aside>
 
-        <p>El café que prepara —llamémoslo <code>espresso_311</code>— es, por sí mismo, un manojo de
-          números: 18&nbsp;gramos de dosis, 36&nbsp;mililitros de bebida en taza, 93&nbsp;°C de
-          temperatura del agua, 9&nbsp;bar de presión y 27&nbsp;segundos de extracción. Cinco lecturas,
+        <p>La venta que registra —llamémosla <code>venta_001</code>— es, por sí misma, un manojo de
+          números: 1&nbsp;camiseta vendida, 49,90&nbsp;dólares de monto, 18&nbsp;% de impuesto,
+          10&nbsp;% de descuento y 180&nbsp;gramos de peso de la prenda. Cinco lecturas,
           cinco unidades distintas. Ninguna de ellas es una «cosa» con identidad propia, como lo es la
-          taza o el propio barista. Son respuestas a una misma pregunta repetida cinco veces:
+          camiseta o el propio vendedor. Son respuestas a una misma pregunta repetida cinco veces:
           <strong>¿cuánto?</strong> Ese es el cuarto eje de valor, el eje <span class="eje-rotulo"><span class="eje eje--n">N</span> cuánto</span>,
           y este capítulo lo desarma pieza por pieza.</p>
 
         <h2>Por qué los números no caben en el eje de las cosas</h2>
 
         <p>La objeción es razonable y conviene enfrentarla de inmediato: ¿para qué un eje exclusivo
-          para los números? ¿No bastaría con guardarlos dentro del eje de los objetos, junto a las tazas,
-          las máquinas y los granos de café? La respuesta es que no, y la razón se vuelve evidente apenas
-          intentas forzarlo.</p>
+          para los números? ¿No bastaría con guardarlos dentro del eje de los objetos, junto a las
+          camisetas, los estantes y las cajas registradoras? La respuesta es que no, y la razón se vuelve
+          evidente apenas intentas forzarlo.</p>
 
-        <p>Una taza es un individuo físico: tiene identidad, persiste en el tiempo, puede aparecer en
-          varios eventos —se llena, se sirve, se lava, se rompe— y sigue siendo <em>esa</em> taza. El
-          número 9, en cambio, no es una cosa. No existe un «9» guardado en algún cajón del universo al
-          que podamos apuntar. Lo que existe son innumerables hechos del mundo que <em>usan</em> el valor
-          9 para describir algo: los 9&nbsp;bar de presión de un espresso, los 9&nbsp;minutos de una
+        <p>Una camiseta es un individuo físico: tiene identidad, persiste en el tiempo, puede aparecer en
+          varios eventos —se fabrica, se exhibe, se vende, se devuelve— y sigue siendo <em>esa</em>
+          camiseta. El número 9, en cambio, no es una cosa. No existe un «9» guardado en algún cajón del
+          universo al que podamos apuntar. Lo que existe son innumerables hechos del mundo que <em>usan</em>
+          el valor 9 para describir algo: los 9&nbsp;dólares de un descuento, los 9&nbsp;minutos de una
           espera, los 9&nbsp;intentos de una herramienta. Cada aparición del 9 es del todo independiente
           de las demás.</p>
 
@@ -118,13 +118,13 @@
           <div class="tarjeta">
             <h4><span class="eje eje--n">N</span>&nbsp; Magnitud</h4>
             <p style="margin:0;font-size:.95rem">Una medida sobre una escala continua, que <em>siempre</em>
-              arrastra una unidad: 93&nbsp;°C, 9&nbsp;bar, 36&nbsp;ml, 27&nbsp;s. Preguntar «¿cuánto de
-              caliente?» exige nombrar la escala.</p>
+              arrastra una unidad: 49,90&nbsp;USD, 18&nbsp;%, 10&nbsp;%, 180&nbsp;g. Preguntar «¿cuánto
+              cuesta?» exige nombrar la escala.</p>
           </div>
           <div class="tarjeta">
             <h4><span class="eje eje--n">N</span>&nbsp; Cardinalidad</h4>
             <p style="margin:0;font-size:.95rem">Un conteo de cosas discretas, sin dimensión física:
-              4&nbsp;tazas, 3&nbsp;intentos de una herramienta, 1&nbsp;agente. La «unidad» aquí es la
+              4&nbsp;camisetas, 3&nbsp;intentos de una herramienta, 1&nbsp;agente. La «unidad» aquí es la
               cosa contada, y suele bastar con saber qué se cuenta.</p>
           </div>
         </div>
@@ -157,7 +157,7 @@
           de dígitos.<cite>La regla del eje N</cite></p>
 
         <p>De ahí la consecuencia arquitectónica que no admite excepciones: <strong>un valor en el eje
-          N nunca debe viajar solo</strong>. Tiene que ir siempre escoltado por su unidad. Y aquí los
+          N nunca debe viajar solo</strong>. Tiene que ir siempre acompañado por su unidad. Y aquí los
           ejes empiezan a trabajar en equipo, porque una unidad —<em>gramo</em>, <em>segundo</em>,
           <em>bar</em>, <em>token</em>— no es un objeto físico ni un valor numérico: es una
           <strong>categoría abstracta</strong>. Y las categorías, como vimos en el capítulo anterior,
@@ -166,17 +166,17 @@
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="triple">(espresso_311, presion,         9)        ∈ M(O, N)
-(espresso_311, unidad_presion,  bar)      ∈ M(O, K)
+          <pre><code data-lang="triple">(venta_001, monto,         49.90)     ∈ M(O, N)
+(venta_001, unidad_monto,  Currency:USD) ∈ M(O, K)
 
 (sesion_ia_5521, latencia_ms,   2100)     ∈ M(O, N)
 (sesion_ia_5521, unidad_lat,    milisegundo) ∈ M(O, K)</code></pre>
         </div>
 
-        <p>A primera vista parece burocracia. ¿No es obvio que la presión de un espresso se mide en
-          bar? Hoy sí. Pero deja de serlo el día en que un nuevo proveedor de máquinas reporta la presión
-          en <em>kilopascales</em>, y tu sistema —que asumía bar en silencio— suma 9&nbsp;bar con
-          900&nbsp;kPa como si fueran la misma escala. La unidad explícita es el seguro contra ese día.</p>
+        <p>A primera vista parece burocracia. ¿No es obvio que el monto de una venta se cobra en
+          dólares? Hoy sí. Pero deja de serlo el día en que una nueva sucursal reporta los montos
+          en <em>soles</em>, y tu sistema —que asumía dólares en silencio— suma 49,90&nbsp;USD con
+          49,90&nbsp;PEN como si fueran la misma escala. La unidad explícita es el seguro contra ese día.</p>
 
         <h2>Cuándo conviene reificar una medición</h2>
 
@@ -194,10 +194,10 @@
           propiedades y relaciones.
         </aside>
 
-        <p>Compara las dos formas de registrar la misma extracción de café. La versión <em>simple</em>
+        <p>Compara las dos formas de registrar el mismo monto de una venta. La versión <em>simple</em>
           cuelga el valor y la unidad directamente del evento; la versión <em>reificada</em> crea una
-          entidad <code>medicion_temp_311</code> que reúne cantidad, unidad, instrumento y momento, y la
-          enlaza al evento del espresso. La figura las pone lado a lado.</p>
+          entidad <code>medicion_monto_001</code> que reúne cantidad, unidad, instrumento y momento, y la
+          enlaza al evento de la venta. La figura las pone lado a lado.</p>
 
         <!-- FIGURA SVG: medición simple vs. reificada -->
         <figure class="figura figura--ancha revelar">
@@ -211,21 +211,21 @@
               <!-- evento O -->
               <rect x="20" y="62" width="160" height="44" rx="9" fill="var(--eje-o)" opacity=".14"/>
               <rect x="20" y="62" width="160" height="44" rx="9" fill="none" stroke="var(--eje-o)" stroke-width="1.6"/>
-              <text x="100" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="var(--eje-o)">espresso_311</text>
+              <text x="100" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="var(--eje-o)">venta_001</text>
               <text x="100" y="98" text-anchor="middle" font-size="10" fill="var(--tinta-tenue)" font-family="var(--mono)">O · evento</text>
 
               <!-- valor N -->
               <line x1="100" y1="106" x2="100" y2="150" stroke="var(--eje-n)" stroke-width="1.8"/>
-              <text x="112" y="132" font-size="10" fill="var(--eje-n)" font-family="var(--mono)">temperatura</text>
+              <text x="112" y="132" font-size="10" fill="var(--eje-n)" font-family="var(--mono)">monto</text>
               <rect x="44" y="150" width="112" height="36" rx="8" fill="var(--eje-n)"/>
-              <text x="100" y="173" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">93</text>
+              <text x="100" y="173" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">49.90</text>
 
               <!-- unidad K -->
               <line x1="100" y1="186" x2="100" y2="226" stroke="var(--eje-k)" stroke-width="1.8" stroke-dasharray="4 3"/>
               <text x="112" y="210" font-size="10" fill="var(--eje-k)" font-family="var(--mono)">unidad</text>
               <rect x="52" y="226" width="96" height="34" rx="17" fill="var(--eje-k)" opacity=".16"/>
               <rect x="52" y="226" width="96" height="34" rx="17" fill="none" stroke="var(--eje-k)" stroke-width="1.6"/>
-              <text x="100" y="248" text-anchor="middle" font-size="12" font-weight="700" fill="var(--eje-k)">°C</text>
+              <text x="100" y="248" text-anchor="middle" font-size="12" font-weight="700" fill="var(--eje-k)">USD</text>
               <text x="100" y="300" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">basta para un dato fijo</text>
 
               <!-- separador -->
@@ -238,7 +238,7 @@
               <!-- evento O -->
               <rect x="360" y="62" width="150" height="42" rx="9" fill="var(--eje-o)" opacity=".14"/>
               <rect x="360" y="62" width="150" height="42" rx="9" fill="none" stroke="var(--eje-o)" stroke-width="1.6"/>
-              <text x="435" y="80" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-o)">espresso_311</text>
+              <text x="435" y="80" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-o)">venta_001</text>
               <text x="435" y="96" text-anchor="middle" font-size="9.5" fill="var(--tinta-tenue)" font-family="var(--mono)">O · evento</text>
 
               <!-- enlace a la medicion -->
@@ -248,21 +248,21 @@
               <!-- entidad medicion O -->
               <rect x="372" y="132" width="276" height="150" rx="12" fill="var(--eje-o)" opacity=".07"/>
               <rect x="372" y="132" width="276" height="150" rx="12" fill="none" stroke="var(--eje-o)" stroke-width="1.8"/>
-              <text x="510" y="152" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-o)">medicion_temp_311</text>
+              <text x="510" y="152" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-o)">medicion_monto_001</text>
               <text x="510" y="167" text-anchor="middle" font-size="9.5" fill="var(--tinta-tenue)" font-family="var(--mono)">O · medición reificada</text>
 
               <!-- cantidad N -->
               <circle cx="404" cy="196" r="5" fill="var(--eje-n)"/>
-              <text x="416" y="200" font-size="10.5" fill="var(--tinta)"><tspan font-family="var(--mono)" fill="var(--eje-n)">cantidad</tspan> = 93</text>
+              <text x="416" y="200" font-size="10.5" fill="var(--tinta)"><tspan font-family="var(--mono)" fill="var(--eje-n)">cantidad</tspan> = 49.90</text>
               <!-- unidad K -->
               <circle cx="404" cy="221" r="5" fill="var(--eje-k)"/>
-              <text x="416" y="225" font-size="10.5" fill="var(--tinta)"><tspan font-family="var(--mono)" fill="var(--eje-k)">unidad</tspan> = qudt:DEG_C</text>
+              <text x="416" y="225" font-size="10.5" fill="var(--tinta)"><tspan font-family="var(--mono)" fill="var(--eje-k)">unidad</tspan> = qudt:USD</text>
               <!-- instrumento O -->
               <circle cx="404" cy="246" r="5" fill="var(--eje-o)"/>
-              <text x="416" y="250" font-size="10.5" fill="var(--tinta)"><tspan font-family="var(--mono)" fill="var(--eje-o)">instrumento</tspan> = sonda_pid</text>
+              <text x="416" y="250" font-size="10.5" fill="var(--tinta)"><tspan font-family="var(--mono)" fill="var(--eje-o)">instrumento</tspan> = caja_pos</text>
               <!-- momento T -->
               <circle cx="404" cy="271" r="5" fill="var(--eje-t)"/>
-              <text x="416" y="275" font-size="10.5" fill="var(--tinta)"><tspan font-family="var(--mono)" fill="var(--eje-t)">momento</tspan> = 08:14:07</text>
+              <text x="416" y="275" font-size="10.5" fill="var(--tinta)"><tspan font-family="var(--mono)" fill="var(--eje-t)">momento</tspan> = 16:32</text>
 
               <text x="510" y="308" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)">trazable, convertible, auditable</text>
             </svg>
@@ -275,9 +275,9 @@
             propios: el dato pasa de número suelto a hecho trazable.</figcaption>
         </figure>
 
-        <p>La versión reificada es lo que separa a un sistema que escupe «93» de uno que afirma, con
-          todas las letras: <em>«93&nbsp;°C, medidos por la sonda PID sobre la extracción
-          <code>espresso_311</code>, a las 08:14:07»</em>. El primero es un número flotando en el vacío;
+        <p>La versión reificada es lo que separa a un sistema que escupe «49.90» de uno que afirma, con
+          todas las letras: <em>«49,90&nbsp;USD, cobrados por la caja del punto de venta sobre la venta
+          <code>venta_001</code>, a las 16:32»</em>. El primero es un número flotando en el vacío;
           el segundo es un hecho que puede auditarse, convertirse y agregarse sin riesgo.</p>
 
         <h2>El catálogo oficial: QUDT</h2>
@@ -292,25 +292,25 @@
             (<em>Quantities, Units, Dimensions and Types</em>) <code>[18]</code> cataloga miles de
             unidades reconocidas: sus dimensiones físicas, sus factores de conversión exactos y sus
             identificadores oficiales (URIs). Para milisegundos usas <code>qudt:MilliSEC</code>; para un
-            archivo de computadora, <code>qudt:Byte</code>; para dinero, <code>qudt:USD</code>; para los
-            grados Celsius de nuestro espresso, <code>qudt:DEG_C</code>. Cuando WQuestions adopta una
+            archivo de computadora, <code>qudt:Byte</code>; para el peso de la prenda, <code>qudt:GM</code>;
+            para los dólares de nuestra venta, <code>qudt:USD</code>. Cuando WQuestions adopta una
             unidad, no la inventa: se enlaza a este catálogo.</p>
         </div>
 
         <p>El enganche es directo: la categoría que vive en el eje <span class="eje-rotulo"><span class="eje eje--k">K</span></span>
-          —digamos <code>K:bar</code>— declara su anclaje canónico mediante una propiedad que apunta al
+          —digamos <code>K:USD</code>— declara su anclaje canónico mediante una propiedad que apunta al
           recurso de QUDT. Así, dos sistemas que jamás se han visto pueden coincidir en que ambos hablan
-          de <em>bar</em> porque ambos apuntan al mismo URI.</p>
+          de <em>dólares</em> porque ambos apuntan al mismo URI.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">json</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="json">{
-  "id": "K:bar",
+  "id": "K:USD",
   "eje": "K",
-  "etiqueta": "bar (presión)",
-  "ancla_qudt": "http://qudt.org/vocab/unit/BAR",
-  "dimension": "presion",
-  "convertir_a_si": { "unidad": "qudt:PA", "factor": 100000 }
+  "etiqueta": "dólar estadounidense (moneda)",
+  "ancla_qudt": "http://qudt.org/vocab/unit/USD",
+  "dimension": "moneda",
+  "convertir_a": { "unidad": "qudt:PEN", "factor": 3.75 }
 }</code></pre>
         </div>
 
@@ -402,7 +402,7 @@ K:USD_por_millon_tokens   — unidad compuesta: con ella facturan los proveedore
         </div>
 
         <p>El motor que intente sumar 100&nbsp;USD con 100&nbsp;JPY debe detenerse en seco, igual que se
-          negaría a sumar tazas con grados Celsius. La cantidad deja de ser un escalar y pasa a ser un
+          negaría a sumar camisetas con porcentajes de descuento. La cantidad deja de ser un escalar y pasa a ser un
           <strong>hecho completo y autoexplicativo</strong>: el par valor&nbsp;+&nbsp;unidad, con la
           unidad anclada en K mediante su URI canónica.</p>
 
@@ -451,7 +451,7 @@ K:USD_por_millon_tokens   — unidad compuesta: con ella facturan los proveedore
             métrica plana.</p>
         </div>
 
-        <h2>El espresso y el agente, eje a eje</h2>
+        <h2>La venta y el agente, eje a eje</h2>
 
         <p>Conviene ver el eje <span class="eje-rotulo"><span class="eje eje--n">N</span></span> en acción
           sobre nuestros dos casos vivos. Cada uno es, mirado de cerca, un pequeño enjambre de magnitudes
@@ -459,14 +459,13 @@ K:USD_por_millon_tokens   — unidad compuesta: con ella facturan los proveedore
 
         <div class="rejilla-2 revelar">
           <div class="tarjeta">
-            <p class="emoji">☕</p>
-            <h4>Una extracción de espresso</h4>
-            <p style="margin:0;font-size:.95rem">Dosis de 18&nbsp;g, agua a 93&nbsp;°C, presión de
-              9&nbsp;bar, extracción de 27&nbsp;s y un rendimiento de 36&nbsp;ml en taza. Cinco magnitudes
-              con cinco unidades físicas, más un conteo solitario —1&nbsp;taza— que es pura cardinalidad
-              y no necesita escala. Si llamáramos al café «intenso», ojo: eso no entra en N, porque la
-              intensidad percibida es una categoría del eje <span class="eje-rotulo"><span class="eje eje--k">K</span></span>,
-              no un número.</p>
+            <p class="emoji">👕</p>
+            <h4>La venta de una camiseta</h4>
+            <p style="margin:0;font-size:.95rem">Monto de 49,90&nbsp;USD, descuento del 10&nbsp;%, impuesto
+              del 18&nbsp;%, peso de 180&nbsp;g y una talla M. Cuatro magnitudes con cuatro unidades, más un
+              conteo solitario —1&nbsp;camiseta— que es pura cardinalidad y no necesita escala. Si llamáramos
+              a la prenda «talla M», ojo: eso no entra en N, porque la talla es una categoría del eje
+              <span class="eje-rotulo"><span class="eje eje--k">K</span></span>, no un número.</p>
           </div>
           <div class="tarjeta">
             <p class="emoji">🤖</p>
@@ -481,7 +480,7 @@ K:USD_por_millon_tokens   — unidad compuesta: con ella facturan los proveedore
 
         <p>La verdadera prueba llega cuando alguien hace una pregunta que cruza ambos mundos. Por
           ejemplo: <em>«¿cuántos dólares y cuántos tokens cuesta pedirle al agente que redacte la ficha
-          técnica de un menú de cuarenta cafés?»</em>. Es una pregunta perfectamente razonable para un
+          técnica de un catálogo de cuarenta camisetas?»</em>. Es una pregunta perfectamente razonable para un
           negocio, y mezcla unidades de páginas, tokens, dólares y tiempo. Responderla exige que el
           sistema sepa exactamente qué unidad acompaña a cada número y cómo se convierten entre sí. Sin
           esa capa de inteligencia estructural, cualquier respuesta es una adivinanza disfrazada de

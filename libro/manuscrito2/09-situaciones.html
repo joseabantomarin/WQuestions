@@ -75,14 +75,14 @@
 
         <h2>No todo merece ser un sustantivo</h2>
 
-        <p>La tentación, una vez que descubres la reificación, es aplicarla a todo. ¿Si una jugadora
-          es alta, debo crear «la situación de su altura»? La respuesta es un no rotundo. Reificar
+        <p>La tentación, una vez que descubres la reificación, es aplicarla a todo. ¿Si un cliente
+          es alto, debo crear «la situación de su altura»? La respuesta es un no rotundo. Reificar
           cuesta: cada situación es un objeto nuevo en la base de datos, con su identificador único,
           que el sistema tendrá que buscar y mantener. Reificar por costumbre es inflar la base con
           abstracción vacía y volverla lenta.</p>
 
         <p>La estatura de una persona se queda perfectamente como un hecho atómico plano,
-          <code>(rivas, estatura_cm, 191)</code>: no tiene partes, no participa nadie más, nadie
+          <code>(cliente_1042, estatura_cm, 178)</code>: no tiene partes, no participa nadie más, nadie
           volverá a hablar de ese número, no caduca. Reificarla sería como guardar un termómetro
           dentro de una caja fuerte. La pregunta correcta, entonces, no es «¿puedo reificar esto?»,
           sino «¿hay alguna razón de peso para hacerlo?». El modelo reconoce exactamente cuatro
@@ -92,9 +92,9 @@
           <div class="tarjeta">
             <h4><span class="eje eje--o">1</span>&nbsp; Tiene atributos propios</h4>
             <p style="margin:0;font-size:.95rem">El hecho carga detalles que no caben en una sola
-              frase: un lugar, un instrumento, un modo, un actor secundario. Una canasta profesional
-              tiene minuto, distancia y un pase previo; esos datos no tienen de dónde colgar si la
-              canasta no es una entidad.</p>
+              frase: un lugar, un instrumento, un modo, un actor secundario. Un gol profesional
+              tiene minuto, pierna y un pase previo; esos datos no tienen de dónde colgar si el
+              gol no es una entidad.</p>
           </div>
           <div class="tarjeta">
             <h4><span class="eje eje--q">2</span>&nbsp; Participan más de dos actores</h4>
@@ -136,46 +136,46 @@
         <h2>Autopsia de una situación</h2>
 
         <p>¿Cómo se ve uno de estos nudos por dentro? Abramos uno. Tomemos un evento cotidiano pero
-          con suficiente sustancia: el espresso número 311, que la barista Lucía preparó a las 08:14
-          de una mañana de mayo. Cumple D4 de sobra —tiene varios participantes, carga media docena de
-          parámetros propios y la taza resultante volverá a aparecer cuando el cliente la valore—. Lo
-          primero es «hacer cosa» el evento, creándolo en el eje O:</p>
+          con suficiente sustancia: la venta número 1, en la que el vendedor 17 le vendió una camiseta
+          al cliente 1042 a las 16:32 de una tarde de mayo. Cumple D4 de sobra —reúne varios
+          participantes, carga media docena de datos propios y volverá a aparecer cuando el cliente
+          reclame o devuelva—. Lo primero es «hacer cosa» el evento, creándolo en el eje O:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="triple">(espresso_311) ∈ O          // el nudo: a partir de aquí, todo cuelga de él</code></pre>
+          <pre><code data-lang="triple">(venta_001) ∈ O          // el nudo: a partir de aquí, todo cuelga de él</code></pre>
         </div>
 
-        <p>Ese identificador, <code>espresso_311</code>, se vuelve el punto articulador. Todos los
-          detalles de la preparación se enganchan a él con hechos atómicos de tres partes, cada uno
+        <p>Ese identificador, <code>venta_001</code>, se vuelve el punto articulador. Todos los
+          detalles de la operación se enganchan a él con hechos atómicos de tres partes, cada uno
           aportando una coordenada de un eje distinto:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="triple">(espresso_311, instancia_de,   espresso)                  ∈ M(O, K)
-(espresso_311, agente,         barista_lucia)            ∈ M(O, Q)
-(espresso_311, grano,          cafe_arabica)             ∈ M(O, K)
-(espresso_311, momento,        2026-05-14T08:14:00-05:00) ∈ M(O, T)
-(espresso_311, lugar_de,       barra_central)            ∈ M(O, L)
-(espresso_311, dosis_g,        18)                       ∈ M(O, N)
-(espresso_311, presion_bar,    9)                        ∈ M(O, N)
-(espresso_311, rendimiento_ml, 36)                       ∈ M(O, N)
-(espresso_311, estatus_factual, real)                    ∈ M(O, K)</code></pre>
+          <pre><code data-lang="triple">(venta_001, instancia_de,    venta)                     ∈ M(O, K)
+(venta_001, agente,          vendedor_17)               ∈ M(O, Q)
+(venta_001, cliente,         cliente_1042)              ∈ M(O, Q)
+(venta_001, objeto,          camiseta_88)               ∈ M(O, O)
+(venta_001, momento,         2026-05-14T16:32:00-05:00) ∈ M(O, T)
+(venta_001, lugar_de,        tienda_centro)             ∈ M(O, L)
+(venta_001, monto,           49.90)                     ∈ M(O, N)
+(venta_001, impuesto_pct,    18)                        ∈ M(O, N)
+(venta_001, estatus_factual, real)                      ∈ M(O, K)</code></pre>
         </div>
 
-        <p>Nueve hechos atómicos dibujan el espresso completo: qué clase de café es, quién lo hizo,
-          con qué grano, cuándo, dónde, con qué parámetros y en qué estado. Y aquí llega la recompensa
-          de haberlo reificado. Como <code>espresso_311</code> ahora tiene identidad propia, otros
-          eventos posteriores pueden apuntar directamente a él:</p>
+        <p>Nueve hechos atómicos dibujan la venta completa: qué clase de operación es, quién la hizo,
+          a quién, qué objeto, cuándo, dónde, por cuánto y en qué estado. Y aquí llega la recompensa
+          de haberla reificado. Como <code>venta_001</code> ahora tiene identidad propia, otros
+          eventos posteriores pueden apuntar directamente a ella:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="triple">(valoracion_311,  sobre_situacion, espresso_311)   // el cliente lo puntúa
-(recarga_grano_9, parte_de,        espresso_311)   // el gramaje que consumió
-(reclamo_088,     rectifica,       espresso_311)   // "salió frío", se rehízo</code></pre>
+          <pre><code data-lang="triple">(valoracion_001, sobre_situacion, venta_001)   // el cliente la puntúa
+(pago_tarjeta_9, parte_de,        venta_001)   // cómo se pagó
+(devolucion_088, rectifica,       venta_001)   // "talla equivocada", se cambió</code></pre>
         </div>
 
-        <p>La valoración, la recarga del grano y el reclamo son, cada una, <strong>nuevas situaciones
+        <p>La valoración, el pago y la devolución son, cada una, <strong>nuevas situaciones
           reificadas</strong> que se conectan al nudo original. La red crece de forma orgánica, sin
           cambiar jamás su formato de tres columnas. Esto es lo que la siguiente figura hace visible:
           un evento en el centro y sus participantes irradiando hacia los ejes, cada cable con su
@@ -185,7 +185,7 @@
         <figure class="figura figura--ancha revelar">
           <div class="lienzo">
             <svg viewBox="0 0 660 400" class="svg-eje" role="img"
-                 aria-label="El espresso 311 reificado como evento central en el eje O, rodeado de participantes conectados por roles canónicos, cada uno coloreado según su eje">
+                 aria-label="La venta 001 reificada como evento central en el eje O, rodeada de participantes conectados por roles canónicos, cada uno coloreado según su eje">
               <!-- enlaces -->
               <g stroke-width="2" opacity=".55" fill="none">
                 <line x1="330" y1="200" x2="330" y2="48"  stroke="var(--eje-k)"/>
@@ -193,8 +193,8 @@
                 <line x1="330" y1="200" x2="606" y2="200" stroke="var(--eje-t)"/>
                 <line x1="330" y1="200" x2="516" y2="326" stroke="var(--eje-l)"/>
                 <line x1="330" y1="200" x2="144" y2="326" stroke="var(--eje-n)"/>
-                <line x1="330" y1="200" x2="54"  y2="200" stroke="var(--eje-n)"/>
-                <line x1="330" y1="200" x2="144" y2="74"  stroke="var(--eje-k)"/>
+                <line x1="330" y1="200" x2="54"  y2="200" stroke="var(--eje-o)"/>
+                <line x1="330" y1="200" x2="144" y2="74"  stroke="var(--eje-q)"/>
               </g>
               <!-- rótulos de rol sobre los enlaces -->
               <g font-size="11" font-family="var(--sans)" fill="var(--tinta-tenue)" text-anchor="middle">
@@ -202,51 +202,52 @@
                 <text x="436" y="122">agente</text>
                 <text x="482" y="194">momento</text>
                 <text x="436" y="276">lugar_de</text>
-                <text x="226" y="276">dosis_g</text>
-                <text x="174" y="194">presion_bar</text>
-                <text x="226" y="122">grano</text>
+                <text x="226" y="276">monto</text>
+                <text x="174" y="194">objeto</text>
+                <text x="226" y="122">cliente</text>
               </g>
               <!-- nodo central O -->
               <circle cx="330" cy="200" r="46" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="2.5"/>
-              <text x="330" y="196" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">espresso_311</text>
+              <text x="330" y="196" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">venta_001</text>
               <text x="330" y="212" text-anchor="middle" font-size="10" fill="var(--tinta-tenue)">evento · O</text>
               <!-- satélites -->
               <g font-family="var(--mono)" font-size="11.5" text-anchor="middle">
                 <!-- instancia_de K (arriba) -->
                 <rect x="276" y="18" width="108" height="34" rx="9" fill="var(--eje-k-suave)" stroke="var(--eje-k)"/>
-                <text x="330" y="39" fill="var(--tinta)">espresso</text>
+                <text x="330" y="39" fill="var(--tinta)">venta</text>
                 <!-- agente Q (arriba derecha) -->
                 <rect x="456" y="56" width="124" height="34" rx="9" fill="var(--eje-q-suave)" stroke="var(--eje-q)"/>
-                <text x="518" y="77" fill="var(--tinta)" font-size="10.5">barista_lucia</text>
+                <text x="518" y="77" fill="var(--tinta)" font-size="10.5">vendedor_17</text>
                 <!-- momento T (derecha) -->
                 <rect x="552" y="182" width="100" height="34" rx="9" fill="var(--eje-t-suave)" stroke="var(--eje-t)"/>
-                <text x="602" y="203" fill="var(--tinta)">08:14</text>
+                <text x="602" y="203" fill="var(--tinta)">16:32</text>
                 <!-- lugar_de L (abajo derecha) -->
                 <rect x="456" y="308" width="124" height="34" rx="9" fill="var(--eje-l-suave)" stroke="var(--eje-l)"/>
-                <text x="518" y="329" fill="var(--tinta)" font-size="10.5">barra_central</text>
-                <!-- dosis_g N (abajo izquierda) -->
+                <text x="518" y="329" fill="var(--tinta)" font-size="10.5">tienda_centro</text>
+                <!-- monto N (abajo izquierda) -->
                 <rect x="88" y="308" width="112" height="34" rx="9" fill="var(--eje-n-suave)" stroke="var(--eje-n)"/>
-                <text x="144" y="329" fill="var(--tinta)">18 g</text>
-                <!-- presion_bar N (izquierda) -->
-                <rect x="8" y="182" width="92" height="34" rx="9" fill="var(--eje-n-suave)" stroke="var(--eje-n)"/>
-                <text x="54" y="203" fill="var(--tinta)">9 bar</text>
-                <!-- grano K (arriba izquierda) -->
-                <rect x="80" y="56" width="128" height="34" rx="9" fill="var(--eje-k-suave)" stroke="var(--eje-k)"/>
-                <text x="144" y="77" fill="var(--tinta)" font-size="10.5">cafe_arabica</text>
+                <text x="144" y="329" fill="var(--tinta)">49.90 USD</text>
+                <!-- objeto O (izquierda) -->
+                <rect x="4" y="182" width="100" height="34" rx="9" fill="var(--eje-o-suave)" stroke="var(--eje-o)"/>
+                <text x="54" y="203" fill="var(--tinta)" font-size="10">camiseta_88</text>
+                <!-- cliente Q (arriba izquierda) -->
+                <rect x="80" y="56" width="128" height="34" rx="9" fill="var(--eje-q-suave)" stroke="var(--eje-q)"/>
+                <text x="144" y="77" fill="var(--tinta)" font-size="10.5">cliente_1042</text>
               </g>
             </svg>
           </div>
-          <figcaption><span class="fnum">Figura 9.1.</span> El espresso de Lucía, reificado como el
-            individuo <code>espresso_311</code> en el eje O, con sus participantes colgados por roles
-            canónicos. Cada cable lleva el color del eje al que apunta: el agente en rojo (Q), el
-            grano y la clase en verde azulado (K), el momento en violeta (T), el lugar en verde (L),
-            los parámetros en ámbar (N). La escena entera cabe sin abandonar la tripleta.</figcaption>
+          <figcaption><span class="fnum">Figura 9.1.</span> La venta del vendedor 17, reificada como el
+            individuo <code>venta_001</code> en el eje O, con sus participantes colgados por roles
+            canónicos. Cada cable lleva el color del eje al que apunta: el vendedor y el cliente en
+            rojo (Q), la clase en verde azulado (K), el objeto vendido en azul (O), el momento en
+            violeta (T), el lugar en verde (L), el monto en ámbar (N). La escena entera cabe sin
+            abandonar la tripleta.</figcaption>
         </figure>
 
         <h2>Quién puede ser agente</h2>
 
         <p>Detengámonos en uno de esos cables, porque oficializa algo que los ejemplos ya venían
-          gritando. En el espresso, el rol <code>agente</code> lo ocupó una persona de carne y hueso.
+          gritando. En la venta, el rol <code>agente</code> lo ocupó una persona de carne y hueso.
           Pero abre el abanico de dominios y el protagonista de una acción puede ser otra cosa: el
           algoritmo que asigna un conductor, el servidor bancario que cobra el mantenimiento, el
           modelo de lenguaje que redacta un borrador, el sensor que dispara una alarma. El modelo
@@ -373,8 +374,8 @@
         <h2>Datos que caducan: la vigencia</h2>
 
         <p>Llegamos a uno de los recursos de diseño más finos del modelo. Hay propiedades que
-          sencillamente no duran para siempre. El precio de una suscripción de software cambia con cada
-          renovación. La posición de una jugadora en la cancha cambia de temporada en temporada. El
+          sencillamente no duran para siempre. El precio de una camiseta cambia con cada temporada y
+          cada rebaja. La dirección de un cliente cambia cuando se muda. El
           modelo de IA que corre en producción se reemplaza por una versión nueva cada pocas semanas.
           Una base de datos ingenua, al recibir un valor nuevo, pisa el viejo y destruye el historial
           para siempre.</p>
@@ -478,7 +479,7 @@
 
         <div class="columnas">
           <p><strong>1 · Jerarquía</strong> (<code>parte_de</code> y su inverso <code>contiene</code>).
-            Mete eventos pequeños dentro de eventos grandes. Una canasta es <code>parte_de</code> un
+            Mete eventos pequeños dentro de eventos grandes. Un gol es <code>parte_de</code> un
             partido; una escena es <code>parte_de</code> una película. El todo y la parte coexisten
             como entidades de pleno derecho, sin que el todo aplaste a sus partes.</p>
           <p><strong>2 · Secuencia lógica</strong> (<code>precede</code> y su inverso
@@ -495,36 +496,39 @@
             su propio capítulo: el <a href="10-por-que.html">siguiente</a>.</p>
         </div>
 
-        <p>Mira cómo se aplican a un partido de baloncesto, el ejemplo arquetípico de una situación que
+        <p>Mira cómo se aplican a un partido de fútbol, el ejemplo arquetípico de una situación que
           <em>contiene</em> otras. El partido es el nudo grande; cada jugada es un nudo pequeño que
           cuelga de él por <code>parte_de</code>, y entre jugadas hay secuencia y reacción:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="triple">(partido_halcones_lobos) ∈ O
+          <pre><code data-lang="triple">(partido_arg_per_2026) ∈ O
   instancia_de : partido
   estatus_factual : real
 
-(triple_088, parte_de,  partido_halcones_lobos)   // la jugada cuelga del partido
-(triple_088, anotadora, rivas)         ∈ M(O, Q)
-(triple_088, asistente, navarro)       ∈ M(O, Q)
-(triple_088, cuarto,    4)             ∈ M(O, N)
+(gol_001, parte_de,     partido_arg_per_2026)   // la jugada cuelga del partido
+(gol_001, instancia_de, gol_jugada_abierta)  ∈ M(O, K)
+(gol_001, agente,       messi)               ∈ M(O, Q)
+(gol_001, asistente,    di_maria)            ∈ M(O, Q)
+(gol_001, minuto,       87)                  ∈ M(O, N)
 
-(falta_091,  sigue_a,   triple_088)    // ocurrió justo después
-(tiro_libre_092, cumple, falta_091)    // el tiro libre que la falta concedió</code></pre>
+(pase_001, precede, gol_001)    // ocurrió justo antes
+(pase_001, agente,      messi)       ∈ M(O, Q)
+(pase_001, beneficiario, di_maria)   ∈ M(O, Q)</code></pre>
         </div>
 
-        <p>El partido, las jugadas, la falta y el tiro libre son seis situaciones distintas, todas en
+        <p>El partido, el pase y el gol son situaciones distintas, todas en
           O, todas tejidas con cables canónicos. Borra cualquiera y las demás siguen teniendo sentido;
-          añade una jugada nueva y nada se rompe. La estructura n-aria —cinco actores en una canasta—
-          se conserva entera porque cada situación absorbe la complejidad sin deformar la tripleta.</p>
+          añade una jugada nueva y nada se rompe. La estructura n-aria —agente, asistente, minuto y
+          pierna en un solo gol— se conserva entera porque cada situación absorbe la complejidad sin
+          deformar la tripleta.</p>
 
         <h2>El zoom de la reificación</h2>
 
         <p>Cierro con una aclaración vital para quien implemente. Reificar no es un interruptor de
           encendido y apagado: es un <strong>zoom</strong>. Un mismo evento admite varios niveles de
-          detalle, y los tres son perfectamente legales. Tómalo con el espresso de antes, pero ahora
-          pensando en su consumo de grano a lo largo de un día de cafetería.</p>
+          detalle, y los tres son perfectamente legales. Tómalo con la venta de antes, pero ahora
+          pensando en las ventas de la tienda a lo largo de un día.</p>
 
         <div class="rejilla-3 revelar">
           <div class="tarjeta">
@@ -532,28 +536,28 @@
             <p style="margin:0 0 .5rem;font-size:.92rem">Una tripleta plana. Suficiente si solo
               quieres el total del día.</p>
             <div class="bloque-codigo" style="margin:0">
-              <pre style="padding:.6rem .7rem"><code data-lang="triple">(barra_central, grano_dia_kg, 3.4)</code></pre>
+              <pre style="padding:.6rem .7rem"><code data-lang="triple">(tienda_centro, ventas_dia_usd, 3420)</code></pre>
             </div>
           </div>
           <div class="tarjeta">
             <h4><span class="eje eje--o">2</span>&nbsp; Reificación normal</h4>
-            <p style="margin:0 0 .5rem;font-size:.92rem">«Hicimos cosa» el consumo. Necesario para
-              auditar lote y proveedor.</p>
+            <p style="margin:0 0 .5rem;font-size:.92rem">«Hicimos cosa» el cierre. Necesario para
+              auditar caja y turno.</p>
             <div class="bloque-codigo" style="margin:0">
-              <pre style="padding:.6rem .7rem"><code data-lang="triple">(consumo_dia_14) ∈ O
-  lugar    : barra_central
-  cantidad : 3.4 kg
-  lote     : arabica_l77</code></pre>
+              <pre style="padding:.6rem .7rem"><code data-lang="triple">(cierre_dia_14) ∈ O
+  lugar  : tienda_centro
+  total  : 3420 USD
+  turno  : tarde_t2</code></pre>
             </div>
           </div>
           <div class="tarjeta">
             <h4><span class="eje eje--k">3</span>&nbsp; Reificación extrema</h4>
-            <p style="margin:0 0 .5rem;font-size:.92rem">Cada espresso, una situación propia, ligada
+            <p style="margin:0 0 .5rem;font-size:.92rem">Cada venta, una situación propia, ligada
               al día por <code>parte_de</code>.</p>
             <div class="bloque-codigo" style="margin:0">
-              <pre style="padding:.6rem .7rem"><code data-lang="triple">(espresso_311) ∈ O
-  parte_de : consumo_dia_14
-  dosis_g  : 18</code></pre>
+              <pre style="padding:.6rem .7rem"><code data-lang="triple">(venta_001) ∈ O
+  parte_de : cierre_dia_14
+  monto    : 49.90</code></pre>
             </div>
           </div>
         </div>

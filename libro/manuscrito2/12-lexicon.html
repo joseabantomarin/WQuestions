@@ -42,13 +42,13 @@
 
       <div class="contenido">
 
-        <p class="entrada">Una barista de turno escribe en la tablet del local una sola palabra para
-          cerrar la comanda: <em>tomar</em>. Lo hace cien veces al día y nunca duda. «El cliente de la
-          mesa cuatro <strong>tomó</strong> un espresso doble.» La frase es transparente para cualquier
+        <p class="entrada">Un vendedor de turno escribe en la tablet del local una sola palabra para
+          cerrar la operación: <em>tomar</em>. Lo hace cien veces al día y nunca duda. «El cliente
+          <strong>tomó</strong> la camiseta visitante talla M.» La frase es transparente para cualquier
           hispanohablante. El problema empieza cuando esa misma palabra viaja por el resto del edificio.
           En la sala de reuniones del primer piso, la gerente anota que el comité «<strong>tomó</strong>
-          una decisión sobre el nuevo proveedor». En la cancha de la liga corporativa que el café
-          patrocina, el relator narra que la escolta «<strong>tomó</strong> el rebote». Y en el
+          una decisión sobre el nuevo proveedor». En la cancha del torneo que la tienda
+          patrocina, el relator narra que el delantero «<strong>tomó</strong> el balón en el área». Y en el
           municipio de la esquina, un funcionario certifica que el alcalde le «<strong>tomó</strong>
           juramento» al nuevo regidor. Cuatro veces el mismo verbo; cuatro hechos que no tienen nada en
           común salvo seis letras.</p>
@@ -63,10 +63,10 @@
         <p>Si el sistema del capítulo anterior tomara el verbo al pie de la letra, haría lo que hace un
           parser ingenuo: leería <em>tomar</em>, dispararía una única firma —digamos
           <code>tomar(agente, tema)</code>— y guardaría las cuatro frases como instancias del mismo
-          tipo de evento. El resultado sería una base de datos que cree que beber un café, deliberar en
-          comité, capturar un balón y administrar un juramento son la misma clase de cosa. Las consultas
+          tipo de evento. El resultado sería una base de datos que cree que entregar una camiseta, deliberar en
+          comité, recibir un balón y administrar un juramento son la misma clase de cosa. Las consultas
           posteriores heredarían el desastre: preguntar «¿qué decisiones se tomaron este mes?» devolvería
-          también los cafés y los rebotes. El error no se nota al escribir; se cobra al leer.</p>
+          también las ventas y las jugadas. El error no se nota al escribir; se cobra al leer.</p>
 
         <p>El capítulo 11 nos dejó con el verbo entendido como <strong>signatura</strong>: cada verbo
           declara qué roles exige y de qué eje sale cada uno. Pero acabamos de ver que un verbo no basta
@@ -212,8 +212,8 @@
         <h2>Autopsia de una entrada</h2>
 
         <p>Bajemos al detalle. Una entrada del lexicon es una «página» del diccionario, y cada pieza
-          tiene un trabajo concreto. Tomemos un verbo del mundo del espresso —el local de la escena
-          inicial vende también granos al público— y desarmemos su entrada de <code>vender</code>:</p>
+          tiene un trabajo concreto. Tomemos un verbo del mundo de la tienda —el local de la escena
+          inicial despacha camisetas al público— y desarmemos su entrada de <code>vender</code>:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">lexicon</span><button class="copiar">⧉ copiar</button></div>
@@ -221,14 +221,14 @@
   "verbo": "vender",
   "tipo_situacion": "accion_vender",
   "roles": {
-    "agente":       { "canonico": "agente",       "aliases": ["vendedor", "el que vende", "barista"] },
-    "tema":         { "canonico": "tema",         "aliases": ["producto", "lo vendido", "bolsa de grano"] },
+    "agente":       { "canonico": "agente",       "aliases": ["vendedor", "el que vende", "el que despacha"] },
+    "tema":         { "canonico": "tema",         "aliases": ["producto", "lo vendido", "camiseta"] },
     "beneficiario": { "canonico": "beneficiario", "aliases": ["comprador", "cliente", "el que compra"] },
     "por_cuanto":   { "canonico": "por_cuanto",   "aliases": ["precio", "monto", "importe"] }
   },
   "obligatorios": ["agente", "tema", "beneficiario", "por_cuanto"],
   "opcionales":   ["momento", "lugar_de", "moneda", "instrumento"],
-  "ejemplo": "Lucía vendió una bolsa de café arábica al cliente por 14 dólares"
+  "ejemplo": "El vendedor le vendió una camiseta al cliente por 49.90 dólares"
 }</code></pre>
         </div>
 
@@ -244,7 +244,7 @@
             escribe.</li>
           <li><strong><code>roles</code> y sus <code>aliases</code></strong>. Aquí vive D9. El rol
             canónico es <code>agente</code>, pero la lista de aliases le enseña al sistema que «vendedor»,
-            «el que vende» y «barista» significan lo mismo. Gracias a eso, «el barista le vendió un café
+            «el que vende» y «el que despacha» significan lo mismo. Gracias a eso, «el vendedor le vendió una camiseta
             al cliente» y «el agente transfirió un producto al beneficiario» producen el
             <em>idéntico</em> registro.</li>
           <li><strong><code>obligatorios</code> y <code>opcionales</code></strong>. Las reglas de
@@ -292,8 +292,8 @@
   "input_schema": {
     "type": "object",
     "properties": {
-      "agente":       { "type": "string", "eje": "Q", "description": "vendedor, barista, el que vende" },
-      "tema":         { "type": "string", "eje": "O", "description": "producto, bolsa de grano, lo vendido" },
+      "agente":       { "type": "string", "eje": "Q", "description": "vendedor, el que vende, el que despacha" },
+      "tema":         { "type": "string", "eje": "O", "description": "producto, camiseta, lo vendido" },
       "beneficiario": { "type": "string", "eje": "Q", "description": "comprador, cliente, el que compra" },
       "por_cuanto":   { "type": "number", "eje": "N", "description": "precio, monto, importe" },
       "momento":      { "type": "string", "eje": "T", "description": "cuándo ocurrió" },
@@ -334,7 +334,7 @@ Catálogo (verbo → situación · roles obligatorios):
   vender → accion_vender · [agente, tema, beneficiario, por_cuanto]
   tomar  → accion_consumir · [agente, tema]
 
-Frase del usuario: "Lucía le vendió una bolsa de arábica a un cliente por 14 dólares"</code></pre>
+Frase del usuario: "El vendedor le vendió una camiseta al cliente por 49.90 dólares"</code></pre>
         </div>
 
         <p>Y la respuesta llega lista para asentarse en el grafo, ya traducida a roles canónicos:</p>
@@ -343,10 +343,10 @@ Frase del usuario: "Lucía le vendió una bolsa de arábica a un cliente por 14 
           <div class="barra"><span class="lenguaje">respuesta del modelo</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="json">{
   "tipo_situacion": "accion_vender",
-  "agente": "barista_lucia",
-  "tema": "bolsa_arabica",
-  "beneficiario": "cliente_anonimo",
-  "por_cuanto": 14
+  "agente": "vendedor_17",
+  "tema": "camiseta_88",
+  "beneficiario": "cliente_1042",
+  "por_cuanto": 49.90
 }</code></pre>
         </div>
 
@@ -355,20 +355,20 @@ Frase del usuario: "Lucía le vendió una bolsa de arábica a un cliente por 14 
           tripleta del eje M que sale del evento y aterriza en una persona:</p>
 
         <div class="triple">
-          <span class="nodo nodo--o"><span>venta_0042</span><small>O</small></span>
+          <span class="nodo nodo--o"><span>venta_001</span><small>O</small></span>
           <span class="enlace">beneficiario<span class="firma">M(O→Q)</span></span>
-          <span class="nodo nodo--q"><span>cliente_anonimo</span><small>Q</small></span>
+          <span class="nodo nodo--q"><span>cliente_1042</span><small>Q</small></span>
         </div>
 
         <p>Y una vez asentada, la situación completa se descompone en los cables que ya conocemos:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="triple">(venta_0042, instancia_de,  accion_vender)    ∈ M(O, K)
-(venta_0042, agente,        barista_lucia)    ∈ M(O, Q)
-(venta_0042, tema,          bolsa_arabica)    ∈ M(O, O)
-(venta_0042, beneficiario,  cliente_anonimo)  ∈ M(O, Q)
-(venta_0042, por_cuanto,    14)               ∈ M(O, N)</code></pre>
+          <pre><code data-lang="triple">(venta_001, instancia_de,  accion_vender)   ∈ M(O, K)
+(venta_001, agente,        vendedor_17)     ∈ M(O, Q)
+(venta_001, tema,          camiseta_88)     ∈ M(O, O)
+(venta_001, beneficiario,  cliente_1042)    ∈ M(O, Q)
+(venta_001, por_cuanto,    49.90)           ∈ M(O, N)</code></pre>
         </div>
 
         <p>El modelo nunca vio la palabra <code>por_cuanto</code> hasta que el lexicon se la nombró; el
@@ -393,10 +393,10 @@ Frase del usuario: "Lucía le vendió una bolsa de arábica a un cliente por 14 
     "obligatorios": ["agente", "tema"],
     "ejemplo": "El comité tomó una decisión sobre el nuevo proveedor"
   },
-  "tomar [el balón | el rebote | la pelota]": {
+  "tomar [el balón | la pelota | el pase]": {
     "tipo_situacion": "accion_recuperar_posesion",
     "obligatorios": ["agente", "tema"],
-    "ejemplo": "La escolta tomó el rebote bajo el aro"
+    "ejemplo": "El delantero tomó el balón en el área"
   },
   "tomar [juramento]": {
     "tipo_situacion": "acto_juramentacion",
@@ -406,15 +406,15 @@ Frase del usuario: "Lucía le vendió una bolsa de arábica a un cliente por 14 
   "tomar": {
     "tipo_situacion": "accion_consumir",
     "obligatorios": ["agente", "tema"],
-    "ejemplo": "El cliente tomó un espresso doble"
+    "ejemplo": "El cliente tomó un refresco en la cafetería del estadio"
   }
 }</code></pre>
         </div>
 
         <p>El procedimiento de resolución es, otra vez, el de un compilador: el sistema intenta encajar
           la frase <strong>desde el patrón más específico hacia el más general</strong>. Si aparece
-          «tomar el rebote», gana la entrada de baloncesto. Si aparece «tomar juramento», gana el acto
-          de juramentación. Y solo cuando ningún patrón con complemento coincide —«tomar un espresso»—
+          «tomar el balón», gana la entrada de fútbol. Si aparece «tomar juramento», gana el acto
+          de juramentación. Y solo cuando ningún patrón con complemento coincide —«tomar un refresco»—
           cae la regla genérica de consumir. El orden importa: lo específico siempre primero, lo
           genérico como red de seguridad. La figura siguiente lo muestra con los colores de cada eje
           para que se vea adónde va a parar cada hecho.</p>
@@ -454,7 +454,7 @@ Frase del usuario: "Lucía le vendió una bolsa de arábica a un cliente por 14 
               <rect x="200" y="120" width="164" height="56" rx="11" fill="var(--eje-k)" opacity=".14"/>
               <rect x="200" y="120" width="164" height="56" rx="11" fill="none" stroke="var(--eje-k)" stroke-width="1.6"/>
               <text x="282" y="142" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">recuperar_posesion</text>
-              <text x="282" y="160" text-anchor="middle" font-size="10" fill="var(--tinta-suave)" font-family="var(--sans)">escolta · cancha</text>
+              <text x="282" y="160" text-anchor="middle" font-size="10" fill="var(--tinta-suave)" font-family="var(--sans)">delantero · cancha</text>
 
               <!-- 3 juramento -->
               <rect x="394" y="120" width="158" height="56" rx="11" fill="var(--eje-k)" opacity=".14"/>
@@ -466,7 +466,7 @@ Frase del usuario: "Lucía le vendió una bolsa de arábica a un cliente por 14 
               <rect x="558" y="120" width="100" height="56" rx="11" fill="var(--eje-k)" opacity=".22"/>
               <rect x="558" y="120" width="100" height="56" rx="11" fill="none" stroke="var(--eje-k)" stroke-width="2.2"/>
               <text x="608" y="142" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">consumir</text>
-              <text x="608" y="160" text-anchor="middle" font-size="10" fill="var(--tinta-suave)" font-family="var(--sans)">cliente · café</text>
+              <text x="608" y="160" text-anchor="middle" font-size="10" fill="var(--tinta-suave)" font-family="var(--sans)">cliente · refresco</text>
 
               <!-- firmas de roles bajo cada nodo -->
               <text x="96"  y="200" text-anchor="middle" font-size="11" fill="var(--tinta)" font-family="var(--mono)">[agente, tema]</text>
@@ -505,8 +505,8 @@ Frase del usuario: "Lucía le vendió una bolsa de arábica a un cliente por 14 
         <p>Hasta aquí los aliases han sido <strong>por rol</strong>: dentro de la entrada de
           <code>vender</code>, «vendedor» equivale a <code>agente</code>. Pero hay un segundo nivel de
           traducción, indispensable para que el modelo funcione de verdad en una empresa. Hay palabras
-          que aplican <em>transversalmente</em> a todo un dominio, sin importar qué verbo se use. Un café
-          siempre habla de «barista», «comanda» y «mesa»; una clínica siempre habla de «paciente»,
+          que aplican <em>transversalmente</em> a todo un dominio, sin importar qué verbo se use. Una tienda
+          siempre habla de «vendedor», «boleta» y «caja»; una clínica siempre habla de «paciente»,
           «historia» y «diagnóstico». Repetir esos aliases en cada entrada sería absurdo. Para eso el
           lexicon admite <strong>dialectos de dominio</strong>: un pequeño archivo de traducción que se
           carga encima del catálogo base.</p>
@@ -514,22 +514,22 @@ Frase del usuario: "Lucía le vendió una bolsa de arábica a un cliente por 14 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">dialecto de dominio</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="json">{
-  "dominio": "cafe_central",
+  "dominio": "tienda_central",
   "aliases_de_dominio": {
-    "barista":       "agente",
-    "comanda":       "pedido",
-    "mesa":          "lugar_de",
-    "carta":         "catalogo",
-    "extraer":       "verbo_preparar",
-    "doble":         "atributo_intensidad"
+    "vendedor":      "agente",
+    "boleta":        "comprobante",
+    "caja":          "lugar_de",
+    "catálogo":      "catalogo",
+    "despachar":     "verbo_vender",
+    "talla":         "atributo_medida"
   }
 }</code></pre>
         </div>
 
-        <p>Con este dialecto cargado, una barista puede escribir «extraje un espresso doble para la mesa
-          cuatro» y el sistema traduce «extraje» al verbo <code>preparar</code>, «mesa» al rol
-          <code>lugar_de</code> y «doble» al atributo de intensidad —todo sin que ninguna entrada de
-          verbo mencione la palabra «mesa». El núcleo permanece intacto, pero el café, la clínica y el
+        <p>Con este dialecto cargado, un vendedor puede escribir «despaché una camiseta talla M en la caja
+          dos» y el sistema traduce «despaché» al verbo <code>vender</code>, «caja» al rol
+          <code>lugar_de</code> y «talla» al atributo de medida —todo sin que ninguna entrada de
+          verbo mencione la palabra «caja». El núcleo permanece intacto, pero la tienda, la clínica y el
           municipio sienten, cada uno, que el software fue hecho a su medida. Es el mismo motor universal
           hablando tres jergas distintas.</p>
 
@@ -665,8 +665,8 @@ Frase del usuario: "Lucía le vendió una bolsa de arábica a un cliente por 14 
         <div class="caja caja--practica revelar">
           <p class="caja-tit">El lexicon en producción</p>
           <p><strong>Habla el idioma real de tu gente.</strong> Sin lexicon, habría que enseñarle a cada
-            empleado los campos robóticos del sistema. Con él, una barista escribe «la mesa cuatro tomó
-            un doble» y el hecho queda registrado en la jerga del café, sin capacitación.</p>
+            empleado los campos robóticos del sistema. Con él, un vendedor escribe «el cliente tomó
+            la camiseta visitante» y el hecho queda registrado en la jerga de la tienda, sin capacitación.</p>
           <p><strong>Es la puerta de entrada de la IA.</strong> El lexicon ya tiene la forma de un
             catálogo de <em>function calling</em>. Un modelo conectado a él empieza a redactar y auditar
             hechos sin que nadie reprograme el sistema: basta serializarlo y entregarlo.</p>
@@ -679,7 +679,7 @@ Frase del usuario: "Lucía le vendió una bolsa de arábica a un cliente por 14 
         </div>
 
         <p>La genialidad de los siete ejes es el corazón del modelo, sí. Pero su <strong>adopción</strong>
-          —el que una clínica, un banco o un café lo usen sin sentir que cambiaron de idioma— depende
+          —el que una clínica, un banco o una tienda lo usen sin sentir que cambiaron de idioma— depende
           entera y exclusivamente de este traductor. El catálogo es el motor; el lexicon es el volante.
           Y nadie conduce agarrando el motor.</p>
 
