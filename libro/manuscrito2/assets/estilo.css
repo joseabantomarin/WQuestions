@@ -299,6 +299,31 @@ blockquote p:last-child { margin-bottom: 0; }
   .retrato-autor { float: none; width: min(230px, 70%); margin: .5rem auto 1.6rem; }
 }
 
+/* Marcador de referencia en el texto: (N) enlazado a referencias.html */
+.ref {
+  font-size: .72em; font-weight: 700; vertical-align: super; line-height: 0;
+  color: var(--acento); text-decoration: none; white-space: nowrap;
+  padding: 0 .04em; letter-spacing: -.01em;
+}
+.ref:hover, .ref:focus { color: var(--acento-hov); text-decoration: underline; }
+
+/* Página de referencias (aparato crítico) */
+.lista-refs { margin: 1.4rem 0 0; }
+.lista-refs h2 { font-size: 1.04rem; letter-spacing: .01em; margin: 2.1rem 0 .7rem; }
+.lista-refs h2:first-of-type { margin-top: .6rem; }
+.ref-item {
+  position: relative; padding: .55rem 0 .55rem 2.7rem;
+  border-top: 1px solid var(--linea-fina); font-size: .96rem; line-height: 1.55;
+  color: var(--tinta-suave); scroll-margin-top: 5rem;
+}
+.ref-item:target { background: color-mix(in srgb, var(--acento) 9%, transparent); border-radius: var(--radio); }
+.ref-item .ref-n {
+  position: absolute; left: 0; top: .55rem; width: 2.1rem; text-align: right;
+  font-family: var(--sans); font-weight: 700; font-size: .82rem; color: var(--acento);
+}
+.ref-item strong, .ref-item em { color: var(--tinta); }
+.ref-item a { word-break: break-word; }
+
 /* ---------------------------------------------------------------------------
    7. CAJAS (callouts)
    --------------------------------------------------------------------------- */

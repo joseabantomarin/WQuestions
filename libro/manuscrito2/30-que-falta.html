@@ -55,7 +55,7 @@
           inspiradora al horizonte; es un <strong>mapa de implementación</strong>. Hasta aquí el libro
           presentó la propuesta entera y la sometió a prueba: un prototipo en Python con sus pruebas en
           verde, ocho dominios industriales modelados que confirman que el catálogo se sostiene en
-          territorios disímiles y —en el <a href="28-prueba-reflexiva.html">capítulo&nbsp;26</a>— el
+          territorios disímiles y —en el <a href="28-prueba-reflexiva.html">capítulo&nbsp;28</a>— el
           experimento reflexivo, donde el modelo bastó para describir su propia herramienta y se
           corrigió a sí mismo bajo carga. Lo que sigue es el inventario honesto de la distancia que
           separa eso de una pieza de infraestructura que cualquiera pueda adoptar un martes por la
@@ -75,7 +75,7 @@
           Y cierro con la pieza que pesa más que todas las demás juntas, y que el autor no controla
           solo.</p>
 
-        <!-- FIGURA 28.1 · roadmap resuelto vs pendiente -->
+        <!-- FIGURA 30.1 · roadmap resuelto vs pendiente -->
         <figure class="figura figura--ancha revelar">
           <div class="lienzo">
             <svg viewBox="0 0 680 392" class="svg-eje" role="img"
@@ -159,7 +159,7 @@
           <div class="tarjeta">
             <h4 style="color:var(--eje-k)">SHACL</h4>
             <p style="margin:0;font-size:.93rem"><em>Shapes Constraint Language</em> (W3C, 2017),
-              pensado para validar grafos RDF. Excelente para chequear consistencia —«ningún paciente
+              pensado para validar grafos RDF<a class="ref" href="referencias.html#ref-8">(8)</a>. Excelente para chequear consistencia —«ningún paciente
               con dos diagnósticos contradictorios vigentes»—; pobre para el razonamiento positivo.</p>
           </div>
           <div class="tarjeta">
@@ -230,7 +230,7 @@
           roles ya están tipados y la regla mapea a patrones sobre hechos canónicos. Así se obtiene lo
           mejor de los dos mundos: la flexibilidad del lenguaje natural para <em>escribir</em> reglas y
           el rigor del motor para <em>ejecutarlas</em>. La IA entra dos veces —para convertir lenguaje
-          en hechos (lo vimos en el <a href="26-llms.html">capítulo&nbsp;24</a>) y para compilar
+          en hechos (lo vimos en el <a href="26-llms.html">capítulo&nbsp;26</a>) y para compilar
           reglas—, pero el corazón de la inferencia estricta queda determinista y demostrable.</p>
 
         <aside class="nota-margen">
@@ -305,7 +305,7 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
             <code>query(valido_en=T1, registrado_en=T2)</code>.</p>
           <p style="margin:0"><b>Qué requiere:</b> una refactorización compatible del módulo del hecho
             para llevar dos intervalos en lugar de uno, y de la capa de persistencia para preservarlos.
-            Snodgrass formalizó esto en los años noventa; las bases bitemporales modernas —Datomic,
+            Snodgrass<a class="ref" href="referencias.html#ref-17">(17)</a> formalizó esto en los años noventa; las bases bitemporales modernas —Datomic,
             XTDB— lo implementan en producción. Estimación: un mes de implementación, más pruebas sobre
             un dominio regulado real.</p>
         </div>
@@ -378,7 +378,7 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
         <div class="columnas">
           <p><strong>4.1 — Ingestor de lexicon.</strong> Hoy las entradas del lexicon se escriben a
             mano. Hace falta una herramienta que ingiera entradas desde recursos masivos ya
-            construidos —FrameNet, VerbNet, PropBank— y produzca entradas válidas del lexicon
+            construidos —FrameNet<a class="ref" href="referencias.html#ref-14">(14)</a>, VerbNet<a class="ref" href="referencias.html#ref-15">(15)</a>, PropBank— y produzca entradas válidas del lexicon
             WQuestions. Esto da, de un golpe, un piso de cobertura de miles de verbos sin trabajo
             manual.</p>
           <p><strong>4.2 — Parser de lenguaje natural a hechos.</strong> Hoy el análisis se hace vía
@@ -505,7 +505,7 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
           en sí misma, una propiedad de diseño: el modelo del medio es el contrato estable que sostiene
           todo lo demás.</p>
 
-        <!-- FIGURA 28.2 · la pila completa por capas -->
+        <!-- FIGURA 30.2 · la pila completa por capas -->
         <figure class="figura figura--ancha revelar">
           <div class="lienzo">
             <svg viewBox="0 0 660 408" class="svg-eje" role="img"
@@ -595,7 +595,7 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
 
         <p>Además de los seis frentes mayores, el prototipo expuso un puñado de fricciones puntuales del
           catálogo al chocar con los dominios de estrés. El experimento reflexivo
-          (<a href="28-prueba-reflexiva.html">capítulo&nbsp;26</a>) <strong>cerró varias</strong> —el
+          (<a href="28-prueba-reflexiva.html">capítulo&nbsp;28</a>) <strong>cerró varias</strong> —el
           texto libre, el tipado de los campos definidos por datos, el display derivado de hechos— y
           entregó el comodín <code>V</code> —<em>cualquier eje de valor</em>—, que resuelve de raíz toda
           la familia «esta signatura es demasiado estrecha». Lo que queda abierto es esto:</p>

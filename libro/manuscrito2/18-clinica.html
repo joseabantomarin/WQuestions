@@ -671,7 +671,7 @@ historia = u.timeline(vega, valid_at="2026-06-19")</code></pre>
               <text x="22" y="288" font-size="10.5" fill="var(--tinta-tenue)" font-family="var(--sans)">Todos los episodios cuelgan del mismo nodo Q; el orden lo da T; cada afirmación lleva su propia vigencia D6.</text>
             </svg>
           </div>
-          <figcaption><span class="fnum">Figura 18.4.</span> La historia clínica de Vega como serie
+          <figcaption><span class="fnum">Figura 18.3.</span> La historia clínica de Vega como serie
             temporal de episodios. La identidad del paciente (<code>vega</code>, en <code>Q</code>) es
             una sola; cada urgencia, analítica, consulta o ingreso es una situación independiente en
             <code>O</code> que la referencia y se ordena por su eje <code>T</code>. La bitemporalidad
@@ -791,7 +791,7 @@ historia = u.timeline(vega, valid_at="2026-06-19")</code></pre>
               <text x="40" y="326" font-size="10.5" fill="var(--tinta-tenue)" font-family="var(--sans)">Las paredes son el eje T (admisión → alta); el interior son eventos en O; el cable que los cuelga del marco es M.</text>
             </svg>
           </div>
-          <figcaption><span class="fnum">Figura 18.5.</span> La hospitalización como situación-marco. Las
+          <figcaption><span class="fnum">Figura 18.4.</span> La hospitalización como situación-marco. Las
             paredes verticales son el eje <code>T</code> (la admisión abre la caja, el alta la cierra);
             dentro ocurren, en orden, la asignación de cama, los signos vitales, las rondas, la
             medicación administrada y las notas de evolución. Todos cuelgan del marco con
@@ -921,7 +921,7 @@ afectados = u.subjects_where("lote_usado", lote_av2207, role="paciente")
               <text x="28" y="284" font-size="10.5" fill="var(--tinta-tenue)" font-family="var(--sans)">Tres situaciones en O encadenadas por M (cumple); el lote, objeto en O clasificado por K, las cruza para la trazabilidad.</text>
             </svg>
           </div>
-          <figcaption><span class="fnum">Figura 18.6.</span> La cadena de la farmacia interna. La
+          <figcaption><span class="fnum">Figura 18.5.</span> La cadena de la farmacia interna. La
             administración de la enfermería <em>cumple</em> una dispensación de la farmacia, que a su vez
             <em>cumple</em> la prescripción de la doctora —tres situaciones en <code>O</code> encadenadas
             por <code>cumple</code>—. El lote concreto (<code>lote_av2207</code>) atraviesa la
@@ -1048,7 +1048,7 @@ vigente = u.value_at(vega, "diagnostico_asignado", at="2026-04-15")  # → hta_g
              ]}
             </script>
           </div>
-          <figcaption><span class="fnum">Figura 18.3.</span> Huella de la consulta por bloque, en
+          <figcaption><span class="fnum">Figura 18.6.</span> Huella de la consulta por bloque, en
             hechos atómicos. La pieza más cara es el diagnóstico, justamente porque carga la vigencia
             (D6): guardar dos verdades históricas en vez de pisar una sola cuesta unos hechos de más
             —y vale cada uno—. El total ronda las seis decenas de tripletas: un volumen ridículo

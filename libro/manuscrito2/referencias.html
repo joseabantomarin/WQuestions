@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Referencias — WQuestions</title>
+  <meta name="description" content="Fuentes y precedentes citados en el libro: filosofía clásica, periodismo, ontologías de dominio, estándares de intercambio, web semántica, semántica formal y recursos léxicos.">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice de la página">
+    <h2>En esta página</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'R'">
+      <header class="portada-cap">
+        <p class="parte">Aparato crítico</p>
+        <h1>Referencias</h1>
+        <p class="lede">Las fuentes y precedentes citados a lo largo del libro. En el texto, cada
+          referencia se marca con su número entre paréntesis —por ejemplo, <a class="ref" href="#ref-4">(4)</a>
+          remite a CIDOC&nbsp;CRM—. La numeración es estable y se asigna por orden de primera aparición.</p>
+      </header>
+
+      <div class="contenido lista-refs">
+
+        <h2>Filosofía y retórica clásica</h2>
+        <p class="ref-item" id="ref-1"><span class="ref-n">1</span>Aristóteles. <em>Ética a Nicómaco</em>, libro III. Discusión de las circunstancias del acto voluntario como criterio para evaluar la responsabilidad moral.</p>
+        <p class="ref-item" id="ref-2"><span class="ref-n">2</span>Cicerón. <em>De inventione</em>, libro I (siglo I a.C.). Lista canónica de las <em>circumstantiae</em> romanas: <em>quis, quid, ubi, quibus auxiliis, cur, quomodo, quando</em>.</p>
+        <p class="ref-item" id="ref-25"><span class="ref-n">25</span>Quintiliano. <em>Institutio Oratoria</em>, siglo I d.C. Refinamiento retórico del esquema de las circunstancias heredado de Cicerón y Hermágoras.</p>
+        <p class="ref-item" id="ref-26"><span class="ref-n">26</span>Tomás de Aquino. <em>Summa Theologica</em>, I-II, q. 7 (siglo XIII). Retoma las circunstancias del acto como categorías para evaluar su moralidad.</p>
+
+        <h2>Periodismo</h2>
+        <p class="ref-item" id="ref-3"><span class="ref-n">3</span>Bleyer, W. G. <em>Newspaper Writing and Editing</em>. Houghton Mifflin, 1913. Texto fundacional que codifica los 5W1H como obligación de toda nota informativa.</p>
+
+        <h2>Ontologías de dominio</h2>
+        <p class="ref-item" id="ref-4"><span class="ref-n">4</span><strong>CIDOC CRM</strong> — <em>Conceptual Reference Model</em> del International Council of Museums. Norma ISO 21127:2014. <a href="https://www.cidoc-crm.org" target="_blank" rel="noopener">cidoc-crm.org</a></p>
+        <p class="ref-item" id="ref-5"><span class="ref-n">5</span><strong>Biolink Model</strong> — Modelo unificador de tipos y predicados para datos biomédicos. <a href="https://biolink.github.io/biolink-model" target="_blank" rel="noopener">biolink.github.io/biolink-model</a></p>
+        <p class="ref-item" id="ref-30"><span class="ref-n">30</span><strong>Schema.org</strong> — Vocabulario estandarizado para datos estructurados en la web. Iniciativa conjunta de Google, Microsoft, Yandex y Yahoo. <a href="https://schema.org" target="_blank" rel="noopener">schema.org</a></p>
+        <p class="ref-item" id="ref-19"><span class="ref-n">19</span><strong>IFC</strong> — <em>Industry Foundation Classes</em>. ISO 16739. Estándar de datos para arquitectura, ingeniería y construcción. <a href="https://www.buildingsmart.org/standards/bsi-standards/industry-foundation-classes" target="_blank" rel="noopener">buildingsmart.org</a></p>
+
+        <h2>Estándares de intercambio</h2>
+        <p class="ref-item" id="ref-6"><span class="ref-n">6</span><strong>HL7 FHIR</strong> — <em>Fast Healthcare Interoperability Resources</em>. Estándar de intercambio en salud. <a href="https://www.hl7.org/fhir" target="_blank" rel="noopener">hl7.org/fhir</a></p>
+        <p class="ref-item" id="ref-7"><span class="ref-n">7</span><strong>XBRL</strong> — <em>eXtensible Business Reporting Language</em>. Estándar para reportes financieros corporativos. <a href="https://www.xbrl.org" target="_blank" rel="noopener">xbrl.org</a></p>
+        <p class="ref-item" id="ref-20"><span class="ref-n">20</span><strong>EDI</strong> — <em>Electronic Data Interchange</em>. Familia de estándares (X12, EDIFACT) para intercambio comercial estructurado.</p>
+        <p class="ref-item" id="ref-21"><span class="ref-n">21</span><strong>ISO 20022</strong> — Norma global para mensajes financieros (pagos, valores, comercio exterior).</p>
+
+        <h2>Web semántica y grafos abiertos</h2>
+        <p class="ref-item" id="ref-8"><span class="ref-n">8</span><strong>RDF</strong> — <em>Resource Description Framework</em>. Recomendación W3C. <a href="https://www.w3.org/RDF" target="_blank" rel="noopener">w3.org/RDF</a></p>
+        <p class="ref-item" id="ref-22"><span class="ref-n">22</span><strong>OWL</strong> — <em>Web Ontology Language</em>. Recomendación W3C. <a href="https://www.w3.org/OWL" target="_blank" rel="noopener">w3.org/OWL</a></p>
+        <p class="ref-item" id="ref-23"><span class="ref-n">23</span><strong>OpenIE</strong> — Banko, M., Cafarella, M. J., Soderland, S., Broadhead, M. &amp; Etzioni, O. «Open Information Extraction from the Web». <em>IJCAI</em>, 2007. Origen de las técnicas de extracción de relaciones abierta.</p>
+        <p class="ref-item" id="ref-31"><span class="ref-n">31</span>Berners-Lee, T., Hendler, J. &amp; Lassila, O. «The Semantic Web». <em>Scientific American</em>, mayo de 2001. Artículo programático que formuló la visión de la web semántica.</p>
+        <p class="ref-item" id="ref-32"><span class="ref-n">32</span><strong>Wikidata</strong> — Base de conocimiento colaborativa de la Fundación Wikimedia, sobre RDF. <a href="https://www.wikidata.org" target="_blank" rel="noopener">wikidata.org</a></p>
+        <p class="ref-item" id="ref-33"><span class="ref-n">33</span><strong>DBpedia</strong> — Extracción estructurada de información de Wikipedia. <a href="https://www.dbpedia.org" target="_blank" rel="noopener">dbpedia.org</a></p>
+
+        <h2>5W1H operativo en computación</h2>
+        <p class="ref-item" id="ref-9"><span class="ref-n">9</span>Yang, X. &amp; Hu, J. Trabajos sobre extracción de información basada en 5W1H aplicados a representación de eventos.</p>
+        <p class="ref-item" id="ref-10"><span class="ref-n">10</span>Mahmood, A. Representación de eventos sobre el esqueleto 5W1H.</p>
+
+        <h2>Semántica formal y representación del conocimiento</h2>
+        <p class="ref-item" id="ref-11"><span class="ref-n">11</span>Barwise, J. &amp; Perry, J. <em>Situations and Attitudes</em>. MIT Press, 1983. Teoría matemática de la información situacional.</p>
+        <p class="ref-item" id="ref-12"><span class="ref-n">12</span>Davidson, D. «The Logical Form of Action Sentences». En Rescher, N. (ed.), <em>The Logic of Decision and Action</em>. University of Pittsburgh Press, 1967. Origen de la semántica neo-davidsoniana de eventos.</p>
+        <p class="ref-item" id="ref-13"><span class="ref-n">13</span>Gärdenfors, P. <em>Conceptual Spaces: The Geometry of Thought</em>. MIT Press, 2000.</p>
+        <p class="ref-item" id="ref-24"><span class="ref-n">24</span>Fillmore, C. J. «The Case for Case». En Bach, E. &amp; Harms, R. T. (eds.), <em>Universals in Linguistic Theory</em>. Holt, Rinehart and Winston, 1968. Origen de la teoría de roles temáticos.</p>
+
+        <h2>Recursos léxicos</h2>
+        <p class="ref-item" id="ref-14"><span class="ref-n">14</span><strong>FrameNet</strong> — Proyecto del International Computer Science Institute, Universidad de California, Berkeley. <a href="https://framenet.icsi.berkeley.edu" target="_blank" rel="noopener">framenet.icsi.berkeley.edu</a></p>
+        <p class="ref-item" id="ref-15"><span class="ref-n">15</span><strong>VerbNet</strong> — Léxico de verbos del inglés organizado por clases de Levin. Universidad de Colorado, Boulder. <a href="https://verbs.colorado.edu/verbnet" target="_blank" rel="noopener">verbs.colorado.edu/verbnet</a></p>
+
+        <h2>Extracción y modelado de relaciones</h2>
+        <p class="ref-item" id="ref-16"><span class="ref-n">16</span>Riedel, S., Yao, L., McCallum, A. &amp; Marlin, B. «Relation Extraction with Matrix Factorization and Universal Schemas». <em>NAACL HLT</em>, 2013.</p>
+
+        <h2>Psicolingüística y desarrollo</h2>
+        <p class="ref-item" id="ref-27"><span class="ref-n">27</span>Brown, R. <em>A First Language: The Early Stages</em>. Harvard University Press, 1973. Estudio longitudinal seminal sobre la adquisición del lenguaje en niños.</p>
+
+        <h2>Universales lingüísticos</h2>
+        <p class="ref-item" id="ref-28"><span class="ref-n">28</span>Wierzbicka, A. <em>Semantic Primitives</em> (1972) y <em>Semantics: Primes and Universals</em> (Oxford University Press, 1996). Programa del Natural Semantic Metalanguage: identifica primitivos semánticos compartidos por todas las lenguas humanas.</p>
+        <p class="ref-item" id="ref-29"><span class="ref-n">29</span>Greenberg, J. H. (ed.). <em>Universals of Human Language</em> (4 vols.). Stanford University Press, 1978. Marco fundacional del estudio comparado de universales lingüísticos.</p>
+
+        <h2>Bases de datos temporales</h2>
+        <p class="ref-item" id="ref-17"><span class="ref-n">17</span>Snodgrass, R. T. <em>Developing Time-Oriented Database Applications in SQL</em>. Morgan Kaufmann, 1999. Fundamento del modelado bitemporal.</p>
+
+        <h2>Unidades de medida</h2>
+        <p class="ref-item" id="ref-18"><span class="ref-n">18</span><strong>QUDT</strong> — <em>Quantities, Units, Dimensions and Types Ontology</em>. <a href="https://www.qudt.org" target="_blank" rel="noopener">qudt.org</a></p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="34-el-autor.html"><span class="dir">← Anterior</span><span class="tit">El autor</span></a>
+      <a class="sig" href="index.html"><span class="dir">Volver al índice →</span><span class="tit">Índice</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>
