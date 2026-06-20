@@ -1,1 +1,0 @@
-  <div class="dv-logo-wrap"><img id="dv-logo" class="dv-logo" alt="logo" style="display:none" /></div>
