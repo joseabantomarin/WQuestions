@@ -369,7 +369,7 @@ def category(label: str) -> Individual:
           todo, absolutamente todo lo que el modelo sabe, se descompone en estas tripletas tipadas. Lo
           complejo no se modela con estructuras más ricas: se apila como más tripletas.</p>
 
-        <div class="caja caja--decision revelar">
+        <div class="caja caja--practica revelar">
           <p class="caja-tit"><span class="codigo-d">D3</span> El hecho atómico</p>
           <p style="margin:0">La clase <code>Fact</code> es la encarnación literal de D3: una tripleta
             <code>(subject, role, value)</code>, congelada e inmutable. No hay forma de representar un
@@ -475,7 +475,7 @@ class Fact:
           comprueba que el eje del sujeto coincida con el dominio del rol y el eje del valor con su
           rango.</p>
 
-        <div class="caja caja--decision revelar">
+        <div class="caja caja--practica revelar">
           <p class="caja-tit"><span class="codigo-d">D8</span> El catálogo canónico de roles</p>
           <p style="margin:0">Cada rol es un predicado del eje <span class="eje eje--m">M</span> con
             una signatura <code>dominio → rango</code>. La clase <code>RoleSignature</code> la guarda;
@@ -701,7 +701,7 @@ class Catalog:
           obligatorios y opcionales, los aliases naturales por rol y por dominio, sus formas nominales
           y, sobre todo, un <code>pattern</code> de complementos que es el motor de la desambiguación.</p>
 
-        <div class="caja caja--decision revelar">
+        <div class="caja caja--practica revelar">
           <p class="caja-tit"><span class="codigo-d">D9</span> El usuario nunca toca etiquetas canónicas</p>
           <p style="margin:0">El lexicon es la interfaz; el catálogo, invisible. Un negocio puede
             llamar «socio» a lo que el modelo registra como <code>cliente</code>, o «huésped» a lo que
@@ -1019,7 +1019,7 @@ class Universe:
           hace un LLM, o un parser dedicado. La ingesta no entiende español; <em>modela</em> lo que
           alguien ya entendió.</p>
 
-        <div class="caja caja--decision revelar">
+        <div class="caja caja--practica revelar">
           <p class="caja-tit"><span class="codigo-d">D4</span> Reificar la situación</p>
           <p style="margin:0">El paso clave del pipeline es acuñar un individuo nuevo en <span
             class="eje eje--o">O</span> que <em>representa la situación entera</em> —la venta, la
@@ -1187,7 +1187,7 @@ def ingest_situation(
           Este motor es deliberadamente ingenuo: un barrido con tres índices simples. Sirve para
           validar el modelo en dominios reales, no para producción a escala. El <a
           href="30-que-falta.html">capítulo 30</a> nombra los reemplazos serios: Datalog, SHACL,
-          motores RDF, bases columnares.
+          motores RDF<a class="ref" href="referencias.html#ref-8">(8)</a>, bases columnares.
         </aside>
 
         <div class="bloque-codigo">
