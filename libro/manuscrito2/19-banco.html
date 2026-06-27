@@ -376,6 +376,50 @@
           conservar el historial completo de los errores, no solo el resultado pulido; el modelo lo
           hace por defecto, sin tablas de auditoría aparte. Volveremos sobre esto en el Caso 3.</p>
 
+        <p>Queda una última arruga de la transferencia, y no se deshace con agentes ni con asientos,
+          sino con el reloj. La de Mariana a Bruno se liquidó en dos segundos porque era interna: el
+          mismo banco movía dinero entre dos de sus cuentas. Invierte ahora los papeles. A Mariana le
+          envían un giro desde <strong>otro banco</strong> y, peor aún, desde <strong>el
+          extranjero</strong>, un viernes por la tarde.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Fecha valor</span>
+          La hora en que ordenan el giro (viernes) y la fecha en que el dinero ya es de Mariana
+          (lunes) no son la misma. A los tres relojes del eje <span class="eje eje--t">T</span> el
+          comercio exterior le añade este matiz —la <em>fecha valor</em>—; confundirlo es lo que
+          produce el clásico «ya te lo envié / a mí no me ha llegado», donde las dos personas creen
+          tener razón.
+        </aside>
+
+        <p>El dinero ya salió de la cuenta del remitente, pero a la de Mariana todavía no entra: queda
+          suspendido en una cámara de compensación, esperando a que los sistemas abran. Y como el
+          viernes la ventana ya cerró, tendrá que esperar hasta el <strong>lunes</strong> para disponer
+          de su propio dinero. En pleno siglo&nbsp;XXI, un par de días de limbo para un giro que la
+          pantalla ya da por enviado, y el dinero podía ser urgente.</p>
+
+        <p>Que esa espera exista no es culpa de ningún modelo de datos: responde a ventanas de
+          compensación, husos horarios, fines de semana y reglas regulatorias que ningún grafo borra.
+          Pero sí es culpa del modelo plano que Mariana no pueda saber <em>dónde</em> está su dinero
+          mientras tanto; un sistema clásico le muestra un opaco «pendiente» y poco más. WQuestions no
+          trata la transferencia como un instante, sino como un evento con estados fechados —la misma
+          vigencia temporal que el siguiente caso convertirá en regla—:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(giro_int_8043, estado, ordenada,        inicio=2026-05-15T17:40, fin=2026-05-15T17:41)
+(giro_int_8043, estado, en_compensacion, inicio=2026-05-15T17:41, fin=2026-05-18T09:02)
+(giro_int_8043, estado, disponible,      inicio=2026-05-18T09:02, fin=hoy)
+(giro_int_8043, fecha_valor, 2026-05-18)            # cuándo el dinero es de Mariana
+(giro_int_8043, ts_orden,    2026-05-15T17:40)      # viernes: cuándo se ordenó</code></pre>
+        </div>
+
+        <p>Modelada así, la pregunta angustiada del cliente —«¿dónde está mi dinero y cuándo lo
+          tendré?»— deja de ser un secreto que solo el banco conoce: es una consulta que el grafo
+          contesta al instante, con el estado vigente y la fecha en que el dinero se libera. El modelo
+          no acelera el giro; los dos días de espera siguen ahí. Lo que hace es convertir ese limbo
+          opaco en un hecho explícito, fechado y consultable, que es justo lo que el cliente —y el
+          regulador— tienen derecho a ver.</p>
+
         <h2>Caso 2 · La novela de un préstamo y la regla del tiempo</h2>
 
         <p>Un préstamo no es un suceso de un segundo: es una novela que dura años. Se aprueba, se
