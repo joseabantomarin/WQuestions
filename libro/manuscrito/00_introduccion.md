@@ -16,7 +16,7 @@ Este libro plantea, defiende y demuestra una sola idea. Es una idea tan simple d
 
 Quizá notes un pequeño desplazamiento respecto de las seis preguntas con las que abrimos. Es deliberado: al llevar esa intuición a la precisión, *cuánto* y *cuál* se revelan como preguntas propias que el genérico *qué* tenía escondidas, y *por qué* resulta no ser una coordenada más sino una **relación entre hechos** — la causa de algo es siempre otro hecho que lo explica. La intuición de la infancia no se reemplaza: se **afina** hasta volverse siete coordenadas exactas. (Al "por qué" le dedicamos, de hecho, un capítulo entero más adelante.)
 
-No hay trucos ocultos ni capas de complejidad innecesaria. Pero, como ocurre con los verdaderos cambios de paradigma, cuando tomas esta premisa y la llevas hasta sus últimas consecuencias lógicas, el panorama entero cambia. Cambia la forma en que diseñas una base de datos. Cambia la manera en que construyes agentes de inteligencia artificial. Cambia cómo conectas sistemas que hoy son incapaces de hablarse entre sí. Incluso cambia la forma en que le explicas un negocio nuevo a un programador junior.
+No hay trucos ocultos ni capas de complejidad innecesaria. Pero, como ocurre con los verdaderos cambios de paradigma, cuando tomas esta premisa y la llevas hasta sus últimas consecuencias lógicas, cambia todo lo que viene después: desde cómo diseñas una base de datos hasta cómo le explicas un negocio nuevo a un programador junior.
 
 Lo hemos puesto a prueba. Funciona. Y el propósito de este texto es mostrarte la ingeniería exacta detrás de ese funcionamiento.
 
