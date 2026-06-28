@@ -127,5 +127,32 @@ class TestPivote(unittest.TestCase):
         self.assertEqual(int(df.loc["K", "Zona"]), 1)
 
 
+class TestSeedCap8(unittest.TestCase):
+    def test_reproduce_figuras_del_libro(self):
+        from ejemplos import tabla_cap8
+        u, h = tabla_cap8.build_universe()
+        piv = tabla_cap8.vista_pivote(u, h)
+        self.assertEqual(piv.values.tolist(),
+                         [[45, 12, 8], [120, 54, 30], [15, 42, 10]])
+        self.assertEqual(list(piv.index),
+                         ["Licencias de construcción",
+                          "Licencias de funcionamiento",
+                          "Multas de fiscalización"])
+        self.assertEqual(list(piv.columns), ["Centro", "Norte", "Sur"])
+        proj = tabla_cap8.vista_proyeccion(u, h)
+        self.assertEqual(proj.iloc[0].tolist(),
+                         ["Juan", "Licencia de funcionamiento",
+                          "Jr. Trujillo 450, Centro", "22-06-2026",
+                          "S/ 450,00", "Solicitado"])
+        self.assertEqual(proj.iloc[1].tolist(),
+                         ["Carla", "Licencia de micromovilidad",
+                          "Av. Perú 1200, Norte", "23-06-2026",
+                          "S/ 300,00", "En revisión"])
+        self.assertEqual(proj.iloc[2].tolist(),
+                         ["Marta", "Remodelación de local",
+                          "Jr. Lima 88, Centro", "24-06-2026",
+                          "S/ 520,00", "Aprobada"])
+
+
 if __name__ == "__main__":
     unittest.main()
