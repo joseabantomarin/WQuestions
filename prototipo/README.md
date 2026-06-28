@@ -1,8 +1,8 @@
 # Prototipo WQuestions — informe de validación
 
 Prototipo en Python (Python 3.9+). El núcleo `wq` no tiene dependencias; el
-aplanado a tablas (`wq/vistas.py`) y el ejemplo `tabla_cap8.py` usan `pandas`. Que
-implementa lo que el libro describe del modelo: los 8 ejes, los hechos
+aplanado a tablas (`wq/vistas.py`) y el ejemplo `tabla_cap8.py` usan `pandas`. El
+prototipo implementa lo que el libro describe del modelo: los 8 ejes, los hechos
 atómicos con signatura, la reificación de situaciones, el catálogo
 canónico de roles, el lexicon con resolución de polisemia, D9 (vigencia
 temporal), las cuatro relaciones del "por qué" y un motor de consulta
@@ -16,7 +16,7 @@ producción.
 ```bash
 cd /Users/joseabanto/WQuestions/prototipo
 
-# Suite de tests unitarios (21 tests)
+# Suite de tests unitarios (23 tests)
 PYTHONPATH=. python3 -m unittest tests.test_wq -v
 
 # Demo extremo a extremo del dominio spa (10 validaciones)
@@ -44,22 +44,26 @@ wq/
   lexicon.py    Entradas, polisemia (patrón más específico primero), nominalización, dialectos.
   ingest.py     verbo + roles → situación reificada + hechos atómicos.
   query.py      Patrones WH como proyecciones sobre roles, con filtro temporal `at`.
+  vistas.py     Aplanado a tablas: plana / proyección / pivote → pandas.DataFrame.
 
 ejemplos/
   spa.py            Dominio spa completo (3 clientes, 16 sesiones, plan, fidelidad, D9).
   dominios_previos.py Valida fricciones en aeropuerto, ventas, taxi, clínica,
                       música, contrato, química, fútbol.
+  tabla_cap8.py     Las tres vistas del cap. 8 sobre ~336 trámites (Figs 8.4 y 8.5).
 
 tests/
-  test_wq.py    21 tests unitarios cubriendo ejes, signaturas, lexicon,
+  test_wq.py    23 tests unitarios cubriendo ejes, signaturas, lexicon,
                 modales, queries, D9, spa end-to-end.
+  test_vistas.py 9 tests del aplanado (plana, proyección, pivote, seed cap. 8).
 ```
 
 ## Resultados de validación
 
 | Suite                              | Pasa | Total |
 | ---------------------------------- | ---- | ----- |
-| Tests unitarios (`tests/test_wq.py`)  | 21   | 21    |
+| Tests unitarios (`tests/test_wq.py`)  | 23   | 23    |
+| Aplanado a tablas (`tests/test_vistas.py`) | 9 | 9 |
 | Spa end-to-end (`ejemplos/spa.py`) | 10   | 10    |
 | 8 dominios previos (`ejemplos/dominios_previos.py`) | 17 | 17 |
 
