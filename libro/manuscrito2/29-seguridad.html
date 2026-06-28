@@ -55,72 +55,71 @@
 
       <div class="contenido">
 
-        <p class="entrada">A las diez y cuarto de la mañana, en una oficina con aire acondicionado y
-          luz fluorescente, un analista de una aseguradora abre la consola de evaluación de riesgo. Tiene
-          delante el expediente de una solicitante de seguro de vida —llamémosla Vega, la misma
-          paciente cuya madrugada en urgencias abrió el <a href="01-torre-de-babel.html">primer
-          capítulo</a>, con una historia clínica que entonces nadie pudo reunir a tiempo— y necesita
-          un dato: si esa persona tiene antecedentes que
-          encarezcan la prima. Su sistema es moderno, está conectado y, como todo lo demás en este
-          libro, habla en preguntas. Así que el analista formula una consulta perfectamente legible:
-          <em>¿qué situaciones de clase <code>diagnostico_medico</code> tienen a esta persona como
-          paciente?</em></p>
+        <p class="entrada">Son las diez y cuarto de la mañana. Un analista de una aseguradora abre su
+          consola de evaluación de riesgo. Tiene delante la solicitud de un seguro de vida. La
+          solicitante es Vega, la misma paciente que en el <a href="01-torre-de-babel.html">primer
+          capítulo</a> llegó de madrugada a urgencias con una historia clínica que nadie logró reunir a
+          tiempo. El analista quiere saber una sola cosa: si Vega tiene antecedentes que encarezcan la
+          prima. Su sistema es moderno y, como todo en este libro, habla en preguntas. Así que formula
+          una consulta perfectamente legible: <em>¿qué situaciones de clase
+          <code>diagnostico_medico</code> tienen a esta persona como paciente?</em></p>
 
-        <p>El grafo, servicial, responde sin titubear: una arritmia, monitoreada desde hace dos años,
-          con un episodio de descompensación documentado. La prima se dispara. En el peor caso, la
-          cobertura se niega. Y aquí está lo inquietante: <strong>nadie hackeó nada.</strong> No hubo
-          una brecha, ni una contraseña filtrada, ni un empleado deshonesto vendiendo registros. El
-          sistema funcionó <em>exactamente como fue diseñado</em>: alguien hizo una pregunta y obtuvo
-          una respuesta tipada, precisa y confiable. El mismo grafo que ante un médico de guardia
-          reúne en segundos una historia clínica dispersa y puede salvar una vida, ante un actuario a
-          media mañana le niega un crédito.</p>
+        <p>El grafo responde sin titubear: una arritmia, vigilada desde hace dos años, con un episodio
+          de descompensación documentado. La prima se dispara. En el peor caso, la aseguradora niega la
+          cobertura. Y aquí está lo inquietante: <strong>nadie hackeó nada.</strong> No hubo una
+          brecha, ni una contraseña filtrada, ni un empleado vendiendo registros. El sistema funcionó
+          <em>exactamente como se diseñó</em>: alguien preguntó y obtuvo una respuesta precisa y
+          confiable. El mismo grafo que ante un médico de guardia reúne en segundos una historia
+          clínica dispersa y salva una vida, ante un analista a media mañana le niega el seguro.</p>
 
         <aside class="nota-margen">
           <span class="etq">Marco</span>
           La <a href="01-torre-de-babel.html">madrugada de Vega</a> abrió el libro: una historia
-          clínica que existía pero no podía reunirse a tiempo. Aquí esa misma historia regresa por su
-          lado oscuro: la
-          interoperabilidad no distingue, por sí sola, entre el médico de guardia y el actuario.
+          clínica que existía pero que nadie pudo reunir a tiempo. Aquí esa misma historia vuelve por su
+          lado oscuro. Por sí sola, la interoperabilidad no distingue entre el médico que salva una
+          vida y el analista que sube una prima.
         </aside>
 
         <p>Esta es la objeción más seria que se le puede hacer al modelo, y no la voy a esquivar. Un
-          grafo compartido con identidad estable es, por defecto, <strong>una infraestructura de
-          vigilancia</strong>. No es un efecto colateral: es la cara opuesta de su mayor virtud. Toda
-          la legislación de protección de datos del mundo —el RGPD europeo, la HIPAA estadounidense, la
-          Ley&nbsp;29733 peruana— existe precisamente para impedir lo que WQuestions vuelve trivial:
-          vincular, sin fricción, datos que vivían separados. Si la fuerza del modelo es que los
-          pacientes, los clientes y los lugares son <em>los mismos</em> a través de los dominios, esa
-          misma fuerza es lo que permite que el banco vea el diagnóstico y la clínica vea la deuda.</p>
+          grafo compartido en el que cada persona tiene una identidad estable es, por defecto,
+          <strong>una infraestructura de vigilancia</strong>. No es un efecto colateral: es la cara
+          opuesta de su mayor virtud. Las leyes de protección de datos del mundo (el RGPD europeo, la
+          HIPAA estadounidense, la Ley&nbsp;29733 peruana) existen justamente para impedir lo que
+          WQuestions vuelve fácil: cruzar, sin esfuerzo, datos que vivían separados. Si la fuerza del
+          modelo es que el paciente, el cliente y el lugar son <em>los mismos</em> en todos los
+          dominios, esa misma fuerza permite que el banco vea el diagnóstico y la clínica vea la
+          deuda.</p>
 
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">La objeción, sin maquillaje</p>
-          <p style="margin:0">Un modelo que vuelve trivial preguntar cualquier cosa sobre cualquiera
-            es tan capaz de habilitar la mejor medicina como el peor abuso. La diferencia entre ambos
-            no está en la potencia del grafo, sino en una sola política: <strong>quién puede preguntar
-            qué</strong>. El resto del capítulo trata de poner esa política dentro del modelo, no
-            pegada por fuera con cinta.</p>
+          <p style="margin:0">Un modelo que vuelve fácil preguntar cualquier cosa sobre cualquiera
+            sirve tanto para la mejor medicina como para el peor abuso. La diferencia no está en la
+            potencia del grafo, sino en una sola política: <strong>quién puede preguntar qué</strong>.
+            El resto del capítulo trata de meter esa política dentro del modelo, no de pegarla por
+            fuera con cinta.</p>
         </div>
 
-        <p>El argumento que sigue es doble. Primero, que el problema no solo tiene solución, sino que
-          el modelo —bien entendido— ofrece <em>mejores</em> herramientas para resolverlo que la
-          arquitectura relacional que reemplaza. Y segundo, que hay un frente
-          que ningún modelo enlazable resuelve todavía. Pero antes de la ingeniería hay que deshacer un
-          malentendido, porque la primera respuesta no es técnica.</p>
+        <p>Lo que sigue defiende dos cosas. Primero, que el problema no solo tiene solución: bien
+          entendido, el modelo ofrece <em>mejores</em> herramientas para resolverlo que la arquitectura
+          relacional a la que reemplaza. Segundo, que queda un frente que ningún modelo enlazable
+          resuelve todavía. Pero antes de la ingeniería hay que deshacer un malentendido, porque la
+          primera respuesta no es técnica.</p>
 
         <h2>Un idioma, no una base de datos central</h2>
 
-        <p>La imagen que produce pánico —y con razón— es la de un gran depósito central: un único
-          servidor donde el historial completo de todas las personas cuelga de un identificador único
-          que cualquiera con credenciales puede consultar. Si <em>eso</em> fuera WQuestions, el modelo
-          sería indefendible y este capítulo no tendría defensa posible.</p>
+        <p>La imagen que produce pánico, y con razón, es la de un gran depósito central: un único
+          servidor donde el historial completo de cada persona cuelga de un identificador, y donde
+          cualquiera con credenciales puede consultarlo. Si WQuestions fuera <em>eso</em>, sería
+          indefendible y este capítulo no tendría nada que defender.</p>
 
-        <p>No lo es. El grafo compartido es <strong>semántico, no físico</strong>. Lo que comparten el
-          banco, la clínica, la endocrinóloga y el cardiólogo no es una base de datos: es el
-          <em>idioma de las preguntas</em> —los siete ejes y el lexicon que traduce hacia ellos—. Cada
-          quien sigue guardando sus propios hechos en su propio almacén, bajo su propio control y su
-          propia llave. La clínica no lee el grafo del banco. Lo que ocurre es que, cuando hace falta
-          interoperar —y solo con autorización—, los dos grafos hablan la misma lengua, y la fusión
-          que antes era un proyecto de integración de seis meses se vuelve trivial.</p>
+        <p>No lo es. El grafo compartido es <strong>semántico, no físico</strong>: lo que se comparte
+          es un significado común, no un disco común. El banco, la clínica, la endocrinóloga y el
+          cardiólogo no comparten una base de datos. Comparten un <em>idioma de preguntas</em>: los
+          siete ejes y el lexicon que traduce hacia ellos. Cada uno sigue guardando sus propios hechos
+          en su propio almacén, bajo su propio control y su propia llave. La clínica no lee el grafo
+          del banco. Lo que ocurre es que, cuando hace falta interoperar, y solo con autorización, los
+          dos grafos hablan la misma lengua. Y la fusión que antes era un proyecto de integración de
+          seis meses se vuelve sencilla.</p>
 
         <p class="cita-destacada revelar">Lo que se comparte es el idioma de las preguntas, no la
           memoria de los hechos. La interoperabilidad vive en el borde, bajo consentimiento; no en un
@@ -130,7 +129,7 @@
         <figure class="figura figura--ancha revelar">
           <div class="lienzo">
             <svg viewBox="0 0 660 360" class="svg-eje" role="img"
-                 aria-label="Comparación entre un depósito central donde todos leen y una federación donde cada tenedor guarda lo suyo y solo lo une un idioma común">
+                 aria-label="Comparación entre un depósito central donde todos leen y una federación donde cada parte guarda lo suyo y solo lo une un idioma común">
               <!-- títulos -->
               <text x="165" y="26" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-q)">Depósito central</text>
               <text x="165" y="42" text-anchor="middle" font-size="11" fill="var(--tinta-tenue)">la pesadilla de privacidad</text>
@@ -194,42 +193,43 @@
           </div>
           <figcaption><span class="fnum">Figura 29.1.</span> A la izquierda, el depósito único donde
             todos leen de todos: la imagen que produce pánico, y con razón. A la derecha, lo que de
-            verdad es WQuestions: cada tenedor conserva sus propios hechos bajo su propia llave, y solo
+            verdad es WQuestions: cada parte conserva sus propios hechos bajo su propia llave, y solo
             los une, bajo consentimiento, un <span class="eje eje--k">K</span> idioma común de
-            preguntas. La privacidad empieza por la <em>topología</em>.</figcaption>
+            preguntas. La privacidad empieza por la forma de la red, no por las reglas que le pongas
+            encima.</figcaption>
         </figure>
 
         <p>Releída así, la escena del médico de guardia cambia de sentido. No fue que el médico
-          «entró al expediente global de Vega». Fue que cada tenedor —los dos hospitales, la
-          endocrinóloga, el cardiólogo— <strong>publicó hacia un espacio que la paciente había
-          autorizado de antemano</strong> para situaciones de emergencia, y que esos hechos, por
-          hablar el mismo idioma, se ensamblaron solos. La interoperabilidad no exige un cerebro
-          central; exige un idioma compartido y un permiso. Esto disuelve el susto inicial, pero abre
-          la verdadera pregunta de ingeniería: si cada tenedor controla su acceso, ¿con qué lo
-          controla? Y aquí es donde el modelo deja de defenderse y empieza a atacar.</p>
+          «entrara al expediente global de Vega». Fue que cada parte (los dos hospitales, la
+          endocrinóloga, el cardiólogo) <strong>publicó hacia un espacio que la paciente había
+          autorizado de antemano</strong> para emergencias. Y como todos esos hechos hablaban el mismo
+          idioma, se ensamblaron solos. La interoperabilidad no exige un cerebro central; le bastan un
+          idioma compartido y un permiso. Eso disuelve el susto inicial, pero abre la pregunta de
+          ingeniería de verdad: si cada parte controla su propio acceso, ¿con qué lo controla? Aquí el
+          modelo deja de defenderse y empieza a atacar.</p>
 
         <h2>El permiso es un hecho</h2>
 
         <p>En una arquitectura relacional, el control de acceso es una capa aparte, escrita en un
-          lenguaje distinto al de los datos: tablas de permisos, jerarquías de roles, sentencias
-          <code>GRANT</code> y <code>REVOKE</code>, reglas de aplicación dispersas por el código. Es un
-          sistema paralelo. Y los sistemas paralelos comparten un destino común: <em>se
-          desincronizan</em>. La política dice una cosa, el código hace otra, y nadie sabe cuál de las
-          dos es la verdad vigente.</p>
+          lenguaje distinto del de los datos: tablas de permisos, jerarquías de roles, sentencias
+          <code>GRANT</code> y <code>REVOKE</code>, reglas sueltas por todo el código. Es un sistema
+          que corre en paralelo a los datos. Y los sistemas paralelos terminan igual: <em>se
+          desincronizan</em>. La política dice una cosa, el código hace otra y nadie sabe cuál de las
+          dos manda de verdad.</p>
 
         <p>En WQuestions no hay capa aparte, por una razón que a estas alturas del libro debería sonar
-          inevitable: <strong>el permiso es, él mismo, una situación reificada</strong> —un hecho más,
-          descrito con las mismas siete preguntas que cualquier otro—. «Que el cardiólogo Rosales
-          pueda ver el diagnóstico de arritmia de Vega» no es una fila en una tabla de control de
-          acceso: es una afirmación del grafo, con su quién, su qué, su agente y su cuándo. El control
-          de acceso habla el mismo idioma que aquello que controla.</p>
+          inevitable: <strong>el permiso es, él mismo, un hecho del grafo</strong>. Es una situación
+          reificada, es decir, un hecho descrito con las mismas siete preguntas que cualquier otro.
+          «Que el cardiólogo Rosales pueda ver el diagnóstico de arritmia de Vega» no es una fila en
+          una tabla de permisos: es una afirmación del grafo, con su quién, su qué, su agente y su
+          cuándo. El control de acceso habla el mismo idioma que aquello que controla.</p>
 
         <aside class="nota-margen">
           <span class="etq">Recuerda</span>
-          Que un permiso pueda modelarse como situación no es un truco para este capítulo: es la regla
-          general de reificación que ya viste en acción —un evento o relación se vuelve nodo en
-          <span class="eje eje--o">O</span> cuando necesita atributos propios—. El permiso los necesita
-          todos: titular, alcance, vigencia, procedencia.
+          Que un permiso pueda modelarse como situación no es un truco inventado para este capítulo. Es
+          la regla general de reificación que ya viste en acción: un evento o una relación se vuelve un
+          nodo en <span class="eje eje--o">O</span> cuando necesita atributos propios. Y el permiso los
+          necesita todos: titular, alcance, vigencia y procedencia.
         </aside>
 
         <!-- FIGURA 29.2 · el permiso como tripleta / situación reificada -->
@@ -301,9 +301,9 @@
 (consentimiento_4471, caracter,     revocable)             ∈ M(O, K)</code></pre>
         </div>
 
-        <p>Y ese mismo consentimiento, serializado para viajar entre sistemas, no es un formato
-          especial de seguridad: es un hecho más del grafo, indistinguible en su forma de un
-          diagnóstico o de una transferencia.</p>
+        <p>Y ese mismo consentimiento, escrito para viajar entre sistemas, no usa un formato especial
+          de seguridad: es un hecho más del grafo, con la misma forma que un diagnóstico o una
+          transferencia.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">json</span><button class="copiar">⧉ copiar</button></div>
@@ -319,9 +319,8 @@
 }</code></pre>
         </div>
 
-        <p>De que el permiso sea un hecho —y no un sistema aparte— caen tres consecuencias de regalo,
-          y conviene desplegarlas una por una, porque cada una resuelve un dolor clásico del control de
-          acceso relacional.</p>
+        <p>Que el permiso sea un hecho, y no un sistema aparte, trae tres regalos. Conviene verlos uno
+          por uno, porque cada uno cura un dolor clásico del control de acceso relacional.</p>
 
         <div class="rejilla-3 revelar">
           <div class="tarjeta">
@@ -333,41 +332,39 @@
           </div>
           <div class="tarjeta">
             <h4><span class="eje eje--o">2</span>&nbsp; Revocar es publicar</h4>
-            <p style="margin:0;font-size:.93rem">Cuando Vega retira el permiso, no se edita ni se
-              destruye el hecho anterior: se asienta uno nuevo que lo supersede. El acceso deja de
-              valer en el acto, y queda constancia auditable de que existió y de cuándo cesó. El sistema
-              no olvida que hubo permiso; recuerda, además, que se revocó.</p>
+            <p style="margin:0;font-size:.93rem">Cuando Vega retira el permiso, no se edita ni se borra
+              el hecho anterior: se añade uno nuevo que lo deja sin efecto. El acceso caduca en el acto
+              y queda constancia, auditable, de que existió y de cuándo terminó. El sistema no olvida
+              que hubo permiso; recuerda, además, que se revocó.</p>
           </div>
           <div class="tarjeta">
             <h4><span class="eje eje--k">3</span>&nbsp; Auditoría gratis</h4>
             <p style="margin:0;font-size:.93rem">Cada acceso es también una situación: «el analista del
               seguro consultó <code>arritmia_dx_2026</code> el 2028-02-01 a las 10:14». El registro de
-              auditoría no es un subsistema de <em>logging</em> que construir y proteger aparte: es más
+              auditoría no es un sistema de bitácoras que haya que construir y proteger aparte: son más
               hechos en el mismo grafo.</p>
           </div>
         </div>
 
         <p>El segundo punto merece una palabra más, porque es donde el modelo y la ley se cruzan con
           elegancia. «Revocar es publicar» funciona gracias a la <strong>vigencia temporal</strong>
-          que ya conoces: la regla de bitemporalidad por la que, ante dos hechos contradictorios, gana
-          el último vigente. Retirar un permiso no es un borrado destructivo; es asentar un hecho de
-          superseción con su propia marca de tiempo. El grafo conserva la historia completa del
-          consentimiento —imprescindible para auditar— y, a la vez, sabe sin ambigüedad qué vale
-          <em>ahora</em>.</p>
+          que ya conoces: ante dos hechos que se contradicen, gana el último que sigue vigente. Retirar
+          un permiso no borra nada; añade un hecho nuevo, con su propia marca de tiempo, que cancela al
+          anterior. Así el grafo conserva la historia completa del consentimiento, imprescindible para
+          auditar, y a la vez sabe sin dudas qué vale <em>ahora</em>.</p>
 
         <aside class="nota-margen">
           <span class="etq">Cruce</span>
-          La regla que hace que «revocar» funcione sin borrar —gana el último hecho vigente— es la
-          misma bitemporalidad <span class="eje eje--t">T</span> que el libro fija al tratar las
-          situaciones y la vigencia. El control de acceso no inventa mecánica propia: reutiliza la del
-          tiempo.
+          La regla que permite «revocar» sin borrar (gana el último hecho vigente) es la misma
+          bitemporalidad <span class="eje eje--t">T</span> que el libro fija al tratar las situaciones
+          y la vigencia. El control de acceso no inventa mecanismos propios: reutiliza los del tiempo.
         </aside>
 
         <div class="caja caja--practica revelar">
           <p class="caja-tit">«Quién vio qué y cuándo», en una línea</p>
-          <p style="margin:0 0 .8rem">Porque cada acceso es un hecho, la pregunta forense que en una
-            arquitectura clásica obliga a cruzar logs dispersos, rotados y de formatos distintos, aquí
-            es una consulta más sobre los mismos siete ejes:</p>
+          <p style="margin:0 0 .8rem">Como cada acceso es un hecho, la pregunta forense que en una
+            arquitectura clásica obliga a cruzar bitácoras dispersas, rotadas y en formatos distintos,
+            aquí es una consulta más sobre los mismos siete ejes:</p>
           <div class="bloque-codigo" style="margin:0">
             <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
             <pre><code data-lang="triple"># ¿Quién accedió a la situación arritmia_dx_2026, y cuándo?
@@ -380,19 +377,19 @@
 
         <h2>Redacción por eje</h2>
 
-        <p>Hay una asimetría de granularidad que juega a favor del modelo, y es quizá su ventaja más
-          subestimada en materia de privacidad. Una base relacional concede acceso por tabla o, con
-          bastante esfuerzo, por fila: o ves el registro de la transacción entero, o no lo ves.
-          WQuestions concede acceso por <strong>hecho</strong> e incluso por <strong>eje</strong>.</p>
+        <p>Hay una diferencia de grano fino que juega a favor del modelo, y es quizá su ventaja más
+          subestimada en privacidad. Una base relacional da acceso por tabla o, con bastante esfuerzo,
+          por fila: o ves el registro entero de la transacción, o no ves nada. WQuestions da acceso por
+          <strong>hecho</strong>, e incluso por <strong>eje</strong>.</p>
 
-        <p>Porque cada situación descompone la realidad en coordenadas tipadas y separadas, se pueden
-          revelar unas y sellar otras sin romper nada. Un auditor financiero puede recibir la prueba de
-          que una transacción <em>ocurrió</em> —su <span class="eje eje--o">O</span> qué y su
-          <span class="eje eje--t">T</span> cuándo— sin ver jamás el <span class="eje eje--n">N</span>
+        <p>Como cada situación parte la realidad en coordenadas separadas y de tipo conocido, se pueden
+          mostrar unas y tapar otras sin romper nada. Un auditor financiero puede recibir la prueba de
+          que una transacción <em>ocurrió</em> (su <span class="eje eje--o">O</span> qué y su
+          <span class="eje eje--t">T</span> cuándo) sin ver nunca el <span class="eje eje--n">N</span>
           cuánto ni la <span class="eje eje--q">Q</span> contraparte. Un investigador epidemiológico
-          puede saber que existió un diagnóstico de cierta clase, en cierta fecha y cierto lugar
-          —<span class="eje eje--k">K</span>, <span class="eje eje--t">T</span> y
-          <span class="eje eje--l">L</span>—, con el <span class="eje eje--q">Q</span> quién sellado
+          puede saber que hubo un diagnóstico de cierta clase, en cierta fecha y cierto lugar
+          (<span class="eje eje--k">K</span>, <span class="eje eje--t">T</span> y
+          <span class="eje eje--l">L</span>), con el <span class="eje eje--q">Q</span> quién guardado
           bajo llave.</p>
 
         <!-- FIGURA 29.3 · redacción por eje -->
@@ -458,73 +455,73 @@
               <text x="495" y="278" text-anchor="middle" font-size="10" fill="var(--tinta-suave)">mismos hechos · todos los ejes</text>
             </svg>
           </div>
-          <figcaption><span class="fnum">Figura 29.3.</span> Redacción por eje: una misma situación
+          <figcaption><span class="fnum">Figura 29.3.</span> Redacción por eje: la misma situación
             servida a dos solicitantes. El auditor ve que la transferencia
             <span class="eje eje--o">O</span> ocurrió y <span class="eje eje--t">T</span> cuándo, pero
             el <span class="eje eje--n">N</span> monto y la <span class="eje eje--q">Q</span>
-            contraparte quedan bajo candado. La divulgación diferencial está en la
-            <em>geometría del hecho</em>, no añadida después.</figcaption>
+            contraparte quedan bajo candado. Mostrar a cada quien solo lo que le toca viene de la propia
+            forma del hecho, no se añade después.</figcaption>
         </figure>
 
-        <p>Esto no es un parche encima del modelo: es la geometría del hecho atómico haciendo trabajo
-          de privacidad. La <strong>minimización de datos</strong> —el principio legal de no entregar
-          más de lo necesario para el fin— deja de ser una promesa de buena conducta y se vuelve algo
-          que la estructura del dato permite expresar con precisión quirúrgica. En una tabla, «mostrar
-          el hecho pero ocultar el monto» exige una vista a medida, un proyecto. Aquí es decir qué ejes
-          se revelan.</p>
+        <p>Esto no es un parche encima del modelo: es la propia forma del hecho atómico haciendo
+          trabajo de privacidad. La <strong>minimización de datos</strong> (el principio legal de no
+          entregar más de lo necesario para cada fin) deja de ser una promesa de buena conducta y pasa
+          a ser algo que la estructura del dato expresa con precisión de bisturí. En una tabla,
+          «mostrar el hecho pero ocultar el monto» exige una vista a medida, todo un proyecto. Aquí
+          basta con decir qué ejes se revelan.</p>
 
         <h2>Las tensiones que quedan crudas</h2>
 
-        <p>No todo esto está resuelto: quedan tres tensiones reales, y la última
-          no la resuelve nadie todavía —para ningún modelo de datos enlazable—. Las pongo sobre la
-          mesa sin maquillaje, porque el modelo se defiende mejor cuando no finge.</p>
+        <p>No todo está resuelto. Quedan tres tensiones reales, y la última no la resuelve nadie
+          todavía, para ningún modelo de datos enlazable. Las pongo sobre la mesa sin maquillaje,
+          porque el modelo se defiende mejor cuando no finge.</p>
 
         <h3>El sistema que nunca olvida frente al derecho al olvido</h3>
 
-        <p>La vigencia temporal supersede, no borra; el RGPD, en cambio, concede el derecho a la
-          <em>eliminación</em> efectiva. Son dos exigencias que suenan compatibles y no lo son del
-          todo. La salida pasa por distinguir dos cosas que el lenguaje confunde: la
-          <strong>vigencia lógica</strong> (un hecho deja de ser verdad) y el <strong>borrado
-          físico</strong> (el contenido se destruye de verdad). La técnica concreta se llama
-          <em>crypto-shredding</em>: el contenido de los ejes de valor se guarda cifrado, y «borrar»
-          consiste en destruir la llave. Lo que queda es ruido irrecuperable, aunque el nodo-situación
-          persista para integridad referencial y auditoría.</p>
+        <p>La vigencia temporal cancela un hecho, pero no lo borra; el RGPD, en cambio, da derecho a la
+          <em>eliminación</em> de verdad. Son dos exigencias que parecen compatibles y no lo son del
+          todo. La salida pasa por separar dos cosas que el lenguaje confunde: que un hecho
+          <strong>deje de ser verdad</strong> y que su contenido <strong>se destruya</strong>. La
+          técnica concreta se llama <em>crypto-shredding</em>, «triturado por cifrado»: el contenido de
+          los ejes de valor se guarda cifrado, y «borrar» consiste en destruir la llave. Sin la llave,
+          lo que queda es ruido imposible de recuperar, aunque el nodo de la situación siga ahí para no
+          romper las referencias y poder auditar.</p>
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Por qué aquí el borrado es más factible, no menos</p>
-          <p style="margin:0">Como cada eje declara <em>explícitamente</em> dónde vive cada dato
-            personal —el nombre en <span class="eje eje--q">Q</span>, el monto en
-            <span class="eje eje--n">N</span>, la dolencia en <span class="eje eje--k">K</span>—, el
-            borrado dirigido es <strong>más</strong> alcanzable que en el <em>blob</em> relacional,
-            donde el mismo dato sensible aparece embarrado en columnas, índices, logs de aplicación y
-            respaldos de medianoche. El modelo sabe dónde apuntar la tijera.</p>
+          <p style="margin:0">Como cada eje dice <em>con claridad</em> dónde vive cada dato personal
+            (el nombre en <span class="eje eje--q">Q</span>, el monto en
+            <span class="eje eje--n">N</span>, la dolencia en <span class="eje eje--k">K</span>),
+            borrar a propósito un dato es <strong>más</strong> fácil aquí que en el amasijo relacional,
+            donde el mismo dato sensible aparece desperdigado por columnas, índices, bitácoras y copias
+            de respaldo de medianoche. El modelo sabe dónde apuntar la tijera.</p>
         </div>
 
         <h3>La identidad estable es a la vez el arma y la herramienta</h3>
 
-        <p>El poder del modelo viene de que la persona es la misma entre dominios; eso es,
-          exactamente, lo que habilita los ataques de re-identificación. La mitigación se llama
-          <strong>seudónimos pareados</strong>: la persona es una sola entidad lógica, pero cada
-          relación la ve bajo un identificador propio y acotado a ese dominio —como usar un nombre
-          distinto en cada ventanilla, donde solo un resolutor autorizado sabe que son la misma
-          persona—. Vincular dos identificadores deja de ser gratis y pasa a requerir autorización
-          explícita.</p>
+        <p>El poder del modelo viene de que la persona es la misma en todos los dominios; y eso es,
+          justamente, lo que abre la puerta a los ataques de re-identificación, los que vuelven a poner
+          nombre a un dato anónimo. La defensa se llama <strong>seudónimos pareados</strong>: la
+          persona sigue siendo una sola por dentro, pero cada relación la ve con un identificador
+          propio, válido solo en ese dominio. Es como usar un nombre distinto en cada ventanilla, donde
+          solo un árbitro autorizado sabe que detrás de todos está la misma persona. Así, cruzar dos
+          identificadores deja de ser gratis: pasa a exigir un permiso explícito.</p>
 
         <aside class="nota-margen">
           <span class="etq">Cruce</span>
-          El «enchufe» de identificadores resolubles que se introduce al tratar el zócalo categórico
-          (<a href="03-clase.html">capítulo&nbsp;3</a>) es justo el punto donde esta política de
-          resolución puede interponerse: resolver dos identificadores a una misma persona se vuelve una
-          operación con permiso, no un dato libre.
+          El «enchufe» de identificadores que se conecta al tratar el zócalo categórico
+          (<a href="03-clase.html">capítulo&nbsp;3</a>) es justo el punto donde esta política puede
+          intervenir: averiguar que dos identificadores son la misma persona se vuelve una operación
+          con permiso, no un dato de libre acceso.
         </aside>
 
         <h3>El frente genuinamente abierto: inferencia y agregación</h3>
 
-        <p>Aun con permisos por hecho y redacción por eje, un modelo que unifica las preguntas hace
-          <em>más</em> fácil el ataque por combinación: varios hechos inocuos por separado, cruzados,
-          reconstruyen lo que ninguno revelaba solo. El lugar donde vives, la hora a la que sales de
-          casa, la farmacia que frecuentas —ninguno es secreto; juntos, te identifican y te
-          diagnostican.</p>
+        <p>Aun con permisos por hecho y con la redacción por eje, un modelo que unifica las preguntas
+          vuelve <em>más</em> fácil el ataque por combinación: varios hechos inofensivos por separado,
+          al cruzarse, reconstruyen lo que ninguno mostraba solo. Dónde vives, a qué hora sales de
+          casa, qué farmacia frecuentas: ninguno es secreto, pero juntos te identifican y hasta dicen
+          qué enfermedad tienes.</p>
 
         <!-- FIGURA 29.4 · ataque de agregación -->
         <figure class="figura figura--ancha revelar">
@@ -572,46 +569,46 @@
           </div>
           <figcaption><span class="fnum">Figura 29.4.</span> El ataque por agregación: un
             <span class="eje eje--l">L</span> lugar, un <span class="eje eje--t">T</span> horario y una
-            <span class="eje eje--k">K</span> compra —inofensivos por separado— convergen y
+            <span class="eje eje--k">K</span> compra (inofensivos por separado) convergen y
             reconstruyen una identidad y una condición que ninguno revelaba solo. Es el frente que
             ningún modelo enlazable resuelve por completo.</figcaption>
         </figure>
 
-        <p>Esto <strong>no lo resuelve limpiamente nadie</strong>, y WQuestions, precisamente por
-          facilitar el enlace por diseño, tiene la obligación de tomárselo <em>más</em> en serio, no
-          menos. El <em>k</em>-anonimato y la privacidad diferencial —añadir ruido calibrado a las
-          respuestas agregadas para que ningún individuo sea distinguible— son mitigaciones serias en
-          la capa de consulta, pero son mitigaciones, no soluciones. Por eso este problema pertenece,
-          con todas las letras, al <a href="30-que-falta.html">capítulo siguiente</a>: es parte
-          de lo que falta.</p>
+        <p>Esto <strong>no lo resuelve bien nadie</strong>, y WQuestions, justo por facilitar el enlace
+          desde el diseño, está obligado a tomárselo <em>más</em> en serio, no menos. Existen defensas
+          serias en el momento de responder una consulta: el <em>k</em>-anonimato (no contestar si la
+          respuesta señala a menos de <em>k</em> personas) y la privacidad diferencial (añadir un poco
+          de ruido a las cifras agregadas para que nadie quede al descubierto). Pero son eso, defensas,
+          no soluciones. Por eso este problema pertenece, con todas las letras, al
+          <a href="30-que-falta.html">capítulo siguiente</a>: es parte de lo que falta.</p>
 
         <h2>El veredicto</h2>
 
-        <p>Recapitulando sin adornos lo que el grafo compartido sí ofrece —y lo que todavía no—:</p>
+        <p>En limpio, esto es lo que el grafo compartido sí ofrece, y lo que todavía no:</p>
 
         <div class="columnas">
           <p>El grafo compartido es un <strong>idioma, no una base central</strong>. La privacidad
-            empieza por la topología: cada tenedor controla lo suyo y solo une bajo consentimiento. El
-            permiso, el consentimiento y la auditoría son <strong>situaciones reificadas</strong> —se
-            expresan en el mismo modelo que los datos, no en una capa paralela que se desincroniza con
-            el tiempo—.</p>
+            empieza por la forma de la red: cada parte controla lo suyo y solo lo une bajo
+            consentimiento. El permiso, el consentimiento y la auditoría son <strong>hechos del propio
+            grafo</strong>; se escriben en el mismo modelo que los datos, no en una capa aparte que se
+            desincroniza con el tiempo.</p>
           <p>El control fino por eje y el borrado dirigido por <em>crypto-shredding</em> son
-            <strong>más factibles</strong> aquí que en lo relacional, porque el modelo sabe
-            explícitamente dónde vive cada dato. Pero la misma vinculabilidad que le da su fuerza
-            convierte a la <strong>inferencia por agregación</strong> en el riesgo central, todavía sin
-            solución cerrada para nadie.</p>
+            <strong>más viables</strong> aquí que en lo relacional, porque el modelo sabe con exactitud
+            dónde vive cada dato. Pero esa misma facilidad para enlazar, que es su fuerza, convierte la
+            <strong>inferencia por agregación</strong> en el riesgo central, todavía sin solución
+            cerrada para nadie.</p>
         </div>
 
-        <p>La conclusión operativa es incómoda y conviene decirla en voz alta: <strong>una arquitectura
-          de información que no piensa la privacidad desde el primer día no merece ser adoptada.</strong>
-          Un modelo que vuelve trivial preguntar cualquier cosa sobre cualquiera es tan capaz de
-          habilitar la mejor medicina como el peor abuso, y la diferencia entre ambos no está en la
-          potencia del grafo, sino en quién puede preguntar qué.</p>
+        <p>La conclusión práctica es incómoda y conviene decirla en voz alta: <strong>una arquitectura
+          de información que no piensa la privacidad desde el primer día no merece adoptarse.</strong>
+          Un modelo que vuelve fácil preguntar cualquier cosa sobre cualquiera sirve tanto para la
+          mejor medicina como para el peor abuso, y la diferencia no está en la potencia del grafo,
+          sino en quién puede preguntar qué.</p>
 
         <p>Que esa pregunta —quién puede preguntar qué— se responda <em>con el mismo modelo</em>, y no
           con un sistema aparte pegado con cinta, es la mejor noticia de este capítulo. Que la
-          inferencia por agregación siga abierta es la peor. Las dos son verdad a la vez, y la página
-          siguiente empieza, justamente, por admitir todo lo que falta.</p>
+          inferencia por agregación siga abierta es la peor. Las dos cosas son verdad a la vez, y la
+          página siguiente empieza, justamente, por admitir todo lo que falta.</p>
 
         <p class="cita-destacada revelar">La diferencia entre la mejor medicina y el peor abuso no está
           en la potencia del grafo, sino en quién puede preguntar qué.<cite>El veredicto</cite></p>

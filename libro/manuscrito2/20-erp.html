@@ -125,8 +125,8 @@
         <p>Cada uno de esos módulos vive, históricamente, en su propio archipiélago de tablas. Y la
           consecuencia es bien conocida por cualquier consultor: <strong>las integraciones entre
           módulos son el grueso del proyecto</strong>. Se estima que conectar los subsistemas
-          —lograr que la venta «avise» al inventario, que el inventario «avise» a contabilidad, que
-          contabilidad «avise» a recursos humanos— consume del orden del 60 al 70 por ciento del
+          (lograr que la venta «avise» al inventario, que el inventario «avise» a contabilidad, que
+          contabilidad «avise» a recursos humanos) consume del orden del 60 al 70 por ciento del
           esfuerzo total de una implementación. No se paga por modelar la venta; se paga por
           coserla a todo lo demás.</p>
 
@@ -143,7 +143,7 @@
           </div>
           <figcaption><span class="fnum">Figura 20.1.</span> Reparto aproximado del esfuerzo en una
             implementación de ERP clásica: el grueso no se va en describir cada módulo, sino en
-            integrarlos entre sí. La promesa de este capítulo es que esa barra —la integración— tiende
+            integrarlos entre sí. La promesa de este capítulo es que esa barra (la integración) tiende
             a cero cuando todos los hechos comparten la misma estructura atómica.</figcaption>
         </figure>
 
@@ -151,8 +151,8 @@
           ventas, la operación de Ortiz es un <code>pedido</code> con un <code>cliente_id</code>; para
           inventario, es un <code>movimiento</code> con un <code>sku</code> y un signo negativo; para
           contabilidad, es un <code>asiento</code> con un <code>haber</code>. Tres nombres, tres
-          tablas, tres identidades para <em>el mismo suceso</em>. Y para volver a juntarlos —para
-          responder «¿cuánta comisión generó la venta que vació ocho bombas del almacén norte?»— hace
+          tablas, tres identidades para <em>el mismo suceso</em>. Y para volver a juntarlos (para
+          responder «¿cuánta comisión generó la venta que vació ocho bombas del almacén norte?») hace
           falta cruzar tres bases de datos con claves foráneas frágiles y, casi siempre, un proceso
           <em>ETL</em> nocturno mantenido a mano.</p>
 
@@ -213,8 +213,8 @@
           </div>
         </div>
 
-        <p>Y atravesando las seis cajas, los predicados del séptimo eje —<span class="eje eje--m">M</span>,
-          el <em>cómo</em>— son los cables que articulan todo: <code>agente</code>, <code>parte_de</code>,
+        <p>Y atravesando las seis cajas, los predicados del séptimo eje (<span class="eje eje--m">M</span>,
+          el <em>cómo</em>) son los cables que articulan todo: <code>agente</code>, <code>parte_de</code>,
           <code>reporta_a</code>, <code>motivado_por</code>. Las decisiones de diseño que el ERP más
           ejercita son cuatro, y conviene tenerlas a mano porque reaparecerán en cada escenario: la
           <strong>D3</strong> (todo es tripleta atómica), la <strong>D4</strong> (una operación que
@@ -271,8 +271,8 @@
 
         <h2>Caso 2 · La lista de materiales (BOM) es <code>parte_de</code> recursivo</h2>
 
-        <p>Aquí el modelo luce. Una <em>lista de materiales</em> —el BOM, por <em>bill of
-          materials</em>— es la descomposición jerárquica de un producto en sus subproductos y, al
+        <p>Aquí el modelo luce. Una <em>lista de materiales</em> (el BOM, por <em>bill of
+          materials</em>) es la descomposición jerárquica de un producto en sus subproductos y, al
           final, en su materia prima. Es uno de los conceptos más notoriamente incómodos de
           implementar en bases relacionales: los MRP clásicos lo resuelven con tablas como
           <code>mast</code>, <code>matl</code> y <code>caps</code> unidas por <em>joins</em> que pocos
@@ -356,10 +356,10 @@ u.assert_fact(mp_cobre, "cantidad_en_bom",
 
         <p>En un ERP tradicional, esta venta dispara <em>tres procesos separados</em> que escriben en
           tres tablas distintas, unidas por claves foráneas y convenciones de nombres. La pregunta de
-          auditoría más simple —«explícame qué pasó con esta venta»— obliga a cruzar las tres bases. En
+          auditoría más simple («explícame qué pasó con esta venta») obliga a cruzar las tres bases. En
           WQuestions el modelado es directo: <strong>una situación reificada con tres
-          sub-situaciones</strong>. Esto es exactamente la D4 en acción —la operación que tocaría
-          varios módulos se reifica— y la figura lo muestra antes que el código.</p>
+          sub-situaciones</strong>. Esto es exactamente la D4 en acción (la operación que tocaría
+          varios módulos se reifica) y la figura lo muestra antes que el código.</p>
 
         <!-- FIGURA SVG: la venta vista cross-módulo -->
         <figure class="figura figura--ancha revelar">
@@ -483,14 +483,14 @@ u.assert_fact(comision_ortiz, "calculado_segun", politica_comisiones_v2)</code><
         <h2>Caso 4 · La orden de compra y su aprobación bitemporal</h2>
 
         <p>Río arriba de la venta hay que reponer stock, y eso dispara compras. Las órdenes grandes
-          —digamos 48.000 USD de cobre al proveedor— no se ejecutan al instante: pasan por un ciclo.
+          (digamos 48.000 USD de cobre al proveedor) no se ejecutan al instante: pasan por un ciclo.
           Alguien la redacta, alguien la manda a aprobación, alguien con autoridad la aprueba o la
           rechaza. Cada estado tiene su fecha de entrada y su fecha de salida.</p>
 
         <p>En sistemas tradicionales, esto vive en una columna <code>estado</code> que <strong>se
           sobrescribe</strong> en cada transición. Cuando alguien pregunta «¿en qué estado estaba esta
-          orden el 20 de julio a la una de la tarde?», hay que rebuscar en la tabla de auditoría —si
-          existe— o estimarlo a partir de los <em>logs</em>. En WQuestions, el estado es un hecho con
+          orden el 20 de julio a la una de la tarde?», hay que rebuscar en la tabla de auditoría (si
+          existe) o estimarlo a partir de los <em>logs</em>. En WQuestions, el estado es un hecho con
           vigencia temporal (D6): no se pisa, se acumula.</p>
 
         <div class="caja caja--practica revelar">
@@ -545,8 +545,8 @@ u.assert_fact(oc_2208, "estado", aprobada,
 
         <p>Las ocho bombas que salieron del almacén hay que reponerlas: la planta de Cordero va a
           producir cincuenta. Cada bomba consume cierta cantidad de cobre (para el bobinado) y cierta
-          cantidad de horas-hombre de taller. El ERP necesita registrar tres cosas —la orden como
-          evento principal, el consumo de insumos y el consumo de mano de obra— y el patrón es,
+          cantidad de horas-hombre de taller. El ERP necesita registrar tres cosas (la orden como
+          evento principal, el consumo de insumos y el consumo de mano de obra) y el patrón es,
           felizmente, el mismo de la venta cross-módulo:</p>
 
         <div class="bloque-codigo">
@@ -574,7 +574,7 @@ u.assert_fact(consumo_hh, "ejecutado_por", jefe_planta_cordero)</code></pre>
           <em>no hay agente humano</em> y los reactivos se transforman solos siguiendo su
           estequiometría. El catálogo ya admite que el rol <code>agente</code> sea opcional cuando el
           verbo lo permite (D5); por eso el mismo molde sirve para «Cordero ensambla» y para «la
-          mezcla reacciona». Ese caso límite —química sin agente— se explora en el
+          mezcla reacciona». Ese caso límite (química sin agente) se explora en el
           <a href="25-cuatro-dominios.html">capítulo 25</a>.</p>
 
         <p>La consulta «¿cuántos kilos de cobre consumió esta orden?» es, otra vez, una proyección:
@@ -594,8 +594,8 @@ u.assert_fact(consumo_hh, "ejecutado_por", jefe_planta_cordero)</code></pre>
           auditor laboral al revisar un legajo: <strong>¿cuál era el salario de Ortiz el 15 de marzo?
           ¿Y el 15 de junio? ¿Y el 15 de septiembre?</strong></p>
 
-        <p>En un ERP tradicional, esto exige una tabla histórica auxiliar —<code>emp_salary_hist</code>
-          y parientes— que la mitad de las implementaciones nunca termina de mantener al día. En
+        <p>En un ERP tradicional, esto exige una tabla histórica auxiliar (<code>emp_salary_hist</code>
+          y parientes) que la mitad de las implementaciones nunca termina de mantener al día. En
           WQuestions, es la misma D6 del Caso 4 aplicada a un número: <strong>tres tripletas</strong>
           que conviven en el grafo.</p>
 
@@ -668,7 +668,7 @@ GROUP BY so.id, sc.monto;
           <p><strong>Después, en WQuestions.</strong> La misma información ya existe como un único
             grafo de hechos atómicos. La <code>venta_4417</code> es una situación reificada que
             contiene, por <code>parte_de</code>, la comisión de Ortiz, el movimiento de inventario y
-            —a través de la orden de producción que repuso el stock— el consumo de horas-hombre. La
+            (a través de la orden de producción que repuso el stock) el consumo de horas-hombre. La
             pregunta transversal es una proyección de unos pocos saltos: localiza las ventas de Ortiz
             del trimestre, recorre sus sub-situaciones, lee <code>monto</code> en la comisión y
             <code>cantidad</code> en el consumo de mano de obra.</p>
@@ -705,17 +705,17 @@ GROUP BY so.id, sc.monto;
         </div>
 
         <p>Y todo se modeló con los mismos roles canónicos del catálogo (D8) más un puñado de roles de
-          dominio —<code>reporta_a</code>, <code>trabaja_en</code>, <code>calculado_segun</code>,
-          <code>cantidad_en_bom</code>, <code>ejecutado_por</code>— admitidos por la política liberal.
+          dominio (<code>reporta_a</code>, <code>trabaja_en</code>, <code>calculado_segun</code>,
+          <code>cantidad_en_bom</code>, <code>ejecutado_por</code>) admitidos por la política liberal.
           El motor no creció ni una línea para absorber el ERP. Lo único que creció fue el lexicon,
-          con un puñado de verbos nuevos —<code>vender</code>, <code>ordenar_compra</code>,
+          con un puñado de verbos nuevos (<code>vender</code>, <code>ordenar_compra</code>,
           <code>aprobar</code>, <code>producir</code>, <code>contratar</code>,
-          <code>ajustar_salario</code>— y sus signaturas.</p>
+          <code>ajustar_salario</code>) y sus signaturas.</p>
 
         <p>Si el banco demostró que el modelo soporta el peso del dinero, el ERP demuestra que soporta
           el peso de la <em>coordinación</em>: muchas voces internas describiendo, cada una a su
-          manera, hechos que en el fondo son uno solo. El próximo capítulo cambia de terreno —de la
-          fábrica al aula— y trae un grafo de otra naturaleza: <a href="21-universidad.html">una
+          manera, hechos que en el fondo son uno solo. El próximo capítulo cambia de terreno (de la
+          fábrica al aula) y trae un grafo de otra naturaleza: <a href="21-universidad.html">una
           universidad</a>, donde los prerrequisitos forman cadenas que el modelo deberá recorrer como
           un dependiente al que nunca le faltó un eslabón.</p>
 

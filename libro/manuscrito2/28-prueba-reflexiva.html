@@ -80,12 +80,12 @@
           Lo apretó un sistema de verdad, en producción, cuando hicimos arqueología del
           <a href="24-yaku.html">yaku</a>. Y lo apretaron, a propósito, cuatro dominios incómodos
           elegidos para que crujiera. Todas esas presiones tienen algo en común: vienen de fuera. El
-          modelo describe un mundo —ventas, pacientes, partidos, contratos— y la pregunta es si el
+          modelo describe un mundo (ventas, pacientes, partidos, contratos) y la pregunta es si el
           mundo cabe en sus siete ejes.</p>
 
         <p>Queda una presión más, y es la más exigente de todas: pedirle al modelo que <strong>se
           describa a sí mismo</strong>. No modelar un dominio externo, sino construir una herramienta
-          —un programa con menús, formularios, tipos de dato y reglas de comportamiento— cuya
+          (un programa con menús, formularios, tipos de dato y reglas de comportamiento) cuya
           estructura, cuyos tipos y cuya conducta sean, ellos mismos, hechos WQuestions. Si la tesis
           del libro es cierta, si las preguntas son la base universal de la información, entonces la
           propia maquinaria que manipula información tendría que poder expresarse en esas preguntas.
@@ -106,15 +106,15 @@
 
         <p>Construimos, sobre el prototipo, una pequeña aplicación de gestión: un menú navegable,
           formularios para dar de alta y editar, grillas para consultar, y entidades de negocio
-          —personas, productos, ventas, compras— con sus campos. Lo decisivo no es la aplicación; es
+          (personas, productos, ventas, compras) con sus campos. Lo decisivo no es la aplicación; es
           <strong>de qué está hecha</strong>. Cada opción del menú, cada campo de cada formulario,
           cada tipo de dato, cada relación entre entidades y cada acción que el programa ejecuta es
           una tripleta <code>(sujeto, rol, valor)</code> en un único grafo.</p>
 
         <p>El menú es un objeto reificado que <code>tiene_opcion</code> a otros objetos; cada opción
           <code>tiene_accion</code> una acción; cada acción es <code>instancia_de</code> un verbo
-          —<code>mostrar_texto</code>, <code>abrir_formulario</code>, <code>abrir_grilla</code>,
-          <code>guardar</code>— que un evaluador genérico interpreta. El esquema de una entidad
+          (<code>mostrar_texto</code>, <code>abrir_formulario</code>, <code>abrir_grilla</code>,
+          <code>guardar</code>) que un evaluador genérico interpreta. El esquema de una entidad
           también es dato: la entidad <code>tiene_campo</code> a descriptores que declaran su etiqueta,
           su <code>tipo_dato</code> y su <code>orden</code>. Un registro es un individuo
           <code>instancia_de</code> su tipo, con un hecho por campo. No hay, en ninguna parte, una
@@ -200,8 +200,8 @@
             </svg>
           </div>
           <figcaption><span class="fnum">Figura 28.1.</span> El modelo reflejándose a sí mismo. Cada
-            uno de los siete ejes es, a su vez, una <code>instancia_de</code> el concepto «eje» —una
-            clase del eje <span class="eje eje--k">K</span>—, y el lexicon y los predicados viven como
+            uno de los siete ejes es, a su vez, una <code>instancia_de</code> el concepto «eje» (una
+            clase del eje <span class="eje eje--k">K</span>), y el lexicon y los predicados viven como
             tripletas en el mismo grafo. La flecha de trazos que regresa sobre el anillo es la
             reflexión: el grafo contiene su propia descripción.</figcaption>
         </figure>
@@ -228,7 +228,7 @@
         <p>Cinco tripletas. Ninguna línea de código en el motor, en el servidor ni en la interfaz. Al
           recargar, el formulario dibujó el campo, la grilla le sumó la columna y el guardado lo
           persistió, porque las tres operaciones leen el esquema del grafo en lugar de conocerlo de
-          antemano. Ese número —cinco hechos, cero código— es el resultado central del experimento, y
+          antemano. Ese número (cinco hechos, cero código) es el resultado central del experimento, y
           la confirmación más limpia de la primera mitad de la tesis: <strong>la estructura es
           dato</strong>.</p>
 
@@ -306,7 +306,7 @@
 # basta declarar el verbo, la entidad y sus campos como hechos.</code></pre>
         </div>
 
-        <p>Agregar una transacción entera nueva —«compras», hermana de «ventas»— costó esencialmente
+        <p>Agregar una transacción entera nueva («compras», hermana de «ventas») costó esencialmente
           datos, no motor. El comportamiento vive en el grafo y se interpreta desde afuera, tal como
           el modelo prometía.</p>
 
@@ -339,13 +339,13 @@
 
         <aside class="nota-margen">
           <span class="etq">Referencia</span>
-          La bitemporalidad —reificar las propiedades que cambian con un rango de inicio y fin— se
+          La bitemporalidad (reificar las propiedades que cambian con un rango de inicio y fin) se
           enuncia formalmente en el <a href="09-situaciones.html">capítulo 9</a>. Aquí solo la usamos.
         </aside>
 
         <p>La edición de un dato se implementó sin borrar nada: editar un valor es asentar un hecho
-          nuevo y leer el más reciente. Es bitemporalidad en miniatura —la vigencia de la decisión
-          <span class="codigo-d" style="font-family:var(--mono);font-weight:700;background:var(--eje-o);color:#fff;border-radius:4px;padding:.05rem .4rem;font-size:.8rem">D6</span>—:
+          nuevo y leer el más reciente. Es bitemporalidad en miniatura (la vigencia de la decisión
+          <span class="codigo-d" style="font-family:var(--mono);font-weight:700;background:var(--eje-o);color:#fff;border-radius:4px;padding:.05rem .4rem;font-size:.8rem">D6</span>):
           historial gratis, ninguna sobreescritura destructiva. Y resultó ser la forma <em>natural</em>
           de implementar el «update» de un CRUD, no un agregado teórico que hubo que justificar.</p>
 
@@ -361,7 +361,7 @@
 
         <p>El experimento no solo validó: <strong>forzó una corrección del prototipo</strong>, y vale
           la pena contarla, porque es el método del libro operando sobre sí mismo. Para clasificar a
-          una persona —decir «Ana es un cliente»— hace falta el hecho <code>(ana, instancia_de,
+          una persona (decir «Ana es un cliente») hace falta el hecho <code>(ana, instancia_de,
           cliente)</code>. Pero <code>ana</code> vive en el eje <span class="eje eje--q">Q</span>, es
           un agente, y el prototipo había restringido <code>instancia_de</code> a sujetos del eje
           <span class="eje eje--o">O</span>. La carga reveló la contradicción de inmediato.</p>
@@ -392,14 +392,14 @@
             <span class="eje eje--n">N</span> <span class="eje eje--k">K</span>), por oposición al eje
             estructural <span class="eje eje--m">M</span> de los predicados. Una signatura
             <code>V→K</code> dice: «el sujeto puede ser un individuo de cualquier eje de valor, y el
-            objeto es una clase». Es la forma de declarar que una operación —como clasificar— no
+            objeto es una clase». Es la forma de declarar que una operación (como clasificar) no
             pertenece a un eje particular.</p>
         </div>
 
         <p>Ese comodín no resuelve solo este caso. Es exactamente el mecanismo que el
           <a href="30-que-falta.html">capítulo 30</a> reclama para relajar otras signaturas demasiado
-          estrechas —pensemos en <code>paciente</code> o <code>partes</code>, hoy fijadas a
-          <code>O→Q</code> cuando deberían admitir <code>O→V</code>—. La fricción, sometida a carga, no
+          estrechas (pensemos en <code>paciente</code> o <code>partes</code>, hoy fijadas a
+          <code>O→Q</code> cuando deberían admitir <code>O→V</code>). La fricción, sometida a carga, no
           abrió un agujero en el modelo: lo empujó a alinearse con lo que ya afirmaba.</p>
 
         <p class="cita-destacada revelar">La presión no abrió un agujero en el modelo: lo empujó a
@@ -414,7 +414,7 @@
         <div class="columnas">
           <p><strong>El texto libre.</strong> Los siete ejes son semánticos, no tipos primitivos: no
             existe un eje «string». Un nombre como «Ana», el contenido de un mensaje, el número de un
-            documento —texto arbitrario— no tienen casa propia. La decisión, fiel a la teoría, fue
+            documento (texto arbitrario) no tienen casa propia. La decisión, fiel a la teoría, fue
             alojar el texto libre como un <strong>literal en <span class="eje eje--k">K</span>,
             minteado y único</strong>, con su valor en la etiqueta y una marca que lo distingue de una
             <em>categoría controlada</em>. Así, dos personas llamadas «Ana» no terminan compartiendo un
@@ -422,8 +422,8 @@
           <p><strong>El catálogo como dato.</strong> El catálogo canónico tipa con fuerza el núcleo del
             modelo, pero los campos que el usuario define como datos pasaban sin validar, bajo política
             liberal. La carga lo expuso: el tipado del esquema vivía a medias en el código. Lo cerramos
-            haciendo que <strong>cada campo derive su signatura de sus propios datos</strong> —dominio
-            del eje de la entidad, rango de su <code>tipo_dato</code>— y la registre en el catálogo.
+            haciendo que <strong>cada campo derive su signatura de sus propios datos</strong> (dominio
+            del eje de la entidad, rango de su <code>tipo_dato</code>) y la registre en el catálogo.
             Escribir en un campo dinámico ahora se valida como un rol canónico.</p>
         </div>
 
@@ -439,16 +439,16 @@
             </div>
             <div>
               <p style="margin:0;font-weight:600;color:var(--eje-k)">Categoría controlada</p>
-              <p style="margin:.2rem 0 0;font-size:.92rem">Vocabulario cerrado —unidades monetarias,
-                estados de un trámite—. Es una clase nombrada y <em>compartida</em>; el mismo nodo
+              <p style="margin:.2rem 0 0;font-size:.92rem">Vocabulario cerrado (unidades monetarias,
+                estados de un trámite). Es una clase nombrada y <em>compartida</em>; el mismo nodo
                 vale para todos.</p>
             </div>
           </div>
         </div>
 
-        <p>El catálogo canónico es invisible para el usuario final —es el lexicon su interfaz, como fija
+        <p>El catálogo canónico es invisible para el usuario final (es el lexicon su interfaz, como fija
           la decisión
-          <span class="codigo-d" style="font-family:var(--mono);font-weight:700;background:var(--eje-o);color:#fff;border-radius:4px;padding:.05rem .4rem;font-size:.8rem">D8</span>—,
+          <span class="codigo-d" style="font-family:var(--mono);font-weight:700;background:var(--eje-o);color:#fff;border-radius:4px;padding:.05rem .4rem;font-size:.8rem">D8</span>),
           pero la carga reflexiva lo obligó a abarcar también lo que el usuario crea sobre la marcha. El
           tipado dejó de vivir en Python y pasó a vivir en el grafo:</p>
 
@@ -464,7 +464,7 @@
         <p><strong>El humano.</strong> Queda en pie la tercera frontera, y no es del modelo, sino del
           lector. Cuando <em>todo</em> es <code>(sujeto, rol, valor)</code>, se pierde el andamiaje de
           tablas y formularios con nombre que normalmente carga el significado. El poder de la
-          abstracción reflexiva tiene un peaje cognitivo. El inspector —«lo que ves es lo que hay»—
+          abstracción reflexiva tiene un peaje cognitivo. El inspector («lo que ves es lo que hay»)
           re-concreta lo suficiente para no ahogarse, pero la pieza que falta es hacer de las
           <strong>vistas y proyecciones con nombre</strong> ciudadanas del grafo: datos, no accidente
           de la interfaz. Es trabajo pendiente, y reaparece como tal en el capítulo que sigue.</p>
@@ -473,8 +473,8 @@
           <p class="caja-tit">La frontera que no cerramos</p>
           <p style="margin:0">Un sistema donde todo es una tripleta gana en uniformidad lo que pierde en
             asideros. El programador acostumbrado a una tabla <code>venta</code> con columnas a la vista
-            tiene, de pronto, solo hechos. La re-concreción —darle nombre y forma a las vistas, dentro
-            del propio grafo— no es un lujo cosmético: es lo que vuelve usable un modelo que, por
+            tiene, de pronto, solo hechos. La re-concreción (darle nombre y forma a las vistas, dentro
+            del propio grafo) no es un lujo cosmético: es lo que vuelve usable un modelo que, por
             construcción, disuelve las categorías familiares.</p>
         </div>
 
@@ -495,19 +495,19 @@
           prototipo produjo. Más que ocho dominios distintos, es el modelo hablando de sí mismo sin
           salirse de sus siete ejes: corrigiéndose cuando una signatura quedó corta, absorbiendo como
           datos lo que un sistema convencional cablearía en código, y midiendo su propia ambición en un
-          número limpio —cinco hechos, cero líneas—.</p>
+          número limpio (cinco hechos, cero líneas).</p>
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">El saldo de la prueba reflexiva</p>
-          <p style="margin:0">La primera mitad de la tesis —<strong>estructura y comportamiento son
-            datos</strong>— queda saldada, y medida. Lo que sigue es la otra mitad: el inventario
+          <p style="margin:0">La primera mitad de la tesis (<strong>estructura y comportamiento son
+            datos</strong>) queda saldada, y medida. Lo que sigue es la otra mitad: el inventario
             de lo que todavía falta para que esto deje de ser un prototipo y se vuelva
             infraestructura de uso diario. Antes de ese inventario, sin embargo, hay una pregunta que
             un grafo compartido vuelve urgente: si todos los hechos viven en un mismo piso, ¿quién
             puede ver —y preguntar— qué?</p>
         </div>
 
-        <p>A esa pregunta —la seguridad y la privacidad del grafo compartido— dedicamos el próximo
+        <p>A esa pregunta (la seguridad y la privacidad del grafo compartido) dedicamos el próximo
           capítulo. Y al inventario de lo pendiente, el siguiente.</p>
 
       </div>

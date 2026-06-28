@@ -58,24 +58,24 @@
 
         <p class="entrada">A lo largo del libro el código apareció a cuentagotas: una llamada aquí
           para ilustrar la reificación de una situación, una consulta allá para mostrar la
-          bitemporalidad. Ese goteo es deliberado en el cuerpo del texto —cada fragmento llega cuando
-          la idea que lo justifica está fresca—, pero estorba a quien se sienta a programar. Este
+          bitemporalidad. Ese goteo es deliberado en el cuerpo del texto (cada fragmento llega cuando
+          la idea que lo justifica está fresca), pero estorba a quien se sienta a programar. Este
           anexo invierte la prioridad: consolida en un único sitio las piezas técnicas, ordenadas no
           por el hilo narrativo sino por su función. Es un manual de referencia, no un capítulo para
           leer de corrido.</p>
 
         <p>La buena noticia, que este anexo deja a la vista mejor que ninguna otra página, es que hay
           poco que memorizar. El núcleo del modelo cabe en un puñado de estructuras de datos y cuatro
-          funciones. Todo lo demás —los ocho dominios industriales, los cuatro escenarios de estrés,
-          la aplicación que se describe a sí misma— se construye combinando esas pocas piezas. Si solo
+          funciones. Todo lo demás (los ocho dominios industriales, los cuatro escenarios de estrés,
+          la aplicación que se describe a sí misma) se construye combinando esas pocas piezas. Si solo
           vas a leer una sección, que sea el catálogo de predicados: ahí está el vocabulario con el que
           se escribe cualquier hecho.</p>
 
         <div class="caja caja--practica">
           <p class="caja-tit">Sobre los identificadores de este anexo</p>
-          <p style="margin-bottom:0">Los ejemplos usan el repertorio del libro —la venta de Marco,
+          <p style="margin-bottom:0">Los ejemplos usan el repertorio del libro (la venta de Marco,
             el gol de Messi, la película de Serra, la ordenanza de micromovilidad, la sesión de IA,
-            el episodio del paciente Vega— para que reconozcas los casos. Las <em>estructuras</em>
+            el episodio del paciente Vega) para que reconozcas los casos. Las <em>estructuras</em>
             (los campos de un hecho, la forma de un patrón, las firmas de las APIs) son las del
             prototipo real, que vive en <code>prototipo/wq/</code>. Cambia los nombres a tu dominio;
             la maquinaria no cambia.</p>
@@ -120,8 +120,8 @@ count(u, Pattern(...), *, at=None)
           frontera para el control de acceso.
         </aside>
 
-        <p>Junto a <code>count</code> conviven agregadores del mismo molde —<code>suma</code>,
-          <code>promedio</code>— que aplican una función sobre el rol numérico de las coincidencias.
+        <p>Junto a <code>count</code> conviven agregadores del mismo molde (<code>suma</code>,
+          <code>promedio</code>) que aplican una función sobre el rol numérico de las coincidencias.
           Comparten la firma exacta de <code>count</code>, cambiando solo qué devuelven; por eso no
           merecen entrada propia.</p>
 
@@ -157,8 +157,8 @@ class Individual:
 
         <aside class="nota-margen">
           <span class="etq">Recuerda</span>
-          En <strong>K</strong> viven los conceptos atemporales —las plantillas, como
-          <code>venta</code> o <code>largometraje</code>—; en <strong>O</strong> y los pilares,
+          En <strong>K</strong> viven los conceptos atemporales (las plantillas, como
+          <code>venta</code> o <code>largometraje</code>); en <strong>O</strong> y los pilares,
           las entidades situadas, como <code>venta_001</code> (D1). El predicado
           <code>instancia_de</code> es el puente entre ambos mundos.
         </aside>
@@ -208,7 +208,7 @@ class Pattern:
 
         <p>El lexicon es el compilador que traduce un verbo del lenguaje a la signatura de una
           situación (D8). Cada <code>LexiconEntry</code> declara qué tipo de situación produce el
-          verbo, qué roles son obligatorios y —si el verbo es polisémico— qué complemento la dispara.</p>
+          verbo, qué roles son obligatorios y (si el verbo es polisémico) qué complemento la dispara.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -291,7 +291,7 @@ class LexiconEntry:
             </svg>
           </div>
           <figcaption><span class="fnum">Figura 32.1.</span> Los siete ejes. Seis fijan el valor de
-            un hecho —una lectura por eje, a la derecha el ejemplo de <code>venta_001</code>—; el
+            un hecho (una lectura por eje, a la derecha el ejemplo de <code>venta_001</code>); el
             séptimo, <strong>M</strong>, no aloja nodos: es el de los predicados que cosen las seis
             lecturas en un hecho consultable.</figcaption>
         </figure>
@@ -312,8 +312,8 @@ class LexiconEntry:
           unifican: ambas son cables; solo difieren en cardinalidad —funcional (un solo valor) o
           múltiple (D2)—. La firma de cada predicado declara de qué eje sale y a cuál llega; la
           escribimos <code>M(O→Q)</code>: «desde un nodo O hacia un nodo Q». El motor solo valida este
-          repertorio canónico; cualquier rol que un dominio invente —por la política liberal del
-          catálogo— se acepta sin declararlo.</p>
+          repertorio canónico; cualquier rol que un dominio invente (por la política liberal del
+          catálogo) se acepta sin declararlo.</p>
 
         <p>Conviene mostrar primero la forma del cable con el componente insignia. El hecho «Messi es
           el autor de <code>gol_001</code>» es una tripleta cuyo cable es <code>agente</code>:</p>
@@ -512,7 +512,7 @@ lex.register(LexiconEntry(
 # n == 8</code></pre>
         </div>
 
-        <p>Y una decisión de negocio —«a la séptima, una gratis»— no es código del motor: es Python que
+        <p>Y una decisión de negocio («a la séptima, una gratis») no es código del motor: es Python que
           consume el resultado de la consulta. La regla vive en la aplicación, no en el grafo.</p>
 
         <div class="bloque-codigo">
@@ -578,7 +578,7 @@ u.assert_fact(tarifa, "monto", n_25_usd)
 u.assert_fact(tarifa, "causado_por", estado_demanda)</code></pre>
         </div>
 
-        <p>Y la consulta inversa —«¿por qué costó tanto?»— recorre los hechos de la tarifa buscando el
+        <p>Y la consulta inversa («¿por qué costó tanto?») recorre los hechos de la tarifa buscando el
           cable <code>causado_por</code>:</p>
 
         <div class="bloque-codigo">
@@ -827,8 +827,8 @@ uso = query(u, Pattern(
         <div class="rejilla-2 revelar">
           <div class="tarjeta">
             <h4><span class="eje eje--q">1</span>&nbsp; La API es diminuta</h4>
-            <p style="margin:0;font-size:.95rem">Cuatro funciones —<code>ingest_situation</code>,
-              <code>assert_fact</code>, <code>query</code>, <code>count</code>— modelan ocho dominios
+            <p style="margin:0;font-size:.95rem">Cuatro funciones (<code>ingest_situation</code>,
+              <code>assert_fact</code>, <code>query</code>, <code>count</code>) modelan ocho dominios
               completos. No hay doscientas funciones que aprender; hay cuatro.</p>
           </div>
           <div class="tarjeta">
@@ -845,7 +845,7 @@ uso = query(u, Pattern(
           <div class="tarjeta">
             <h4><span class="eje eje--t">4</span>&nbsp; La política liberal trabaja sola</h4>
             <p style="margin:0;font-size:.95rem">Roles que ningún capítulo declara
-              —<code>medicamento_prescrito</code>, <code>equipo</code>, <code>frecuencia</code>— el
+              (<code>medicamento_prescrito</code>, <code>equipo</code>, <code>frecuencia</code>) el
               motor los acepta. Valida lo canónico; deja pasar lo de dominio.</p>
           </div>
           <div class="tarjeta" style="grid-column:1/-1">

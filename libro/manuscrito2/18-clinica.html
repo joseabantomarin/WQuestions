@@ -57,7 +57,7 @@
       <div class="contenido">
 
         <p class="entrada">Son las 09:40 de un martes en un consultorio de cardiología. El paciente
-          —el mismo Vega que meses atrás entró por urgencias con una fibrilación— llega ahora a un
+          (el mismo Vega que meses atrás entró por urgencias con una fibrilación) llega ahora a un
           control de rutina. No hay drama: se sienta, cuenta que duerme mal y que a veces siente el
           corazón «a destiempo», la doctora le toma la presión, repasa su última analítica, confirma
           que la hipertensión que arrastra desde el episodio agudo sigue ahí pero algo peor, ajusta
@@ -81,8 +81,8 @@
           se archiva. Modelarlos fue, en buena medida, aprender a usar bien las herramientas y luego
           repetir la fórmula cambiando las palabras del lexicon. La medicina no concede esa comodidad.
           Una consulta es un evento, sí, pero a nadie le interesa cuánto duró: lo que interesa es el
-          <strong>contenido</strong> que se produjo dentro —un diagnóstico, una receta, una alerta de
-          alergia, un control programado—, y ese contenido tiene que vivir mucho más que la cita que
+          <strong>contenido</strong> que se produjo dentro (un diagnóstico, una receta, una alerta de
+          alergia, un control programado), y ese contenido tiene que vivir mucho más que la cita que
           lo engendró.</p>
 
         <p>Por eso este capítulo cambia de foco. No vamos a presumir de soluciones ya hechas: vamos a
@@ -94,9 +94,9 @@
         <div class="caja caja--idea revelar">
           <p class="caja-tit">La pregunta que gobierna el capítulo</p>
           <p style="margin:0">¿Aguanta el modelo un dominio para el que <em>no</em> fue diseñado, sin
-            inventar maquinaria nueva? La apuesta: una consulta médica completa —síntoma, medición,
+            inventar maquinaria nueva? La apuesta: una consulta médica completa (síntoma, medición,
             diagnóstico, prescripción y control futuro, con su incertidumbre clínica, su evidencia y
-            su vigencia en el tiempo— cae sobre los mismos siete ejes, las mismas situaciones
+            su vigencia en el tiempo) cae sobre los mismos siete ejes, las mismas situaciones
             reificadas y el mismo lexicon que ya conoces. La fricción será mínima. Donde la haya, la
             mostraré tal cual.</p>
         </div>
@@ -177,14 +177,14 @@
 
         <p>La arquitectura no se inmuta: una entidad grande que contiene un racimo de sub-situaciones,
           exactamente como la venta del spa contenía sus líneas. Que la consulta merezca reificarse no
-          es un capricho —cumple de sobra las condiciones para volverse situación en <code>O</code>:
+          es un capricho (cumple de sobra las condiciones para volverse situación en <code>O</code>:
           agrupa varias partes, está fechada, tiene participantes con roles y, sobre todo, otras cosas
-          le harán referencia—. Lo que vuelve fascinante a la medicina no es el contenedor, sino el
+          le harán referencia). Lo que vuelve fascinante a la medicina no es el contenedor, sino el
           interior de cada pieza.</p>
 
         <aside class="nota-margen">
           <span class="etq">Recordatorio · D4</span>
-          Reificar la consulta —convertir el evento en una entidad de pleno derecho en <code>O</code>—
+          Reificar la consulta (convertir el evento en una entidad de pleno derecho en <code>O</code>)
           es justo lo que la regla de situaciones autoriza cuando un evento agrupa partes, lleva
           participantes y será referenciado por otros hechos. La condición se enunció al tratar las
           situaciones; aquí la cobramos.
@@ -298,7 +298,7 @@
         <p>Pero detente. <strong>«Presión arterial» y «el antihipertensivo» no son objetos físicos con
           identidad propia.</strong> No puedes guardar «la presión arterial universal» en un cajón:
           es una <em>magnitud</em>, una categoría teórica. La caja de pastillas que Vega compra en la
-          farmacia sí es un objeto del eje <code>O</code> —tiene lote, vencimiento, ubicación—, pero
+          farmacia sí es un objeto del eje <code>O</code> (tiene lote, vencimiento, ubicación), pero
           el concepto científico del fármaco es una <em>clase</em>, un habitante del eje
           <code>K</code>. El instinto humano mezcla, sin notarlo, lo físico con lo conceptual.</p>
 
@@ -342,7 +342,7 @@ u.assert_fact(prescrip_8842, "medicamento_prescrito", antihipertensivo) # O → 
           <ul class="limpia" style="margin:0">
             <li style="margin-bottom:.5rem"><b>El catálogo universal cubre casi todo, pero no todo.</b>
               Los roles base sirven para la inmensa mayoría de los hechos; cada dominio altamente
-              técnico —medicina, química, derecho— pedirá unos pocos cables propios para sus
+              técnico (medicina, química, derecho) pedirá unos pocos cables propios para sus
               abstracciones. Eso es esperado, no un fallo.</li>
             <li><b>El error fue del modelador, no del modelo.</b> La firma estricta no es burocracia:
               es la que distingue «la caja de pastillas» (objeto, <code>O</code>) del «fármaco como
@@ -410,7 +410,7 @@ u.assert_fact(prescrip_8842, "medicamento_prescrito", antihipertensivo) # O → 
 
         <aside class="nota-margen">
           <span class="etq">Vigencia · D6</span>
-          Una propiedad que cambia en el tiempo —el grado de una hipertensión— no se edita: se reifica
+          Una propiedad que cambia en el tiempo (el grado de una hipertensión) no se edita: se reifica
           con un rango <code>inicio</code>/<code>fin</code>. La verdad pasada se conserva intacta. Esa
           es la regla de vigencia, enunciada al tratar las situaciones; aquí decide si el sistema
           puede o no responder a un juez.
@@ -433,7 +433,7 @@ u.assert_fact(diag_hta_8842, "rectifica", diag_marzo)   # M · este corrige a aq
         <p>El premio de modelarlo así es una capacidad forense que viene de fábrica. Si mañana hay una
           demanda y el juez pregunta <em>«¿qué sabía el hospital sobre este paciente en abril?»</em>,
           la base de datos no devuelve el estado de hoy: devuelve exactamente la verdad clínica que
-          regía en abril —grado&nbsp;1—, ignorando todo lo que se supo después. Una consulta con un
+          regía en abril (grado&nbsp;1), ignorando todo lo que se supo después. Una consulta con un
           filtro temporal basta.</p>
 
         <!-- FIGURA SVG 2: la vigencia del diagnóstico en el tiempo (D6) -->
@@ -525,8 +525,8 @@ u.assert_fact(pres, "verificado_contra", regla_renal_alerta)    # ← qué ley c
 
         <div class="caja caja--definicion revelar">
           <p class="caja-tit">Contraindicación como objeto, no como código</p>
-          <p style="margin:0">La regla de seguridad —<em>«no combinar este fármaco con tal condición
-            renal»</em>— no es una línea escondida en el código de la aplicación. Es un evento
+          <p style="margin:0">La regla de seguridad (<em>«no combinar este fármaco con tal condición
+            renal»</em>) no es una línea escondida en el código de la aplicación. Es un evento
             reificado más en el eje <code>O</code>, con su clase, su fármaco implicado, su condición
             disparadora y su orden. Como cualquier norma, tiene autor y fecha de vigencia. Vive en el
             grafo, a la vista, y por eso es auditable.</p>
@@ -544,7 +544,7 @@ u.assert_fact(pres, "verificado_contra", regla_renal_alerta)    # ← qué ley c
         </div>
 
         <p>Con la regla viviendo en el grafo, la base de datos se vuelve inteligente sin volverse
-          rígida. Cuando la doctora presiona «recetar», un motor externo —o una IA— escanea el grafo,
+          rígida. Cuando la doctora presiona «recetar», un motor externo (o una IA) escanea el grafo,
           encuentra esta norma, comprueba la función renal del paciente y, si hace falta, levanta una
           alerta antes de que el daño ocurra. El grafo guarda la verdad; la lógica que la aplica vive
           afuera. Esa separación es deliberada, igual que en el spa: el modelo no <em>ejecuta</em> la
@@ -554,8 +554,8 @@ u.assert_fact(pres, "verificado_contra", regla_renal_alerta)    # ← qué ley c
 
         <p>La quinta pieza, el control a treinta días, parece trivial y esconde una sutileza
           importante. Todavía no ocurrió: es un plan. Si el sistema lo guardara como un hecho
-          consumado, contaminaría cualquier informe —contaríamos como «atendida» una cita que no
-          existe—. El modelo lo marca como <em>previsto</em>, no como <em>real</em>, exactamente con la
+          consumado, contaminaría cualquier informe (contaríamos como «atendida» una cita que no
+          existe). El modelo lo marca como <em>previsto</em>, no como <em>real</em>, exactamente con la
           misma maquinaria de modalidad que usamos para el diagnóstico sospechado o para la intención
           de compra del spa.</p>
 
@@ -580,7 +580,7 @@ u.assert_fact(pres, "verificado_contra", regla_renal_alerta)    # ← qué ley c
         <p>Hasta aquí hemos diseccionado <em>una</em> consulta. Pero Vega no es una consulta: es un
           paciente con años de roce con el sistema sanitario. El mismo Vega que entró por urgencias con
           una fibrilación, el que en marzo recibió su primer diagnóstico de hipertensión, el que hoy
-          vuelve al control de cardiología, y el que —lo veremos enseguida— pasará unos días ingresado.
+          vuelve al control de cardiología, y el que (lo veremos enseguida) pasará unos días ingresado.
           Su identidad es una sola, cosida con el mismo <code>vega</code> que ya recorre la tienda y la
           clínica; lo que cambia es el rosario de situaciones que cuelgan de ella a lo largo del
           tiempo. Eso es una <strong>historia clínica</strong>: no un documento, sino una serie
@@ -590,14 +590,14 @@ u.assert_fact(pres, "verificado_contra", regla_renal_alerta)    # ← qué ley c
           <span class="etq">Una sola identidad</span>
           El <code>vega</code> que compra en la tienda y el <code>vega</code> que se atiende en
           cardiología son la misma entidad en <code>Q</code>. La historia clínica no «posee» al
-          paciente: lo <em>referencia</em>. Por eso un mismo identificador puede cruzar módulos —tienda,
-          urgencias, consulta, ingreso— sin duplicarse jamás.
+          paciente: lo <em>referencia</em>. Por eso un mismo identificador puede cruzar módulos (tienda,
+          urgencias, consulta, ingreso) sin duplicarse jamás.
         </aside>
 
         <p>En el modelo, la historia no es una tabla con una fila por visita. Es la proyección de todas
           las situaciones cuyo <code>paciente</code> es <code>vega</code>, ordenadas por su eje
-          <code>T</code> y filtradas por la vigencia que cada hecho declara. Cada episodio —una urgencia,
-          una analítica, una consulta, un ingreso— es una situación reificada más en <code>O</code> que
+          <code>T</code> y filtradas por la vigencia que cada hecho declara. Cada episodio (una urgencia,
+          una analítica, una consulta, un ingreso) es una situación reificada más en <code>O</code> que
           referencia al mismo paciente y se sitúa en el tiempo. Recuperar «la historia de Vega» es
           barrer el grafo por ese nodo y leer la cinta cronológica.</p>
 
@@ -699,8 +699,8 @@ historia = u.timeline(vega, valid_at="2026-06-19")</code></pre>
           que la consulta ya insinuó pero que el ingreso lleva al extremo: una <strong>situación-marco
           que contiene a otras</strong>. Si la consulta era una carpeta de cinco piezas, la
           hospitalización es una <em>carpeta de carpetas</em>, una caja con paredes de tiempo dentro de
-          la cual ocurren decenas de eventos menudos —admisión, asignación de cama, signos vitales cada
-          turno, rondas médicas, cada dosis administrada, la evolución diaria— hasta que se cierra con
+          la cual ocurren decenas de eventos menudos (admisión, asignación de cama, signos vitales cada
+          turno, rondas médicas, cada dosis administrada, la evolución diaria) hasta que se cierra con
           el alta.</p>
 
         <p>El instinto erróneo sería crear una tabla <code>hospitalizaciones</code> con columnas para
@@ -729,8 +729,8 @@ historia = u.timeline(vega, valid_at="2026-06-19")</code></pre>
 (alta_9120,        ∈ O,  parte_de,  ingreso_9120)   # T: 17 jun, cierre del marco</code></pre>
         </div>
 
-        <p>Fíjate en la cama: <code>cama_4b_307</code> es un objeto físico en <code>O</code> —tiene
-          ubicación, ocupación, mantenimiento—, no una etiqueta. Que el ingreso la referencie por
+        <p>Fíjate en la cama: <code>cama_4b_307</code> es un objeto físico en <code>O</code> (tiene
+          ubicación, ocupación, mantenimiento), no una etiqueta. Que el ingreso la referencie por
           <code>L</code>/<code>O</code> y no la copie como texto es lo que permite responder «¿qué camas
           están libres en cardiología ahora mismo?» sin inventar otra tabla. El servicio
           (<code>cardiologia</code>), en cambio, es una clase en <code>K</code>: no se interroga su
@@ -823,7 +823,7 @@ historia = u.timeline(vega, valid_at="2026-06-19")</code></pre>
           <strong>administración</strong> (la enfermería lo aplica al paciente).</p>
 
         <p>El detalle que lo cambia todo es el <em>lote</em>. La farmacia no entrega «el
-          antihipertensivo» —un concepto en <code>K</code>—; entrega una caja física de un lote
+          antihipertensivo» (un concepto en <code>K</code>); entrega una caja física de un lote
           concreto, con su vencimiento y su trazabilidad, igual que en minería un saco de mineral
           arrastra su lote de origen. Si mañana ese lote se retira por un defecto de fabricación, el
           grafo debe poder responder en segundos: «¿a qué pacientes se les administró algo de este
@@ -937,15 +937,15 @@ afectados = u.subjects_where("lote_usado", lote_av2207, role="paciente")
           </div>
           <figcaption><span class="fnum">Figura 18.5.</span> La cadena de la farmacia interna. La
             administración de la enfermería <em>cumple</em> una dispensación de la farmacia, que a su vez
-            <em>cumple</em> la prescripción de la doctora —tres situaciones en <code>O</code> encadenadas
-            por <code>cumple</code>—. El lote concreto (<code>lote_av2207</code>) atraviesa la
+            <em>cumple</em> la prescripción de la doctora (tres situaciones en <code>O</code> encadenadas
+            por <code>cumple</code>). El lote concreto (<code>lote_av2207</code>) atraviesa la
             dispensación y la administración, de modo que un retiro de lote se resuelve con una sola
             proyección, sin cruzar tablas entre el módulo clínico y el de farmacia.</figcaption>
         </figure>
 
         <h2>El lexicon de la clínica</h2>
 
-        <p>Para que la doctora —o el sistema que ella usa— no tenga que aprender jerga de bases de
+        <p>Para que la doctora (o el sistema que ella usa) no tenga que aprender jerga de bases de
           datos, configuramos el lexicon con las palabras exactas de la medicina. El lexicon es el
           compilador del que habló la Parte&nbsp;IV: traduce el vocabulario humano a los roles
           canónicos y resuelve la polisemia. El verbo <em>«controlar»</em>, por ejemplo, significa
@@ -970,8 +970,8 @@ lex.register(LexiconEntry(
 
         <p>Y le instalamos el dialecto del dominio: un mapa entre las palabras que el personal clínico
           usa de verdad y las etiquetas canónicas del catálogo. El usuario final nunca toca esas
-          etiquetas internas —el sistema traduce por debajo, exactamente como el spa traducía «IGV» a
-          su clase de impuesto—.</p>
+          etiquetas internas (el sistema traduce por debajo, exactamente como el spa traducía «IGV» a
+          su clase de impuesto).</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -988,14 +988,14 @@ lex.register(LexiconEntry(
         <p>Gracias a esto, la doctora puede dictarle al sistema <em>«controlé al paciente, la presión
           salió alta, le subí la pastilla y lo cito en un mes»</em> y el grafo lo traduce a sus
           identificadores internos sin que ella sepa que existen. La interfaz es su idioma, no el
-          catálogo —tal como dejó establecido la Parte&nbsp;IV—.</p>
+          catálogo (tal como dejó establecido la Parte&nbsp;IV).</p>
 
         <h2>El antes y el después: del expediente fragmentado al grafo único</h2>
 
         <p><b>Antes, en SQL.</b> En un sistema hospitalario típico, el expediente de Vega vive
           repartido en cinco o seis tablas que no se hablan solas: <code>pacientes</code>,
           <code>consultas</code>, <code>diagnosticos</code>, <code>prescripciones</code>,
-          <code>contraindicaciones</code> y —si el equipo fue cuidadoso— una tabla
+          <code>contraindicaciones</code> y (si el equipo fue cuidadoso) una tabla
           <code>diagnostico_historial</code> para versionar los cambios. Cuando la doctora quiere
           saber si el ajuste que acaba de recetar choca con una contraindicación <em>vigente</em>, el
           sistema debe cruzar <code>prescripciones</code> con <code>contraindicaciones</code>; y para
@@ -1024,8 +1024,8 @@ WHERE d.paciente_id = :paciente
         <p><b>Después, en WQuestions.</b> La misma información es un grafo único de hechos atómicos:
           <code>diag_hta_8842</code> cuelga de <code>consulta_8842</code> con <code>parte_de</code>,
           lleva sus propias fechas de validez internas, y <code>prescrip_8842</code> apunta a
-          <code>regla_renal_alerta</code> con <code>verificado_contra</code>. La pregunta —¿esta
-          prescripción choca con una contraindicación vigente?— es una proyección sobre el grafo con
+          <code>regla_renal_alerta</code> con <code>verificado_contra</code>. La pregunta (¿esta
+          prescripción choca con una contraindicación vigente?) es una proyección sobre el grafo con
           un filtro temporal: el motor entrega solo los hechos cuya ventana de validez cubre la fecha
           consultada. No hay <code>JOIN</code> entre tablas ni código de pegamento; la vigencia y las
           relaciones causales ya estaban tejidas en el mismo tejido de datos desde el primer hecho.</p>
@@ -1044,8 +1044,8 @@ vigente = u.value_at(vega, "diagnostico_asignado", at="2026-04-15")  # → hta_g
         <h2>Cuánto pesó el dominio entero</h2>
 
         <p>Vale la pena medir la huella, porque desmiente el prejuicio de que tanta expresividad debe
-          costar un diluvio de datos. Toda la consulta de Vega —las cinco piezas, los tres porqués de
-          la receta, los dos diagnósticos versionados, la contraindicación y el control previsto— se
+          costar un diluvio de datos. Toda la consulta de Vega (las cinco piezas, los tres porqués de
+          la receta, los dos diagnósticos versionados, la contraindicación y el control previsto) se
           guardó como un puñado modesto de hechos atómicos. Comparado con lo que un esquema relacional
           necesita para sostener la misma riqueza histórica, la diferencia es notable.</p>
 
@@ -1099,12 +1099,12 @@ vigente = u.value_at(vega, "diagnostico_asignado", at="2026-04-15")  # → hta_g
             <b>¿Reificamos «20&nbsp;mg»?</b> No. Es una cantidad con su unidad. Vive en <code>N</code> y
             ahí muere.<br>
             <b>¿Reificamos «148/95»?</b> El número, no; pero la <em>medición</em> que lo contiene, sí
-            —porque la medición sí será interrogada—.</p>
+            (porque la medición sí será interrogada).</p>
         </div>
 
         <p>El costo de reificar es de unos pocos bytes en el servidor. El costo de <em>no</em> hacerlo
-          —y descubrir, años después, que un regulador exige el historial completo de un dato que
-          guardaste como texto plano— se mide en una refactorización carísima y, en medicina, en algo
+          (y descubrir, años después, que un regulador exige el historial completo de un dato que
+          guardaste como texto plano) se mide en una refactorización carísima y, en medicina, en algo
           peor que dinero. Por eso, ante la duda, esta regla se inclina siempre hacia reificar.</p>
 
         <h2>Balance: un dominio nuevo, casi sin fricción</h2>
@@ -1134,8 +1134,8 @@ vigente = u.value_at(vega, "diagnostico_asignado", at="2026-04-15")  # → hta_g
 
         <p>La clínica parecía exigir una arquitectura especializada y resultó caber en la misma que ya
           conocíamos, con un par de cables propios y ni una sola excepción estructural. Pero hubo una
-          exigencia que aquí solo asomó —la de que varios custodios distintos, en hospitales distintos,
-          puedan leer y escribir sobre el mismo paciente sin pisarse— y que en el próximo capítulo se
+          exigencia que aquí solo asomó (la de que varios custodios distintos, en hospitales distintos,
+          puedan leer y escribir sobre el mismo paciente sin pisarse) y que en el próximo capítulo se
           vuelve la ley. Subimos al dominio más implacable de todos: un banco, donde no borrar el
           pasado deja de ser buen gusto y pasa a ser una condición que dicta el regulador.</p>
 

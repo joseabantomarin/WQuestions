@@ -77,19 +77,19 @@
           la velocidad; en la historia clínica, que sabía repartir la verdad entre varios custodios.
           El banco reúne las tres exigencias y añade una cuarta que las domina a todas: <strong>el
           regulador</strong>. Aquí las decisiones de diseño que en otros capítulos eran preferencias
-          —no borrar nunca el pasado, tratar al software como un agente con responsabilidad— dejan de
+          (no borrar nunca el pasado, tratar al software como un agente con responsabilidad) dejan de
           ser lujos teóricos y se vuelven condiciones de supervivencia dictadas por la ley.</p>
 
         <aside class="nota-margen">
           <span class="etq">Alcance</span>
-          No vamos a modelar un banco entero —eso pediría otro libro—. Tomaremos cuatro situaciones
+          No vamos a modelar un banco entero (eso pediría otro libro). Tomaremos cuatro situaciones
           críticas y mostraremos que cada una cae, sin forcejeo, sobre la misma maquinaria que ya
           conoces.
         </aside>
 
         <p>Este capítulo no aspira a ser un manual de <em>core banking</em>. Aspira a algo más
-          modesto y más contundente: tomar cuatro escenas —una transferencia, la vida entera de un
-          préstamo, una investigación de fraude y el catálogo de productos— y demostrar que el modelo
+          modesto y más contundente: tomar cuatro escenas (una transferencia, la vida entera de un
+          préstamo, una investigación de fraude y el catálogo de productos) y demostrar que el modelo
           absorbe la complejidad industrial sin trucos. Si aguanta el dinero, aguanta cualquier cosa.</p>
 
         <h2>La realidad honesta: cinco islas que no se hablan</h2>
@@ -159,7 +159,7 @@
             </svg>
           </div>
           <figcaption><span class="fnum">Figura 19.1.</span> Las cinco islas de un banco regional
-            —núcleo, agencias, contabilidad, promotores y reportería—, cada una con su tecnología y
+            (núcleo, agencias, contabilidad, promotores y reportería), cada una con su tecnología y
             su jerga. WQuestions no reemplaza a ninguna: cada isla <em>publica</em> sus hechos al
             grafo común con su dialecto, mapeado una sola vez al catálogo D8. El archipiélago se
             vuelve consultable sin disolverse.</figcaption>
@@ -194,7 +194,7 @@
           <p class="caja-tit">El giro de WQuestions</p>
           <p style="margin:0">El modelo no le exige a la sucursal ni a contabilidad que cambien su
             software. Solo les pide que <strong>traduzcan</strong> lo que ya hacen y lo publiquen al
-            mapa central —el grafo— usando su propia jerga. Contabilidad habla de «partidas»; la
+            mapa central (el grafo) usando su propia jerga. Contabilidad habla de «partidas»; la
             agencia habla de «simulaciones». El <a href="14-lexicon.html">lexicon</a> traduce ambos
             dialectos al catálogo universal una sola vez, y a partir de allí cada isla sigue operando
             como siempre mientras la gerencia consulta el mapa en milisegundos.</p>
@@ -244,7 +244,7 @@
           </div>
         </div>
 
-        <p>Los predicados del eje <em>cómo</em> —el séptimo eje, <span class="eje eje--m">M</span>—
+        <p>Los predicados del eje <em>cómo</em> (el séptimo eje, <span class="eje eje--m">M</span>)
           son los cables que conectan todo: <code>agente</code>, <code>parte_de</code>,
           <code>cubierto_por</code>, <code>cancela</code>. Sin ellos las seis cajas serían seis
           listas inertes. Con ellos, un hecho bancario se vuelve un punto navegable. Pasemos a verlo
@@ -320,14 +320,14 @@
             </svg>
           </div>
           <figcaption><span class="fnum">Figura 19.2.</span> La transferencia <code>transferencia_7791</code>
-            como evento central. Cuatro agentes la rodean —quien inicia, quien recibe, el sistema que
-            autoriza y el motor que verifica— y dos asientos contables cuelgan de ella por
+            como evento central. Cuatro agentes la rodean (quien inicia, quien recibe, el sistema que
+            autoriza y el motor que verifica) y dos asientos contables cuelgan de ella por
             <code>parte_de</code>; el departamento de contabilidad es el quinto agente, implícito en
             las partidas. Nada de esto cabe en una sola fila de una tabla.</figcaption>
         </figure>
 
         <p>Primero declaramos el evento central. Observa que tres de sus enlaces apuntan a agentes y
-          que uno de ellos —el motor antifraude— no es una persona:</p>
+          que uno de ellos (el motor antifraude) no es una persona:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -345,7 +345,7 @@
   ts_proceso:       2026-05-19T21:07:46  # reloj del servidor</code></pre>
         </div>
 
-        <p>Pero la transferencia no termina ahí. Tras bambalinas, contabilidad —el quinto agente—
+        <p>Pero la transferencia no termina ahí. Tras bambalinas, contabilidad (el quinto agente)
           debe cuadrar sus libros. La partida doble es una ley de la profesión: a todo débito le
           corresponde un crédito. En el modelo creamos dos <strong>subeventos</strong> y los colgamos
           de la transferencia con el cable <code>parte_de</code>:</p>
@@ -400,7 +400,7 @@
           <span class="etq">Fecha valor</span>
           La hora en que ordenan el giro (viernes) y la fecha en que el dinero ya es de Mariana
           (lunes) no son la misma. A los tres relojes del eje <span class="eje eje--t">T</span> el
-          comercio exterior le añade este matiz —la <em>fecha valor</em>—; confundirlo es lo que
+          comercio exterior le añade este matiz (la <em>fecha valor</em>); confundirlo es lo que
           produce el clásico «ya te lo envié / a mí no me ha llegado», donde las dos personas creen
           tener razón.
         </aside>
@@ -415,8 +415,8 @@
           compensación, husos horarios, fines de semana y reglas regulatorias que ningún grafo borra.
           Pero sí es culpa del modelo plano que Mariana no pueda saber <em>dónde</em> está su dinero
           mientras tanto; un sistema clásico le muestra un opaco «pendiente» y poco más. WQuestions no
-          trata la transferencia como un instante, sino como un evento con estados fechados —la misma
-          vigencia temporal que el siguiente caso convertirá en regla—:</p>
+          trata la transferencia como un instante, sino como un evento con estados fechados (la misma
+          vigencia temporal que el siguiente caso convertirá en regla):</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -427,17 +427,17 @@
 (giro_int_8043, ts_orden,    2026-05-15T17:40)      # viernes: cuándo se ordenó</code></pre>
         </div>
 
-        <p>Modelada así, la pregunta angustiada del cliente —«¿dónde está mi dinero y cuándo lo
-          tendré?»— deja de ser un secreto que solo el banco conoce: es una consulta que el grafo
+        <p>Modelada así, la pregunta angustiada del cliente («¿dónde está mi dinero y cuándo lo
+          tendré?») deja de ser un secreto que solo el banco conoce: es una consulta que el grafo
           contesta al instante, con el estado vigente y la fecha en que el dinero se libera. El modelo
           no acelera el giro; los dos días de espera siguen ahí. Lo que hace es convertir ese limbo
-          opaco en un hecho explícito, fechado y consultable, que es justo lo que el cliente —y el
-          regulador— tienen derecho a ver.</p>
+          opaco en un hecho explícito, fechado y consultable, que es justo lo que el cliente (y el
+          regulador) tienen derecho a ver.</p>
 
         <h2>Caso 2 · La novela de un préstamo y la regla del tiempo</h2>
 
         <p>Un préstamo no es un suceso de un segundo: es una novela que dura años. Se aprueba, se
-          pagan cuotas, el cliente se atrasa —entra en mora—, a veces la deuda se reestructura y, con
+          pagan cuotas, el cliente se atrasa (entra en mora), a veces la deuda se reestructura y, con
           suerte, todo termina cancelado. En un sistema heredado, la celda «estado» del préstamo se
           va borrando y reescribiendo, y con cada reescritura desaparece un capítulo de la historia.</p>
 
@@ -526,8 +526,8 @@
 
         <p>Hay un detalle fino que la figura insinúa. Una transición no es solo un cambio de
           etiqueta: es un hecho que merece su propia causa. Por eso cada cambio de estado lleva un
-          enlace <code>motivado_por</code> que apunta al evento que lo provocó —un pago vencido, un
-          acuerdo firmado— y, cuando hace falta, un <code>justificado_por</code> que apunta al
+          enlace <code>motivado_por</code> que apunta al evento que lo provocó (un pago vencido, un
+          acuerdo firmado) y, cuando hace falta, un <code>justificado_por</code> que apunta al
           documento legal. El «por qué» no es un eje, como vimos en su momento; es una relación entre
           hechos, y aquí esa relación es la que un auditor leerá primero.</p>
 
@@ -565,8 +565,8 @@
 
         <p>Con eso a la vista, el investigador entiende por qué la tarjeta pasó esa noche: el
           <code>score_riesgo</code> era bajo y el comercio no levantó alertas suficientes. Al
-          confirmar el robo, <strong>no borra</strong> el pago de la tienda —el cargo fue real y
-          movió dinero de verdad—. En su lugar crea un evento de reverso que apunta al original y deja
+          confirmar el robo, <strong>no borra</strong> el pago de la tienda (el cargo fue real y
+          movió dinero de verdad). En su lugar crea un evento de reverso que apunta al original y deja
           escrita la causa:</p>
 
         <div class="bloque-codigo">
@@ -654,7 +654,7 @@
         <p><strong>Antes, en el modelo relacional.</strong> La información se reparte entre tablas
           como <code>clientes</code>, <code>cuentas</code>, <code>transferencias</code>,
           <code>asientos</code> y <code>perfiles_riesgo</code>. La primera mitad de la pregunta se
-          resuelve con un <em>join</em> de cuatro tablas —incómodo, pero posible—. La segunda mitad
+          resuelve con un <em>join</em> de cuatro tablas (incómodo, pero posible). La segunda mitad
           fracasa, porque <code>perfiles_riesgo</code> solo guarda el registro <em>actual</em>. Para
           saber qué decía el perfil la noche del cargo hay que rebuscar en tablas de auditoría
           separadas, si es que alguien las creó; de lo contrario, la respuesta sencillamente no existe
@@ -687,8 +687,8 @@ SELECT nivel FROM perfiles_riesgo WHERE cliente_id = 4410;</code></pre>
             de vigencia <code>inicio=2026-04-30, fin=2026-06-02</code>. La pregunta entera se vuelve un
             patrón de proyección: recoge los hechos cuyos extremos cuelgan de la transferencia y suma
             el perfil cuyo intervalo temporal solapa con la marca de tiempo del cargo.</p>
-          <p>No hay <em>join</em> de cuatro tablas, no hay tabla de auditoría paralela —el tiempo es
-            un atributo de primer orden en cada hecho— y, sobre todo, no hay que migrar ningún esquema
+          <p>No hay <em>join</em> de cuatro tablas, no hay tabla de auditoría paralela (el tiempo es
+            un atributo de primer orden en cada hecho) y, sobre todo, no hay que migrar ningún esquema
             para que funcione. El banco no abandona sus mil quinientas tablas: las deja publicar al
             grafo. La consulta que antes era un proyecto de semanas pasa a ser una sola pregunta bien
             formada, y la respuesta que antes «no existía en los datos» pasa a estar siempre
@@ -698,8 +698,8 @@ SELECT nivel FROM perfiles_riesgo WHERE cliente_id = 4410;</code></pre>
         <h2>Lo que el banco le exigió al modelo</h2>
 
         <p>Vale la pena cuantificar de qué tamaño es el problema que el modelo absorbe. Estas son las
-          tablas aproximadas que un banco regional dedica a cada frente —el orden de magnitud que
-          obliga a las cinco islas a existir:</p>
+          tablas aproximadas que un banco regional dedica a cada frente (el orden de magnitud que
+          obliga a las cinco islas a existir):</p>
 
         <figure class="figura revelar">
           <div class="lienzo" data-chart>
@@ -716,7 +716,7 @@ SELECT nivel FROM perfiles_riesgo WHERE cliente_id = 4410;</code></pre>
           </div>
           <figcaption><span class="fnum">Figura 19.4.</span> Aproximación al número de tablas por
             frente en un banco regional. WQuestions no reduce ese inventario: cada sistema sigue con
-            sus tablas. Lo que aporta es una sola superficie común —un grafo— donde todas publican, de
+            sus tablas. Lo que aporta es una sola superficie común (un grafo) donde todas publican, de
             modo que el cruce entre frentes deja de costar semanas.</figcaption>
         </figure>
 

@@ -56,7 +56,7 @@
       <div class="contenido">
 
         <p class="entrada">Es un martes cualquiera de un año que aún no llega. El dueño de una pequeña
-          cadena de spas —cuatro sedes, tres ciudades, ningún equipo de analítica— abre el teléfono
+          cadena de spas (cuatro sedes, tres ciudades, ningún equipo de analítica) abre el teléfono
           mientras espera el café y escribe una sola línea a su asistente: <em>«¿Qué pasó esta
           semana?»</em>. No es una consulta a un panel de control; es una pregunta, en español, como
           la haría a un gerente de confianza. La respuesta llega en segundos, y no es un número suelto,
@@ -65,14 +65,14 @@
         <blockquote>
           <p>Las ventas de la sede Centro cayeron un 12&nbsp;% frente a la semana anterior. La causa
             principal: un desplome en los planes mensuales el miércoles. Ese mismo día se dispararon
-            las cancelaciones de sesiones —siete en total, seis por el mismo motivo: una ducha
-            averiada—. La orden de mantenimiento ya está abierta, pero lleva tres días sin atenderse.
+            las cancelaciones de sesiones (siete en total, seis por el mismo motivo: una ducha
+            averiada). La orden de mantenimiento ya está abierta, pero lleva tres días sin atenderse.
             Sugiero priorizarla.</p>
         </blockquote>
 
         <p>Detrás de esa respuesta tan sosegada hay un trabajo que, para un equipo humano, habría sido
-          media tarde de cruzar planillas: el asistente recorrió cinco fuentes —ventas, planes,
-          sesiones, cancelaciones, órdenes de mantenimiento— siguiendo cadenas de
+          media tarde de cruzar planillas: el asistente recorrió cinco fuentes (ventas, planes,
+          sesiones, cancelaciones, órdenes de mantenimiento) siguiendo cadenas de
           <code>causado_por</code> y <code>motivado_por</code> a través de un grafo. Lo notable no es
           que un programa cruce cinco tablas; eso se hace desde hace décadas. Lo notable es que nadie
           tuvo que programar <em>esa</em> consulta. La pregunta no estaba prevista. Simplemente cabía
@@ -86,20 +86,20 @@
         </aside>
 
         <p>Cambiemos de escena sin cambiar de principio. Un hospital con quinientos médicos y veinte
-          años de historias clínicas registradas como hechos —no como prosa libre atrapada en un campo
-          <code>observaciones</code>—. Una cardióloga pregunta: <em>«Muéstrame los pacientes con
+          años de historias clínicas registradas como hechos (no como prosa libre atrapada en un campo
+          <code>observaciones</code>). Una cardióloga pregunta: <em>«Muéstrame los pacientes con
           hipertensión de grado&nbsp;2 que iniciaron enalapril en los últimos seis meses y no lograron
           control a los tres.»</em> Recibe la lista. Refina: <em>«De esos, ¿cuántos tenían diabetes
           comórbida, y cuál fue el segundo fármaco que se les añadió?»</em> Recibe una tabla cruzada.
-          Lo que ayer era un proyecto de tesis —extraer a mano quinientas historias en prosa,
-          codificarlas, analizarlas— hoy es una conversación de tres minutos. Porque las historias
+          Lo que ayer era un proyecto de tesis (extraer a mano quinientas historias en prosa,
+          codificarlas, analizarlas) hoy es una conversación de tres minutos. Porque las historias
           estuvieron en el grafo desde el primer día.</p>
 
         <p>Y una tercera, más sombría. Una empresa enfrenta una investigación regulatoria. El fiscal
           no pregunta qué es cierto hoy, sino algo mucho más difícil: <em>«¿Qué sabía el directorio
           sobre la cláusula de garantía el 15 de noviembre de 2024?»</em> El sistema reconstruye el
-          estado del grafo en esa fecha exacta —no solo qué era verdad entonces, sino qué estaba
-          <em>afirmado en el sistema</em> en ese instante— y devuelve los hechos accesibles, los actos
+          estado del grafo en esa fecha exacta (no solo qué era verdad entonces, sino qué estaba
+          <em>afirmado en el sistema</em> en ese instante) y devuelve los hechos accesibles, los actos
           formales registrados, las reglas vigentes. La pregunta «¿qué sabía la organización, y
           cuándo?» deja de ser testimonial y se vuelve consultiva.</p>
 
@@ -111,7 +111,7 @@
           tres empresas distintas venderían por separado. Pero las tres descansan en una sola base: un
           <strong>grafo persistente</strong> como sustrato, un <strong>modelo de lenguaje</strong>
           como interfaz, y un conjunto de <strong>relaciones canónicas</strong> como infraestructura
-          de razonamiento. Cuando esa base existe, las tres aplicaciones —y muchas más— dejan de ser
+          de razonamiento. Cuando esa base existe, las tres aplicaciones (y muchas más) dejan de ser
           proyectos a medida y pasan a ser consecuencias. Lo que sigue es el inventario de esas
           consecuencias: cinco familias de aplicaciones que se desbloquean a la vez.</p>
 
@@ -165,7 +165,7 @@
           </div>
           <figcaption><span class="fnum">Figura 27.1.</span> Cinco familias de aplicaciones que dejan
             de ser proyectos a medida cuando un grafo de preguntas vive bajo un modelo de lenguaje.
-            Todas radian del mismo núcleo —un sustrato persistente con interfaz conversacional— y por
+            Todas radian del mismo núcleo (un sustrato persistente con interfaz conversacional) y por
             eso maduran juntas: no hay que construir cinco productos, sino habilitar una sola capa.</figcaption>
         </figure>
 
@@ -175,17 +175,17 @@
           el marketing un tercero, las finanzas un cuarto, y la operación algún <em>legacy</em> que
           nadie se atreve a tocar. Cada uno tiene su esquema. Para responder algo tan razonable como
           <em>«¿cuál fue el costo total de adquisición de los clientes que cancelaron en sus primeros
-          noventa días?»</em> hay que cruzar cuatro sistemas, y eso —en la práctica— significa abrir
+          noventa días?»</em> hay que cruzar cuatro sistemas, y eso (en la práctica) significa abrir
           un proyecto de integración con presupuesto propio y meses de calendario.</p>
 
         <p>WQuestions sustituye ese cruce por un sustrato común. Las áreas siguen operando sus
-          sistemas tal cual; lo que cambia es que los hechos relevantes —ventas, contactos,
-          transacciones, bajas— se publican al grafo central, cada cual con su propio dialecto de
+          sistemas tal cual; lo que cambia es que los hechos relevantes (ventas, contactos,
+          transacciones, bajas) se publican al grafo central, cada cual con su propio dialecto de
           dominio. La pregunta del director financiero se convierte entonces en una consulta sobre el
-          grafo, que el modelo de lenguaje formula y ejecuta. El <em>schema matching</em> —ese cuello
+          grafo, que el modelo de lenguaje formula y ejecuta. El <em>schema matching</em> (ese cuello
           de botella histórico de la integración empresarial, donde un analista pasa semanas decidiendo
           que el campo <code>cust_id</code> de un sistema equivale al <code>id_cliente</code> de
-          otro— sencillamente desaparece, porque todos los dialectos ya están mapeados contra el mismo
+          otro) sencillamente desaparece, porque todos los dialectos ya están mapeados contra el mismo
           catálogo canónico invisible.</p>
 
         <aside class="nota-margen">
@@ -234,22 +234,22 @@
             fundacional de la <em>web semántica</em> hace ya veinticinco años: una capa de significado
             sobre la que las máquinas pudieran cruzar datos sin un acuerdo previo, sistema por sistema.
             Lo que faltaba eran dos piezas. Primero, un modelo lo bastante <em>simple</em> para que las
-            áreas lo adoptaran sin un comité de ontólogos —las siete preguntas lo son—. Segundo, un
+            áreas lo adoptaran sin un comité de ontólogos (las siete preguntas lo son). Segundo, un
             traductor lo bastante <em>fluido</em> para no exigir vocabulario técnico al usuario final
-            —los modelos de lenguaje lo son—. La promesa era correcta; le faltaban estas dos manos.</p>
+            (los modelos de lenguaje lo son). La promesa era correcta; le faltaban estas dos manos.</p>
         </div>
 
         <h2>Familia 2 · Auditoría retrospectiva con bitemporalidad</h2>
 
-        <p>Esta es la familia que rinde el beneficio más inmediato en los sectores regulados —finanzas,
-          salud, derecho— y la única donde la vigencia temporal no es una comodidad, sino un requisito
+        <p>Esta es la familia que rinde el beneficio más inmediato en los sectores regulados (finanzas,
+          salud, derecho) y la única donde la vigencia temporal no es una comodidad, sino un requisito
           legal. El principio cabe en una frase: <strong>el sistema nunca olvida, y puede mostrar lo
           que sabía en cualquier instante del pasado</strong>.</p>
 
         <aside class="nota-margen">
           <span class="etq">Decisión referenciada</span>
           La reificación de las propiedades cambiantes con rango <code>inicio</code>/<code>fin</code>
-          —la bitemporalidad— es la decisión <span class="codigo-d" style="font-size:.72rem">D6</span>,
+          (la bitemporalidad) es la decisión <span class="codigo-d" style="font-size:.72rem">D6</span>,
           del <a href="09-situaciones.html">capítulo 9</a>. Su pago se cobra aquí, años después de
           escrito el primer hecho.
         </aside>
@@ -259,8 +259,8 @@
           correos y memorias. Un supervisor financiero que pide <em>«¿cuál era el límite de exposición
           de este cliente cuando se firmó la operación?»</em> recibe el valor histórico, no el de hoy.
           Un comité que estudia un evento adverso reconstruye <em>qué se sabía del paciente al momento
-          de prescribir</em> —y, por tanto, si la decisión fue defendible bajo el conocimiento
-          entonces disponible, que es la única vara justa para juzgarla—.</p>
+          de prescribir</em> (y, por tanto, si la decisión fue defendible bajo el conocimiento
+          entonces disponible, que es la única vara justa para juzgarla).</p>
 
         <p>La diferencia con los sistemas tradicionales no está en la <em>capacidad</em>: Richard
           Snodgrass<a class="ref" href="referencias.html#ref-17">(17)</a> formalizó la bitemporalidad en SQL ya en los años noventa, y bases de datos como
@@ -275,7 +275,7 @@
           <p style="margin:0">«Bitemporal» quiere decir que cada hecho carga <em>dos</em> líneas de
             tiempo: <strong>cuándo fue cierto en el mundo</strong> (tiempo de validez) y
             <strong>cuándo el sistema lo supo</strong> (tiempo de transacción). Por eso la pregunta del
-            fiscal —«¿qué sabía el directorio el 15 de noviembre?»— es contestable: no pregunta por la
+            fiscal («¿qué sabía el directorio el 15 de noviembre?») es contestable: no pregunta por la
             realidad de esa fecha, sino por el estado del <em>conocimiento registrado</em> en ella. Un
             sistema con un solo reloj no distingue ambas cosas y, al hacerlas colapsar, pierde
             justamente lo que un auditor necesita.</p>
@@ -316,8 +316,8 @@
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">La trampa: la alucinación compositiva</p>
           <p style="margin:0">El riesgo conocido de esta familia tiene nombre: el modelo puede inventar
-            conexiones <em>plausibles</em> que no están en el grafo —un «paciente con diabetes» que
-            nunca recibió ese diagnóstico, una «cláusula que justifica a otra» que nadie redactó—. La
+            conexiones <em>plausibles</em> que no están en el grafo: un «paciente con diabetes» que
+            nunca recibió ese diagnóstico, una «cláusula que justifica a otra» que nadie redactó. La
             mitigación es exigir <strong>trazabilidad</strong>: toda conclusión debe poder citar los
             hechos del grafo que la sostienen, con su identificador y su momento. Cuando una respuesta
             no se puede trazar, el sistema lo declara abiertamente en lugar de fabricar. La diferencia
@@ -329,14 +329,14 @@
         <p>Hasta hace poco, «agente de IA» significaba un único modelo con unas herramientas. Hoy ya se
           ven sistemas donde <strong>varios agentes especializados colaboran</strong>: uno investiga,
           otro redacta, otro verifica, otro audita. El cuello de botella es que cada agente vive en su
-          propio contexto, y la coordinación entre ellos resulta frágil —se pasan resúmenes, pierden
-          matices, se contradicen sin notarlo—.</p>
+          propio contexto, y la coordinación entre ellos resulta frágil: se pasan resúmenes, pierden
+          matices, se contradicen sin notarlo.</p>
 
         <p>WQuestions ofrece a esos sistemas un <strong>modelo del mundo compartido</strong>: un grafo
           persistente que todos los agentes consultan y al que todos contribuyen. Las decisiones de uno
           se vuelven hechos consultables por los demás. La cadena de razonamiento de un agente
-          —<em>«el agente A diagnosticó X a partir de la evidencia Y, justificado por la regla
-          Z»</em>— queda registrada con la misma estructura que cualquier otra situación. La
+          (<em>«el agente A diagnosticó X a partir de la evidencia Y, justificado por la regla
+          Z»</em>) queda registrada con la misma estructura que cualquier otra situación. La
           coordinación deja de ser implícita y se vuelve <strong>observable</strong>: un agente puede
           citar literalmente a otro.</p>
 
@@ -357,7 +357,7 @@
 
         <aside class="nota-margen">
           <span class="etq">Decisión referenciada</span>
-          Que el rol <code>agente</code> lo pueda ocupar un programa —no solo un humano— es la agencia
+          Que el rol <code>agente</code> lo pueda ocupar un programa (no solo un humano) es la agencia
           contextual, la decisión <span class="codigo-d" style="font-size:.72rem">D5</span> del
           <a href="09-situaciones.html">capítulo 9</a>. Aquí rinde su dividendo final.
         </aside>
@@ -366,7 +366,7 @@
           sistema como agentes <span class="eje-rotulo"><span class="eje eje--q">Q</span> de pleno
           derecho</span>, tratados con la misma uniformidad que una persona o una organización. El
           sistema no necesita un módulo especial para «agentes de IA»: el modelo ya los admite, porque
-          desde el principio admitió agentes que no eran humanos —sensores, software, instituciones—.
+          desde el principio admitió agentes que no eran humanos: sensores, software, instituciones.
           Lo que se diseñó para un inclinómetro en una mina sirve, sin un solo cambio, para un equipo
           de modelos colaborando.</p>
 
@@ -374,7 +374,7 @@
 
         <p>Una aplicación menos comercial, pero quizás la más significativa a la larga: WQuestions como
           <strong>herramienta pedagógica</strong>. Cuando a un estudiante se le explica un dominio
-          complejo —anatomía, derecho constitucional, química orgánica— la dificultad de fondo es que
+          complejo (anatomía, derecho constitucional, química orgánica) la dificultad de fondo es que
           el dominio se presenta como un texto lineal, una sucesión de párrafos, cuando su estructura
           real es un grafo de conceptos enlazados.</p>
 
@@ -386,18 +386,18 @@
           consultable; el conocimiento, explorable en vez de memorizable.</p>
 
         <p>Y hay un correlato directo en la explicabilidad de la IA. Cuando un sistema basado en
-          modelos toma una decisión que afecta a alguien —denegar un crédito, sugerir un tratamiento,
-          sancionar un contenido— la pregunta <em>«¿por qué?»</em> exige una respuesta auditable. Si
+          modelos toma una decisión que afecta a alguien (denegar un crédito, sugerir un tratamiento,
+          sancionar un contenido) la pregunta <em>«¿por qué?»</em> exige una respuesta auditable. Si
           esa decisión se construyó sobre un grafo con relaciones canónicas del porqué
-          —<code>causado_por</code>, <code>motivado_por</code>, <code>con_finalidad</code>,
-          <code>justificado_por</code>—, la cadena de explicación es <strong>literalmente un recorrido
+          (<code>causado_por</code>, <code>motivado_por</code>, <code>con_finalidad</code>,
+          <code>justificado_por</code>), la cadena de explicación es <strong>literalmente un recorrido
           del grafo</strong>. No es una racionalización a posteriori, fabricada para sonar convincente:
           es la reconstrucción del razonamiento que de verdad ocurrió.</p>
 
         <aside class="nota-margen">
           <span class="etq">Recordatorio</span>
-          El porqué no es un eje, sino cuatro cables distintos. Esa descomposición —del
-          <a href="10-por-que.html">capítulo 10</a>— es lo que convierte una explicación en un camino
+          El porqué no es un eje, sino cuatro cables distintos. Esa descomposición (del
+          <a href="10-por-que.html">capítulo 10</a>) es lo que convierte una explicación en un camino
           recorrible, en lugar de un párrafo de texto libre.
         </aside>
 
@@ -469,9 +469,9 @@
             </svg>
           </div>
           <figcaption><span class="fnum">Figura 27.2.</span> Una misma pregunta atraviesa tres dominios
-            —normativo <span class="eje eje--k" style="font-size:.7em">K</span>, macroeconómico
+            (normativo <span class="eje eje--k" style="font-size:.7em">K</span>, macroeconómico
             <span class="eje eje--n" style="font-size:.7em">N</span> y comercial
-            <span class="eje eje--o" style="font-size:.7em">O</span>— que en cualquier organización
+            <span class="eje eje--o" style="font-size:.7em">O</span>) que en cualquier organización
             viven en sistemas distintos. El modelo descompone, consulta y recombina sobre el
             <em>mismo</em> grafo, y devuelve una respuesta narrativa cuyas afirmaciones se pueden
             rastrear hasta el hecho que las sostiene. Lo que une los tres dominios no es un puente
@@ -544,7 +544,7 @@
           <div class="tarjeta">
             <h4><span class="eje eje--t">5</span>&nbsp; Regulación que acompañe</h4>
             <p style="margin:0;font-size:.93rem">Que la norma habilite en lugar de bloquear, sobre todo
-              en los sectores donde más rinde —salud, finanzas, derecho—, que son también los más
+              en los sectores donde más rinde (salud, finanzas, derecho), que son también los más
               celosos.</p>
           </div>
           <div class="tarjeta">
@@ -562,8 +562,8 @@
         <h2>El mapa de lo que falta</h2>
 
         <p>Conviene terminar señalando el escalón que separa este capítulo del presente. Todas estas
-          aplicaciones suponen una versión <em>madura</em> del proyecto. La versión actual —la que el
-          prototipo ejecuta— está, deliberadamente, incompleta:</p>
+          aplicaciones suponen una versión <em>madura</em> del proyecto. La versión actual (la que el
+          prototipo ejecuta) está, deliberadamente, incompleta:</p>
 
         <div class="caja caja--practica revelar">
           <p class="caja-tit">Lo construido frente a lo prometido</p>
@@ -582,8 +582,8 @@
         </div>
 
         <p>Mientras las aplicaciones de este capítulo viven en el futuro, ese trabajo pendiente vive en
-          el presente, muy operativo. Enumerarlo con precisión —como un <strong>mapa de
-          implementación</strong> para quien quiera contribuir o adoptar la propuesta— es lo que queda
+          el presente, muy operativo. Enumerarlo con precisión (como un <strong>mapa de
+          implementación</strong> para quien quiera contribuir o adoptar la propuesta) es lo que queda
           por hacer, y es a lo que dedicamos el cierre del libro. Pero antes hay una prueba que esta
           arquitectura debe pasar, más exigente que cualquier dominio industrial: la de describirse a
           sí misma. A eso vamos.</p>

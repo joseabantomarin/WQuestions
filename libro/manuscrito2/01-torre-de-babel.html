@@ -83,8 +83,8 @@
         <p>La endocrinóloga usa un software que guarda el diagnóstico en un campo llamado
           <code>diagnostico_principal</code>. El sistema del cardiólogo, hecho por otra
           empresa, lo registra como <code>dx_p</code>. Para la medicación, la primera clínica
-          emplea una estructura plana —<code>medicacion_actual</code> con <code>nombre</code>,
-          <code>dosis</code> y <code>frecuencia</code>—; la segunda diseñó una base relacional
+          emplea una estructura plana (<code>medicacion_actual</code> con <code>nombre</code>,
+          <code>dosis</code> y <code>frecuencia</code>); la segunda diseñó una base relacional
           con una tabla de <code>prescripciones</code> que pide un identificador numérico
           (<code>farmaco_id</code>), los miligramos por toma (<code>mg_por_toma</code>) y el
           número de tomas diarias (<code>tomas_dia</code>). Dos formas legítimas y razonables
@@ -92,7 +92,7 @@
 
         <p>Si trabajas en software, ya sabes que conectar esas dos bases no es ciencia
           ficción. Es posible. Pero es un trabajo artesanal, caro y frágil: hay que programar
-          un puente de código —un <em>middleware</em>—, mapear a mano qué columna equivale a
+          un puente de código (un <em>middleware</em>), mapear a mano qué columna equivale a
           qué columna y escribir una excepción por cada formato de fecha o de número. Y ese
           puente caduca. El día en que una de las clínicas actualice su sistema y renombre un
           solo campo, el puente se rompe en silencio. Multiplica ese esfuerzo por miles de
@@ -114,7 +114,7 @@
           descubriremos que sus distintos sistemas anotan ese mismo instante en cuatro lenguajes
           radicalmente distintos.</p>
 
-        <p>Para el <strong>punto de venta</strong> —la caja— lo que importa es la transacción y
+        <p>Para el <strong>punto de venta</strong> (la caja) lo que importa es la transacción y
           quiénes la protagonizan. El hecho se guarda como una fila en una base relacional:</p>
 
         <div class="bloque-codigo">
@@ -223,8 +223,8 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
               </g>
             </svg>
           </div>
-          <figcaption><span class="fnum">Figura 1.1.</span> Un único hecho —la camiseta que el
-            vendedor 17 vendió a las 16:32— proyecta cuatro <em>sombras</em> parciales. Cada sistema
+          <figcaption><span class="fnum">Figura 1.1.</span> Un único hecho (la camiseta que el
+            vendedor 17 vendió a las 16:32) proyecta cuatro <em>sombras</em> parciales. Cada sistema
             captura la cara que le importa (<code>vendedor_id</code>, <code>cobrar</code>,
             <code>evento</code>, <code>movimiento</code>) y la escribe en su dialecto. Ninguna
             sombra sabe de las otras, aunque debajo todas respondan a las mismas preguntas.</figcaption>
@@ -236,8 +236,8 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
 
         <div class="caja caja--definicion revelar">
           <p class="caja-tit">Ontología (en ingeniería de datos)</p>
-          <p style="margin:0">El catálogo oficial de conceptos que un sistema reconoce —«cliente»,
-            «factura», «producto», «prescripción»— junto con las reglas lógicas que dictan cómo
+          <p style="margin:0">El catálogo oficial de conceptos que un sistema reconoce («cliente»,
+            «factura», «producto», «prescripción») junto con las reglas lógicas que dictan cómo
             se relacionan entre sí. Nada más esotérico que un diccionario con gramática. El
             problema no es que existan ontologías: es que cada departamento, empresa y disciplina
             construye la suya <em>cerrada</em>, aislándose del resto.</p>
@@ -270,7 +270,7 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
           un repertorio de preguntas anterior a todas ellas. «¿Quién?», «¿qué?», «¿dónde?»,
           «¿cuándo?», «¿cuánto?» y «¿cuál?» no tocan una parte del elefante: son las coordenadas
           que sitúan cualquier parte dentro del mismo cuerpo. La pata y la trompa dejan de ser
-          objetos rivales y pasan a ser dos respuestas —al «qué» y al «dónde»— de un único hecho.</p>
+          objetos rivales y pasan a ser dos respuestas (al «qué» y al «dónde») de un único hecho.</p>
 
         <!-- FIGURA SVG: el elefante en la oscuridad, observadores parciales, capa de preguntas -->
         <figure class="figura figura--ancha revelar">
@@ -368,8 +368,8 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
             </svg>
           </div>
           <figcaption><span class="fnum">Figura 1.2.</span> El elefante en la habitación oscura.
-            Cada sistema toca una parte del mismo animal y la nombra distinto —«columna»,
-            «abanico», «manguera», «lanza»—: así nace la torre de Babel. Las ontologías de dominio
+            Cada sistema toca una parte del mismo animal y la nombra distinto («columna»,
+            «abanico», «manguera», «lanza»): así nace la torre de Babel. Las ontologías de dominio
             capturan vistas parciales; <em>las preguntas son el animal completo</em>. La capa de
             coordenadas (<code>quién</code>, <code>qué</code>, <code>dónde</code>, <code>cuándo</code>,
             <code>cuánto</code>, <code>cuál</code>) no añade otra parte: reconstruye el todo
@@ -378,7 +378,7 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
 
         <h2>La causa de todo el problema</h2>
 
-        <p>La raíz de esta torre de Babel —y el punto de partida de este libro— se enuncia en una
+        <p>La raíz de esta torre de Babel (y el punto de partida de este libro) se enuncia en una
           frase: hemos permitido que <strong>cada sector invente, desde cero, su propia forma de
           entender la realidad</strong>. La ingeniería médica no hereda nada de la contabilidad.
           El comercio no comparte cimientos con el derecho. La educación diseña bases que jamás
@@ -428,8 +428,8 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
             conexión por sistema (verde). Pasa el cursor sobre las barras para ver las cifras.</figcaption>
         </figure>
 
-        <p>Por eso el integrador de datos —ese rol que casi ninguna escuela enseña y que casi
-          toda empresa necesita— existe. Su oficio es escribir y vigilar esos <em>n(n−1)/2</em>
+        <p>Por eso el integrador de datos (ese rol que casi ninguna escuela enseña y que casi
+          toda empresa necesita) existe. Su oficio es escribir y vigilar esos <em>n(n−1)/2</em>
           puentes: los ETL que vacían una base en otra, los mapeos columna a columna, las
           excepciones por cada formato de fecha. Es trabajo valioso y, a la vez, trabajo que no
           debería existir. Es el impuesto que paga la industria por un pecado original de diseño.</p>
@@ -454,7 +454,7 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
           <div class="tarjeta">
             <h4 style="color:var(--eje-m)">Vía 2 · La extracción abierta</h4>
             <p style="margin:0;font-size:.95rem">Renunciar al esquema y dejar que una máquina
-              extraiga relaciones del texto libre —la llamada <em>OpenIE</em><a class="ref" href="referencias.html#ref-23">(23)</a>—. Es
+              extraiga relaciones del texto libre (la llamada <em>OpenIE</em><a class="ref" href="referencias.html#ref-23">(23)</a>). Es
               <strong>ancha pero informe</strong>: cubre cualquier tema, sí, pero produce
               tripletas sin tipos estables, sin unidades, sin distinguir un agente de un lugar.
               Mucha cobertura y poca estructura: imposible de consultar con rigor.</p>
@@ -463,8 +463,8 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
 
         <div class="caja caja--precedente revelar">
           <p class="caja-tit">El callejón de las dos vías<a class="ref" href="referencias.html#ref-4">(4)</a></p>
-          <p style="margin:0">Las ontologías clásicas —de las que CIDOC&nbsp;CRM o las redes de
-            <em>frames</em> son ejemplos refinados— ganan en estructura lo que pierden en
+          <p style="margin:0">Las ontologías clásicas (de las que CIDOC&nbsp;CRM o las redes de
+            <em>frames</em> son ejemplos refinados) ganan en estructura lo que pierden en
             alcance. La extracción abierta gana en alcance lo que pierde en estructura. La
             industria osciló entre ambos extremos sin encontrar el punto medio: un esquema
             <em>a la vez ancho y estructurado</em>. Ese punto medio es lo que perseguimos, y la
@@ -472,7 +472,7 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
         </div>
 
         <p>Y aquí cabe una pregunta incómoda, la que abre la puerta a todo lo demás: ¿y si la
-          solución a este caos fuera <em>anterior</em> —y mucho más simple— que cualquier diseño
+          solución a este caos fuera <em>anterior</em> (y mucho más simple) que cualquier diseño
           de base de datos? ¿Y si, mucho antes de que existieran los hospitales, los bancos o el
           comercio internacional, la humanidad ya hubiera fijado un esquema cognitivo universal
           que nadie, en ningún idioma, puede evitar usar?</p>
@@ -480,7 +480,7 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
         <h2>La apuesta de este libro</h2>
 
         <p>Volvamos a la venta una última vez. Si detuviéramos a cualquier persona en la calle
-          —sin nociones de bases de datos ni de código— y le pidiéramos describir lo que pasó en
+          (sin nociones de bases de datos ni de código) y le pidiéramos describir lo que pasó en
           esa tienda, su respuesta natural sería algo muy parecido a esto:</p>
 
         <blockquote>
@@ -585,11 +585,11 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
         <div class="caja caja--idea revelar">
           <p class="caja-tit">La apuesta</p>
           <p style="margin:0;font-size:1.05rem">Existe un conjunto reducido y estable de preguntas
-            primarias —<strong>siete</strong>— con poder descriptivo suficiente para modelar
+            primarias (<strong>siete</strong>) con poder descriptivo suficiente para modelar
             cualquier hecho factual, en cualquier dominio industrial y en cualquier idioma:
             <strong>quién, qué, dónde, cuándo, cuánto, cuál y cómo</strong>. Al diseñar las bases
-            de datos alrededor de estas coordenadas cognitivas —y no de la terminología de turno
-            de cada industria— se neutraliza de raíz la fragmentación semántica. La torre de
+            de datos alrededor de estas coordenadas cognitivas (y no de la terminología de turno
+            de cada industria) se neutraliza de raíz la fragmentación semántica. La torre de
             Babel se desmorona desde los cimientos.</p>
         </div>
 
@@ -602,8 +602,8 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
           dialecto nuevo por cada API que toca.</p>
 
         <p>Conviene separar aquí las siete coordenadas en dos grupos, porque así las recorreremos.
-          Seis fijan la <em>posición</em> de un hecho —dónde cae en cada dimensión de la
-          realidad—; la séptima, <em>cómo</em>, aporta los enlaces que amarran las otras seis
+          Seis fijan la <em>posición</em> de un hecho (dónde cae en cada dimensión de la
+          realidad); la séptima, <em>cómo</em>, aporta los enlaces que amarran las otras seis
           entre sí:</p>
 
         <div class="columnas">
@@ -623,7 +623,7 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
         </div>
 
         <p>Anticipando un poco la maquinaria que viene, así se ve un fragmento del hecho
-          <code>venta_001</code> expresado ya en el formato del modelo —cada línea es una
+          <code>venta_001</code> expresado ya en el formato del modelo: cada línea es una
           tripleta que conecta el hecho con uno de sus valores, y la firma final declara a qué
           par de ejes pertenece:</p>
 
@@ -639,7 +639,7 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
         <p>No te detengas todavía en la notación; el <a href="07-hecho-atomico.html">capítulo
           7</a> la desarma pieza por pieza. Lo único que importa ver aquí es que las cuatro
           sombras de la Figura 1.1 acaban de fundirse en un solo registro, y que ese registro es
-          legible —de izquierda a derecha, como una frase— por cualquiera de los cuatro sistemas
+          legible (de izquierda a derecha, como una frase) por cualquiera de los cuatro sistemas
           y por una máquina por igual.</p>
 
         <h2>Una promesa que se puede comprobar</h2>
@@ -647,18 +647,18 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
         <p>No te pido que tomes esto como un acto de fe. La fuerza de la apuesta no está en que
           suene elegante, sino en que estas siete preguntas no son un invento moderno. Filósofos
           griegos, juristas romanos, escuelas de periodismo del 1900 y los propios niños que
-          aprenden a hablar convergen —sin coordinarse, separados por siglos— en la misma lista.
+          aprenden a hablar convergen (sin coordinarse, separados por siglos) en la misma lista.
           Cuando tantas tradiciones independientes llegan a la misma respuesta, esa respuesta
           deja de ser una hipótesis y empieza a parecer un descubrimiento.</p>
 
         <aside class="nota-margen">
           <span class="etq">Más adelante</span>
-          La demostración de <em>por qué estas siete y no otras</em> —la convergencia entre
-          Aristóteles<a class="ref" href="referencias.html#ref-1">(1)</a>, la retórica clásica y la adquisición del lenguaje— tiene capítulo propio:
+          La demostración de <em>por qué estas siete y no otras</em> (la convergencia entre
+          Aristóteles<a class="ref" href="referencias.html#ref-1">(1)</a>, la retórica clásica y la adquisición del lenguaje) tiene capítulo propio:
           el <a href="06-raices.html">capítulo 6</a>.
         </aside>
 
-        <p>A esa convergencia —la prueba de por qué estas preguntas y no otras— le dedicamos un
+        <p>A esa convergencia (la prueba de por qué estas preguntas y no otras) le dedicamos un
           capítulo entero. Pero no hace falta esperar a la demostración para empezar a construir.
           De hecho, conviene construir primero: ver la maquinaria funcionando convence más que
           cualquier argumento.</p>
@@ -668,16 +668,16 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
           <p style="margin:0">Esta arquitectura no se diseñó en abstracto para luego forzar a los
             datos a encajar. Emergió al revés: dominio tras dominio, chocando con las fricciones
             reales que cada negocio exigía resolver. El día decisivo fue aquel en que comprendimos
-            que ocho industrias sin relación entre sí —de un spa a un banco, de una clínica a una
-            mina— estaban pidiendo la <em>misma</em> solución estructural, disfrazada con
+            que ocho industrias sin relación entre sí (de un spa a un banco, de una clínica a una
+            mina) estaban pidiendo la <em>misma</em> solución estructural, disfrazada con
             vocabularios distintos. Cuando ocho problemas independientes convergen en la misma
             respuesta, esa respuesta deja de ser una opinión.</p>
         </div>
 
         <p>Lo que sigue es, sencillamente, la ingeniería. Vamos a diseccionar las siete
           coordenadas una por una: su carga de significado, sus trampas, los casos límite donde
-          parecen romperse. Empezaremos por las cuatro más concretas —quién, qué, dónde y
-          cuándo—, porque son el suelo firme sobre el que se levanta todo lo demás. La paciente
+          parecen romperse. Empezaremos por las cuatro más concretas (quién, qué, dónde y
+          cuándo), porque son el suelo firme sobre el que se levanta todo lo demás. La paciente
           Vega nos espera al final del camino; cuando volvamos a su sala de urgencias, la consulta
           imposible de esta noche será una sola línea.</p>
 

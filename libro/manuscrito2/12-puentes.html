@@ -50,8 +50,8 @@
         <div class="num-cap">12</div>
         <h1>Puentes: objetos, bits, grafos y cadenas</h1>
         <p class="lede">Nada de esto es magia, y nada es del todo nuevo. WQuestions se asienta sobre
-          cuatro ideas que el lector técnico ya domina —la programación orientada a objetos, el bit,
-          el grafo y la cadena de bloques—. Este capítulo tiende los puentes, y marca
+          cuatro ideas que el lector técnico ya domina (la programación orientada a objetos, el bit,
+          el grafo y la cadena de bloques). Este capítulo tiende los puentes, y marca
           dónde el puente sostiene y dónde se rompe.</p>
       </header>
 
@@ -67,8 +67,8 @@
           inmutables. Este capítulo se dedica a contestarle, una objeción a la vez.</p>
 
         <p>El método será siempre el mismo. Para cada tecnología familiar tenderemos un
-          <strong>puente</strong> —un mapa que muestra qué pieza de WQuestions corresponde a qué pieza
-          que el lector ya conoce— y luego marcaremos el punto exacto donde el puente
+          <strong>puente</strong> (un mapa que muestra qué pieza de WQuestions corresponde a qué pieza
+          que el lector ya conoce) y luego marcaremos el punto exacto donde el puente
           deja de sostener peso. Porque la analogía sirve para entrar, pero engaña si se la lleva
           demasiado lejos. Cuatro puentes, cuatro secciones.</p>
 
@@ -83,9 +83,9 @@
 
         <p>La primera reacción de cualquier ingeniero es la más natural: «esto ya lo hago con clases».
           Y en parte lleva razón. La programación orientada a objetos (POO) lleva medio siglo
-          organizando el software alrededor de la misma intuición que WQuestions —que el mundo se
+          organizando el software alrededor de la misma intuición que WQuestions (que el mundo se
           describe con <em>cosas</em> que pertenecen a <em>categorías</em> y que se <em>relacionan</em>
-          entre sí—. El parecido es tan profundo que conviene hacerlo explícito antes de señalar la
+          entre sí). El parecido es tan profundo que conviene hacerlo explícito antes de señalar la
           grieta.</p>
 
         <p>Tres conceptos de la POO tienen un gemelo casi perfecto en el modelo. Cuando un programador
@@ -95,7 +95,7 @@
           clase <code>VentaOnline</code> <em>hereda</em> de <code>Venta</code>, declara que todo lo
           que vale para una venta vale para una venta en línea; nosotros lo escribimos con
           <code>subtipo_de</code> entre dos conceptos del eje K. Y los <em>atributos</em> y
-          <em>asociaciones</em> de un objeto —su <code>monto</code>, su <code>vendedor</code>— no son
+          <em>asociaciones</em> de un objeto (su <code>monto</code>, su <code>vendedor</code>) no son
           otra cosa que nuestros predicados del eje M.</p>
 
         <div class="bloque-codigo">
@@ -106,7 +106,7 @@
 (venta_001,     monto_usd,     49.90)           ∈ M(O, N)   // atributo</code></pre>
         </div>
 
-        <p>Para fijar el paralelo, traduzcamos la misma entidad —nuestra venta canónica— a una clase de
+        <p>Para fijar el paralelo, traduzcamos la misma entidad (nuestra venta canónica) a una clase de
           Python y, justo al lado, a las tripletas equivalentes. Mira primero el código que el
           programador escéptico reconoce a primera vista:</p>
 
@@ -213,8 +213,8 @@ v = Venta("venta_001", vendedor_17, cliente_1042,
           Un objeto <code>Venta</code> guarda el monto <em>y</em> sabe aplicarse un descuento: el dato y
           el código que lo toca viven en la misma caja. Eso es elegante para programar, pero ata la
           información a un lenguaje y a una versión del software. Nuestras tripletas no saben hacer
-          nada: son afirmaciones inertes sobre el mundo. El comportamiento —cómo calcular un descuento,
-          cómo validar una venta— vive en otra capa, separado del hecho. Un dato que no carga lógica es
+          nada: son afirmaciones inertes sobre el mundo. El comportamiento (cómo calcular un descuento,
+          cómo validar una venta) vive en otra capa, separado del hecho. Un dato que no carga lógica es
           un dato que cualquier sistema puede leer sin importar en qué lenguaje fue escrito.</p>
 
         <p><strong>La segunda: la POO fija el esquema en el código (mundo cerrado); WQuestions es de
@@ -229,16 +229,16 @@ v = Venta("venta_001", vendedor_17, cliente_1042,
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Idea clave</p>
           <p style="margin:0">La POO encierra datos y comportamiento en una caja cuyo esquema se fija al
-            compilar —<strong>mundo cerrado</strong>—. WQuestions deja los datos como tripletas inertes
-            y abiertas, y manda el comportamiento a otra capa —<strong>mundo abierto</strong>—. No es
+            compilar (<strong>mundo cerrado</strong>). WQuestions deja los datos como tripletas inertes
+            y abiertas, y manda el comportamiento a otra capa (<strong>mundo abierto</strong>). No es
             que una sea correcta y la otra no: sirven a propósitos distintos. La POO optimiza la
             ejecución de un programa; WQuestions optimiza que muchos programas distintos compartan los
             mismos hechos.</p>
         </div>
 
         <p>Un último hilo conecta esta sección con el capítulo anterior. En la POO, dos variables que
-          apuntan al mismo objeto comparten su <em>referencia</em> —ese puntero invisible que distingue
-          «el mismo objeto» de «un objeto igual»—. Esa referencia es, ni más ni menos, lo que en el
+          apuntan al mismo objeto comparten su <em>referencia</em> (ese puntero invisible que distingue
+          «el mismo objeto» de «un objeto igual»). Esa referencia es, ni más ni menos, lo que en el
           <a href="11-identidad.html">capítulo 11</a> llamamos el identificador único: el ancla que
           permite a un hecho hablar de <code>venta_001</code> y a otro, en otro sistema, hablar de la
           misma venta sin confundirla con su gemela. El puntero del objeto y el UID del grafo cumplen
@@ -337,12 +337,12 @@ v = Venta("venta_001", vendedor_17, cliente_1042,
           veces? La respuesta es que <em>no</em>, y la razón merece detallarse, porque deshace un
           malentendido común.</p>
 
-        <p>Las bases especializadas en tripletas —los <em>triple stores</em>— jamás guardan el texto
+        <p>Las bases especializadas en tripletas (los <em>triple stores</em>) jamás guardan el texto
           literal que tú escribes. Aplican <strong>codificación por diccionario</strong>: cada cadena
           que se repite (un predicado como <code>monto_usd</code>, un valor como <code>vendedor_17</code>)
           se almacena <em>una sola vez</em> en una tabla y, de ahí en adelante, se referencia por un
           número entero corto. Donde tú ves <code>vendedor_17</code> mil veces, la máquina ve un
-          entero mil veces —y los enteros se comprimen casi a la nada cuando se repiten—. A eso se suma
+          entero mil veces (y los enteros se comprimen casi a la nada cuando se repiten). A eso se suma
           el <strong>almacenamiento columnar</strong>, que guarda juntos todos los valores de una misma
           posición, donde la redundancia es máxima y la compresión, brutal.</p>
 
@@ -366,8 +366,8 @@ v = Venta("venta_001", vendedor_17, cliente_1042,
         <p>«Está bien —concede el ingeniero—, pero todo esto, ¿en qué motor lo corro? Yo tengo
           PostgreSQL.» Aquí la respuesta es la más alentadora de todo el capítulo: no hace falta
           inventar nada. La industria lleva veinte años construyendo bases de datos que abandonaron el
-          modelo de tablas para abrazar el modelo de la <strong>red de nodos y enlaces</strong> —el
-          grafo—. WQuestions no compite con ellas; encuentra en ellas su hogar natural. El contraste
+          modelo de tablas para abrazar el modelo de la <strong>red de nodos y enlaces</strong> (el
+          grafo). WQuestions no compite con ellas; encuentra en ellas su hogar natural. El contraste
           con el modelo relacional ya lo desarrollamos en el <a href="08-espacio-multidimensional.html">capítulo
           8</a>: aquí miramos las alternativas que sí encajan.</p>
 
@@ -385,7 +385,7 @@ v = Venta("venta_001", vendedor_17, cliente_1042,
 
           <p><b>Property graphs (grafos de propiedades).</b> En vez de tripletas puras, modelan el mundo
             como nodos y aristas a los que se les cuelgan propiedades. Son extraordinariamente rápidos
-            para recorrer relaciones —«amigos de amigos», rutas, cadenas de suministro—. Los referentes
+            para recorrer relaciones («amigos de amigos», rutas, cadenas de suministro). Los referentes
             son <strong>Neo4j</strong>, <strong>Memgraph</strong> y <strong>TigerGraph</strong>. Encajan
             bien, aunque su modelo de propiedades en la arista exige una traducción menor respecto de
             nuestra tripleta canónica.</p>
@@ -393,7 +393,7 @@ v = Venta("venta_001", vendedor_17, cliente_1042,
           <p><b>Datalog, inmutables y temporales.</b> Aquí ocurre la coincidencia más asombrosa del
             capítulo. <strong>Datomic</strong> y <strong>XTDB</strong> guardan la información como
             <em>datoms</em>: hechos de la forma <code>[entidad, atributo, valor, tiempo-de-transacción]</code>.
-            Léelo de nuevo. Es nuestra tripleta —entidad, predicado, valor— más una marca temporal.
+            Léelo de nuevo. Es nuestra tripleta (entidad, predicado, valor) más una marca temporal.
             Casi exactamente lo que el modelo propone. Y XTDB es <strong>bitemporal de fábrica</strong>:
             distingue de raíz entre cuándo ocurrió un hecho en el mundo y cuándo el sistema se enteró,
             que es justo la distinción de la vigencia (la regla D6 del <a href="09-situaciones.html">capítulo
@@ -402,7 +402,7 @@ v = Venta("venta_001", vendedor_17, cliente_1042,
 
         <aside class="nota-margen">
           <span class="etq">Convergencia</span>
-          Que dos comunidades independientes —la de RDF y la de Datomic— hayan llegado, por caminos
+          Que dos comunidades independientes (la de RDF y la de Datomic) hayan llegado, por caminos
           distintos, a una unidad <code>(entidad, atributo, valor [, tiempo])</code> es la mejor señal
           de que la tripleta no es un capricho del modelo, sino una forma natural a la que el problema
           empuja por sí solo.
@@ -516,14 +516,14 @@ v = Venta("venta_001", vendedor_17, cliente_1042,
         </div>
 
         <p><strong>Hash-encadenado (Merkle).</strong> Si cada hecho guarda el <em>hash</em> del anterior
-          —como en el campo <code>hash_previo</code> de arriba—, la cadena entera se vuelve evidencia de
+          (como en el campo <code>hash_previo</code> de arriba), la cadena entera se vuelve evidencia de
           manipulación: alterar un hecho viejo rompe todos los hashes que vinieron después, y la
           falsificación salta a la vista al instante. Es la misma garantía criptográfica que sostiene
           una blockchain, aplicada a nuestro libro de hechos.</p>
 
         <p><strong>Consenso y federación.</strong> Cuando el grafo deja de pertenecer a una sola empresa
-          y pasa a ser compartido entre varias —el sueño de la interoperabilidad con el que abrió este
-          libro—, hace falta un protocolo que decida qué hechos entran al registro común y quién puede
+          y pasa a ser compartido entre varias (el sueño de la interoperabilidad con el que abrió este
+          libro), hace falta un protocolo que decida qué hechos entran al registro común y quién puede
           afirmar qué. Ahí entran las ideas de consenso y federación. Pero eso ya es terreno de la
           seguridad del grafo compartido, que el <a href="29-seguridad.html">capítulo 29</a> trata a
           fondo.</p>
@@ -599,9 +599,9 @@ v = Venta("venta_001", vendedor_17, cliente_1042,
           piensa las cosas y las categorías, pero la supera al desacoplar el dato del comportamiento y
           abrir el esquema. <em>Se parece</em> a una avalancha de bits, y por la misma razón que los
           bits funcionan: la atomicidad uniforme es lo que vuelve la información operable y comprimible
-          a escala. <em>Vive</em> en las bases de grafos que la industria ya construyó —y en Datomic y
-          XTDB casi sin traducción—. Y <em>hereda</em> lo mejor de la blockchain —el registro inmutable
-          y auditable— sin pagar el precio de la moda.</p>
+          a escala. <em>Vive</em> en las bases de grafos que la industria ya construyó (y en Datomic y
+          XTDB casi sin traducción). Y <em>hereda</em> lo mejor de la blockchain (el registro inmutable
+          y auditable) sin pagar el precio de la moda.</p>
 
         <p class="cita-destacada revelar">WQuestions no pide tirar lo que ya sabes. Pide reconocer que
           las preguntas estaban debajo de todo eso desde el principio.<cite>El sentido de los cuatro
@@ -610,7 +610,7 @@ v = Venta("venta_001", vendedor_17, cliente_1042,
         <p>Ninguno de estos puentes es decorativo. Cada uno responde a un lector que llega con su propia
           herramienta favorita y la pregunta legítima de «¿esto qué me aporta sobre lo que ya tengo?».
           La respuesta, repetida cuatro veces, es la misma: WQuestions no reemplaza tu pila tecnológica;
-          le pone debajo una capa de significado —los ejes de las preguntas— que hace que tus objetos,
+          le pone debajo una capa de significado (los ejes de las preguntas) que hace que tus objetos,
           tus bits, tus grafos y tus cadenas por fin se entiendan entre sí. Con los cuatro puentes
           tendidos, estamos listos para la última pieza del lenguaje a los hechos: cómo el verbo de una
           frase se convierte en la signatura tipada de un predicado, que es el asunto del capítulo

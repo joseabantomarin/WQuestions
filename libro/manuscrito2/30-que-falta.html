@@ -56,8 +56,8 @@
       <div class="contenido">
 
         <p class="entrada">Imagina que cierras este libro y decides que la idea merece existir de
-          verdad. Clonas el repositorio, levantas el prototipo, cargas un dominio propio —tu spa, tu
-          clínica, el sistema de tu empresa— y empiezas a registrar hechos. Funciona: los hechos
+          verdad. Clonas el repositorio, levantas el prototipo, cargas un dominio propio (tu spa, tu
+          clínica, el sistema de tu empresa) y empiezas a registrar hechos. Funciona: los hechos
           entran como tripletas tipadas, el lexicon traduce tu vocabulario, las consultas responden. Y
           entonces, casi de inmediato, chocas con una pared. Quieres que el sistema dispare solo la
           regla <em>«a la séptima sesión, la octava es gratis»</em>; el prototipo guarda la regla como
@@ -69,7 +69,7 @@
           inspiradora al horizonte; es un <strong>mapa de implementación</strong>. Hasta aquí el libro
           presentó la propuesta entera y la sometió a prueba: un prototipo en Python con sus pruebas en
           verde, ocho dominios industriales modelados que confirman que el catálogo se sostiene en
-          territorios disímiles y —en el <a href="28-prueba-reflexiva.html">capítulo&nbsp;28</a>— el
+          territorios disímiles y (en el <a href="28-prueba-reflexiva.html">capítulo&nbsp;28</a>) el
           experimento reflexivo, donde el modelo bastó para describir su propia herramienta y se
           corrigió a sí mismo bajo carga. Lo que sigue es el inventario de la distancia que
           separa eso de una pieza de infraestructura que cualquiera pueda adoptar un martes por la
@@ -161,8 +161,8 @@
           hechos del grafo y un consecuente que se efectúa cuando la condición se cumple.</p>
 
         <p>El experimento reflexivo dio el <strong>primer medio paso</strong>: demostró que la conducta
-          puede vivir como dato y ejecutarse desde afuera —un evaluador genérico que despacha verbos
-          leyéndolos del grafo—. Lo que ese motor <strong>todavía no es</strong> es un evaluador de
+          puede vivir como dato y ejecutarse desde afuera (un evaluador genérico que despacha verbos
+          leyéndolos del grafo). Lo que ese motor <strong>todavía no es</strong> es un evaluador de
           <strong>reglas declarativas</strong>. Sabe ejecutar verbos; no sabe resolver «si se cumplen
           estas condiciones sobre los hechos, deriva este hecho nuevo». Esa es la pieza ausente.</p>
 
@@ -173,13 +173,13 @@
           <div class="tarjeta">
             <h4 style="color:var(--eje-k)">SHACL</h4>
             <p style="margin:0;font-size:.93rem"><em>Shapes Constraint Language</em> (W3C, 2017),
-              pensado para validar grafos RDF<a class="ref" href="referencias.html#ref-8">(8)</a>. Excelente para chequear consistencia —«ningún paciente
-              con dos diagnósticos contradictorios vigentes»—; pobre para el razonamiento positivo.</p>
+              pensado para validar grafos RDF<a class="ref" href="referencias.html#ref-8">(8)</a>. Excelente para chequear consistencia («ningún paciente
+              con dos diagnósticos contradictorios vigentes»); pobre para el razonamiento positivo.</p>
           </div>
           <div class="tarjeta">
             <h4 style="color:var(--eje-o)">Datalog</h4>
             <p style="margin:0;font-size:.93rem">Lenguaje lógico deductivo. Sobresale en razonamiento
-              composicional —«si X causa Y e Y causa Z, entonces X causa Z»—. Motores como Soufflé
+              composicional («si X causa Y e Y causa Z, entonces X causa Z»). Motores como Soufflé
               alcanzan rendimiento industrial.</p>
           </div>
           <div class="tarjeta">
@@ -206,19 +206,19 @@
           <p style="margin:0"><b>Qué requiere:</b> una <em>API de motor de inferencia</em> que el
             universo exponga —<code>u.evaluate(regla)</code>, <code>u.evaluate_all()</code>— cuyos
             resultados sean, otra vez, hechos atómicos firmados por el evaluador. El primer paso es
-            elegir un motor de referencia —SHACL para validación, Datalog para inferencia— y montarlo
+            elegir un motor de referencia (SHACL para validación, Datalog para inferencia) y montarlo
             sobre el evaluador genérico que ya existe. Estimación: tres a seis meses para una primera
             versión usable.</p>
         </div>
 
         <h3>El lugar de la IA en este frente</h3>
 
-        <p>La cuarta opción de la lista —usar un modelo de lenguaje— merece una aclaración, porque la
+        <p>La cuarta opción de la lista (usar un modelo de lenguaje) merece una aclaración, porque la
           tentación es grande. ¿No podría una IA, incluso de pesos abiertos y autoalojada, hacer de
           motor de inferencia, con un buen <em>prompt</em> y un modelo bien definido? Hay que separar
-          dos clases de regla. Para las <strong>borrosas</strong> —¿este reclamo es urgente?, ¿este
-          texto implica consentimiento?— la respuesta es sí, y ahí el LLM es la herramienta correcta.
-          Para las <strong>estrictas</strong> —las del spa, las del banco, las del contrato— la
+          dos clases de regla. Para las <strong>borrosas</strong> (¿este reclamo es urgente?, ¿este
+          texto implica consentimiento?) la respuesta es sí, y ahí el LLM es la herramienta correcta.
+          Para las <strong>estrictas</strong> (las del spa, las del banco, las del contrato) la
           respuesta es no, por cuatro razones que ningún <em>prompt</em> arregla.</p>
 
         <div class="caja caja--alerta revelar">
@@ -230,7 +230,7 @@
               tesis del modelo es justamente la auditabilidad: hechos firmados, bitemporales,
               rastreables.</li>
             <li style="margin-bottom:.35rem">Es poco confiable en <strong>conteo y agregación
-              exactos</strong> —contar goles, sumar costos, cerrar una transitividad—.</li>
+              exactos</strong> (contar goles, sumar costos, cerrar una transitividad).</li>
             <li style="margin-bottom:0">Es caro de <strong>escalar</strong> y de
               <strong>reproducir</strong> una decisión pasada idéntica.</li>
           </ol>
@@ -238,7 +238,7 @@
 
         <p>La forma productiva de sumar IA, entonces, no es ponerla de <em>runtime</em> sino de
           <strong>autor</strong>. Que un LLM <strong>compile</strong> una regla escrita en lenguaje
-          natural —<em>«a las siete sesiones, la octava es gratis»</em>— a una regla declarativa en
+          natural (<em>«a las siete sesiones, la octava es gratis»</em>) a una regla declarativa en
           Datalog o SHACL sobre los hechos del grafo, y que el <strong>motor determinista la
           ejecute</strong>. El modelo bien definido vuelve esa compilación casi directa, porque los
           roles ya están tipados y la regla mapea a patrones sobre hechos canónicos. Así se obtiene lo
@@ -289,16 +289,16 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
         <p>Hoy el modelo soporta <strong>tiempo de validez</strong> (<em>valid time</em>): cada hecho
           lleva su rango <code>[inicio, fin)</code>, y una consulta «en el momento T» recupera lo que
           era cierto del mundo entonces. Esta es la mecánica de vigencia que el libro reifica con rangos
-          —la decisión <span class="codigo-d">D6</span>, enunciada en el
-          <a href="09-situaciones.html">capítulo&nbsp;9</a>—. Lo que <strong>falta</strong> es el
+          (la decisión <span class="codigo-d">D6</span>, enunciada en el
+          <a href="09-situaciones.html">capítulo&nbsp;9</a>). Lo que <strong>falta</strong> es el
           <strong>tiempo de transacción</strong> (<em>transaction time</em>): cuándo el sistema afirmó
           ese hecho.</p>
 
         <p>La diferencia importa cuando alguien pregunta no «¿qué era cierto?» sino «¿qué sabíamos?».
           Toma un caso del banco. En mayo registramos que el plan mensual de un cliente venció el 31 de
           marzo; en abril el cliente aparece, demuestra que había renovado y retrocedemos el plan. La
-          pregunta del auditor —«¿qué estaba en el sistema entre el 1 de abril y la fecha de la
-          corrección?»— solo se responde si el sistema preservó esa versión transitoria, la que era
+          pregunta del auditor («¿qué estaba en el sistema entre el 1 de abril y la fecha de la
+          corrección?») solo se responde si el sistema preservó esa versión transitoria, la que era
           falsa pero estuvo vigente como creencia del sistema durante semanas.</p>
 
         <aside class="nota-margen">
@@ -313,14 +313,14 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
           <p style="margin:0 0 .5rem"><b>Qué falta:</b> cerrar el tiempo de transacción de punta a
             punta. La estructura del hecho ya reserva un campo para él, pero la persistencia aún no lo
             conserva en el viaje de ida y vuelta a disco. Queda como deuda concreta.</p>
-          <p style="margin:0 0 .5rem"><b>Urgencia: alta</b> para dominios regulados —finanzas, salud,
-            derecho—; baja para el resto. Cuando un dominio lo necesita, no es opcional. El destino es
+          <p style="margin:0 0 .5rem"><b>Urgencia: alta</b> para dominios regulados (finanzas, salud,
+            derecho); baja para el resto. Cuando un dominio lo necesita, no es opcional. El destino es
             un par de intervalos por hecho y consultas <em>as-of</em> duales:
             <code>query(valido_en=T1, registrado_en=T2)</code>.</p>
           <p style="margin:0"><b>Qué requiere:</b> una refactorización compatible del módulo del hecho
             para llevar dos intervalos en lugar de uno, y de la capa de persistencia para preservarlos.
-            Snodgrass<a class="ref" href="referencias.html#ref-17">(17)</a> formalizó esto en los años noventa; las bases bitemporales modernas —Datomic,
-            XTDB— lo implementan en producción. Estimación: un mes de implementación, más pruebas sobre
+            Snodgrass<a class="ref" href="referencias.html#ref-17">(17)</a> formalizó esto en los años noventa; las bases bitemporales modernas (Datomic,
+            XTDB) lo implementan en producción. Estimación: un mes de implementación, más pruebas sobre
             un dominio regulado real.</p>
         </div>
 
@@ -333,7 +333,7 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
           <code>(sujeto, rol, valor, inicio, fin, …)</code>. Es la prueba de que el modelo persiste sin
           esfuerzo: la geometría de las tripletas se aplana a tabla casi sin pérdida.</p>
 
-        <p>Lo que <strong>falta</strong>, entonces, no es «persistencia» —ya existe— sino
+        <p>Lo que <strong>falta</strong>, entonces, no es «persistencia» (ya existe) sino
           <strong>persistencia industrial y plural</strong>: una interfaz <code>Storage</code>
           abstracta de la que SQLite sea la primera implementación, y otros respaldos con perfiles
           distintos según el caso de uso.</p>
@@ -357,7 +357,7 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
               </tr>
               <tr>
                 <td><b>Kùzu / Neo4j</b></td>
-                <td>Sistemas que privilegian consultas de grafo —rutas, caminos transitivos—. Modelo
+                <td>Sistemas que privilegian consultas de grafo (rutas, caminos transitivos). Modelo
                   más natural; curva de adopción mayor.</td>
                 <td>pendiente</td>
               </tr>
@@ -374,10 +374,10 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
 
         <div class="caja caja--practica revelar">
           <p class="caja-tit">Qué falta · urgencia · qué requiere</p>
-          <p style="margin:0 0 .5rem"><b>Urgencia: media.</b> El piso —SQLite— ya permite construir; lo
+          <p style="margin:0 0 .5rem"><b>Urgencia: media.</b> El piso (SQLite) ya permite construir; lo
             que falta habilita escala y casos exigentes, no la operación básica.</p>
           <p style="margin:0"><b>Qué requiere:</b> extraer la interfaz <code>Storage</code> del SQLite
-            actual y escribir al menos un segundo respaldo —Postgres—. El módulo del universo delega la
+            actual y escribir al menos un segundo respaldo (Postgres). El módulo del universo delega la
             lectura y la escritura a esa interfaz, sin saber qué hay debajo. Estimación: dos a tres
             meses para los dos respaldos primarios.</p>
         </div>
@@ -397,15 +397,15 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
             manual.</p>
           <p><strong>4.2 — Parser de lenguaje natural a hechos.</strong> Hoy el análisis se hace vía
             LLM con <i>function calling</i>. Hace falta también un parser <strong>local y
-            determinista</strong> para textos donde la latencia del modelo importa —sistemas de tiempo
-            real— o donde la privacidad lo exige —datos médicos que no deben salir de la sala—.
+            determinista</strong> para textos donde la latencia del modelo importa (sistemas de tiempo
+            real) o donde la privacidad lo exige (datos médicos que no deben salir de la sala).
             Combinar análisis sintáctico con el lexicon es trabajo concreto, no investigación abierta.</p>
           <p><strong>4.3 — IDE / inspector.</strong> El experimento reflexivo entregó una
             <strong>primera versión</strong>: un inspector que, junto a cada vista, muestra las
-            tripletas que la sostienen —«lo que ves es el dato»—. Falta el resto: explorar individuos y
+            tripletas que la sostienen («lo que ves es el dato»). Falta el resto: explorar individuos y
             vecinos a voluntad, consultar con patrones, seguir la cadena <code>causado_por</code> o
-            <code>justificado_por</code> de cualquier nodo, y —la pieza que el propio experimento
-            señaló como necesaria— <strong>vistas con nombre</strong> definidas como dato, para
+            <code>justificado_por</code> de cualquier nodo, y (la pieza que el propio experimento
+            señaló como necesaria) <strong>vistas con nombre</strong> definidas como dato, para
             re-concretar el grafo sin ahogar al modelador en la abstracción. La base existe; el salto
             es de semanas, no de meses.</p>
           <p><strong>4.4 — Validador de migración.</strong> Cuando un sistema heredado quiere migrar a
@@ -430,15 +430,15 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
 
         <h2>Frente 5 — Lexicon poblado en varios idiomas</h2>
 
-        <p>El catálogo canónico del libro —la decisión <span class="codigo-d">D8</span>, que hace
-          invisible el catálogo y deja al lexicon como única interfaz— define 38 roles. El lexicon del
+        <p>El catálogo canónico del libro (la decisión <span class="codigo-d">D8</span>, que hace
+          invisible el catálogo y deja al lexicon como única interfaz) define 38 roles. El lexicon del
           prototipo registra una decena de verbos. Para un sistema productivo, el lexicon de
           <em>un solo idioma</em> necesita del orden de <strong>dos a cinco mil entradas</strong>: los
           verbos frecuentes del español, sus formas nominales, las locuciones idiomáticas que la gente
           usa sin pensar.</p>
 
         <p>Lo que <strong>falta</strong> es trabajo lingüístico paciente. Por dominio o por familia
-          semántica —transferencia, comunicación, movimiento, percepción, estados— hay que poblar el
+          semántica (transferencia, comunicación, movimiento, percepción, estados) hay que poblar el
           lexicon. FrameNet español, el corpus español de Universal Dependencies y AnCora son fuentes
           legítimas para mecanizar parcialmente la tarea, pero no para eliminar el juicio humano que
           cada entrada delicada exige.</p>
@@ -486,14 +486,14 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
             entradas al catálogo, nuevos dominios al lexicon, parches al motor. Necesita criterios
             escritos, no costumbres tácitas.</li>
           <li style="margin-bottom:.55rem"><b>Foro o canal de discusión</b> para resolver las
-            fricciones que surjan al modelar dominios nuevos. Cada conversación cualifica el catálogo —y
+            fricciones que surjan al modelar dominios nuevos. Cada conversación cualifica el catálogo (y
             el <a href="28-prueba-reflexiva.html">experimento reflexivo</a> es evidencia de que las
-            fricciones más valiosas aparecen cuando se somete el modelo a una carga real—.</li>
+            fricciones más valiosas aparecen cuando se somete el modelo a una carga real).</li>
           <li style="margin-bottom:.55rem"><b>Estandarización gradual:</b> una vez que varios proyectos
             adopten el modelo, vale la pena llevar las partes más universales del catálogo a un proceso
-            formal —IETF, W3C, ISO—. Eso da estabilidad legal para el uso empresarial.</li>
-          <li><b>Dialectos de dominio</b> mantenidos por comunidades sectoriales —clínico, financiero,
-            legal, manufactura—, cada uno con su propia gobernanza dentro de la espina común.</li>
+            formal (IETF, W3C, ISO). Eso da estabilidad legal para el uso empresarial.</li>
+          <li><b>Dialectos de dominio</b> mantenidos por comunidades sectoriales (clínico, financiero,
+            legal, manufactura), cada uno con su propia gobernanza dentro de la espina común.</li>
         </ul>
 
         <p class="cita-destacada revelar">Las arquitecturas duraderas no se imponen: se adoptan. Y se
@@ -503,7 +503,7 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Qué falta · urgencia · qué requiere</p>
           <p style="margin:0 0 .5rem"><b>Urgencia: el reloj corre.</b> Si la comunidad no se forma en
-            el momento en que los LLMs con MCP se popularizan, alguna otra propuesta —menos cuidadosa—
+            el momento en que los LLMs con MCP se popularizan, alguna otra propuesta (menos cuidadosa)
             ocupará el espacio. La ventana es de dos a cinco años.</p>
           <p style="margin:0"><b>Qué requiere:</b> lo mismo que cualquier proyecto de código abierto
             serio: un autor o equipo fundador dispuesto a moderar, a criticar contribuciones, a
@@ -514,8 +514,8 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
         <h2>La pila completa</h2>
 
         <p>Conviene ver los seis frentes juntos, como capas de una misma pila. Cada capa puede
-          evolucionar por su cuenta —cambiar el respaldo de persistencia no obliga a tocar el lexicon, y
-          mejorar el motor de reglas no altera la aplicación que ve el usuario—. Esa independencia es,
+          evolucionar por su cuenta (cambiar el respaldo de persistencia no obliga a tocar el lexicon, y
+          mejorar el motor de reglas no altera la aplicación que ve el usuario). Esa independencia es,
           en sí misma, una propiedad de diseño: el modelo del medio es el contrato estable que sostiene
           todo lo demás.</p>
 
@@ -572,16 +572,16 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
           </div>
           <figcaption><span class="fnum">Figura 30.2.</span> La pila completa. Abajo, la persistencia
             (hoy SQLite, mañana plural tras una interfaz <code>Storage</code>); encima, el núcleo de los
-            siete ejes —el contrato estable—; encima, el motor de reglas y el lexicon; encima, el LLM
+            siete ejes (el contrato estable); encima, el motor de reglas y el lexicon; encima, el LLM
             que traduce y compila vía MCP; arriba, la aplicación que ve la persona. La bitemporalidad
             atraviesa el núcleo y la persistencia, porque el tiempo no es una capa: es una dimensión de
             cada hecho.</figcaption>
         </figure>
 
         <p>Y si los seis frentes se miden por su grado de madurez, el panorama es claro y no
-          desalentador. Tres de ellos tienen un piso operable —persistencia, una primera versión de
-          inspector, el medio paso del motor—; tres están casi por construir —el lexicon a escala, la
-          comunidad, el tooling completo—. Nada está en cero; nada está cerca de cien.</p>
+          desalentador. Tres de ellos tienen un piso operable (persistencia, una primera versión de
+          inspector, el medio paso del motor); tres están casi por construir (el lexicon a escala, la
+          comunidad, el tooling completo). Nada está en cero; nada está cerca de cien.</p>
 
         <figure class="figura revelar">
           <div class="lienzo" data-chart>
@@ -609,9 +609,9 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
 
         <p>Además de los seis frentes mayores, el prototipo expuso un puñado de fricciones puntuales del
           catálogo al chocar con los dominios de estrés. El experimento reflexivo
-          (<a href="28-prueba-reflexiva.html">capítulo&nbsp;28</a>) <strong>cerró varias</strong> —el
-          texto libre, el tipado de los campos definidos por datos, el display derivado de hechos— y
-          entregó el comodín <code>V</code> —<em>cualquier eje de valor</em>—, que resuelve de raíz toda
+          (<a href="28-prueba-reflexiva.html">capítulo&nbsp;28</a>) <strong>cerró varias</strong> (el
+          texto libre, el tipado de los campos definidos por datos, el display derivado de hechos) y
+          entregó el comodín <code>V</code> (<em>cualquier eje de valor</em>), que resuelve de raíz toda
           la familia «esta signatura es demasiado estrecha». Lo que queda abierto es esto:</p>
 
         <div class="tabla-envoltura revelar">
@@ -623,7 +623,7 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
               <tr>
                 <td><code>paciente</code> / <code>partes: O→Q</code> demasiado estrechos</td>
                 <td>química, fútbol</td>
-                <td>Relajar a <code>O→V</code> — el comodín <code>V</code> ya existe; es una línea</td>
+                <td>Relajar a <code>O→V</code>: el comodín <code>V</code> ya existe; es una línea</td>
               </tr>
               <tr>
                 <td><code>tema: O→O</code> rechaza K (obra, medicamento)</td>
@@ -661,7 +661,7 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
 
         <p>Cerremos con la idea menos técnica del capítulo. Un libro no es una propuesta terminada: es
           <strong>una invitación a que alguien la termine</strong>. Las arquitecturas que duraron
-          —Unix, TCP/IP, HTTP, SQL, RDF— empezaron como artículos, manifiestos, RFCs, libros: textos
+          (Unix, TCP/IP, HTTP, SQL, RDF) empezaron como artículos, manifiestos, RFCs, libros: textos
           que articulaban una idea con la claridad suficiente para que otros pudieran apropiársela y
           empujarla adelante. Ninguna nació completa; todas nacieron <em>legibles</em>.</p>
 
@@ -677,8 +677,8 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
         <p>Eso es lo que hace la diferencia entre una especulación y una semilla. El modelo bastó para
           describir su propio menú, sus formularios, sus esquemas y su conducta, y para corregirse
           cuando la carga reveló una signatura demasiado estrecha. La propuesta aguanta el peso que
-          prometió aguantar. Desde aquí, la tarea no es demostrarla —ya está demostrada en lo
-          esencial—, sino perfeccionarla: poblar el lexicon, montar el motor, escribir las herramientas,
+          prometió aguantar. Desde aquí, la tarea no es demostrarla (ya está demostrada en lo
+          esencial), sino perfeccionarla: poblar el lexicon, montar el motor, escribir las herramientas,
           formar la comunidad. Trabajo, no misterio.</p>
 
         <p class="cita-destacada revelar">El catálogo está incompleto, el lexicon bosquejado, las
