@@ -450,6 +450,121 @@ M                                     (los enlaces que conectan cada lectura del
             registrando, sin leer una línea de documentación. La forma de la nube es un diagnóstico.</p>
         </div>
 
+        <h2>De la geometría a la tabla que ya conoces</h2>
+
+        <p>Toda esta geometría deja a más de un lector con una incomodidad legítima: <em>está muy bien,
+          pero yo necesito una tabla</em>. La buena noticia es que no hay que elegir. Una consulta recorta
+          un subconjunto de puntos del espacio; entregar ese recorte a un humano —o a una hoja de cálculo,
+          o a un reporte— es, sencillamente, <strong>proyectar los ejes a columnas</strong>. La geometría
+          no reemplaza a la tabla: la genera bajo demanda, y en más de una forma.</p>
+
+        <p>La primera ya la tienes delante. Esa hoja dispersa de la Figura&nbsp;8.2 —cinco hechos de cinco
+          dominios sobre los seis ejes— <strong>es</strong> la tabla universal de hechos: una lectura
+          plana, con sus códigos crudos, donde conviven una venta y una ordenanza sin romper nada. Es la
+          vista que querría una máquina. Pero una persona no quiere códigos: quiere nombres, fechas y un
+          encabezado que entienda. Esa es la segunda vista.</p>
+
+        <p>Pídele al sistema «un reporte de los trámites de licencias». Por dentro, el motor hace dos
+          cosas: <strong>filtra</strong> por el eje <span class="eje-rotulo"><span class="eje eje--k">K</span></span>
+          —se queda con los hechos cuya clase es una licencia— y <strong>resuelve</strong> cada código a
+          su etiqueta legible a través del lexicon: <code>juan</code> se vuelve «Juan»,
+          <code>tramite_juan_lic_04</code> se vuelve «Licencia de funcionamiento», <code>zona_centro</code>
+          se vuelve «Centro». El resultado es exactamente la tabla clásica que esperabas:</p>
+
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <table>
+              <thead>
+                <tr>
+                  <th>Ciudadano <span class="eje eje--q">Q</span></th>
+                  <th>Trámite <span class="eje eje--o">O</span></th>
+                  <th>Ubicación <span class="eje eje--l">L</span></th>
+                  <th>Fecha <span class="eje eje--t">T</span></th>
+                  <th>Costo <span class="eje eje--n">N</span></th>
+                  <th>Estado <span class="eje eje--m">M</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Juan</td><td>Licencia de funcionamiento</td><td>Jr. Trujillo 450, Centro</td>
+                  <td>22-06-2026</td><td>S/ 450,00</td><td>Solicitado</td>
+                </tr>
+                <tr>
+                  <td>Carla</td><td>Licencia de micromovilidad</td><td>Av. Perú 1200, Norte</td>
+                  <td>23-06-2026</td><td>S/ 300,00</td><td>En revisión</td>
+                </tr>
+                <tr>
+                  <td>Marta</td><td>Remodelación de local</td><td>Jr. Lima 88, Centro</td>
+                  <td>24-06-2026</td><td>S/ 520,00</td><td>Aprobada</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <figcaption><span class="fnum">Figura 8.4.</span> La misma geometría, servida como reporte: se
+            filtra el eje <span class="eje eje--k">K</span> por la familia de licencias y el lexicon
+            resuelve cada coordenada a su etiqueta. Bajo «Juan» vive <code>juan</code>; bajo «Centro»,
+            <code>zona_centro</code>. La columna <span class="eje eje--m">M</span> «Estado» no es un eje de
+            posición: es <em>un enlace</em> —el cable <code>estado</code>— proyectado a propósito como
+            columna, porque es el que este reporte quería ver.</figcaption>
+        </figure>
+
+        <p>Repara en esa última columna, porque toca un punto fino del modelo. La tabla universal tiene
+          seis columnas de valor, no siete: <span class="eje-rotulo"><span class="eje eje--m">M</span></span>
+          es la urdimbre de enlaces, no una coordenada de posición. Pero al proyectar para un humano puedes
+          <em>elegir</em> qué enlace subir a columna —aquí, el estado del trámite—. Cada reporte decide qué
+          cable de <em>cómo</em> le interesa mostrar; el modelo de fondo no cambia.</p>
+
+        <p>Y hay una tercera vista, la que más impresiona a quien manda. Si el alcalde pide «cuántos
+          trámites de cada tipo se hicieron por zona», no hace falta un programa nuevo: cruzas dos ejes en
+          una cuadrícula. Las filas son el eje <span class="eje-rotulo"><span class="eje eje--k">K</span></span>,
+          las columnas el eje <span class="eje-rotulo"><span class="eje eje--l">L</span></span>, y cada
+          celda cuenta los puntos que caen en esa intersección. En SQL eso pediría un <code>GROUP&nbsp;BY</code>
+          con <code>PIVOT</code>; aquí es la misma operación geométrica de siempre —un corte—, contada
+          ahora sobre dos dimensiones:</p>
+
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <table>
+              <thead>
+                <tr>
+                  <th>Tipo de trámite <span class="eje eje--k">K</span> \ Zona <span class="eje eje--l">L</span></th>
+                  <th>Centro</th>
+                  <th>Norte</th>
+                  <th>Sur</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><b>Licencias de construcción</b></td><td>45</td><td>12</td><td>8</td></tr>
+                <tr><td><b>Licencias de funcionamiento</b></td><td>120</td><td>54</td><td>30</td></tr>
+                <tr><td><b>Multas de fiscalización</b></td><td>15</td><td>42</td><td>10</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <figcaption><span class="fnum">Figura 8.5.</span> Una tabla pivote es solo dos ejes pintados en
+            una matriz: <span class="eje eje--k">K</span> contra <span class="eje eje--l">L</span>, con el
+            conteo de puntos en cada cruce. Lo mismo daría cruzar <span class="eje eje--t">T</span> contra
+            <span class="eje eje--k">K</span> —trámites por mes y tipo— o cualquier otro par. La rejilla no
+            estaba preconstruida: se arma al vuelo, porque todo vive en la misma geometría.</figcaption>
+        </figure>
+
+        <p>Tres vistas, un solo almacén: la lectura plana para la máquina, la proyección con nombres para
+          la persona, la pivote para quien decide. Ninguna se diseñó por separado; las tres son cortes y
+          proyecciones del mismo espacio de puntos.</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">Para el desarrollador</p>
+          <p style="margin:0">Servir esto a un usuario final es menos trabajo del que parece. Tu capa de
+            software hace dos pasos: <strong>(1)</strong> lanza la consulta de coordenadas al grafo y
+            recibe una lista de objetos; <strong>(2)</strong> los formatea como un <code>DataFrame</code>
+            de pandas o una tabla HTML, usando los nombres de las preguntas como cabeceras. No hay un
+            esquema de tablas que mantener: las columnas son siempre las mismas siete preguntas, y el
+            contenido cambia según el corte. La vista es código de presentación; el dato vive una sola
+            vez.</p>
+        </div>
+
+        <p class="cita-destacada revelar">La tabla nunca fue el modelo. Era una de sus vistas —y el grafo
+          sabe generarla cuando la pides.<cite>Del espacio a la rejilla</cite></p>
+
         <h2>Frente a ℝⁿ, las tablas y los cubos</h2>
 
         <p>Conviene ahora contrastar este espacio, de frente, con las tres tecnologías multidimensionales
