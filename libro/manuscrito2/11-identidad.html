@@ -98,7 +98,7 @@
           sistema acuña los suyos sin consultar a nadie: la tienda numera a sus clientes en orden de
           llegada, la clínica usa el apellido, la municipalidad concatena un código tributario. Ninguno
           es «más correcto» que otro; simplemente son tres nombres privados para una misma persona
-          pública. El error clásico —y la causa de media torre de Babel— es confundir el rótulo con lo
+          pública. El error clásico (y la causa de media torre de Babel) es confundir el rótulo con lo
           rotulado: tratar <code>cliente_1042</code> como si <em>fuera</em> la persona, en vez de como
           una flecha que apunta a ella.</p>
 
@@ -180,8 +180,8 @@
             <code>cliente_1042</code> no contiene a Juan: apunta a él. Es la dirección que usa la
             tienda para llegar a la persona.</li>
           <li style="margin-bottom:.55rem"><b>Reificar es «tomar la dirección».</b> Cuando en el
-            <a href="09-situaciones.html">capítulo&nbsp;9</a> convertimos un evento fugaz —una venta, un
-            gol— en un objeto con identidad propia, lo que hicimos fue darle una dirección estable para
+            <a href="09-situaciones.html">capítulo&nbsp;9</a> convertimos un evento fugaz (una venta, un
+            gol) en un objeto con identidad propia, lo que hicimos fue darle una dirección estable para
             poder apuntarlo después. Reificar es el operador <code>&amp;</code> del modelo: pasar de
             «algo ocurrió» a «este algo, al que ahora puedo señalar».</li>
           <li style="margin-bottom:.55rem"><b><code>mismo_que</code> es <em>aliasing</em> de
@@ -273,8 +273,8 @@
 
         <h3>Vía 2 · <code>mismo_que</code> declarado como un hecho más</h3>
 
-        <p>A veces no hay clave común, pero alguien —un humano, un proceso de conciliación, una
-          migración— <em>sabe</em> que dos identificadores coinciden y quiere dejarlo escrito. El
+        <p>A veces no hay clave común, pero alguien (un humano, un proceso de conciliación, una
+          migración) <em>sabe</em> que dos identificadores coinciden y quiere dejarlo escrito. El
           modelo no necesita maquinaria nueva para eso: la identidad compartida se guarda como
           cualquier otro hecho, una tripleta con el cable <code>mismo_que</code>. Es la elegancia del
           enfoque: una afirmación de identidad es un dato de primera clase, fechable, atribuible y
@@ -287,8 +287,8 @@
         </div>
 
         <p>Porque es un hecho como los demás, puede reificarse cuando importa <em>quién</em> lo afirmó y
-          <em>cuándo</em> —exactamente las razones de reificación del
-          <a href="09-situaciones.html">capítulo&nbsp;9</a>—. Una fusión de identidades en un banco no
+          <em>cuándo</em> (exactamente las razones de reificación del
+          <a href="09-situaciones.html">capítulo&nbsp;9</a>). Una fusión de identidades en un banco no
           es trivial: conviene saber qué operador la aprobó, con qué evidencia y en qué fecha, por si
           mañana hay que deshacerla.</p>
 
@@ -299,7 +299,7 @@
             declara que dos URIs denotan el mismo individuo; es el motor que permite a un dato de
             DBpedia<a class="ref" href="referencias.html#ref-33">(33)</a> enlazarse con su gemelo en Wikidata<a class="ref" href="referencias.html#ref-32">(32)</a>. Nuestro <code>mismo_que</code> es,
             deliberadamente, ese mismo gesto traducido al vocabulario de las preguntas.</p>
-          <p style="margin:0">El problema más amplio —decidir cuándo dos registros son la misma cosa—
+          <p style="margin:0">El problema más amplio (decidir cuándo dos registros son la misma cosa)
             tiene nombre propio en la literatura: <em>entity resolution</em> (también <em>record
             linkage</em> o <em>deduplication</em>), estudiado desde el trabajo seminal de Fellegi y
             Sunter en 1969. El modelo no lo reinventa; le da un lugar limpio donde aterrizar.</p>
@@ -310,14 +310,14 @@
         <p>El caso incómodo, y el más frecuente en la vida real: no hay clave común y nadie declaró
           nada. La tienda guardó «Juan Vega», la clínica «J. Vega Ramos», la municipalidad «Vega, Juan
           A.». ¿Son el mismo? Probablemente. Pero «probablemente» es una palabra peligrosa en una base
-          de datos. Aquí la identidad se <em>infiere</em> comparando rasgos —nombre, fecha de
-          nacimiento, dirección, teléfono— y calculando una probabilidad de coincidencia. Por encima de
+          de datos. Aquí la identidad se <em>infiere</em> comparando rasgos (nombre, fecha de
+          nacimiento, dirección, teléfono) y calculando una probabilidad de coincidencia. Por encima de
           cierto umbral, el sistema propone que son la misma persona; por debajo, los deja separados.</p>
 
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">El <em>matching</em> probabilístico es un reto de tooling, no de modelo</p>
-          <p style="margin:0">El modelo te da <em>dónde</em> escribir la conclusión —una tripleta
-            <code>mismo_que</code>, idealmente reificada con su grado de confianza— pero no resuelve por
+          <p style="margin:0">El modelo te da <em>dónde</em> escribir la conclusión (una tripleta
+            <code>mismo_que</code>, idealmente reificada con su grado de confianza) pero no resuelve por
             ti el cálculo. Emparejar a ciegas funde a dos personas distintas; ser demasiado cauto deja
             la historia partida en pedazos. Es un problema abierto de herramientas e infraestructura, y
             por eso lo retomamos sin rodeos en el <a href="30-que-falta.html">capítulo&nbsp;30, «Qué
@@ -327,7 +327,7 @@
         <h2>El modelo: una persona canónica con identidades colgando</h2>
 
         <p>Con las tres vías sobre la mesa, el patrón de modelado es directo. Existe una
-          <strong>identidad canónica</strong> —un único nodo en Q, <code>persona_vega</code>— y, a su
+          <strong>identidad canónica</strong> (un único nodo en Q, <code>persona_vega</code>) y, a su
           alrededor, los identificadores locales de cada sistema, unidos a ella por <code>mismo_que</code>.
           Cada sistema sigue usando su rótulo de siempre, sin renunciar a nada; el grafo se encarga de
           que todos esos rótulos converjan en una sola persona.</p>
@@ -363,8 +363,8 @@
         <h2>No es una decisión numerada: es una convención de fondo</h2>
 
         <p>Vale la pena ser explícito sobre el estatus de esto. La resolución de identidad no introduce
-          una regla de diseño nueva al modo de las que hemos ido numerando —no hay aquí ninguna
-          maquinaria que no existiera ya—. Es, más bien, una <strong>convención fuerte</strong> que se
+          una regla de diseño nueva al modo de las que hemos ido numerando (no hay aquí ninguna
+          maquinaria que no existiera ya). Es, más bien, una <strong>convención fuerte</strong> que se
           desprende de piezas que el lector ya conoce: la entidad del eje&nbsp;Q como referente, el
           cable como referencia, la reificación como dirección estable. La identidad emerge de juntarlas
           bien, no de añadir nada.</p>
@@ -383,7 +383,7 @@
 
         <p>Detente a imaginar la consulta que da sentido a este libro entero: <em>«muéstrame todo lo que
           el sistema sabe de Juan Vega»</em>. Sus compras en la tienda, su episodio en urgencias, sus
-          arbitrios en la municipalidad —tres dominios que nunca fueron diseñados para hablarse— reunidos
+          arbitrios en la municipalidad (tres dominios que nunca fueron diseñados para hablarse) reunidos
           en una sola respuesta coherente. Esa consulta es la prueba viviente de la interoperabilidad
           que la introducción prometió. Y es <em>imposible</em> sin resolución de identidad: sin las
           flechas <code>mismo_que</code>, la pregunta «¿qué sabemos de Juan?» se rompe en tres
@@ -396,7 +396,7 @@
             volver a pedírsela; si la tienda ya tiene su correo, ningún tercer sistema tendría por qué
             exigirlo de nuevo. El dato vive una vez, en el individuo canónico, y todos los sistemas que
             lo conocen lo consultan allí.</p>
-          <p>Ese principio —«no vuelvas a pedir lo que otro sistema ya sabe»— es la cara amable de la
+          <p>Ese principio («no vuelvas a pedir lo que otro sistema ya sabe») es la cara amable de la
             resolución de identidad para el ciudadano, el paciente, el cliente. Lo que para el ingeniero
             es un puntero compartido, para la persona es no tener que llenar el mismo formulario tres
             veces. La identidad bien resuelta no es una sutileza técnica: es lo que convierte un montón
@@ -411,8 +411,8 @@
           <p class="caja-tit">En la práctica</p>
           <p style="margin:0 0 .6rem">Cuando integres un sistema nuevo al grafo, no intentes
             renumerar sus identificadores: déjalos como están y tiende los <code>mismo_que</code>.
-            Prioriza siempre la <em>vía 1</em> —busca una clave natural con autoridad externa antes que
-            cualquier otra cosa—, porque convierte la resolución en una deducción y no en una apuesta.</p>
+            Prioriza siempre la <em>vía 1</em> (busca una clave natural con autoridad externa antes que
+            cualquier otra cosa), porque convierte la resolución en una deducción y no en una apuesta.</p>
           <p style="margin:0">Reserva el <em>matching</em> probabilístico para cuando no quede
             alternativa, y cuando lo uses, <strong>guarda la confianza</strong>: reifica el
             <code>mismo_que</code> con quién lo afirmó, cuándo y con qué grado de certeza. Una fusión de
@@ -422,8 +422,8 @@
         <p>Con esto, la Parte III queda completa: tenemos el hecho atómico, el espacio donde vive, las
           situaciones que lo enriquecen, la causalidad que lo enlaza y, ahora, la identidad que permite
           que todo eso cruce de un sistema a otro sin perderse. Lo que sigue es tender la mano a los
-          mundos vecinos —los objetos de la programación, los bits, los grafos, las cadenas de
-          bloques— y mostrar que el modelo no es una isla, sino un puente.</p>
+          mundos vecinos (los objetos de la programación, los bits, los grafos, las cadenas de
+          bloques) y mostrar que el modelo no es una isla, sino un puente.</p>
 
       </div>
     </article>

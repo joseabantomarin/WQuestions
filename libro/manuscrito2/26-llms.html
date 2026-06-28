@@ -63,8 +63,8 @@
           sin cambios hasta el 10 de enero de 2027, cuando se ajustó la dosis al rediagnosticarla con
           hipertensión de grado&nbsp;2. Para la doctora la escena es trivial: una pregunta en
           castellano, una respuesta en castellano. Pero entre el instante en que pulsó <em>Enter</em> y
-          el instante en que apareció el texto ocurrió un viaje de ida y vuelta entre dos lenguajes —el
-          natural y el estructurado— que vale la pena ver desde adentro.</p>
+          el instante en que apareció el texto ocurrió un viaje de ida y vuelta entre dos lenguajes (el
+          natural y el estructurado) que vale la pena ver desde adentro.</p>
 
         <aside class="nota-margen">
           <span class="etq">Hilo del libro</span>
@@ -74,8 +74,8 @@
         </aside>
 
         <p>Vista por dentro, esa interacción no fue un acto único sino una secuencia de seis pasos. El
-          modelo de lenguaje —da igual cuál: <code>modelo_lumen_2026</code> en nuestros ejemplos, pero
-          la mecánica es idéntica para cualquiera— recibió el texto y lo leyó como una <em>intención de
+          modelo de lenguaje (da igual cuál: <code>modelo_lumen_2026</code> en nuestros ejemplos, pero
+          la mecánica es idéntica para cualquiera) recibió el texto y lo leyó como una <em>intención de
           consulta</em>. Eligió, del catálogo de funciones que el sistema le expone, la adecuada:
           <code>consultar_tratamiento(paciente, periodo)</code>. Tradujo el castellano a argumentos
           estructurados: «María Gonzales» se volvió el identificador <code>maria_g</code>; «desde
@@ -165,8 +165,8 @@
             profundidad estructural.</figcaption>
         </figure>
 
-        <p>Esa secuencia —usuario natural, modelo, función estructurada, grafo persistente, respuesta
-          natural— es la forma canónica del momento tecnológico de 2026. Y es exactamente aquello para
+        <p>Esa secuencia (usuario natural, modelo, función estructurada, grafo persistente, respuesta
+          natural) es la forma canónica del momento tecnológico de 2026. Y es exactamente aquello para
           lo que WQuestions, sin habérselo propuesto, resulta estructuralmente diseñado. Este capítulo
           defiende una tesis de tiempo: <strong>el momento de esta arquitectura es ahora</strong>,
           porque solo ahora existe la pieza que traduce con soltura entre el lenguaje de las personas y
@@ -215,9 +215,9 @@
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Idea clave · una simbiosis, no una competencia</p>
-          <p style="margin:0">El LLM se ocupa de la <strong>superficie lingüística</strong> —entender la
-            pregunta, redactar la respuesta— y el grafo de la <strong>profundidad estructural</strong>
-            —almacenar el estado, razonar sobre los hechos, dejar trazas. Cada uno hace aquello en lo que
+          <p style="margin:0">El LLM se ocupa de la <strong>superficie lingüística</strong> (entender la
+            pregunta, redactar la respuesta) y el grafo de la <strong>profundidad estructural</strong>:
+            almacenar el estado, razonar sobre los hechos, dejar trazas. Cada uno hace aquello en lo que
             es fuerte; ninguno carga con lo que se le da mal. El error de la última década fue pedirle a
             una sola tecnología las dos cosas.</p>
         </div>
@@ -237,7 +237,7 @@
           aquel capítulo; tomemos el caso clínico que abre este, <code>prescribir</code>, y pongámoslo
           al lado de su esquema.</p>
 
-        <p>Primero, la entrada del lexicon, tal como vive por dentro del modelo —vocabulario natural en
+        <p>Primero, la entrada del lexicon, tal como vive por dentro del modelo: vocabulario natural en
           los <code>aliases</code>, roles canónicos en las claves:</p>
 
         <div class="bloque-codigo">
@@ -282,10 +282,10 @@
           el tipo de objeto que la función devolverá al asentarse en el grafo. Los <code>aliases</code>
           de cada rol alimentan la <code>description</code>, que es precisamente la pista que el modelo
           lee para reconocer cómo se expresa ese rol en lenguaje natural. Los ejes de origen
-          —<span class="eje-rotulo"><span class="eje eje--q">Q</span></span>,
+          (<span class="eje-rotulo"><span class="eje eje--q">Q</span></span>,
           <span class="eje-rotulo"><span class="eje eje--o">O</span></span>,
           <span class="eje-rotulo"><span class="eje eje--k">K</span></span>,
-          <span class="eje-rotulo"><span class="eje eje--t">T</span></span>— se convierten en
+          <span class="eje-rotulo"><span class="eje eje--t">T</span></span>) se convierten en
           metadatos del esquema y aportan una validación semántica extra. Y la lista de
           <code>obligatorios</code> es, literalmente, el campo <code>required</code>.</p>
 
@@ -375,8 +375,8 @@
 
         <h2>MCP: el cable estándar</h2>
 
-        <p>En 2024, Anthropic publicó la especificación de <strong>MCP</strong> —<em>Model Context
-          Protocol</em>—, un estándar abierto para que herramientas externas se expongan a los modelos
+        <p>En 2024, Anthropic publicó la especificación de <strong>MCP</strong> (<em>Model Context
+          Protocol</em>), un estándar abierto para que herramientas externas se expongan a los modelos
           de lenguaje de forma uniforme. La idea es modesta y por eso poderosa: en vez de que cada
           aplicación invente su propia manera de conectar un LLM a sus datos, MCP define un protocolo
           común. Un <em>servidor MCP</em> declara qué funciones ofrece, qué argumentos acepta y qué tipo
@@ -387,7 +387,7 @@
           WQuestions es el lexicon expuesto como funciones</strong>. Cada verbo se vuelve una herramienta
           de ingesta; cada consulta-WH habitual se vuelve una herramienta de consulta; cada explicación
           del «por qué» se vuelve una herramienta de auditoría. Mira cómo se ve el servidor del spa
-          —el mismo <code>Spa&nbsp;Oasis</code> de la <a href="16-spa.html">Parte&nbsp;V</a>— una vez
+          (el mismo <code>Spa&nbsp;Oasis</code> de la <a href="16-spa.html">Parte&nbsp;V</a>) una vez
           publicado:</p>
 
         <div class="bloque-codigo">
@@ -409,8 +409,8 @@
     - estado_de_cliente_en(cliente, momento)       -> Estado</code></pre>
         </div>
 
-        <p>Un asistente conversacional corporativo —piensa en un «asistente del director financiero», un
-          «asistente del médico de cabecera», un «asistente del periodista de investigación»— se
+        <p>Un asistente conversacional corporativo (piensa en un «asistente del director financiero», un
+          «asistente del médico de cabecera», un «asistente del periodista de investigación») se
           construye conectando un LLM a ese servidor. No hay <em>glue code</em> enmarañado: hay un
           catálogo declarativo de funciones y un modelo que las elige según la conversación.</p>
 
@@ -419,8 +419,8 @@
 
         <h2>Tres casos de uso, ya posibles en 2026</h2>
 
-        <p>Conviene aterrizar la idea en escenarios concretos —no especulación, sino cosas técnicamente
-          factibles hoy— donde WQuestions encaja justo en el hueco que el LLM no llena solo.</p>
+        <p>Conviene aterrizar la idea en escenarios concretos (no especulación, sino cosas técnicamente
+          factibles hoy) donde WQuestions encaja justo en el hueco que el LLM no llena solo.</p>
 
         <h3>1 · Asistente operativo de un negocio</h3>
 
@@ -460,8 +460,8 @@
           30 días.»<cite>Una nota clínica típica</cite></p>
 
         <p>Se procesa con un <em>prompt</em> que le entrega al modelo el lexicon clínico y le pide:
-          «extrae todas las situaciones de esta nota». El modelo emite —usando <em>function calling</em>
-          una vez por situación— los hechos atómicos ya tipados:</p>
+          «extrae todas las situaciones de esta nota». El modelo emite (usando <em>function calling</em>
+          una vez por situación) los hechos atómicos ya tipados:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">ingesta · llamadas generadas</span><button class="copiar">⧉ copiar</button></div>
@@ -493,7 +493,7 @@ ingest("controlar", roles={
         <p>Cinco situaciones reificadas (<a href="09-situaciones.html">D4</a>), todas validadas contra
           el catálogo. La prosa original queda como nota de respaldo; la estructura entra al grafo, donde
           se vuelve consultable, agregable y auditable. Fíjate en la última llamada: el control futuro
-          entra con <code>estatus_factual: previsto</code>, no como un hecho consumado —el grafo
+          entra con <code>estatus_factual: previsto</code>, no como un hecho consumado: el grafo
           distingue lo que pasó de lo que está planeado, justo la distinción que un LLM por sí solo no
           sostiene.</p>
 
@@ -507,8 +507,8 @@ ingest("controlar", roles={
 
         <h3>3 · Razonamiento entre dominios</h3>
 
-        <p>Una periodista económica —la misma <code>paredes</code> de nuestra sesión, pero ahora en su
-          faceta de investigación— estudia el efecto de una reforma tributaria sobre las ventas
+        <p>Una periodista económica (la misma <code>paredes</code> de nuestra sesión, pero ahora en su
+          faceta de investigación) estudia el efecto de una reforma tributaria sobre las ventas
           minoristas. Tradicionalmente tendría que cruzar bases inconexas: el registro de ventas con un
           esquema, los datos macro con otro, las noticias políticas en texto libre. Con WQuestions como
           <strong>sustrato común</strong>, los tres dominios viven en el mismo grafo, cada uno con su
@@ -537,7 +537,7 @@ ventas = query(Pattern(
 
         <h2>La economía de tokens, en limpio</h2>
 
-        <p>Los modelos de 2026 manejan ventanas de contexto enormes —un millón de <em>tokens</em>, dos,
+        <p>Los modelos de 2026 manejan ventanas de contexto enormes: un millón de <em>tokens</em>, dos,
           cuatro. El instinto fácil es volcar todo en prosa y dejar que el modelo encuentre lo que
           necesita. Funciona, sí, pero gasta el presupuesto a una velocidad ingenua. Tres cifras,
           tomadas de los dominios que modelamos en la Parte&nbsp;V:</p>
@@ -564,13 +564,13 @@ ventas = query(Pattern(
 
         <p>Pero la compresión, con ser importante, no es lo que más cambia el cálculo. El segundo factor
           pesa más: <strong>la ambigüedad</strong>. La prosa obliga al modelo a reinterpretar
-          coreferencias —«él», «el doctor», «la paciente mencionada»—, a inferir relaciones implícitas, a
+          coreferencias («él», «el doctor», «la paciente mencionada»), a inferir relaciones implícitas, a
           reconstruir la estructura desde cero. Todas esas operaciones consumen atención: <em>tokens</em>
           efectivos que no se invierten en razonar sobre el contenido sino en rearmar el esqueleto.</p>
 
         <p>El grafo WQuestions entrega ese esqueleto <strong>ya reconstruido</strong>. El modelo puede
           dedicar su capacidad a lo suyo: razonar, conectar, redactar con fluidez. La economía es doble
-          —menos <em>tokens</em> <em>y</em> mejor calidad de respuesta— y por eso no se reduce a una
+          (menos <em>tokens</em> <em>y</em> mejor calidad de respuesta) y por eso no se reduce a una
           partida en una factura de cómputo.</p>
 
         <h2>Multi-agente, de forma nativa</h2>
@@ -579,7 +579,7 @@ ventas = query(Pattern(
           <code>agente</code> lo puede ocupar un humano, una organización, una pieza de software o un
           sensor, según el verbo. Aquello no era adorno; es justo la propiedad que un futuro multi-agente
           reclama. Imagina, a tres años vista, un sistema empresarial donde varios LLMs especializados
-          —uno clínico, uno financiero, uno legal— colaboran sobre el mismo grafo. Cada uno trae su
+          (uno clínico, uno financiero, uno legal) colaboran sobre el mismo grafo. Cada uno trae su
           sub-lexicon; cada uno entra al grafo como <strong>agente</strong> cuando asienta un hecho:</p>
 
         <div class="bloque-codigo">
@@ -590,7 +590,7 @@ ventas = query(Pattern(
         </div>
 
         <p>El grafo registra <strong>quién dijo qué y cuándo</strong>, exactamente como registraría a un
-          médico de carne y hueso. Y conviene verlo como la tripleta que es —un cable del eje
+          médico de carne y hueso. Y conviene verlo como la tripleta que es: un cable del eje
           <span class="eje-rotulo"><span class="eje eje--m">M</span></span> que sale del evento y aterriza
           en el agente, sea humano o software:</p>
 
@@ -618,8 +618,8 @@ ventas = query(Pattern(
             conversación con un asistente fluye, nadie piensa en el grafo de abajo. La infraestructura es
             justamente lo que se vuelve invisible porque funciona.</p>
           <p>El proyecto, en su forma actual, todavía no está listo para serlo. Le faltan piezas
-            —persistencia industrial, motor de inferencia, bitemporalidad completa, un lexicon poblado con
-            miles de entradas verbales en varios idiomas— y el <a href="30-que-falta.html">capítulo 30</a>
+            (persistencia industrial, motor de inferencia, bitemporalidad completa, un lexicon poblado con
+            miles de entradas verbales en varios idiomas) y el <a href="30-que-falta.html">capítulo 30</a>
             las enumera sin disimulo. Pero la <em>arquitectura</em> está completa, y el momento histórico
             empuja a favor.</p>
         </div>

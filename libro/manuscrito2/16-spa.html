@@ -57,12 +57,12 @@
       <div class="contenido">
 
         <p class="entrada">Son las 18:05 de un jueves en <em>Serena Termas</em>, un spa de barrio. Una
-          clienta —Lucía— acaba de salir de la cámara de vapor, se acerca al mostrador y pide pagar:
+          clienta (Lucía) acaba de salir de la cámara de vapor, se acerca al mostrador y pide pagar:
           un circuito termal y un masaje descontracturante. La recepcionista teclea, el sistema
           calcula el subtotal, le suma el impuesto al consumo, descuenta un cupón de fidelidad, cobra
           la mitad en efectivo y la mitad con una tarjeta extranjera en otra moneda, e imprime una
           boleta numerada que esa misma noche viajará al organismo tributario. Toda esa coreografía
-          —servicio, precio, impuesto, comprobante, divisa, fidelidad— ocurre en menos de un minuto y
+          (servicio, precio, impuesto, comprobante, divisa, fidelidad) ocurre en menos de un minuto y
           deja un rastro que un contador, un auditor y el dueño tendrán que poder leer meses después.
           Ese minuto es el examen de este capítulo.</p>
 
@@ -78,7 +78,7 @@
           ordenanza que entra en vigor a los treinta días. Eran lo bastante chicas para caber en una
           página. Pero ninguna arquitectura merece llamarse <em>universal</em> si no sostiene un
           negocio completo, con sus impuestos, sus comprobantes legales y sus monedas. Un spa parece
-          el dominio más inofensivo del mundo —toallas, vapor, música suave— y es justo por eso que
+          el dominio más inofensivo del mundo (toallas, vapor, música suave) y es justo por eso que
           conviene empezar aquí: bajo esa superficie relajada se esconde un sistema de ventas con
           casi todas las exigencias de un comercio formal.</p>
 
@@ -128,7 +128,7 @@
             18&nbsp;% que el spa cobra al cliente y luego entrega al fisco. No es ingreso del negocio:
             es dinero en tránsito.</li>
           <li style="margin-bottom:.5rem"><b>Comprobantes.</b> Toda venta exige un documento numerado
-            —boleta o factura— con una serie correlativa que la autoridad tributaria audita.</li>
+            (boleta o factura) con una serie correlativa que la autoridad tributaria audita.</li>
           <li><b>Multi-divisa.</b> La mitad de la clientela es de paso y paga con tarjetas en dólares;
             la contabilidad lleva todo en la moneda local.</li>
         </ul>
@@ -236,8 +236,8 @@
 
         <aside class="nota-margen">
           <span class="etq">Recordatorio · D1</span>
-          En <code>K</code> viven los conceptos atemporales —<code>circuito_termal</code>,
-          <code>soles</code>, el estado <code>pagada</code>—; en <code>O</code> y los demás pilares,
+          En <code>K</code> viven los conceptos atemporales (<code>circuito_termal</code>,
+          <code>soles</code>, el estado <code>pagada</code>); en <code>O</code> y los demás pilares,
           las instancias situadas: <em>esta</em> venta, de las 18:05. La distinción se enunció en el
           capítulo de la clase.
         </aside>
@@ -245,7 +245,7 @@
         <p>Repara en la barra de jugos. Un servicio y un jugo parecen lo mismo en la caja
           registradora, pero el fisco los trata distinto: el servicio es <em>prestación</em>, el jugo
           es <em>bien</em>, y de eso depende qué impuesto aplica. Modelarlos como clases distintas en
-          <code>K</code> —<code>servicio_spa</code> frente a <code>bien_consumible</code>— no es
+          <code>K</code> (<code>servicio_spa</code> frente a <code>bien_consumible</code>) no es
           pedantería: es lo que permite, más tarde, declarar el impuesto correcto sin un solo
           <em>if</em> incrustado en el código de la caja.</p>
 
@@ -257,7 +257,7 @@
           siete ejes se cruzan. Tal como vimos al tratar el hecho atómico (D3), no la guardamos como
           una fila gorda, sino como una constelación de tripletas tipadas que se apilan.</p>
 
-        <p>La venta de las 18:05 a Lucía —un circuito más un masaje— se reifica como una situación en
+        <p>La venta de las 18:05 a Lucía (un circuito más un masaje) se reifica como una situación en
           <code>O</code> (D4: lo merece, porque agrupa varias partes, tiene fecha y participa en otras
           relaciones) y se describe con esta lista de hechos atómicos:</p>
 
@@ -311,7 +311,7 @@
 
         <p>Y en el código real del prototipo, construir esa venta no exige redactar las tripletas a
           mano: una llamada de pocas líneas consulta el lexicon, desambigua el verbo, crea la situación
-          y le enchufa los cables —validando que ninguno esté mal puesto.</p>
+          y le enchufa los cables: validando que ninguno esté mal puesto.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -344,8 +344,8 @@
 
         <p>Aquí es donde un sistema de ventas se separa de un cuaderno de apuntes. Ese 18&nbsp;% que
           aparece en la boleta no es ingreso del spa: es dinero que el negocio cobra <em>por cuenta
-          del fisco</em> y que tendrá que entregarle. Confundir ambas cosas —tratar el impuesto como
-          ganancia— es uno de los errores contables más caros que existen. El modelo lo mantiene
+          del fisco</em> y que tendrá que entregarle. Confundir ambas cosas (tratar el impuesto como
+          ganancia) es uno de los errores contables más caros que existen. El modelo lo mantiene
           separado por construcción.</p>
 
         <p>El impuesto no se guarda como un número suelto pegado a la venta, sino como un objeto con
@@ -401,8 +401,8 @@
   estatus_factual: emitida                 # K · emitida, anulada, etc.</code></pre>
         </div>
 
-        <p>La distinción entre <em>boleta</em> y <em>factura</em> —una para el consumidor final, otra
-          a nombre de una empresa que descontará el impuesto— es, en el modelo, nada más que dos clases
+        <p>La distinción entre <em>boleta</em> y <em>factura</em> (una para el consumidor final, otra
+          a nombre de una empresa que descontará el impuesto) es, en el modelo, nada más que dos clases
           distintas en <code>K</code>: <code>tipo_boleta_venta</code> y <code>tipo_factura_venta</code>.
           Cuando Noa pidió factura a nombre de su empresa, el sistema no necesitó otra tabla ni otro
           flujo: la misma maquinaria emitió un objeto de otra clase, con un campo extra para el
@@ -421,7 +421,7 @@
 
         <p>Martín, el turista, pagó su circuito en dos partes: la mitad en efectivo, en moneda local,
           y la mitad con una tarjeta en dólares. La trampa clásica es guardar «pagó 22.50» sin decir
-          de qué moneda hablamos —el pecado capital de los sistemas que asumen una sola divisa—. En
+          de qué moneda hablamos (el pecado capital de los sistemas que asumen una sola divisa). En
           WQuestions, un monto nunca viaja solo: siempre arrastra su unidad, que es un habitante de
           <code>K</code>. Y un pago en otra moneda guarda, además, la tasa de cambio con la que se
           convirtió, fechada en el día de la operación.</p>
@@ -498,8 +498,8 @@ lex.register(LexiconEntry(
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">La interfaz es el lexicon, no el catálogo</p>
-          <p style="margin:0">El catálogo canónico —<code>impuesto_consumo_18</code>,
-            <code>tipo_boleta_venta</code>— es invisible para quien usa el negocio. Lo que ve es su
+          <p style="margin:0">El catálogo canónico (<code>impuesto_consumo_18</code>,
+            <code>tipo_boleta_venta</code>) es invisible para quien usa el negocio. Lo que ve es su
             propio idioma: «IGV», «boleta», «sesión gratis». Dos spas con vocabularios distintos pueden
             compartir el mismo catálogo y aun así cada uno hablar como siempre habló.</p>
         </div>
@@ -511,9 +511,9 @@ lex.register(LexiconEntry(
           recorriendo tripletas en vez de encadenar tablas.</p>
 
         <p><b>Pregunta 1 · ¿Cuántos circuitos pagados lleva Lucía? ¿Le toca el gratis?</b><br>
-          No hay <code>JOIN</code> que escribir: el motor busca un patrón en el grafo —todas las ventas
+          No hay <code>JOIN</code> que escribir: el motor busca un patrón en el grafo (todas las ventas
           de clase <code>circuito_termal</code> cuyo cliente sea Lucía y cuyo estado sea
-          <code>pagada</code>— y las cuenta.</p>
+          <code>pagada</code>) y las cuenta.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -524,8 +524,8 @@ lex.register(LexiconEntry(
 le_toca_gratis = n >= 10        # la regla de fidelidad, en una línea</code></pre>
         </div>
 
-        <p>El modelo no <em>ejecuta</em> la regla de negocio por su cuenta —para eso hace falta un motor
-          externo o una IA—; lo que hace es entregar el dato prístino y estructurado para que ese motor
+        <p>El modelo no <em>ejecuta</em> la regla de negocio por su cuenta (para eso hace falta un motor
+          externo o una IA); lo que hace es entregar el dato prístino y estructurado para que ese motor
           decida sin equivocarse. La división del trabajo es deliberada: el grafo guarda la verdad, la
           lógica vive afuera.</p>
 
@@ -689,8 +689,8 @@ WHERE v.estado = 'pagada'              -- ojo: ¿y las anuladas?
 
         <p><b>Después, en WQuestions.</b> La misma información es un grafo único de hechos atómicos:
           cada impuesto es un objeto con su cable <code>acreedor → fisco</code> y su
-          <code>estatus_factual</code>. La pregunta se vuelve una suma sobre un patrón —sin migrar
-          esquema, sin <code>JOIN</code>, sin lógica escondida en procedimientos almacenados—. Y
+          <code>estatus_factual</code>. La pregunta se vuelve una suma sobre un patrón (sin migrar
+          esquema, sin <code>JOIN</code>, sin lógica escondida en procedimientos almacenados). Y
           cuando la tasa cambie, se edita un solo hecho en el catálogo; las ventas pasadas conservan la
           suya y el resto del sistema ni se entera.</p>
 

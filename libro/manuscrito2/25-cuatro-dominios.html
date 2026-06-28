@@ -69,13 +69,13 @@
 
         <p>Cuatro escenas, cuatro mundos. Ninguno es una venta, una historia clínica ni un expediente
           administrativo. Y, sin embargo, todos pretendemos describirlos con las mismas siete preguntas.
-          Si el modelo de WQuestions es lo que dice ser —un sistema de coordenadas universal— tiene que
+          Si el modelo de WQuestions es lo que dice ser (un sistema de coordenadas universal) tiene que
           aguantar aquí. Este capítulo lo somete a los cuatro a propósito, buscando la grieta.</p>
 
         <h2>Por qué los dominios incómodos</h2>
 
-        <p>Hasta este punto, la Parte V recorrió ocho dominios industriales —del spa al banco, de la
-          universidad a la mina— y el modelo aguantó con poca fricción. Eso es alentador, pero también
+        <p>Hasta este punto, la Parte V recorrió ocho dominios industriales (del spa al banco, de la
+          universidad a la mina) y el modelo aguantó con poca fricción. Eso es alentador, pero también
           es sospechoso: todos esos dominios, por exigentes que fueran, compartían un aire de familia.
           Son comerciales, clínicos o administrativos; tienen personas que deciden, transacciones que
           se registran, fechas que se anotan. Un modelo puede encajar bien en ocho variantes de la
@@ -90,7 +90,7 @@
 
         <p>Por eso elegimos cuatro dominios <strong>cualitativamente</strong> distintos, cada uno
           escogido porque tensa una parte distinta del modelo hasta el punto de fractura. No buscamos
-          modelar cada uno en profundidad —eso ya lo hicimos con los ocho industriales—; buscamos, de
+          modelar cada uno en profundidad (eso ya lo hicimos con los ocho industriales); buscamos, de
           cada mundo, su fricción más característica, ponerla bajo la lupa y ver qué pasa. La estrategia
           es la de un ingeniero de estructuras que no admira el puente terminado, sino que lo carga con
           camiones hasta oír dónde rechina.</p>
@@ -109,8 +109,8 @@
         <p>Conviene adelantar la conclusión para leer el capítulo sin suspenso falso: <strong>el
           esqueleto no se quiebra en ninguno de los cuatro</strong>. Algunos casos se resuelven con
           limpieza; otros piden un <em>rol de dominio</em> que extiende el catálogo; unos pocos dejan
-          un pendiente que dejamos señalado. Ese balance —mucha cobertura, pocas
-          grietas y todas conocidas— es justo lo que distingue una propuesta probada de una promesa.</p>
+          un pendiente que dejamos señalado. Ese balance (mucha cobertura, pocas
+          grietas y todas conocidas) es justo lo que distingue una propuesta probada de una promesa.</p>
 
         <!-- FIGURA 25.1 — panel de los cuatro dominios y el eje/decisión que estresa cada uno -->
         <figure class="figura figura--ancha revelar">
@@ -195,14 +195,14 @@
             (<span class="eje eje--q">Q</span> tachado) y exige la pareja plantilla–instancia; el fútbol
             duplica el reloj (<span class="eje eje--t">T</span> + <span class="eje eje--n">N</span>) y
             convierte el marcador en estado derivado; los contratos hacen del eje
-            <span class="eje eje--m">M</span> —los predicados del porqué— el centro de gravedad.</figcaption>
+            <span class="eje eje--m">M</span> (los predicados del porqué) el centro de gravedad.</figcaption>
         </figure>
 
         <h2>Música: cuando la categoría se vuelve un árbol</h2>
 
         <p>Empecemos por la sala de ensayo. El objeto a modelar es una <strong>composición
-          musical</strong> —tomemos la <em>Sonata para piano n.º 14, «Claro de luna», op. 27 n.º 2</em>,
-          de Beethoven— junto con una <strong>interpretación concreta</strong>: la que da la pianista
+          musical</strong> (tomemos la <em>Sonata para piano n.º 14, «Claro de luna», op. 27 n.º 2</em>,
+          de Beethoven) junto con una <strong>interpretación concreta</strong>: la que da la pianista
           Hélène Renaud el 12 de junio de 2026 en la Sala Devereux. Queremos poder preguntar tanto por
           la obra abstracta («¿cuántos movimientos tiene?») como por esa noche particular («¿quién la
           tocó y dónde?»). Son dos preguntas sobre dos cosas distintas que comparten un nombre.</p>
@@ -211,12 +211,12 @@
           fue creada en 1801, sí, pero no <em>ocurre</em> en ningún instante; persiste como objeto
           cultural, idéntica a sí misma se toque o no se toque. Una interpretación, en cambio,
           <strong>ocurre</strong>: tiene fecha, lugar, intérprete y se desvanece. El reflejo ingenuo es
-          colocar la obra en el eje del tiempo —un patrón temporal abstracto— pero el modelo lo rechaza:
+          colocar la obra en el eje del tiempo (un patrón temporal abstracto) pero el modelo lo rechaza:
           el eje <span class="eje eje--t">T</span> es para momentos y rangos, no para entidades estables.
           La obra vive en <span class="eje eje--k">K</span>, lo categórico y atemporal; la interpretación
           vive en <span class="eje eje--o">O</span>, lo situado. Es exactamente la separación que el
-          capítulo de la clase fijó como <strong>D1</strong> —los conceptos atemporales habitan K, las
-          entidades creadas y situadas habitan O— y aquí encuentra su caso límite más nítido.</p>
+          capítulo de la clase fijó como <strong>D1</strong> (los conceptos atemporales habitan K, las
+          entidades creadas y situadas habitan O) y aquí encuentra su caso límite más nítido.</p>
 
         <aside class="nota-margen">
           <span class="etq">Referencia · D1</span>
@@ -246,7 +246,7 @@
         <p>Mira la línea <code>obra_interpretada</code>. Su signatura es <code>M(O→K)</code>: conecta un
           evento situado con una categoría atemporal. El rol genérico <code>tema</code> del catálogo no
           servía, porque su signatura es <code>O→O</code> y rechaza valores en K. El prototipo obligó a
-          usar un <strong>rol de dominio</strong> —un predicado declarado para este caso— que apunta de
+          usar un <strong>rol de dominio</strong> (un predicado declarado para este caso) que apunta de
           O hacia K. No es un parche aislado: es exactamente la forma que reaparecerá con el medicamento
           que se prescribe (un evento O apuntando al fármaco K) y con el plan que se contrata. La música
           no es excepcional; es la primera vez que el patrón <em>«evento que refiere a una categoría»</em>
@@ -290,7 +290,7 @@
 
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">Lo que la música deja pendiente</p>
-          <p style="margin:0">El <em>tiempo musical</em> —los compases, los pulsos, el tempo— no es
+          <p style="margin:0">El <em>tiempo musical</em> (los compases, los pulsos, el tempo) no es
             tiempo absoluto y no entra en <span class="eje eje--t">T</span>. Por ahora se modela como K
             (<code>compas_4_4</code>, <code>figura_negra</code>) o se reifica en O cuando hace falta
             hablar de un compás concreto de una interpretación. Funciona, pero es una solución de
@@ -314,7 +314,7 @@
           hay vendedor, ni conductor, ni motor antifraude detrás. Esto pone a prueba, sin red de
           seguridad, la decisión que el capítulo de las situaciones llamó <strong>D5</strong>: la
           <em>agencia contextual</em>. Esa decisión establece que el rol <code>agente</code> no es
-          obligatorio —solo lo es si el verbo lo exige— y que, cuando lo es, puede ocuparlo un humano,
+          obligatorio (solo lo es si el verbo lo exige) y que, cuando lo es, puede ocuparlo un humano,
           una organización, un programa o un sensor. La química es el caso donde el rol queda
           sencillamente <strong>vacío</strong>, y el grafo lo acepta sin marcar un error.</p>
 
@@ -330,8 +330,8 @@
 
         <p>La segunda presión es más rica. La química distingue con naturalidad dos cosas que el lenguaje
           cotidiano confunde. Por un lado, <em>la combustión del metano en general</em>: una entidad
-          categórica que describe la estequiometría invariante —un mol de CH₄ más dos moles de O₂
-          producen un mol de CO₂ y dos moles de H₂O—. Por otro, <em>esta combustión concreta</em> que
+          categórica que describe la estequiometría invariante (un mol de CH₄ más dos moles de O₂
+          producen un mol de CO₂ y dos moles de H₂O). Por otro, <em>esta combustión concreta</em> que
           ocurrió en el cilindro número tres a las 14:32, con cantidades reales y a una escala
           determinada. El modelo necesita capturar las dos y, sobre todo, <strong>conectar la instancia
           con su plantilla</strong>.</p>
@@ -435,8 +435,8 @@
             genérica vive en <span class="eje eje--k">K</span> con su estequiometría invariante (las
             proporciones, en tono <span class="eje eje--n">N</span>); cada reacción concreta vive en
             <span class="eje eje--o">O</span> con cantidades reales obtenidas multiplicando la plantilla
-            por un <code>factor_escala</code>. La flecha <code>instancia_de</code> —un cable del eje
-            <span class="eje eje--m">M</span>— las une. El mismo molde sirve para sonata→interpretación,
+            por un <code>factor_escala</code>. La flecha <code>instancia_de</code> (un cable del eje
+            <span class="eje eje--m">M</span>) las une. El mismo molde sirve para sonata→interpretación,
             receta→preparación y regla→aplicación.</figcaption>
         </figure>
 
@@ -452,7 +452,7 @@
             caso con limpieza. Pero deja en evidencia que la signatura canónica podría tener que
             ensancharse.</p>
           <p><strong>Dos · <code>reactivo</code> y <code>producto</code> no están en el catálogo.</strong>
-            El catálogo canónico —lo que el capítulo del lexicon llamó <strong>D8</strong>— no los
+            El catálogo canónico (lo que el capítulo del lexicon llamó <strong>D8</strong>) no los
             incluye. La política liberal del modelo permite registrarlos como roles de dominio sin
             pedir permiso, así que el dominio funciona hoy. Pero queda anotado el parche de canonizarlos
             algún día, porque el patrón es universal: <em>toda</em> transformación tiene entradas y
@@ -486,17 +486,17 @@
         <p>En cada instante del partido hay veintidós jugadoras haciendo cosas a la vez, más la árbitra,
           los cuerpos técnicos y el público. Registrarlo todo sería absurdo e inútil. Aquí conviene una
           aclaración importante: esto <em>no</em> es una fricción del modelo, es una decisión de
-          <strong>granularidad</strong>. Lo que se modela es solo lo significativo —los goles, las
-          tarjetas, los cambios, las jugadas clave— y el resto queda implícito. El mérito del modelo es
+          <strong>granularidad</strong>. Lo que se modela es solo lo significativo (los goles, las
+          tarjetas, los cambios, las jugadas clave) y el resto queda implícito. El mérito del modelo es
           que <strong>no obliga</strong> a registrar lo que no importa: no exige llenar un campo por cada
           jugadora en cada segundo. Y, en efecto, no lo hace.</p>
 
         <h3>El doble reloj</h3>
 
         <p>La segunda complicación es más sutil: en un partido conviven <strong>dos tiempos</strong>. El
-          tiempo absoluto —la hora del reloj de pared, <code>2026-09-14T21:14:07Z</code>— y el minuto de
-          partido —el «minuto 67», que vive en una escala relativa al pitazo inicial y que se detiene en
-          el entretiempo—. No son el mismo eje. El modelo los absorbe con un doble registro: cada evento
+          tiempo absoluto (la hora del reloj de pared, <code>2026-09-14T21:14:07Z</code>) y el minuto de
+          partido (el «minuto 67», que vive en una escala relativa al pitazo inicial y que se detiene en
+          el entretiempo). No son el mismo eje. El modelo los absorbe con un doble registro: cada evento
           lleva un <code>momento: T</code> absoluto y, opcionalmente, un <code>minuto_partido: N</code>
           relativo. Así, dos consultas distintas conviven sin pisarse: <em>«¿qué pasó a las 21:14 hora
           local?»</em> recorre el eje <span class="eje eje--t">T</span>, y <em>«¿qué pasó al minuto
@@ -521,7 +521,7 @@
           de agregar todos los goles registrados. Nadie escribe el marcador como dato; el marcador se
           <strong>deriva</strong>. Es exactamente la misma forma estructural que la fidelidad del spa
           (siete sesiones acumuladas dan una gratis) y que el costo total de un viaje en el taxi: el
-          modelo almacena los <strong>hechos primitivos</strong> —cada gol como evento reificado— y un
+          modelo almacena los <strong>hechos primitivos</strong> (cada gol como evento reificado) y un
           evaluador externo recorre el grafo y agrega. El modelo no calcula marcadores; los
           <strong>prepara</strong> para que cualquier evaluador lo haga.</p>
 
@@ -539,10 +539,10 @@ marcador = f"{goles_sur} - {goles_norte}"   # el estado, derivado al vuelo</code
         </div>
 
         <p>Durante el modelado apareció una fricción concreta, una sola. El rol <code>partes</code>
-          aplicado a un partido —sus dos equipos— traía la signatura <code>T→Q</code>, que asume que las
+          aplicado a un partido (sus dos equipos) traía la signatura <code>T→Q</code>, que asume que las
           partes son agentes. Pero un <em>equipo</em> es más cómodo como <span class="eje eje--o">O</span>:
           un colectivo compuesto, no un agente individual. El parche propuesto es generalizar
-          <code>partes</code> a <code>O→V</code> —admitiendo cualquier eje de valor como rango—. El
+          <code>partes</code> a <code>O→V</code> (admitiendo cualquier eje de valor como rango). El
           prototipo confirmó la fricción y la sorteó con un rol de dominio (<code>parte: O→O</code>),
           pero la canonización del parche es trabajo pendiente real, no resuelto.</p>
 
@@ -567,16 +567,16 @@ marcador = f"{goles_sur} - {goles_norte}"   # el estado, derivado al vuelo</code
         <h2>Contratos: cuando lo normativo manda sobre lo factual</h2>
 
         <p>Última escena, la notaría. El objeto es un <strong>contrato de alquiler</strong> a doce meses,
-          con cláusulas, obligaciones recíprocas, una cláusula de rescisión por impago y —llegado el
-          caso— una rescisión efectiva. Es el dominio donde lo <em>factual</em> (lo que pasó) queda en
+          con cláusulas, obligaciones recíprocas, una cláusula de rescisión por impago y (llegado el
+          caso) una rescisión efectiva. Es el dominio donde lo <em>factual</em> (lo que pasó) queda en
           segundo plano frente a lo <em>normativo</em> (lo que está permitido, exigido o prohibido). El
           contrato existe y obliga antes de que ocurra ningún hecho que regule.</p>
 
-        <p>La primera tensión es la <strong>vigencia</strong> —del contrato entero y de cada cláusula por
-          separado—. Algunas cláusulas valen durante todo el plazo; otras solo en ventanas específicas
+        <p>La primera tensión es la <strong>vigencia</strong> (del contrato entero y de cada cláusula por
+          separado). Algunas cláusulas valen durante todo el plazo; otras solo en ventanas específicas
           (la de actualización del alquiler aplica únicamente en el aniversario). El modelo absorbe esto
-          con la decisión que el capítulo de las situaciones llamó <strong>D6</strong> —la vigencia: las
-          propiedades que cambian se reifican con un rango de <code>inicio</code>/<code>fin</code>—. Al
+          con la decisión que el capítulo de las situaciones llamó <strong>D6</strong> (la vigencia: las
+          propiedades que cambian se reifican con un rango de <code>inicio</code>/<code>fin</code>). Al
           implementarlo se vuelve evidente que la <em>bitemporalidad completa</em> sería lo ideal: no
           solo registrar <em>cuándo algo es cierto</em>, sino también <em>cuándo lo afirmamos</em>. Esa
           segunda mitad queda documentada como pendiente.</p>
@@ -606,8 +606,8 @@ marcador = f"{goles_sur} - {goles_norte}"   # el estado, derivado al vuelo</code
   vigencia:            [2026-01-01 .. 2026-12-31]   (D6)</code></pre>
         </div>
 
-        <p>Cuando una rescisión efectivamente ocurre, no se dispara sola. Un evaluador —humano o
-          algorítmico— verifica que la condición se cumpla y emite la rescisión como un hecho nuevo, que
+        <p>Cuando una rescisión efectivamente ocurre, no se dispara sola. Un evaluador (humano o
+          algorítmico) verifica que la condición se cumpla y emite la rescisión como un hecho nuevo, que
           apunta a la cláusula con el cable <code>justificado_por</code>:</p>
 
         <div class="triple" style="flex-wrap:wrap;justify-content:center">
@@ -617,10 +617,10 @@ marcador = f"{goles_sur} - {goles_norte}"   # el estado, derivado al vuelo</code
         </div>
 
         <p>Ese cable no es decorativo. El capítulo sobre el porqué mostró que no existe un eje «por qué»:
-          el porqué se reparte en cuatro cables distintos —<code>causado_por</code>, <code>motivado_por</code>,
-          <code>con_finalidad</code> y <code>justificado_por</code>—, y esa decisión es <strong>D7</strong>.
+          el porqué se reparte en cuatro cables distintos (<code>causado_por</code>, <code>motivado_por</code>,
+          <code>con_finalidad</code> y <code>justificado_por</code>), y esa decisión es <strong>D7</strong>.
           En lo normativo, el cable que importa es el último: la <em>justificación</em>. La auditoría
-          legal —<em>«¿bajo qué autoridad se rescindió este contrato?»</em>— se reduce a seguir
+          legal (<em>«¿bajo qué autoridad se rescindió este contrato?»</em>) se reduce a seguir
           <code>justificado_por</code> hasta la cláusula, y de la cláusula al contrato. La cadena de
           razonamiento entera está en el grafo, no en la cabeza de un abogado.</p>
 
@@ -636,8 +636,8 @@ marcador = f"{goles_sur} - {goles_norte}"   # el estado, derivado al vuelo</code
           renegocia? La regla del modelo es severa y deliberada: <strong>los hechos son inmutables</strong>.
           Una renegociación no edita el hecho viejo; es una <strong>situación nueva</strong> que lo
           <code>rectifica</code> o lo <code>cancela</code>. El historial se preserva entero y el «estado
-          actual» se reconstruye por consulta —exactamente lo que vimos en la clínica con un
-          rediagnóstico y en el taxi con una cancelación—.</p>
+          actual» se reconstruye por consulta (exactamente lo que vimos en la clínica con un
+          rediagnóstico y en el taxi con una cancelación).</p>
 
         <p class="cita-destacada revelar">En lo normativo, el sistema no debe producir solo el resultado;
           debe producir la cadena de razones que lo justifica.<cite>La lección del contrato</cite></p>
@@ -692,8 +692,8 @@ marcador = f"{goles_sur} - {goles_norte}"   # el estado, derivado al vuelo</code
           <div class="tarjeta">
             <p class="emoji">🔧</p>
             <h4>Las grietas son pocas y conocidas</h4>
-            <p style="margin:0;font-size:.93rem">Tras ocho dominios —los cuatro de aquí más los cuatro
-              previos—, las fricciones reales son cuatro: roles canónicos del catálogo D8 algo estrechos
+            <p style="margin:0;font-size:.93rem">Tras ocho dominios (los cuatro de aquí más los cuatro
+              previos), las fricciones reales son cuatro: roles canónicos del catálogo D8 algo estrechos
               (<code>paciente</code>, <code>partes</code>, <code>tema</code>); bitemporalidad completa;
               tiempo musical y patrones temporales finos; y reglas de derivación versionadas. Cuatro
               pendientes documentados, ningún punto de quiebre.</p>
@@ -702,14 +702,14 @@ marcador = f"{goles_sur} - {goles_norte}"   # el estado, derivado al vuelo</code
 
         <p>Esa última lección es la que más importa para un lector escéptico. Un modelo que nunca falla en
           público suele ser un modelo que no se ha probado en serio; un modelo que declara con precisión
-          sus cuatro grietas —y muestra que ninguna lo derrumba— es un modelo que ha pasado por el banco
+          sus cuatro grietas (y muestra que ninguna lo derrumba) es un modelo que ha pasado por el banco
           de pruebas. Las cuatro pendientes son el mapa de hasta
           dónde llega hoy la arquitectura y qué le falta para llegar más lejos.</p>
 
         <div class="caja caja--practica revelar">
           <p class="caja-tit">El balance de la Parte V</p>
-          <p style="margin:0">El modelo se sostuvo a lo largo de los doce dominios del libro —ocho
-            industriales y cuatro de estrés— apoyado en un prototipo en Python de unas 2.250 líneas y un
+          <p style="margin:0">El modelo se sostuvo a lo largo de los doce dominios del libro (ocho
+            industriales y cuatro de estrés) apoyado en un prototipo en Python de unas 2.250 líneas y un
             catálogo canónico de 38 roles. Donde hubo fricción, hubo parche o un pendiente documentado.
             En ninguno de los doce el esqueleto se quebró. Esa es, en una frase, la evidencia que la
             Parte V se propuso reunir.</p>
@@ -719,7 +719,7 @@ marcador = f"{goles_sur} - {goles_norte}"   # el estado, derivado al vuelo</code
           en cuatro lugares distintos, y los cuatro chirridos están anotados en el plano. Queda una
           pregunta que recorre todo el libro por debajo y que la siguiente parte pone al frente: si las
           preguntas son un vocabulario común, ¿qué cambia para las máquinas que hoy aprenden a hablar
-          —los grandes modelos de lenguaje— cuando ese vocabulario existe? A eso vamos.</p>
+          (los grandes modelos de lenguaje) cuando ese vocabulario existe? A eso vamos.</p>
 
       </div>
     </article>

@@ -65,7 +65,7 @@
           cortesía: una sauna regalada a una clienta que cumple años. Cuatro hechos del mismo turno, cada
           uno tecleado en segundos, cada uno guardado en filas que nadie volverá a mirar individualmente.
           yaku no sabe que está modelando agencia, vigencia ni cobertura. Solo registra ventas. Y, sin
-          embargo —esa es la tesis del capítulo—, debajo de sus nombres de columna ya están enterradas
+          embargo (esa es la tesis del capítulo), debajo de sus nombres de columna ya están enterradas
           casi todas las coordenadas que este libro lleva veintiún capítulos construyendo.</p>
 
         <aside class="nota-margen">
@@ -107,23 +107,23 @@
           cualquier negocio de servicios termina teniendo, llámense como se llamen:</p>
 
         <div class="columnas">
-          <p><code>cliente</code> — quiénes consumen. <code>persona</code> — los empleados: recepción,
+          <p><code>cliente</code>: quiénes consumen. <code>persona</code>: los empleados: recepción,
             masajistas, instructores. Entre ambas tablas vive todo lo que el modelo llamaría el eje
             <span class="eje eje--q">Q</span>, repartido en dos según un criterio puramente operativo
             (quién cobra y quién paga), no semántico.</p>
-          <p><code>producto</code> — todo lo vendible bajo un mismo techo: habitaciones, sesiones de sauna,
-            jugos, gaseosas, planes mensuales. <code>venta</code> más <code>ventadet</code> — las comandas
-            y sus líneas. <code>asistencia</code> — el registro de entrada y salida del gimnasio, con
-            banderas anexas para sauna y ducha. <code>socio</code> más <code>plan</code> — las membresías
+          <p><code>producto</code>: todo lo vendible bajo un mismo techo: habitaciones, sesiones de sauna,
+            jugos, gaseosas, planes mensuales. <code>venta</code> más <code>ventadet</code>: las comandas
+            y sus líneas. <code>asistencia</code>: el registro de entrada y salida del gimnasio, con
+            banderas anexas para sauna y ducha. <code>socio</code> más <code>plan</code>: las membresías
             mensuales vigentes.</p>
         </div>
 
         <p>Y aquí aparece el primer detalle revelador, el que justifica la palabra «arqueología». El campo
-          <code>producto.MARCA</code> no guarda lo que su nombre promete —la marca comercial del
-          producto—. Guarda su <strong>familia de negocio</strong>: <code>HOSTAL</code>, <code>SAUNA</code>,
+          <code>producto.MARCA</code> no guarda lo que su nombre promete (la marca comercial del
+          producto). Guarda su <strong>familia de negocio</strong>: <code>HOSTAL</code>, <code>SAUNA</code>,
           <code>GYM</code>, <code>RESTAURANT</code>, <code>STOCK</code>. Es decir, yaku <em>ya</em>
-          clasifica sus productos en categorías —ya tiene un eje <span class="eje eje--k">K</span> en
-          funcionamiento— solo que escondido tras un nombre de columna que disimula su función real.
+          clasifica sus productos en categorías (ya tiene un eje <span class="eje eje--k">K</span> en
+          funcionamiento) solo que escondido tras un nombre de columna que disimula su función real.
           Excavar yaku es, literalmente, esto: levantar la capa de nombres engañosos y reconocer debajo
           las coordenadas que el modelo predice.</p>
 
@@ -231,7 +231,7 @@
           </div>
           <figcaption><span class="fnum">Figura 24.1.</span> Arqueología de yaku sobre los siete ejes. Cada
             tabla del MySQL existente proyecta su contenido a uno o varios ejes; los bloques sólidos marcan
-            lo que yaku <em>ya</em> implementa —aunque nunca lo haya bautizado así—, y el bloque punteado
+            lo que yaku <em>ya</em> implementa (aunque nunca lo haya bautizado así), y el bloque punteado
             inferior marca lo que la excavación revela como faltante o crudo. Repara en tres cosas: en
             <code>Q</code> el modelo ya tiene clientes y empleados tipados; en <code>T</code> los campos
             <code>socio.desde</code>/<code>socio.hasta</code> son vigencia bitemporal de manual; y en
@@ -245,8 +245,8 @@
           el <a href="09-situaciones.html">capítulo de situaciones</a> prescribe para los hechos que
           cambian con el tiempo: la membresía no se guarda como un atributo del cliente, sino como un
           <em>evento con inicio y fin</em>. Cuando un socio renueva, yaku no sobrescribe el registro
-          anterior: crea uno nuevo. Esa decisión —tomada hace años por alguien que probablemente solo
-          quería un historial de pagos— es la vigencia bitemporal que el modelo formaliza como
+          anterior: crea uno nuevo. Esa decisión (tomada hace años por alguien que probablemente solo
+          quería un historial de pagos) es la vigencia bitemporal que el modelo formaliza como
           <strong>D6</strong>. Y tiene la consecuencia exacta que D6 promete: la pregunta <em>«¿qué socios
           estaban activos el 15 de marzo del año pasado?»</em> se responde con precisión, sin
           reconstrucciones aproximadas ni «depende de qué tabla mires».</p>
@@ -254,7 +254,7 @@
         <aside class="nota-margen">
           <span class="etq">Recordatorio · D6</span>
           La <em>vigencia</em> dice que las propiedades que cambian se reifican con un rango
-          <code>inicio</code>/<code>fin</code> —bitemporalidad—. Se enunció en el capítulo de situaciones;
+          <code>inicio</code>/<code>fin</code> (bitemporalidad). Se enunció en el capítulo de situaciones;
           el banco la usó para préstamos y la minera para quince años de estados de un camión. yaku la
           tenía implementada de forma tácita en dos columnas de la tabla <code>socio</code>.
         </aside>
@@ -275,18 +275,18 @@
         <p>Las banderas <code>venta.ANULA</code> y <code>venta.CANCELADO</code> son la versión cruda de
           algo que el spa del capítulo 16 modeló con cuidado: el <code>estatus_factual</code>, ese campo
           en <span class="eje eje--k">K</span> que distingue <code>{real, intencionado, planeado,
-          hipotético, cancelado}</code>. yaku cubre, sin problemas, el extremo negativo —«esto no
-          pasó»— con sus dos flags. Lo que le falta es el extremo opuesto: el <code>intencionado</code>.
+          hipotético, cancelado}</code>. yaku cubre, sin problemas, el extremo negativo («esto no
+          pasó») con sus dos flags. Lo que le falta es el extremo opuesto: el <code>intencionado</code>.
           El cliente que estuvo a punto de comprar el plan trimestral y se fue sin firmar deja, en yaku,
           una huella pobrísima: una nota en prosa libre dentro de <code>cliente.NOTAS</code>, no
           consultable, no agregable, invisible para cualquier reporte. La intención de compra fallida
-          —oro puro para marketing— se evapora.</p>
+          (oro puro para marketing) se evapora.</p>
 
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">La grieta del campo de texto libre</p>
           <p style="margin:0">Casi todo sistema heredado tiene su <code>cliente.NOTAS</code>: un campo de
-            texto donde el negocio vuelca lo que el esquema no supo prever —intenciones, motivos,
-            excepciones, promesas—. Es el cementerio de los hechos que el modelo de datos no anticipó.
+            texto donde el negocio vuelca lo que el esquema no supo prever (intenciones, motivos,
+            excepciones, promesas). Es el cementerio de los hechos que el modelo de datos no anticipó.
             La arqueología semántica consiste, en buena parte, en <strong>rescatar de ese campo lo que
             debería ser estructura</strong> y darle un eje. El <code>intencionado</code> que hoy vive
             como prosa en <code>NOTAS</code> es, en WQuestions, una tripleta consultable como cualquier
@@ -296,12 +296,12 @@
         <h3>Tercera observación · el eje L está externalizado, pero es recuperable</h3>
 
         <p>yaku no tiene tabla de lugares físicos. Las habitaciones del hostal viven como filas de
-          <code>producto</code> —códigos <code>H103</code>, <code>H201</code>, etcétera—. A primera vista
+          <code>producto</code> (códigos <code>H103</code>, <code>H201</code>, etcétera). A primera vista
           parece una carencia; en realidad es <strong>una decisión de modelado</strong> que el capítulo
           16 ya preveía: una misma entidad puede vivir en <span class="eje eje--o">O</span> <em>y</em> en
           <span class="eje eje--l">L</span> a la vez. La cámara de vapor del spa era, simultáneamente,
           una máquina (objeto) y un lugar. yaku eligió priorizar la cara <code>O</code> de la habitación
-          —para que entrara sin fricción en el flujo de ventas— y dejó implícita la cara <code>L</code>.
+          (para que entrara sin fricción en el flujo de ventas) y dejó implícita la cara <code>L</code>.
           La buena noticia: WQuestions puede recuperar esa cara <em>sin cambiar yaku</em>. Basta declarar,
           en el lexicon, que cada código de habitación es además un individuo del eje <code>L</code>. El
           dato ya está; solo le faltaba el segundo sombrero.</p>
@@ -314,7 +314,7 @@
         <p>El spa introdujo el <code>estatus_factual</code> para responder a una pregunta única: <em>¿esto
           pasó o no?</em>. Es una distinción importante, pero unidimensional. yaku, por ser un negocio
           real con cuatro líneas conviviendo, hace aflorar otra dimensión <strong>ortogonal</strong> que
-          el libro no había formalizado hasta aquí: <em>¿cómo se cobró —o se cubrió— este servicio?</em>.
+          el libro no había formalizado hasta aquí: <em>¿cómo se cobró (o se cubrió) este servicio?</em>.
           No es lo mismo que «si pasó»; un servicio puede haber ocurrido con total certeza y, aun así,
           haberse cobrado de cuatro maneras distintas. En la operación diaria de yaku conviven, el mismo
           viernes, las cuatro:</p>
@@ -345,7 +345,7 @@
           </div>
         </div>
 
-        <p>Las cuatro modalidades comparten el mismo hecho factual —«se usó el sauna»— pero responden de
+        <p>Las cuatro modalidades comparten el mismo hecho factual («se usó el sauna») pero responden de
           forma distinta a la pregunta del cobro. En yaku, distinguirlas obliga a cruzar tres señales
           frágiles: el valor de <code>asistencia.IMPORTE</code>, la presencia de un <code>socio</code>
           activo y la existencia de una <code>venta</code> asociada. Tres consultas que se rompen en
@@ -367,7 +367,7 @@
         <p>Cada <code>uso_sauna</code> es, en su esencia, un hecho idéntico: alguien usó el sauna. La
           modalidad de cobertura, por separado, explica <em>por qué no se cobró como pago directo</em>.
           Lo elegante del diseño es que <code>cubierto_por</code> apunta a entidades de naturaleza
-          distinta —un contrato, una estancia, una promoción— sin que el cable tenga que saber de
+          distinta (un contrato, una estancia, una promoción) sin que el cable tenga que saber de
           antemano cuál; el destino lleva su propia clase. Y es generalizable mucho más allá de un
           complejo de sauna: cualquier club deportivo, hotel o clínica con cobertura de seguros vive la
           misma heterogeneidad de orígenes de cobro.</p>
@@ -378,7 +378,7 @@
             yaku no compiten: son <strong>perpendiculares</strong>. Uno responde <em>«¿el hecho es
             real?»</em>; el otro, <em>«¿cómo se financió ese hecho real?»</em>. Una sauna puede ser real
             y cortesía a la vez. <code>cubierto_por</code> pertenece a la familia del porqué que
-            <strong>D7</strong> descompone —apunta al origen que justifica la ausencia de cobro—, y se
+            <strong>D7</strong> descompone (apunta al origen que justifica la ausencia de cobro), y se
             suma al repertorio de cables de ese eje sin tocar la maquinaria del modelo. Es un concepto que
             la pizarra limpia nunca habría hecho aflorar: lo regaló un sistema real.</p>
         </div>
@@ -488,9 +488,9 @@
           </div>
           <figcaption><span class="fnum">Figura 24.2.</span> Tres arquitecturas para hacer convivir el
             modelo con un sistema heredado. <strong>A</strong> traduce cada consulta a SQL contra las
-            tablas vivas —cero copia, cero latencia, pero limitada a lo que el <em>legacy</em> ya modela—.
+            tablas vivas (cero copia, cero latencia, pero limitada a lo que el <em>legacy</em> ya modela).
             <strong>B</strong> proyecta las filas a una tabla <code>fact(s, p, o, t_from, t_to)</code>
-            alimentada por ETL —expresiva, pero con retraso—. <strong>C</strong> enruta cada consulta
+            alimentada por ETL (expresiva, pero con retraso). <strong>C</strong> enruta cada consulta
             según su predicado: lo transaccional en vivo vía A, lo semántico-puro vía B. La estrella marca
             la opción recomendada.</figcaption>
         </figure>
@@ -517,7 +517,7 @@ WHERE  v.id_cliente = 'juan'
         </div>
 
         <p>Funciona de maravilla para las preguntas que el sistema heredado ya sabe contestar con sus
-          tablas actuales —«¿qué huéspedes están alojados ahora?», «¿cuánto facturó el cafetín ayer?»—.
+          tablas actuales («¿qué huéspedes están alojados ahora?», «¿cuánto facturó el cafetín ayer?»).
           Y fracasa, por construcción, para todo lo que el <em>legacy</em> no modela: la vigencia
           histórica de la dirección de un cliente, las intenciones de compra fallidas, la justificación
           de una cortesía. Si el dato no está en una columna, ningún SQL lo inventa.</p>
@@ -528,8 +528,8 @@ WHERE  v.id_cliente = 'juan'
           Postgres, SQLite o donde sea— recibe, vía un proceso ETL o de captura de cambios, una
           proyección de las filas de yaku convertidas en hechos atómicos. El motor consulta
           exclusivamente esta tabla <code>fact</code>. Su virtud es la libertad: todo lo que el
-          <em>legacy</em> no modela —las intenciones, el porqué, la vigencia bitemporal completa, las
-          modalidades de cobertura— cabe limpio, porque la tabla está diseñada justo para alojarlo.</p>
+          <em>legacy</em> no modela (las intenciones, el porqué, la vigencia bitemporal completa, las
+          modalidades de cobertura) cabe limpio, porque la tabla está diseñada justo para alojarlo.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">sql</span><button class="copiar">⧉ copiar</button></div>
@@ -553,7 +553,7 @@ INSERT INTO fact VALUES
 
         <p>El proceso ETL que alimenta esa tabla es, en esencia, la arqueología hecha código: lee una fila
           relacional de yaku y la <em>descompone</em> en las tripletas que el modelo predice. Una fila de
-          <code>socio</code> —que para yaku es un renglón con columnas— se convierte en cuatro hechos
+          <code>socio</code> (que para yaku es un renglón con columnas) se convierte en cuatro hechos
           atómicos, uno por cada coordenada que esa fila escondía:</p>
 
         <div class="bloque-codigo">
@@ -574,15 +574,15 @@ INSERT INTO fact VALUES
           revela las coordenadas que siempre tuvo. Eso es, en una función, todo el capítulo.</p>
 
         <p>Su límite es la latencia. Entre que una venta entra a yaku y aparece en el grafo hay un
-          retraso. Para muchas aplicaciones eso es irrelevante —consultas analíticas, campañas de
-          marketing, tableros que se miran una vez al día—; para otras es un bloqueador insalvable —una
-          decisión que se toma en la caja, frente al cliente, ahora mismo—.</p>
+          retraso. Para muchas aplicaciones eso es irrelevante (consultas analíticas, campañas de
+          marketing, tableros que se miran una vez al día); para otras es un bloqueador insalvable (una
+          decisión que se toma en la caja, frente al cliente, ahora mismo).</p>
 
         <h3>Arquitectura C · el híbrido pragmático</h3>
 
-        <p>Los datos transaccionales —clientes, productos, ventas, asistencias— se consultan en vivo
+        <p>Los datos transaccionales (clientes, productos, ventas, asistencias) se consultan en vivo
           contra el <em>legacy</em>, vía A. Los datos puramente semánticos que WQuestions agrega
-          —intenciones, modalidades de cobertura, justificaciones, vigencias históricas— viven en la
+          (intenciones, modalidades de cobertura, justificaciones, vigencias históricas) viven en la
           tabla <code>fact</code> paralela, vía B. El motor decide a qué <em>backend</em> ir según el
           predicado de la consulta. Es la que recomendaría para casi cualquier adoptante real: aprovecha
           el sistema operativo existente para lo que ya hace bien y le añade encima, sin tocarlo, la capa
@@ -620,15 +620,15 @@ INSERT INTO fact VALUES
               <code>cargar&nbsp;a</code>, <code>regalar</code>, <code>cancelar</code>.</li>
             <li style="margin-bottom:.5rem"><strong>Descubrir las polisemias locales.</strong> El verbo
               <code>tomar</code> cubre dos situaciones según el complemento: «tomar sauna» es un
-              <em>servicio</em>; «tomar una cerveza» es un <em>consumo</em>. yaku no las distingue —escribe
-              ambas en la misma <code>ventadet</code>—; el lexicon sí, vía el patrón sintáctico del
+              <em>servicio</em>; «tomar una cerveza» es un <em>consumo</em>. yaku no las distingue (escribe
+              ambas en la misma <code>ventadet</code>); el lexicon sí, vía el patrón sintáctico del
               capítulo 14.</li>
             <li style="margin-bottom:.5rem"><strong>Detectar campos que conflan dimensiones.</strong> El
               campo <code>producto.MARCA</code> codifica <em>dos</em> cosas ortogonales en una: la
               categoría semántica (<code>HOSTAL</code>, <code>SAUNA</code>…) y el control de inventario
               (<code>STOCK</code> = se cuenta; lo demás = no se cuenta). Un jugo de naranja es
               semánticamente <code>RESTAURANT</code> y, a la vez, operativamente no-<code>STOCK</code>
-              —no hay jugos en almacén, se preparan al pedido—. El lexicon separa las dos dimensiones por
+              (no hay jugos en almacén, se preparan al pedido). El lexicon separa las dos dimensiones por
               construcción.</li>
             <li style="margin-bottom:.5rem"><strong>Clasificar los artefactos en subclases.</strong> yaku
               tiene casi un centenar de planes en <code>plan.nplan</code>, texto libre. Hay que rotular
@@ -636,8 +636,8 @@ INSERT INTO fact VALUES
               otro tanto con los productos <code>HOSTAL</code> (matrimonial, doble, simple) y
               <code>SAUNA</code> (adulto, niño, de paso). Una pasada manual o asistida por un modelo de
               lenguaje resuelve esto <em>una sola vez</em>, no por consulta.</li>
-            <li><strong>Inventariar las modalidades de cobertura</strong> y sus señales en los datos —el
-              <code>cubierto_por</code> de la sección anterior—. Es el hallazgo ortogonal que el propio
+            <li><strong>Inventariar las modalidades de cobertura</strong> y sus señales en los datos (el
+              <code>cubierto_por</code> de la sección anterior). Es el hallazgo ortogonal que el propio
               ejercicio regala.</li>
           </ol>
         </div>
@@ -646,7 +646,7 @@ INSERT INTO fact VALUES
           etnográfico, clasificación y escritura del lexicon. Es labor arqueológico-lingüística, no
           ingeniería. Y se hace una sola vez: desde ese punto, toda consulta futura sobre el negocio
           <em>reúsa</em> el mismo lexicon. Esa amortización es el retorno que justifica el esfuerzo
-          inicial —un costo fijo y pequeño contra un beneficio que se cobra en cada pregunta de los años
+          inicial: un costo fijo y pequeño contra un beneficio que se cobra en cada pregunta de los años
           siguientes.</p>
 
         <h2>El gap del gimnasio · el modelo no inventa información</h2>
@@ -656,17 +656,17 @@ INSERT INTO fact VALUES
           captura en ningún lado, no aparece en el grafo por arte de magia.</p>
 
         <p>En yaku, el uso del gimnasio <em>solo</em> se registra cuando el cliente es socio en plan
-          —entra al sistema por la tabla <code>asistencia</code>—. Los días sueltos comprados como
+          (entra al sistema por la tabla <code>asistencia</code>). Los días sueltos comprados como
           producto <code>MARCA=GYM</code> se cobran en <code>venta</code>, pero no generan registro de
           entrada y salida: no existe una tabla <code>asistencia_walkin_gym</code>. Por tanto, la
           pregunta «¿cuántas horas usó alguien el gimnasio este mes?» hoy <em>no se puede</em> responder
-          para los clientes de paso —ni con yaku puro, ni con WQuestions encima—.</p>
+          para los clientes de paso (ni con yaku puro, ni con WQuestions encima).</p>
 
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">Lo que no se registra, no existe</p>
           <p style="margin:0">El modelo se vende a veces como una solución mágica para preguntas que las
             bases heredadas no respondían. No lo es. WQuestions <em>explicita</em> estructura, conexiones,
-            vigencia y porqué —pero solo de lo que el negocio decidió capturar—. Cualquier capacidad nueva
+            vigencia y porqué (pero solo de lo que el negocio decidió capturar). Cualquier capacidad nueva
             exige captura nueva: un lector de huella en la puerta del gimnasio, un QR escaneado, una
             anotación en recepción. Confundir «el modelo es expresivo» con «el sistema lo sabe todo» es un
             error costoso. El lector que aplique la arqueología sobre su propio <em>legacy</em>
@@ -679,8 +679,8 @@ INSERT INTO fact VALUES
         <p>Cerremos con un ejercicio concreto que ata todo lo anterior. La recepcionista pregunta: <em>«¿qué
           huéspedes han usado sauna durante su estancia este mes, y cuánto extra han generado?»</em>. Esa
           consulta no tiene una vista preparada en yaku. Hoy obliga a cruzar <code>asistencia</code> con
-          <code>venta</code> —filtrada por <code>MARCA=HOSTAL</code>— y con <code>ventadet</code>
-          —filtrada por <code>MARCA=SAUNA</code> o por la bandera <code>asistencia.Sauna</code>—, y aún
+          <code>venta</code> (filtrada por <code>MARCA=HOSTAL</code>) y con <code>ventadet</code>
+          (filtrada por <code>MARCA=SAUNA</code> o por la bandera <code>asistencia.Sauna</code>), y aún
           hay que desambiguar las saunas anexas del gimnasio de las saunas de paso. Es factible, pero
           frágil: un cambio en los nombres de productos rompe el reporte. Así de enredado se ve en SQL
           crudo:</p>
@@ -700,7 +700,7 @@ WHERE   v.fecha BETWEEN h.fecha AND h.fecha_checkout
 GROUP BY h.id_cliente;</code></pre>
         </div>
 
-        <p>En WQuestions —en la arquitectura híbrida C, contra el propio yaku— la misma pregunta se vuelve
+        <p>En WQuestions (en la arquitectura híbrida C, contra el propio yaku) la misma pregunta se vuelve
           una composición de roles canónicos, legible y estable:</p>
 
         <div class="bloque-codigo">
@@ -717,9 +717,9 @@ PROJECT  SUM(importe)</code></pre>
 
         <p>El motor traduce el patrón al SQL apropiado; el modelo de lenguaje, si lo hay, traduce la frase
           en español a este patrón. Pero el patrón mismo es la pieza estable: tres roles canónicos
-          —<code>instancia_de</code>, <code>durante</code>, <code>cubierto_por</code>— que cualquier
+          (<code>instancia_de</code>, <code>durante</code>, <code>cubierto_por</code>) que cualquier
           negocio de servicios va a reutilizar tal cual. Y aquí está la prueba de fuego. La pregunta de
-          seguimiento —<em>«¿alguno de esos huéspedes era además socio del gimnasio?»</em>— se contesta
+          seguimiento (<em>«¿alguno de esos huéspedes era además socio del gimnasio?»</em>) se contesta
           agregando un solo filtro: <code>huesped IN socios_activos_gym(inicio_mes, fin_mes)</code>. Sin
           código nuevo. Sin reporte nuevo. El lexicon ya enseñó qué es un socio del gimnasio; el grafo ya
           conecta los huéspedes con sus contratos; la consulta compuesta sale de combinar piezas que ya
@@ -733,16 +733,16 @@ PROJECT  SUM(importe)</code></pre>
 
         <p><strong>Antes (yaku puro).</strong> Cada pregunta que el negocio no había anticipado se
           convierte en un reporte nuevo, escrito a mano, que cruza tablas por convenciones de nombres
-          —<code>MARCA='SAUNA'</code>, banderas booleanas, fechas comparadas a ojo— y que se rompe en
+          (<code>MARCA='SAUNA'</code>, banderas booleanas, fechas comparadas a ojo) y que se rompe en
           silencio el día en que alguien renombra un producto o cambia una regla de caja. El conocimiento
           del negocio vive en la cabeza de quien escribió cada consulta, y se pierde cuando esa persona se
           va. La intención fallida, la cortesía, la vigencia histórica, sencillamente no caben.</p>
 
         <p><strong>Después (WQuestions, híbrido C).</strong> Las mismas preguntas se contestan componiendo
-          conceptos. El lexicon —construido una sola vez, en dos a cinco días— enseña el dialecto del
+          conceptos. El lexicon (construido una sola vez, en dos a cinco días) enseña el dialecto del
           negocio; el grafo conecta los hechos por sus cables canónicos; cada consulta nueva es una
-          combinación de roles que ya existen. Lo que yaku no modelaba —el <code>intencionado</code>, el
-          <code>cubierto_por</code>, la vigencia bitemporal completa— vive en la tabla <code>fact</code>
+          combinación de roles que ya existen. Lo que yaku no modelaba (el <code>intencionado</code>, el
+          <code>cubierto_por</code>, la vigencia bitemporal completa) vive en la tabla <code>fact</code>
           paralela sin tocar una sola fila del sistema operativo. Y nada de esto requirió migrar yaku: el
           MySQL sigue corriendo exactamente igual que el viernes con el que abrimos.</p>
 
@@ -762,7 +762,7 @@ PROJECT  SUM(importe)</code></pre>
           <div class="tarjeta">
             <h4><span class="eje eje--k">C</span>&nbsp; Topología antes que tecnología</h4>
             <p style="margin:0;font-size:.95rem">«¿Dónde viven los datos?» tiene tres respuestas. El
-              híbrido —legacy en vivo para lo transaccional, grafo paralelo para lo semántico— da cero
+              híbrido (legacy en vivo para lo transaccional, grafo paralelo para lo semántico) da cero
               riesgo y ganancia incremental.</p>
           </div>
           <div class="tarjeta">
@@ -808,7 +808,7 @@ PROJECT  SUM(importe)</code></pre>
           —y es la prueba más terrenal de que WQuestions no exige empezar de nuevo: exige, apenas,
           aprender a leer lo que ya estaba escrito. Con eso cerramos los dominios reales; el próximo
           capítulo cambia de registro y somete al modelo a cuatro mundos cualitativamente distintos
-          —música, química, fútbol y contratos— buscando, esta vez a propósito, dónde se resiste.</p>
+          (música, química, fútbol y contratos) buscando, esta vez a propósito, dónde se resiste.</p>
 
       </div>
     </article>

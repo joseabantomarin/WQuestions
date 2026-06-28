@@ -145,7 +145,7 @@
           </div>
         </div>
 
-        <p>Y el séptimo eje, <span class="eje eje--m">M</span> —el <em>cómo</em>—, aporta los cables
+        <p>Y el séptimo eje, <span class="eje eje--m">M</span> (el <em>cómo</em>), aporta los cables
           que amarran todo: <code>parte_de</code> arma las jerarquías, <code>requiere_prereq</code>
           teje la malla, <code>agente</code> ata cada persona a su situación. Sin esos enlaces, las
           seis cajas anteriores serían seis listas inertes. Con ellos, una vida académica entera se
@@ -172,8 +172,8 @@
           Tres tripletas de jerarquía y la columna vertebral de la carrera queda armada. Cuando Tomás
           pregunta «¿qué cursos hay en mi ciclo actual?», la consulta es un único salto: trae todas
           las entidades de <code>O</code> cuyo <code>parte_de</code> sea <code>ciclo_2026_i</code>. Y
-          cada curso, además de colgar de su ciclo, lleva sus propios atributos —créditos, docente,
-          aula, código, sílabo— sin que ninguno necesite una tabla aparte. Todo el inventario
+          cada curso, además de colgar de su ciclo, lleva sus propios atributos (créditos, docente,
+          aula, código, sílabo) sin que ninguno necesite una tabla aparte. Todo el inventario
           académico tiene la misma forma.</p>
 
         <div class="triple">
@@ -186,8 +186,8 @@
 
         <h2>Caso 2 · Los prerrequisitos como grafo dirigido acíclico</h2>
 
-        <p>Llegamos al corazón del capítulo. La malla curricular —qué curso exige haber pasado por
-          cuál— es por su propia naturaleza un <strong>grafo dirigido acíclico</strong>, un DAG: las
+        <p>Llegamos al corazón del capítulo. La malla curricular (qué curso exige haber pasado por
+          cuál) es por su propia naturaleza un <strong>grafo dirigido acíclico</strong>, un DAG: las
           aristas tienen sentido (de requisito a curso), no hay ciclos (ningún curso puede exigirse a
           sí mismo, ni directa ni indirectamente) y las dependencias se cruzan (un curso puede tener
           varios requisitos, y un requisito puede habilitar varios cursos).</p>
@@ -203,8 +203,8 @@
 
         <p>En un sistema relacional, esto se modela con una tabla <code>curso_prereq(curso, prereq)</code>
           y se consulta con SQL recursivo. En WQuestions, <strong>cada prerrequisito es una sola
-          tripleta</strong>. Tomamos un fragmento real de la malla de Tomás —dos líneas que confluyen,
-          la de matemática y la de programación:</p>
+          tripleta</strong>. Tomamos un fragmento real de la malla de Tomás (dos líneas que confluyen,
+          la de matemática y la de programación):</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -224,7 +224,7 @@
         </div>
 
         <p><em>Algoritmos</em> (<code>cc_310</code>) exige <strong>dos</strong> requisitos simultáneos
-          —uno de cada rama—, y <em>Aprendizaje de Máquina</em> (<code>cc_420</code>), la cima de la
+          (uno de cada rama), y <em>Aprendizaje de Máquina</em> (<code>cc_420</code>), la cima de la
           carrera, exige otros dos. El modelo lo absorbe sin pestañear porque
           <code>requiere_prereq</code> es un cable múltiple: un mismo curso puede emitir varias flechas
           de requisito, cada una su propio hecho atómico, independiente de las demás. No hay que
@@ -305,8 +305,8 @@
           </div>
           <figcaption><span class="fnum">Figura 21.1.</span> La malla de Tomás como grafo dirigido
             acíclico. Cada curso es un individuo de <code>O</code>; cada flecha es una tripleta
-            <code>requiere_prereq</code> (en color <em>cómo</em>). Las dos ramas —programación y
-            matemática— confluyen en <em>Algoritmos</em>, que requiere ambas a la vez, y la carrera
+            <code>requiere_prereq</code> (en color <em>cómo</em>). Las dos ramas (programación y
+            matemática) confluyen en <em>Algoritmos</em>, que requiere ambas a la vez, y la carrera
             culmina en <em>Aprendizaje de Máquina</em>, que depende de <em>Algoritmos</em> y de
             <em>Probabilidad</em>. Cada dependencia es un hecho atómico independiente.</figcaption>
         </figure>
@@ -315,8 +315,8 @@
           ciclo?» se vuelve un recorrido directo sobre el grafo. Para cada curso del ciclo, el motor
           mira sus flechas <code>requiere_prereq</code> y verifica que <strong>todos</strong> los
           requisitos tengan, en el historial de Tomás, una evaluación con estado <em>aprobado</em>. Si
-          falta uno solo, el curso queda excluido. Y —esto es lo que el portal del lunes no sabía
-          hacer— el mismo recorrido puede <em>devolver el requisito que falta</em>, no solo un «no».</p>
+          falta uno solo, el curso queda excluido. Y (esto es lo que el portal del lunes no sabía
+          hacer) el mismo recorrido puede <em>devolver el requisito que falta</em>, no solo un «no».</p>
 
         <div class="caja caja--practica revelar">
           <p class="caja-tit">El recorrido de elegibilidad, en una frase</p>
@@ -338,7 +338,7 @@
 
         <p>Tomás se matricula en <em>Bases de Datos</em> el 10 de marzo. Lucía también, dos días
           después. Pero a mediados de abril Lucía se retira del curso. ¿Cómo guardamos esto sin perder
-          información? La tentación clásica —y el error más común— es poner una columna
+          información? La tentación clásica (y el error más común) es poner una columna
           <code>estado</code> en la tabla de matrículas y <em>actualizarla</em> cuando alguien se
           retira. El problema aparece en julio, cuando la secretaría pregunta: «¿quiénes estaban
           matriculados el 1 de abril?». La respuesta fiel ya no existe: el <code>UPDATE</code> borró el
@@ -376,7 +376,7 @@
         <p>Una verdad incómoda del mundo académico: las personas no son una sola cosa. Renata Ferro es
           estudiante de quinto año <em>y</em>, al mismo tiempo, jefa de práctica del curso de
           Programación. En unos años será docente titular; más adelante, directora de tesis; quizá,
-          decana. Es <strong>la misma persona</strong> —un solo individuo en <code>Q</code>—, pero
+          decana. Es <strong>la misma persona</strong> (un solo individuo en <code>Q</code>), pero
           ocupa roles distintos en situaciones distintas.</p>
 
         <p>En un sistema tradicional esto se vuelve un dolor de cabeza: una tabla <code>estudiantes</code>,
@@ -422,10 +422,10 @@
           de acuerdo con la corrección de un ejercicio y presenta un reclamo formal el 20 de julio. La
           docente lo revisa, le da la razón y el 25 de julio rectifica la nota a 15.</p>
 
-        <p>En un sistema tradicional, la nota se <strong>sobrescribe</strong>. El historial —si
-          existe— vive en una tabla auxiliar que casi nadie consulta. Cuando años después alguien
-          quiere reconstruir el incidente —un decano que atiende una queja, un comité de calidad que
-          audita—, el rastro está borroso. En WQuestions, las tres situaciones <strong>conviven</strong>
+        <p>En un sistema tradicional, la nota se <strong>sobrescribe</strong>. El historial (si
+          existe) vive en una tabla auxiliar que casi nadie consulta. Cuando años después alguien
+          quiere reconstruir el incidente (un decano que atiende una queja, un comité de calidad que
+          audita), el rastro está borroso. En WQuestions, las tres situaciones <strong>conviven</strong>
           en el grafo, y la causa que las encadena queda explícita.</p>
 
         <p>Aquí entra en juego una decisión que el libro ya estableció: el «por qué» no es un eje, sino
@@ -497,7 +497,7 @@
         <h2>Caso 6 · Una defensa de tesis con director y jurado</h2>
 
         <p>El último escenario es la defensa de tesis de Renata. Una tesis es una situación de larga
-          duración —un año, en su caso— con varios participantes que no juegan el mismo papel:</p>
+          duración (un año, en su caso) con varios participantes que no juegan el mismo papel:</p>
 
         <div class="columnas">
           <p>La <strong>tesista</strong> es Renata, la agente principal. El <strong>director</strong> es
@@ -530,7 +530,7 @@
 
         <p>Roles como <code>director_tesis</code>, <code>jurado_presidente</code>,
           <code>jurado_vocal</code> y <code>jurado_secretario</code> no figuran en el catálogo canónico
-          —ese catálogo invisible que vimos al hablar del lexicon—. No importa: la política liberal del
+          (ese catálogo invisible que vimos al hablar del lexicon). No importa: la política liberal del
           modelo los acepta sin protestar, y mientras el dominio universitario los use de forma
           consistente, el motor opera con ellos como si fueran canónicos. La graduación, por su parte,
           queda <code>justificado_por</code> la defensa: Renata se graduó <em>porque</em> defendió con
@@ -551,7 +551,7 @@
           y <code>notas</code>. Para expandir el árbol de dependencias de un curso hay que escribir un
           <code>WITH RECURSIVE</code> sobre <code>prerequisitos</code>, y luego cruzarlo con
           <code>matriculas</code> y <code>notas</code> mediante varios <em>joins</em>. Cada vez que la
-          malla cambia —y cambia cada pocos años—, la consulta hay que revisarla con lupa.</p>
+          malla cambia (y cambia cada pocos años), la consulta hay que revisarla con lupa.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">SQL</span><button class="copiar">⧉ copiar</button></div>
@@ -574,8 +574,8 @@ LEFT JOIN notas n
         <p><strong>Después, en WQuestions.</strong> La misma información vive como un solo grafo. Cada
           prerrequisito es una tripleta <code>requiere_prereq</code>; cada curso aprobado es un nodo
           alcanzable desde Tomás. La cadena completa de dependencias de <em>Aprendizaje de Máquina</em>
-          se obtiene con un recorrido hacia atrás sobre las flechas <code>requiere_prereq</code> —sin
-          SQL recursivo, sin procedimiento almacenado—. Determinar qué le falta es restar dos
+          se obtiene con un recorrido hacia atrás sobre las flechas <code>requiere_prereq</code> (sin
+          SQL recursivo, sin procedimiento almacenado). Determinar qué le falta es restar dos
           conjuntos: la cadena de requisitos menos su subgrafo de aprobados. Y el grafo no distingue
           entre malla vigente y malla histórica: la bitemporalidad ya lo cubre, así que la misma
           consulta sirve para el plan de hoy y para el de hace diez años.</p>
@@ -606,9 +606,9 @@ LEFT JOIN notas n
         </div>
 
         <p>Y, una vez más, <strong>el motor no creció ni una línea</strong> para absorber el dominio.
-          Lo único que creció fue el lexicon: un puñado de verbos —<code>matricular</code>,
+          Lo único que creció fue el lexicon: un puñado de verbos (<code>matricular</code>,
           <code>dictar</code>, <code>evaluar</code>, <code>reclamar</code>, <code>rectificar_nota</code>,
-          <code>graduar</code>, <code>defender_tesis</code>— con sus signaturas, más un dialecto de
+          <code>graduar</code>, <code>defender_tesis</code>) con sus signaturas, más un dialecto de
           dominio que mapea «estudiante», «docente», «tesista» o «director de tesis» a sus roles. En el
           próximo capítulo dejamos el campus y cruzamos a lo público: una municipalidad, donde las
           fechas de vigencia de una norma deciden la vida de un barrio entero.</p>

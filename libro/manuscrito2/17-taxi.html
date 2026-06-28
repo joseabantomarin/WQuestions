@@ -62,7 +62,7 @@
           llegó. Pero en los servidores de la plataforma, entre el toque del botón y el portazo final,
           pasaron muchas: el sistema rastreó conductores cerca, eligió a uno, el conductor aceptó,
           condujo hasta la plaza, recogió a Camila, la llevó a la terminal y cerró el viaje. Cada paso
-          dejó su huella, movió un cobro, alteró un mapa de tráfico y —si algo hubiera salido mal—
+          dejó su huella, movió un cobro, alteró un mapa de tráfico y (si algo hubiera salido mal)
           habría abierto un reclamo que alguien en soporte tendría que reconstruir meses más tarde.</p>
 
         <aside class="nota-margen">
@@ -94,7 +94,7 @@
         <p>Fijemos el negocio antes de modelarlo. <em>Rumbo</em> es una plataforma de transporte que
           conecta a quien necesita moverse con quien tiene un auto y tiempo. No posee vehículos ni
           emplea conductores en relación de dependencia: opera el <em>algoritmo</em> que los empareja
-          y cobra una comisión por cada viaje. Esa frase aparentemente trivial —«opera el algoritmo»—
+          y cobra una comisión por cada viaje. Esa frase aparentemente trivial («opera el algoritmo»)
           es la que vuelve interesante el dominio, porque el algoritmo toma decisiones con
           consecuencias legales y económicas, y eso lo convierte en un agente de pleno derecho.</p>
 
@@ -123,7 +123,7 @@
           <div class="tarjeta">
             <p class="emoji">🚗</p>
             <h4>El vehículo · <code>vehiculo_4821</code></h4>
-            <p style="margin:0;font-size:.93rem">La máquina física —placa 4821— que hace posible el
+            <p style="margin:0;font-size:.93rem">La máquina física (placa 4821) que hace posible el
               traslado. El <em>instrumento</em> del trabajo.</p>
           </div>
         </div>
@@ -132,14 +132,14 @@
 
         <p>Si le preguntas a cualquiera <em>«¿quién participa en el viaje?»</em>, la respuesta obvia
           es: Camila y su conductor, Iván. Pero en el modelo hay dos participantes más que suelen
-          pasar inadvertidos. Uno es <strong>la plataforma</strong> —un agente de software que toma
-          decisiones autónomas—; el otro, <strong>el vehículo</strong>, la máquina que ejecuta el
+          pasar inadvertidos. Uno es <strong>la plataforma</strong> (un agente de software que toma
+          decisiones autónomas); el otro, <strong>el vehículo</strong>, la máquina que ejecuta el
           traslado. Para que la base de datos sea auditable, los cuatro tienen que dejar rastro.</p>
 
         <p>Aquí entra en acción una de las decisiones de diseño más liberadoras de la arquitectura: la
           <em>agencia contextual</em> (D5). El rol de <code>agente</code> no está reservado a los
           humanos; lo puede ocupar quien <em>ejecute la acción del verbo</em>, sea persona,
-          organización, sensor o software. Y el verbo central de este viaje —<em>asignar</em>— no lo
+          organización, sensor o software. Y el verbo central de este viaje (<em>asignar</em>) no lo
           ejecutó Camila ni Iván: lo ejecutó el algoritmo. Fue él quien decidió, a las 22:41, darle
           <em>ese</em> pedido a <em>ese</em> conductor. Negarle la condición de agente sería falsear
           quién tomó la decisión.</p>
@@ -243,8 +243,8 @@
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">¿Y si mañana hay que auditar al GPS?</p>
           <p style="margin:0">El vehículo vive en <code>O</code> como instrumento porque, casi siempre,
-            actúa por orden de un humano. Pero si un día el coche tomara una decisión propia —un
-            piloto automático que frena solo, un sensor que reporta una falla—, no hay que rediseñar
+            actúa por orden de un humano. Pero si un día el coche tomara una decisión propia (un
+            piloto automático que frena solo, un sensor que reporta una falla), no hay que rediseñar
             nada: se crea un agente <code>gps_4821</code> en <code>Q</code>, vinculado al vehículo
             físico de <code>O</code>, y ese agente pasa a ocupar el rol del verbo que ejecutó. El
             modelo no obliga a elegir entre humano y máquina: la agencia depende del verbo, no de la
@@ -253,8 +253,8 @@
 
         <h2>La cadena de las seis situaciones</h2>
 
-        <p>Cronológicamente, el viaje de Camila genera seis situaciones reificadas —seis nodos
-          independientes en el grafo—, cada una con su hora y sus participantes:</p>
+        <p>Cronológicamente, el viaje de Camila genera seis situaciones reificadas (seis nodos
+          independientes en el grafo), cada una con su hora y sus participantes:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">la cadena</span><button class="copiar">⧉ copiar</button></div>
@@ -293,7 +293,7 @@
 
         <aside class="nota-margen">
           <span class="etq">El porqué no es un eje · D7</span>
-          El capítulo del «por qué» mostró que el porqué se reparte en cuatro cables —
+          El capítulo del «por qué» mostró que el porqué se reparte en cuatro cables:
           <code>causado_por</code>, <code>motivado_por</code>, <code>con_finalidad</code>,
           <code>justificado_por</code>. Una asignación está <em>motivada</em> por un pedido; un alza
           de tarifa está <em>causada</em> por un estado del mercado. Distinguirlos es lo que vuelve la
@@ -301,16 +301,16 @@
         </aside>
 
         <p>Los dos cables sirven a públicos distintos. El temporal alimenta los cálculos operativos
-          —cuánto tardó la plataforma en asignar, cuántos minutos esperó la pasajera, qué velocidad
-          media tuvo el traslado—. El causal alimenta al auditor, que no quiere saber <em>cuándo</em>
+          (cuánto tardó la plataforma en asignar, cuántos minutos esperó la pasajera, qué velocidad
+          media tuvo el traslado). El causal alimenta al auditor, que no quiere saber <em>cuándo</em>
           sino <em>por qué</em> se tomó cada decisión. Tenerlos separados, y a la vez en el mismo
           grafo, es lo que permite responder ambas preguntas sin reconstruir nada.</p>
 
         <p>Falta una pieza. Si estos seis eventos quedaran sueltos en el servidor, serían huérfanos:
           ninguno sabría a qué viaje pertenece. Por eso los agrupamos bajo una <strong>unidad
           comercial</strong>: creamos un nodo <code>viaje_7732</code> y colgamos de él las seis
-          situaciones con el cable <code>parte_de</code>. Ese nodo es la entidad de negocio real —a él
-          se le pega la factura, a él acude soporte si hay un reclamo—; las seis situaciones son su
+          situaciones con el cable <code>parte_de</code>. Ese nodo es la entidad de negocio real (a él
+          se le pega la factura, a él acude soporte si hay un reclamo); las seis situaciones son su
           interior cronológico.</p>
 
         <!-- FIGURA SVG 17.2: la cadena del viaje, situaciones encadenadas (precede) -->
@@ -408,7 +408,7 @@
           <p><span class="eje-rotulo"><span class="eje eje--t">T</span> ¿en qué orden?</span> &nbsp;El
             cable <code>sigue_a</code> es asunto del eje del tiempo. Da la secuencia sin restar relojes:
             preguntar «¿qué vino después de aceptar?» es seguir una flecha, no calcular una diferencia
-            de horas. Es lo que alimenta toda métrica operativa —espera de la pasajera, duración del
+            de horas. Es lo que alimenta toda métrica operativa: espera de la pasajera, duración del
             traslado, latencia de la asignación.</p>
           <p><span class="eje-rotulo"><span class="eje eje--m">M</span> ¿por qué ocurrió?</span> &nbsp;El
             cable <code>motivado_por</code> es un predicado del eje <em>cómo</em>, el que enlaza hechos
@@ -424,7 +424,7 @@
         <p>Hay un rasgo de este negocio que tensa de verdad la estructura de datos: el precio no es
           fijo. Cuando llueve, o cuando hay más pasajeros que autos disponibles, la tarifa sube. Un
           mismo trayecto que ayer costó 18 unidades hoy cuesta 30. El reto no es <em>cobrar</em> ese
-          recargo —eso lo hace cualquier sistema— sino <em>explicarlo</em> seis meses después, cuando
+          recargo (eso lo hace cualquier sistema) sino <em>explicarlo</em> seis meses después, cuando
           la pasajera escribe enfadada preguntando por qué le cobraron casi el doble.</p>
 
         <p>Un sistema mediocre pegaría a la factura un número suelto: <code>multiplicador: 1.67</code>.
@@ -490,7 +490,7 @@ u.assert_fact(tarifa, "causado_por", estado_mercado)   # ← el porqué, como ca
           información. Borrar deja un hueco; sobrescribir miente sobre el pasado.</p>
 
         <p>La convención del modelo es la <strong>inmutabilidad</strong>: nunca se borra, nunca se
-          reescribe la historia. Una cancelación no es un cambio sobre el viaje viejo —es <em>un evento
+          reescribe la historia. Una cancelación no es un cambio sobre el viaje viejo: es <em>un evento
           nuevo</em> que lo apunta. Y ese principio es exactamente la <em>vigencia</em> (D6) en su
           forma más concreta: el estado del viaje no se modifica en su lugar, sino que se registra como
           un hecho fechado que abre un intervalo de validez.</p>
@@ -527,8 +527,8 @@ u.assert_fact(cancelacion, "cancela", viaje_7732)   # el cable hacia el original
 (viaje_7732, estado, cancelado,   inicio=22:43, fin=∞)        # el estado vigente ahora</code></pre>
         </div>
 
-        <p>Nacieron varios hechos nuevos —la situación de cancelación con su autor y su hora, el cable
-          <code>cancela</code> y la línea de estado fechada— y ninguno destruyó nada. El viaje sigue
+        <p>Nacieron varios hechos nuevos (la situación de cancelación con su autor y su hora, el cable
+          <code>cancela</code> y la línea de estado fechada) y ninguno destruyó nada. El viaje sigue
           entero en el grafo, solo que ahora su estado vigente es <code>cancelado</code>. Cuando la
           empresa calcule los viajes facturables del día, el código simplemente ignora los que tengan
           estado vigente <code>cancelado</code>. La base de datos se vuelve un registro histórico
@@ -542,8 +542,8 @@ u.assert_fact(cancelacion, "cancela", viaje_7732)   # el cable hacia el original
           grafo en lugar de cadenas de tablas.</p>
 
         <p><b>Consulta 1 · ¿Adónde llevó Iván a Camila?</b><br>
-          El motor busca un patrón —las situaciones de clase <code>trasladar</code> donde el agente
-          sea Iván y la pasajera sea Camila— y proyecta el destino. No hay tablas que unir: hay un
+          El motor busca un patrón (las situaciones de clase <code>trasladar</code> donde el agente
+          sea Iván y la pasajera sea Camila) y proyecta el destino. No hay tablas que unir: hay un
           patrón que se satisface.</p>
 
         <div class="bloque-codigo">
@@ -569,14 +569,14 @@ u.assert_fact(cancelacion, "cancela", viaje_7732)   # el cable hacia el original
 
         <p>Repara en algo que conviene no dejar pasar: este conteo es <em>estructuralmente idéntico</em>
           al que usamos en el spa para contar los circuitos pagados de Lucía. Cambian los nombres de
-          los roles y de las clases —<code>conductor_salas</code> en vez de <code>lucia</code>,
-          <code>viaje</code> en vez de <code>circuito_termal</code>— pero la maquinaria es la misma.
+          los roles y de las clases (<code>conductor_salas</code> en vez de <code>lucia</code>,
+          <code>viaje</code> en vez de <code>circuito_termal</code>) pero la maquinaria es la misma.
           La uniformidad del modelo permite reciclar la misma consulta entre un spa de barrio y una
           plataforma transnacional, dos negocios sin nada en común salvo su forma profunda.</p>
 
         <p><b>Consulta 3 · ¿Por qué la tarifa fue de 30?</b><br>
           Se siguen los hechos de la tarifa y se filtra el cable causal. La respuesta es el estado del
-          mercado que la provocó —no un número opaco, sino un hecho con lugar y hora.</p>
+          mercado que la provocó: no un número opaco, sino un hecho con lugar y hora.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -590,11 +590,11 @@ causa  = [f for f in hechos if f.role == "causado_por"]
         <p><b>Antes, en SQL.</b> El esquema clásico de un servicio de transporte reparte la realidad
           en tablas separadas que no se hablan solas: <code>viajes</code>, <code>conductores</code>,
           <code>pasajeros</code>, <code>tarifas</code>, <code>eventos_viaje</code>. Reconstruir la
-          cadena completa —qué ocurrió, en qué orden y por qué el precio subió— obliga a encadenar
+          cadena completa (qué ocurrió, en qué orden y por qué el precio subió) obliga a encadenar
           <code>JOIN</code> en cascada y luego ordenar en código por marca de tiempo. Y la pregunta
-          que de verdad duele —<em>«¿cuál fue la causa concreta de que esa tarifa subiera a 30 ese
-          minuto?»</em>— sencillamente no tiene respuesta: no existe una tabla de causas; el motivo
-          —lluvia, alta demanda— se perdió o agoniza en un campo de texto libre que nadie consulta con
+          que de verdad duele (<em>«¿cuál fue la causa concreta de que esa tarifa subiera a 30 ese
+          minuto?»</em>) sencillamente no tiene respuesta: no existe una tabla de causas; el motivo
+          (lluvia, alta demanda) se perdió o agoniza en un campo de texto libre que nadie consulta con
           coherencia.</p>
 
         <div class="bloque-codigo">
@@ -614,8 +614,8 @@ ORDER BY e.ts;                      -- el orden se calcula; no está en la estru
         </div>
 
         <p><b>Después, en WQuestions.</b> La misma realidad es un grafo único. <code>viaje_7732</code>
-          agrupa las seis situaciones reificadas —<code>solicitar</code>, <code>asignar</code>,
-          <code>aceptar</code>, <code>recoger</code>, <code>trasladar</code>, <code>completar</code>—
+          agrupa las seis situaciones reificadas (<code>solicitar</code>, <code>asignar</code>,
+          <code>aceptar</code>, <code>recoger</code>, <code>trasladar</code>, <code>completar</code>)
           con cables <code>parte_de</code> y <code>sigue_a</code>. La tarifa es un objeto en
           <code>O</code> unido al estado de alta demanda por <code>causado_por</code>. Reconstruir el
           viaje es seguir los cables desde <code>viaje_7732</code>; obtener la causa del precio es leer

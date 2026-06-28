@@ -60,7 +60,7 @@
           Un relator de radio describe la jugada para miles de personas que no pueden ver la
           cancha: <em>«Messi recibe de Di María en la frontal del área, recorta sobre la marca y</em>
           <strong>marca</strong><em> el gol con la zurda»</em>. En el instante en que pronuncia
-          ese verbo —<em>marca</em>— ocurre algo que damos por sentado y que, sin embargo, es casi
+          ese verbo (<em>marca</em>) ocurre algo que damos por sentado y que, sin embargo, es casi
           milagroso: cada oyente reconstruye en su cabeza el mismo evento. Sabe que <em>hubo</em> un
           remate, que <em>alguien</em> lo ejecutó, que <em>algo</em> entró en el arco, que pasó <em>en</em>
           un sitio y <em>en</em> un momento. El verbo no transmitió una imagen; transmitió un molde, y
@@ -69,7 +69,7 @@
         <aside class="nota-margen">
           <span class="etq">Hilo del libro</span>
           Este es el capítulo bisagra de la Parte IV. En el <a href="07-hecho-atomico.html">capítulo 7</a>
-          fijamos el átomo —la tripleta tipada (D3)—; en el <a href="09-situaciones.html">capítulo 9</a>,
+          fijamos el átomo (la tripleta tipada, D3); en el <a href="09-situaciones.html">capítulo 9</a>,
           cómo un evento se reifica como situación con roles. Aquí mostramos por qué el lenguaje ya venía
           organizado de esa misma forma.
         </aside>
@@ -78,8 +78,8 @@
           consecuencias enormes: <strong>cada verbo es una firma de función</strong>. No describe una
           acción suelta, sino un <em>tipo</em> de situación, y trae de fábrica una declaración de qué
           participantes admite y de qué eje debe venir cada uno. Si en los capítulos anteriores
-          construimos un modelo de datos sobre las preguntas, ahora descubriremos que el idioma —sin
-          que nadie se lo pidiera— ya estaba estructurado sobre esos mismos ejes. El verbo es la
+          construimos un modelo de datos sobre las preguntas, ahora descubriremos que el idioma (sin
+          que nadie se lo pidiera) ya estaba estructurado sobre esos mismos ejes. El verbo es la
           costura natural entre la lengua que hablamos y los datos que guardamos.</p>
 
         <h2>El argumento fantasma de Davidson</h2>
@@ -124,7 +124,7 @@
         <p>Una década más tarde, lingüistas como Terence Parsons llevaron la idea a su forma actual,
           la que hoy llamamos <strong>neodavidsoniana</strong>: incluso el sujeto y el objeto directo
           dejan de ser argumentos «del verbo» y pasan a engancharse al evento mediante roles
-          explícitos —<em>agente</em>, <em>tema</em>, <em>lugar</em>—. El verbo deja de ser un
+          explícitos (<em>agente</em>, <em>tema</em>, <em>lugar</em>). El verbo deja de ser un
           predicado con casillas fijas y se convierte en algo más limpio: un predicado de un solo
           argumento, el evento, alrededor del cual orbitan los participantes.</p>
 
@@ -144,7 +144,7 @@
           Nombra un <strong>molde</strong>: un tipo, una categoría de situación. Por eso los verbos no
           viven en el eje de las cosas que pasan
           (<span class="eje-rotulo"><span class="eje eje--o">O</span></span>), sino en el eje de los
-          conceptos (<span class="eje-rotulo"><span class="eje eje--k">K</span></span>) —tal como
+          conceptos (<span class="eje-rotulo"><span class="eje eje--k">K</span></span>), tal como
           fijamos en la primera decisión de diseño del libro: en K viven las plantillas atemporales;
           en O, las instancias situadas.</p>
 
@@ -172,7 +172,7 @@
 (gol_001, instancia_de, marcar)    ∈ M(O, K)   // su molde vive en K</code></pre>
         </div>
 
-        <p>Ese segundo hecho —el cable que une la instancia con su molde— es la primera tripleta de
+        <p>Ese segundo hecho (el cable que une la instancia con su molde) es la primera tripleta de
           toda situación, y conviene verla con la forma insignia del modelo:</p>
 
         <div class="triple">
@@ -182,7 +182,7 @@
         </div>
 
         <p>A quien programe, esto le sonará idéntico a la relación entre una clase y un objeto. El
-          verbo <em>marcar</em> es la función —o la clase— que vive en la biblioteca; cada vez que un
+          verbo <em>marcar</em> es la función (o la clase) que vive en la biblioteca; cada vez que un
           hablante la usa, el sistema la <em>invoca</em> y crea una ejecución concreta en memoria,
           anotando qué participantes recibió. El verbo permanece; las instancias se multiplican.</p>
 
@@ -219,7 +219,7 @@
         </div>
 
         <p>Cada verbo del idioma tiene la suya. Algunas son austeras y solitarias. El verbo
-          <em>llover</em>, por ejemplo, no exige agente —nadie «hace» la lluvia— y deja todo lo demás
+          <em>llover</em>, por ejemplo, no exige agente (nadie «hace» la lluvia) y deja todo lo demás
           en opcional:</p>
 
         <div class="bloque-codigo">
@@ -313,14 +313,14 @@ dirigir ( agente: Q, tema: O, lugar?: L, momento?: T, con_finalidad?: O )  → S
           </div>
           <figcaption><span class="fnum">Figura 13.1.</span> El verbo <code>marcar</code> como firma
             de función. La caja izquierda es el molde en <span class="eje eje--k">K</span>; al
-            invocarlo despliega sus ranuras tipadas. Cada ranura declara su eje de destino —el
+            invocarlo despliega sus ranuras tipadas. Cada ranura declara su eje de destino (el
             <em>agente</em> sólo admite valores de <span class="eje eje--q">Q</span>, el <em>lugar</em>
-            de <span class="eje eje--l">L</span>—. El borde discontinuo marca los roles opcionales.</figcaption>
+            de <span class="eje eje--l">L</span>). El borde discontinuo marca los roles opcionales.</figcaption>
         </figure>
 
         <h2>Tres superpoderes que regala el contrato</h2>
 
-        <p>Tratar el verbo como un contrato de tipos —y no como una palabra de diccionario— no es un
+        <p>Tratar el verbo como un contrato de tipos (y no como una palabra de diccionario) no es un
           adorno conceptual. Concede tres garantías que, en una base de datos tradicional, costarían
           cientos de líneas de validación escritas a mano.</p>
 
@@ -353,16 +353,16 @@ dirigir ( agente: Q, tema: O, lugar?: L, momento?: T, con_finalidad?: O )  → S
 
         <p>Estas tres propiedades son, en el fondo, la misma propiedad mirada desde tres ángulos: el
           tipo del argumento contiene la verdad sobre lo que es admisible. El verbo, al declarar sus
-          tipos, hace de aduana. Y como la aduana es declarativa —vive en la firma, no en el código de
-          la aplicación—, vale para cualquier dominio sin que nadie reescriba el motor.</p>
+          tipos, hace de aduana. Y como la aduana es declarativa (vive en la firma, no en el código de
+          la aplicación), vale para cualquier dominio sin que nadie reescriba el motor.</p>
 
         <h2>De dónde salen los roles: un catálogo cerrado</h2>
 
         <p>Habrás notado que las palabras <code>agente</code>, <code>tema</code>,
           <code>experimentador</code>, <code>lugar</code> no aparecen al azar: se repiten de verbo en
           verbo. No las inventamos en cada ejemplo. Provienen de un <strong>catálogo cerrado y
-          deliberadamente pequeño</strong> de roles —los <em>cables conectores</em> del eje
-          <span class="eje eje--m">M</span>—, heredado casi sin cambios de lo que la lingüística lleva
+          deliberadamente pequeño</strong> de roles (los <em>cables conectores</em> del eje
+          <span class="eje eje--m">M</span>), heredado casi sin cambios de lo que la lingüística lleva
           medio siglo refinando bajo el nombre de <em>roles temáticos</em>.</p>
 
         <div class="caja caja--precedente revelar">
@@ -371,11 +371,11 @@ dirigir ( agente: Q, tema: O, lugar?: L, momento?: T, con_finalidad?: O )  → S
             <strong>FrameNet</strong> (Charles Fillmore<a class="ref" href="referencias.html#ref-24">(24)</a>, Universidad de California en Berkeley) parte
             de una idea hermosa: comprender una palabra es invocar un <em>marco</em> (<em>frame</em>),
             una escena estereotipada con sus papeles. El marco <em>Commerce_buy</em> trae de fábrica
-            sus huecos —comprador, vendedor, mercancía, dinero— y verbos como <em>comprar</em>,
+            sus huecos (comprador, vendedor, mercancía, dinero) y verbos como <em>comprar</em>,
             <em>adquirir</em> o <em>pagar</em> son distintas maneras de iluminar la misma escena.</p>
           <p style="margin-bottom:0"><strong>VerbNet</strong> (Karin Kipper-Schuler) lo lleva al plano
             operativo: clasifica miles de verbos del inglés en clases que comparten roles temáticos y
-            restricciones de selección —exactamente lo que aquí llamamos <em>tipo del argumento</em>—.
+            restricciones de selección (exactamente lo que aquí llamamos <em>tipo del argumento</em>).
             Nuestro catálogo es un primo cercano y minimalista de estos dos: en lugar de miles de
             marcos, un núcleo de unas pocas decenas de roles que se reutilizan en todos los dominios.</p>
         </div>
@@ -406,14 +406,14 @@ dirigir ( agente: Q, tema: O, lugar?: L, momento?: T, con_finalidad?: O )  → S
           <p><strong>Modales y del «por qué».</strong> Roles como <code>estatus_factual</code> o
             <code>polaridad</code> distinguen lo real de lo planeado, lo afirmado de lo negado. Y como
             vimos en el <a href="10-por-que.html">capítulo 10</a>, el «por qué» se reparte en cuatro
-            cables —<code>causado_por</code>, <code>motivado_por</code>, <code>con_finalidad</code>,
-            <code>justificado_por</code> (D7)—, todos del tipo
+            cables (<code>causado_por</code>, <code>motivado_por</code>, <code>con_finalidad</code>,
+            <code>justificado_por</code>, D7), todos del tipo
             <span class="eje eje--o">O</span>→<span class="eje eje--o">O</span>.</p>
         </div>
 
         <aside class="nota-margen">
           <span class="etq">Adelanto</span>
-          ¿Y si un dominio necesita un rol que el catálogo no trae —un químico que pide
+          ¿Y si un dominio necesita un rol que el catálogo no trae: un químico que pide
           <code>reactivo</code>, un banco que pide <code>cuenta_origen</code>? El sistema lo admite sin
           pedir permiso. El catálogo es un núcleo estable, no una camisa de fuerza; el
           <a href="14-lexicon.html">capítulo 14</a> detalla esa política de extensión.
@@ -429,7 +429,7 @@ dirigir ( agente: Q, tema: O, lugar?: L, momento?: T, con_finalidad?: O )  → S
         <h2>El mapeo mecánico: una oración, paso a paso</h2>
 
         <p>Ya tenemos las piezas. Veamos ahora la maquinaria completa en marcha, desarmando una
-          oración fresca y cargada de detalle —del mundo del cine— con un procedimiento tan simple que
+          oración fresca y cargada de detalle (del mundo del cine) con un procedimiento tan simple que
           raya en lo tonto:</p>
 
         <p class="cita-destacada">Serra filmó la escena del faro al amanecer en la costa para cerrar
@@ -465,7 +465,7 @@ para cerrar el acto   → el objetivo      → con_finalidad  → eje O (¡otro 
         </div>
 
         <p>Cada línea de ese reparto se convierte, sin intervención humana, en un hecho atómico
-          —una tripleta tipada— colgado del evento central. La oración entera se vuelve una pila de
+          (una tripleta tipada) colgado del evento central. La oración entera se vuelve una pila de
           átomos sobre un mismo sujeto:</p>
 
         <div class="bloque-codigo">
@@ -574,7 +574,7 @@ para cerrar el acto   → el objetivo      → con_finalidad  → eje O (¡otro 
             faro…» convertida en situación. El verbo se reifica como <code>filmacion_042</code> en
             <span class="eje eje--o">O</span>; el sujeto se vuelve <em>agente</em> en
             <span class="eje eje--q">Q</span>; cada complemento cae en su rol y su eje. La cláusula de
-            finalidad genera un <strong>subevento</strong> —otra situación en O— enganchado por
+            finalidad genera un <strong>subevento</strong> (otra situación en O) enganchado por
             <code>con_finalidad</code>.</figcaption>
         </figure>
 
@@ -593,8 +593,8 @@ para cerrar el acto   → el objetivo      → con_finalidad  → eje O (¡otro 
 (pase_001, momento,      minuto_87)              ∈ M(O, T)</code></pre>
         </div>
 
-        <p>El verbo <em>pasar</em> no se parece en nada a <em>filmar</em> —pide un
-          <em>beneficiario</em> donde el otro pedía una <em>finalidad</em>—. Pero la tubería que los
+        <p>El verbo <em>pasar</em> no se parece en nada a <em>filmar</em> (pide un
+          <em>beneficiario</em> donde el otro pedía una <em>finalidad</em>). Pero la tubería que los
           procesó fue idéntica: detectar el molde, reificar, anclar, enchufar. Esa es la prueba de
           que el motor no necesita reescribirse para cada negocio. Lo que cambia entre la clínica, el
           banco y el restaurante son las <em>firmas</em>, no la maquinaria que las aplica.</p>
@@ -602,8 +602,8 @@ para cerrar el acto   → el objetivo      → con_finalidad  → eje O (¡otro 
         <h2>Las preguntas-WH son ranuras vacías</h2>
 
         <p>El cierre elegante de todo esto aparece cuando, en vez de <em>afirmar</em> un hecho,
-          <em>preguntamos</em>. Las palabras interrogativas que abren este libro —<em>quién, qué,
-          dónde, cuándo</em>— no son magia. Son, simplemente, una ranura de la firma a la que le
+          <em>preguntamos</em>. Las palabras interrogativas que abren este libro (<em>quién, qué,
+          dónde, cuándo</em>) no son magia. Son, simplemente, una ranura de la firma a la que le
           hemos borrado el valor y dejado una incógnita. Preguntar es invocar el verbo con un hueco.</p>
 
         <p>Tomemos el evento <code>filmacion_042</code> ya guardado. Cada pregunta humana se traduce a
@@ -639,7 +639,7 @@ para cerrar el acto   → el objetivo      → con_finalidad  → eje O (¡otro 
           La guionista afirmó que el estudio había recortado el final.</p>
 
         <p>El verbo principal es <em>afirmar</em>, y la «cosa afirmada» no es un objeto que se pueda
-          tocar: es <strong>otra situación completa</strong> —un recorte hecho por el estudio—. Para
+          tocar: es <strong>otra situación completa</strong> (un recorte hecho por el estudio). Para
           nuestro modelo esto no representa ninguna dificultad nueva, porque todas las situaciones son
           individuos del mismo eje <span class="eje eje--o">O</span>. El <em>tema</em> de
           <em>afirmar</em> apunta, sin más, a otro evento:</p>
@@ -659,8 +659,8 @@ para cerrar el acto   → el objetivo      → con_finalidad  → eje O (¡otro 
         <p>El último cable es oro puro. <code>estatus_factual: reportado</code> le dice a la base de
           datos que el sistema <em>no tiene evidencia</em> de que el estudio recortara el final;
           guarda el hecho de que <em>alguien lo afirmó</em>, sin comprometerse con su verdad. Gracias a
-          esa marca, podemos representar oraciones cada vez más profundas —«la productora negó que la
-          guionista afirmara que el estudio recortó el final»— apilando situaciones como muñecas
+          esa marca, podemos representar oraciones cada vez más profundas («la productora negó que la
+          guionista afirmara que el estudio recortó el final») apilando situaciones como muñecas
           rusas, sin programar una sola regla nueva. La recursión sale gratis, porque el eje
           <span class="eje eje--o">O</span> no distingue entre un evento simple y un evento que contiene
           otros.</p>
@@ -670,7 +670,7 @@ para cerrar el acto   → el objetivo      → con_finalidad  → eje O (¡otro 
           <p style="margin:0">Como todo verbo se reifica en un individuo de
             <span class="eje eje--o">O</span>, y el rol <code>tema</code> puede apuntar a cualquier
             individuo de <span class="eje eje--o">O</span>, las situaciones se contienen unas a otras
-            sin límite. La composición del lenguaje —oraciones dentro de oraciones— se hereda sin coste:
+            sin límite. La composición del lenguaje (oraciones dentro de oraciones) se hereda sin coste:
             es la misma estructura recursiva, ahora en los datos.</p>
         </div>
 
@@ -679,14 +679,14 @@ para cerrar el acto   → el objetivo      → con_finalidad  → eje O (¡otro 
         <p>Cerremos fijando la idea en piedra. Cuando guardamos un verbo en nuestra arquitectura no
           estamos archivando una palabra de diccionario: estamos depositando un <strong>contrato de
           tipos</strong>. El verbo declara qué participantes son obligatorios, cuáles opcionales y de
-          qué caja —<span class="eje eje--q">Q</span>, <span class="eje eje--o">O</span>,
-          <span class="eje eje--l">L</span>, <span class="eje eje--t">T</span>…— debe venir cada dato.
+          qué caja (<span class="eje eje--q">Q</span>, <span class="eje eje--o">O</span>,
+          <span class="eje eje--l">L</span>, <span class="eje eje--t">T</span>…) debe venir cada dato.
           Si entra basura, la frena en la puerta; si entran datos limpios, ejecuta su ensamblaje en
           cinco pasos y los archiva sin pérdida.</p>
 
         <p>Y aquí asoma la conexión más profunda del libro. Sesenta años de filosofía del lenguaje
-          —Davidson, Parsons— descubrieron que el cerebro reifica eventos. Décadas de lingüística
-          computacional —FrameNet, VerbNet— catalogaron que cada verbo trae sus papeles tipados.
+          (Davidson, Parsons) descubrieron que el cerebro reifica eventos. Décadas de lingüística
+          computacional (FrameNet, VerbNet) catalogaron que cada verbo trae sus papeles tipados.
           Nosotros, desde la ingeniería de datos, llegamos a la única forma de base de datos universal
           que no colapsa: reificar, tipar, apilar. Que tres caminos independientes desemboquen en la
           misma estructura no es coincidencia. Es la señal de que la forma de la lengua y la forma de

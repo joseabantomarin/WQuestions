@@ -76,9 +76,9 @@
           parser ingenuo cree que cada oración esconde <em>un</em> verbo de acción rodeado de
           participantes, y que su tarea es encontrarlo y colgar a cada quien en su clavija. Esa
           heurística funciona con <em>«la directora rodó la escena»</em> y se desmorona con casi todo
-          lo demás. La primera frase esconde sus acciones bajo dos sustantivos —<em>estreno</em>,
-          <em>cambio</em>—; la segunda apila dos verbos de intención —<em>debía</em>,
-          <em>podía</em>— sobre los hechos reales; la tercera dice <em>tomar el pelo</em> y no habla
+          lo demás. La primera frase esconde sus acciones bajo dos sustantivos (<em>estreno</em>,
+          <em>cambio</em>); la segunda apila dos verbos de intención (<em>debía</em>,
+          <em>podía</em>) sobre los hechos reales; la tercera dice <em>tomar el pelo</em> y no habla
           de cabello en absoluto. Tres trampas distintas, un mismo origen: el lenguaje no marca en la
           superficie lo que el modelo necesita por debajo.</p>
 
@@ -87,9 +87,9 @@
           hecho.<cite>La tesis del capítulo</cite></p>
 
         <p>Adelanto la conclusión para que leas con red: ninguna de las tres trampas obliga a ampliar
-          la geometría de siete ejes. Las tres se resuelven en la capa de traducción —el lexicon de la
+          la geometría de siete ejes. Las tres se resuelven en la capa de traducción (el lexicon de la
           <a href="14-lexicon.html">decisión&nbsp;D9</a>, donde el usuario nunca toca una etiqueta
-          canónica— y todas terminan en la misma forma de siempre: tripletas tipadas
+          canónica) y todas terminan en la misma forma de siempre: tripletas tipadas
           <code>(sujeto, cable, objeto)</code>, el átomo de la <a href="07-hecho-atomico.html">decisión&nbsp;D3</a>.
           El límite real del modelo, lo veremos al cerrar, está en otra parte.</p>
 
@@ -134,7 +134,7 @@
 (cambio_071,   motivado_por,    estreno_204)         ∈ M(O, O)   ← el conector del eje M</code></pre>
         </div>
 
-        <p>Mira lo que acaba de ocurrir. Dos sustantivos —<em>estreno</em> y <em>cambio</em>— se
+        <p>Mira lo que acaba de ocurrir. Dos sustantivos (<em>estreno</em> y <em>cambio</em>) se
           convirtieron en dos situaciones de pleno derecho en el eje O. Y el verbo de la superficie,
           <em>obligó a</em>, que un parser ingenuo habría elevado a evento propio, nosotros lo
           degradamos a lo que de verdad es: el cable <code>motivado_por</code> del capítulo&nbsp;10, el
@@ -227,11 +227,11 @@
 
         <h2>Segunda presión: los modales</h2>
 
-        <p>Los verbos modales —<em>querer, deber, poder, soler, parecer</em>— son una emboscada para
+        <p>Los verbos modales (<em>querer, deber, poder, soler, parecer</em>) son una emboscada para
           cualquier base de datos. Tienen aspecto de verbo principal, conjugan como tal, pero en
           realidad son <strong>modificadores</strong> de un segundo verbo. Cuando un estudio dice
-          <em>«queremos estrenar en marzo»</em>, no ocurren dos cosas en el mundo —un <em>querer</em>
-          por un lado y un <em>estrenar</em> por otro—. Ocurre <em>una</em> sola situación posible,
+          <em>«queremos estrenar en marzo»</em>, no ocurren dos cosas en el mundo (un <em>querer</em>
+          por un lado y un <em>estrenar</em> por otro). Ocurre <em>una</em> sola situación posible,
           <em>estrenar</em>, envuelta en una etiqueta de intención que avisa: esto todavía no pasó.</p>
 
         <div class="caja caja--alerta revelar">
@@ -245,7 +245,7 @@
 
         <p>La salida es tratar a los modales como lo que son: <strong>decoradores</strong>. No crean
           una situación; envuelven una situación existente con propiedades que ajustan su modo y su
-          factualidad. El núcleo —<em>estrenar</em>, <em>pagar</em>— sigue siendo un solo evento en O;
+          factualidad. El núcleo (<em>estrenar</em>, <em>pagar</em>) sigue siendo un solo evento en O;
           el modal aporta dos cables de matiz: la <code>modalidad</code> (¿es un deseo, una
           obligación, una capacidad?) y el <code>estatus_factual</code> (¿ocurrió, se intenta, es
           imposible?). Desarmemos la segunda oración:</p>
@@ -271,9 +271,9 @@
         </div>
 
         <p>Generamos <strong>dos</strong> situaciones, no cuatro: <code>estrenar_309</code> y
-          <code>pagar_309</code>. El <em>debía</em> se guardó como <code>modalidad: deontica</code> —el
-          modo de la obligación—; el <em>no podía</em>, como <code>modalidad: aletica</code> —el modo
-          de lo posible— teñido de <code>polaridad: negativa</code>. Y el adversativo <em>pero</em>, que
+          <code>pagar_309</code>. El <em>debía</em> se guardó como <code>modalidad: deontica</code> (el
+          modo de la obligación); el <em>no podía</em>, como <code>modalidad: aletica</code> (el modo
+          de lo posible) teñido de <code>polaridad: negativa</code>. Y el adversativo <em>pero</em>, que
           un parser tomaría por ruido, se volvió un cable honesto, <code>contrasta_con</code>, que ata
           las dos situaciones. Ahorramos nodos, evitamos los fantasmas y, sobre todo, sostuvimos la
           regla de oro: <strong>una situación en el mundo equivale a una situación en el sistema</strong>.</p>
@@ -336,7 +336,7 @@
 
         <p>Llegamos a la trampa más espinosa, y a la tercera oración. <em>Tomar el pelo</em> no habla
           de cabello; <em>dar luz verde</em> no enciende ningún semáforo; <em>echar leña al fuego</em>
-          rara vez involucra leña. Estas frases hechas —los <strong>modismos</strong>— no se pueden
+          rara vez involucra leña. Estas frases hechas (los <strong>modismos</strong>) no se pueden
           desarmar palabra por palabra sin convertir la frase en un disparate. Y junto a ellas vive un
           fenómeno más sutil, las <strong>colocaciones</strong>: combinaciones que el idioma fija por
           costumbre. Se dice <em>«rodar una película»</em>, no «conducir una película»; se
@@ -397,7 +397,7 @@
           <p style="margin:0">La idea de que ciertas combinaciones de palabras forman una <em>unidad
             de significado</em> indivisible no es nuestra: es el corazón de la <em>Construction
             Grammar</em> (Fillmore<a class="ref" href="referencias.html#ref-24">(24)</a>, Goldberg) y de los marcos de <em>FrameNet</em><a class="ref" href="referencias.html#ref-14">(14)</a>, donde un patrón
-            como <em>tomar el pelo</em> evoca un marco completo —el del engaño jocoso— con sus roles ya
+            como <em>tomar el pelo</em> evoca un marco completo (el del engaño jocoso) con sus roles ya
             definidos. WQuestions no reinventa esa lingüística; le da un destino estructurado: la
             tripleta tipada.</p>
         </div>
@@ -405,16 +405,16 @@
         <p>El reto, sin embargo, no es técnico sino de escala. El español tiene miles de modismos y
           decenas de miles de colocaciones; poblar un lexicon a mano con todas sería una obra de años.
           Aquí entra la buena noticia de la era moderna: <strong>los modelos de lenguaje ya conocen
-          estas frases</strong>. El LLM hace el trabajo pesado —reconoce que <em>tomar el pelo</em> es
-          una broma, capta la ironía, resuelve el contexto— y el grafo le ofrece el molde exacto donde
+          estas frases</strong>. El LLM hace el trabajo pesado (reconoce que <em>tomar el pelo</em> es
+          una broma, capta la ironía, resuelve el contexto) y el grafo le ofrece el molde exacto donde
           verter ese significado. La división de tareas es nítida, y merece su propia sección.</p>
 
         <h2>El límite real no está donde parece</h2>
 
         <p>El modelo no pretende cubrir el cien por ciento de la lingüística humana, y conviene ser
           preciso sobre dónde está hoy su frontera. No la digiere entera, y un buen ingeniero conoce
-          los bordes de su herramienta. Importa ver bien <em>dónde</em> está el borde: no en los tres casos que acabamos de absorber —esos
-          quedaron resueltos— sino en un terreno más difícil, donde el problema deja de ser de
+          los bordes de su herramienta. Importa ver bien <em>dónde</em> está el borde: no en los tres casos que acabamos de absorber (esos
+          quedaron resueltos) sino en un terreno más difícil, donde el problema deja de ser de
           traducción y pasa a ser de <strong>inferencia</strong>. El modelo guarda lo que se dijo; lo
           que <em>no se dijo</em> pero se sigue lógicamente es harina de otro costal.</p>
 
@@ -462,7 +462,7 @@
           <div class="tarjeta">
             <h4 style="color:var(--eje-n)">El costo</h4>
             <p style="margin:0;font-size:.95rem">Hacer que la IA relea texto crudo en cada consulta
-              quema <em>tokens</em> —cómputo, dinero— una y otra vez por información que pudo guardarse
+              quema <em>tokens</em> (cómputo, dinero) una y otra vez por información que pudo guardarse
               ya destilada. Una historia de cinco páginas en prosa se reduce a unas pocas líneas de
               átomos estructurados.</p>
           </div>
@@ -491,8 +491,8 @@
         <p>Pon a la IA de recepcionista que conversa con el usuario, y al grafo de archivo de acero que
           guarda detrás, y obtienes lo mejor de ambos: la elocuencia de uno sobre la disciplina del
           otro. La IA traduce el habla en átomos al entrar y los átomos en habla al salir; el grafo
-          custodia la verdad entre una cosa y la otra. Las tres presiones de este capítulo —la
-          nominalización, los modales, los modismos— se absorben justo en esa frontera, en el lexicon,
+          custodia la verdad entre una cosa y la otra. Las tres presiones de este capítulo (la
+          nominalización, los modales, los modismos) se absorben justo en esa frontera, en el lexicon,
           sin tocar la geometría de siete ejes que sostiene todo.</p>
 
         <p>Y con esto cerramos la teoría. Hemos visto las siete coordenadas, el átomo que las une, el

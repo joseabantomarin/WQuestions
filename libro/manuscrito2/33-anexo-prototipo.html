@@ -49,8 +49,8 @@
         <p class="parte">Anexos</p>
         <div class="num-cap">33</div>
         <h1>Anexo: el prototipo</h1>
-        <p class="lede">Todo lo que el libro afirma —las siete coordenadas, los hechos con
-          signatura, las situaciones reificadas, la bitemporalidad, el motor de consulta— cabe en
+        <p class="lede">Todo lo que el libro afirma (las siete coordenadas, los hechos con
+          signatura, las situaciones reificadas, la bitemporalidad, el motor de consulta) cabe en
           nueve archivos cortos de Python que corren sin una sola dependencia externa.</p>
       </header>
 
@@ -71,7 +71,7 @@
         </aside>
 
         <p>Conviene fijar el alcance desde la primera línea, sin letra pequeña. Lo que sigue es
-          <strong>solo la librería núcleo</strong> —el paquete <code>wq/</code>—. Los ejemplos por
+          <strong>solo la librería núcleo</strong> (el paquete <code>wq/</code>). Los ejemplos por
           dominio que ejercita la Parte&nbsp;V (el spa, el taxi, la clínica, el banco), la batería de
           tests del modelo y los scripts de utilidad <em>no aparecen aquí</em>, pero existen, corren y
           están publicados. El proyecto completo vive en el repositorio del libro, y al final de este
@@ -83,15 +83,15 @@
             arquitectura <em>coherente</em> y <em>operable</em>. Ochocientas cincuenta líneas bastan
             para sostener las siete coordenadas, validar hechos contra sus signaturas, reificar
             situaciones, resolver polisemia y responder preguntas-WH con vigencia temporal. La
-            validación industrial es otro trabajo —el del <a href="30-que-falta.html">capítulo
-            30</a>—; lo que estas líneas prueban es que la idea cierra.</p>
+            validación industrial es otro trabajo (el del <a href="30-que-falta.html">capítulo
+            30</a>); lo que estas líneas prueban es que la idea cierra.</p>
         </div>
 
         <h2>La arquitectura en una sola mirada</h2>
 
         <p>El prototipo se organiza en nueve módulos que se apilan como capas. En la base están los
           siete ejes; sobre ellos, la noción de individuo; sobre los individuos, el hecho atómico; a
-          un lado, las dos estructuras transversales —el catálogo de roles y el lexicon—; por encima
+          un lado, las dos estructuras transversales (el catálogo de roles y el lexicon); por encima
           de todo, el universo que lo contiene todo y, en la cima, la superficie pública que reexporta
           lo que el usuario va a tocar. Cada decisión de diseño del libro aterriza en un módulo
           concreto: el paralelismo es deliberado y casi uno a uno.</p>
@@ -177,7 +177,7 @@
             anexo siguen ese mismo orden.</figcaption>
         </figure>
 
-        <p>El recorrido de lectura es de abajo hacia arriba. Empezamos por la base —los ejes—, subimos
+        <p>El recorrido de lectura es de abajo hacia arriba. Empezamos por la base (los ejes), subimos
           a los individuos que los pueblan, llegamos al hecho atómico, abrimos en abanico las dos
           piezas transversales, las reunimos en el universo y rematamos con la fachada que expone todo
           al usuario. Cada sección abre con una nota breve sobre qué resuelve el módulo y termina con
@@ -196,7 +196,7 @@
         <h2><span class="eje eje--m">§A1</span>&nbsp; <code>axes.py</code> — los siete ejes</h2>
 
         <p>Es la pieza fundacional y la más corta. Declara, como un <code>Enum</code>, los seis ejes de
-          valor —los que albergan individuos— y el único eje estructural de predicados. A partir de
+          valor (los que albergan individuos) y el único eje estructural de predicados. A partir de
           aquí, todo el modelo se referencia contra estos siete identificadores: no hay cadenas
           mágicas dispersas por el código, hay un vocabulario cerrado y verificable.</p>
 
@@ -261,7 +261,7 @@ def is_value_axis(axis: Axis) -> bool:
         <p>Ochenta y un líneas. Define qué es un <em>individuo</em>: la entidad concreta que habita en
           alguno de los seis ejes de valor. Un agente, una situación, un lugar, un instante, una
           magnitud o una categoría son todos individuos; lo que cambia es el eje en el que viven. La
-          clase es inmutable —un <code>dataclass</code> congelado— porque en este modelo un individuo,
+          clase es inmutable (un <code>dataclass</code> congelado) porque en este modelo un individuo,
           una vez acuñado, no cambia de identidad ni de eje.</p>
 
         <p>El archivo aporta además tres fábricas de individuos «primitivos», esos que en realidad son
@@ -270,7 +270,7 @@ def is_value_axis(axis: Axis) -> bool:
           class="eje eje--n">N</span> anclando su unidad en <span class="eje eje--k">K</span>, y
           <code>category</code> crea una categoría en <span class="eje eje--k">K</span>. El detalle de
           que <code>quantity</code> exija que la unidad viva en K no es decorativo: es la regla del
-          <a href="04-cuanto.html">eje cuantitativo</a> hecha código —un número sin unidad anclada
+          <a href="04-cuanto.html">eje cuantitativo</a> hecha código: un número sin unidad anclada
           simplemente no se puede construir.</p>
 
         <div class="caja caja--definicion revelar">
@@ -378,8 +378,8 @@ def category(label: str) -> Individual:
         <h2><span class="eje eje--t">§A3</span>&nbsp; <code>fact.py</code> — el hecho atómico con bitemporalidad</h2>
 
         <p>Sesenta y una líneas para la unidad mínima del modelo. Un hecho es una tupla inmutable
-          <code>(sujeto, rol, valor)</code> donde sujeto y valor son individuos —viven en algún eje de
-          valor— y el rol es una etiqueta del catálogo. Esto es <strong>D3</strong> en estado puro:
+          <code>(sujeto, rol, valor)</code> donde sujeto y valor son individuos (viven en algún eje de
+          valor) y el rol es una etiqueta del catálogo. Esto es <strong>D3</strong> en estado puro:
           todo, absolutamente todo lo que el modelo sabe, se descompone en estas tripletas tipadas. Lo
           complejo no se modela con estructuras más ricas: se apila como más tripletas.</p>
 
@@ -392,8 +392,8 @@ def category(label: str) -> Individual:
         </div>
 
         <p>Sobre esa base mínima, el archivo añade la dimensión temporal que pide <strong>D6</strong>.
-          Cada hecho lleva un rango de vigencia opcional <code>[valid_from, valid_to)</code> —desde
-          cuándo y hasta cuándo es cierto <em>en el mundo</em>— y un <code>tx_time</code> automático
+          Cada hecho lleva un rango de vigencia opcional <code>[valid_from, valid_to)</code> (desde
+          cuándo y hasta cuándo es cierto <em>en el mundo</em>) y un <code>tx_time</code> automático
           que registra cuándo entró <em>al sistema</em>. Son dos líneas de tiempo distintas: el tiempo
           de los hechos y el tiempo de los registros. Esa separación es lo que da bitemporalidad, y
           basta para modelar mudanzas, rediagnósticos o cláusulas contractuales que expiran.</p>
@@ -483,8 +483,8 @@ class Fact:
 
         <p>Ciento setenta y nueve líneas: es el módulo más largo de la librería núcleo y donde se
           materializa <strong>D8</strong>. El catálogo declara los treinta y ocho roles canónicos del
-          modelo, cada uno con su signatura tipada —un <em>dominio</em> y un <em>rango</em>, ambos
-          ejes de valor— y su cardinalidad. Esa signatura es lo que convierte una tripleta de texto
+          modelo, cada uno con su signatura tipada (un <em>dominio</em> y un <em>rango</em>, ambos
+          ejes de valor) y su cardinalidad. Esa signatura es lo que convierte una tripleta de texto
           libre en un hecho verificable: al insertar <code>(sujeto, rol, valor)</code>, el catálogo
           comprueba que el eje del sujeto coincida con el dominio del rol y el eje del valor con su
           rango.</p>
@@ -507,7 +507,7 @@ class Fact:
           catálogo central; si más tarde quiere validación, lo registra. La elección está comentada en
           el propio código, a la vista.</p>
 
-        <p>La cardinalidad —el campo <code>functional</code>— merece una nota. Un rol funcional admite
+        <p>La cardinalidad (el campo <code>functional</code>) merece una nota. Un rol funcional admite
           un solo valor por sujeto: una situación tiene un <code>agente</code>, un <code>lugar_de</code>,
           un <code>inicio</code>. Un rol no funcional admite varios: una situación puede estar
           <code>causado_por</code> varias otras, o <code>contiene</code> muchas partes. Esto es
@@ -710,7 +710,7 @@ class Catalog:
         <h2><span class="eje eje--q">§A5</span>&nbsp; <code>lexicon.py</code> — el lexicon con resolución de polisemia</h2>
 
         <p>Ciento dieciséis líneas. Aquí vive la capa que traduce entre el lenguaje del usuario y los
-          roles canónicos —la materialización de <strong>D9</strong>—. Cada entrada del lexicon es un
+          roles canónicos (la materialización de <strong>D9</strong>). Cada entrada del lexicon es un
           <code>LexiconEntry</code>: declara un verbo, el tipo de situación que produce, sus roles
           obligatorios y opcionales, los aliases naturales por rol y por dominio, sus formas nominales
           y, sobre todo, un <code>pattern</code> de complementos que es el motor de la desambiguación.</p>
@@ -724,15 +724,15 @@ class Catalog:
         </div>
 
         <p>La pieza ingeniosa es la resolución de polisemia. Un mismo verbo puede tener varias entradas
-          —<code>dar la mano</code> no es <code>dar una conferencia</code>—, y el lexicon elige la
+          (<code>dar la mano</code> no es <code>dar una conferencia</code>), y el lexicon elige la
           <strong>más específica que coincide</strong>. La especificidad se mide por la longitud del
           patrón de complementos: una entrada con patrón <code>('la_mano',)</code> es más específica que
           una entrada genérica sin patrón. Las entradas se mantienen ordenadas de más específica a más
           general, de modo que <code>resolve</code> devuelve la primera que encaja con los complementos
           observados en la oración.</p>
 
-        <p>El módulo también resuelve nominalizaciones —«la llegada del avión» remite al verbo
-          <code>llegar</code>— mediante un índice de formas nominales, y guarda los dialectos de
+        <p>El módulo también resuelve nominalizaciones («la llegada del avión» remite al verbo
+          <code>llegar</code>) mediante un índice de formas nominales, y guarda los dialectos de
           dominio en una tabla aparte. Tres mecanismos distintos, una sola idea: que la riqueza y la
           ambigüedad del lenguaje natural se resuelvan <em>antes</em> de tocar el grafo, no dentro de
           él.</p>
@@ -860,7 +860,7 @@ class Lexicon:
         <h2><span class="eje eje--n">§A6</span>&nbsp; <code>universe.py</code> — el universo V</h2>
 
         <p>Ciento treinta líneas. El universo es el container que aloja todos los individuos y todos los
-          hechos. Por dentro mantiene tres índices —por sujeto, por valor y por rol— para que las
+          hechos. Por dentro mantiene tres índices (por sujeto, por valor y por rol) para que las
           consultas no degeneren en un barrido lineal sobre toda la colección. Es aquí donde se conecta
           el catálogo: cada <code>assert_fact</code> delega la validación de signatura al catálogo si se
           le inyectó uno. Sin catálogo, el universo acepta cualquier hecho bien formado; con catálogo,
@@ -886,7 +886,7 @@ class Lexicon:
         <aside class="nota-margen">
           <span class="etq">En memoria</span>
           El universo no persiste a disco: es una estructura en memoria, suficiente para tests y demos.
-          La persistencia —y los motores que la harían escalar— se discute en el <a
+          La persistencia (y los motores que la harían escalar) se discute en el <a
           href="30-que-falta.html">capítulo 30</a>.
         </aside>
 
@@ -1028,7 +1028,7 @@ class Universe:
 
         <p>Noventa y seis líneas. Esta es la función que más se usa en los ejemplos de la Parte&nbsp;V:
           <code>ingest_situation</code>. Toma un verbo y un diccionario de roles ya identificados, y
-          aplica un pipeline de seis pasos que produce una situación reificada —<strong>D4</strong>—
+          aplica un pipeline de seis pasos que produce una situación reificada (<strong>D4</strong>)
           con todos sus hechos atómicos colgando de ella. El parser lingüístico se asume externo: lo
           hace un LLM, o un parser dedicado. La ingesta no entiende español; <em>modela</em> lo que
           alguien ya entendió.</p>
@@ -1036,8 +1036,8 @@ class Universe:
         <div class="caja caja--practica revelar">
           <p class="caja-tit"><span class="codigo-d">D4</span> Reificar la situación</p>
           <p style="margin:0">El paso clave del pipeline es acuñar un individuo nuevo en <span
-            class="eje eje--o">O</span> que <em>representa la situación entera</em> —la venta, la
-            consulta, el préstamo— y colgar de él cada rol como un hecho atómico. Un evento deja de ser
+            class="eje eje--o">O</span> que <em>representa la situación entera</em> (la venta, la
+            consulta, el préstamo) y colgar de él cada rol como un hecho atómico. Un evento deja de ser
             una fila con columnas y pasa a ser un nodo con cables. Eso es reificación, y es lo que
             permite que una situación tenga, a su vez, modalidad, causa o vigencia propias.</p>
         </div>
@@ -1045,14 +1045,14 @@ class Universe:
         <p>El pipeline se lee casi como su docstring: resuelve el lexicon (con polisemia o forma
           nominal), reifica la situación en <span class="eje eje--o">O</span>, asienta su
           <code>instancia_de</code> apuntando al tipo, recorre los roles y asienta cada uno como un
-          hecho, agrega los extras —modalidad, estatus factual, calificación— y, antes de devolver,
+          hecho, agrega los extras (modalidad, estatus factual, calificación) y, antes de devolver,
           verifica que no falte ningún rol obligatorio declarado por la entrada del lexicon. El valor
           de retorno es la situación reificada, para que quien llama pueda seguir enriqueciéndola.</p>
 
         <p>Nótese la coherencia con la política liberal del catálogo: la ingesta <em>no exige</em> que
           cada rol pasado esté declarado en la entrada del lexicon. La entrada es informativa, no una
           camisa de fuerza; los roles extra se admiten. Lo único que se verifica con dureza es la
-          presencia de los obligatorios —sin agente no hay venta— y, vía <code>assert_fact</code>, la
+          presencia de los obligatorios (sin agente no hay venta) y, vía <code>assert_fact</code>, la
           signatura de cada hecho contra el catálogo.</p>
 
         <aside class="nota-margen">
@@ -1166,8 +1166,8 @@ def ingest_situation(
 
         <p>Ciento veinticuatro líneas. Aquí las preguntas-WH se vuelven operaciones concretas. Una
           consulta es un <code>Pattern</code>: un diccionario de roles <code>fixed</code> con valores
-          conocidos —lo que ya sabemos— y uno o más roles en <code>ask</code> marcados con un
-          <code>Var</code> —lo que queremos descubrir—. «¿Quién vendió el circuito de hidroterapia?» se
+          conocidos (lo que ya sabemos) y uno o más roles en <code>ask</code> marcados con un
+          <code>Var</code> (lo que queremos descubrir). «¿Quién vendió el circuito de hidroterapia?» se
           escribe fijando el rol <code>tema</code> en el circuito y pidiendo el rol <code>agente</code>.
           El motor busca todas las situaciones que satisfacen los roles fijos y proyecta el valor del
           rol preguntado.</p>
@@ -1192,8 +1192,8 @@ def ingest_situation(
 
         <p>Toda consulta admite el parámetro <code>at</code>: el momento en que se quiere evaluar la
           vigencia. Es lo que permite preguntar «¿quién era el dueño en aquella fecha?» y obtener la
-          respuesta correcta para <em>ese</em> instante, no para el presente —la consulta bitemporal de
-          <strong>D6</strong>—. Y <code>count</code> es simplemente <code>query</code> que devuelve la
+          respuesta correcta para <em>ese</em> instante, no para el presente (la consulta bitemporal de
+          <strong>D6</strong>). Y <code>count</code> es simplemente <code>query</code> que devuelve la
           cardinalidad en vez de los bindings: el caso de «¿cuántos?».</p>
 
         <aside class="nota-margen">
@@ -1416,27 +1416,27 @@ __all__ = [
           </div>
           <div class="tarjeta">
             <h4><span class="eje eje--n">5</span>&nbsp; No hay parser de lenguaje</h4>
-            <p style="margin:0;font-size:.95rem">El prototipo asume el parser externo —un LLM o un
-              módulo dedicado— que se enchufa por <code>ingest_situation</code>. Separar «entender» de
+            <p style="margin:0;font-size:.95rem">El prototipo asume el parser externo (un LLM o un
+              módulo dedicado) que se enchufa por <code>ingest_situation</code>. Separar «entender» de
               «modelar» es lo que lo hace reutilizable en cualquier idioma.</p>
           </div>
           <div class="tarjeta">
             <h4><span class="eje eje--k">6</span>&nbsp; El motor es ingenuo</h4>
             <p style="margin:0;font-size:.95rem">Un barrido con tres índices simples. Valida el modelo
-              en dominios reales; no escala a producción. Los reemplazos serios —Datalog, SHACL, RDF,
-              columnar— están en el capítulo 30.</p>
+              en dominios reales; no escala a producción. Los reemplazos serios (Datalog, SHACL, RDF,
+              columnar) están en el capítulo 30.</p>
           </div>
         </div>
 
         <p>Juntas, estas seis observaciones son la justificación del enfoque: <strong>no construir
           infraestructura, sino prueba de concepto</strong>. Lo que estas ochocientas cincuenta líneas
-          demuestran es que el modelo es coherente y operable. La validación industrial es otro trabajo
-          —el del capítulo 30 y de quien lo continúe.</p>
+          demuestran es que el modelo es coherente y operable. La validación industrial es otro trabajo:
+          el del capítulo 30 y de quien lo continúe.</p>
 
         <h2>Lo que queda en el repositorio</h2>
 
         <p>Para que este anexo siga siendo legible, incluí solo la librería núcleo. El resto del
-          prototipo —alrededor de <strong>2.400 líneas adicionales</strong>— está publicado completo en
+          prototipo (alrededor de <strong>2.400 líneas adicionales</strong>) está publicado completo en
           el repositorio del proyecto. Este es el mapa de lo que encontrarás allí.</p>
 
         <div class="bloque-codigo">
@@ -1467,8 +1467,8 @@ __all__ = [
 
         <p>Cada archivo de <code>ejemplos/</code> es un script ejecutable que modela un dominio
           completo: declara los individuos, registra el lexicon, ingresa todas las situaciones, corre
-          las consultas que el libro discute y valida los resultados. Ejecutar uno cualquiera —por
-          ejemplo <code>python -m prototipo.ejemplos.banco</code>— reproduce las escenas de la
+          las consultas que el libro discute y valida los resultados. Ejecutar uno cualquiera (por
+          ejemplo <code>python -m prototipo.ejemplos.banco</code>) reproduce las escenas de la
           Parte&nbsp;V tal como aparecen en el texto.</p>
 
         <p>El archivo <code>test_wq.py</code> ejercita las invariantes del modelo: que el catálogo

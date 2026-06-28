@@ -68,7 +68,7 @@
           «el mostrador» sea la persona, ni que «las cuatro y media» sea el objeto que cambió de manos.
           Esa operación de descomponer un hecho y colocar cada fragmento en su lugar correcto es,
           literalmente, la materia prima de todo este libro. Las cuatro preguntas que tu cerebro
-          acaba de responder a ciegas —<em>quién</em>, <em>qué</em>, <em>dónde</em>, <em>cuándo</em>—
+          acaba de responder a ciegas (<em>quién</em>, <em>qué</em>, <em>dónde</em>, <em>cuándo</em>)
           son los <strong>cuatro pilares</strong>: las dimensiones que comparecen en cualquier
           descripción de algo que sucede, sin importar el idioma ni el grado de tecnicismo. Si falta
           uno, la historia se siente incompleta. Si están los cuatro, tienes al menos el armazón de
@@ -83,8 +83,8 @@
         </aside>
 
         <p>En este capítulo recorreremos los cuatro pilares uno a uno. Todavía no como ejes
-          matemáticos formales —eso vendrá cuando construyamos la arquitectura en la
-          <a href="07-hecho-atomico.html">Parte III</a>—, sino como <strong>preguntas con
+          matemáticos formales (eso vendrá cuando construyamos la arquitectura en la
+          <a href="07-hecho-atomico.html">Parte III</a>), sino como <strong>preguntas con
           personalidad propia</strong>. Cada una esconde rarezas, decisiones de diseño y
           convenciones que solemos pasar por alto. Comprenderlas a fondo ahora nos ahorrará
           incontables dolores de cabeza cuando empecemos a modelar bases de datos de verdad.</p>
@@ -183,10 +183,10 @@
         <p>Cruzado con nuestras cuatro escenas, el panorama es plácido:</p>
 
         <ul>
-          <li><span class="eje-rotulo"><span class="eje eje--q">Q</span></span>&nbsp;<b>👕 Venta</b> — ¿Quién despachó la camiseta? El vendedor, <code>vendedor_17</code>.</li>
-          <li><span class="eje-rotulo"><span class="eje eje--q">Q</span></span>&nbsp;<b>⚽ Fútbol</b> — ¿Quién marcó el gol? El delantero, <code>messi</code> (y, con más detalle, quién dio la asistencia: <code>di_maria</code>).</li>
-          <li><span class="eje-rotulo"><span class="eje eje--q">Q</span></span>&nbsp;<b>🎬 Cine</b> — ¿Quién dirigió la película? La directora, <code>serra</code>.</li>
-          <li><span class="eje-rotulo"><span class="eje eje--q">Q</span></span>&nbsp;<b>🏛️ Ordenanza</b> — ¿Quién la promulgó? La <code>municipalidad_centro</code>, por mano del <code>alcalde_reyes</code>.</li>
+          <li><span class="eje-rotulo"><span class="eje eje--q">Q</span></span>&nbsp;<b>👕 Venta</b>: ¿Quién despachó la camiseta? El vendedor, <code>vendedor_17</code>.</li>
+          <li><span class="eje-rotulo"><span class="eje eje--q">Q</span></span>&nbsp;<b>⚽ Fútbol</b>: ¿Quién marcó el gol? El delantero, <code>messi</code> (y, con más detalle, quién dio la asistencia: <code>di_maria</code>).</li>
+          <li><span class="eje-rotulo"><span class="eje eje--q">Q</span></span>&nbsp;<b>🎬 Cine</b>: ¿Quién dirigió la película? La directora, <code>serra</code>.</li>
+          <li><span class="eje-rotulo"><span class="eje eje--q">Q</span></span>&nbsp;<b>🏛️ Ordenanza</b>: ¿Quién la promulgó? La <code>municipalidad_centro</code>, por mano del <code>alcalde_reyes</code>.</li>
         </ul>
 
         <p>Hasta aquí, ninguna fricción. Pero la pregunta se vuelve fascinante apenas la sacamos de
@@ -200,8 +200,8 @@
           Y se complica más cuando el balón rebota en un defensor rival y entra al arco: las
           estadísticas oficiales hablan de «gol en contra» y, para la tabla de goleadores, le
           acreditan el tanto al delantero que pateó, no al defensor que lo desvió. El reglamento
-          zanja la disputa; pero traducir esa decisión a una estructura de datos —«este evento tiene
-          <em>un</em> agente principal y <em>varios</em> agentes secundarios con roles distintos»—
+          zanja la disputa; pero traducir esa decisión a una estructura de datos («este evento tiene
+          <em>un</em> agente principal y <em>varios</em> agentes secundarios con roles distintos»)
           está lejos de ser trivial.</p>
 
         <p>El cine lo lleva al extremo. ¿Quién «hizo» <code>pelicula_marea</code>? La directora
@@ -209,12 +209,12 @@
           roles legalmente distintos: dirección y guion no son lo mismo, ni siquiera ocurren en el
           mismo momento. El problema empieza cuando un sistema mete a todos en un único campo
           genérico llamado <code>autor</code>. Cuando esa base de datos intenta compartir la
-          información con otra, si nadie sabe qué convención interna usó cada una, los datos chocan
-          —exactamente el conflicto de la <a href="01-torre-de-babel.html">torre de Babel</a>.</p>
+          información con otra, si nadie sabe qué convención interna usó cada una, los datos chocan:
+          exactamente el conflicto de la <a href="01-torre-de-babel.html">torre de Babel</a>.</p>
 
         <aside class="nota-margen">
           <span class="etq">Autor vs. ejecutor</span>
-          La política de la venta —precio de lista, descuentos, impuesto aplicable— pudo fijarla la
+          La política de la venta (precio de lista, descuentos, impuesto aplicable) pudo fijarla la
           gerencia hace meses; quien la <em>ejecuta</em> esta tarde es <code>vendedor_17</code>. Ambos
           responden a «¿quién?», pero uno aporta la regla y el otro el acto. Confundirlos es un clásico
           de los sistemas heredados.
@@ -222,7 +222,7 @@
 
         <p>Y aún hay una distinción más fina, de naturaleza temporal. ¿Quién «hace» la venta que
           tienes delante? <code>vendedor_17</code> la cerró esta tarde, pero las condiciones exactas
-          —precio de 49,90 dólares, 18 % de impuesto— las fijó alguien más, tiempo atrás. Hay una
+          (precio de 49,90 dólares, 18 % de impuesto) las fijó alguien más, tiempo atrás. Hay una
           diferencia de fondo entre el <em>autor</em> (quien diseñó la regla) y el <em>ejecutor</em>
           (quien la materializa hoy). Las dos personas son respuestas legítimas a «¿quién?», pero
           pertenecen a momentos y a naturalezas de acción distintas.</p>
@@ -244,14 +244,14 @@
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Adelanto · Agencia contextual</p>
-          <p>La <strong>agencia</strong> —la capacidad de hacer algo— no es una propiedad estática
+          <p>La <strong>agencia</strong> (la capacidad de hacer algo) no es una propiedad estática
             que un objeto posea siempre, sino una <strong>propiedad puramente contextual</strong>.
             Según la situación, un objeto pasivo puede «vestirse» de agente y ocupar transitoriamente
             el eje <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>, sin dejar de ser,
             en su origen, un habitante del eje <span class="eje-rotulo"><span class="eje eje--o">O</span></span>.</p>
           <p style="margin-bottom:0">A este principio lo llamaremos <strong>agencia contextual</strong>,
-            y volverá como una de nuestras decisiones de diseño más fuertes —la formalizaremos como la
-            regla <strong>D5</strong> en el <a href="09-situaciones.html">capítulo 9</a>—. Por ahora basta
+            y volverá como una de nuestras decisiones de diseño más fuertes (la formalizaremos como la
+            regla <strong>D5</strong> en el <a href="09-situaciones.html">capítulo 9</a>). Por ahora basta
             con dejar el nombre puesto: una cosa puede actuar, pero solo dentro del marco que se lo permite.</p>
         </div>
 
@@ -274,7 +274,7 @@
           <span class="nodo nodo--o"><span>cliente_1042</span><small>O</small></span>
         </div>
 
-        <p>El identificador no cambió —sigue siendo la misma terminal—; lo que cambió fue el eje que
+        <p>El identificador no cambió (sigue siendo la misma terminal); lo que cambió fue el eje que
           ocupa, y solo mientras dura la acción. Volveremos sobre ello; por ahora, sigamos hacia la
           pregunta más resbaladiza de todas.</p>
 
@@ -295,7 +295,7 @@
         <div class="rejilla-3 revelar">
           <div class="tarjeta">
             <h4 style="color:var(--eje-o)">① Objetos</h4>
-            <p style="margin:0;font-size:.95rem">Cosas —tangibles o no— que existen por sí mismas,
+            <p style="margin:0;font-size:.95rem">Cosas (tangibles o no) que existen por sí mismas,
               persisten en el tiempo y pueden mencionarse en muchas situaciones. La
               <code>camiseta_88</code> que despachó el vendedor; el balón del partido; el guion de
               <code>pelicula_marea</code>; el texto publicado de la <code>ordenanza_142</code>.</p>
@@ -318,10 +318,10 @@
 
         <p>Aquí asoma una intuición de diseño sutil pero crítica: estas tres familias no están
           separadas por muros impenetrables. Un evento se transforma en objeto cuando otro dato lo
-          menciona —«<strong>ese gol</strong> fue revisado por el VAR»—; ahí, la jugada deja
+          menciona («<strong>ese gol</strong> fue revisado por el VAR»); ahí, la jugada deja
           de <em>ocurrir</em> y pasa a ser una cosa a la que apuntamos. Y, en sentido inverso, una
-          situación gigantesca puede verse como un evento simple desde un nivel aún mayor —«<strong>el
-          partido</strong> se suspendió por un corte de luz»—. El eje <em>qué</em> tiene una
+          situación gigantesca puede verse como un evento simple desde un nivel aún mayor («<strong>el
+          partido</strong> se suspendió por un corte de luz»). El eje <em>qué</em> tiene una
           flexibilidad inherente respecto de la escala: lo que en un nivel del modelo es un evento
           activo, en un nivel superior es un objeto pasivo al que se hace referencia.</p>
 
@@ -332,8 +332,8 @@
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">Trampa: aplanar un evento hasta volverlo un objeto mudo</p>
           <p style="margin-bottom:0">La maleabilidad entre objeto, evento y situación es poderosa, y
-            por eso es peligrosa. Reducir un evento rico —con sus agentes, su instante, sus
-            magnitudes— a una simple cadena de texto destruye información que luego nadie podrá
+            por eso es peligrosa. Reducir un evento rico (con sus agentes, su instante, sus
+            magnitudes) a una simple cadena de texto destruye información que luego nadie podrá
             recuperar. El proceso disciplinado de «cosificar» un evento sin perder su contenido tiene
             nombre técnico: <strong>reificación</strong>, y lo desmenuzaremos en la
             <a href="07-hecho-atomico.html">Parte III</a>. Por ahora, basta con desconfiar de todo
@@ -378,9 +378,9 @@
 
         <p>Ambos responden con total naturalidad a «¿dónde?», pero técnicamente apuntan a realidades
           de estructura incompatible. Una ciudad es un polígono geográfico; una gerencia es un
-          organigrama de personas e intenciones. Si los mezclamos en el diseño —si guardamos
+          organigrama de personas e intenciones. Si los mezclamos en el diseño (si guardamos
           <code>plaza_central</code> y <code>gerencia_transito</code> en una misma columna genérica
-          llamada <code>ubicacion</code>— perdemos para siempre la capacidad de separar
+          llamada <code>ubicacion</code>) perdemos para siempre la capacidad de separar
           <em>dónde ocurre algo físicamente</em> de <em>a qué estructura administrativa pertenece</em>.</p>
 
         <div class="caja caja--idea revelar">
@@ -389,7 +389,7 @@
             <span class="eje-rotulo"><span class="eje eje--l">L</span></span> se reserva de forma
             estricta para los lugares físicos. Una organización, cuando <em>ejecuta</em> una acción,
             se traslada al eje <span class="eje-rotulo"><span class="eje eje--q">Q</span></span> y
-            actúa como agente —ecos de la agencia contextual—; cuando funciona como mero contenedor
+            actúa como agente (ecos de la agencia contextual); cuando funciona como mero contenedor
             administrativo, puede aparecer en <span class="eje-rotulo"><span class="eje eje--l">L</span></span>,
             pero etiquetada de forma obligatoria con una marca de «organización». La distinción se
             volverá nítida cuando veamos el código; por ahora, basta con tenerla mapeada.</p>
@@ -399,10 +399,10 @@
           varios «dónde» de escalas distintas coexisten sin estorbarse:</p>
 
         <ul>
-          <li><span class="eje-rotulo"><span class="eje eje--l">L</span></span>&nbsp;<b>👕 Venta</b> — ¿Dónde se cobró? En el mostrador. ¿Dónde está la tienda? En la <code>tienda_centro</code>. ¿En qué ciudad? En el casco urbano entero. Tres escalas físicas conviviendo.</li>
-          <li><span class="eje-rotulo"><span class="eje eje--l">L</span></span>&nbsp;<b>⚽ Fútbol</b> — ¿Dónde se remató el gol? Desde el área chica. ¿Dónde se jugó el partido? En un estadio, dentro de una ciudad. Escalas anidadas.</li>
-          <li><span class="eje-rotulo"><span class="eje eje--l">L</span></span>&nbsp;<b>🎬 Cine</b> — ¿Dónde se rodó la escena? En un plató de la ciudad. ¿Dónde transcurre <em>dentro</em> de la ficción? En un puerto imaginario. El lugar real y el lugar narrado no coinciden.</li>
-          <li><span class="eje-rotulo"><span class="eje eje--l">L</span></span>&nbsp;<b>🏛️ Ordenanza</b> — ¿Dónde se firmó? En el despacho municipal (lugar físico). ¿Dónde tiene jurisdicción? En todo el distrito (lugar político).</li>
+          <li><span class="eje-rotulo"><span class="eje eje--l">L</span></span>&nbsp;<b>👕 Venta</b>: ¿Dónde se cobró? En el mostrador. ¿Dónde está la tienda? En la <code>tienda_centro</code>. ¿En qué ciudad? En el casco urbano entero. Tres escalas físicas conviviendo.</li>
+          <li><span class="eje-rotulo"><span class="eje eje--l">L</span></span>&nbsp;<b>⚽ Fútbol</b>: ¿Dónde se remató el gol? Desde el área chica. ¿Dónde se jugó el partido? En un estadio, dentro de una ciudad. Escalas anidadas.</li>
+          <li><span class="eje-rotulo"><span class="eje eje--l">L</span></span>&nbsp;<b>🎬 Cine</b>: ¿Dónde se rodó la escena? En un plató de la ciudad. ¿Dónde transcurre <em>dentro</em> de la ficción? En un puerto imaginario. El lugar real y el lugar narrado no coinciden.</li>
+          <li><span class="eje-rotulo"><span class="eje eje--l">L</span></span>&nbsp;<b>🏛️ Ordenanza</b>: ¿Dónde se firmó? En el despacho municipal (lugar físico). ¿Dónde tiene jurisdicción? En todo el distrito (lugar político).</li>
         </ul>
 
         <p>Conviene dejar asentada una observación de fondo: el pilar <em>dónde</em> está diseñado por
@@ -446,8 +446,8 @@
             <p style="margin:0;font-size:.95rem">Fechas y horas exactas atadas al calendario
               gregoriano. El día en que se rodó la película; las 16:32 de la venta.</p></div>
           <div class="tarjeta"><h4 style="color:var(--eje-t)">2 · Tiempo relativo</h4>
-            <p style="margin:0;font-size:.95rem">Expresiones relacionales —«antes de», «durante»,
-              «inmediatamente después de»— atadas a otro hecho comprobable.</p></div>
+            <p style="margin:0;font-size:.95rem">Expresiones relacionales («antes de», «durante»,
+              «inmediatamente después de») atadas a otro hecho comprobable.</p></div>
           <div class="tarjeta"><h4 style="color:var(--eje-t)">3 · Tiempo de reloj corto</h4>
             <p style="margin:0;font-size:.95rem">Marcadores internos de un evento cerrado: el minuto
               87 del partido, el tiempo de descuento.</p></div>
@@ -472,7 +472,7 @@
         <p>Esa pluralidad plantea de inmediato una pregunta operativa: si conviven varios relojes,
           ¿cómo ordena el sistema los eventos sin reducirlos a uno solo? La regla de normalización es
           deliberadamente humilde: <strong>no traducir</strong>. El compás 17 no se convierte a un
-          horario de cuarzo —eso destruiría su naturaleza—; en su lugar, cada instante no-reloj se
+          horario de cuarzo (eso destruiría su naturaleza); en su lugar, cada instante no-reloj se
           reifica con tres datos estándar.</p>
 
         <div class="bloque-codigo">
@@ -487,19 +487,19 @@
         </div>
 
         <ul>
-          <li><code>escala</code> — a qué sistema temporal pertenece (<code>musical</code>,
+          <li><code>escala</code>: a qué sistema temporal pertenece (<code>musical</code>,
             <code>narrativo</code>, <code>paginado</code>, <code>reloj_absoluto</code>). Impide
             comparar peras con manzanas: el motor nunca ordenará un compás contra una fecha por
             accidente.</li>
-          <li><code>posicion</code> — un ordinal numérico que lo vuelve <strong>ordenable dentro de su
+          <li><code>posicion</code>: un ordinal numérico que lo vuelve <strong>ordenable dentro de su
             propia escala</strong> (compás 17 → <code>17</code>; página 240 → <code>240</code>;
             «final del segundo acto» → <code>acto 2, 1.0</code>). Es la clave de orden.</li>
-          <li><code>valor_nativo</code> — la expresión original, preservada tal cual («compás 17»,
+          <li><code>valor_nativo</code>: la expresión original, preservada tal cual («compás 17»,
             «p. 240», «final del segundo acto»), para no perder fidelidad.</li>
         </ul>
 
-        <p>Con esto, ordenar es trivial <em>dentro</em> de una escala —se ordena por
-          <code>posicion</code> filtrando por <code>escala</code>— y honesto <em>entre</em> escalas:
+        <p>Con esto, ordenar es trivial <em>dentro</em> de una escala (se ordena por
+          <code>posicion</code> filtrando por <code>escala</code>) y honesto <em>entre</em> escalas:
           no se mezclan, salvo que exista un puente real. Y los puentes existen cuando el mundo los
           provee: la grabación de un concierto ata el <code>compás 17</code> de la escala musical a
           las <code>20:03:14</code> de la escala absoluta mediante un hecho explícito, no una
@@ -524,16 +524,16 @@
           siguiente. La tienda abrió en la <code>plaza_central</code> entre 2019 y 2025; si
           preguntas hoy dónde está, la respuesta es otra dirección. «¿Dónde queda la tienda?» no es
           un bloque de piedra: es un flujo de valores, cada uno con su propia fecha de caducidad. Ese
-          fenómeno —un dato verdadero solo dentro de una ventana temporal— será un componente
+          fenómeno (un dato verdadero solo dentro de una ventana temporal) será un componente
           explícito de nuestro diseño final.</p>
 
         <p>Cerremos el pilar aplicándolo a las cuatro escenas:</p>
 
         <ul>
-          <li><span class="eje-rotulo"><span class="eje eje--t">T</span></span>&nbsp;<b>👕 Venta</b> — Tiempo absoluto (se cobró a las 16:32), cíclico (la tienda abre cada día) y relativo interno («aplicar el impuesto una vez confirmado el pago»).</li>
-          <li><span class="eje-rotulo"><span class="eje eje--t">T</span></span>&nbsp;<b>⚽ Fútbol</b> — El gol cae en el minuto 87: tiempo de reloj corto, que solo cobra sentido respecto del inicio del partido.</li>
-          <li><span class="eje-rotulo"><span class="eje eje--t">T</span></span>&nbsp;<b>🎬 Cine</b> — La revelación ocurre «al final del segundo acto» (tiempo narrativo); el rodaje de esa escena tiene una fecha de calendario (tiempo absoluto). Dos líneas conviviendo en paralelo.</li>
-          <li><span class="eje-rotulo"><span class="eje eje--t">T</span></span>&nbsp;<b>🏛️ Ordenanza</b> — Se firmó ayer (tiempo absoluto); entra en vigor a los treinta días (tiempo derivado por regla). Dos relojes operando sobre el mismo objeto.</li>
+          <li><span class="eje-rotulo"><span class="eje eje--t">T</span></span>&nbsp;<b>👕 Venta</b>: Tiempo absoluto (se cobró a las 16:32), cíclico (la tienda abre cada día) y relativo interno («aplicar el impuesto una vez confirmado el pago»).</li>
+          <li><span class="eje-rotulo"><span class="eje eje--t">T</span></span>&nbsp;<b>⚽ Fútbol</b>: El gol cae en el minuto 87: tiempo de reloj corto, que solo cobra sentido respecto del inicio del partido.</li>
+          <li><span class="eje-rotulo"><span class="eje eje--t">T</span></span>&nbsp;<b>🎬 Cine</b>: La revelación ocurre «al final del segundo acto» (tiempo narrativo); el rodaje de esa escena tiene una fecha de calendario (tiempo absoluto). Dos líneas conviviendo en paralelo.</li>
+          <li><span class="eje-rotulo"><span class="eje eje--t">T</span></span>&nbsp;<b>🏛️ Ordenanza</b>: Se firmó ayer (tiempo absoluto); entra en vigor a los treinta días (tiempo derivado por regla). Dos relojes operando sobre el mismo objeto.</li>
         </ul>
 
         <h2>Cuando un pilar se confunde: una IA en libertad</h2>
@@ -558,8 +558,8 @@
             saludable y de paso no gastas energía pedaleando.</p>
         </blockquote>
 
-        <p>El consejo es un disparate físico: no se lleva una bicicleta al taller yendo a pie —la
-          bicicleta <em>es</em> lo que hay que transportar—. Pero el error no nace de una «estupidez»
+        <p>El consejo es un disparate físico: no se lleva una bicicleta al taller yendo a pie (la
+          bicicleta <em>es</em> lo que hay que transportar). Pero el error no nace de una «estupidez»
           del algoritmo, sino de un problema muy concreto: una <strong>mala asignación de roles a los
           cuatro pilares</strong>. La estadística llenó las cajas, pero las llenó mal.</p>
 
@@ -575,7 +575,7 @@ M (con_finalidad)           : reparar la bicicleta              ← le da sentid
         </div>
 
         <p>El verbo núcleo de la situación es <em>llevar</em>. La persona es, sin duda, el agente; pero
-          el <strong>paciente</strong> —la cosa física que sufre el transporte— es la bicicleta. Y la
+          el <strong>paciente</strong> (la cosa física que sufre el transporte) es la bicicleta. Y la
           finalidad ineludible de la maniobra es someter esa bicicleta a una reparación. Si quitas la
           finalidad de la ecuación, la pregunta «¿caminando o en bici?» pierde todo su sentido.</p>
 
@@ -593,7 +593,7 @@ M (con_finalidad)           : trasladarse al taller             ← finalidad re
 
         <p>Bajo esa lectura, la bicicleta se cae de su rol legítimo de paciente y queda empujada a un
           rol de <strong>instrumento opcional</strong> («puedes ir en bici o no»). La finalidad real
-          —repararla— se diluye y la sustituye el mero acto de llegar a unas coordenadas. Como el
+          (repararla) se diluye y la sustituye el mero acto de llegar a unas coordenadas. Como el
           modelo evalúa que la distancia es mínima, sus pesos probabilísticos concluyen que caminar es
           lo más eficiente y saludable. Impecable… salvo que el objeto central de la frase se evaporó.</p>
 
@@ -608,11 +608,11 @@ M (con_finalidad)           : trasladarse al taller             ← finalidad re
 
         <p>Es aquí donde la promesa central de este libro cobra fuerza industrial. Si pudiéramos
           entregarles los hechos del mundo a los asistentes de IA con una estructura donde los cuatro
-          pilares fueran <strong>explícitos</strong> —el agente siempre en
+          pilares fueran <strong>explícitos</strong> (el agente siempre en
           <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>, el paciente en
           <span class="eje-rotulo"><span class="eje eje--o">O</span></span>, el lugar en
           <span class="eje-rotulo"><span class="eje eje--l">L</span></span> y el momento en
-          <span class="eje-rotulo"><span class="eje eje--t">T</span></span>—, esta clase de absurdos
+          <span class="eje-rotulo"><span class="eje eje--t">T</span></span>), esta clase de absurdos
           desaparecería. Y no porque hubiéramos fabricado un algoritmo más listo, sino porque la
           propia <strong>arquitectura impediría la asignación incorrecta</strong>.</p>
 
@@ -623,15 +623,15 @@ M (con_finalidad)           : trasladarse al taller             ← finalidad re
             está, el sistema detecta que la orden está incompleta y, en lugar de alucinar una
             respuesta, se detiene a pedir una aclaración.</p>
           <p>La estadística deja de gobernar a ciegas; la estructura toma el control y le pone límites
-            seguros. Las cajas vacías se vuelven preguntas, no invenciones. Esto —dar al modelo un
-            esqueleto que no se puede llenar mal— es justo lo que la industria de la IA necesita con
+            seguros. Las cajas vacías se vuelven preguntas, no invenciones. Esto (dar al modelo un
+            esqueleto que no se puede llenar mal) es justo lo que la industria de la IA necesita con
             más urgencia hoy. Y volveremos a ello en la <a href="26-llms.html">Parte VI</a>.</p>
         </div>
 
         <h2>Los cuatro pilares y lo que falta</h2>
 
-        <p>Si repasamos las cuatro preguntas —<em>quién</em>, <em>qué</em>, <em>dónde</em>,
-          <em>cuándo</em>— y volvemos a la tarde de la venta, las cuatro piezas están ahí, haciendo un
+        <p>Si repasamos las cuatro preguntas (<em>quién</em>, <em>qué</em>, <em>dónde</em>,
+          <em>cuándo</em>) y volvemos a la tarde de la venta, las cuatro piezas están ahí, haciendo un
           trabajo de ordenamiento preciso. El vendedor (quién) entregó la camiseta (qué) sobre el
           mostrador (dónde) a las 16:32 (cuándo). La escena queda sólidamente descrita.</p>
 
@@ -648,7 +648,7 @@ M (con_finalidad)           : trasladarse al taller             ← finalidad re
           procesar un <strong>precio</strong> (49,90). Entró en juego un <strong>motivo</strong> claro
           de la acción (la liquidación de temporada). Aparece una <strong>clasificación más fina</strong>
           del objeto: no es una prenda cualquiera, es una <em>camiseta deportiva</em>. Y, de paso, la
-          frase deja entrever que la camiseta pertenece a la categoría <em>prenda de vestir</em> —un
+          frase deja entrever que la camiseta pertenece a la categoría <em>prenda de vestir</em>: un
           detalle que nuestros cuatro pilares todavía no permiten declarar, porque el eje
           <span class="eje-rotulo"><span class="eje eje--q">Q</span></span> guarda individuos
           concretos, no define categorías abstractas.</p>
@@ -687,7 +687,7 @@ M (con_finalidad)           : trasladarse al taller             ← finalidad re
             </svg>
           </div>
           <figcaption><span class="fnum">Figura 2.2.</span> Los cuatro pilares levantan el esqueleto
-            de cualquier hecho —son <em>necesarios</em>—, pero la frase enriquecida revela tres huecos
+            de cualquier hecho (son <em>necesarios</em>), pero la frase enriquecida revela tres huecos
             que ninguno de ellos cubre: la <strong>clase</strong> del objeto
             (<span class="eje-rotulo"><span class="eje eje--k">K</span></span>), su
             <strong>magnitud</strong> (<span class="eje-rotulo"><span class="eje eje--n">N</span></span>)
@@ -705,19 +705,19 @@ M (con_finalidad)           : trasladarse al taller             ← finalidad re
         </div>
 
         <p>De ahí emerge el resto del modelo. Necesitamos, como mínimo, una quinta pregunta
-          —<em>cuál</em>, es decir, qué tipo de cosa es esto— con eje propio: el zócalo categórico
+          (<em>cuál</em>, es decir, qué tipo de cosa es esto) con eje propio: el zócalo categórico
           donde habitarán los tipos, las familias y los conceptos abstractos. A ella hay que sumarle
-          una sexta —<em>cuánto</em>— para las métricas, con sus propias trampas de conversión de
-          unidades; y una séptima —<em>cómo</em>— encargada de articular las conexiones y atributos
+          una sexta (<em>cuánto</em>) para las métricas, con sus propias trampas de conversión de
+          unidades; y una séptima (<em>cómo</em>) encargada de articular las conexiones y atributos
           que amarran todo el modelo.</p>
 
         <p>De esas tres, la primera y más delicada de todo el sistema es el <strong>eje
           categórico</strong>. Es, paradójicamente, el que soporta la mayor carga de trabajo en los
           sistemas del mundo real, y es allí donde la arquitectura de WQuestions se integra
-          pacíficamente con los gigantes de la industria —Schema.org<a class="ref" href="referencias.html#ref-30">(30)</a>, QUDT<a class="ref" href="referencias.html#ref-18">(18)</a>, SNOMED, CIDOC CRM<a class="ref" href="referencias.html#ref-4">(4)</a>—,
+          pacíficamente con los gigantes de la industria (Schema.org<a class="ref" href="referencias.html#ref-30">(30)</a>, QUDT<a class="ref" href="referencias.html#ref-18">(18)</a>, SNOMED, CIDOC CRM<a class="ref" href="referencias.html#ref-4">(4)</a>),
           usándolos como aliados en lugar de competir con ellos: el vocabulario común que nos asegura
-          no volver a levantar, nunca más, la torre de Babel de los datos. A ese zócalo —el eje
-          <span class="eje-rotulo"><span class="eje eje--k">K</span></span>, <em>cuál</em>— dedicamos
+          no volver a levantar, nunca más, la torre de Babel de los datos. A ese zócalo (el eje
+          <span class="eje-rotulo"><span class="eje eje--k">K</span></span>, <em>cuál</em>) dedicamos
           el capítulo siguiente.</p>
 
       </div>

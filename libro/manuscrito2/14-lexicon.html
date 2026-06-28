@@ -75,8 +75,8 @@
         </aside>
 
         <p>Si el sistema del capítulo anterior tomara el verbo al pie de la letra, haría lo que hace un
-          parser ingenuo: leería <em>tomar</em>, dispararía una única firma —digamos
-          <code>tomar(agente, tema)</code>— y guardaría las cuatro frases como instancias del mismo
+          parser ingenuo: leería <em>tomar</em>, dispararía una única firma (digamos
+          <code>tomar(agente, tema)</code>) y guardaría las cuatro frases como instancias del mismo
           tipo de evento. El resultado sería una base de datos que cree que entregar una camiseta, deliberar en
           comité, recibir un balón y administrar un juramento son la misma clase de cosa. Las consultas
           posteriores heredarían el desastre: preguntar «¿qué decisiones se tomaron este mes?» devolvería
@@ -86,15 +86,15 @@
           declara qué roles exige y de qué eje sale cada uno. Pero acabamos de ver que un verbo no basta
           como llave. <em>Tomar</em> no es <em>una</em> signatura: es una <em>familia</em> de signaturas
           que comparten ortografía. Para elegir la correcta hace falta mirar también qué acompaña al
-          verbo. Y ese trabajo —el de pasar del lenguaje a la firma exacta— no lo hace el verbo solo.
+          verbo. Y ese trabajo (el de pasar del lenguaje a la firma exacta) no lo hace el verbo solo.
           Lo hace una pieza dedicada, que es el verdadero protagonista de este capítulo.</p>
 
         <h2>Dos lenguajes que no deberían tocarse</h2>
 
         <p>Conviene nombrar con precisión los dos mundos que el capítulo 13 puso frente a frente. Por un
           lado está el <strong>catálogo canónico</strong>: el conjunto cerrado y versionado de roles
-          —<code>agente</code>, <code>tema</code>, <code>beneficiario</code>, <code>experimentador</code>,
-          <code>causado_por</code>…— con sus firmas, sus ejes de origen y sus reglas de obligatoriedad.
+          (<code>agente</code>, <code>tema</code>, <code>beneficiario</code>, <code>experimentador</code>,
+          <code>causado_por</code>…) con sus firmas, sus ejes de origen y sus reglas de obligatoriedad.
           Es exacto, estable y completamente ilegible para quien no diseñó el modelo. Ningún recepcionista,
           ningún médico, ningún relator deportivo va a escribir <code>experimentador</code> para registrar
           que a un cliente le encantó el postre.</p>
@@ -103,7 +103,7 @@
           «paciente», «socio», «el que pierde». Vocabulario vivo, distinto en cada gremio, lleno de
           sinónimos y de polisemia. Es lo único que la gente sabe escribir, y es lo único que un modelo
           de lenguaje recibe cuando lee una frase suelta. Si forzáramos a estos dos mundos a tocarse
-          —si el catálogo canónico fuera la interfaz— habríamos construido una pieza de ingeniería
+          (si el catálogo canónico fuera la interfaz) habríamos construido una pieza de ingeniería
           impecable y socialmente inútil. La adopción se moriría en la primera capacitación.</p>
 
         <p>La solución es interponer una capa de traducción entre ambos. Una capa que por fuera hable el
@@ -127,8 +127,8 @@
           <p class="caja-tit"><span class="codigo-d">D9</span> El usuario nunca toca etiquetas canónicas</p>
           <p style="margin:0">Un humano <strong>jamás</strong> debe verse obligado a escribir
             <code>agente</code>, <code>beneficiario</code> o <code>experimentador</code> para que el
-            sistema funcione. El usuario emplea su propio vocabulario —«vendedor», «comprador»,
-            «cliente», «el que anota»— y el lexicon lo traduce en silencio a la etiqueta canónica
+            sistema funcione. El usuario emplea su propio vocabulario («vendedor», «comprador»,
+            «cliente», «el que anota») y el lexicon lo traduce en silencio a la etiqueta canónica
             correspondiente. La complejidad del idioma se resuelve en el diccionario, no en la cabeza
             de quien escribe.</p>
         </div>
@@ -141,8 +141,8 @@
         </aside>
 
         <p>El par D8–D9 reparte responsabilidades con nitidez. D8 mira hacia adentro: garantiza a los
-          ingenieros que pueden mover los engranajes —agregar roles, cambiar códigos internos,
-          reorganizar el catálogo— sin romperle nada a nadie, porque la fachada permanece. D9 mira hacia
+          ingenieros que pueden mover los engranajes (agregar roles, cambiar códigos internos,
+          reorganizar el catálogo) sin romperle nada a nadie, porque la fachada permanece. D9 mira hacia
           afuera: garantiza a las personas que pueden seguir hablando como hablan. El lexicon es el
           contrato que sostiene ambas promesas a la vez: <strong>estable hacia afuera, flexible hacia
           adentro</strong>.</p>
@@ -226,8 +226,8 @@
         <h2>Autopsia de una entrada</h2>
 
         <p>Bajemos al detalle. Una entrada del lexicon es una «página» del diccionario, y cada pieza
-          tiene un trabajo concreto. Tomemos un verbo del mundo de la tienda —el local de la escena
-          inicial despacha camisetas al público— y desarmemos su entrada de <code>vender</code>:</p>
+          tiene un trabajo concreto. Tomemos un verbo del mundo de la tienda (el local de la escena
+          inicial despacha camisetas al público) y desarmemos su entrada de <code>vender</code>:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">lexicon</span><button class="copiar">⧉ copiar</button></div>
@@ -265,7 +265,7 @@
             seguridad de la firma. Dictan qué roles no pueden faltar para que el hecho se acepte. Una
             venta sin precio se rechaza; una venta sin lugar, no.</li>
           <li><strong><code>ejemplo</code></strong>. Una frase humana real. No es adorno: el motor de
-            pruebas —y, cada vez más, el modelo de lenguaje— lee este ejemplo para aprender cómo se usa
+            pruebas (y, cada vez más, el modelo de lenguaje) lee este ejemplo para aprender cómo se usa
             el verbo en la práctica.</li>
         </ol>
 
@@ -279,7 +279,7 @@
         <h2>El idioma de los modelos: function calling</h2>
 
         <p>Aquí ocurre una de esas convergencias que parecen casualidad y no lo son. Los modelos de
-          lenguaje de uso corporativo —entre ellos Claude, de Anthropic— se conectan al software de la
+          lenguaje de uso corporativo (entre ellos Claude, de Anthropic) se conectan al software de la
           empresa mediante un mecanismo estándar: el <em>function calling</em>, o uso de herramientas.
           El patrón es simple. La aplicación le entrega al modelo un catálogo en formato JSON que
           describe cada herramienta disponible, sus parámetros y cuáles son obligatorios. Cuando un
@@ -289,8 +289,8 @@
         <aside class="nota-margen">
           <span class="etq">Convergencia</span>
           Que la lingüística formal de los años noventa y el <em>function calling</em> de los modelos
-          actuales hayan llegado a la misma forma —nombre, descripción, parámetros tipados,
-          obligatorios— no es coincidencia: ambos resuelven el mismo problema, mapear lenguaje a acción
+          actuales hayan llegado a la misma forma (nombre, descripción, parámetros tipados,
+          obligatorios) no es coincidencia: ambos resuelven el mismo problema, mapear lenguaje a acción
           verificable.
         </aside>
 
@@ -428,7 +428,7 @@ Frase del usuario: "El vendedor le vendió una camiseta al cliente por 49.90 dó
         <p>El procedimiento de resolución es, otra vez, el de un compilador: el sistema intenta encajar
           la frase <strong>desde el patrón más específico hacia el más general</strong>. Si aparece
           «tomar el balón», gana la entrada de fútbol. Si aparece «tomar juramento», gana el acto
-          de juramentación. Y solo cuando ningún patrón con complemento coincide —«tomar un refresco»—
+          de juramentación. Y solo cuando ningún patrón con complemento coincide («tomar un refresco»)
           cae la regla genérica de consumir. El orden importa: lo específico siempre primero, lo
           genérico como red de seguridad. La figura siguiente lo muestra con los colores de cada eje
           para que se vea adónde va a parar cada hecho.</p>
@@ -508,9 +508,9 @@ Frase del usuario: "El vendedor le vendió una camiseta al cliente por 49.90 dó
         </figure>
 
         <p>La consecuencia arquitectónica es la que da título al capítulo. La complejidad del lenguaje no
-          se elimina —sería imposible— sino que se <strong>traslada al lugar correcto</strong>: al
+          se elimina (sería imposible) sino que se <strong>traslada al lugar correcto</strong>: al
           diccionario. Un modelador de datos puede registrar un nuevo significado de <em>tomar</em>
-          —«tomar un préstamo», por ejemplo— agregando una entrada de texto, sin tocar una sola línea
+          («tomar un préstamo», por ejemplo) agregando una entrada de texto, sin tocar una sola línea
           del núcleo. La base de datos sigue siendo ignorante sobre el español; el lexicon hace todo el
           trabajo lingüístico.</p>
 
@@ -542,7 +542,7 @@ Frase del usuario: "El vendedor le vendió una camiseta al cliente por 49.90 dó
 
         <p>Con este dialecto cargado, un vendedor puede escribir «despaché una camiseta talla M en la caja
           dos» y el sistema traduce «despaché» al verbo <code>vender</code>, «caja» al rol
-          <code>lugar_de</code> y «talla» al atributo de medida —todo sin que ninguna entrada de
+          <code>lugar_de</code> y «talla» al atributo de medida: todo sin que ninguna entrada de
           verbo mencione la palabra «caja». El núcleo permanece intacto, pero la tienda, la clínica y el
           municipio sienten, cada uno, que el software fue hecho a su medida. Es el mismo motor universal
           hablando tres jergas distintas.</p>
@@ -565,12 +565,12 @@ Frase del usuario: "El vendedor le vendió una camiseta al cliente por 49.90 dó
           <p class="caja-tit">Precedente · FrameNet, VerbNet y PropBank</p>
           <p><strong>FrameNet</strong><a class="ref" href="referencias.html#ref-14">(14)</a> (Universidad de Berkeley, años noventa) clasifica el idioma en
             <em>escenarios conceptuales</em> o <em>frames</em>. Su escenario de «Comercio» define roles
-            predefinidos como <em>Buyer</em>, <em>Seller</em> y <em>Goods</em> —casi calcados de nuestra
+            predefinidos como <em>Buyer</em>, <em>Seller</em> y <em>Goods</em>: casi calcados de nuestra
             entrada de <code>vender</code>. Sus más de mil doscientos escenarios son una mina para poblar
             la caja <strong>K</strong> con tipos de situación ya pensados por lingüistas.</p>
           <p><strong>VerbNet</strong><a class="ref" href="referencias.html#ref-15">(15)</a> (Universidad de Pensilvania) agrupa miles de verbos del inglés que
-            comparten una misma estructura lógica —verbos de transferencia, verbos de encuentro, verbos
-            de cambio de estado— de modo que un verbo nuevo hereda la firma de su clase en lugar de
+            comparten una misma estructura lógica (verbos de transferencia, verbos de encuentro, verbos
+            de cambio de estado) de modo que un verbo nuevo hereda la firma de su clase en lugar de
             definirse a mano.</p>
           <p style="margin:0"><strong>PropBank</strong> prioriza la cobertura: etiqueta masivamente
             textos reales con roles genéricos (<code>Arg0</code> a <code>Arg5</code>). Es menos elegante,
@@ -589,7 +589,7 @@ Frase del usuario: "El vendedor le vendió una camiseta al cliente por 49.90 dó
         <p>Para que esto no quede en abstracto, vale la pena ver varias entradas juntas, de dominios sin
           relación entre sí. Mientras las recorres, fíjate en tres cosas: que los roles se
           <em>reciclan</em>, que los aliases cambian con el gremio aunque el esqueleto no, y que los
-          casos «raros» —verbos sin agente, verbos invertidos— encajan sin forzar nada.</p>
+          casos «raros» (verbos sin agente, verbos invertidos) encajan sin forzar nada.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">lexicon · cuatro dominios</span><button class="copiar">⧉ copiar</button></div>
@@ -647,8 +647,8 @@ Frase del usuario: "El vendedor le vendió una camiseta al cliente por 49.90 dó
           <div class="tarjeta">
             <h4><span class="eje eje--q">1</span>&nbsp; Los mismos cables, siempre</h4>
             <p style="margin:0;font-size:.93rem">Vacunar, multar, invocar y vender comparten un puñado de
-              roles —<code>agente</code>, <code>tema</code>, <code>paciente</code>,
-              <code>lugar_de</code>—. El catálogo base de roles basta para dominios que no se parecen en
+              roles (<code>agente</code>, <code>tema</code>, <code>paciente</code>,
+              <code>lugar_de</code>). El catálogo base de roles basta para dominios que no se parecen en
               nada.</p>
           </div>
           <div class="tarjeta">
@@ -684,16 +684,16 @@ Frase del usuario: "El vendedor le vendió una camiseta al cliente por 49.90 dó
           <p><strong>Es la puerta de entrada de la IA.</strong> El lexicon ya tiene la forma de un
             catálogo de <em>function calling</em>. Un modelo conectado a él empieza a redactar y auditar
             hechos sin que nadie reprograme el sistema: basta serializarlo y entregarlo.</p>
-          <p><strong>Desambigua antes de escribir en disco.</strong> La polisemia —el caos de
-            <em>tomar</em>— se resuelve en el diccionario. La base de datos recibe siempre hechos
+          <p><strong>Desambigua antes de escribir en disco.</strong> La polisemia (el caos de
+            <em>tomar</em>) se resuelve en el diccionario. La base de datos recibe siempre hechos
             limpios, ya etiquetados con su tipo exacto en <strong>K</strong>.</p>
-          <p style="margin:0"><strong>Escala agregando texto.</strong> Abrir un dominio nuevo —logística,
-            por decir— no exige crear cuarenta tablas: exige añadir un bloque de verbos al lexicon. El
+          <p style="margin:0"><strong>Escala agregando texto.</strong> Abrir un dominio nuevo (logística,
+            por decir) no exige crear cuarenta tablas: exige añadir un bloque de verbos al lexicon. El
             motor central hereda ese conocimiento de inmediato.</p>
         </div>
 
         <p>La genialidad de los siete ejes es el corazón del modelo, sí. Pero su <strong>adopción</strong>
-          —el que una clínica, un banco o una tienda lo usen sin sentir que cambiaron de idioma— depende
+          (el que una clínica, un banco o una tienda lo usen sin sentir que cambiaron de idioma) depende
           entera y exclusivamente de este traductor. El catálogo es el motor; el lexicon es el volante.
           Y nadie conduce agarrando el motor.</p>
 
@@ -704,7 +704,7 @@ Frase del usuario: "El vendedor le vendió una camiseta al cliente por 49.90 dó
         <p>Nos queda un frente abierto. El lexicon resuelve la polisemia y la jerga, pero el lenguaje
           guarda trampas más finas: la negación, la modalidad, el tiempo verbal que no coincide con el
           tiempo del hecho, las metáforas que ningún diccionario anticipa. Es hora de poner el modelo
-          completo —ejes, hecho atómico, lexicon— a prueba contra los casos que de verdad duelen. Eso es
+          completo (ejes, hecho atómico, lexicon) a prueba contra los casos que de verdad duelen. Eso es
           el próximo capítulo.</p>
 
       </div>
