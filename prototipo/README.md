@@ -1,6 +1,7 @@
 # Prototipo WQuestions — informe de validación
 
-Prototipo en Python puro (sin dependencias externas; Python 3.9+) que
+Prototipo en Python (Python 3.9+). El núcleo `wq` no tiene dependencias; el
+aplanado a tablas (`wq/vistas.py`) y el ejemplo `tabla_cap8.py` usan `pandas`. Que
 implementa lo que el libro describe del modelo: los 8 ejes, los hechos
 atómicos con signatura, la reificación de situaciones, el catálogo
 canónico de roles, el lexicon con resolución de polisemia, D9 (vigencia
@@ -23,6 +24,12 @@ PYTHONPATH=. python3 ejemplos/spa.py
 
 # Validación de fricciones en los 8 dominios previos (17 comprobaciones)
 PYTHONPATH=. python3 ejemplos/dominios_previos.py
+
+# Instalar la dependencia del aplanado a tablas
+python3 -m pip install -r requirements.txt
+
+# Las tres vistas del cap. 8 (plana / proyección / pivote) sobre ~336 trámites
+PYTHONPATH=. python3 ejemplos/tabla_cap8.py
 ```
 
 ## Estructura
