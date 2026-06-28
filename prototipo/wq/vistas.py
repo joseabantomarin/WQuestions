@@ -112,5 +112,87 @@ def proyeccion(u: Universe,
     return pd.DataFrame(filas, columns=cabeceras)
 
 
-def pivote(*args, **kwargs):  # implementado en Task 3
-    raise NotImplementedError
+def _subir_a_zona(u: Universe, l_ind: Individual, zonas,
+                  max_saltos: int = 10) -> Individual:
+    """Sube por `dentro_de` hasta un ancestro cuyo id esté en `zonas`.
+
+    Si `zonas` es None, sube hasta la raíz (primer L sin `dentro_de`). Si el
+    propio `l_ind` ya está en `zonas`, lo devuelve tal cual.
+    """
+    cur = l_ind
+    for _ in range(max_saltos):
+        if zonas is not None and cur.id in zonas:
+            return cur
+        ups = [f.value for f in u.facts_about(cur) if f.role == "dentro_de"]
+        if not ups:
+            return cur
+        cur = ups[0]
+    return cur
+
+
+def _orden_aparicion(ids) -> List[str]:
+    """Lista de ids únicos en orden de primera aparición."""
+    vistos: List[str] = []
+    s = set()
+    for i in ids:
+        if i not in s:
+            s.add(i)
+            vistos.append(i)
+    return vistos
+
+
+def pivote(u: Universe,
+           eje_filas: str = "instancia_de",
+           eje_cols: str = "lugar_de",
+           orden_filas: Optional[Sequence[str]] = None,
+           orden_cols: Optional[Sequence[str]] = None,
+           filtro_k=None,
+           resolver_l_a_zona: bool = False,
+           at: Optional[datetime] = None) -> pd.DataFrame:
+    """Fig 8.5 — el cruce de dos ejes con conteos.
+
+    Agrupa cada situación por el valor de `eje_filas` y el de `eje_cols`;
+    la celda es el número de situaciones en esa intersección. Con
+    `resolver_l_a_zona=True`, el valor de `eje_cols` se sube por `dentro_de`
+    hasta una zona de `orden_cols`.
+    """
+    if isinstance(filtro_k, str):
+        filtro_k = {filtro_k}
+    elif filtro_k is not None:
+        filtro_k = set(filtro_k)
+
+    sits = _situaciones(u)
+    if filtro_k is not None:
+        sits = [s for s in sits if _clases(u, s, at) & filtro_k]
+
+    zonas = set(orden_cols) if (resolver_l_a_zona and orden_cols) else None
+
+    conteos: Dict[Tuple[str, str], int] = {}
+    etiquetas: Dict[str, str] = {}
+    for sit in sits:
+        hechos = u.facts_about(sit, at=at)
+        fila_vals = [f.value for f in hechos if f.role == eje_filas]
+        col_vals = [f.value for f in hechos if f.role == eje_cols]
+        if not fila_vals or not col_vals:
+            continue
+        fv = fila_vals[0]
+        cv = col_vals[0]
+        if resolver_l_a_zona:
+            cv = _subir_a_zona(u, cv, zonas)
+        etiquetas[fv.id] = _etiqueta(fv)
+        etiquetas[cv.id] = _etiqueta(cv)
+        clave = (fv.id, cv.id)
+        conteos[clave] = conteos.get(clave, 0) + 1
+
+    fila_ids = (list(orden_filas) if orden_filas
+                else _orden_aparicion([k[0] for k in conteos]))
+    col_ids = (list(orden_cols) if orden_cols
+               else _orden_aparicion([k[1] for k in conteos]))
+
+    data = [[conteos.get((fid, cid), 0) for cid in col_ids]
+            for fid in fila_ids]
+    return pd.DataFrame(
+        data,
+        index=[etiquetas.get(fid, fid) for fid in fila_ids],
+        columns=[etiquetas.get(cid, cid) for cid in col_ids],
+    )
