@@ -7,7 +7,7 @@ from __future__ import annotations
 import unittest
 
 from wq import Axis, Individual, Universe, Catalog
-from wq.vistas import tabla_plana, proyeccion
+from wq.vistas import tabla_plana, proyeccion, pivote
 
 
 def _mini():
@@ -79,6 +79,52 @@ class TestProyeccion(unittest.TestCase):
                       Individual(id="k_compra", axis=Axis.K, label="Compra"))
         df = proyeccion(u, [("Op (O)", "_subject")], subjects=[s2, s])
         self.assertEqual(df["Op (O)"].tolist(), ["Compra #1", "Venta #1"])
+
+
+class TestPivote(unittest.TestCase):
+    def _cruce(self):
+        u = Universe(catalog=Catalog())
+        kA = Individual(id="kA", axis=Axis.K, label="A")
+        kB = Individual(id="kB", axis=Axis.K, label="B")
+        lx = Individual(id="lx", axis=Axis.L, label="X")
+        ly = Individual(id="ly", axis=Axis.L, label="Y")
+
+        def sit(i, k, l):
+            s = Individual(id=f"s{i}", axis=Axis.O, label=f"s{i}")
+            u.add_individual(s)
+            u.assert_fact(s, "instancia_de", k)
+            u.assert_fact(s, "lugar_de", l)
+            return s
+
+        sit(1, kA, lx)
+        sit(2, kA, lx)
+        sit(3, kA, ly)
+        sit(4, kB, lx)
+        return u
+
+    def test_cuenta_el_cruce_k_por_l(self):
+        u = self._cruce()
+        df = pivote(u, orden_filas=["kA", "kB"], orden_cols=["lx", "ly"])
+        self.assertEqual(int(df.loc["A", "X"]), 2)
+        self.assertEqual(int(df.loc["A", "Y"]), 1)
+        self.assertEqual(int(df.loc["B", "X"]), 1)
+        self.assertEqual(int(df.loc["B", "Y"]), 0)
+
+    def test_resolver_l_a_zona_sube_por_dentro_de(self):
+        u = Universe(catalog=Catalog())
+        k = Individual(id="k", axis=Axis.K, label="K")
+        zona = Individual(id="zona", axis=Axis.L, label="Zona")
+        calle = Individual(id="calle", axis=Axis.L, label="Calle 1")
+        u.add_individual(zona)
+        u.add_individual(calle)
+        u.assert_fact(calle, "dentro_de", zona)
+        s = Individual(id="s1", axis=Axis.O, label="s1")
+        u.add_individual(s)
+        u.assert_fact(s, "instancia_de", k)
+        u.assert_fact(s, "lugar_de", calle)
+        df = pivote(u, orden_filas=["k"], orden_cols=["zona"],
+                    resolver_l_a_zona=True)
+        self.assertEqual(int(df.loc["K", "Zona"]), 1)
 
 
 if __name__ == "__main__":
