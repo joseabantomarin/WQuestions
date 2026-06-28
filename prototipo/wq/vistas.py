@@ -51,6 +51,7 @@ def tabla_plana(u: Universe,
     (Q/O/L/T/N/K); celdas = ids (códigos). Varios valores en un eje se unen
     con "; "; ejes sin valor quedan en "". La columna O es la id de la propia
     situación (los enlaces O→O no se vuelcan ahí).
+    Los elementos de subjects, si se pasan, deben ser situaciones reificadas (eje O).
     """
     sits = list(subjects) if subjects is not None else _situaciones(u)
     columnas = [ax.value for ax in _EJES_VALOR]  # ["Q","O","L","T","N","K"]
@@ -68,8 +69,47 @@ def tabla_plana(u: Universe,
     return pd.DataFrame(filas, columns=columnas)
 
 
-def proyeccion(*args, **kwargs):  # implementado en Task 2
-    raise NotImplementedError
+def _clases(u: Universe, sit: Individual,
+            at: Optional[datetime] = None) -> set:
+    """Ids de las categorías K declaradas con `instancia_de` para `sit`."""
+    return {f.value.id for f in u.facts_about(sit, at=at)
+            if f.role == "instancia_de"}
+
+
+def proyeccion(u: Universe,
+               columnas: Sequence[Tuple[str, str]],
+               subjects: Optional[Sequence[Individual]] = None,
+               filtro_k=None,
+               at: Optional[datetime] = None) -> pd.DataFrame:
+    """Fig 8.4 — el reporte legible.
+
+    `columnas`: lista de (cabecera, rol). El rol "_subject" proyecta la
+    etiqueta de la situación; cualquier otro proyecta el label del valor de
+    ese rol (o "" si no está). `filtro_k`: id de K o iterable de ids.
+    `subjects`: si se da, solo esas situaciones, en ese orden.
+    """
+    if isinstance(filtro_k, str):
+        filtro_k = {filtro_k}
+    elif filtro_k is not None:
+        filtro_k = set(filtro_k)
+
+    sits = list(subjects) if subjects is not None else _situaciones(u)
+    if filtro_k is not None:
+        sits = [s for s in sits if _clases(u, s, at) & filtro_k]
+
+    cabeceras = [cab for cab, _ in columnas]
+    filas: List[Dict[str, str]] = []
+    for sit in sits:
+        hechos = u.facts_about(sit, at=at)
+        fila: Dict[str, str] = {}
+        for cab, rol in columnas:
+            if rol == "_subject":
+                fila[cab] = _etiqueta(sit)
+            else:
+                vals = [f.value for f in hechos if f.role == rol]
+                fila[cab] = _etiqueta(vals[0]) if vals else ""
+        filas.append(fila)
+    return pd.DataFrame(filas, columns=cabeceras)
 
 
 def pivote(*args, **kwargs):  # implementado en Task 3
