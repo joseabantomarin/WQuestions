@@ -21,6 +21,7 @@ from .catalog import Catalog, RoleSignature, SignatureError
 from .lexicon import Lexicon, LexiconEntry
 from .query import Pattern, Var, query, count
 from .ingest import ingest_situation, IngestError
+from .vistas import tabla_plana, proyeccion, pivote
 
 __all__ = [
     "Axis", "Individual", "mint_id", "category", "quantity", "time_point",
@@ -29,4 +30,5 @@ __all__ = [
     "Lexicon", "LexiconEntry",
     "Pattern", "Var", "query", "count",
     "ingest_situation", "IngestError",
+    "tabla_plana", "proyeccion", "pivote",
 ]
