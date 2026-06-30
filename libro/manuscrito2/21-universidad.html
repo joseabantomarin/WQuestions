@@ -540,6 +540,23 @@
           es la película completa de una vida que el tiempo no debería poder reescribir.<cite>La lección
           del expediente académico</cite></p>
 
+        <h2>Del expediente al tablero del rectorado</h2>
+
+        <p>Modelar la matrícula de Tomás y la malla que arrastra <em>Aprendizaje de Máquina</em> es
+          resolver un caso. Pero el rectorado vive en el agregado: cuántos estudiantes siguen
+          vigentes en cada carrera, qué curso acumula la tasa de desaprobación más alta, cuántos egresan
+          dentro de los cinco años. Ninguna de esas preguntas pide una tabla nueva. La inscripción de
+          cada alumno ya es una situación de tipo <code>matricula</code> con su carrera y su estado; la
+          estadística del semestre es contar esas situaciones, agrupadas por la coordenada que el
+          decano necesite.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># Matrículas vigentes en una carrera — un corte; el tablero recorre todas las carreras
+count(u, Pattern(fixed={"carrera": u.ind("carrera_cc"), "estado": u.ind("vigente")},
+                 type_constraint=u.ind("matricula")))</code></pre>
+        </div>
+
         <h2>El antes y el después: del esquema fragmentado al grafo único</h2>
 
         <p>Pongamos las dos arquitecturas frente a frente con la pregunta que abrió el capítulo, ahora
