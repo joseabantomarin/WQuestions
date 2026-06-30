@@ -865,6 +865,6 @@ Expected: 0 en todos (o coincidencias preexistentes no relacionadas, a revisar).
 ## Self-review (hecho)
 
 - **Cobertura del spec:** las 23 entradas del mapa (Núcleo/Ligero/Ajuste) tienen tarea (Tasks 1–24). Los 8 "Omitir" se verifican en Task 25/Step 3. ✓
-- **Sin placeholders:** cada tarea trae el borrador real del párrafo a insertar. Los nombres de roles/ejemplos (`rol:tipo`, IDs) son tentativos y se ajustan al leer cada capítulo (Step 1 de cada tarea lo exige); esto es intencional, no un placeholder. ✓
+- **Sin placeholders:** cada tarea trae el borrador real del párrafo a insertar. Los nombres concretos de roles, tipos e IDs (`"servicio"`, `u.ind("sauna")`, etc.) son tentativos y se ajustan a los reales de cada capítulo al leerlo (Step 1 de cada tarea lo exige); esto es intencional, no un placeholder. ✓
 - **Consistencia:** API verificada contra `prototipo/wq/query.py` y el uso real del cap. 16. Firmas: `count(u, Pattern(...))`, `suma(u, "campo", Pattern(...))`, `promedio(u, "campo", Pattern(...))`, `query(u, Pattern(fixed, ask, type_constraint))`. **No hay GROUP BY**: los snippets son cortes concretos (un valor fijo + `type_constraint`), no agrupaciones; la prosa describe el reporte completo. Roles en crudo + `u.ind(...)`. Todos los snippets del plan ya siguen este idioma. ✓
 - **Anti-redundancia:** cada tarea declara su ángulo; los Steps de fin de tranche releen en secuencia. ✓
