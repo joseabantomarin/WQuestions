@@ -943,6 +943,26 @@ afectados = u.subjects_where("lote_usado", lote_av2207, role="paciente")
             proyección, sin cruzar tablas entre el módulo clínico y el de farmacia.</figcaption>
         </figure>
 
+        <h2>Del paciente a la población</h2>
+
+        <p>Todo este capítulo diseccionó a un paciente. Vega tiene nombre, una fibrilación en
+          febrero, un diagnóstico que cambió de grado en marzo. Pero quien dirige el hospital rara vez
+          pregunta por Vega: pregunta por la población que Vega integra. Cuántos pacientes arrastran hoy
+          una hipertensión grado 2, qué diagnóstico encabezó el trimestre, cuántas camas sigue ocupando
+          cardiología esta mañana.</p>
+
+        <p>Y ahí está el dividendo que no se ve mientras modelas: ninguna de esas preguntas pide una
+          tabla nueva. El diagnóstico de Vega es una situación más, del mismo tipo que los de los otros
+          mil pacientes, y contar los de un tipo es contarlos a todos a la vez. Diseccionar con cuidado
+          una sola consulta fue, sin proponérnoslo, dejar armado el tablero epidemiológico.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># Cuántos diagnósticos de hipertensión grado 2 hay vigentes — la cohorte que Vega integra
+count(u, Pattern(fixed={"diagnostico_asignado": u.ind("hta_grado_2")},
+                 type_constraint=u.ind("diagnostico")))</code></pre>
+        </div>
+
         <h2>El lexicon de la clínica</h2>
 
         <p>Para que la doctora (o el sistema que ella usa) no tenga que aprender jerga de bases de
