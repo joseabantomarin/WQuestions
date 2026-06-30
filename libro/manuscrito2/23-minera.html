@@ -1051,6 +1051,23 @@ u.assert_fact(orden_trabajo_88, "resultado", "rodamiento sustituido")</code></pr
           protocolo de comisionamiento a la última orden de trabajo, sin que ninguna pieza nueva del
           modelo haya tenido que inventarse para sostenerlo.</p>
 
+        <h2>Del camión 007 al parque entero</h2>
+
+        <p>Reconstruimos la vida de un activo: el camión 007, sus quince años de estados, sus órdenes
+          de trabajo. Pero quien planifica el mantenimiento no decide sobre un camión, decide sobre el parque. Y la
+          pregunta que ordena el presupuesto no es «¿en qué estado está este equipo?», sino «¿qué activo
+          acumula más intervenciones correctivas?» o «¿qué causa raíz reaparece trimestre tras
+          trimestre?». Esas no son consultas de otro sistema: cada falla quedó registrada con su activo y
+          su disparador, y el reporte de confiabilidad es contar esas órdenes correctivas, activo por
+          activo.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># Órdenes correctivas sobre un activo — un corte; el reporte recorre todo el parque
+count(u, Pattern(fixed={"activo": u.ind("camion_007"), "tipo": u.ind("correctivo")},
+                 type_constraint=u.ind("dar_mantenimiento")))</code></pre>
+        </div>
+
         <h2>Una operación entera, vista como hechos</h2>
 
         <p>Conviene detenerse y mirar el conjunto. Lo que en una arquitectura tradicional serían cinco o
