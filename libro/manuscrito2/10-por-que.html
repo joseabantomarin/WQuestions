@@ -358,6 +358,23 @@ justificado_por  ∈ M(O, O)    // la autoridad de una norma o regla</code></pre
           guarda una norma (porque una regla, en este modelo, también es un objeto) al final del
           capítulo.</p>
 
+        <h2>Cuando la causa raíz es contar</h2>
+
+        <p>Separar el porqué en cuatro cables rinde de verdad cuando dejas de mirar
+          un hecho y miras el patrón. Si cada corte de transmisión cuelga de un
+          <code>causado_por</code>, entonces «¿qué causa se repite más?» deja de ser una
+          investigación y se vuelve un conteo: basta agrupar las situaciones por el otro extremo
+          de ese cable. El análisis de causa raíz —que en otros sistemas es un proyecto con su
+          analista y su hoja de cálculo— aquí es preguntar cuántos hechos comparten la misma
+          causa, una causa por vez.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># Cortes atribuidos a una causa concreta — un corte; la causa raíz se compara entre causas
+count(u, Pattern(fixed={"causado_por": u.ind("sobrecarga_generador_01")},
+                 type_constraint=u.ind("corte_imagen")))</code></pre>
+        </div>
+
         <h2>Cuatro cables en un solo hecho</h2>
 
         <p>Lo verdaderamente potente de tener cuatro cables bien separados es que un mismo evento puede
