@@ -421,6 +421,19 @@
           que la vieja torre de Babel de los datos, que vimos en el <a href="01-torre-de-babel.html">capítulo
           1</a>, nos impedía hacer.</p>
 
+        <h2>Un cable repetido es una columna</h2>
+
+        <p>Apilar tripletas produce un efecto lateral que se ve mejor desde ya. Cuando mil ventas distintas
+          llevan todas el mismo cable <code>monto_usd</code>, ese cable deja de ser un dato suelto de
+          <code>venta_001</code> y se vuelve, de hecho, una columna que se puede recorrer entera. Lo
+          mismo pasa con <code>agente</code>: escribirlo sobre cada gol es, sin proponérselo, dejar
+          armada la lista de todas las jugadas que comparten ese cable. Por eso el patrón
+          <code>(?, agente, messi)</code> de hace un momento no era un truco aislado, sino la forma
+          natural de leer esa columna de punta a punta. Cada hecho que registras sobre un sujeto es, a
+          la vez, una fila en el reporte de todos los sujetos que comparten ese cable: lo que parece
+          guardar un dato individual está construyendo, sin avisar, la semilla de la consulta
+          colectiva.</p>
+
         <h2>El contraste con SQL</h2>
 
         <p>Para medir la diferencia, traduzcamos esa última pregunta (<em>goles de Messi en

@@ -500,6 +500,22 @@ K:USD_por_millon_tokens   — unidad compuesta: con ella facturan los proveedore
           esa capa de inteligencia estructural, cualquier respuesta es una adivinanza disfrazada de
           cálculo.</p>
 
+        <h2>Un número solo dice poco; muchos cuentan el negocio</h2>
+
+        <p>Una magnitud aislada (los 49,90&nbsp;dólares de <code>venta_001</code>, su 10&nbsp;% de
+          descuento) describe un solo hecho y poco más. El eje cuantitativo cobra todo su sentido cuando
+          se acumula: el total facturado del día, el descuento promedio de la campaña, el ticket medio
+          por cliente. Y como cada importe es un valor tipado colgado de una situación, sumarlos o
+          promediarlos sobre miles de ventas no es una capa que se añade por fuera: es la operación más
+          natural del eje. Sumar montos es, sencillamente, recorrer el mismo cable <code>monto</code>
+          sobre todas las situaciones de venta a la vez.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># Total facturado — suma del monto sobre todas las ventas
+suma(u, "monto", Pattern(type_constraint=u.ind("venta")))</code></pre>
+        </div>
+
         <h2>La trampa de programación: el escalar pelado</h2>
 
         <p>El error clásico (el que asoma en producción y cuesta dinero real) es guardar

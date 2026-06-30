@@ -591,6 +591,22 @@
             tranquilo.</p>
         </div>
 
+        <h2>Darle identidad a una es nombrar a todas</h2>
+
+        <p>Reificar tiene una recompensa que se cobra más tarde. Al «hacer cosa» a
+          <code>venta_001</code> parece que solo le damos identidad a un evento suelto para colgarle
+          atributos: su monto, su cliente, su momento. Pero al darle un tipo —al decir que es una
+          instancia de <code>venta</code>— la inscribimos, sin proponérnoslo, en un conjunto: el de
+          todas las ventas. Esa es la otra cara del nudo. Un evento con identidad propia no solo
+          recibe detalles; queda contado junto a sus pares, y «¿cuántas ventas hubo?» pasa a tener
+          respuesta sin armar nada nuevo.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># Cuántas ventas se reificaron — un tipo de situación, contado entero
+count(u, Pattern(type_constraint=u.ind("venta")))</code></pre>
+        </div>
+
         <p>Las situaciones reificadas son las rotondas por donde circula el tráfico de la base: los
           puntos donde convergen los hechos y desde donde se ramifican los procesos. Pero para que el
           mapa esté completo falta pavimentar un tipo de conexión muy especial entre esas rotondas.

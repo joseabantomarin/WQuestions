@@ -480,6 +480,23 @@ u.assert_fact(comision_ortiz, "calculado_segun", politica_comisiones_v2)</code><
           volver a unir. Es un solo hecho que cada módulo mira desde su rol: el grafo ya es la
           integración.<cite>La lección del Caso 3</cite></p>
 
+        <h2>De la venta 4417 al cierre de mes</h2>
+
+        <p>Acompañamos una venta que cruzó inventario, contabilidad y compras. La gerencia
+          no mira la <code>venta_4417</code>: mira el cierre de mes. Cuánto facturó cada línea de
+          producto, qué margen dejó cada sede, cuántas bombas K7 quedan en el almacén norte, qué
+          comisiones acumuló Ortiz en el trimestre. Lo notable es que ninguno de esos reportes vive en
+          un módulo. Son cortes distintos del mismo grafo de situaciones —cada uno fija una coordenada
+          y deja libre el resto—, y todos los sumandos ya estaban escritos cuando cerró el pedido de las
+          11:20. Sumar las ventas de una línea es el corte más simple del consolidado:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># Facturación de una línea de producto — un corte; el cierre de mes recorre todas
+suma(u, "monto", Pattern(fixed={"tema": u.ind("bomba_riego_k7")},
+                         type_constraint=u.ind("vender")))</code></pre>
+        </div>
+
         <h2>Caso 4 · La orden de compra y su aprobación bitemporal</h2>
 
         <p>Río arriba de la venta hay que reponer stock, y eso dispara compras. Las órdenes grandes

@@ -695,6 +695,23 @@ SELECT nivel FROM perfiles_riesgo WHERE cliente_id = 4410;</code></pre>
             disponible, fechada al segundo.</p>
         </div>
 
+        <h2>Del préstamo de Mariana a la cartera entera</h2>
+
+        <p>Una transferencia de Mariana a Bruno, la novela de un préstamo, un cargo fraudulento: casos
+          que se entienden de a uno. El regulador, en cambio, nunca pregunta por Mariana. Pregunta por
+          la cartera entera: cuánto saldo sigue vivo en cada estado de mora, qué proporción de los
+          préstamos lleva más de sesenta días vencido, cómo se movió ese número de un mes al otro. Y
+          esas respuestas no piden tablas nuevas. El préstamo <code>prestamo_5503</code> ya guarda su
+          estado fechado con la vigencia D6; el reporte regulatorio es leer ese mismo estado sobre
+          todos los préstamos a la vez y sumar sus montos.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># Saldo vivo de los préstamos en mora de 60 días — un corte; el reporte recorre cada estado
+suma(u, "monto", Pattern(fixed={"estado": u.ind("mora_60_dias")},
+                         type_constraint=u.ind("prestamo")))</code></pre>
+        </div>
+
         <h2>Lo que el banco le exigió al modelo</h2>
 
         <p>Vale la pena cuantificar de qué tamaño es el problema que el modelo absorbe. Estas son las

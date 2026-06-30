@@ -585,6 +585,23 @@ causa  = [f for f in hechos if f.role == "causado_por"]
 # → pico_demanda_2240   (alta demanda + lluvia, 22:40, zona de la plaza)</code></pre>
         </div>
 
+        <h2>De un viaje a la flota entera</h2>
+
+        <p>Hasta aquí seguimos un viaje: la solicitud de Camila, la asignación a Iván, el cobro
+          de la tarifa. Pero quien opera Rumbo no vive en un viaje, vive en diez mil. Y la pregunta
+          que paga el sueldo no es «¿adónde llevó Iván a Camila?», sino «¿qué zona se queda sin
+          autos a las siete de la tarde?» o «¿qué conductor completa más carreras de las que
+          rechaza?». Esas no son consultas nuevas: son las mismas situaciones de viaje, agrupadas
+          por destino, por hora, por conductor. El conteo de los viajes de Iván que vimos recién
+          es ya un corte de ese tablero; correrlo sobre cada conductor da el ranking de la flota.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># Viajes completados hacia una zona — un corte; el tablero cruza todas las zonas y conductores
+count(u, Pattern(fixed={"destino": u.ind("terminal_buses"), "estatus_factual": u.ind("completado")},
+                 type_constraint=u.ind("viaje")))</code></pre>
+        </div>
+
         <h2>El antes y el después · del esquema fragmentado al grafo único</h2>
 
         <p><b>Antes, en SQL.</b> El esquema clásico de un servicio de transporte reparte la realidad

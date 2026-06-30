@@ -338,6 +338,21 @@
           un ejemplar único del mundo, sino un patrón conceptual que puede aplicarse a decenas, miles
           o millones de casos</strong>.</p>
 
+        <h2>Una sola plantilla, todas sus instancias</h2>
+
+        <p>Que la plantilla viva separada de sus ejemplares no es solo orden conceptual: es lo que
+          hace barata una pregunta que en otros modelos sale cara. Si <code>camiseta</code> es una
+          categoría en K, entonces «todas las prendas de ese tipo» ya está dicho —son los individuos
+          que cuelgan de ella por <code>instancia_de</code>, y <code>camiseta_88</code> es solo uno
+          entre ellos—. Preguntar por una unidad o por las diez mil cuesta lo mismo: en ambos casos
+          recorres el mismo cable hacia la misma plantilla.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># Cuántos ejemplares instancian la misma plantilla de K
+count(u, Pattern(type_constraint=u.ind("camiseta")))</code></pre>
+        </div>
+
         <h2>La frontera resbaladiza: ¿instancia (O) o clase (K)?</h2>
 
         <p>El lector técnico choca tarde o temprano con un caso incómodo: ciertos objetos híbridos
