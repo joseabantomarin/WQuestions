@@ -746,6 +746,22 @@ PROJECT  SUM(importe)</code></pre>
           paralela sin tocar una sola fila del sistema operativo. Y nada de esto requirió migrar yaku: el
           MySQL sigue corriendo exactamente igual que el viernes con el que abrimos.</p>
 
+        <h2>Del viernes en recepción al consolidado del negocio</h2>
+
+        <p>Mapear yaku no fue el objetivo final: fue la condición para poder preguntar. Y lo que el dueño
+          quiere preguntar no es por la sauna de paso de las 19:40, sino por el negocio entero: cuánto
+          factura cada línea —sauna, hostal, gimnasio, cafetín—, cuál crece y cuál se estanca, qué día de
+          la semana llena el local. Antes esas respuestas vivían repartidas entre <code>venta</code>,
+          <code>ventadet</code> y los valores de <code>producto.MARCA</code>, cruzados a mano cada vez;
+          ahora son cortes de un mismo grafo de ventas, uno por familia de servicio.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># Facturación del sauna — un corte; el consolidado recorre las cuatro familias
+suma(u, "importe", Pattern(fixed={"familia": u.ind("sauna")},
+                           type_constraint=u.ind("venta")))</code></pre>
+        </div>
+
         <h2>Qué quedó probado</h2>
 
         <p>La arqueología de yaku deja tres lecciones que ningún dominio de pizarra limpia podía dejar, y
