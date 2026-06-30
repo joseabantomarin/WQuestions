@@ -888,6 +888,22 @@ u.assert_fact(multa_ivan_88, "estatus_factual", u.ind("revocada"),
           municipalidad?»</em> deja de ser un reporte artesanal y se vuelve una proyección por el rol
           <code>responsable</code> del paso vigente.</p>
 
+        <h2>De un trámite a la demora de todos</h2>
+
+        <p>Recorrimos el trámite de Juan paso a paso. Pero al alcalde nadie le pregunta por
+          <code>tramite_juan_lic_04</code>: le preguntan por la demora. Cuántos días, en promedio, tarda
+          una licencia de micromovilidad desde la solicitud hasta la emisión; qué paso es el cuello de
+          botella; si el «una sola vez» de verdad recortó los tiempos este año. Cada trámite ya cargó su
+          <code>momento</code> de inicio y su fecha de cierre, paso por paso; el indicador de gestión es
+          promediar esa diferencia sobre todos los trámites de un mismo tipo.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># Días promedio de resolución de un tipo de trámite ya emitido — el SLA se mira por tipo
+promedio(u, "dias_resolucion", Pattern(fixed={"estatus_factual": u.ind("emitida")},
+                                       type_constraint=u.ind("tramite_licencia_micromov")))</code></pre>
+        </div>
+
         <h2>El expediente, contenedor que todo lo agrupa</h2>
 
         <p>El trámite encadena los pasos; el <strong>expediente</strong> los guarda. Es el segundo
