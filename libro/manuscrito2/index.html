@@ -22,7 +22,6 @@
   </script>
 </head>
 <body>
-  <div class="barra-progreso" aria-hidden="true"></div>
   <header class="cabecera">
     <a class="marca" href="index.html">
       <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
@@ -36,25 +35,30 @@
 
   <main>
     <section class="landing-heroe">
-      <div class="env">
-        <p class="super revelar">Arquitectura universal de la información</p>
-        <h1 class="revelar">Las preguntas como <em>coordenadas</em></h1>
-        <p class="bajada revelar">Quién, qué, dónde, cuándo, cuánto, cuál y cómo. Siete preguntas
-          bastan para organizar la información de cualquier dominio, y para que la inteligencia
-          artificial trabaje con nuestros datos sin perder precisión.</p>
-        <div class="franja-ejes revelar" aria-label="Los siete ejes">
-          <span class="pill"><span class="pt" style="background:var(--eje-q)"></span>Q · quién</span>
-          <span class="pill"><span class="pt" style="background:var(--eje-o)"></span>O · qué</span>
-          <span class="pill"><span class="pt" style="background:var(--eje-l)"></span>L · dónde</span>
-          <span class="pill"><span class="pt" style="background:var(--eje-t)"></span>T · cuándo</span>
-          <span class="pill"><span class="pt" style="background:var(--eje-n)"></span>N · cuánto</span>
-          <span class="pill"><span class="pt" style="background:var(--eje-k)"></span>K · cuál</span>
-          <span class="pill"><span class="pt" style="background:var(--eje-m)"></span>M · cómo</span>
+      <div class="env heroe-grid">
+        <div class="heroe-texto">
+          <p class="super revelar">Arquitectura universal de la información</p>
+          <h1 class="revelar">Las preguntas como <em>coordenadas</em></h1>
+          <p class="bajada revelar">Quién, qué, dónde, cuándo, cuánto, cuál y cómo. Siete preguntas
+            bastan para organizar la información de cualquier dominio, y para que la inteligencia
+            artificial trabaje con nuestros datos sin perder precisión.</p>
+          <div class="franja-ejes revelar" aria-label="Los siete ejes">
+            <span class="pill"><span class="pt" style="background:var(--eje-q)"></span>Q · quién</span>
+            <span class="pill"><span class="pt" style="background:var(--eje-o)"></span>O · qué</span>
+            <span class="pill"><span class="pt" style="background:var(--eje-l)"></span>L · dónde</span>
+            <span class="pill"><span class="pt" style="background:var(--eje-t)"></span>T · cuándo</span>
+            <span class="pill"><span class="pt" style="background:var(--eje-n)"></span>N · cuánto</span>
+            <span class="pill"><span class="pt" style="background:var(--eje-k)"></span>K · cuál</span>
+            <span class="pill"><span class="pt" style="background:var(--eje-m)"></span>M · cómo</span>
+          </div>
+          <div class="cta-fila revelar">
+            <a class="btn btn--solido" href="indice.html">Leer el libro</a>
+            <a class="btn btn--borde" href="33-anexo-prototipo.html">Ver el prototipo (Python)</a>
+          </div>
         </div>
-        <div class="cta-fila revelar">
-          <a class="btn btn--solido" href="indice.html">Leer el libro</a>
-          <a class="btn btn--borde" href="33-anexo-prototipo.html">Ver el prototipo (Python)</a>
-        </div>
+        <figure class="heroe-visual revelar">
+          <img src="assets/img/portada.png" alt="Portada del libro WQuestions">
+        </figure>
       </div>
     </section>
 
@@ -118,12 +122,12 @@
           <div class="eje-card" style="--c:var(--eje-l)">
             <div class="eje-card__num">L</div>
             <h3 class="eje-card__q">¿Dónde?</h3>
-            <p class="eje-card__txt">Ancla el hecho a un lugar en el espacio.</p>
+            <p class="eje-card__txt">El lugar: ancla el hecho a un espacio.</p>
           </div>
           <div class="eje-card" style="--c:var(--eje-t)">
             <div class="eje-card__num">T</div>
             <h3 class="eje-card__q">¿Cuándo?</h3>
-            <p class="eje-card__txt">Ubica el hecho en el tiempo: es el momento.</p>
+            <p class="eje-card__txt">El momento: sitúa el hecho en el tiempo.</p>
           </div>
           <div class="eje-card" style="--c:var(--eje-n)">
             <div class="eje-card__num">N</div>
