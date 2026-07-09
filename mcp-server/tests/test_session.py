@@ -102,3 +102,25 @@ def test_ask_projects_the_asked_role():
     out = s.ask(fixed={"lugar_de": "spa_oasis"}, ask=["agente"])
     assert out["count"] == 1
     assert out["results"][0]["agente"] == "ana"
+
+
+def test_show_model_reports_counts():
+    s = WQSession()
+    s.add_entity("ana", "Q", "Ana")
+    s.assert_situation("visit", roles={"agente": "ana"})
+    out = s.show_model()
+    assert out["fact_count"] >= 1
+    assert any(f["role"] == "agente" for f in out["facts"])
+
+
+def test_load_example_spa_populates_model():
+    s = WQSession()
+    out = s.load_example("spa")
+    assert out["ok"] is True
+    assert out["fact_count"] > 0
+
+
+def test_load_example_unknown_name_errors():
+    s = WQSession()
+    out = s.load_example("does_not_exist")
+    assert out["ok"] is False

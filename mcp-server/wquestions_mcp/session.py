@@ -164,3 +164,25 @@ class WQSession:
                     row[role] = val.id
             results.append(row)
         return {"count": len(results), "results": results}
+
+    def show_model(self) -> Dict[str, Any]:
+        facts = [
+            {"subject": f.subject.id, "role": f.role, "value": f.value.id}
+            for f in self.universe.facts
+        ]
+        return {
+            "summary": self.universe.summary(),
+            "entity_count": len(self.universe.individuals),
+            "fact_count": len(self.universe.facts),
+            "facts": facts,
+        }
+
+    def load_example(self, name: str) -> Dict[str, Any]:
+        from .examples import EXAMPLES
+        builder = EXAMPLES.get(name)
+        if builder is None:
+            return {"ok": False,
+                    "error": f"Unknown example '{name}'. Available: {list(EXAMPLES)}"}
+        self.reset()
+        builder(self)
+        return {"ok": True, "loaded": name, "fact_count": len(self.universe.facts)}
