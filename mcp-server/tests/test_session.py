@@ -76,3 +76,18 @@ def test_assert_situation_reports_missing_entity():
     out = s.assert_situation("visit", roles={"agente": "ghost"})
     assert out["ok"] is False
     assert "ghost" in out["error"]
+
+
+def test_add_entity_axis_conflict_returns_error():
+    s = WQSession()
+    s.add_entity("x", "Q")
+    out = s.add_entity("x", "O")
+    assert out["ok"] is False
+    assert "error" in out
+
+
+def test_assert_situation_inline_spec_missing_axis_returns_error():
+    s = WQSession()
+    out = s.assert_situation("visit", roles={"agente": {"id": "bob"}})
+    assert out["ok"] is False
+    assert "error" in out

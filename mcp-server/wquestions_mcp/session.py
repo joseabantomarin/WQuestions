@@ -71,9 +71,9 @@ class WQSession:
                    label: Optional[str] = None) -> Dict[str, Any]:
         try:
             ind = self._individual(entity_id, axis, label)
+            self.universe.add_individual(ind)
         except ValueError as e:
             return {"ok": False, "error": str(e)}
-        self.universe.add_individual(ind)
         return {"ok": True,
                 "entity": {"id": ind.id, "axis": ind.axis.value, "label": ind.label}}
 
@@ -92,6 +92,11 @@ class WQSession:
         """A role value is either an existing entity id (str) or an inline
         spec dict {id, axis, label} to create on the fly."""
         if isinstance(spec, dict):
+            if "id" not in spec or "axis" not in spec:
+                raise ValueError(
+                    "Inline entity spec needs 'id' and 'axis' "
+                    f"(got keys: {sorted(spec.keys())})"
+                )
             ind = self._individual(spec["id"], spec["axis"], spec.get("label"))
             self.universe.add_individual(ind)
             return ind
