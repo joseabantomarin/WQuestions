@@ -13,10 +13,10 @@ with zero per-domain schema.**
 
 > Say: "Load the spa example, then show me the model."
 
-Claude calls `load_example("spa")`, then `show_model()`. The response shows
-a small universe: two clients (Q), a spa (L), and three visit facts on the
-`M` axis connecting them — built entirely from the 7 axes, no spa-specific
-code.
+Claude calls `load_example("spa")`, then `show_model()`. The response is a
+small universe built entirely from the 7 axes — two clients (Q), a spa (L),
+and three visits, each reified as its own situation (O) that links who went
+where and when. No spa-specific code, no schema.
 
 **2. Query it.**
 
