@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wquestions-mcp"
+version = "0.1.0"
+description = "Model any domain in 7 questions — a WQuestions MCP server."
+requires-python = ">=3.10"
+dependencies = ["mcp>=1.2", "wquestions-engine>=0.1.0"]
+
+[project.scripts]
+wquestions-mcp = "wquestions_mcp.server:main"
+
+[tool.setuptools]
+packages = ["wquestions_mcp"]
