@@ -5,10 +5,12 @@ JSON-friendly arguments into wq engine calls and JSON-friendly results back.
 No MCP types here: this module is pure Python and fully unit-tested.
 """
 from __future__ import annotations
+from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 from wq import Catalog, Individual, Lexicon, Universe
 from wq import LexiconEntry
+from wq import ingest_situation, IngestError
 from wq.axes import Axis, is_value_axis
 
 _AXIS_NAMES = {
@@ -85,3 +87,47 @@ class WQSession:
             optional=optional or [],
         ))
         return {"ok": True, "verb": verb}
+
+    def _resolve_value(self, spec: Any) -> Individual:
+        """A role value is either an existing entity id (str) or an inline
+        spec dict {id, axis, label} to create on the fly."""
+        if isinstance(spec, dict):
+            ind = self._individual(spec["id"], spec["axis"], spec.get("label"))
+            self.universe.add_individual(ind)
+            return ind
+        if spec in self.universe.individuals:
+            return self.universe.individuals[spec]
+        raise ValueError(
+            f"Unknown entity '{spec}'. Create it with add_entity first, "
+            f"or pass an inline spec {{'id','axis','label'}}."
+        )
+
+    @staticmethod
+    def _parse_ts(value: Optional[str]) -> Optional[datetime]:
+        if value is None:
+            return None
+        return datetime.fromisoformat(value.replace("Z", "+00:00"))
+
+    def assert_situation(self, verb: str, roles: Dict[str, Any],
+                         extra: Optional[Dict[str, Any]] = None,
+                         valid_from: Optional[str] = None,
+                         valid_to: Optional[str] = None) -> Dict[str, Any]:
+        if self.lexicon.resolve(verb) is None:
+            self.define_verb(verb, f"action_{verb}")
+        try:
+            resolved = {r: self._resolve_value(v) for r, v in roles.items()}
+            resolved_extra = ({r: self._resolve_value(v) for r, v in extra.items()}
+                              if extra else None)
+            situ = ingest_situation(
+                self.universe, self.lexicon, verb, resolved,
+                extra=resolved_extra,
+                valid_from=self._parse_ts(valid_from),
+                valid_to=self._parse_ts(valid_to),
+            )
+        except (ValueError, IngestError) as e:
+            return {"ok": False, "error": str(e)}
+        facts = [
+            {"subject": f.subject.id, "role": f.role, "value": f.value.id}
+            for f in self.universe.facts_about(situ)
+        ]
+        return {"ok": True, "situation_id": situ.id, "facts": facts}
