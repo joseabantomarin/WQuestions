@@ -34,3 +34,14 @@ def test_add_entity_rejects_predicate_axis():
     out = s.add_entity("bad", "M", "nope")
     assert out["ok"] is False
     assert "axis" in out["error"].lower()
+
+
+def test_define_verb_registers_entry():
+    s = WQSession()
+    out = s.define_verb("visit", "action_visit",
+                        obligatory=["agente"], optional=["lugar_de", "momento"])
+    assert out["ok"] is True
+    entry = s.lexicon.resolve("visit")
+    assert entry is not None
+    assert entry.situation_type == "action_visit"
+    assert entry.obligatory == ["agente"]

@@ -8,6 +8,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional
 
 from wq import Catalog, Individual, Lexicon, Universe
+from wq import LexiconEntry
 from wq.axes import Axis, is_value_axis
 
 _AXIS_NAMES = {
@@ -73,3 +74,14 @@ class WQSession:
         self.universe.add_individual(ind)
         return {"ok": True,
                 "entity": {"id": ind.id, "axis": ind.axis.value, "label": ind.label}}
+
+    def define_verb(self, verb: str, situation_type: str,
+                    obligatory: Optional[List[str]] = None,
+                    optional: Optional[List[str]] = None) -> Dict[str, Any]:
+        self.lexicon.register(LexiconEntry(
+            verb=verb,
+            situation_type=situation_type,
+            obligatory=obligatory or [],
+            optional=optional or [],
+        ))
+        return {"ok": True, "verb": verb}
