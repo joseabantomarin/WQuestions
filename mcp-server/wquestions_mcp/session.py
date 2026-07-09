@@ -44,6 +44,8 @@ class WQSession:
         }
 
     def list_roles(self) -> Dict[str, Any]:
+        # Reads a private attr: the engine exposes no public roles iterator,
+        # and it's intentionally left unmodified (see Global Constraints).
         roles = [
             {
                 "name": sig.name,
@@ -145,24 +147,24 @@ class WQSession:
         try:
             fixed_ind = ({r: self._resolve_value(v) for r, v in fixed.items()}
                          if fixed else {})
-        except ValueError as e:
+            pattern = Pattern(
+                fixed=fixed_ind,
+                ask={role: Var(role) for role in (ask or [])},
+                type_constraint=category(type) if type else None,
+            )
+            bindings = query(self.universe, pattern, at=self._parse_ts(at))
+            results = []
+            for b in bindings:
+                row: Dict[str, Any] = {"_subject": b["_subject"].id}
+                for role in (ask or []):
+                    val = b.get(role)
+                    if isinstance(val, list):
+                        row[role] = [v.id for v in val]
+                    elif val is not None:
+                        row[role] = val.id
+                results.append(row)
+        except (ValueError, IngestError) as e:
             return {"ok": False, "error": str(e)}
-        pattern = Pattern(
-            fixed=fixed_ind,
-            ask={role: Var(role) for role in (ask or [])},
-            type_constraint=category(type) if type else None,
-        )
-        bindings = query(self.universe, pattern, at=self._parse_ts(at))
-        results = []
-        for b in bindings:
-            row: Dict[str, Any] = {"_subject": b["_subject"].id}
-            for role in (ask or []):
-                val = b.get(role)
-                if isinstance(val, list):
-                    row[role] = [v.id for v in val]
-                elif val is not None:
-                    row[role] = val.id
-            results.append(row)
         return {"count": len(results), "results": results}
 
     def show_model(self) -> Dict[str, Any]:

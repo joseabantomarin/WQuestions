@@ -124,3 +124,10 @@ def test_load_example_unknown_name_errors():
     s = WQSession()
     out = s.load_example("does_not_exist")
     assert out["ok"] is False
+
+
+def test_ask_malformed_at_returns_error():
+    s = WQSession()
+    out = s.ask(fixed=None, ask=["agente"], at="not-a-date")
+    assert out["ok"] is False
+    assert "error" in out

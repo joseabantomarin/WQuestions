@@ -885,7 +885,12 @@ These are outward-facing actions Jose performs on his own accounts — the plan
 stops at producing everything they need:
 
 - **Record the demo GIF** following `DEMO.md`; drop it at `mcp-server/docs/demo.gif` and confirm the README renders it.
-- **Publish to PyPI** (`wquestions-mcp`) so `uvx wquestions-mcp` resolves — OR document the `pip install git+…` fallback in the README until PyPI is live.
+- **Publish to PyPI**: BOTH distributions must be published for `uvx wquestions-mcp`
+  to resolve — `wquestions-engine` (from `prototipo/`) AND `wquestions-mcp` (from
+  `mcp-server/`), since the latter depends on the former and neither is on PyPI yet
+  (alternatively, bundle the engine into the mcp-server wheel so only one dist needs
+  publishing) — OR document the `pip install git+…` fallback in the README until
+  PyPI is live.
 - **Create the public GitHub repo** from `mcp-server/` (0.2) and **enable GitHub Discussions** (0.4). Discord stays off until there's traction.
 
 ---

@@ -48,7 +48,8 @@ def assert_situation(verb: str, roles: Dict[str, Any],
                      valid_to: Optional[str] = None) -> Dict[str, Any]:
     """Assert a fact: reify a situation for `verb` and attach its roles.
     Each role value is an existing entity id or an inline {id, axis, label}.
-    valid_from/valid_to are ISO-8601 for time-varying facts (D6)."""
+    valid_from/valid_to are ISO-8601, for facts that are only valid during
+    a time range."""
     return _session.assert_situation(verb, roles, extra, valid_from, valid_to)
 
 
@@ -57,8 +58,10 @@ def ask(fixed: Optional[Dict[str, Any]] = None,
         ask: Optional[List[str]] = None,
         type: Optional[str] = None,
         at: Optional[str] = None) -> Dict[str, Any]:
-    """Query by projection: fix some roles, ask for others. `at` (ISO) queries
-    the model as it was valid at that time."""
+    """Query by projection: fix some roles, ask for others. `type` filters to
+    situations whose type matches the given category id (auto-registered
+    verbs get the id `action_<verb>`). `at` (ISO) queries the model as it
+    was valid at that time."""
     return _session.ask(fixed, ask, type, at)
 
 

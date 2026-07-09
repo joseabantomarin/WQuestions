@@ -49,8 +49,10 @@ restart Claude Desktop:
 ```
 
 Until `wquestions-mcp` is published to PyPI, run it from source instead:
-clone this repo, `pip install -e mcp-server` into a virtualenv, then point
-`command`/`args` at that venv's `wquestions-mcp` script (e.g.
+clone this repo and, from the repo root, install both local packages into a
+virtualenv — `pip install -e ./prototipo -e ./mcp-server` (the MCP server
+depends on the engine in `prototipo/`, which also isn't on PyPI yet). Then
+point `command`/`args` at that venv's `wquestions-mcp` script (e.g.
 `command: ".../.venv/bin/wquestions-mcp"`, `args: []`) instead of `uvx`.
 
 Then ask Claude: *"Load the spa example, then show me the model."* See
