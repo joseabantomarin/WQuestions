@@ -20,3 +20,17 @@ def test_reset_gives_empty_universe():
     s = WQSession()
     s.reset()
     assert len(s.universe.facts) == 0
+
+
+def test_add_entity_registers_individual():
+    s = WQSession()
+    out = s.add_entity("ana", "Q", "Ana")
+    assert out["ok"] is True
+    assert s.universe.individuals["ana"].axis.value == "Q"
+
+
+def test_add_entity_rejects_predicate_axis():
+    s = WQSession()
+    out = s.add_entity("bad", "M", "nope")
+    assert out["ok"] is False
+    assert "axis" in out["error"].lower()
