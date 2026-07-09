@@ -11,6 +11,7 @@ from typing import Any, Dict, List, Optional
 from wq import Catalog, Individual, Lexicon, Universe
 from wq import LexiconEntry
 from wq import ingest_situation, IngestError
+from wq import Pattern, Var, query, category
 from wq.axes import Axis, is_value_axis
 
 _AXIS_NAMES = {
@@ -136,3 +137,30 @@ class WQSession:
             for f in self.universe.facts_about(situ)
         ]
         return {"ok": True, "situation_id": situ.id, "facts": facts}
+
+    def ask(self, fixed: Optional[Dict[str, Any]] = None,
+            ask: Optional[List[str]] = None,
+            type: Optional[str] = None,
+            at: Optional[str] = None) -> Dict[str, Any]:
+        try:
+            fixed_ind = ({r: self._resolve_value(v) for r, v in fixed.items()}
+                         if fixed else {})
+        except ValueError as e:
+            return {"ok": False, "error": str(e)}
+        pattern = Pattern(
+            fixed=fixed_ind,
+            ask={role: Var(role) for role in (ask or [])},
+            type_constraint=category(type) if type else None,
+        )
+        bindings = query(self.universe, pattern, at=self._parse_ts(at))
+        results = []
+        for b in bindings:
+            row: Dict[str, Any] = {"_subject": b["_subject"].id}
+            for role in (ask or []):
+                val = b.get(role)
+                if isinstance(val, list):
+                    row[role] = [v.id for v in val]
+                elif val is not None:
+                    row[role] = val.id
+            results.append(row)
+        return {"count": len(results), "results": results}

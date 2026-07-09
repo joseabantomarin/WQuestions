@@ -91,3 +91,14 @@ def test_assert_situation_inline_spec_missing_axis_returns_error():
     out = s.assert_situation("visit", roles={"agente": {"id": "bob"}})
     assert out["ok"] is False
     assert "error" in out
+
+
+def test_ask_projects_the_asked_role():
+    s = WQSession()
+    s.add_entity("ana", "Q", "Ana")
+    s.add_entity("spa_oasis", "L", "Spa Oasis")
+    s.assert_situation("visit", roles={"agente": "ana", "lugar_de": "spa_oasis"})
+
+    out = s.ask(fixed={"lugar_de": "spa_oasis"}, ask=["agente"])
+    assert out["count"] == 1
+    assert out["results"][0]["agente"] == "ana"
