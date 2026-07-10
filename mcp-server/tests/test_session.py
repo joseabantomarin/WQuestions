@@ -211,3 +211,31 @@ def test_rejected_inline_n_creates_no_phantom_unit():
     )
     assert out["ok"] is False
     assert "usd" not in s.universe.individuals
+
+
+def test_correct_appends_fact_to_existing_situation():
+    s = WQSession()
+    s.add_entity("ana", "Q", "Ana")
+    s.add_entity("beto", "Q", "Beto")
+    out = s.assert_situation("visit", roles={"agente": "ana"})
+    sid = out["situation_id"]
+    c = s.correct(sid, "agente", "beto")
+    assert c["ok"] is True
+    agente = [f for f in s.universe.facts
+              if f.subject.id == sid and f.role == "agente"]
+    assert {f.value.id for f in agente} == {"ana", "beto"}
+
+
+def test_correct_unknown_situation_errors():
+    s = WQSession()
+    out = s.correct("nope", "agente", "ana")
+    assert out["ok"] is False
+    assert "nope" in out["error"]
+
+
+def test_correct_rejects_non_situation_subject():
+    s = WQSession()
+    s.add_entity("ana", "Q", "Ana")
+    out = s.correct("ana", "agente", "ana")  # ana is Q, not a situation (O)
+    assert out["ok"] is False
+    assert "situation" in out["error"].lower()

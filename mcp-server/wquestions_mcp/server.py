@@ -102,6 +102,17 @@ def assert_situation(verb: str, roles: Dict[str, Any],
 
 
 @mcp.tool()
+def correct(situation_id: str, role: str, value: Any,
+            valid_from: Optional[str] = None,
+            valid_to: Optional[str] = None) -> Dict[str, Any]:
+    """Correct or update a role on an existing situation by re-asserting it.
+    Append-only: the prior value is kept as history, never overwritten. ask
+    returns the latest value; ask(history=true) shows the full trail. Use this
+    instead of inventing status/superseded roles. valid_from/valid_to ISO-8601."""
+    return _session.correct(situation_id, role, value, valid_from, valid_to)
+
+
+@mcp.tool()
 def ask(fixed: Optional[Dict[str, Any]] = None,
         ask: Optional[List[str]] = None,
         type: Optional[str] = None,

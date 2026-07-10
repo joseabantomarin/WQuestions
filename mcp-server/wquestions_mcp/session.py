@@ -219,6 +219,33 @@ class WQSession:
         ]
         return {"ok": True, "situation_id": situ.id, "facts": facts}
 
+    def correct(self, situation_id: str, role: str, value: Any,
+                valid_from: Optional[str] = None,
+                valid_to: Optional[str] = None) -> Dict[str, Any]:
+        """Re-assert a role on an existing situation. Append-only: the prior
+        value is kept as history; ask returns the latest. No overwrite, ever."""
+        situ = self.universe.individuals.get(situation_id)
+        if situ is None:
+            return {"ok": False,
+                    "error": f"Unknown situation '{situation_id}'. Pass the "
+                             f"situation_id returned by a prior assert_situation."}
+        if situ.axis is not Axis.O:
+            return {"ok": False,
+                    "error": f"'{situation_id}' is in axis {situ.axis.value}, not "
+                             f"a situation (O). Corrections attach to situations."}
+        try:
+            val = self._resolve_value(value)
+            self.universe.assert_fact(
+                situ, role, val,
+                valid_from=self._parse_ts(valid_from),
+                valid_to=self._parse_ts(valid_to),
+            )
+        except (ValueError, IngestError) as e:
+            return {"ok": False, "error": str(e)}
+        return {"ok": True, "situation_id": situ.id, "role": role, "value": val.id,
+                "note": "Appended, not overwritten. ask returns this (latest) "
+                        "value; ask(history=true) shows prior ones."}
+
     def ask(self, fixed: Optional[Dict[str, Any]] = None,
             ask: Optional[List[str]] = None,
             type: Optional[str] = None,
