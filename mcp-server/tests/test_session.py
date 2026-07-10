@@ -184,7 +184,7 @@ def test_value_unit_rejected_on_non_n_axis():
     s = WQSession()
     out = s.add_entity("ana", "Q", value=5)
     assert out["ok"] is False
-    assert "n" in out["error"].lower()
+    assert "axis n" in out["error"].lower()
 
 
 def test_assert_situation_inline_n_without_unit_is_rejected():
@@ -193,3 +193,21 @@ def test_assert_situation_inline_n_without_unit_is_rejected():
         "charge", roles={"por_cuanto": {"id": "p", "axis": "N", "value": 25}})
     assert out["ok"] is False
     assert "unit" in out["error"].lower()
+
+
+def test_rejected_n_add_entity_creates_no_phantom_unit():
+    s = WQSession()
+    out = s.add_entity("price", "N", unit={"id": "pen", "axis": "K", "label": "PEN"})
+    assert out["ok"] is False
+    assert "pen" not in s.universe.individuals  # rejection is atomic — nothing created
+
+
+def test_rejected_inline_n_creates_no_phantom_unit():
+    s = WQSession()
+    out = s.assert_situation(
+        "charge",
+        roles={"por_cuanto": {"id": "p", "axis": "N",
+                              "unit": {"id": "usd", "axis": "K", "label": "USD"}}},
+    )
+    assert out["ok"] is False
+    assert "usd" not in s.universe.individuals

@@ -14,6 +14,12 @@ from wq import ingest_situation, IngestError
 from wq import Pattern, Var, query, category
 from wq.axes import Axis, is_value_axis
 
+_N_REQUIRES_UNIT_MSG = (
+    "N magnitudes require a numeric `value` and a `unit` in K "
+    "(e.g. value=25, unit='pen'). Do not encode the unit in the id or "
+    "label, and do not assume a unit — ask for it if missing."
+)
+
 _AXIS_NAMES = {
     "Q": ("who", "agents"),
     "O": ("what", "objects / reified situations"),
@@ -112,11 +118,7 @@ class WQSession:
             )
         if ax is Axis.N:
             if value is None or unit_ind is None:
-                raise ValueError(
-                    "N magnitudes require a numeric `value` and a `unit` in K "
-                    "(e.g. value=25, unit='pen'). Do not encode the unit in the "
-                    "id or label, and do not assume a unit — ask for it if missing."
-                )
+                raise ValueError(_N_REQUIRES_UNIT_MSG)
             return Individual(
                 id=entity_id, axis=Axis.N,
                 label=label or f"{value} {unit_ind.label or unit_ind.id}",
@@ -133,6 +135,8 @@ class WQSession:
         try:
             if axis != "N" and (value is not None or unit is not None):
                 raise ValueError("`value`/`unit` only apply to axis N.")
+            if axis == "N" and value is None:
+                raise ValueError(_N_REQUIRES_UNIT_MSG)
             unit_ind = self._resolve_value(unit) if unit is not None else None
             if unit_ind is not None and unit_ind.axis is not Axis.K:
                 raise ValueError(
@@ -166,6 +170,8 @@ class WQSession:
                     "Inline entity spec needs 'id' and 'axis' "
                     f"(got keys: {sorted(spec.keys())})"
                 )
+            if spec.get("axis") == "N" and spec.get("value") is None:
+                raise ValueError(_N_REQUIRES_UNIT_MSG)
             unit_ind = (self._resolve_value(spec["unit"])
                         if spec.get("unit") is not None else None)
             if unit_ind is not None and unit_ind.axis is not Axis.K:
