@@ -41,8 +41,11 @@ WHAT THE STANDARD ALREADY HANDLES — do not build it yourself
 GROUND RULES
 - The store is append-only and open-world: it does not check consistency.
   Contradictory facts coexist by design — not an error to fix.
-- State is in-memory for this process and does not survive a restart. Use
-  show_model to inspect and reset to start clean; do not build recovery rituals.
+- Your universe is persisted to an append-only log and reloaded on restart, so it
+  survives across sessions (on by default; show_model reports the log path and how
+  many events were replayed). Working state is in-memory within the process and
+  nothing is silently lost. Use show_model to inspect and reset to start a fresh
+  domain; do not build recovery rituals.
 - Start with list_axes and list_roles — they describe the vocabulary and its
   typed signatures.
 """

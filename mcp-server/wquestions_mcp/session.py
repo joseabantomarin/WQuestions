@@ -391,6 +391,12 @@ class WQSession:
             {"subject": f.subject.id, "role": f.role, "value": f.value.id}
             for f in self.universe.facts
         ]
+        persistence = (
+            {"path": self._log_path,
+             "replayed_events": self._replayed_events,
+             "skipped_lines": self._skipped_lines}
+            if self._log_path else {"enabled": False}
+        )
         return {
             "summary": self.universe.summary(),
             "entity_count": len(self.universe.individuals),
@@ -399,6 +405,7 @@ class WQSession:
             "legend": "Facts are binary triplets (subject · role · value), the "
                       "projection of reified situations. The store is append-only: "
                       "corrections add facts, they never overwrite.",
+            "persistence": persistence,
         }
 
     def load_example(self, name: str) -> Dict[str, Any]:

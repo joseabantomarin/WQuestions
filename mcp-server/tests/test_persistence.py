@@ -67,3 +67,40 @@ def test_load_example_round_trips_as_single_event(tmp_path):
         ops = [__import__("json").loads(ln)["op"] for ln in f if ln.strip()]
     assert ops.count("load_example") == 1
     assert "add_entity" not in ops  # inner builder calls were not double-logged
+
+
+def test_show_model_reports_persistence_when_active(tmp_path):
+    p = str(tmp_path / "u.jsonl")
+    s = WQSession(log_path=p)
+    s.add_entity("ana", "Q", "Ana")
+    s2 = WQSession(log_path=p)
+    pers = s2.show_model()["persistence"]
+    assert pers["path"] == p
+    assert pers["replayed_events"] == 1
+    assert pers["skipped_lines"] == 0
+
+
+def test_show_model_reports_disabled_in_memory():
+    s = WQSession(log_path=None)
+    assert s.show_model()["persistence"] == {"enabled": False}
+
+
+def test_replay_skips_and_counts_a_corrupt_line(tmp_path):
+    p = tmp_path / "u.jsonl"
+    s = WQSession(log_path=str(p))
+    s.add_entity("ana", "Q", "Ana")
+    s.add_entity("beto", "Q", "Beto")
+    # simulate a half-written trailing line from a crash
+    with open(p, "a", encoding="utf-8") as f:
+        f.write('{"v": 1, "op": "add_entity", "args": {"entity_id": "cor')
+
+    s2 = WQSession(log_path=str(p))
+    assert "ana" in s2.universe.individuals and "beto" in s2.universe.individuals
+    pers = s2.show_model()["persistence"]
+    assert pers["replayed_events"] == 2
+    assert pers["skipped_lines"] == 1
+
+
+def test_server_module_session_is_isolated_from_real_log():
+    from wquestions_mcp import server
+    assert server._session._log_path is None  # conftest pinned WQUESTIONS_LOG=off
