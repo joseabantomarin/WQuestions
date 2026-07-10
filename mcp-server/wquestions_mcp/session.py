@@ -24,6 +24,37 @@ _AXIS_NAMES = {
     "M": ("how", "predicates that connect individuals"),
 }
 
+_AXIS_GUIDE = {
+    "Q": {"how_to_use": "People and agents. add_entity(id, 'Q').",
+          "example": "add_entity('ana', 'Q', 'Ana')",
+          "gotcha": "Agents enter situations through roles like agente/cliente."},
+    "O": {"how_to_use": "Things AND reified situations. Every assert_situation "
+                        "mints an O node.",
+          "example": "a 'visit' situation lives in O as visit_000001",
+          "gotcha": "O is not only physical objects — situations are objects here."},
+    "L": {"how_to_use": "Places. add_entity(id, 'L').",
+          "example": "add_entity('spa_oasis', 'L', 'Spa Oasis')",
+          "gotcha": "Attach with lugar_de / origen / destino."},
+    "T": {"how_to_use": "Time points or intervals, ISO-8601.",
+          "example": "add_entity('t_2026_07_10', 'T', '2026-07-10')",
+          "gotcha": "For world-time validity use valid_from/valid_to on the fact, "
+                    "not a T role."},
+    "N": {"how_to_use": "Magnitudes. Always a value plus a unit: "
+                        "add_entity(id, 'N', value=.., unit=..).",
+          "example": "add_entity('p25', 'N', value=25, "
+                     "unit={'id':'pen','axis':'K','label':'PEN'})",
+          "gotcha": "A number without a unit is rejected. Never bake the unit "
+                    "into the id or label; never assume one."},
+    "K": {"how_to_use": "Atemporal categories: types, states, units, vocabularies.",
+          "example": "add_entity('pen', 'K', 'PEN')",
+          "gotcha": "The units of N magnitudes live here."},
+    "M": {"how_to_use": "Predicate axis: the roles themselves. You cannot "
+                        "add_entity on M.",
+          "example": "agente, lugar_de, causado_por, instancia_de ARE M predicates.",
+          "gotcha": "M both classifies (instancia_de) and connects situations "
+                    "(causado_por, cumple, rectifica)."},
+}
+
 
 class WQSession:
     def __init__(self) -> None:
@@ -38,7 +69,8 @@ class WQSession:
     def list_axes(self) -> Dict[str, Any]:
         return {
             "axes": [
-                {"code": code, "name": name, "description": desc}
+                {"code": code, "name": name, "description": desc,
+                 **_AXIS_GUIDE.get(code, {})}
                 for code, (name, desc) in _AXIS_NAMES.items()
             ]
         }
@@ -56,7 +88,15 @@ class WQSession:
             }
             for sig in self.catalog._roles.values()
         ]
-        return {"roles": roles}
+        return {
+            "roles": roles,
+            "policy": "Roles are open-world: unknown roles are accepted, not "
+                      "validated — invent domain roles freely. Declared roles "
+                      "carry a typed signature (domain axis -> range axis) and a "
+                      "functional flag (functional=one value per subject).",
+            "common": ["agente", "cliente", "tema", "momento", "lugar_de",
+                       "por_cuanto", "unidad", "instancia_de", "estatus_factual"],
+        }
 
     def _individual(self, entity_id: str, axis: str,
                     label: Optional[str] = None) -> Individual:
@@ -177,6 +217,9 @@ class WQSession:
             "entity_count": len(self.universe.individuals),
             "fact_count": len(self.universe.facts),
             "facts": facts,
+            "legend": "Facts are binary triplets (subject · role · value), the "
+                      "projection of reified situations. The store is append-only: "
+                      "corrections add facts, they never overwrite.",
         }
 
     def load_example(self, name: str) -> Dict[str, Any]:

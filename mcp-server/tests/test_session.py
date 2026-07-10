@@ -131,3 +131,24 @@ def test_ask_malformed_at_returns_error():
     out = s.ask(fixed=None, ask=["agente"], at="not-a-date")
     assert out["ok"] is False
     assert "error" in out
+
+
+def test_list_axes_teaches_n_needs_unit_and_m_is_predicate():
+    s = WQSession()
+    axes = {a["code"]: a for a in s.list_axes()["axes"]}
+    assert "unit" in axes["N"]["how_to_use"].lower()
+    assert "predicate" in axes["M"]["how_to_use"].lower()
+    assert axes["O"]["gotcha"]  # non-empty
+
+
+def test_list_roles_states_open_policy_and_common_roles():
+    s = WQSession()
+    out = s.list_roles()
+    assert "open" in out["policy"].lower()
+    assert "agente" in out["common"] and "por_cuanto" in out["common"]
+
+
+def test_show_model_has_append_only_legend():
+    s = WQSession()
+    out = s.show_model()
+    assert "append-only" in out["legend"].lower()
