@@ -64,10 +64,11 @@ Then ask Claude: *"Load the spa example, then show me the model."* See
 |---|---|
 | `list_axes` | Describe the 7 axes |
 | `list_roles` | List canonical roles (who/what/where/... connectors), typed by domain and range |
-| `add_entity` | Create an individual on a value axis (Q, O, L, T, N, K) |
+| `add_entity` | Create an individual on a value axis (Q, O, L, T, N, K); for the N axis pass `value` + `unit` (a K entity id or inline spec) — a magnitude without a unit is rejected |
 | `define_verb` | Register a situation type and its roles — optional, `assert_situation` auto-registers unknown verbs |
 | `assert_situation` | Assert a fact: reify a situation and attach its roles |
-| `ask` | Query by projection — fix some roles, ask for others, optionally as of a point in time |
+| `correct` | Correct/update a role on an existing situation by re-asserting it (append-only; `ask` returns the latest, `history=true` shows the trail) |
+| `ask` | Query by projection — fix some roles, ask for others, optionally as of a point in time; pass `history=true` for the full time-ordered trail instead of just the current value |
 | `show_model` | Dump the current universe: every entity and fact |
 | `load_example` | Load a prebuilt demo universe (`spa`) to try queries instantly |
 | `reset` | Clear the model and start a fresh universe |
@@ -79,8 +80,24 @@ cut Marco's hair at Barber Kings on 2025-06-11" and turns it into
 role-labeled arguments (`agente: diego, paciente: marco, lugar_de:
 barber_kings`). The server never parses English — it takes those roles,
 validates them against the 7-axis model, and runs ingest and query over the
-`wq` engine. Same engine, same 9 tools, whether the domain behind them is a
+`wq` engine. Same engine, same 10 tools, whether the domain behind them is a
 spa or a barbershop.
+
+## Persistence
+
+By default the server persists your universe to an append-only log and reloads
+on restart, so a modeled domain survives across sessions — you never rebuild by
+hand. Nothing is ever overwritten; corrections are appended and the log is the
+source of truth.
+
+- **Default location:** `~/.wquestions/universe.jsonl`.
+- **Choose a file:** set `WQUESTIONS_LOG=/path/to/domain.jsonl`. Point each domain
+  at its own file (e.g. one per MCP server entry in your client config) — a single
+  log holds one live universe at a time (a `reset` starts a fresh domain within it).
+- **Turn it off (pure in-memory):** `WQUESTIONS_LOG=off`.
+
+`show_model` reports the active log path and how many events were replayed, so
+you can confirm persistence is on.
 
 ## Further reading
 

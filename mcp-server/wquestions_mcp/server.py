@@ -132,7 +132,8 @@ def ask(fixed: Optional[Dict[str, Any]] = None,
 
 @mcp.tool()
 def show_model() -> Dict[str, Any]:
-    """Dump the current universe: entity/fact counts and every fact."""
+    """Dump the current universe: entity/fact counts and every fact, plus the
+    persistence status (log path, replayed/skipped event counts)."""
     return _session.show_model()
 
 

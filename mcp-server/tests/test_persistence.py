@@ -104,3 +104,32 @@ def test_replay_skips_and_counts_a_corrupt_line(tmp_path):
 def test_server_module_session_is_isolated_from_real_log():
     from wquestions_mcp import server
     assert server._session._log_path is None  # conftest pinned WQUESTIONS_LOG=off
+
+
+def test_barbershop_capstone_survives_log_round_trip(tmp_path):
+    """The full fidelity capstone (N-with-nested-unit + multi-correction on an
+    invented role) must survive a persistence log round-trip losslessly."""
+    p = str(tmp_path / "barber.jsonl")
+    s = WQSession(log_path=p)
+    s.add_entity("marcos", "Q", "Marcos")
+    s.add_entity("pablo", "Q", "Pablo")
+    s.add_entity("shave", "O", "Shave service")
+    out = s.assert_situation("serve", roles={
+        "agente": "marcos", "cliente": "pablo", "tema": "shave",
+        "por_cuanto": {"id": "usd_12", "axis": "N", "value": 12,
+                       "unit": {"id": "usd", "axis": "K", "label": "USD"}},
+    })
+    sid = out["situation_id"]
+    s.correct(sid, "tipo_cambio",
+              {"id": "tc_333", "axis": "N", "value": 3.33,
+               "unit": {"id": "pen_per_usd", "axis": "K", "label": "PEN/USD"}})
+    s.correct(sid, "tipo_cambio",
+              {"id": "tc_339", "axis": "N", "value": 3.39, "unit": "pen_per_usd"})
+
+    s2 = WQSession(log_path=p)  # restart: fresh session replays the log
+    assert s2.universe.individuals["usd_12"].payload == {"value": 12, "unit": "usd"}
+    cur = s2.ask(fixed={"cliente": "pablo"}, ask=["tipo_cambio"])
+    assert cur["results"][0]["tipo_cambio"] == "tc_339"
+    hist = s2.ask(fixed={"cliente": "pablo"}, ask=["tipo_cambio"], history=True)
+    assert hist["results"][0]["tipo_cambio"] == ["tc_333", "tc_339"]
+    assert s2.show_model()["persistence"]["replayed_events"] > 0

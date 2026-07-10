@@ -21,7 +21,8 @@ DEFAULT_LOG_PATH = "~/.wquestions/universe.jsonl"
 
 def resolve_log_path(raw: Optional[str]) -> Optional[str]:
     """Resolve the persistence log path. None (env unset) -> default file;
-    off/none/:memory:/empty -> None (pure in-memory); else the expanded path."""
+    off/none/:memory:/empty (case-insensitive, whitespace-only counts as empty)
+    -> None (pure in-memory); else the expanded path."""
     if raw is None:
         raw = DEFAULT_LOG_PATH
     if raw.strip().lower() in ("", "off", "none", ":memory:"):
@@ -380,6 +381,7 @@ class WQSession:
         sig = self.catalog.get(role)
         if sig is not None and not sig.functional:
             return [f.value.id for f in role_facts]
+        # role_facts is non-empty here: query() only yields subjects that have the asked role
         latest = role_facts[0]
         for f in role_facts[1:]:
             if f.tx_time >= latest.tx_time:  # >= so later insertion wins ties
