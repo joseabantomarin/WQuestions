@@ -8,7 +8,45 @@ from mcp.server.fastmcp import FastMCP
 
 from .session import WQSession
 
-mcp = FastMCP("wquestions")
+INSTRUCTIONS = """\
+WQuestions models any domain as one fact space over 7 axes:
+Q who · O what · L where · T when · N how-much · K which/kind · M how (predicates).
+
+HOW STORAGE WORKS
+- Everything is stored as binary triplets: subject · role · value. No prose, no
+  rows — only triplets.
+- A fact with many participants (a sale with seller, buyer, item, price, time) is
+  reified: the situation becomes its own node in O and each participant hangs off
+  it as one triplet. assert_situation does this and returns the triplets it made.
+
+WHAT IS OPEN — invent freely (this is the point)
+- Entities, verbs and roles are open-world. Coin new domain entities (add_entity),
+  new verbs (assert_situation auto-registers them) and new roles as you need them.
+  No catalog and no permission required.
+
+WHAT THE STANDARD ALREADY HANDLES — do not build it yourself
+- Corrections & time. To record that a fact changed in the world over time, set
+  valid_from/valid_to and read the past with ask(at=...). To fix a value you
+  recorded wrong, call correct(situation_id, role, new_value): it re-asserts the
+  role. ask returns the current (latest) value and keeps the previous one as
+  history (ask(history=true)). You do not track current-vs-superseded yourself.
+- Magnitudes carry a unit. Every N value has a unit that lives in K. Create a
+  magnitude with add_entity(id, "N", value=<number>, unit=<K id or spec>). Never
+  bake the unit into an id or label, and never assume a currency or unit — if a
+  number arrives without one, ask for it.
+- Authorship / provenance is out of scope. WQuestions does not track who entered a
+  fact or where it came from. Do not model it.
+
+GROUND RULES
+- The store is append-only and open-world: it does not check consistency.
+  Contradictory facts coexist by design — not an error to fix.
+- State is in-memory for this process and does not survive a restart. Use
+  show_model to inspect and reset to start clean; do not build recovery rituals.
+- Start with list_axes and list_roles — they describe the vocabulary and its
+  typed signatures.
+"""
+
+mcp = FastMCP("wquestions", instructions=INSTRUCTIONS)
 _session = WQSession()
 
 
@@ -36,8 +74,10 @@ def add_entity(entity_id: str, axis: str, label: Optional[str] = None) -> Dict[s
 def define_verb(verb: str, situation_type: str,
                 obligatory: Optional[List[str]] = None,
                 optional: Optional[List[str]] = None) -> Dict[str, Any]:
-    """Register a situation type (verb) and which roles it takes. Optional:
-    assert_situation auto-registers unknown verbs permissively."""
+    """Register a situation type (verb) and the roles it takes. `obligatory`
+    roles ARE enforced: assert_situation rejects a situation missing one. Leaving
+    `obligatory` empty makes every role optional — a deliberate choice, not a
+    limit. assert_situation also auto-registers unknown verbs permissively."""
     return _session.define_verb(verb, situation_type, obligatory, optional)
 
 
@@ -46,10 +86,13 @@ def assert_situation(verb: str, roles: Dict[str, Any],
                      extra: Optional[Dict[str, Any]] = None,
                      valid_from: Optional[str] = None,
                      valid_to: Optional[str] = None) -> Dict[str, Any]:
-    """Assert a fact: reify a situation for `verb` and attach its roles.
-    Each role value is an existing entity id or an inline {id, axis, label}.
-    valid_from/valid_to are ISO-8601, for facts that are only valid during
-    a time range."""
+    """Assert a fact. The situation is REIFIED: a new node is minted in axis O
+    and each role becomes one binary triplet (situation · role · value) — that is
+    what this returns. Each role value is an existing entity id or an inline
+    {id, axis, label}; for N pass an inline magnitude {id, axis:'N', value, unit}.
+    valid_from/valid_to (ISO-8601) mark a fact true only during a time range;
+    read the past with ask(at=...). To correct a value later use `correct`, not a
+    new status role."""
     return _session.assert_situation(verb, roles, extra, valid_from, valid_to)
 
 
