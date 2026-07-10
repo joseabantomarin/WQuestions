@@ -274,3 +274,34 @@ def test_ask_nonfunctional_role_returns_all_values():
     vals = res["results"][0]["instancia_de"]
     assert isinstance(vals, list)
     assert "special" in vals and "action_visit" in vals
+
+
+def test_barbershop_correction_scenario_end_to_end():
+    """The exact friction from the stress test: a mis-recorded exchange rate is
+    corrected by re-assertion, priced in unit-bearing N, no auditing vocabulary."""
+    s = WQSession()
+    s.add_entity("marcos", "Q", "Marcos")
+    s.add_entity("pablo", "Q", "Pablo")
+    s.add_entity("shave", "O", "Shave service")
+    out = s.assert_situation("serve", roles={
+        "agente": "marcos", "cliente": "pablo", "tema": "shave",
+        "por_cuanto": {"id": "usd_12", "axis": "N", "value": 12,
+                       "unit": {"id": "usd", "axis": "K", "label": "USD"}},
+    })
+    sid = out["situation_id"]
+
+    # exchange rate recorded wrong (3.33) then corrected (3.39) — no status role
+    s.correct(sid, "tipo_cambio",
+              {"id": "tc_333", "axis": "N", "value": 3.33,
+               "unit": {"id": "pen_per_usd", "axis": "K", "label": "PEN/USD"}})
+    s.correct(sid, "tipo_cambio",
+              {"id": "tc_339", "axis": "N", "value": 3.39, "unit": "pen_per_usd"})
+
+    current = s.ask(fixed={"cliente": "pablo"}, ask=["tipo_cambio"])
+    assert current["results"][0]["tipo_cambio"] == "tc_339"  # current wins
+
+    trail = s.ask(fixed={"cliente": "pablo"}, ask=["tipo_cambio"], history=True)
+    assert trail["results"][0]["tipo_cambio"] == ["tc_333", "tc_339"]
+
+    # the magnitude kept its unit as structured data, not baked into a label
+    assert s.universe.individuals["usd_12"].payload == {"value": 12, "unit": "usd"}
