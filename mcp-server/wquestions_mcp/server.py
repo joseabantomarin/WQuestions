@@ -2,11 +2,12 @@
 behaviour lives in (and is tested via) session.py. A single WQSession is
 held per server process."""
 from __future__ import annotations
+import os
 from typing import Any, Dict, List, Optional
 
 from mcp.server.fastmcp import FastMCP
 
-from .session import WQSession
+from .session import WQSession, resolve_log_path
 
 INSTRUCTIONS = """\
 WQuestions models any domain as one fact space over 7 axes:
@@ -47,7 +48,7 @@ GROUND RULES
 """
 
 mcp = FastMCP("wquestions", instructions=INSTRUCTIONS)
-_session = WQSession()
+_session = WQSession(log_path=resolve_log_path(os.environ.get("WQUESTIONS_LOG")))
 
 
 @mcp.tool()

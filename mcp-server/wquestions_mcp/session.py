@@ -77,14 +77,76 @@ _AXIS_GUIDE = {
 
 
 class WQSession:
-    def __init__(self) -> None:
-        self.reset()
+    def __init__(self, log_path: Optional[str] = None) -> None:
+        self._log_path = log_path
+        self._suppress_log = False
+        self._sit_seq = 1
+        self._replayed_events = 0
+        self._skipped_lines = 0
+        self._fresh()
+        if self._log_path and os.path.exists(self._log_path):
+            self._replay()
 
-    def reset(self) -> Dict[str, Any]:
+    def _fresh(self) -> None:
         self.catalog = Catalog()
         self.universe = Universe(name="session", catalog=self.catalog)
         self.lexicon = Lexicon()
+        self._sit_seq = 1
+
+    def reset(self) -> Dict[str, Any]:
+        self._fresh()
+        self._append_event("reset", {})
         return {"ok": True}
+
+    def _append_event(self, op: str, args: Dict[str, Any]) -> None:
+        if not self._log_path or self._suppress_log:
+            return
+        parent = os.path.dirname(self._log_path)
+        if parent:
+            os.makedirs(parent, exist_ok=True)
+        with open(self._log_path, "a", encoding="utf-8") as f:
+            f.write(json.dumps({"v": 1, "op": op, "args": args}) + "\n")
+            f.flush()
+
+    def _bump_sit_seq(self, sit_id: str) -> None:
+        try:
+            n = int(sit_id.rsplit("_", 1)[-1])
+        except (ValueError, IndexError):
+            return
+        if n >= self._sit_seq:
+            self._sit_seq = n + 1
+
+    def _replay(self) -> None:
+        dispatch = {
+            "add_entity": self.add_entity,
+            "define_verb": self.define_verb,
+            "assert_situation": self.assert_situation,
+            "correct": self.correct,
+            "load_example": self.load_example,
+            "reset": self.reset,
+        }
+        prev = self._suppress_log
+        self._suppress_log = True
+        try:
+            with open(self._log_path, "r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        evt = json.loads(line)
+                        method = dispatch.get(evt.get("op"))
+                        if method is None:
+                            raise ValueError(f"unknown op {evt.get('op')!r}")
+                        result = method(**evt.get("args", {}))
+                        if isinstance(result, dict) and result.get("ok") is False:
+                            raise ValueError(result.get("error", "replay failed"))
+                    except Exception:
+                        self._skipped_lines += 1
+                        continue
+                    self._replayed_events += 1
+        finally:
+            self._suppress_log = prev
 
     def list_axes(self) -> Dict[str, Any]:
         return {
@@ -161,6 +223,9 @@ class WQSession:
             self.universe.add_individual(ind)
         except ValueError as e:
             return {"ok": False, "error": str(e)}
+        self._append_event("add_entity", {"entity_id": entity_id, "axis": axis,
+                                           "label": label, "value": value,
+                                           "unit": unit})
         return {"ok": True,
                 "entity": {"id": ind.id, "axis": ind.axis.value, "label": ind.label}}
 
@@ -173,6 +238,10 @@ class WQSession:
             obligatory=obligatory or [],
             optional=optional or [],
         ))
+        self._append_event("define_verb", {"verb": verb,
+                                            "situation_type": situation_type,
+                                            "obligatory": obligatory,
+                                            "optional": optional})
         return {"ok": True, "verb": verb}
 
     def _resolve_value(self, spec: Any) -> Individual:
@@ -212,21 +281,30 @@ class WQSession:
     def assert_situation(self, verb: str, roles: Dict[str, Any],
                          extra: Optional[Dict[str, Any]] = None,
                          valid_from: Optional[str] = None,
-                         valid_to: Optional[str] = None) -> Dict[str, Any]:
+                         valid_to: Optional[str] = None,
+                         _sit_id: Optional[str] = None) -> Dict[str, Any]:
         if self.lexicon.resolve(verb) is None:
             self.define_verb(verb, f"action_{verb}")
         try:
             resolved = {r: self._resolve_value(v) for r, v in roles.items()}
             resolved_extra = ({r: self._resolve_value(v) for r, v in extra.items()}
                               if extra else None)
+            entry = self.lexicon.resolve(verb)
+            sid = _sit_id or f"{entry.situation_type}_{self._sit_seq:06d}"
             situ = ingest_situation(
                 self.universe, self.lexicon, verb, resolved,
                 extra=resolved_extra,
                 valid_from=self._parse_ts(valid_from),
                 valid_to=self._parse_ts(valid_to),
+                sit_id=sid,
             )
         except (ValueError, IngestError) as e:
             return {"ok": False, "error": str(e)}
+        self._bump_sit_seq(situ.id)
+        self._append_event("assert_situation",
+                           {"verb": verb, "roles": roles, "extra": extra,
+                            "valid_from": valid_from, "valid_to": valid_to,
+                            "_sit_id": situ.id})
         facts = [
             {"subject": f.subject.id, "role": f.role, "value": f.value.id}
             for f in self.universe.facts_about(situ)
@@ -256,6 +334,9 @@ class WQSession:
             )
         except (ValueError, IngestError) as e:
             return {"ok": False, "error": str(e)}
+        self._append_event("correct", {"situation_id": situation_id, "role": role,
+                                        "value": value, "valid_from": valid_from,
+                                        "valid_to": valid_to})
         return {"ok": True, "situation_id": situ.id, "role": role, "value": val.id,
                 "note": "Appended, not overwritten. ask returns this (latest) "
                         "value; ask(history=true) shows prior ones."}
@@ -326,6 +407,12 @@ class WQSession:
         if builder is None:
             return {"ok": False,
                     "error": f"Unknown example '{name}'. Available: {list(EXAMPLES)}"}
-        self.reset()
-        builder(self)
+        prev = self._suppress_log
+        self._suppress_log = True
+        try:
+            self._fresh()
+            builder(self)
+        finally:
+            self._suppress_log = prev
+        self._append_event("load_example", {"name": name})
         return {"ok": True, "loaded": name, "fact_count": len(self.universe.facts)}
