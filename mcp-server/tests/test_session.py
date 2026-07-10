@@ -152,3 +152,44 @@ def test_show_model_has_append_only_legend():
     s = WQSession()
     out = s.show_model()
     assert "append-only" in out["legend"].lower()
+
+
+def test_add_entity_n_without_unit_is_rejected():
+    s = WQSession()
+    out = s.add_entity("price", "N", value=25)
+    assert out["ok"] is False
+    assert "unit" in out["error"].lower()
+
+
+def test_add_entity_n_with_inline_unit_builds_payload():
+    s = WQSession()
+    out = s.add_entity("price_25", "N", value=25,
+                       unit={"id": "pen", "axis": "K", "label": "PEN"})
+    assert out["ok"] is True
+    ind = s.universe.individuals["price_25"]
+    assert ind.axis.value == "N"
+    assert ind.payload == {"value": 25, "unit": "pen"}
+    assert "pen" in s.universe.individuals  # unit auto-created in K
+
+
+def test_add_entity_n_with_existing_unit_id():
+    s = WQSession()
+    s.add_entity("pen", "K", "PEN")
+    out = s.add_entity("price_30", "N", value=30, unit="pen")
+    assert out["ok"] is True
+    assert s.universe.individuals["price_30"].payload["unit"] == "pen"
+
+
+def test_value_unit_rejected_on_non_n_axis():
+    s = WQSession()
+    out = s.add_entity("ana", "Q", value=5)
+    assert out["ok"] is False
+    assert "n" in out["error"].lower()
+
+
+def test_assert_situation_inline_n_without_unit_is_rejected():
+    s = WQSession()
+    out = s.assert_situation(
+        "charge", roles={"por_cuanto": {"id": "p", "axis": "N", "value": 25}})
+    assert out["ok"] is False
+    assert "unit" in out["error"].lower()

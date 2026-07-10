@@ -65,9 +65,14 @@ def list_roles() -> Dict[str, Any]:
 
 
 @mcp.tool()
-def add_entity(entity_id: str, axis: str, label: Optional[str] = None) -> Dict[str, Any]:
-    """Create an individual on a value axis (Q, O, L, T, N, or K)."""
-    return _session.add_entity(entity_id, axis, label)
+def add_entity(entity_id: str, axis: str, label: Optional[str] = None,
+               value: Optional[float] = None,
+               unit: Optional[Any] = None) -> Dict[str, Any]:
+    """Create an individual on a value axis (Q, O, L, T, N, K). For N you MUST
+    pass `value` (a number) and `unit` (an existing K entity id, or an inline
+    {id, axis:'K', label}); a magnitude without a unit is rejected. Never assume
+    a unit — ask for it. `value`/`unit` apply only to N."""
+    return _session.add_entity(entity_id, axis, label, value, unit)
 
 
 @mcp.tool()

@@ -99,7 +99,9 @@ class WQSession:
         }
 
     def _individual(self, entity_id: str, axis: str,
-                    label: Optional[str] = None) -> Individual:
+                    label: Optional[str] = None,
+                    value: Any = None,
+                    unit_ind: Optional[Individual] = None) -> Individual:
         try:
             ax = Axis[axis]
         except KeyError:
@@ -108,12 +110,36 @@ class WQSession:
             raise ValueError(
                 f"Axis '{axis}' cannot hold entities. Value axes: Q,O,L,T,N,K."
             )
+        if ax is Axis.N:
+            if value is None or unit_ind is None:
+                raise ValueError(
+                    "N magnitudes require a numeric `value` and a `unit` in K "
+                    "(e.g. value=25, unit='pen'). Do not encode the unit in the "
+                    "id or label, and do not assume a unit — ask for it if missing."
+                )
+            return Individual(
+                id=entity_id, axis=Axis.N,
+                label=label or f"{value} {unit_ind.label or unit_ind.id}",
+                payload={"value": value, "unit": unit_ind.id},
+            )
+        if value is not None or unit_ind is not None:
+            raise ValueError(f"`value`/`unit` only apply to axis N, not {axis}.")
         return Individual(id=entity_id, axis=ax, label=label or entity_id)
 
     def add_entity(self, entity_id: str, axis: str,
-                   label: Optional[str] = None) -> Dict[str, Any]:
+                   label: Optional[str] = None,
+                   value: Any = None,
+                   unit: Any = None) -> Dict[str, Any]:
         try:
-            ind = self._individual(entity_id, axis, label)
+            if axis != "N" and (value is not None or unit is not None):
+                raise ValueError("`value`/`unit` only apply to axis N.")
+            unit_ind = self._resolve_value(unit) if unit is not None else None
+            if unit_ind is not None and unit_ind.axis is not Axis.K:
+                raise ValueError(
+                    f"unit must live in K (got {unit_ind.axis.value})."
+                )
+            ind = self._individual(entity_id, axis, label,
+                                   value=value, unit_ind=unit_ind)
             self.universe.add_individual(ind)
         except ValueError as e:
             return {"ok": False, "error": str(e)}
@@ -140,7 +166,14 @@ class WQSession:
                     "Inline entity spec needs 'id' and 'axis' "
                     f"(got keys: {sorted(spec.keys())})"
                 )
-            ind = self._individual(spec["id"], spec["axis"], spec.get("label"))
+            unit_ind = (self._resolve_value(spec["unit"])
+                        if spec.get("unit") is not None else None)
+            if unit_ind is not None and unit_ind.axis is not Axis.K:
+                raise ValueError(
+                    f"unit must live in K (got {unit_ind.axis.value})."
+                )
+            ind = self._individual(spec["id"], spec["axis"], spec.get("label"),
+                                   value=spec.get("value"), unit_ind=unit_ind)
             self.universe.add_individual(ind)
             return ind
         if spec in self.universe.individuals:
