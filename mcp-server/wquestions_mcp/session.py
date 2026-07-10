@@ -249,29 +249,47 @@ class WQSession:
     def ask(self, fixed: Optional[Dict[str, Any]] = None,
             ask: Optional[List[str]] = None,
             type: Optional[str] = None,
-            at: Optional[str] = None) -> Dict[str, Any]:
+            at: Optional[str] = None,
+            history: bool = False) -> Dict[str, Any]:
         try:
             fixed_ind = ({r: self._resolve_value(v) for r, v in fixed.items()}
                          if fixed else {})
+            at_dt = self._parse_ts(at)
             pattern = Pattern(
                 fixed=fixed_ind,
                 ask={role: Var(role) for role in (ask or [])},
                 type_constraint=category(type) if type else None,
             )
-            bindings = query(self.universe, pattern, at=self._parse_ts(at))
+            bindings = query(self.universe, pattern, at=at_dt)
             results = []
             for b in bindings:
-                row: Dict[str, Any] = {"_subject": b["_subject"].id}
+                subj = b["_subject"]
+                row: Dict[str, Any] = {"_subject": subj.id}
+                subj_facts = self.universe.facts_about(subj, at=at_dt)
                 for role in (ask or []):
-                    val = b.get(role)
-                    if isinstance(val, list):
-                        row[role] = [v.id for v in val]
-                    elif val is not None:
-                        row[role] = val.id
+                    role_facts = [f for f in subj_facts if f.role == role]
+                    row[role] = self._project_role(role, role_facts, history)
                 results.append(row)
         except (ValueError, IngestError) as e:
             return {"ok": False, "error": str(e)}
         return {"count": len(results), "results": results}
+
+    def _project_role(self, role: str, role_facts: List[Any],
+                      history: bool) -> Any:
+        """Resolve a role's value(s). Default: the current value (latest tx_time)
+        for functional/unknown roles; all values for catalog non-functional roles.
+        history=True: the full time-ordered trail (current + superseded)."""
+        if history:
+            ordered = sorted(role_facts, key=lambda f: f.tx_time)
+            return [f.value.id for f in ordered]
+        sig = self.catalog.get(role)
+        if sig is not None and not sig.functional:
+            return [f.value.id for f in role_facts]
+        latest = role_facts[0]
+        for f in role_facts[1:]:
+            if f.tx_time >= latest.tx_time:  # >= so later insertion wins ties
+                latest = f
+        return latest.value.id
 
     def show_model(self) -> Dict[str, Any]:
         facts = [

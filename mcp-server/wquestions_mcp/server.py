@@ -116,12 +116,14 @@ def correct(situation_id: str, role: str, value: Any,
 def ask(fixed: Optional[Dict[str, Any]] = None,
         ask: Optional[List[str]] = None,
         type: Optional[str] = None,
-        at: Optional[str] = None) -> Dict[str, Any]:
-    """Query by projection: fix some roles, ask for others. `type` filters to
-    situations whose type matches the given category id (auto-registered
-    verbs get the id `action_<verb>`). `at` (ISO) queries the model as it
-    was valid at that time."""
-    return _session.ask(fixed, ask, type, at)
+        at: Optional[str] = None,
+        history: bool = False) -> Dict[str, Any]:
+    """Query by projection: fix some roles, ask for others. Returns the CURRENT
+    value of each asked role (the latest correction wins for single-valued roles);
+    pass history=true for the full time-ordered trail. `type` filters to a category
+    id (auto-registered verbs get `action_<verb>`). `at` (ISO-8601) reads the
+    model's valid-time as of that moment."""
+    return _session.ask(fixed, ask, type, at, history)
 
 
 @mcp.tool()

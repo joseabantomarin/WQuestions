@@ -239,3 +239,38 @@ def test_correct_rejects_non_situation_subject():
     out = s.correct("ana", "agente", "ana")  # ana is Q, not a situation (O)
     assert out["ok"] is False
     assert "situation" in out["error"].lower()
+
+
+def test_ask_returns_latest_value_after_correction():
+    s = WQSession()
+    s.add_entity("ana", "Q", "Ana")
+    s.add_entity("beto", "Q", "Beto")
+    s.add_entity("spa", "L", "Spa")
+    out = s.assert_situation("visit", roles={"agente": "ana", "lugar_de": "spa"})
+    s.correct(out["situation_id"], "agente", "beto")
+    res = s.ask(fixed={"lugar_de": "spa"}, ask=["agente"])
+    assert res["results"][0]["agente"] == "beto"  # functional role: latest wins
+
+
+def test_ask_history_returns_full_trail():
+    s = WQSession()
+    s.add_entity("ana", "Q", "Ana")
+    s.add_entity("beto", "Q", "Beto")
+    s.add_entity("spa", "L", "Spa")
+    out = s.assert_situation("visit", roles={"agente": "ana", "lugar_de": "spa"})
+    s.correct(out["situation_id"], "agente", "beto")
+    res = s.ask(fixed={"lugar_de": "spa"}, ask=["agente"], history=True)
+    assert res["results"][0]["agente"] == ["ana", "beto"]  # tx_time order
+
+
+def test_ask_nonfunctional_role_returns_all_values():
+    s = WQSession()
+    s.add_entity("ana", "Q", "Ana")
+    out = s.assert_situation("visit", roles={"agente": "ana"})
+    # instancia_de is catalog non-functional -> genuinely multi-valued
+    s.correct(out["situation_id"], "instancia_de",
+              {"id": "special", "axis": "K", "label": "special"})
+    res = s.ask(fixed={"agente": "ana"}, ask=["instancia_de"])
+    vals = res["results"][0]["instancia_de"]
+    assert isinstance(vals, list)
+    assert "special" in vals and "action_visit" in vals
