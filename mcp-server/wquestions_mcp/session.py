@@ -5,6 +5,8 @@ JSON-friendly arguments into wq engine calls and JSON-friendly results back.
 No MCP types here: this module is pure Python and fully unit-tested.
 """
 from __future__ import annotations
+import json
+import os
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
@@ -13,6 +15,18 @@ from wq import LexiconEntry
 from wq import ingest_situation, IngestError
 from wq import Pattern, Var, query, category
 from wq.axes import Axis, is_value_axis
+
+DEFAULT_LOG_PATH = "~/.wquestions/universe.jsonl"
+
+
+def resolve_log_path(raw: Optional[str]) -> Optional[str]:
+    """Resolve the persistence log path. None (env unset) -> default file;
+    off/none/:memory:/empty -> None (pure in-memory); else the expanded path."""
+    if raw is None:
+        raw = DEFAULT_LOG_PATH
+    if raw.strip().lower() in ("", "off", "none", ":memory:"):
+        return None
+    return os.path.expanduser(raw)
 
 _N_REQUIRES_UNIT_MSG = (
     "N magnitudes require a numeric `value` and a `unit` in K "
