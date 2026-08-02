@@ -110,13 +110,32 @@ Como hoja de ruta, no como confesión:
    con sus aserciones, para que el capítulo sea reproducible como lo son los
    demás capítulos de dominio.
 
-## Fuera de alcance
+## Desajuste resuelto
 
-Desajuste preexistente detectado y no corregido aquí: `23-minera.html` dice
-«Banco 04» y `debilitamiento_pared_b04`; `prototipo/ejemplos/minera.py:255` dice
-`debilitamiento_pared_b03` / «Banco 03», y su validación interna (línea 683)
-comprueba `b03`. El capítulo 28 cita esa cadena, así que conviene decidir cuál
-manda antes de escribirla.
+El `b04` del libro contra el `b03` del prototipo resultó ser la punta de una
+deriva mayor: la reescritura HTML del capítulo 23 creó un escenario nuevo
+(turno de noche, otro banco, otras magnitudes) y el prototipo se quedó con el de
+la edición Markdown. Siete contradicciones en total:
+
+| Concepto | Libro (canónico) | Prototipo (antes) |
+|---|---|---|
+| Turno | `turno_noche_2026_05_19`, 18:00→06:00 | `turno_dia_2026_05_19`, 06:00→18:00 |
+| Accidente | 23:40 | 11:40 |
+| Banco, frente, debilitamiento | `b04` | `b03` |
+| Desprendimiento | `evento_desprendimiento_07` | `..._001` |
+| Producción | 2.480 t @ 8,6 g/t | 2.400 t @ 8,2 g/t |
+| Oro fino | 685,8 oz | 632,7 oz |
+| Arsénico medido | 0,34 mg/L | 0,32 mg/L |
+
+Manda el libro: el turno de noche no es un desliz sino una decisión narrativa que
+sostiene el capítulo entero («mientras todos duermen, el camión registra horas de
+motor en un turno desierto»). El prototipo se alineó, y sus 18 validaciones y los
+32 tests siguen pasando. La extracción se movió de 09:15 a 21:15 para caer dentro
+del turno nuevo; el libro no la fecha, así que no había restricción.
+
+Única decisión de criterio: la norma ambiental pasó de `ds_004_2017_minam` a
+`eca_agua_cat3`, que es lo que el libro cita. Se pierde la referencia al decreto
+peruano real; el organismo regulador (`oefa_peru`) sigue en el modelo.
 
 ## Canon a respetar
 

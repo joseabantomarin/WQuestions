@@ -135,9 +135,9 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
     nivel_4250 = u.add_individual(Individual(
         id="nivel_4250", axis=Axis.L, label="Nivel 4250 m.s.n.m."))
     banco_3 = u.add_individual(Individual(
-        id="banco_03_tn", axis=Axis.L, label="Banco 03 (Tajo Norte)"))
+        id="banco_04_tn", axis=Axis.L, label="Banco 04 (Tajo Norte)"))
     frente_a = u.add_individual(Individual(
-        id="frente_a_b03", axis=Axis.L, label="Frente A (Banco 03)"))
+        id="frente_a_b04", axis=Axis.L, label="Frente A (Banco 04)"))
     rio_quebrada = u.add_individual(Individual(
         id="rio_quebrada_chica", axis=Axis.L,
         label="Río Quebrada Chica"))
@@ -188,14 +188,14 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
     #          equipos, producción, todos parte_de el turno)
     # ====================================================================
     turno = u.add_individual(Individual(
-        id="turno_dia_2026_05_19", axis=Axis.O,
-        label="Turno día 19-May-2026"))
+        id="turno_noche_2026_05_19", axis=Axis.O,
+        label="Turno noche 19-May-2026"))
     u.assert_fact(turno, "instancia_de",
                   u.add_individual(category("turno_minero")))
     u.assert_fact(turno, "inicio",
-                  at("2026-05-19T06:00:00+00:00"))
-    u.assert_fact(turno, "fin",
                   at("2026-05-19T18:00:00+00:00"))
+    u.assert_fact(turno, "fin",
+                  at("2026-05-20T06:00:00+00:00"))
     u.assert_fact(turno, "lugar_de", tajo_norte)
     u.assert_fact(turno, "supervisor", supervisor)
 
@@ -215,17 +215,17 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
     extraccion = ingest_situation(u, lex, "extraer", roles={
         "agente": operador1,
         "extraido": mineral_oro,
-        "monto": n(2400, "toneladas", "n_2400_t"),
+        "monto": n(2480, "toneladas", "n_2480_t"),
         "unidad": tonelada_metr,
         "lugar_de": frente_a,
-        "momento": at("2026-05-19T09:15:00+00:00"),
-        "ley_mineral": n(8.2, "g/t", "n_8_2_gt"),
+        "momento": at("2026-05-19T21:15:00+00:00"),
+        "ley_mineral": n(8.6, "g/t", "n_8_6_gt"),
         "ley_unidad": gramo_por_ton,
     }, sit_id="extr_001")
     u.assert_fact(extraccion, "parte_de", turno)
     u.assert_fact(extraccion, "instrumento", camion_007)
 
-    # Cálculo derivado: 2400 t × 8.2 g/t = 19,680 g = 632.7 onzas troy
+    # Cálculo derivado: 2480 t × 8.6 g/t = 21,328 g ≈ 685.8 onzas troy
     produccion_oro = u.add_individual(Individual(
         id="prod_oro_extr_001", axis=Axis.O,
         label="Oro fino producido por extr_001"))
@@ -233,7 +233,7 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
                   u.add_individual(category("produccion_oro_fino")))
     u.assert_fact(produccion_oro, "parte_de", extraccion)
     u.assert_fact(produccion_oro, "monto",
-                  n(632.7, "onzas_troy", "n_632_7_oz"))
+                  n(685.8, "onzas_troy", "n_685_8_oz"))
     u.assert_fact(produccion_oro, "unidad", onza_troy)
     u.assert_fact(produccion_oro, "calculado_de", extraccion)
 
@@ -242,18 +242,18 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
     # ====================================================================
     # Un desprendimiento de roca lesiona al operador Quispe
     desprendimiento = u.add_individual(Individual(
-        id="evento_desprendimiento_001", axis=Axis.O,
+        id="evento_desprendimiento_07", axis=Axis.O,
         label="Desprendimiento de roca"))
     u.assert_fact(desprendimiento, "instancia_de",
                   u.add_individual(category("evento_fisico_geomecanico")))
     u.assert_fact(desprendimiento, "lugar_de", frente_a)
     u.assert_fact(desprendimiento, "momento",
-                  at("2026-05-19T11:40:00+00:00"))
+                  at("2026-05-19T23:40:00+00:00"))
     # NO TIENE agente — fue un evento físico, no lo "hizo" nadie
     # Su causa probable: un debilitamiento estructural previo
     debilitamiento = u.add_individual(Individual(
-        id="debilitamiento_pared_b03", axis=Axis.O,
-        label="Debilitamiento estructural Banco 03"))
+        id="debilitamiento_pared_b04", axis=Axis.O,
+        label="Debilitamiento estructural Banco 04"))
     u.assert_fact(debilitamiento, "instancia_de",
                   u.add_individual(category("condicion_geomecanica")))
     u.assert_fact(desprendimiento, "causado_por", debilitamiento)
@@ -267,7 +267,7 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
     u.assert_fact(accidente, "paciente", operador1)
     u.assert_fact(accidente, "lugar_de", frente_a)
     u.assert_fact(accidente, "momento",
-                  at("2026-05-19T11:40:30+00:00"))
+                  at("2026-05-19T23:40:30+00:00"))
     u.assert_fact(accidente, "causado_por", desprendimiento)
     u.assert_fact(accidente, "parte_de", turno)
     u.assert_fact(accidente, "tipo_lesion",
@@ -296,7 +296,7 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
     medicion_alta = ingest_situation(u, lex, "medir_calidad", roles={
         "agente": sensor_pm,
         "medido_de": arsenico,
-        "monto": n(0.32, "mg/L", "n_0_32_mg_l"),
+        "monto": n(0.34, "mg/L", "n_0_34_mg_l"),
         "unidad": miligramo_l,
         "lugar_de": estacion_monitoreo,
         "momento": at("2026-05-15T14:00:00+00:00"),
@@ -304,8 +304,8 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
 
     # Umbral regulatorio: 0.10 mg/L (norma máxima permisible)
     norma_ambiental = u.add_individual(Individual(
-        id="ds_004_2017_minam", axis=Axis.O,
-        label="DS 004-2017-MINAM (ECA agua)"))
+        id="eca_agua_cat3", axis=Axis.O,
+        label="Estándar de calidad ambiental · agua, categoría 3"))
     u.assert_fact(norma_ambiental, "instancia_de",
                   u.add_individual(category("norma_ambiental")))
     u.assert_fact(norma_ambiental, "umbral_arsenico",
@@ -610,7 +610,7 @@ def run_validations(u: Universe, lex: Lexicon, h: dict):
         return chain
 
     chain = chain_terr(h["frente_a"])
-    expected = ["frente_a_b03", "banco_03_tn", "nivel_4250",
+    expected = ["frente_a_b04", "banco_04_tn", "nivel_4250",
                 "tajo_norte", "yac_san_marcos"]
     results.append((
         "Jerarquía espacial: frente → banco → nivel → tajo → yacimiento",
@@ -654,20 +654,20 @@ def run_validations(u: Universe, lex: Lexicon, h: dict):
     monto = [f for f in facts_extr if f.role == "monto"]
     ley = [f for f in facts_extr if f.role == "ley_mineral"]
     results.append((
-        "Producción con múltiples unidades: 2400 t @ 8.2 g/t",
-        (len(monto) == 1 and monto[0].value.payload["value"] == 2400
-         and len(ley) == 1 and ley[0].value.payload["value"] == 8.2),
+        "Producción con múltiples unidades: 2480 t @ 8.6 g/t",
+        (len(monto) == 1 and monto[0].value.payload["value"] == 2480
+         and len(ley) == 1 and ley[0].value.payload["value"] == 8.6),
         f"monto={monto[0].value.payload['value']}, "
         f"ley={ley[0].value.payload['value']}",
     ))
 
-    # V5 — Producción derivada: 632.7 onzas calculadas de la extracción
+    # V5 — Producción derivada: 685.8 onzas calculadas de la extracción
     facts_prod = u.facts_about(h["produccion_oro"])
     monto_oro = [f for f in facts_prod if f.role == "monto"]
     calc = [f for f in facts_prod if f.role == "calculado_de"]
     results.append((
         "Producción de oro calculada como sub-situación parte_de extracción",
-        (len(monto_oro) == 1 and monto_oro[0].value.payload["value"] == 632.7
+        (len(monto_oro) == 1 and monto_oro[0].value.payload["value"] == 685.8
          and len(calc) == 1 and calc[0].value.id == "extr_001"),
         f"oro={monto_oro[0].value.payload['value']} oz, "
         f"calculado_de={[f.value.id for f in calc]}",
@@ -680,7 +680,7 @@ def run_validations(u: Universe, lex: Lexicon, h: dict):
     results.append((
         "D5: desprendimiento de roca SIN agente humano, con causa física",
         (len(agente_des) == 0 and len(causa_des) == 1
-         and causa_des[0].value.id == "debilitamiento_pared_b03"),
+         and causa_des[0].value.id == "debilitamiento_pared_b04"),
         f"agente={len(agente_des)} (esperado 0), "
         f"causa={[f.value.id for f in causa_des]}",
     ))
@@ -689,7 +689,7 @@ def run_validations(u: Universe, lex: Lexicon, h: dict):
     causa_acc = [f for f in u.facts_about(h["accidente"]) if f.role == "causado_por"]
     cadena_causal = (
         len(causa_acc) == 1
-        and causa_acc[0].value.id == "evento_desprendimiento_001"
+        and causa_acc[0].value.id == "evento_desprendimiento_07"
     )
     results.append((
         "Cadena causal: accidente ← desprendimiento ← debilitamiento estructural",
@@ -702,7 +702,7 @@ def run_validations(u: Universe, lex: Lexicon, h: dict):
                  if f.role == "parte_de"]
     results.append((
         "Accidente parte_de el turno articulador",
-        parte_acc == ["turno_dia_2026_05_19"],
+        parte_acc == ["turno_noche_2026_05_19"],
         f"parte_de: {parte_acc}",
     ))
 
@@ -712,7 +712,7 @@ def run_validations(u: Universe, lex: Lexicon, h: dict):
     mot_rep = [f for f in facts_rep if f.role == "motivado_por"]
     results.append((
         "D7: reporte ambiental motivado_por medición + justificado_por norma",
-        (len(just_rep) == 1 and just_rep[0].value.id == "ds_004_2017_minam"
+        (len(just_rep) == 1 and just_rep[0].value.id == "eca_agua_cat3"
          and len(mot_rep) == 1 and mot_rep[0].value.id == "medicion_001"),
         f"justif={[f.value.id for f in just_rep]}, "
         f"motiv={[f.value.id for f in mot_rep]}",
@@ -738,7 +738,7 @@ def run_validations(u: Universe, lex: Lexicon, h: dict):
     ))
     results.append((
         "WH: ¿cuánto mineral extrajo el operador Quispe?",
-        len(r) == 1 and r[0]["monto"].payload["value"] == 2400,
+        len(r) == 1 and r[0]["monto"].payload["value"] == 2480,
         f"monto: {[x['monto'].payload['value'] for x in r]}",
     ))
 
