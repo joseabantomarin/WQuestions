@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 28 · El grafo como lienzo del futuro — WQuestions</title>
+  <meta name="description" content="La misma estructura que guarda lo que pasó sirve para ensayar lo que podría pasar. Escenarios what-if sin un solo mecanismo nuevo.">
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="WQuestions">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Cap. 28 · El grafo como lienzo del futuro">
+  <meta property="og:description" content="La misma estructura que guarda lo que pasó sirve para ensayar lo que podría pasar. Escenarios what-if sin un solo mecanismo nuevo.">
+  <meta property="og:url" content="https://joseabantomarin.github.io/WQuestions/28-simulacion.html">
+  <meta property="og:image" content="https://joseabantomarin.github.io/WQuestions/assets/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cap. 28 · El grafo como lienzo del futuro">
+  <meta name="twitter:description" content="La misma estructura que guarda lo que pasó sirve para ensayar lo que podría pasar. Escenarios what-if sin un solo mecanismo nuevo.">
+  <meta name="twitter:image" content="https://joseabantomarin.github.io/WQuestions/assets/og-cover.jpg">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'28'">
+      <header class="portada-cap">
+        <p class="parte">Parte VI · IA, futuro y cierre</p>
+        <div class="num-cap">28</div>
+        <h1>El grafo como lienzo del futuro</h1>
+        <p class="lede">La misma estructura que guarda lo que pasó sirve para ensayar lo que podría
+          pasar. Y la explicación de por qué podría pasar no hay que añadirla después: viene puesta.</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">La planificadora de mina tiene sobre la mesa una decisión de las que no
+          admiten empate. El camión 007 necesita mantenimiento mayor. Puede pararlo en junio, y perder
+          una semana de producción cuando el precio está alto, o estirarlo hasta agosto y aceptar que
+          llegue más gastado a los meses buenos. Ninguna de las dos opciones es obviamente correcta.
+          Lo único claro es que se decide esta semana.</p>
+
+        <p>Es la clase de pregunta que en cualquier operación seria termina en una hoja de cálculo
+          construida a mano, que alguien guarda en su carpeta, que nadie más entiende y que dentro de
+          seis meses no se podrá auditar. Cuando el trimestre cierre mal, la pregunta será por qué se
+          decidió lo que se decidió, y la respuesta vivirá en la memoria de dos personas.</p>
+
+        <p>Este capítulo sostiene que el grafo puede alojar esa decisión entera, con su cálculo, sus
+          supuestos y su rastro, sin que haya que construir un simulador aparte. Un simulador necesita
+          tres cosas: un estado de partida, una regla que lo transforme y un estado proyectado. Las
+          tres caben en lo que ya has leído. No hace falta un mecanismo nuevo, y esa afirmación es
+          comprobable: al final del capítulo aparece la cuenta exacta de cuánto vocabulario nuevo hizo
+          falta.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">De dónde sale este capítulo</span>
+          Todo lo que sigue ocurre en el yacimiento del <a href="23-minera.html">capítulo 23</a>, con
+          sus mismas entidades. El camión, el tajo, el mecánico y hasta el accidente de Quispe son los
+          de allí. Nada se inventa para que la simulación quepa.
+        </aside>
+
+        <h2>La cadena que ya sabes recorrer</h2>
+
+        <p>Vuelve un momento al peor instante de aquel capítulo. Son las 23:40, una roca se desprende
+          de la pared del Banco 04 y golpea al operador Quispe. La auditoría pregunta qué causó el
+          accidente y el grafo responde recorriendo <code>causado_por</code> hacia atrás: el accidente
+          vino del desprendimiento, y el desprendimiento de un debilitamiento estructural que la
+          inspección geomecánica debió haber detectado. Tres nodos, dos cables, ningún culpable.</p>
+
+        <p>Ahora fíjate en lo que hace la planificadora. Parte de una intervención que todavía no ha
+          ocurrido, el mantenimiento de junio, y quiere saber qué se seguiría de ella. Es el mismo
+          recorrido. Los mismos cables. La única diferencia es el sentido de la marcha.</p>
+
+        <p class="cita-destacada revelar">El auditor recorre las causas hacia atrás. El planificador
+          recorre las mismas hacia adelante.<cite>La tesis del capítulo</cite></p>
+
+        <p>Conviene detenerse aquí, porque es lo que hace innecesario el simulador aparte. Un motor de
+          simulación convencional construye su propio universo de objetos, corre el escenario en
+          memoria y devuelve números. Lo que ocurrió por dentro se pierde, o sobrevive en un registro
+          que nadie diseñó para ser consultado. Si preguntas seis meses después por qué el modelo
+          proyectó esa caída de producción, tienes el número y no tienes el porqué.</p>
+
+        <p>Aquí el porqué se escribe en el mismo acto de proyectar, porque proyectar consiste en
+          escribir hechos, y un hecho proyectado cuelga de su causa por el mismo cable que cualquier
+          otro. La trazabilidad no es una funcionalidad del simulador. Es un efecto secundario de no
+          haber construido uno.</p>
+
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 340" class="svg-eje" role="img"
+                 aria-label="Dos recorridos sobre el mismo tipo de cable causado_por: arriba, la cadena real del accidente que el auditor recorre de derecha a izquierda desde el accidente hasta el debilitamiento; abajo, la cadena proyectada que el planificador recorre de izquierda a derecha desde el mantenimiento de junio hasta la producción de julio">
+
+              <!-- ================= carril superior: lo que ocurrió ============ -->
+              <text x="26" y="26" font-size="12" font-weight="700" fill="var(--eje-o)" font-family="var(--sans)">Lo que ocurrió · capítulo 23</text>
+
+              <rect x="26" y="40" width="176" height="56" rx="10" fill="var(--papel)" stroke="var(--eje-o)" stroke-width="1.8"></rect>
+              <text x="114" y="62" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">debilitamiento</text>
+              <text x="114" y="80" text-anchor="middle" font-size="10" fill="var(--tinta-tenue)" font-family="var(--sans)">pared del Banco 04</text>
+
+              <line x1="202" y1="68" x2="256" y2="68" stroke="var(--eje-m)" stroke-width="2.4"></line>
+              <polygon points="256,68 246,63 246,73" fill="var(--eje-m)"></polygon>
+              <text x="229" y="58" text-anchor="middle" font-size="9.5" fill="var(--eje-m)" font-weight="700" font-family="var(--sans)">causado_por</text>
+
+              <rect x="256" y="40" width="176" height="56" rx="10" fill="var(--papel)" stroke="var(--eje-o)" stroke-width="1.8"></rect>
+              <text x="344" y="62" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">desprendimiento</text>
+              <text x="344" y="80" text-anchor="middle" font-size="10" fill="var(--tinta-tenue)" font-family="var(--sans)">23:40 · sin agente</text>
+
+              <line x1="432" y1="68" x2="486" y2="68" stroke="var(--eje-m)" stroke-width="2.4"></line>
+              <polygon points="486,68 476,63 476,73" fill="var(--eje-m)"></polygon>
+              <text x="459" y="58" text-anchor="middle" font-size="9.5" fill="var(--eje-m)" font-weight="700" font-family="var(--sans)">causado_por</text>
+
+              <rect x="486" y="40" width="148" height="56" rx="10" fill="var(--eje-q-suave)" stroke="var(--eje-q)" stroke-width="1.8"></rect>
+              <text x="560" y="62" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-q)" font-family="var(--mono)">accidente</text>
+              <text x="560" y="80" text-anchor="middle" font-size="10" fill="var(--tinta-tenue)" font-family="var(--sans)">paciente: Quispe</text>
+
+              <!-- flecha de lectura del auditor: hacia la izquierda -->
+              <line x1="620" y1="116" x2="46" y2="116" stroke="var(--eje-o)" stroke-width="1.6" stroke-dasharray="5 4"></line>
+              <polygon points="40,116 52,110 52,122" fill="var(--eje-o)"></polygon>
+              <text x="336" y="134" text-anchor="middle" font-size="11" font-style="italic" fill="var(--eje-o)" font-family="var(--sans)">el auditor pregunta «¿por qué pasó?» y lee en esta dirección</text>
+
+              <!-- ================= separador: el presente =================== -->
+              <line x1="26" y1="160" x2="634" y2="160" stroke="var(--tinta-tenue)" stroke-width="1" stroke-dasharray="2 5"></line>
+              <text x="634" y="154" text-anchor="end" font-size="10" fill="var(--tinta-tenue)" font-family="var(--sans)">hoy · 20 de mayo</text>
+
+              <!-- ================= carril inferior: lo proyectado ============= -->
+              <text x="26" y="192" font-size="12" font-weight="700" fill="var(--eje-t)" font-family="var(--sans)">Lo que podría ocurrir · este capítulo</text>
+
+              <rect x="26" y="206" width="216" height="56" rx="10" fill="var(--papel)" stroke="var(--eje-t)" stroke-width="1.8" stroke-dasharray="6 3"></rect>
+              <text x="134" y="228" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-t)" font-family="var(--mono)">sim_mant_junio</text>
+              <text x="134" y="246" text-anchor="middle" font-size="10" fill="var(--tinta-tenue)" font-family="var(--sans)">1 de junio · proyectado</text>
+
+              <line x1="242" y1="234" x2="316" y2="234" stroke="var(--eje-m)" stroke-width="2.4"></line>
+              <polygon points="316,234 306,229 306,239" fill="var(--eje-m)"></polygon>
+              <text x="279" y="224" text-anchor="middle" font-size="9.5" fill="var(--eje-m)" font-weight="700" font-family="var(--sans)">causado_por</text>
+
+              <rect x="316" y="206" width="240" height="56" rx="10" fill="var(--papel)" stroke="var(--eje-t)" stroke-width="1.8" stroke-dasharray="6 3"></rect>
+              <text x="436" y="228" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-t)" font-family="var(--mono)">sim_prod_jul_junio</text>
+              <text x="436" y="246" text-anchor="middle" font-size="10" fill="var(--tinta-tenue)" font-family="var(--sans)">41.360 t · vigente en julio</text>
+
+              <!-- flecha de lectura del planificador: hacia la derecha -->
+              <line x1="40" y1="282" x2="614" y2="282" stroke="var(--eje-t)" stroke-width="1.6" stroke-dasharray="5 4"></line>
+              <polygon points="620,282 608,276 608,288" fill="var(--eje-t)"></polygon>
+              <text x="330" y="300" text-anchor="middle" font-size="11" font-style="italic" fill="var(--eje-t)" font-family="var(--sans)">el planificador pregunta «¿qué pasaría?» y lee en esta</text>
+              <text x="330" y="316" text-anchor="middle" font-size="11" font-style="italic" fill="var(--eje-t)" font-family="var(--sans)">dirección, sobre el mismo tipo de cable</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 28.1.</span> El mismo cable, dos sentidos de lectura.
+            Arriba, la cadena real del accidente: la auditoría entra por el daño y remonta hasta la
+            causa raíz. Abajo, la cadena proyectada: la planificación entra por la intervención y
+            desciende hasta su consecuencia. Los recuadros de trazo discontinuo marcan lo que aún no
+            ha ocurrido. Nada distingue a un cable del otro, y por eso la función que recorre uno
+            recorre el otro sin cambiar una línea.</figcaption>
+        </figure>
+
+        <h2>El escenario es una entidad</h2>
+
+        <p>La primera pregunta práctica es dónde se guardan dos futuros incompatibles sin que se
+          mezclen entre sí ni ensucien lo que de verdad pasó. Una respuesta tentadora es apoyarse en
+          el tiempo: si el modelo lleva dos relojes, uno para lo que era cierto y otro para lo que el
+          sistema sabía, quizá el segundo baste para separar los mundos.</p>
+
+        <p>No basta, y conviene decir por qué con claridad. Dos relojes dan dos lecturas de
+          <em>una</em> historia. No la ramifican. Puedes preguntarle a un sistema bitemporal qué creía
+          en marzo y qué era cierto en marzo, pero no puedes pedirle que sostenga cuatro marzos
+          alternativos a la vez, porque los relojes no se bifurcan.</p>
+
+        <p>Lo que sí se bifurca es el grafo. El escenario se convierte en una entidad con identidad
+          propia en <span class="eje eje--o">O</span>, y cada hecho proyectado cuelga de ella por
+          <code>parte_de</code>. Es la decisión <span class="codigo-d" style="font-size:.72rem">D4</span> aplicada a la
+          simulación misma: algo se reifica cuando necesita identidad, y un escenario la necesita
+          porque hay que poder nombrarlo, compararlo y descartarlo.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(escenario_junio,  instancia_de,     escenario)              ∈ M(O, K)
+(escenario_junio,  agente,           minera_andes)          ∈ M(O, Q)   # quién lo mandó calcular
+(escenario_junio,  objeto_de,        camion_007)            ∈ M(O, O)   # sobre qué decide
+(escenario_junio,  justificado_por,  regla_desgaste_camion) ∈ M(O, O)   # con qué lógica
+
+(sim_mant_junio,     parte_de, escenario_junio)             ∈ M(O, O)
+(sim_prod_jul_junio, parte_de, escenario_junio)             ∈ M(O, O)</code></pre>
+        </div>
+
+        <p>Fíjate en lo que esto compra. El aislamiento entre ramas deja de ser una cuestión de
+          fechas y pasa a ser una cuestión de topología: los hechos de junio cuelgan de un nodo y los
+          de agosto de otro, y por eso no pueden contaminarse aunque hablen del mismo camión, del
+          mismo mes y de la misma tonelada. Caben dos escenarios, y caben cuarenta, sin que el modelo
+          note la diferencia.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Lo que gana el escenario al ser una entidad</p>
+          <ul style="margin:0">
+            <li><strong>Se puede nombrar.</strong> «El escenario de junio» es un identificador, no una
+              convención en la cabeza de quien lo calculó.</li>
+            <li><strong>Admite hechos sobre sí mismo.</strong> Quién lo encargó, con qué regla, sobre
+              qué activo. Todo eso son tripletas corrientes que cuelgan del nodo del escenario.</li>
+            <li><strong>Se descarta sin borrar nada.</strong> Un escenario rechazado se deja de
+              consultar. Sigue ahí, con su fecha y su lógica, para cuando alguien pregunte qué se
+              consideró y se desechó.</li>
+          </ul>
+        </div>
+
+        <h2>Proyectar es fechar hacia adelante</h2>
+
+        <p>Resuelto dónde vive un futuro, queda cómo se escribe. Y aquí la respuesta decepciona por lo
+          simple: un hecho proyectado es un hecho normal con la vigencia puesta más adelante. La
+          decisión <span class="codigo-d" style="font-size:.72rem">D6</span> nunca dijo que el rango
+          <code>[inicio, fin)</code> tuviera que caer en el pasado. Si lo pones en julio, el hecho
+          existe en el grafo desde que lo escribes y solo entra en vigencia en julio.</p>
+
+        <p>La consecuencia es que la consulta «en el momento T», la que el capítulo 27 usaba para
+          reconstruir lo que sabía un directorio en noviembre, sirve igual para leer un futuro. Es
+          la misma llamada. Cambia la fecha.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python"># El hecho proyectado se escribe hoy y rige en julio
+u.assert_fact(prod, "monto",
+              n(41360.0, "toneladas", "n_prod_escenario_junio"),
+              valid_from=d(2026, 7, 1), valid_to=d(2026, 8, 1))
+
+# Leído hoy, el hecho no está vigente:
+u.facts_about(prod, at=AHORA)
+#   ['causado_por', 'instancia_de', 'instrumento', 'lugar_de', 'momento', 'parte_de']
+
+# Leído en julio, aparece — junto con la disponibilidad que lo explica:
+u.facts_about(prod, at=JULIO)
+#   ['causado_por', 'disponibilidad', 'instancia_de', 'instrumento',
+#    'lugar_de', 'momento', 'monto', 'parte_de']</code></pre>
+        </div>
+
+        <p>Lo que no aparece en esa salida importa tanto como lo que aparece. Los roles estructurales
+          del hecho proyectado (de qué escenario es parte, con qué instrumento, en qué lugar, por qué
+          causa) están vigentes desde el primer día, porque describen el escenario y no el futuro.
+          Solo las magnitudes esperan su turno. Puedes inspeccionar la arquitectura de una proyección
+          sin que sus números contaminen ninguna consulta del presente.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Comprobado, no supuesto</span>
+          Las salidas de este capítulo vienen de <code>ejemplos/simulacion.py</code>, que construye
+          los dos escenarios sobre el universo minero del capítulo 23 y comprueba nueve afirmaciones.
+          Si el modelo no sostuviera algo de lo que aquí se dice, ese archivo fallaría.
+        </aside>
+
+        <h2>La regla también es un hecho</h2>
+
+        <p>Falta la pieza del medio. Un estado de partida y un estado proyectado no hacen una
+          simulación: hace falta la lógica que lleva de uno a otro, y esa lógica suele ser lo primero
+          que se pierde. Vive en una fórmula de hoja de cálculo, en una constante dentro de un script,
+          en el criterio de un ingeniero que se jubiló.</p>
+
+        <p>En este dominio la lógica cabe en una frase: cada mes que se difiere el mantenimiento
+          cuesta un punto y medio de disponibilidad. Escríbela como entidad y deja de ser un supuesto
+          tácito.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(regla_desgaste_camion, instancia_de, regla_de_negocio)  ∈ M(O, K)
+(regla_desgaste_camion, tasa,         1.5 pp_por_mes)    ∈ M(O, N)   # vigente desde 2026-01-01
+(regla_desgaste_camion, objeto_de,    camion_007)        ∈ M(O, O)
+
+(camion_007, capacidad_mensual, 44000 toneladas)         ∈ M(O, N)</code></pre>
+        </div>
+
+        <p>Con la regla en el grafo, la aritmética del escenario se vuelve auditable sin salir de él.
+          El camión mueve 44.000 toneladas al mes a plena disponibilidad. Parándolo en junio llega a
+          julio al 94,0 %, y 44.000 por 0,94 da 41.360 toneladas. Difiriéndolo hasta agosto acumula
+          dos meses de castigo, tres puntos, y julio cae a 91,0 %: 40.040 toneladas.</p>
+
+        <p>La diferencia entre los dos futuros es de 1.320 toneladas. Con la ley de 8,6 gramos por
+          tonelada del capítulo 23, eso son unas 365 onzas de oro fino. Ahora la conversación de la
+          planificadora con su gerencia trata sobre un número que cualquiera puede rehacer, y sobre
+          una tasa de desgaste que cualquiera puede discutir, que es exactamente donde debería estar
+          la discusión.</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">Quién multiplica</p>
+          <p style="margin:0">El grafo sostiene la capacidad, la tasa y el resultado, pero no ejecuta
+            la multiplicación: el motor de inferencia es todavía una deuda, y el
+            <a href="31-que-falta.html">capítulo 31</a> la detalla en su Frente 1. Quien calcula hoy
+            es el llamador, o el modelo de lenguaje que atiende la pregunta. Conviene ver que la
+            explicabilidad no depende de eso. Aunque el número lo ponga alguien de fuera, la regla que
+            lo justifica y la causa que lo dispara quedan escritas dentro.</p>
+        </div>
+
+        <h2>Un hecho proyectado no tiene autor</h2>
+
+        <p>Al escribir el ejemplo de este capítulo apareció una fricción que vale más que cualquier
+          párrafo teórico. El primer intento registraba la producción proyectada poniendo al camión
+          como agente, y el catálogo lo rechazó: la signatura de <code>agente</code> exige un
+          individuo en <span class="eje eje--q">Q</span>, y el camión vive en
+          <span class="eje eje--o">O</span>.</p>
+
+        <p>El rechazo tenía razón, y por un motivo más interesante que el error de eje. En el
+          capítulo 23 el camión nunca fue agente: era el <code>instrumento</code> con el que un
+          operador extraía mineral. Pero al proyectar julio, ¿quién es el operador? Ninguno. Nadie ha
+          conducido todavía ese camión en julio. La extracción proyectada no tiene autor porque no ha
+          tenido lugar.</p>
+
+        <p>Y esa figura ya existía en el libro. Es la del desprendimiento de roca: un evento que
+          ocurre sin que nadie lo ejecute, que la decisión <span class="codigo-d" style="font-size:.72rem">D5</span> admite
+          porque la agencia la fija el verbo y no una casilla obligatoria. Lo que se diseñó para
+          registrar que una roca cae sin culpable sirve, sin tocar nada, para registrar que una
+          tonelada se extraerá sin que nadie la haya extraído aún.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(sim_prod_jul_junio, instancia_de, accion_extraer_mineral) ∈ M(O, K)
+(sim_prod_jul_junio, instrumento,  camion_007)             ∈ M(O, O)
+(sim_prod_jul_junio, lugar_de,     tajo_norte)             ∈ M(O, L)
+(sim_prod_jul_junio, causado_por,  sim_mant_junio)         ∈ M(O, O)
+# no hay tripleta `agente`: nadie ha extraído todavía estas toneladas
+
+(escenario_junio, agente, minera_andes)                    ∈ M(O, Q)
+# la agencia está aquí: alguien mandó calcular este futuro</code></pre>
+        </div>
+
+        <p>La agencia no desaparece, se muda. El hecho proyectado no tiene autor, pero el escenario
+          sí: alguien encargó ese cálculo y esa responsabilidad queda escrita un nivel más arriba. Es
+          la distinción que un comité de inversiones necesita y que una hoja de cálculo nunca hace.
+          Nadie produjo esas toneladas. Alguien, con nombre, afirmó que se producirían.</p>
+
+        <h2>Comparar dos futuros es una consulta</h2>
+
+        <p>Con los dos escenarios escritos, compararlos no requiere ninguna maquinaria. Recorres los
+          hechos que cuelgan de cada nodo, lees el rol que te interesa en la fecha que te interesa y
+          restas. La comparación de escenarios, que en un simulador convencional es una función del
+          motor, aquí es una consulta más.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">text</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="text">✓  D4: cada escenario contiene solo lo suyo (aislamiento estructural)
+     junio=['sim_mant_junio', 'sim_prod_jul_junio'] · agosto=['sim_mant_agosto', 'sim_prod_jul_agosto']
+✓  Comparar dos futuros es una consulta, no una función del motor
+     junio=41,360 t · agosto=40,040 t · diferencia=1,320 t
+✓  La regla está en el grafo y da cuenta de la diferencia proyectada
+     tasa=1.5 pp/mes · 2 meses diferidos → 94.0 % − 91.0 % = 3.0 pp
+✓  Ningún hecho real se modificó (almacén append-only)
+     172 hechos reales intactos + 40 proyectados</code></pre>
+        </div>
+
+        <p>La última línea es la que da tranquilidad para usar esto en producción. Simular añadió
+          cuarenta hechos y no tocó ninguno de los ciento setenta y dos que ya estaban. El presente
+          del camión, consultado el 20 de mayo, devuelve exactamente los mismos cinco roles antes y
+          después de haber proyectado dos futuros sobre él.</p>
+
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 320" class="svg-eje" role="img"
+                 aria-label="El camión 007 en el centro con sus hechos reales vigentes hoy, y dos escenarios colgando a los lados: el de junio con 94 por ciento de disponibilidad y 41.360 toneladas, y el de agosto con 91 por ciento y 40.040 toneladas; los hechos reales no se ven afectados por ninguno de los dos">
+
+              <!-- el presente, en el centro -->
+              <rect x="238" y="18" width="184" height="76" rx="12" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="2"></rect>
+              <text x="330" y="42" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">camion_007</text>
+              <text x="330" y="60" text-anchor="middle" font-size="10" fill="var(--tinta-suave)" font-family="var(--sans)">estado: operativo</text>
+              <text x="330" y="74" text-anchor="middle" font-size="10" fill="var(--tinta-suave)" font-family="var(--sans)">capacidad: 44.000 t/mes</text>
+              <text x="330" y="88" text-anchor="middle" font-size="9.5" fill="var(--tinta-tenue)" font-family="var(--sans)">5 hechos vigentes · intactos</text>
+
+              <!-- conectores objeto_de -->
+              <line x1="238" y1="66" x2="150" y2="120" stroke="var(--eje-m)" stroke-width="1.8"></line>
+              <polygon points="150,120 162,118 156,109" fill="var(--eje-m)"></polygon>
+              <text x="164" y="96" text-anchor="middle" font-size="9" fill="var(--eje-m)" font-weight="700" font-family="var(--sans)">objeto_de</text>
+
+              <line x1="422" y1="66" x2="510" y2="120" stroke="var(--eje-m)" stroke-width="1.8"></line>
+              <polygon points="510,120 498,109 504,118" fill="var(--eje-m)"></polygon>
+              <text x="500" y="96" text-anchor="middle" font-size="9" fill="var(--eje-m)" font-weight="700" font-family="var(--sans)">objeto_de</text>
+
+              <!-- rama junio -->
+              <rect x="26" y="124" width="264" height="150" rx="12" fill="none" stroke="var(--eje-t)" stroke-width="1.6" stroke-dasharray="6 4"></rect>
+              <text x="158" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="var(--eje-t)" font-family="var(--mono)">escenario_junio</text>
+              <text x="158" y="163" text-anchor="middle" font-size="9.5" fill="var(--tinta-tenue)" font-family="var(--sans)">agente: minera_andes</text>
+
+              <rect x="44" y="176" width="228" height="38" rx="8" fill="var(--papel)" stroke="var(--eje-t)" stroke-width="1.2"></rect>
+              <text x="158" y="192" text-anchor="middle" font-size="10" font-family="var(--mono)" fill="var(--eje-t)">sim_mant_junio</text>
+              <text x="158" y="206" text-anchor="middle" font-size="9.5" fill="var(--tinta-tenue)" font-family="var(--sans)">1–8 de junio</text>
+
+              <rect x="44" y="222" width="228" height="38" rx="8" fill="var(--papel)" stroke="var(--eje-t)" stroke-width="1.2"></rect>
+              <text x="158" y="238" text-anchor="middle" font-size="10" font-family="var(--mono)" fill="var(--eje-t)">sim_prod_jul_junio</text>
+              <text x="158" y="252" text-anchor="middle" font-size="10" font-weight="700" fill="var(--eje-n)" font-family="var(--sans)">94,0 % · 41.360 t</text>
+
+              <!-- rama agosto -->
+              <rect x="370" y="124" width="264" height="150" rx="12" fill="none" stroke="var(--eje-k)" stroke-width="1.6" stroke-dasharray="6 4"></rect>
+              <text x="502" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="var(--eje-k)" font-family="var(--mono)">escenario_agosto</text>
+              <text x="502" y="163" text-anchor="middle" font-size="9.5" fill="var(--tinta-tenue)" font-family="var(--sans)">agente: minera_andes</text>
+
+              <rect x="388" y="176" width="228" height="38" rx="8" fill="var(--papel)" stroke="var(--eje-k)" stroke-width="1.2"></rect>
+              <text x="502" y="192" text-anchor="middle" font-size="10" font-family="var(--mono)" fill="var(--eje-k)">sim_mant_agosto</text>
+              <text x="502" y="206" text-anchor="middle" font-size="9.5" fill="var(--tinta-tenue)" font-family="var(--sans)">1–8 de agosto</text>
+
+              <rect x="388" y="222" width="228" height="38" rx="8" fill="var(--papel)" stroke="var(--eje-k)" stroke-width="1.2"></rect>
+              <text x="502" y="238" text-anchor="middle" font-size="10" font-family="var(--mono)" fill="var(--eje-k)">sim_prod_jul_agosto</text>
+              <text x="502" y="252" text-anchor="middle" font-size="10" font-weight="700" fill="var(--eje-n)" font-family="var(--sans)">91,0 % · 40.040 t</text>
+
+              <!-- la diferencia -->
+              <line x1="290" y1="241" x2="370" y2="241" stroke="var(--tinta-tenue)" stroke-width="1" stroke-dasharray="3 3"></line>
+              <text x="330" y="236" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--eje-n)" font-family="var(--sans)">1.320 t</text>
+              <text x="330" y="250" text-anchor="middle" font-size="9" fill="var(--tinta-tenue)" font-family="var(--sans)">≈ 365 oz</text>
+
+              <text x="330" y="300" text-anchor="middle" font-size="11" font-style="italic" fill="var(--tinta-suave)" font-family="var(--sans)">Las dos ramas hablan del mismo camión y del mismo julio, y no se tocan.</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 28.2.</span> Dos futuros colgando del mismo presente.
+            El camión conserva sus hechos reales en el centro, sin alteración: los escenarios apuntan
+            hacia él por <code>objeto_de</code>, no al revés, así que ninguna proyección lo modifica.
+            Cada rama agrupa sus hechos bajo su propio nodo, y de ahí viene el aislamiento. Añadir un
+            tercer escenario, o un décimo, es añadir otro recuadro sin tocar los anteriores.</figcaption>
+        </figure>
+
+        <h2>Cuánto vocabulario nuevo hizo falta</h2>
+
+        <p>Queda por saldar la afirmación del principio. Simular, se dijo, no exige un mecanismo
+          nuevo. Es una afirmación medible: basta contar los roles que la simulación usó y ver
+          cuántos ya existían.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">text</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="text">✓  Simular no exigió ningún mecanismo nuevo
+     14 roles: 9 canónicos ['agente', 'causado_por', 'instancia_de', 'instrumento',
+                            'justificado_por', 'lugar_de', 'momento', 'monto', 'parte_de']
+              · 5 de dominio ['capacidad_mensual', 'disponibilidad', 'estado',
+                              'objeto_de', 'tasa']</code></pre>
+        </div>
+
+        <p>Nueve de los catorce son roles canónicos del catálogo, los mismos que sostienen una venta,
+          un viaje en taxi o una consulta clínica. Los otros cinco son roles de dominio que la
+          política liberal admite sin declararlos, y ninguno es un mecanismo: <code>estado</code> y
+          <code>objeto_de</code> ya se usaban en el capítulo 23, y los tres restantes nombran
+          magnitudes de camión minero, no piezas de infraestructura de simulación.</p>
+
+        <p class="cita-destacada revelar">No hubo que enseñarle al modelo a simular. Hubo que fecharle
+          los hechos más adelante.<cite>El resultado del experimento</cite></p>
+
+        <h2>Dónde se acaba lo que hoy funciona</h2>
+
+        <p>Tres límites, y conviene tenerlos a la vista antes de llevar esto a una operación real.</p>
+
+        <p><strong>Puedes preguntar qué proyectaste, no cuándo lo proyectaste.</strong> El modelo
+          conserva hoy el tiempo de validez, y por eso un hecho de julio sabe que rige en julio. Lo
+          que falta es el tiempo de transacción: la fecha en que el escenario se calculó. Mientras el
+          Frente 2 del <a href="31-que-falta.html">capítulo 31</a> siga abierto, esa fecha hay que
+          escribirla a mano como un hecho más del escenario. Funciona, y es menos elegante de lo que
+          será.</p>
+
+        <p><strong>El grafo no calcula.</strong> Sostiene el estado, la regla y el resultado, y deja
+          la aritmética a quien pregunta. Para una regla de tres esto no molesta; para un modelo de
+          elasticidad con veinte variables, la ausencia del motor de inferencia se siente en cada
+          consulta.</p>
+
+        <p><strong>Nada impide un escenario absurdo.</strong> El almacén es de mundo abierto y no
+          verifica consistencia, así que una proyección de disponibilidad del 140 % se guarda con la
+          misma docilidad que una razonable. Es la propiedad que el libro defiende desde el capítulo 7,
+          vista desde su lado incómodo: aquí la apertura que permite modelar cualquier dominio también
+          permite proyectar cualquier disparate.</p>
+
+        <p>Ninguno de los tres invalida el planteamiento, y los tres tienen dueño y calendario en el
+          capítulo de hoja de ruta. Lo que sí conviene no perder de vista es que el capítulo describe
+          una arquitectura que sostiene la simulación, no un producto de simulación terminado.</p>
+
+        <h2>Lo que queda escrito</h2>
+
+        <p>Vuelve a la planificadora del principio. Decida junio o agosto, dentro de seis meses el
+          grafo podrá responder tres preguntas que hoy suelen quedar sin respuesta: qué se proyectó,
+          con qué regla y quién lo encargó. Los dos escenarios seguirán ahí, el elegido y el
+          descartado, con sus números y su lógica intactos.</p>
+
+        <p>Eso es más de lo que suena. Un sistema que solo guarda decisiones tomadas pierde la mitad
+          de la historia, porque la mitad interesante de una decisión son las opciones que se
+          consideraron y se dejaron pasar. Un grafo que aloja escenarios guarda las dos mitades con la
+          misma estructura y sin ningún esfuerzo adicional.</p>
+
+        <p>El capítulo 27 mostró lo que se vuelve posible cuando el pasado está bien escrito. Este
+          añade que el futuro se escribe con los mismos cables, y que su explicación viene incluida
+          porque nunca se separó del dato. El siguiente capítulo aprieta más la tuerca: en lugar de
+          proyectar un yacimiento, el modelo se describirá a sí mismo.</p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="27-aplicaciones.html"><span class="dir">← Anterior</span><span class="tit">Aplicaciones futuras</span></a>
+      <a class="sig" href="29-prueba-reflexiva.html"><span class="dir">Siguiente →</span><span class="tit">La prueba reflexiva</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>

@@ -32,14 +32,26 @@ MAIN_RE = re.compile(r"<main\b[^>]*>(.*?)</main>", re.DOTALL | re.IGNORECASE)
 AUDIO_RE = re.compile(r"<audio\b.*?</audio>|<audio\b[^>]*/>", re.DOTALL | re.IGNORECASE)
 
 
+REDIRECT_RE = re.compile(r'http-equiv=["\']refresh', re.IGNORECASE)
+
+
+def es_stub(path):
+    """Los stubs de redirección comparten prefijo numérico con capítulos reales
+    (28-prueba-reflexiva.html apunta al 29). No son páginas del libro."""
+    with open(path, encoding="utf-8") as f:
+        return bool(REDIRECT_RE.search(f.read(2048)))
+
+
 def ordered_files():
     files = ["index.html"]
-    for i in range(0, 35):
+    for i in range(0, 36):
         n = f"{i:02d}"
         files += sorted(f for f in os.listdir(M2)
                         if f.startswith(n + "-") and f.endswith(".html"))
     files += ["referencias.html", "anexo-reglas.html"]
-    return [f for f in files if os.path.isfile(os.path.join(M2, f))]
+    return [f for f in files
+            if os.path.isfile(os.path.join(M2, f))
+            and not es_stub(os.path.join(M2, f))]
 
 
 def extract_main(path):

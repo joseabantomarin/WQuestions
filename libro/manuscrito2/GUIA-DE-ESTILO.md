@@ -201,13 +201,16 @@ Los **8 dominios industriales** de la Parte V (spa, taxi, clínica, banco, ERP, 
 | 25 | `25-cuatro-dominios.html` | V | Música, química, fútbol, contratos |
 | 26 | `26-llms.html` | VI — IA, futuro y cierre | WQuestions y los LLMs |
 | 27 | `27-aplicaciones.html` | VI | Aplicaciones futuras |
-| 28 | `28-prueba-reflexiva.html` | VI | La prueba reflexiva |
-| 29 | `29-seguridad.html` | VI | Seguridad y privacidad |
-| 30 | `30-que-falta.html` | VI | Qué falta |
-| 31 | `31-conclusion.html` | VI | Conclusión: por qué importan |
-| 32 | `32-anexo-codigo.html` | Anexos | Anexo: el código |
-| 33 | `33-anexo-prototipo.html` | Anexos | Anexo: el prototipo |
-| 34 | `34-el-autor.html` | Anexos | El autor |
+| 28 | `28-simulacion.html` | VI | El grafo como lienzo del futuro |
+| 29 | `29-prueba-reflexiva.html` | VI | La prueba reflexiva |
+| 30 | `30-seguridad.html` | VI | Seguridad y privacidad |
+| 31 | `31-que-falta.html` | VI | Qué falta |
+| 32 | `32-conclusion.html` | VI | Conclusión: por qué importan |
+| 33 | `33-anexo-codigo.html` | Anexos | Anexo: el código |
+| 34 | `34-anexo-prototipo.html` | Anexos | Anexo: el prototipo |
+| 35 | `35-el-autor.html` | Anexos | El autor |
+
+Los archivos `28-prueba-reflexiva.html` … `34-el-autor.html` que siguen en la carpeta son **stubs de redirección** a los números nuevos, para no romper las URLs ya compartidas. No son capítulos: no se editan y el generador de PDF los descarta por su `meta refresh`.
 
 ## 6. Sistema de color por eje
 

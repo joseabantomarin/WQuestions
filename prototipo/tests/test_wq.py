@@ -352,5 +352,39 @@ class TestSpaDomain(unittest.TestCase):
         )
 
 
+# ===========================================================================
+# 9. Simulación end-to-end (cap. 28)
+# ===========================================================================
+
+class TestSimulacionDomain(unittest.TestCase):
+    def test_simulacion_demo_passes_all_validations(self):
+        from ejemplos.minera import build_lexicon, build_universe
+        from ejemplos.simulacion import build_escenarios, run_validations
+        lex = build_lexicon()
+        u, h = build_universe(lex)
+        hechos_reales = len(u.facts)
+        e = build_escenarios(u, h)
+        results = run_validations(u, h, e, hechos_reales)
+        failed = [(q, c) for q, ok, c in results if not ok]
+        self.assertEqual(
+            len(failed), 0,
+            f"Validaciones fallidas en simulación: {failed}",
+        )
+
+    def test_los_hechos_proyectados_no_tocan_el_universo_real(self):
+        """El capítulo 28 afirma que simular no altera un solo hecho real."""
+        from ejemplos.minera import build_lexicon, build_universe
+        from ejemplos.simulacion import build_escenarios
+        lex = build_lexicon()
+        u, h = build_universe(lex)
+        antes = [(f.subject.id, f.role, f.value.id) for f in u.facts]
+        build_escenarios(u, h)
+        despues = [(f.subject.id, f.role, f.value.id) for f in u.facts]
+        self.assertEqual(
+            antes, despues[:len(antes)],
+            "Simular modificó o reordenó hechos ya existentes",
+        )
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

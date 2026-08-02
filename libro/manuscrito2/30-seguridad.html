@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es" data-tema="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cap. 30 · Seguridad y privacidad — WQuestions</title>
+  <meta name="description" content="La otra cara del grafo compartido: cuando todo habla el mismo idioma, ¿quién puede preguntar qué? Federación, el permiso como hecho, redacción por eje y el ataque de agregación.">
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="WQuestions">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Cap. 30 · Seguridad y privacidad">
+  <meta property="og:description" content="La otra cara del grafo compartido: cuando todo habla el mismo idioma, ¿quién puede preguntar qué? Federación, el permiso como hecho, redacción por eje y el ataque de agregación.">
+  <meta property="og:url" content="https://joseabantomarin.github.io/WQuestions/30-seguridad.html">
+  <meta property="og:image" content="https://joseabantomarin.github.io/WQuestions/assets/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cap. 30 · Seguridad y privacidad">
+  <meta name="twitter:description" content="La otra cara del grafo compartido: cuando todo habla el mismo idioma, ¿quién puede preguntar qué? Federación, el permiso como hecho, redacción por eje y el ataque de agregación.">
+  <meta name="twitter:image" content="https://joseabantomarin.github.io/WQuestions/assets/og-cover.jpg">
+  <link rel="stylesheet" href="assets/estilo.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <div class="barra-progreso" aria-hidden="true"></div>
+
+  <header class="cabecera">
+    <a class="marca" href="index.html">
+      <span class="glifo"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      WQuestions
+    </a>
+    <div class="acciones">
+      <button class="btn-cromo" data-accion="tema" aria-label="Cambiar tema">◐ Tema</button>
+      <button class="btn-cromo" data-accion="indice" aria-expanded="false">☰ Índice</button>
+    </div>
+  </header>
+
+  <div class="velo" data-abierto="no"></div>
+  <aside class="drawer-indice" data-abierto="no" aria-label="Índice del capítulo">
+    <h2>En este capítulo</h2>
+    <nav class="lista-secciones"></nav>
+    <p style="margin-top:1.4rem"><a href="index.html">← Índice completo del libro</a></p>
+  </aside>
+
+  <main class="libro">
+    <article class="capitulo" style="--cap:'30'">
+      <header class="portada-cap">
+        <p class="parte">Parte VI · IA, futuro y cierre</p>
+        <div class="num-cap">30</div>
+        <h1>Seguridad y privacidad</h1>
+        <p class="lede">Cuando todos los sistemas hablan el mismo idioma, preguntar deja de tener
+          fricción. Y ahí aparece la pregunta que importa: ¿quién puede preguntar qué?</p>
+      </header>
+
+      <div class="contenido">
+
+        <p class="entrada">Son las diez y cuarto de la mañana. Un analista de una aseguradora abre su
+          consola de evaluación de riesgo. Tiene delante la solicitud de un seguro de vida. La
+          solicitante es Vega, la misma paciente que en el <a href="01-torre-de-babel.html">primer
+          capítulo</a> llegó de madrugada a urgencias con una historia clínica que nadie logró reunir a
+          tiempo. El analista quiere saber una sola cosa: si Vega tiene antecedentes que encarezcan la
+          prima. Su sistema es moderno y, como todo en este libro, habla en preguntas. Así que formula
+          una consulta perfectamente legible: <em>¿qué situaciones de clase
+          <code>diagnostico_medico</code> tienen a esta persona como paciente?</em></p>
+
+        <p>El grafo responde sin titubear: una arritmia, vigilada desde hace dos años, con un episodio
+          de descompensación documentado. La prima se dispara. En el peor caso, la aseguradora niega la
+          cobertura. Y aquí está lo inquietante: <strong>nadie hackeó nada.</strong> No hubo una
+          brecha, ni una contraseña filtrada, ni un empleado vendiendo registros. El sistema funcionó
+          <em>exactamente como se diseñó</em>: alguien preguntó y obtuvo una respuesta precisa y
+          confiable. El mismo grafo que ante un médico de guardia reúne en segundos una historia
+          clínica dispersa y salva una vida, ante un analista a media mañana le niega el seguro.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Marco</span>
+          La <a href="01-torre-de-babel.html">madrugada de Vega</a> abrió el libro: una historia
+          clínica que existía pero que nadie pudo reunir a tiempo. Aquí esa misma historia vuelve por su
+          lado oscuro. Por sí sola, la interoperabilidad no distingue entre el médico que salva una
+          vida y el analista que sube una prima.
+        </aside>
+
+        <p>Esta es la objeción más seria que se le puede hacer al modelo, y no la voy a esquivar. Un
+          grafo compartido en el que cada persona tiene una identidad estable es, por defecto,
+          <strong>una infraestructura de vigilancia</strong>. No es un efecto colateral: es la cara
+          opuesta de su mayor virtud. Las leyes de protección de datos del mundo (el RGPD europeo, la
+          HIPAA estadounidense, la Ley&nbsp;29733 peruana) existen justamente para impedir lo que
+          WQuestions vuelve fácil: cruzar, sin esfuerzo, datos que vivían separados. Si la fuerza del
+          modelo es que el paciente, el cliente y el lugar son <em>los mismos</em> en todos los
+          dominios, esa misma fuerza permite que el banco vea el diagnóstico y la clínica vea la
+          deuda.</p>
+
+        <div class="caja caja--alerta revelar">
+          <p class="caja-tit">La objeción, sin maquillaje</p>
+          <p style="margin:0">Un modelo que vuelve fácil preguntar cualquier cosa sobre cualquiera
+            sirve tanto para la mejor medicina como para el peor abuso. La diferencia no está en la
+            potencia del grafo, sino en una sola política: <strong>quién puede preguntar qué</strong>.
+            El resto del capítulo trata de meter esa política dentro del modelo, no de pegarla por
+            fuera con cinta.</p>
+        </div>
+
+        <p>Lo que sigue defiende dos cosas. Primero, que el problema no solo tiene solución: bien
+          entendido, el modelo ofrece <em>mejores</em> herramientas para resolverlo que la arquitectura
+          relacional a la que reemplaza. Segundo, que queda un frente que ningún modelo enlazable
+          resuelve todavía. Pero antes de la ingeniería hay que deshacer un malentendido, porque la
+          primera respuesta no es técnica.</p>
+
+        <h2>Un idioma, no una base de datos central</h2>
+
+        <p>La imagen que produce pánico, y con razón, es la de un gran depósito central: un único
+          servidor donde el historial completo de cada persona cuelga de un identificador, y donde
+          cualquiera con credenciales puede consultarlo. Si WQuestions fuera <em>eso</em>, sería
+          indefendible y este capítulo no tendría nada que defender.</p>
+
+        <p>No lo es. El grafo compartido es <strong>semántico, no físico</strong>: lo que se comparte
+          es un significado común, no un disco común. El banco, la clínica, la endocrinóloga y el
+          cardiólogo no comparten una base de datos. Comparten un <em>idioma de preguntas</em>: los
+          siete ejes y el lexicon que traduce hacia ellos. Cada uno sigue guardando sus propios hechos
+          en su propio almacén, bajo su propio control y su propia llave. La clínica no lee el grafo
+          del banco. Lo que ocurre es que, cuando hace falta interoperar, y solo con autorización, los
+          dos grafos hablan la misma lengua. Y la fusión que antes era un proyecto de integración de
+          seis meses se vuelve sencilla.</p>
+
+        <p class="cita-destacada revelar">Lo que se comparte es el idioma de las preguntas, no la
+          memoria de los hechos. La interoperabilidad vive en el borde, bajo consentimiento; no en un
+          cerebro central que todo lo sabe.<cite>La distinción que lo cambia todo</cite></p>
+
+        <!-- FIGURA 29.1 · federación vs central -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 360" class="svg-eje" role="img"
+                 aria-label="Comparación entre un depósito central donde todos leen y una federación donde cada parte guarda lo suyo y solo lo une un idioma común">
+              <!-- títulos -->
+              <text x="165" y="26" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-q)">Depósito central</text>
+              <text x="165" y="42" text-anchor="middle" font-size="11" fill="var(--tinta-tenue)">la pesadilla de privacidad</text>
+              <text x="495" y="26" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-k)">Federación + idioma común</text>
+              <text x="495" y="42" text-anchor="middle" font-size="11" fill="var(--tinta-tenue)">cada quien guarda lo suyo</text>
+
+              <!-- separador -->
+              <line x1="330" y1="58" x2="330" y2="340" stroke="var(--linea)" stroke-width="1.5" stroke-dasharray="3 5"/>
+
+              <!-- ===== IZQUIERDA: depósito central ===== -->
+              <!-- el depósito -->
+              <rect x="120" y="150" width="90" height="56" rx="8" fill="var(--eje-q-suave)" stroke="var(--eje-q)" stroke-width="2"/>
+              <text x="165" y="174" text-anchor="middle" font-size="11" font-weight="700" fill="var(--eje-q)">TODO</text>
+              <text x="165" y="190" text-anchor="middle" font-size="10" fill="var(--eje-q)">de todos</text>
+
+              <!-- cuatro lectores que leen del centro -->
+              <g font-size="10" fill="var(--tinta-suave)" font-weight="600">
+                <circle cx="60" cy="90" r="15" fill="var(--papel)" stroke="var(--eje-q)" stroke-width="1.5"/>
+                <text x="60" y="115" text-anchor="middle">banco</text>
+                <circle cx="270" cy="90" r="15" fill="var(--papel)" stroke="var(--eje-q)" stroke-width="1.5"/>
+                <text x="270" y="115" text-anchor="middle">clínica</text>
+                <circle cx="60" cy="270" r="15" fill="var(--papel)" stroke="var(--eje-q)" stroke-width="1.5"/>
+                <text x="60" y="295" text-anchor="middle">seguro</text>
+                <circle cx="270" cy="270" r="15" fill="var(--papel)" stroke="var(--eje-q)" stroke-width="1.5"/>
+                <text x="270" y="295" text-anchor="middle">Estado</text>
+              </g>
+              <!-- flechas de lectura (todos leen todo) -->
+              <g stroke="var(--eje-q)" stroke-width="1.6" opacity=".55" fill="none">
+                <line x1="74" y1="100" x2="123" y2="152"/>
+                <line x1="256" y1="100" x2="207" y2="152"/>
+                <line x1="74" y1="260" x2="123" y2="204"/>
+                <line x1="256" y1="260" x2="207" y2="204"/>
+              </g>
+
+              <!-- ===== DERECHA: federación ===== -->
+              <!-- el idioma común al centro -->
+              <circle cx="495" cy="178" r="30" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="2"/>
+              <text x="495" y="174" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--eje-k)">idioma</text>
+              <text x="495" y="186" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--eje-k)">de preguntas</text>
+
+              <!-- cuatro tenedores, cada uno con su propio cilindro -->
+              <g font-size="10" fill="var(--tinta-suave)" font-weight="600">
+                <rect x="375" y="74" width="44" height="30" rx="5" fill="var(--papel)" stroke="var(--eje-o)" stroke-width="1.6"/>
+                <text x="397" y="93" text-anchor="middle" fill="var(--eje-o)">banco</text>
+                <rect x="571" y="74" width="44" height="30" rx="5" fill="var(--papel)" stroke="var(--eje-l)" stroke-width="1.6"/>
+                <text x="593" y="93" text-anchor="middle" fill="var(--eje-l)">clínica</text>
+                <rect x="375" y="252" width="44" height="30" rx="5" fill="var(--papel)" stroke="var(--eje-t)" stroke-width="1.6"/>
+                <text x="397" y="271" text-anchor="middle" fill="var(--eje-t)">seguro</text>
+                <rect x="571" y="252" width="44" height="30" rx="5" fill="var(--papel)" stroke="var(--eje-n)" stroke-width="1.6"/>
+                <text x="593" y="271" text-anchor="middle" fill="var(--eje-n)">Estado</text>
+              </g>
+              <!-- enlaces al idioma, punteados = solo bajo consentimiento -->
+              <g stroke="var(--eje-k)" stroke-width="1.8" stroke-dasharray="4 4" opacity=".7" fill="none">
+                <line x1="419" y1="96" x2="470" y2="160"/>
+                <line x1="571" y1="96" x2="520" y2="160"/>
+                <line x1="419" y1="262" x2="470" y2="196"/>
+                <line x1="571" y1="262" x2="520" y2="196"/>
+              </g>
+              <text x="495" y="330" text-anchor="middle" font-size="9.5" fill="var(--eje-k)" font-weight="600">enlaces punteados = solo con autorización</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 30.1.</span> A la izquierda, el depósito único donde
+            todos leen de todos: la imagen que produce pánico, y con razón. A la derecha, lo que de
+            verdad es WQuestions: cada parte conserva sus propios hechos bajo su propia llave, y solo
+            los une, bajo consentimiento, un <span class="eje eje--k">K</span> idioma común de
+            preguntas. La privacidad empieza por la forma de la red, no por las reglas que le pongas
+            encima.</figcaption>
+        </figure>
+
+        <p>Releída así, la escena del médico de guardia cambia de sentido. No fue que el médico
+          «entrara al expediente global de Vega». Fue que cada parte (los dos hospitales, la
+          endocrinóloga, el cardiólogo) <strong>publicó hacia un espacio que la paciente había
+          autorizado de antemano</strong> para emergencias. Y como todos esos hechos hablaban el mismo
+          idioma, se ensamblaron solos. La interoperabilidad no exige un cerebro central; le bastan un
+          idioma compartido y un permiso. Eso disuelve el susto inicial, pero abre la pregunta de
+          ingeniería de verdad: si cada parte controla su propio acceso, ¿con qué lo controla? Aquí el
+          modelo deja de defenderse y empieza a atacar.</p>
+
+        <h2>El permiso es un hecho</h2>
+
+        <p>En una arquitectura relacional, el control de acceso es una capa aparte, escrita en un
+          lenguaje distinto del de los datos: tablas de permisos, jerarquías de roles, sentencias
+          <code>GRANT</code> y <code>REVOKE</code>, reglas sueltas por todo el código. Es un sistema
+          que corre en paralelo a los datos. Y los sistemas paralelos terminan igual: <em>se
+          desincronizan</em>. La política dice una cosa, el código hace otra y nadie sabe cuál de las
+          dos manda de verdad.</p>
+
+        <p>En WQuestions no hay capa aparte, por una razón que a estas alturas del libro debería sonar
+          inevitable: <strong>el permiso es, él mismo, un hecho del grafo</strong>. Es una situación
+          reificada, es decir, un hecho descrito con las mismas siete preguntas que cualquier otro.
+          «Que el cardiólogo Rosales pueda ver el diagnóstico de arritmia de Vega» no es una fila en
+          una tabla de permisos: es una afirmación del grafo, con su quién, su qué, su agente y su
+          cuándo. El control de acceso habla el mismo idioma que aquello que controla.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Recuerda</span>
+          Que un permiso pueda modelarse como situación no es un truco inventado para este capítulo. Es
+          la regla general de reificación que ya viste en acción: un evento o una relación se vuelve un
+          nodo en <span class="eje eje--o">O</span> cuando necesita atributos propios. Y el permiso los
+          necesita todos: titular, alcance, vigencia y procedencia.
+        </aside>
+
+        <!-- FIGURA 29.2 · el permiso como tripleta / situación reificada -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <p style="text-align:center;font-family:var(--sans);font-size:.82rem;color:var(--tinta-suave);margin:0 0 1rem">
+              El permiso, descrito con el propio modelo: una situación cuyos ejes son su contenido</p>
+            <svg viewBox="0 0 640 250" class="svg-eje" role="img"
+                 aria-label="El permiso como situación reificada en O con cables hacia quién, sobre qué, qué acción, a quién y desde cuándo">
+              <!-- nodo central: la situación-permiso -->
+              <rect x="250" y="100" width="140" height="50" rx="10" fill="var(--eje-o-suave)" stroke="var(--eje-o)" stroke-width="2.2"/>
+              <text x="320" y="122" text-anchor="middle" font-size="12" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">consentimiento_4471</text>
+              <text x="320" y="138" text-anchor="middle" font-size="10" fill="var(--eje-o)">situación · O</text>
+
+              <!-- Q titular (arriba izq) -->
+              <rect x="40" y="22" width="150" height="40" rx="8" fill="var(--papel)" stroke="var(--eje-q)" stroke-width="1.8"/>
+              <text x="115" y="40" text-anchor="middle" font-size="11" font-weight="700" fill="var(--eje-q)" font-family="var(--mono)">paciente_vega</text>
+              <text x="115" y="55" text-anchor="middle" font-size="9.5" fill="var(--eje-q)">Q · titular del dato</text>
+              <line x1="190" y1="55" x2="252" y2="108" stroke="var(--eje-m)" stroke-width="1.8"/>
+              <text x="206" y="78" font-size="9.5" fill="var(--eje-m)" font-weight="700" font-family="var(--mono)">quien</text>
+
+              <!-- Q beneficiario (abajo izq) -->
+              <rect x="40" y="188" width="150" height="40" rx="8" fill="var(--papel)" stroke="var(--eje-q)" stroke-width="1.8"/>
+              <text x="115" y="206" text-anchor="middle" font-size="11" font-weight="700" fill="var(--eje-q)" font-family="var(--mono)">cardiologo_rosales</text>
+              <text x="115" y="221" text-anchor="middle" font-size="9.5" fill="var(--eje-q)">Q · recibe el acceso</text>
+              <line x1="190" y1="196" x2="252" y2="142" stroke="var(--eje-m)" stroke-width="1.8"/>
+              <text x="200" y="176" font-size="9.5" fill="var(--eje-m)" font-weight="700" font-family="var(--mono)">a_quien</text>
+
+              <!-- O sobre qué (arriba der) -->
+              <rect x="450" y="22" width="160" height="40" rx="8" fill="var(--papel)" stroke="var(--eje-o)" stroke-width="1.8"/>
+              <text x="530" y="40" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">arritmia_dx_2026</text>
+              <text x="530" y="55" text-anchor="middle" font-size="9.5" fill="var(--eje-o)">O · situación protegida</text>
+              <line x1="450" y1="55" x2="388" y2="108" stroke="var(--eje-m)" stroke-width="1.8"/>
+              <text x="406" y="78" font-size="9.5" fill="var(--eje-m)" font-weight="700" font-family="var(--mono)">sobre</text>
+
+              <!-- K acción + T desde (abajo der) -->
+              <rect x="450" y="170" width="160" height="58" rx="8" fill="var(--papel)" stroke="var(--eje-k)" stroke-width="1.8"/>
+              <text x="530" y="190" text-anchor="middle" font-size="11" font-weight="700" fill="var(--eje-k)" font-family="var(--mono)">puede_ver</text>
+              <text x="530" y="205" text-anchor="middle" font-size="9.5" fill="var(--eje-k)">K · acción permitida</text>
+              <text x="530" y="220" text-anchor="middle" font-size="10" fill="var(--eje-t)" font-family="var(--mono)">desde 2026-03-12</text>
+              <line x1="450" y1="198" x2="388" y2="142" stroke="var(--eje-m)" stroke-width="1.8"/>
+              <text x="404" y="178" font-size="9.5" fill="var(--eje-m)" font-weight="700" font-family="var(--mono)">permite</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 30.2.</span> El permiso no es una entrada en un sistema
+            ajeno: es una situación reificada en <span class="eje eje--o">O</span>, cuyos cables
+            <span class="eje eje--m">M</span> apuntan a <em>quién</em> recibe el acceso,
+            <em>sobre qué</em> situación, <em>qué</em> acción y <em>desde cuándo</em>. El control de
+            acceso habla el mismo idioma que el dato que protege.</figcaption>
+        </figure>
+
+        <p>Visto como tripletas, el consentimiento se descompone en cables hacia cada eje, igual que
+          cualquier otro hecho del libro:</p>
+
+        <div class="triple" style="flex-wrap:wrap;justify-content:center">
+          <span class="nodo nodo--o"><span>consentimiento_4471</span><small>O</small></span>
+          <span class="enlace">a_quien<span class="firma">M(O→Q)</span></span>
+          <span class="nodo nodo--q"><span>cardiologo_rosales</span><small>Q</small></span>
+        </div>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(consentimiento_4471, instancia_de, consentimiento)        ∈ M(O, K)
+(consentimiento_4471, quien,        paciente_vega)         ∈ M(O, Q)   # titular
+(consentimiento_4471, a_quien,      cardiologo_rosales)    ∈ M(O, Q)   # beneficiario
+(consentimiento_4471, permite,      puede_ver)             ∈ M(O, K)   # acción
+(consentimiento_4471, sobre,        arritmia_dx_2026)      ∈ M(O, O)   # alcance
+(consentimiento_4471, desde,        2026-03-12)            ∈ M(O, T)   # vigencia
+(consentimiento_4471, caracter,     revocable)             ∈ M(O, K)</code></pre>
+        </div>
+
+        <p>Y ese mismo consentimiento, escrito para viajar entre sistemas, no usa un formato especial
+          de seguridad: es un hecho más del grafo, con la misma forma que un diagnóstico o una
+          transferencia.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">json</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="json">{
+  "id": "consentimiento_4471",
+  "instancia_de": "consentimiento",
+  "quien": "paciente_vega",
+  "permite": "puede_ver",
+  "sobre": "arritmia_dx_2026",
+  "a_quien": "cardiologo_rosales",
+  "desde": "2026-03-12",
+  "caracter": "revocable"
+}</code></pre>
+        </div>
+
+        <p>Que el permiso sea un hecho, y no un sistema aparte, trae tres regalos. Conviene verlos uno
+          por uno, porque cada uno cura un dolor clásico del control de acceso relacional.</p>
+
+        <div class="rejilla-3 revelar">
+          <div class="tarjeta">
+            <h4><span class="eje eje--t">1</span>&nbsp; Consentimiento con fecha</h4>
+            <p style="margin:0;font-size:.93rem">No es una casilla marcada en un formulario perdido:
+              es una situación que dice <em>quién</em> consintió <em>qué</em>, para <em>quién</em> y
+              <em>desde cuándo</em>. Y como es un hecho, tiene su propia procedencia: quién recogió el
+              consentimiento, cómo y bajo qué versión de los términos.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--o">2</span>&nbsp; Revocar es publicar</h4>
+            <p style="margin:0;font-size:.93rem">Cuando Vega retira el permiso, no se edita ni se borra
+              el hecho anterior: se añade uno nuevo que lo deja sin efecto. El acceso caduca en el acto
+              y queda constancia, auditable, de que existió y de cuándo terminó. El sistema no olvida
+              que hubo permiso; recuerda, además, que se revocó.</p>
+          </div>
+          <div class="tarjeta">
+            <h4><span class="eje eje--k">3</span>&nbsp; Auditoría gratis</h4>
+            <p style="margin:0;font-size:.93rem">Cada acceso es también una situación: «el analista del
+              seguro consultó <code>arritmia_dx_2026</code> el 2028-02-01 a las 10:14». El registro de
+              auditoría no es un sistema de bitácoras que haya que construir y proteger aparte: son más
+              hechos en el mismo grafo.</p>
+          </div>
+        </div>
+
+        <p>El segundo punto merece una palabra más, porque es donde el modelo y la ley se cruzan con
+          elegancia. «Revocar es publicar» funciona gracias a la <strong>vigencia temporal</strong>
+          que ya conoces: ante dos hechos que se contradicen, gana el último que sigue vigente. Retirar
+          un permiso no borra nada; añade un hecho nuevo, con su propia marca de tiempo, que cancela al
+          anterior. Así el grafo conserva la historia completa del consentimiento, imprescindible para
+          auditar, y a la vez sabe sin dudas qué vale <em>ahora</em>.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Cruce</span>
+          La regla que permite «revocar» sin borrar (gana el último hecho vigente) es la misma
+          bitemporalidad <span class="eje eje--t">T</span> que el libro fija al tratar las situaciones
+          y la vigencia. El control de acceso no inventa mecanismos propios: reutiliza los del tiempo.
+        </aside>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">«Quién vio qué y cuándo», en una línea</p>
+          <p style="margin:0 0 .8rem">Como cada acceso es un hecho, la pregunta forense que en una
+            arquitectura clásica obliga a cruzar bitácoras dispersas, rotadas y en formatos distintos,
+            aquí es una consulta más sobre los mismos siete ejes:</p>
+          <div class="bloque-codigo" style="margin:0">
+            <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+            <pre><code data-lang="triple"># ¿Quién accedió a la situación arritmia_dx_2026, y cuándo?
+?acceso  instancia_de  acceso_a_dato
+?acceso  sobre         arritmia_dx_2026
+?acceso  quien         ?solicitante      # Q  → quién preguntó
+?acceso  cuando        ?momento          # T  → cuándo</code></pre>
+          </div>
+        </div>
+
+        <h2>Redacción por eje</h2>
+
+        <p>Hay una diferencia de grano fino que juega a favor del modelo, y es quizá su ventaja más
+          subestimada en privacidad. Una base relacional da acceso por tabla o, con bastante esfuerzo,
+          por fila: o ves el registro entero de la transacción, o no ves nada. WQuestions da acceso por
+          <strong>hecho</strong>, e incluso por <strong>eje</strong>.</p>
+
+        <p>Como cada situación parte la realidad en coordenadas separadas y de tipo conocido, se pueden
+          mostrar unas y tapar otras sin romper nada. Un auditor financiero puede recibir la prueba de
+          que una transacción <em>ocurrió</em> (su <span class="eje eje--o">O</span> qué y su
+          <span class="eje eje--t">T</span> cuándo) sin ver nunca el <span class="eje eje--n">N</span>
+          cuánto ni la <span class="eje eje--q">Q</span> contraparte. Un investigador epidemiológico
+          puede saber que hubo un diagnóstico de cierta clase, en cierta fecha y cierto lugar
+          (<span class="eje eje--k">K</span>, <span class="eje eje--t">T</span> y
+          <span class="eje eje--l">L</span>), con el <span class="eje eje--q">Q</span> quién guardado
+          bajo llave.</p>
+
+        <!-- FIGURA 29.3 · redacción por eje -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <p style="text-align:center;font-family:var(--sans);font-size:.82rem;color:var(--tinta-suave);margin:0 0 1rem">
+              La misma transacción, mostrada a dos solicitantes distintos</p>
+            <svg viewBox="0 0 660 318" class="svg-eje" role="img"
+                 aria-label="La misma situación revelada de dos formas: un auditor ve qué y cuándo pero no cuánto ni quién; el banco lo ve todo">
+              <!-- columna izquierda: vista auditor -->
+              <text x="165" y="22" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--tinta)">Vista · auditor de cumplimiento</text>
+              <text x="165" y="38" text-anchor="middle" font-size="10" fill="var(--tinta-tenue)">solo «ocurrió, y cuándo»</text>
+
+              <!-- columna derecha: vista banco -->
+              <text x="495" y="22" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--tinta)">Vista · banco titular</text>
+              <text x="495" y="38" text-anchor="middle" font-size="10" fill="var(--tinta-tenue)">acceso completo</text>
+
+              <line x1="330" y1="52" x2="330" y2="300" stroke="var(--linea)" stroke-width="1.5" stroke-dasharray="3 5"/>
+
+              <!-- helper: filas de ejes. y de cada fila -->
+              <!-- IZQUIERDA -->
+              <!-- O (revelado) -->
+              <rect x="36" y="62" width="22" height="22" rx="5" fill="var(--eje-o)"/>
+              <text x="47" y="78" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">O</text>
+              <text x="66" y="78" font-size="11.5" fill="var(--tinta)" font-family="var(--mono)">transferencia_991</text>
+              <!-- T (revelado) -->
+              <rect x="36" y="100" width="22" height="22" rx="5" fill="var(--eje-t)"/>
+              <text x="47" y="116" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">T</text>
+              <text x="66" y="116" font-size="11.5" fill="var(--tinta)" font-family="var(--mono)">2028-01-30</text>
+              <!-- K (revelado) -->
+              <rect x="36" y="138" width="22" height="22" rx="5" fill="var(--eje-k)"/>
+              <text x="47" y="154" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">K</text>
+              <text x="66" y="154" font-size="11.5" fill="var(--tinta)" font-family="var(--mono)">transferencia_sepa</text>
+              <!-- N (sellado) -->
+              <rect x="36" y="176" width="22" height="22" rx="5" fill="var(--tinta-tenue)" opacity=".5"/>
+              <text x="47" y="192" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">N</text>
+              <rect x="66" y="178" width="170" height="18" rx="4" fill="var(--papel-hund)" stroke="var(--linea)" stroke-dasharray="3 3"/>
+              <text x="151" y="191" text-anchor="middle" font-size="10.5" fill="var(--tinta-tenue)">🔒 cuánto · sellado</text>
+              <!-- Q (sellado) -->
+              <rect x="36" y="214" width="22" height="22" rx="5" fill="var(--tinta-tenue)" opacity=".5"/>
+              <text x="47" y="230" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Q</text>
+              <rect x="66" y="216" width="200" height="18" rx="4" fill="var(--papel-hund)" stroke="var(--linea)" stroke-dasharray="3 3"/>
+              <text x="166" y="229" text-anchor="middle" font-size="10.5" fill="var(--tinta-tenue)">🔒 contraparte · sellado</text>
+
+              <!-- DERECHA (todo revelado) -->
+              <rect x="366" y="62" width="22" height="22" rx="5" fill="var(--eje-o)"/>
+              <text x="377" y="78" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">O</text>
+              <text x="396" y="78" font-size="11.5" fill="var(--tinta)" font-family="var(--mono)">transferencia_991</text>
+              <rect x="366" y="100" width="22" height="22" rx="5" fill="var(--eje-t)"/>
+              <text x="377" y="116" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">T</text>
+              <text x="396" y="116" font-size="11.5" fill="var(--tinta)" font-family="var(--mono)">2028-01-30</text>
+              <rect x="366" y="138" width="22" height="22" rx="5" fill="var(--eje-k)"/>
+              <text x="377" y="154" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">K</text>
+              <text x="396" y="154" font-size="11.5" fill="var(--tinta)" font-family="var(--mono)">transferencia_sepa</text>
+              <rect x="366" y="176" width="22" height="22" rx="5" fill="var(--eje-n)"/>
+              <text x="377" y="192" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">N</text>
+              <text x="396" y="192" font-size="11.5" fill="var(--tinta)" font-family="var(--mono)">48 200,00 EUR</text>
+              <rect x="366" y="214" width="22" height="22" rx="5" fill="var(--eje-q)"/>
+              <text x="377" y="230" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Q</text>
+              <text x="396" y="230" font-size="11.5" fill="var(--tinta)" font-family="var(--mono)">cliente_orozco</text>
+
+              <text x="165" y="278" text-anchor="middle" font-size="10" fill="var(--tinta-suave)">mismos hechos · menos ejes</text>
+              <text x="495" y="278" text-anchor="middle" font-size="10" fill="var(--tinta-suave)">mismos hechos · todos los ejes</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 30.3.</span> Redacción por eje: la misma situación
+            servida a dos solicitantes. El auditor ve que la transferencia
+            <span class="eje eje--o">O</span> ocurrió y <span class="eje eje--t">T</span> cuándo, pero
+            el <span class="eje eje--n">N</span> monto y la <span class="eje eje--q">Q</span>
+            contraparte quedan bajo candado. Mostrar a cada quien solo lo que le toca viene de la propia
+            forma del hecho, no se añade después.</figcaption>
+        </figure>
+
+        <p>Esto no es un parche encima del modelo: es la propia forma del hecho atómico haciendo
+          trabajo de privacidad. La <strong>minimización de datos</strong> (el principio legal de no
+          entregar más de lo necesario para cada fin) deja de ser una promesa de buena conducta y pasa
+          a ser algo que la estructura del dato expresa con precisión de bisturí. En una tabla,
+          «mostrar el hecho pero ocultar el monto» exige una vista a medida, todo un proyecto. Aquí
+          basta con decir qué ejes se revelan.</p>
+
+        <p>Esa distinción se vuelve crítica en un caso concreto: cuando la pregunta es por el agregado.
+          A veces quieres que alguien sepa <em>cuántos</em> pacientes tienen cierta condición sin
+          permitirle llegar a ninguno en particular; el control de acceso, entonces, tiene que separar
+          contar de ver.</p>
+
+        <h2>Las tensiones que quedan crudas</h2>
+
+        <p>No todo está resuelto. Quedan tres tensiones reales, y la última no la resuelve nadie
+          todavía, para ningún modelo de datos enlazable. Las pongo sobre la mesa sin maquillaje,
+          porque el modelo se defiende mejor cuando no finge.</p>
+
+        <h3>El sistema que nunca olvida frente al derecho al olvido</h3>
+
+        <p>La vigencia temporal cancela un hecho, pero no lo borra; el RGPD, en cambio, da derecho a la
+          <em>eliminación</em> de verdad. Son dos exigencias que parecen compatibles y no lo son del
+          todo. La salida pasa por separar dos cosas que el lenguaje confunde: que un hecho
+          <strong>deje de ser verdad</strong> y que su contenido <strong>se destruya</strong>. La
+          técnica concreta se llama <em>crypto-shredding</em>, «triturado por cifrado»: el contenido de
+          los ejes de valor se guarda cifrado, y «borrar» consiste en destruir la llave. Sin la llave,
+          lo que queda es ruido imposible de recuperar, aunque el nodo de la situación siga ahí para no
+          romper las referencias y poder auditar.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Por qué aquí el borrado es más factible, no menos</p>
+          <p style="margin:0">Como cada eje dice <em>con claridad</em> dónde vive cada dato personal
+            (el nombre en <span class="eje eje--q">Q</span>, el monto en
+            <span class="eje eje--n">N</span>, la dolencia en <span class="eje eje--k">K</span>),
+            borrar a propósito un dato es <strong>más</strong> fácil aquí que en el amasijo relacional,
+            donde el mismo dato sensible aparece desperdigado por columnas, índices, bitácoras y copias
+            de respaldo de medianoche. El modelo sabe dónde apuntar la tijera.</p>
+        </div>
+
+        <h3>La identidad estable es a la vez el arma y la herramienta</h3>
+
+        <p>El poder del modelo viene de que la persona es la misma en todos los dominios; y eso es,
+          justamente, lo que abre la puerta a los ataques de re-identificación, los que vuelven a poner
+          nombre a un dato anónimo. La defensa se llama <strong>seudónimos pareados</strong>: la
+          persona sigue siendo una sola por dentro, pero cada relación la ve con un identificador
+          propio, válido solo en ese dominio. Es como usar un nombre distinto en cada ventanilla, donde
+          solo un árbitro autorizado sabe que detrás de todos está la misma persona. Así, cruzar dos
+          identificadores deja de ser gratis: pasa a exigir un permiso explícito.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Cruce</span>
+          El «enchufe» de identificadores que se conecta al tratar el zócalo categórico
+          (<a href="03-clase.html">capítulo&nbsp;3</a>) es justo el punto donde esta política puede
+          intervenir: averiguar que dos identificadores son la misma persona se vuelve una operación
+          con permiso, no un dato de libre acceso.
+        </aside>
+
+        <h3>El frente genuinamente abierto: inferencia y agregación</h3>
+
+        <p>Aun con permisos por hecho y con la redacción por eje, un modelo que unifica las preguntas
+          vuelve <em>más</em> fácil el ataque por combinación: varios hechos inofensivos por separado,
+          al cruzarse, reconstruyen lo que ninguno mostraba solo. Dónde vives, a qué hora sales de
+          casa, qué farmacia frecuentas: ninguno es secreto, pero juntos te identifican y hasta dicen
+          qué enfermedad tienes.</p>
+
+        <!-- FIGURA 29.4 · ataque de agregación -->
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 640 280" class="svg-eje" role="img"
+                 aria-label="Tres hechos inocuos por separado convergen y reconstruyen una identidad sensible que ninguno revelaba">
+              <!-- tres hechos inofensivos -->
+              <g font-family="var(--sans)">
+                <rect x="24" y="40" width="150" height="58" rx="10" fill="var(--eje-l-suave)" stroke="var(--eje-l)" stroke-width="1.8"/>
+                <text x="99" y="62" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-l)">L · dónde vive</text>
+                <text x="99" y="80" text-anchor="middle" font-size="10" fill="var(--tinta-suave)">un barrio cualquiera</text>
+
+                <rect x="24" y="116" width="150" height="58" rx="10" fill="var(--eje-t-suave)" stroke="var(--eje-t)" stroke-width="1.8"/>
+                <text x="99" y="138" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-t)">T · horario</text>
+                <text x="99" y="156" text-anchor="middle" font-size="10" fill="var(--tinta-suave)">sale 07:40, vuelve 19:10</text>
+
+                <rect x="24" y="192" width="150" height="58" rx="10" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="1.8"/>
+                <text x="99" y="214" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--eje-k)">K · una compra</text>
+                <text x="99" y="232" text-anchor="middle" font-size="10" fill="var(--tinta-suave)">farmacia, cada 28 días</text>
+              </g>
+
+              <!-- etiquetas "inocuo" -->
+              <text x="99" y="22" text-anchor="middle" font-size="10" fill="var(--tinta-tenue)" font-style="italic">cada uno: inofensivo</text>
+
+              <!-- flechas convergentes -->
+              <g stroke="var(--eje-m)" stroke-width="2" fill="none" opacity=".75" marker-end="url(#flecha)">
+                <path d="M174 69 C 270 90, 300 120, 372 138"/>
+                <path d="M174 145 L 372 145"/>
+                <path d="M174 221 C 270 200, 300 170, 372 152"/>
+              </g>
+              <defs>
+                <marker id="flecha" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+                  <path d="M0,0 L9,4.5 L0,9 Z" fill="var(--eje-m)"/>
+                </marker>
+              </defs>
+              <text x="265" y="118" text-anchor="middle" font-size="10" fill="var(--eje-m)" font-weight="700">cruzar</text>
+
+              <!-- resultado sensible -->
+              <rect x="384" y="104" width="232" height="80" rx="12" fill="var(--eje-q-suave)" stroke="var(--eje-q)" stroke-width="2.4"/>
+              <text x="500" y="132" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-q)">identidad + condición</text>
+              <text x="500" y="152" text-anchor="middle" font-size="10.5" fill="var(--tinta)">«esta persona concreta,</text>
+              <text x="500" y="168" text-anchor="middle" font-size="10.5" fill="var(--tinta)">en tratamiento crónico»</text>
+              <text x="500" y="200" text-anchor="middle" font-size="10" fill="var(--eje-q)" font-style="italic">lo que ningún hecho dijo solo</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 30.4.</span> El ataque por agregación: un
+            <span class="eje eje--l">L</span> lugar, un <span class="eje eje--t">T</span> horario y una
+            <span class="eje eje--k">K</span> compra (inofensivos por separado) convergen y
+            reconstruyen una identidad y una condición que ninguno revelaba solo. Es el frente que
+            ningún modelo enlazable resuelve por completo.</figcaption>
+        </figure>
+
+        <p>Esto <strong>no lo resuelve bien nadie</strong>, y WQuestions, justo por facilitar el enlace
+          desde el diseño, está obligado a tomárselo <em>más</em> en serio, no menos. Existen defensas
+          serias en el momento de responder una consulta: el <em>k</em>-anonimato (no contestar si la
+          respuesta señala a menos de <em>k</em> personas) y la privacidad diferencial (añadir un poco
+          de ruido a las cifras agregadas para que nadie quede al descubierto). Pero son eso, defensas,
+          no soluciones. Por eso este problema pertenece, con todas las letras, al
+          <a href="31-que-falta.html">capítulo siguiente</a>: es parte de lo que falta.</p>
+
+        <h2>El veredicto</h2>
+
+        <p>En limpio, esto es lo que el grafo compartido sí ofrece, y lo que todavía no:</p>
+
+        <div class="columnas">
+          <p>El grafo compartido es un <strong>idioma, no una base central</strong>. La privacidad
+            empieza por la forma de la red: cada parte controla lo suyo y solo lo une bajo
+            consentimiento. El permiso, el consentimiento y la auditoría son <strong>hechos del propio
+            grafo</strong>; se escriben en el mismo modelo que los datos, no en una capa aparte que se
+            desincroniza con el tiempo.</p>
+          <p>El control fino por eje y el borrado dirigido por <em>crypto-shredding</em> son
+            <strong>más viables</strong> aquí que en lo relacional, porque el modelo sabe con exactitud
+            dónde vive cada dato. Pero esa misma facilidad para enlazar, que es su fuerza, convierte la
+            <strong>inferencia por agregación</strong> en el riesgo central, todavía sin solución
+            cerrada para nadie.</p>
+        </div>
+
+        <p>La conclusión práctica es incómoda y conviene decirla en voz alta: <strong>una arquitectura
+          de información que no piensa la privacidad desde el primer día no merece adoptarse.</strong>
+          Un modelo que vuelve fácil preguntar cualquier cosa sobre cualquiera sirve tanto para la
+          mejor medicina como para el peor abuso, y la diferencia no está en la potencia del grafo,
+          sino en quién puede preguntar qué.</p>
+
+        <p>Que esa pregunta —quién puede preguntar qué— se responda <em>con el mismo modelo</em>, y no
+          con un sistema aparte pegado con cinta, es la mejor noticia de este capítulo. Que la
+          inferencia por agregación siga abierta es la peor. Las dos cosas son verdad a la vez, y la
+          página siguiente empieza, justamente, por admitir todo lo que falta.</p>
+
+        <p class="cita-destacada revelar">La diferencia entre la mejor medicina y el peor abuso no está
+          en la potencia del grafo, sino en quién puede preguntar qué.<cite>El veredicto</cite></p>
+
+      </div>
+    </article>
+
+    <nav class="nav-cap">
+      <a class="ant" href="29-prueba-reflexiva.html"><span class="dir">← Anterior</span><span class="tit">La prueba reflexiva</span></a>
+      <a class="sig" href="31-que-falta.html"><span class="dir">Siguiente →</span><span class="tit">Qué falta</span></a>
+    </nav>
+  </main>
+
+  <script src="assets/interacciones.js"></script>
+</body>
+</html>
