@@ -296,12 +296,12 @@ u.facts_about(prod, at=JULIO)
 
         <div class="caja caja--practica revelar">
           <p class="caja-tit">Quién multiplica</p>
-          <p style="margin:0">El grafo sostiene la capacidad, la tasa y el resultado, pero no ejecuta
-            la multiplicación: el motor de inferencia es todavía una deuda, y el
-            <a href="31-que-falta.html">capítulo 31</a> la detalla en su Frente 1. Quien calcula hoy
-            es el llamador, o el modelo de lenguaje que atiende la pregunta. Conviene ver que la
-            explicabilidad no depende de eso. Aunque el número lo ponga alguien de fuera, la regla que
-            lo justifica y la causa que lo dispara quedan escritas dentro.</p>
+          <p style="margin:0">Esta multiplicación la hace el grafo. El motor de derivación lee la
+            regla, opera respetando las unidades y escribe el resultado con su
+            <code>calculado_de</code> puesto, que es como se calcula el oro fino del
+            <a href="23-minera.html">capítulo 23</a>. Le falta la mitad condicional: derivar una
+            magnitud de otras sí, disparar una regla cuando se cumplen ciertas condiciones todavía no.
+            Esa mitad es el Frente 1 del <a href="31-que-falta.html">capítulo 31</a>.</p>
         </div>
 
         <h2>Un hecho proyectado no tiene autor</h2>
@@ -451,31 +451,46 @@ u.facts_about(prod, at=JULIO)
         <p class="cita-destacada revelar">No hubo que enseñarle al modelo a simular. Hubo que fecharle
           los hechos más adelante.<cite>El resultado del experimento</cite></p>
 
-        <h2>Dónde se acaba lo que hoy funciona</h2>
+        <h2>Dónde está la frontera</h2>
 
-        <p>Tres límites, y conviene tenerlos a la vista antes de llevar esto a una operación real.</p>
+        <p>Queda una pregunta incómoda por hacer, y conviene hacerla bien. Un capítulo sobre
+          proyectar futuros invita a preguntar qué le falta a esto para llevarlo a una operación
+          real. La respuesta es una sola cosa, y no la que suele nombrarse.</p>
 
-        <p><strong>Puedes preguntar qué proyectaste, no cuándo lo proyectaste.</strong> El modelo
-          conserva hoy el tiempo de validez, y por eso un hecho de julio sabe que rige en julio. Lo
-          que falta es el tiempo de transacción: la fecha en que el escenario se calculó. Mientras el
-          Frente 2 del <a href="31-que-falta.html">capítulo 31</a> siga abierto, esa fecha hay que
-          escribirla a mano como un hecho más del escenario. Funciona, y es menos elegante de lo que
-          será.</p>
+        <p class="cita-destacada revelar">Lo que falta no es poder describirlo. Es que algo lo
+          ejecute.<cite>La única frontera</cite></p>
 
-        <p><strong>El grafo no calcula.</strong> Sostiene el estado, la regla y el resultado, y deja
-          la aritmética a quien pregunta. Para una regla de tres esto no molesta; para un modelo de
-          elasticidad con veinte variables, la ausencia del motor de inferencia se siente en cada
-          consulta.</p>
+        <p>Mira los tres frentes donde uno esperaría encontrar carencias. El grafo sabe describir la
+          regla que convierte tonelaje y ley en onzas, y desde el capítulo 23 también sabe
+          ejecutarla. Sabe cuándo se afirmó cada hecho, y lo sabe sin que nadie se lo pida: todo hecho
+          entra con su marca de tiempo de transacción, que es lo que permite decir cuál es el valor
+          vigente y cuál quedó atrás. Y sabe describir la restricción que un escenario sensato no
+          debería violar, porque una restricción es una regla y una regla es una entidad como
+          cualquier otra.</p>
 
-        <p><strong>Nada impide un escenario absurdo.</strong> El almacén es de mundo abierto y no
-          verifica consistencia, así que una proyección de disponibilidad del 140 % se guarda con la
-          misma docilidad que una razonable. Es la propiedad que el libro defiende desde el capítulo 7,
-          vista desde su lado incómodo: aquí la apertura que permite modelar cualquier dominio también
-          permite proyectar cualquier disparate.</p>
+        <p>Lo que todavía no existe es el evaluador que recorre el grafo comprobando esas
+          restricciones. Puedes escribir que la disponibilidad va de cero a cien; nada impide guardar
+          ciento cuarenta. La diferencia entre almacenar una regla y tenerla comprobada es la
+          diferencia entre documentación y barandilla, y en un dominio regulado esa diferencia pesa.
+          Ese evaluador es el Frente 1 del <a href="31-que-falta.html">capítulo 31</a>, en su mitad
+          de validación.</p>
 
-        <p>Ninguno de los tres invalida el planteamiento, y los tres tienen dueño y calendario en el
-          capítulo de hoja de ruta. Lo que sí conviene no perder de vista es que el capítulo describe
-          una arquitectura que sostiene la simulación, no un producto de simulación terminado.</p>
+        <aside class="nota-margen">
+          <span class="etq">Una distinción que conviene no perder</span>
+          Que el almacén acepte hechos contradictorios no es un defecto que arreglar: es la decisión
+          de mundo abierto que permite modelar cualquier dominio sin un comité que apruebe cada
+          concepto. La validación no es la corrección de esa apertura, sino una capa que se añade
+          encima cuando un dominio la necesita.
+        </aside>
+
+        <p>Y queda un residuo concreto, que es de persistencia y no de simulación. La marca de
+          tiempo de transacción vive mientras el proceso vive: al recargar desde disco, los hechos
+          vuelven con una marca nueva y las originales se pierden. Para auditar un escenario meses
+          después eso importa, y es el Frente 2 del capítulo 31.</p>
+
+        <p>Ninguna de las dos cosas invalida el planteamiento, y las dos tienen dueño y calendario en
+          la hoja de ruta. Lo que conviene no perder de vista es más simple: el capítulo describe una
+          arquitectura que sostiene la simulación, no un producto de simulación terminado.</p>
 
         <h2>Lo que queda escrito</h2>
 

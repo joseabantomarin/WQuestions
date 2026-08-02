@@ -62,7 +62,8 @@
           entonces, casi de inmediato, chocas con una pared. Quieres que el sistema dispare solo la
           regla <em>«a la séptima sesión, la octava es gratis»</em>; el prototipo guarda la regla como
           dato, pero no la <em>ejecuta</em>. Quieres preguntarle no qué era cierto, sino qué sabía el
-          sistema en abril; la respuesta a medias te dice que esa versión del pasado no se conservó.
+          sistema en abril; te contesta bien mientras el proceso siga vivo, y pierde el hilo en cuanto
+          lo reinicias.
           Ninguna de esas paredes es teórica. Son, exactamente, lo que falta.</p>
 
         <p>Este capítulo cambia de registro a propósito. No es una recapitulación ni una mirada
@@ -102,16 +103,16 @@
               <!-- Frente 1 -->
               <text x="14" y="58" font-size="12.5" font-weight="700" fill="var(--tinta)">1 · Motor de inferencia</text>
               <rect x="160" y="46" width="216" height="16" rx="4" fill="var(--linea)" opacity=".5"/>
-              <rect x="160" y="46" width="58" height="16" rx="4" fill="var(--eje-k)" opacity=".82"/>
-              <text x="384" y="58" font-size="10.5" fill="var(--tinta-tenue)">evaluar reglas declarativas</text>
-              <text x="223" y="58" font-size="9" fill="#fff" font-weight="700">ejecuta verbos</text>
+              <rect x="160" y="46" width="112" height="16" rx="4" fill="var(--eje-k)" opacity=".82"/>
+              <text x="384" y="58" font-size="10.5" fill="var(--tinta-tenue)">reglas condicionales</text>
+              <text x="166" y="58" font-size="9" fill="#fff" font-weight="700">verbos + derivar</text>
 
               <!-- Frente 2 -->
               <text x="14" y="106" font-size="12.5" font-weight="700" fill="var(--tinta)">2 · Bitemporalidad</text>
               <rect x="160" y="94" width="216" height="16" rx="4" fill="var(--linea)" opacity=".5"/>
-              <rect x="160" y="94" width="108" height="16" rx="4" fill="var(--eje-t)" opacity=".82"/>
-              <text x="384" y="106" font-size="10.5" fill="var(--tinta-tenue)">transaction time a disco</text>
-              <text x="214" y="106" font-size="9" fill="#fff" font-weight="700">valid time</text>
+              <rect x="160" y="94" width="132" height="16" rx="4" fill="var(--eje-t)" opacity=".82"/>
+              <text x="384" y="106" font-size="10.5" fill="var(--tinta-tenue)">que sobrevivan al disco</text>
+              <text x="166" y="106" font-size="9" fill="#fff" font-weight="700">valid + tx en memoria</text>
 
               <!-- Frente 3 -->
               <text x="14" y="154" font-size="12.5" font-weight="700" fill="var(--tinta)">3 · Persistencia</text>
@@ -162,9 +163,31 @@
 
         <p>El experimento reflexivo dio el <strong>primer medio paso</strong>: demostró que la conducta
           puede vivir como dato y ejecutarse desde afuera (un evaluador genérico que despacha verbos
-          leyéndolos del grafo). Lo que ese motor <strong>todavía no es</strong> es un evaluador de
-          <strong>reglas declarativas</strong>. Sabe ejecutar verbos; no sabe resolver «si se cumplen
-          estas condiciones sobre los hechos, deriva este hecho nuevo». Esa es la pieza ausente.</p>
+          leyéndolos del grafo).</p>
+
+        <p>El segundo medio paso ya está dado, y es la <strong>derivación</strong>. El prototipo
+          calcula una magnitud a partir de otras respetando las unidades, y escribe el resultado con
+          su <code>calculado_de</code> y su <code>justificado_por</code> puestos. La regla vive en el
+          grafo, no en el código: una expresión sobre roles y una unidad de destino. Así se calcula
+          hoy el oro fino de la minera, y de ahí sale que 2.480&nbsp;t por 8,6&nbsp;g/t den
+          685,7&nbsp;onzas troy sin que nadie escriba el número.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Por qué las unidades primero</span>
+          Un motor que multiplica sin mirar unidades produce hechos numéricamente correctos y
+          dimensionalmente falsos, que es peor que no calcular. Por eso la primera pieza del motor no
+          fue evaluar fórmulas sino respetar dimensiones: la física de cada unidad (su ancla en QUDT,
+          su factor exacto, su dimensión) vive en el eje K como tripletas, y el
+          motor la lee de ahí. De eso se deduce que toneladas por gramos-por-tonelada den gramos, sin
+          que nadie lo programe.
+        </aside>
+
+        <p>Lo que ese motor <strong>todavía no es</strong> es un evaluador de <strong>reglas
+          declarativas</strong>. Sabe ejecutar verbos y sabe calcular; no sabe resolver «si se cumplen
+          estas condiciones sobre los hechos, deriva este hecho nuevo». La regla del spa se almacena y
+          no se dispara. Esa es la pieza que sigue ausente, y trae dos mitades: el disparo condicional
+          con agregados (contar las siete sesiones) y la validación (comprobar que un hecho no viola
+          una restricción declarada).</p>
 
         <p>Hay al menos cuatro tecnologías candidatas para esa capa, cada una con su fortaleza y su
           flanco débil:</p>
@@ -290,9 +313,18 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
           lleva su rango <code>[inicio, fin)</code>, y una consulta «en el momento T» recupera lo que
           era cierto del mundo entonces. Esta es la mecánica de vigencia que el libro reifica con rangos
           (la decisión <span class="codigo-d">D6</span>, enunciada en el
-          <a href="09-situaciones.html">capítulo&nbsp;9</a>). Lo que <strong>falta</strong> es el
-          <strong>tiempo de transacción</strong> (<em>transaction time</em>): cuándo el sistema afirmó
-          ese hecho.</p>
+          <a href="09-situaciones.html">capítulo&nbsp;9</a>).</p>
+
+        <p>El <strong>tiempo de transacción</strong> (<em>transaction time</em>), que registra cuándo
+          el sistema afirmó cada hecho, tampoco está ausente: todo hecho entra con su marca, sin que
+          nadie la pida, y de ella depende algo que ya se usa a diario. Cuando un rol tiene varios
+          valores, el vigente es el de marca más reciente, y el orden del historial sale de ahí. Sin
+          esa marca, <code>corregir</code> no sabría cuál de las dos versiones es la buena.</p>
+
+        <p>Lo que <strong>falta</strong>, entonces, es más estrecho y más incómodo de lo que suele
+          decirse: esa marca <strong>no sobrevive al reinicio</strong>. Al recargar desde disco los
+          hechos vuelven con una marca nueva, la del momento de la recarga, y las originales se
+          pierden. El sistema recuerda qué creía, pero olvida desde cuándo lo creía.</p>
 
         <p>La diferencia importa cuando alguien pregunta no «¿qué era cierto?» sino «¿qué sabíamos?».
           Toma un caso del banco. En mayo registramos que el plan mensual de un cliente venció el 31 de
@@ -311,8 +343,10 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Qué falta · urgencia · qué requiere</p>
           <p style="margin:0 0 .5rem"><b>Qué falta:</b> cerrar el tiempo de transacción de punta a
-            punta. La estructura del hecho ya reserva un campo para él, pero la persistencia aún no lo
-            conserva en el viaje de ida y vuelta a disco. Queda como deuda concreta.</p>
+            punta. El hecho ya lo lleva y el respaldo SQLite ya lo escribe; es la <em>lectura</em> la
+            que lo descarta al reconstruir el universo, junto con la vigencia. De ahí que el viaje de
+            ida y vuelta a disco pierda las dos líneas de tiempo. Falta además la consulta que las
+            cruce.</p>
           <p style="margin:0 0 .5rem"><b>Urgencia: alta</b> para dominios regulados (finanzas, salud,
             derecho); baja para el resto. Cuando un dominio lo necesita, no es opcional. El destino es
             un par de intervalos por hecho y consultas <em>as-of</em> duales:
@@ -332,6 +366,20 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
           individuos <code>(id, eje, payload_json)</code> y una de hechos
           <code>(sujeto, rol, valor, inicio, fin, …)</code>. Es la prueba de que el modelo persiste sin
           esfuerzo: la geometría de las tripletas se aplana a tabla casi sin pérdida.</p>
+
+        <p>Hay además un segundo respaldo, de otra naturaleza: el servidor MCP escribe un
+          <strong>registro de eventos, solo de anexión</strong>, y reconstruye el universo
+          reproduciéndolo al arrancar. Guarda las llamadas, no el estado, lo cual tiene una virtud
+          que la tabla no tiene: la vigencia viaja dentro de los argumentos y vuelve intacta.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Dónde está el «casi»</span>
+          Los dos respaldos pierden cosas distintas al recargar, y conviene decir cuáles. La tabla
+          escribe la vigencia y la marca de transacción, pero la lectura las descarta y reconstruye
+          los hechos como si fueran atemporales. El registro de eventos conserva la vigencia y pierde
+          la marca de transacción, porque anota qué se hizo y no cuándo. Sumadas, son la deuda del
+          Frente 2 vista desde abajo.
+        </aside>
 
         <p>Lo que <strong>falta</strong>, entonces, no es «persistencia» (ya existe) sino
           <strong>persistencia industrial y plural</strong>: una interfaz <code>Storage</code>
@@ -589,7 +637,7 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
             {"tipo":"barras","unidad":"%","max":100,
              "datos":[
                {"l":"Persistencia","v":60,"color":"o"},
-               {"l":"Motor reglas","v":35,"color":"k"},
+               {"l":"Motor reglas","v":50,"color":"k"},
                {"l":"Bitemporal.","v":50,"color":"t"},
                {"l":"Tooling","v":22,"color":"l"},
                {"l":"Lexicon","v":12,"color":"m"},
