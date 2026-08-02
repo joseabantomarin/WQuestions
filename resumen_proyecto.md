@@ -33,7 +33,7 @@ El proyecto está claramente estructurado en tres bloques principales:
     *   Parece que estás escribiendo un libro estructurado en varias partes (desde el problema de la fragmentación de datos hasta implementaciones futuras).
     *   `esquema_capitulos.md`: Contiene un esquema muy detallado de 21 capítulos divididos en 6 partes ("Por qué las preguntas", "Las ocho coordenadas", "Cómo funcionan juntas", etc.).
     *   `propuesta_editorial.md`: Documento orientado a presentar el proyecto a una editorial.
-    *   Scripts y carpetas (`convertir.sh`, `manuscrito/`): Herramientas para la compilación del libro.
+    *   `manuscrito2/`: la edición canónica del libro, en HTML. `generar_pdf_html.py` produce el PDF desde ella. Las ediciones anteriores (Markdown y `.docx`) están retiradas en `libro/_ediciones/`.
 
 3.  **Investigación y Antecedentes (`/related`):**
     *   Contiene notas y análisis de modelos existentes y teorías previas que fundamentan WQuestions.
