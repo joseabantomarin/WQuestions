@@ -22,8 +22,14 @@ from .lexicon import Lexicon, LexiconEntry
 from .query import Pattern, Var, query, count
 from .ingest import ingest_situation, IngestError
 from .vistas import tabla_plana, proyeccion, pivote
+from .magnitud import Magnitud, UnidadReducida, reducir_unidad, ErrorDimensional
+from .derivacion import (declarar_unidad, declarar_unidades_base,
+                         evaluar, derivar, ErrorDerivacion)
 
 __all__ = [
+    "Magnitud", "UnidadReducida", "reducir_unidad", "ErrorDimensional",
+    "declarar_unidad", "declarar_unidades_base", "evaluar", "derivar",
+    "ErrorDerivacion",
     "Axis", "Individual", "mint_id", "category", "quantity", "time_point",
     "Fact", "Universe",
     "Catalog", "RoleSignature", "SignatureError",

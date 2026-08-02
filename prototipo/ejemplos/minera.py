@@ -21,7 +21,9 @@ from typing import Tuple
 from wq import (
     Axis, Individual, Universe, Catalog, Lexicon, LexiconEntry,
     Pattern, Var, query, count, ingest_situation, category,
+    declarar_unidad,
 )
+from wq.unidades import sembrar_si
 
 
 def at(iso: str) -> Individual:
@@ -30,6 +32,8 @@ def at(iso: str) -> Individual:
 
 
 def n(value: float, unit: str, vid: str) -> Individual:
+    """Una magnitud del eje N. `unit` es el id de una categoría de K, no una
+    cadena libre: sin eso el motor de derivación no puede operar con ella."""
     return Individual(id=vid, axis=Axis.N,
                       label=f"{value} {unit}",
                       payload={"value": value, "unit": unit})
@@ -92,6 +96,16 @@ def build_lexicon() -> Lexicon:
 def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
     cat = Catalog()
     u = Universe(name="minera", catalog=cat)
+
+    # === K — Unidades, con su dimensión y su factor exacto ===
+    # La física de las unidades vive en el grafo, no en el código: de ahí sale
+    # que toneladas × (gramos/tonelada) dé gramos sin que nadie lo programe.
+    sembrar_si(u)
+    declarar_unidad(u, "K:USD", label="dólar estadounidense",
+                    qudt="http://qudt.org/vocab/unit/USD")
+    declarar_unidad(u, "K:Bar", label="bar (presión)",
+                    qudt="http://qudt.org/vocab/unit/BAR")
+    declarar_unidad(u, "K:Ordinal", label="posición en una escala ordenada")
 
     # === K — Categorías ===
     operativo = u.add_individual(category("operativo"))
@@ -163,7 +177,7 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
     u.assert_fact(camion_007, "fecha_adquisicion",
                   at("2018-04-10T00:00:00+00:00"))
     u.assert_fact(camion_007, "vida_util_anios",
-                  n(15, "años", "n_15_anios"))
+                  n(15, "K:Anio", "n_15_anios"))
 
     # Estados del camión a lo largo de su vida útil (D6)
     t_op_inicial = datetime(2018, 4, 15, tzinfo=timezone.utc)
@@ -207,35 +221,45 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
     # ====================================================================
     # CASO 3 — Extracción con múltiples unidades (toneladas, ley g/t, onzas)
     # ====================================================================
-    onza_troy = u.add_individual(category("Unit:OnzaTroy"))
-    tonelada_metr = u.add_individual(category("Unit:ToneladaMetrica"))
-    gramo_por_ton = u.add_individual(category("Unit:GramoPorTonelada"))
+    # Las unidades ya están declaradas arriba con su física; el rol `unidad`
+    # apunta a la MISMA entidad de K que lleva la magnitud en su payload.
+    onza_troy = u.ind("K:OnzaTroy")
+    tonelada_metr = u.ind("K:ToneladaMetrica")
+    gramo_por_ton = u.ind("K:GramoPorTonelada")
     mineral_oro = u.add_individual(category("MineralOro"))
 
     extraccion = ingest_situation(u, lex, "extraer", roles={
         "agente": operador1,
         "extraido": mineral_oro,
-        "monto": n(2480, "toneladas", "n_2480_t"),
+        "monto": n(2480, "K:ToneladaMetrica", "n_2480_t"),
         "unidad": tonelada_metr,
         "lugar_de": frente_a,
         "momento": at("2026-05-19T21:15:00+00:00"),
-        "ley_mineral": n(8.6, "g/t", "n_8_6_gt"),
+        "ley_mineral": n(8.6, "K:GramoPorTonelada", "n_8_6_gt"),
         "ley_unidad": gramo_por_ton,
     }, sit_id="extr_001")
     u.assert_fact(extraccion, "parte_de", turno)
     u.assert_fact(extraccion, "instrumento", camion_007)
 
-    # Cálculo derivado: 2480 t × 8.6 g/t = 21,328 g ≈ 685.8 onzas troy
-    produccion_oro = u.add_individual(Individual(
-        id="prod_oro_extr_001", axis=Axis.O,
-        label="Oro fino producido por extr_001"))
+    # El oro fino NO se escribe a mano: se deriva. La regla vive en el grafo,
+    # el motor la aplica y el resultado sale con su procedencia puesta.
+    # 2480 t × 8,6 g/t = 21.328 g, y a 31,1034768 g/oz son 685,7 onzas troy.
+    regla_oro = u.add_individual(Individual(
+        id="regla_oro_fino", axis=Axis.O,
+        label="Oro fino = tonelaje × ley del mineral"))
+    u.assert_fact(regla_oro, "instancia_de",
+                  u.add_individual(category("regla_de_derivacion")))
+    u.assert_fact(regla_oro, "expresion", u.add_individual(Individual(
+        id="expr_oro_fino", axis=Axis.K, label="monto * ley_mineral")))
+    u.assert_fact(regla_oro, "unidad_destino", onza_troy)
+
+    produccion_oro = u.derive(regla_oro, sobre=extraccion,
+                              destino_id="prod_oro_extr_001",
+                              label="Oro fino producido por extr_001")
     u.assert_fact(produccion_oro, "instancia_de",
                   u.add_individual(category("produccion_oro_fino")))
     u.assert_fact(produccion_oro, "parte_de", extraccion)
-    u.assert_fact(produccion_oro, "monto",
-                  n(685.8, "onzas_troy", "n_685_8_oz"))
     u.assert_fact(produccion_oro, "unidad", onza_troy)
-    u.assert_fact(produccion_oro, "calculado_de", extraccion)
 
     # ====================================================================
     # CASO 4 — Incidente sin agente humano (D5 al extremo)
@@ -283,7 +307,7 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
         "tipo_mantenimiento":
             u.add_individual(category("mantenimiento_correctivo_motor")),
         "momento": at("2026-05-14T10:00:00+00:00"),
-        "costo": n(18500, "USD", "n_18500_usd"),
+        "costo": n(18500, "K:USD", "n_18500_usd"),
         "unidad": u.add_individual(category("Currency:USD")),
     }, sit_id="mant_correctivo_001")
 
@@ -296,7 +320,7 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
     medicion_alta = ingest_situation(u, lex, "medir_calidad", roles={
         "agente": sensor_pm,
         "medido_de": arsenico,
-        "monto": n(0.34, "mg/L", "n_0_34_mg_l"),
+        "monto": n(0.34, "K:MiligramoPorLitro", "n_0_34_mg_l"),
         "unidad": miligramo_l,
         "lugar_de": estacion_monitoreo,
         "momento": at("2026-05-15T14:00:00+00:00"),
@@ -309,7 +333,7 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
     u.assert_fact(norma_ambiental, "instancia_de",
                   u.add_individual(category("norma_ambiental")))
     u.assert_fact(norma_ambiental, "umbral_arsenico",
-                  n(0.10, "mg/L", "n_0_10_mg_l"))
+                  n(0.10, "K:MiligramoPorLitro", "n_0_10_mg_l"))
 
     # El reporte regulatorio se dispara por exceder el umbral
     reporte = ingest_situation(u, lex, "reportar", roles={
@@ -344,7 +368,7 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
     u.assert_fact(molino_005, "instancia_de",
                   u.add_individual(category("molino_bolas_industrial")))
     u.assert_fact(molino_005, "capacidad_nominal",
-                  n(120, "tph", "n_120_tph"))   # toneladas por hora
+                  n(120, "K:ToneladaPorHora", "n_120_tph"))   # toneladas por hora
 
     # El paquete de comisionamiento como entidad articuladora superior
     comisionamiento = u.add_individual(Individual(
@@ -372,26 +396,26 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
     u.assert_fact(criterio_hidro, "instancia_de",
                   u.add_individual(category("acceptance_criterion")))
     u.assert_fact(criterio_hidro, "presion_minima",
-                  n(8.0, "bar", "n_8_bar"))
+                  n(8.0, "K:Bar", "n_8_bar"))
     u.assert_fact(criterio_hidro, "duracion_minima",
-                  n(30, "min", "n_30_min"))
+                  n(30, "K:Minuto", "n_30_min"))
     u.assert_fact(criterio_hidro, "caida_maxima_pct",
-                  n(2.0, "%", "n_2_pct"))
+                  n(2.0, "K:Porcentaje", "n_2_pct"))
 
     # El test ejecutado, con su valor medido real
     test_hidro = ingest_situation(u, lex, "ejecutar_test", roles={
         "agente": contratista,
         "tema": molino_005,
-        "valor_medido": n(8.4, "bar", "n_8_4_bar"),
+        "valor_medido": n(8.4, "K:Bar", "n_8_4_bar"),
         "valor_medido_unidad": bar_unit,
         "momento": at("2026-04-05T10:00:00+00:00"),
     }, sit_id="test_hidro_001")
     u.assert_fact(test_hidro, "parte_de", comisionamiento)
     u.assert_fact(test_hidro, "verifica_criterio", criterio_hidro)
     u.assert_fact(test_hidro, "caida_medida",
-                  n(1.3, "%", "n_1_3_pct"))
+                  n(1.3, "K:Porcentaje", "n_1_3_pct"))
     u.assert_fact(test_hidro, "duracion_medida",
-                  n(32, "min", "n_32_min"))
+                  n(32, "K:Minuto", "n_32_min"))
     # El resultado pasa/falla se asienta como hecho — derivado por la
     # regla de comparación (que el motor de reglas externo evalúa).
     u.assert_fact(test_hidro, "resultado",
@@ -423,7 +447,7 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
     test_perf = ingest_situation(u, lex, "ejecutar_test", roles={
         "agente": contratista,
         "tema": molino_005,
-        "valor_medido": n(118, "tph", "n_118_tph"),
+        "valor_medido": n(118, "K:ToneladaPorHora", "n_118_tph"),
         "valor_medido_unidad": u.add_individual(
             category("Unit:ToneladaPorHora")),
         "momento": at("2026-04-12T14:00:00+00:00"),
@@ -440,21 +464,21 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
     # para ordenarlas. El convenio de mining/oil&gas: A > B > C.
     sev_a = u.add_individual(category("severidad_A"))
     u.assert_fact(sev_a, "nivel_severidad",
-                  n(1, "ord", "n_1_ord"))
+                  n(1, "K:Ordinal", "n_1_ord"))
     u.assert_fact(sev_a, "descripcion",
                   u.add_individual(
                       category("crítico_bloquea_comisionamiento")))
 
     sev_b = u.add_individual(category("severidad_B"))
     u.assert_fact(sev_b, "nivel_severidad",
-                  n(2, "ord", "n_2_ord"))
+                  n(2, "K:Ordinal", "n_2_ord"))
     u.assert_fact(sev_b, "descripcion",
                   u.add_individual(
                       category("debe_resolverse_antes_operacion")))
 
     sev_c = u.add_individual(category("severidad_C"))
     u.assert_fact(sev_c, "nivel_severidad",
-                  n(3, "ord", "n_3_ord"))
+                  n(3, "K:Ordinal", "n_3_ord"))
     u.assert_fact(sev_c, "descripcion",
                   u.add_individual(
                       category("estetico_no_bloqueante")))
@@ -534,9 +558,9 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
     u.assert_fact(vibracion, "instancia_de",
                   u.add_individual(category("defecto_dinamico")))
     u.assert_fact(vibracion, "valor_medido",
-                  n(4.2, "mm/s", "n_4_2_mms"))
+                  n(4.2, "K:MilimetroPorSegundo", "n_4_2_mms"))
     u.assert_fact(vibracion, "valor_nominal_max",
-                  n(3.5, "mm/s", "n_3_5_mms"))
+                  n(3.5, "K:MilimetroPorSegundo", "n_3_5_mms"))
 
     punch_003 = ingest_situation(u, lex, "registrar_punchitem", roles={
         "agente": ing_owner,
@@ -661,16 +685,28 @@ def run_validations(u: Universe, lex: Lexicon, h: dict):
         f"ley={ley[0].value.payload['value']}",
     ))
 
-    # V5 — Producción derivada: 685.8 onzas calculadas de la extracción
+    # V5 — Producción DERIVADA por el motor, no escrita a mano:
+    #      2480 t × 8,6 g/t = 21.328 g ÷ 31,1034768 g/oz = 685,7 onzas troy
     facts_prod = u.facts_about(h["produccion_oro"])
     monto_oro = [f for f in facts_prod if f.role == "monto"]
     calc = [f for f in facts_prod if f.role == "calculado_de"]
     results.append((
-        "Producción de oro calculada como sub-situación parte_de extracción",
-        (len(monto_oro) == 1 and monto_oro[0].value.payload["value"] == 685.8
+        "El oro fino lo CALCULA el motor: 2480 t × 8,6 g/t → 685,7 oz troy",
+        (len(monto_oro) == 1
+         and round(monto_oro[0].value.payload["value"], 1) == 685.7
          and len(calc) == 1 and calc[0].value.id == "extr_001"),
-        f"oro={monto_oro[0].value.payload['value']} oz, "
+        f"oro={monto_oro[0].value.payload['value']:.4f} oz, "
         f"calculado_de={[f.value.id for f in calc]}",
+    ))
+
+    # V5b — El hecho derivado dice de dónde sale: regla y situación de origen
+    just = [f.value.id for f in facts_prod if f.role == "justificado_por"]
+    expr = [f.value.label for f in u.facts_about(u.ind("regla_oro_fino"))
+            if f.role == "expresion"]
+    results.append((
+        "El hecho derivado cita la regla que lo autoriza, y la regla es un dato",
+        just == ["regla_oro_fino"] and expr == ["monto * ley_mineral"],
+        f"justificado_por={just}, expresion={expr}",
     ))
 
     # V6 — D5 al extremo: el desprendimiento NO tiene agente

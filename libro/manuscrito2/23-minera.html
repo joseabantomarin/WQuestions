@@ -200,7 +200,7 @@
                 <rect x="242" y="146" width="24" height="24" rx="6" fill="var(--eje-n)"></rect>
                 <text x="254" y="163" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">N</text>
                 <text x="274" y="158" font-size="12.5" font-weight="700" fill="var(--eje-n)">cuánto · magnitudes</text>
-                <text x="242" y="186" font-size="11" fill="var(--tinta-suave)">2.480 t, 8,6 g/t, 685 oz troy</text>
+                <text x="242" y="186" font-size="11" fill="var(--tinta-suave)">2.480 t, 8,6 g/t, 685,7 oz troy</text>
                 <text x="242" y="202" font-size="11" fill="var(--tinta-suave)">0,34 mg/L, umbral 0,10 mg/L</text>
                 <text x="242" y="218" font-size="11" fill="var(--tinta-suave)">15 años de vida útil, 9 bar</text>
               </g>
@@ -362,16 +362,27 @@ u.assert_fact(camion_007, "estado", operativo,
 
         <p>La producción de oro fino no es un campo más de la extracción: es una entidad propia,
           modelada como <strong>sub-situación</strong> <code>parte_de</code> la extracción y calculada
-          de ella. El cálculo (2.480&nbsp;t × 8,6&nbsp;g/t ÷ 31,1&nbsp;g/oz ≈ 685,8&nbsp;oz) se asienta
-          como hecho, y un cable <code>calculado_de</code> apunta hacia atrás, a la extracción de la que
-          salió.</p>
+          de ella. El cálculo (2.480&nbsp;t × 8,6&nbsp;g/t = 21.328&nbsp;g, y a 31,1034768&nbsp;g/oz troy,
+          685,7&nbsp;oz) se asienta como hecho, y un cable <code>calculado_de</code> apunta hacia atrás,
+          a la extracción de la que salió.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="python">u.assert_fact(produccion_oro, "parte_de",     extraccion)
-u.assert_fact(produccion_oro, "monto",        n(685.8, "onzas_troy"))
-u.assert_fact(produccion_oro, "unidad",       onza_troy)
-u.assert_fact(produccion_oro, "calculado_de", extraccion)</code></pre>
+          <pre><code data-lang="python"># La regla vive en el grafo, no en el código de la aplicación
+u.assert_fact(regla_oro, "expresion", u.add_individual(Individual(
+    id="expr_oro_fino", axis=Axis.K, label="monto * ley_mineral")))
+u.assert_fact(regla_oro, "unidad_destino", onza_troy)
+
+# El motor la aplica: nadie escribe el 685,7 a mano
+produccion_oro = u.derive(regla_oro, sobre=extraccion,
+                          destino_id="prod_oro_extr_001")
+u.assert_fact(produccion_oro, "parte_de", extraccion)
+u.assert_fact(produccion_oro, "unidad",   onza_troy)
+
+# y el hecho derivado sale con su procedencia puesta:
+#   (prod_oro_extr_001, monto,           685.7 K:OnzaTroy)
+#   (prod_oro_extr_001, calculado_de,    extr_001)
+#   (prod_oro_extr_001, justificado_por, regla_oro_fino)</code></pre>
         </div>
 
         <div class="triple">
@@ -379,12 +390,12 @@ u.assert_fact(produccion_oro, "calculado_de", extraccion)</code></pre>
           <span class="enlace">calculado_de<span class="firma">M(O→O)</span></span>
           <span class="nodo nodo--o"><span>extraccion_n19</span><small>O</small></span>
           <span class="enlace">monto<span class="firma">M(O→N)</span></span>
-          <span class="nodo nodo--n"><span>685,8 oz troy</span><small>N</small></span>
+          <span class="nodo nodo--n"><span>685,7 oz troy</span><small>N</small></span>
         </div>
 
         <p>Esto es lo que en un dominio físico se llama <em>trazabilidad de lote</em>: el grafo nunca
           pierde de vista de qué roca salió cada onza. Si mañana alguien pregunta <em>«¿de qué
-          extracción específica vinieron estas 685,8 onzas?»</em>, la respuesta es directa, un solo
+          extracción específica vinieron estas 685,7 onzas?»</em>, la respuesta es directa, un solo
           salto por <code>calculado_de</code>. Y si se descubre que la ley estaba mal medida y hay que
           recalcular, la producción corregida se modela como un hecho nuevo que <code>rectifica</code> al
           anterior (el mismo patrón de auditoría que vimos en el rediagnóstico de la clínica y la
@@ -1080,7 +1091,7 @@ count(u, Pattern(fixed={"activo": u.ind("camion_007"), "tipo": u.ind("correctivo
             asignados, ocurre en el Tajo Norte entre las 18:00 y las 06:00, y lo supervisa Mamani. De
             él cuelga, por <code>parte_de</code>, todo lo que sucede.</p>
           <p>La <strong>extracción</strong> aporta la producción: 2.480 toneladas con ley de
-            8,6&nbsp;g/t en el Frente A, de las que se calculan 685,8 onzas de oro fino (trazables por
+            8,6&nbsp;g/t en el Frente A, de las que se calculan 685,7 onzas de oro fino (trazables por
             <code>calculado_de</code> hasta la roca original).</p>
           <p>El <strong>accidente</strong> aporta la cadena causal: Quispe como paciente, causado por un
             desprendimiento, causado a su vez por un debilitamiento estructural —tres eventos físicos sin

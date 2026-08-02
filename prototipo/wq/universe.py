@@ -85,6 +85,18 @@ class Universe:
         self._by_role.setdefault(role, []).append(idx)
         return fact
 
+    def derive(self, regla: Individual, sobre: Individual,
+               destino_id: str, rol_destino: str = "monto",
+               label: Optional[str] = None) -> Individual:
+        """Aplica una regla de derivación y escribe el hecho calculado.
+
+        Primera rebanada del motor de inferencia: calcula una magnitud a partir
+        de otras respetando las unidades, y deja escrito de dónde sale. Ver
+        `wq.derivacion`.
+        """
+        from .derivacion import derivar
+        return derivar(self, regla, sobre, destino_id, rol_destino, label)
+
     # --- recuperación ------------------------------------------------------
 
     def facts_about(self, individual: Individual,
