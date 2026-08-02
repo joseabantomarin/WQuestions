@@ -451,47 +451,6 @@ u.facts_about(prod, at=JULIO)
         <p class="cita-destacada revelar">No hubo que enseñarle al modelo a simular. Hubo que fecharle
           los hechos más adelante.<cite>El resultado del experimento</cite></p>
 
-        <h2>Dónde está la frontera</h2>
-
-        <p>Queda una pregunta incómoda por hacer, y conviene hacerla bien. Un capítulo sobre
-          proyectar futuros invita a preguntar qué le falta a esto para llevarlo a una operación
-          real. La respuesta es una sola cosa, y no la que suele nombrarse.</p>
-
-        <p class="cita-destacada revelar">Lo que falta no es poder describirlo. Es que algo lo
-          ejecute.<cite>La única frontera</cite></p>
-
-        <p>Mira los tres frentes donde uno esperaría encontrar carencias. El grafo sabe describir la
-          regla que convierte tonelaje y ley en onzas, y desde el capítulo 23 también sabe
-          ejecutarla. Sabe cuándo se afirmó cada hecho, y lo sabe sin que nadie se lo pida: todo hecho
-          entra con su marca de tiempo de transacción, que es lo que permite decir cuál es el valor
-          vigente y cuál quedó atrás. Y sabe describir la restricción que un escenario sensato no
-          debería violar, porque una restricción es una regla y una regla es una entidad como
-          cualquier otra.</p>
-
-        <p>Lo que todavía no existe es el evaluador que recorre el grafo comprobando esas
-          restricciones. Puedes escribir que la disponibilidad va de cero a cien; nada impide guardar
-          ciento cuarenta. La diferencia entre almacenar una regla y tenerla comprobada es la
-          diferencia entre documentación y barandilla, y en un dominio regulado esa diferencia pesa.
-          Ese evaluador es el Frente 1 del <a href="31-que-falta.html">capítulo 31</a>, en su mitad
-          de validación.</p>
-
-        <aside class="nota-margen">
-          <span class="etq">Una distinción que conviene no perder</span>
-          Que el almacén acepte hechos contradictorios no es un defecto que arreglar: es la decisión
-          de mundo abierto que permite modelar cualquier dominio sin un comité que apruebe cada
-          concepto. La validación no es la corrección de esa apertura, sino una capa que se añade
-          encima cuando un dominio la necesita.
-        </aside>
-
-        <p>Y queda un residuo concreto, que es de persistencia y no de simulación. La marca de
-          tiempo de transacción vive mientras el proceso vive: al recargar desde disco, los hechos
-          vuelven con una marca nueva y las originales se pierden. Para auditar un escenario meses
-          después eso importa, y es el Frente 2 del capítulo 31.</p>
-
-        <p>Ninguna de las dos cosas invalida el planteamiento, y las dos tienen dueño y calendario en
-          la hoja de ruta. Lo que conviene no perder de vista es más simple: el capítulo describe una
-          arquitectura que sostiene la simulación, no un producto de simulación terminado.</p>
-
         <h2>Lo que queda escrito</h2>
 
         <p>Vuelve a la planificadora del principio. Decida junio o agosto, dentro de seis meses el

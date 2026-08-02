@@ -420,6 +420,69 @@ K:USD_por_millon_tokens   — unidad compuesta: con ella facturan los proveedore
           <strong>hecho completo y autoexplicativo</strong>: el par valor&nbsp;+&nbsp;unidad, con la
           unidad anclada en K mediante su URI canónica.</p>
 
+        <h2>El modelo sabe hacer cuentas</h2>
+
+        <p>Todo lo anterior estaría escrito en modo condicional si el motor no existiera. Existe. El
+          prototipo calcula sobre magnitudes respetando las unidades, y conviene ver por dónde lo
+          hace, porque la solución vuelve a ser la misma de siempre: más hechos.</p>
+
+        <p>La física de cada unidad no vive en el código. Vive en el eje
+          <span class="eje eje--k">K</span>, colgando de la propia categoría, con la forma que ya
+          viste en la ficha de <code>K:USD</code>: su ancla en QUDT, su unidad base y su factor
+          exacto. Una unidad compuesta declara de qué se compone, y con eso basta.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(K:ToneladaMetrica,  unidad_base,   K:Gramo)             ∈ M(K, K)
+(K:ToneladaMetrica,  factor_a_base, 1e6)                 ∈ M(K, N)
+(K:OnzaTroy,         factor_a_base, 31.1034768)          ∈ M(K, N)
+
+(K:GramoPorTonelada, numerador,     K:Gramo)             ∈ M(K, K)
+(K:GramoPorTonelada, denominador,   K:ToneladaMetrica)   ∈ M(K, K)</code></pre>
+        </div>
+
+        <p>De esas cinco tripletas se deduce, sin que nadie lo programe, que multiplicar toneladas por
+          gramos-por-tonelada da gramos. El motor reduce cada unidad a exponentes sobre unidades base y
+          combina los exponentes al operar: la tonelada y la onza troy son ambas gramo con distinto
+          factor, y el gramo por tonelada es masa entre masa, o sea nada, con una escala de una
+          millonésima. Poner esa aritmética en el grafo tiene una consecuencia práctica: un dominio
+          añade <code>K:token</code> o <code>K:USD_por_millon_tokens</code> sin tocar una línea de
+          código.</p>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Lo que el motor se niega a hacer</p>
+          <p style="margin:0">Sumar gramos con segundos falla, y falla diciendo por qué: no son
+            conmensurables. Pedir un resultado en segundos cuando salió en gramos falla. Y una
+            magnitud que llega sin unidad se rechaza citando la regla de este capítulo, en lugar de
+            operar con ella y devolver un número plausible. Es lo contrario de lo que hizo el sistema
+            de las turbinas: allí ninguna multiplicación estaba mal, y el desastre vino de que nadie
+            se negó a nada.</p>
+        </div>
+
+        <p>La regla del cálculo también es un hecho, no una función escondida. Declara qué operar y
+          en qué unidad quieres el resultado, y lo que el motor escribe sale con su procedencia
+          encima: de qué situación se calculó y qué regla lo autoriza. Así es como el
+          <a href="23-minera.html">capítulo 23</a> obtiene las onzas de oro de una extracción sin que
+          nadie teclee el número.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(regla_oro_fino,     expresion,       "monto * ley_mineral")
+(regla_oro_fino,     unidad_destino,  K:OnzaTroy)
+
+# 2.480 t × 8,6 g/t = 21.328 g, y a 31,1034768 g/oz:
+(prod_oro_extr_001,  monto,           685.7 K:OnzaTroy)
+(prod_oro_extr_001,  calculado_de,    extr_001)
+(prod_oro_extr_001,  justificado_por, regla_oro_fino)</code></pre>
+        </div>
+
+        <p class="cita-destacada revelar">Un número derivado que no dice de dónde sale es tan opaco
+          como un número sin unidad.<cite>El corolario de la regla del eje N</cite></p>
+
+        <p>Fíjate en la simetría con la que abrió el capítulo. La unidad impide que un número se
+          malinterprete; la procedencia impide que un número calculado se vuelva incuestionable. En
+          los dos casos la cura es idéntica: no dejar que el número viaje solo.</p>
+
         <h2>Incertidumbre: cuando «cuánto» no es un único número</h2>
 
         <p>En el mundo real los números casi nunca son exactos. Un estudio sobre un modelo de lenguaje
