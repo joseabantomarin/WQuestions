@@ -437,6 +437,96 @@
           tradicional. A nivel matemático, todo es un sujeto, un cable tipado y un destino. Y esa
           simplicidad es la gasolina que hace volar al modelo.</p>
 
+        <h2>La forma: qué voltaje es aceptable</h2>
+
+        <p>La signatura tiene un límite que conviene ver ahora, mientras la metáfora del enchufe está
+          fresca. Comprueba que el cable enchufe donde debe: que el sujeto venga del eje correcto y
+          el valor vaya al eje correcto. No dice nada sobre el valor mismo. Una disponibilidad del
+          140&nbsp;% encaja en la signatura <code>M(O→N)</code> exactamente igual que una del
+          94&nbsp;%, porque las dos son números y el número es lo único que la signatura mira.</p>
+
+        <p class="cita-destacada revelar">La signatura dice qué enchufe encaja. La forma dice qué
+          voltaje es aceptable.<cite>Las dos comprobaciones</cite></p>
+
+        <p>La forma es una entidad más del grafo, como todo lo demás. Declara a qué rol apunta, qué
+          comprueba y con qué cotas, y el evaluador la lee de ahí. Cuatro tipos cubren casi todo lo
+          que un dominio quiere exigir.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(forma_disponibilidad, tipo_forma,   rango)
+(forma_disponibilidad, rol_objetivo, "disponibilidad")
+(forma_disponibilidad, minimo,       0 K:Porcentaje)
+(forma_disponibilidad, maximo,       100 K:Porcentaje)</code></pre>
+        </div>
+
+        <div class="rejilla-2 revelar">
+          <div class="tarjeta">
+            <p><strong>rango</strong></p>
+            <p>El valor cae entre dos cotas. Compara con el álgebra de unidades del
+              <a href="04-cuanto.html">capítulo 4</a>, así que un mínimo en gramos contra un valor en
+              toneladas se compara bien, y uno en segundos contra uno en gramos ni siquiera se
+              intenta.</p>
+          </div>
+          <div class="tarjeta">
+            <p><strong>cardinalidad</strong></p>
+            <p>El sujeto tiene el rol un número de veces dentro de un margen. «Un asiento contable
+              lleva un solo tipo de movimiento.»</p>
+          </div>
+          <div class="tarjeta">
+            <p><strong>requiere</strong></p>
+            <p>Si el sujeto tiene un rol, debe tener también otro. «Toda transferencia pasa por el
+              motor antifraude.»</p>
+          </div>
+          <div class="tarjeta">
+            <p><strong>unicidad</strong></p>
+            <p>El valor de un rol no se repite entre sujetos. Es el folio, la matrícula, el número de
+              expediente.</p>
+          </div>
+        </div>
+
+        <h3>Lo que el evaluador no hace, y por qué</h3>
+
+        <p>Aquí está la decisión que más cuesta aceptar y más se agradece después: <strong>el
+          evaluador no rechaza nada</strong>. Encuentra la violación, la anota y deja que el hecho
+          entre. Suena a permisividad y es lo contrario.</p>
+
+        <p>Un almacén que rechaza la escritura obliga a decidir de antemano qué es imposible, y esa
+          decisión envejece mal: la excepción que nadie previó llega igual, y el sistema que la
+          rechaza la empuja a un correo, a una hoja aparte, a la memoria de alguien. Peor todavía en
+          un dominio regulado, donde una operación sospechosa que se rechaza al escribir es una
+          operación que después nadie puede auditar.</p>
+
+        <p>La violación, entonces, se registra como un hecho más. Tiene sujeto, tiene la forma que la
+          delata, tiene su momento y tiene un estado con vigencia. Se cuenta con una consulta
+          corriente, se ordena por antigüedad, y se cierra sola cuando el hecho que la causaba se
+          corrige, sin que nadie borre nada.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(violacion_0001, instancia_de,     violacion_de_forma)
+(violacion_0001, sobre,            transferencia_002)
+(violacion_0001, justificado_por,  forma_limite_operacion)
+(violacion_0001, detalle,          "25000 USD por encima del máximo 10000 USD")
+(violacion_0001, estado,           abierta)     [12-jun .. ∞)
+(violacion_0001, estado,           resuelta)    [14-jun .. ∞)   # se corrigió</code></pre>
+        </div>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Una violación es un hecho sobre un hecho</p>
+          <p style="margin:0">Fíjate en que no hace falta ninguna maquinaria nueva para alojarla. Es
+            una situación reificada, con sus roles, su vigencia y su estado, igual que una venta o un
+            diagnóstico. Y como es un hecho, hereda todo lo que el modelo ya sabe hacer con los
+            hechos: consultarla, fecharla, contarla por periodo y preguntar cuáles seguían abiertas
+            el 30 de junio.</p>
+        </div>
+
+        <p>La cardinalidad que acabas de ver hace aquí un trabajo silencioso. Cuando el rol es
+          funcional, el sujeto tiene un solo valor y el evaluador juzga el vigente, así que corregir
+          un dato apaga la violación en lugar de acumular una segunda. Cuando es múltiple, los mira
+          todos. La misma distinción que servía para saber si un cable borra y reemplaza decide
+          también qué se comprueba.</p>
+
         <h2>Cuatro cosas que gana una empresa al unificar</h2>
 
         <p>Adoptar D2 no es una elegancia teórica: tiene cuatro consecuencias prácticas, directas y

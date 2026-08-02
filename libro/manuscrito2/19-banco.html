@@ -645,6 +645,73 @@
         <p class="cita-destacada revelar">En banca, los productos no son adjetivos: son contratos
           firmados que el tiempo no debería poder reescribir.<cite>La lección del Caso 4</cite></p>
 
+        <h2>Caso 5 · La operación que no debía ocurrir, y ocurrió</h2>
+
+        <p>Son las 03:11 de un domingo. Desde la cuenta de Ana sale una transferencia de
+          25.000&nbsp;USD hacia una cuenta en el exterior. El límite por operación del banco son
+          10.000, y el motor antifraude no la tocó. Dos normas incumplidas en un solo movimiento.</p>
+
+        <p>La pregunta de diseño es qué debe hacer el sistema, y la respuesta obvia es la
+          equivocada. Un sistema convencional rechaza la escritura: la transacción no se asienta y
+          el cajero recibe un error. Suena prudente hasta que llega el auditor y pregunta qué se
+          intentó esa madrugada. Entonces resulta que <strong>lo que se rechazó no se registró, y lo
+          que no se registró no existe</strong>. El intento vive, si acaso, en una traza de
+          aplicación que nadie diseñó para ser consultada y que se rota cada treinta días.</p>
+
+        <p class="cita-destacada revelar">Una operación sospechosa que se rechaza al escribir es una
+          operación que después nadie puede auditar.<cite>La lección del dominio regulado</cite></p>
+
+        <p>Aquí la transferencia se asienta. Las tres formas que el banco declaró viven en el grafo
+          como cualquier otra entidad, y el evaluador las comprueba sin bloquear nada.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">declarar_forma(u, "forma_limite_operacion", tipo="rango", rol="monto",
+               maximo=limite_10000_usd, aplica_a="accion_transferir")
+declarar_forma(u, "forma_antifraude", tipo="requiere", rol="cuenta_destino",
+               requiere="verificado_por", aplica_a="accion_transferir")
+declarar_forma(u, "forma_asiento_movimiento", tipo="cardinalidad",
+               rol="tipo_movimiento", minimo=uno, maximo=uno,
+               aplica_a="asiento_contable")
+
+informe = u.validate()
+#   {'abiertas': ['violacion_0001', 'violacion_0002'], 'cerradas': [], 'vigentes': 2}</code></pre>
+        </div>
+
+        <p>La transferencia queda asentada con sus 25.000&nbsp;USD, y a su lado quedan dos hechos
+          nuevos que no estaban antes: las dos violaciones, cada una apuntando a la forma que la
+          delata. El oficial de cumplimiento no recibe una alerta que se pierde en una bandeja de
+          entrada. Recibe hechos, y los hechos se consultan.</p>
+
+        <div class="triple">
+          <span class="nodo nodo--o"><span>violacion_0001</span><small>O</small></span>
+          <span class="enlace">sobre<span class="firma">M(O→O)</span></span>
+          <span class="nodo nodo--o"><span>transferencia_002</span><small>O</small></span>
+          <span class="enlace">justificado_por<span class="firma">M(O→O)</span></span>
+          <span class="nodo nodo--o"><span>forma_limite_operacion</span><small>O</small></span>
+        </div>
+
+        <p>Repara en lo que esto permite preguntar, y que un sistema de alertas no permite.
+          «¿Cuántas operaciones excedieron el límite en junio?» es un conteo. «¿Cuáles seguían sin
+          resolver el 30 de junio?» es la misma consulta con una fecha, porque la violación lleva su
+          estado con vigencia. Y «¿por qué esta operación se marcó?» devuelve la forma exacta, con su
+          cota, en un salto.</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">La violación se apaga sola</p>
+          <p style="margin:0">Cuando la operación se regulariza (se anula, se reclasifica, se
+            autoriza por excepción documentada), el evaluador no borra la violación: le añade un
+            estado <code>resuelta</code> con su fecha. La marca queda en el grafo con su historia
+            completa, que es lo que un supervisor pedirá dos años después. Es el mismo patrón de
+            estados con el que la <a href="23-minera.html">minera</a> cierra sus punchitems.</p>
+        </div>
+
+        <p>Y conviene decir qué <em>no</em> hace este mecanismo, porque el banco es donde más
+          tentador resulta pedirle de más. No impide la operación. Si el negocio necesita un bloqueo
+          duro (y a veces lo necesita: una cuenta embargada, un cliente sancionado), ese bloqueo vive
+          en la aplicación que decide, no en el almacén que registra. El grafo no es el guardia de la
+          puerta. Es el testigo que lo vio todo y no olvida.</p>
+
         <h2>El antes y el después: del esquema fragmentado al grafo único</h2>
 
         <p>Pongamos las dos arquitecturas frente a frente con una sola pregunta, deliberadamente

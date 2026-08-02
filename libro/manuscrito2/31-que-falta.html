@@ -103,9 +103,9 @@
               <!-- Frente 1 -->
               <text x="14" y="58" font-size="12.5" font-weight="700" fill="var(--tinta)">1 · Motor de inferencia</text>
               <rect x="160" y="46" width="216" height="16" rx="4" fill="var(--linea)" opacity=".5"/>
-              <rect x="160" y="46" width="112" height="16" rx="4" fill="var(--eje-k)" opacity=".82"/>
+              <rect x="160" y="46" width="150" height="16" rx="4" fill="var(--eje-k)" opacity=".82"/>
               <text x="384" y="58" font-size="10.5" fill="var(--tinta-tenue)">reglas condicionales</text>
-              <text x="166" y="58" font-size="9" fill="#fff" font-weight="700">verbos + derivar</text>
+              <text x="166" y="58" font-size="9" fill="#fff" font-weight="700">verbos + derivar + validar</text>
 
               <!-- Frente 2 -->
               <text x="14" y="106" font-size="12.5" font-weight="700" fill="var(--tinta)">2 · Bitemporalidad</text>
@@ -182,12 +182,35 @@
           que nadie lo programe.
         </aside>
 
+        <p>El tercer medio paso cierra la <strong>validación</strong>. Las formas (del
+          <a href="05-predicados.html">capítulo 5</a>) viven en el grafo como entidades y el
+          evaluador las comprueba: rangos, cardinalidades, roles requeridos y unicidad. No rechaza
+          nada, porque el mundo abierto se mantiene; anota la violación como un hecho y la cierra
+          cuando el dato que la causaba se corrige. La demostración está en el
+          <a href="19-banco.html">capítulo 19</a>, con una transferencia que excede el límite, se
+          asienta igual y queda marcada.</p>
+
+        <div class="caja caja--practica revelar">
+          <p class="caja-tit">Lo que costó, medido</p>
+          <p style="margin:0 0 .5rem">La sospecha razonable era que comprobar en cada escritura
+            saldría caro y habría que empujarlo todo a un barrido nocturno. Medido sobre el
+            prototipo, no: con las formas indexadas por rol, cada escritura consulta cero o una, y el
+            sobrecoste se pierde en el ruido (+8,8&nbsp;% a mil hechos, −1,8&nbsp;% a cien mil, que
+            es la manera que tiene un banco de pruebas de decir que no hay diferencia).</p>
+          <p style="margin:0">Un barrido completo sobre 100.000 hechos son 13&nbsp;ms. Un turno de
+            modelo de lenguaje ronda los 2.000. La comprobación es el 0,66&nbsp;% de lo que el
+            usuario ya está esperando, así que el rendimiento no decide este diseño: lo decide la
+            semántica.</p>
+        </div>
+
         <p>Lo que ese motor <strong>todavía no es</strong> es un evaluador de <strong>reglas
-          declarativas</strong>. Sabe ejecutar verbos y sabe calcular; no sabe resolver «si se cumplen
-          estas condiciones sobre los hechos, deriva este hecho nuevo». La regla del spa se almacena y
-          no se dispara. Esa es la pieza que sigue ausente, y trae dos mitades: el disparo condicional
-          con agregados (contar las siete sesiones) y la validación (comprobar que un hecho no viola
-          una restricción declarada).</p>
+          declarativas</strong>. Sabe ejecutar verbos, sabe calcular y sabe comprobar; no sabe
+          resolver «si se cumplen estas condiciones sobre los hechos, deriva este hecho nuevo». La
+          regla del spa se almacena y no se dispara: falta el <strong>disparo condicional con
+          agregados</strong>, contar las siete sesiones y escribir la octava. Y falta una clase de
+          forma que la primera versión dejó fuera a propósito, la que recorre caminos («que no haya
+          ciclos en <code>causado_por</code>»), porque deja de ser una pasada lineal y cambia de
+          clase de coste.</p>
 
         <p>Hay al menos cuatro tecnologías candidatas para esa capa, cada una con su fortaleza y su
           flanco débil:</p>
@@ -637,7 +660,7 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
             {"tipo":"barras","unidad":"%","max":100,
              "datos":[
                {"l":"Persistencia","v":60,"color":"o"},
-               {"l":"Motor reglas","v":50,"color":"k"},
+               {"l":"Motor reglas","v":65,"color":"k"},
                {"l":"Bitemporal.","v":50,"color":"t"},
                {"l":"Tooling","v":22,"color":"l"},
                {"l":"Lexicon","v":12,"color":"m"},

@@ -427,6 +427,37 @@ u.facts_about(prod, at=JULIO)
             tercer escenario, o un décimo, es añadir otro recuadro sin tocar los anteriores.</figcaption>
         </figure>
 
+        <h2>Un escenario también puede ser un disparate</h2>
+
+        <p>Nada de lo anterior impide proyectar una tontería. Si el modelo de desgaste se teclea mal
+          y la disponibilidad de julio sale al 140&nbsp;%, el escenario se guarda con la misma
+          docilidad que uno sensato. El almacén es de mundo abierto, y eso no va a cambiar: es lo
+          que permite modelar un yacimiento sin pedirle permiso a nadie.</p>
+
+        <p>Lo que sí se puede es declarar qué no debería pasar. La forma que acota la disponibilidad
+          es la del <a href="05-predicados.html">capítulo 5</a>, y aquí gana un matiz que en otros
+          dominios no tiene: <strong>un escenario se valida en la fecha en la que regiría</strong>,
+          no hoy. Preguntar hoy por un hecho de julio no tiene sentido, porque hoy ese hecho todavía
+          no rige.</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="python">u.validate(momento=D(5, 20))   # hoy
+#   []  — el hecho proyectado aún no rige; no hay nada que juzgar
+
+u.validate(momento=D(7, 15))   # en julio, cuando el escenario manda
+#   [sim_prod_jul: 140 K:Porcentaje por encima del máximo 100 K:Porcentaje]</code></pre>
+        </div>
+
+        <p>La vigencia deja de ser solo un mecanismo de archivo y se vuelve el eje de la
+          comprobación. Es la misma <span class="codigo-d" style="font-size:.72rem">D6</span> que
+          hacía invisible el hecho proyectado en la sección anterior, trabajando ahora del otro lado:
+          si un hecho no rige, tampoco se le exige nada.</p>
+
+        <p>Y el escenario disparatado sigue ahí. No se rechazó, no se borró: quedó marcado. Un
+          planificador puede listar los escenarios con violaciones abiertas antes de llevarlos al
+          comité, que es exactamente el momento en que uno quiere enterarse.</p>
+
         <h2>Cuánto vocabulario nuevo hizo falta</h2>
 
         <p>Queda por saldar la afirmación del principio. Simular, se dijo, no exige un mecanismo
