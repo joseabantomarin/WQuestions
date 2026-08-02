@@ -29,10 +29,18 @@ class Universe:
     facts: List[Fact] = field(default_factory=list)
     catalog: Any = None  # Catalog inyectado opcionalmente para validación
 
+    # Comprobar las formas en cada escritura es opcional y no viene activado:
+    # medido, cuesta lo mismo que no hacerlo, pero cambiar la conducta de
+    # `assert_fact` para todos es una decisión de cada dominio, no del motor.
+    validar_al_escribir: bool = False
+
     # Índices
     _by_subject: Dict[str, List[int]] = field(default_factory=dict)
     _by_value: Dict[str, List[int]] = field(default_factory=dict)
     _by_role: Dict[str, List[int]] = field(default_factory=dict)
+
+    # Guarda: los hechos que escribe el propio evaluador no se evalúan.
+    _en_evaluacion: bool = False
 
     # --- registro de individuos --------------------------------------------
 
@@ -83,7 +91,41 @@ class Universe:
         self._by_subject.setdefault(subject.id, []).append(idx)
         self._by_value.setdefault(value.id, []).append(idx)
         self._by_role.setdefault(role, []).append(idx)
+
+        if self.validar_al_escribir and not self._en_evaluacion:
+            self.validate(solo_rol=role)
+
         return fact
+
+    def validate(self, registrar: bool = True,
+                 momento: Optional[datetime] = None,
+                 solo_rol: Optional[str] = None) -> Any:
+        """Comprueba las formas declaradas y registra lo que encuentre.
+
+        No rechaza nada: el almacén sigue siendo de mundo abierto. Cada
+        violación entra al grafo como un hecho con su vigencia, y se cierra
+        cuando el hecho que la causaba deja de violarla. Ver `wq.formas`.
+
+        Con `registrar=False` solo informa, sin escribir. Con `solo_rol`
+        limita la comprobación a las formas que apuntan a ese rol, que es lo
+        que hace el gancho de escritura.
+        """
+        from .formas import (evaluar_formas, formas_declaradas, _leer_forma,
+                             registrar_violaciones)
+
+        solo = None
+        if solo_rol is not None:
+            solo = [f.id for f in formas_declaradas(self)
+                    if _leer_forma(self, f).rol == solo_rol]
+            if not solo:
+                return [] if not registrar else {"abiertas": [], "cerradas": [],
+                                                 "vigentes": 0}
+
+        violaciones = evaluar_formas(self, solo=solo, momento=momento)
+        if not registrar:
+            return violaciones
+        return registrar_violaciones(self, violaciones, momento,
+                                     formas_evaluadas=solo)
 
     def derive(self, regla: Individual, sobre: Individual,
                destino_id: str, rol_destino: str = "monto",

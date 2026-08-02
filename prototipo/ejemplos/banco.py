@@ -12,9 +12,11 @@ from __future__ import annotations
 from datetime import datetime, timezone, timedelta
 from typing import List, Tuple
 
+from wq.unidades import sembrar_si
 from wq import (
     Axis, Individual, Universe, Catalog, Lexicon, LexiconEntry,
-    Pattern, Var, query, count, ingest_situation, category, mint_id,
+    Pattern, Var, query, count, ingest_situation, category,
+    declarar_unidad, declarar_forma, mint_id,
 )
 
 
@@ -57,6 +59,12 @@ def build_lexicon() -> Lexicon:
 def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
     cat = Catalog()
     u = Universe(name="banco", catalog=cat)
+
+    # === K — Unidades ===
+    sembrar_si(u)
+    declarar_unidad(u, "K:USD", label="dólar estadounidense",
+                    qudt="http://qudt.org/vocab/unit/USD")
+    declarar_unidad(u, "K:Cuota", label="cuota de un cronograma")
 
     # === Q ===
     ana = u.add_individual(Individual(id="cli_ana", axis=Axis.Q, label="Ana"))
@@ -134,7 +142,7 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
     # ====================================================================
     monto_500 = u.add_individual(Individual(
         id="n_500_usd", axis=Axis.N, label="500 USD",
-        payload={"value": 500, "unit": "USD"}))
+        payload={"value": 500, "unit": "K:USD"}))
 
     transf = ingest_situation(u, lex, "transferir", roles={
         "agente": ana,
@@ -174,10 +182,10 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
     # ====================================================================
     monto_5000 = u.add_individual(Individual(
         id="n_5000_usd", axis=Axis.N, label="5000 USD",
-        payload={"value": 5000, "unit": "USD"}))
+        payload={"value": 5000, "unit": "K:USD"}))
     tasa_18 = u.add_individual(Individual(
         id="n_18_pct", axis=Axis.N, label="18%",
-        payload={"value": 18, "unit": "Percent"}))
+        payload={"value": 18, "unit": "K:Porcentaje"}))
 
     prestamo = ingest_situation(u, lex, "otorgar", roles={
         "agente": banco_org,
@@ -188,7 +196,7 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
         "tasa_anual": tasa_18,
         "plazo_cuotas": u.add_individual(Individual(
             id="n_36_cuotas", axis=Axis.N, label="36 cuotas",
-            payload={"value": 36, "unit": "cuotas"})),
+            payload={"value": 36, "unit": "K:Cuota"})),
         "momento": at("2026-01-15T10:00:00+00:00"),
         "lugar_de": sucursal_centro,
     }, sit_id="prestamo_personal_017")
@@ -256,7 +264,7 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
     # Autorización (la noche del 20 de mayo)
     monto_1840 = u.add_individual(Individual(
         id="n_1840_usd", axis=Axis.N, label="1840 USD",
-        payload={"value": 1840, "unit": "USD"}))
+        payload={"value": 1840, "unit": "K:USD"}))
     autorizacion = ingest_situation(u, lex, "autorizar", roles={
         "agente": autorizador,
         "tarjeta": tarjeta_ana,
@@ -296,7 +304,56 @@ def build_universe(lex: Lexicon) -> Tuple[Universe, dict]:
     u.assert_fact(reverso, "cancela", autorizacion)
     u.assert_fact(reverso, "justificado_por", investigacion)
 
+    # ====================================================================
+    # CASO 6 — Las formas: lo que un hecho no debería violar
+    # ====================================================================
+    # En un dominio regulado la restricción no es una comodidad: es la norma.
+    # Pero el almacén no rechaza nada, porque una operación sospechosa que se
+    # rechaza al escribir es una operación que nadie puede auditar después.
+    # Se registra, y la violación se registra con ella.
+    limite = u.add_individual(Individual(
+        id="n_10000_usd", axis=Axis.N, label="10 000 USD",
+        payload={"value": 10_000, "unit": "K:USD"}))
+
+    declarar_forma(u, "forma_limite_operacion", tipo="rango", rol="monto",
+                   label="Ninguna transferencia supera los 10 000 USD",
+                   maximo=limite, aplica_a="accion_transferir")
+    declarar_forma(u, "forma_antifraude", tipo="requiere", rol="cuenta_destino",
+                   label="Toda transferencia pasa por el motor antifraude",
+                   requiere="verificado_por", aplica_a="accion_transferir")
+    declarar_forma(u, "forma_asiento_movimiento", tipo="cardinalidad",
+                   rol="tipo_movimiento",
+                   label="Un asiento contable tiene un solo tipo de movimiento",
+                   minimo=u.add_individual(Individual(
+                       id="n_1_mov", axis=Axis.N, label="1",
+                       payload={"value": 1, "unit": "K:Adimensional"})),
+                   maximo=u.add_individual(Individual(
+                       id="n_1_mov_max", axis=Axis.N, label="1",
+                       payload={"value": 1, "unit": "K:Adimensional"})),
+                   aplica_a="asiento_contable")
+
+    # Una transferencia que rompe dos formas a la vez: excede el límite y no
+    # pasó por el motor antifraude. Se escribe igual.
+    monto_25000 = u.add_individual(Individual(
+        id="n_25000_usd", axis=Axis.N, label="25 000 USD",
+        payload={"value": 25_000, "unit": "K:USD"}))
+    cta_tercero = u.add_individual(Individual(
+        id="cta_offshore_99", axis=Axis.L, label="Cuenta 99 (exterior)"))
+    transf_grande = ingest_situation(u, lex, "transferir", roles={
+        "agente": ana,
+        "beneficiario": banco_org,
+        "cuenta_origen": cta_ana,
+        "cuenta_destino": cta_tercero,
+        "monto": monto_25000,
+        "unidad": usd,
+        "momento": at("2026-06-14T03:11:00+00:00"),
+    }, sit_id="transferencia_002")
+
+    informe_formas = u.validate()
+
     h = {
+        "transf_grande": transf_grande,
+        "informe_formas": informe_formas,
         "ana": ana, "beto": beto, "banco": banco_org,
         "motor_antifraude": motor_antifraude, "autorizador": autorizador,
         "cta_ana": cta_ana, "cta_beto": cta_beto,
@@ -434,6 +491,45 @@ def run_validations(u: Universe, lex: Lexicon, h: dict):
         "WH: ¿quién le transfirió a Beto?",
         len(r) == 1 and r[0]["agente"].id == "cli_ana",
         f"agente: {[x['agente'].id for x in r]}",
+    ))
+
+    # V11 — La operación sospechosa SE ESCRIBIÓ. No se rechaza nada.
+    grande = u.facts_about(h["transf_grande"])
+    monto = [f.value.payload["value"] for f in grande if f.role == "monto"]
+    results.append((
+        "La transferencia que viola dos formas se registró igual",
+        monto == [25_000],
+        f"monto asentado: {monto} USD · el almacén no rechazó nada",
+    ))
+
+    # V12 — Y quedó marcada, con la forma que la delata
+    violaciones = {}
+    for f in u.facts:
+        if f.role == "instancia_de" and f.value.id == "violacion_de_forma":
+            datos = {g.role: g.value for g in u.facts_about(f.subject)}
+            violaciones.setdefault(datos["sobre"].id, []).append(
+                datos["justificado_por"].id)
+    delatan = sorted(violaciones.get("transferencia_002", []))
+    results.append((
+        "Las dos violaciones quedaron registradas como hechos",
+        delatan == ["forma_antifraude", "forma_limite_operacion"],
+        f"transferencia_002 violada por: {delatan}",
+    ))
+
+    # V13 — La transferencia legítima no genera ruido
+    results.append((
+        "La transferencia correcta no aparece marcada",
+        "transferencia_001" not in violaciones,
+        f"sujetos con violación: {sorted(violaciones)}",
+    ))
+
+    # V14 — La violación es un hecho: se consulta como cualquier otro
+    abiertas = [f.subject.id for f in u.facts
+                if f.role == "estado" and f.value.id == "violacion_abierta"]
+    results.append((
+        "Las violaciones abiertas se cuentan con una consulta corriente",
+        len(abiertas) == 2,
+        f"abiertas: {len(abiertas)} · informe: {h['informe_formas']}",
     ))
 
     return results

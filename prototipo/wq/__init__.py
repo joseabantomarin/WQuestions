@@ -25,11 +25,15 @@ from .vistas import tabla_plana, proyeccion, pivote
 from .magnitud import Magnitud, UnidadReducida, reducir_unidad, ErrorDimensional
 from .derivacion import (declarar_unidad, declarar_unidades_base,
                          evaluar, derivar, ErrorDerivacion)
+from .formas import (declarar_forma, evaluar_formas, formas_declaradas,
+                     Violacion, ErrorDeForma)
 
 __all__ = [
     "Magnitud", "UnidadReducida", "reducir_unidad", "ErrorDimensional",
     "declarar_unidad", "declarar_unidades_base", "evaluar", "derivar",
     "ErrorDerivacion",
+    "declarar_forma", "evaluar_formas", "formas_declaradas",
+    "Violacion", "ErrorDeForma",
     "Axis", "Individual", "mint_id", "category", "quantity", "time_point",
     "Fact", "Universe",
     "Catalog", "RoleSignature", "SignatureError",
