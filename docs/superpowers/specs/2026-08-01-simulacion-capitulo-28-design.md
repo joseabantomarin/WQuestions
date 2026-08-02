@@ -106,6 +106,9 @@ Como hoja de ruta, no como confesión:
    (cinco veces al 30), `24-yaku` (tres).
 6. La viñeta de simulación en la Familia 3 del cap. 27 se acorta y remite al 28.
 7. Tabla §5 de `GUIA-DE-ESTILO.md` (interna, quedaría desfasada).
+8. Nuevo `prototipo/ejemplos/simulacion.py`: el guion de validación, limpio y
+   con sus aserciones, para que el capítulo sea reproducible como lo son los
+   demás capítulos de dominio.
 
 ## Fuera de alcance
 
