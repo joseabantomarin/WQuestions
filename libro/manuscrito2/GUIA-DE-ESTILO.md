@@ -165,7 +165,7 @@ Reemplaza al repertorio original. Hílalo de forma consistente por todo el libro
 | 🎬 **Cine** | autoría (roles distintos), recursión/composición, tiempo narrativo | obra `pelicula_marea`; directora `serra`; guionista `haddad`; escena `escena_42` (`parte_de pelicula_marea`); T narrativo "final del segundo acto"; K: `largometraje`, `genero_drama` |
 | 🏛️ **Ordenanza municipal** | fechas, vigencia, entidades afectadas, tiempo derivado por reglas | `ordenanza_142` (micromovilidad); agente `municipalidad_centro` / `alcalde_reyes`; `fecha_publicacion`, `entra_en_vigor` (a los 30 días); `afecta_a`: `gerencia_transito`, `gerencia_fiscalizacion`; K: `ordenanza_municipal` |
 | 🤖 **Agente de IA** | telemetría moderna, unidades nuevas, K = modelos/herramientas | sesión `sesion_ia_5521`; modelo `modelo_lumen_2026`; usuaria `paredes`; N: tokens_entrada 4180, tokens_salida 920, latencia_ms 2100, costo_usd 0.015; herramientas `busqueda_web`, `consulta_grafo` |
-| 🏥 **Urgencias** | narrativa marco (abre Cap. 1, cierra Conclusión) | paciente `vega`; episodio `urgencias_2026_xxx`; historia repartida entre cardiólogo, endocrinóloga y dos hospitales |
+| 🏥 **Urgencias** | narrativa marco (abre Cap. 1, cierra Conclusión) | paciente `maria_g` (María Gonzales, mujer de 42 años); episodio `urgencias_2026_xxx`; historia repartida entre cardiólogo, endocrinóloga y dos hospitales |
 
 Los **8 dominios industriales** de la Parte V (spa, taxi, clínica, banco, ERP, universidad, municipalidad, minera) y los **4 dominios de estrés** (música, química, fútbol, contratos) son parte sustantiva del libro: **se conservan como dominios**, pero con datos y escenarios nuevos (no copiar los del original).
 

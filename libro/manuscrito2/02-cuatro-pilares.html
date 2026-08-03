@@ -549,23 +549,24 @@
           vuelto casi un ejemplo de manual sobre los límites de la inteligencia artificial sin
           estructura.</p>
 
-        <p>Imagina a alguien que sale del trabajo con la bicicleta pinchada. Saca el teléfono y le
-          dicta a su asistente:</p>
+        <p>Imagina a alguien que acaba su jornada y vuelve al coche, embarrado del viaje. Saca el
+          teléfono y le dicta a su asistente:</p>
 
         <blockquote>
-          <p>Tengo la bici con una rueda reventada y la quiero llevar al taller de reparación, que me
-            queda a tres cuadras de aquí. ¿Me conviene ir caminando o en bici?</p>
+          <p>Estoy en mi coche, que se me ensució muchísimo viniendo del trabajo. Lo tengo que llevar
+            al autolavado, que me queda a solo dos cuadras de aquí. ¿Me recomiendas ir caminando o ir
+            en carro?</p>
         </blockquote>
 
         <p>La respuesta del modelo fue desconcertante:</p>
 
         <blockquote>
-          <p>Si te queda tan cerca, ve caminando sin problema. Son apenas tres cuadras, es más
-            saludable y de paso no gastas energía pedaleando.</p>
+          <p>Si te queda tan cerca, puedes ir caminando sin problemas. Es mucho más saludable y de
+            paso ahorras combustible.</p>
         </blockquote>
 
-        <p>El consejo es un disparate físico: no se lleva una bicicleta al taller yendo a pie (la
-          bicicleta <em>es</em> lo que hay que transportar). Pero el error no nace de una «estupidez»
+        <p>El consejo es un disparate físico: no se lleva un coche al autolavado yendo a pie (el
+          coche <em>es</em> lo que hay que transportar). Pero el error no nace de una «estupidez»
           del algoritmo, sino de un problema muy concreto: una <strong>mala asignación de roles a los
           cuatro pilares</strong>. La estadística llenó las cajas, pero las llenó mal.</p>
 
@@ -573,40 +574,40 @@
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">lectura correcta</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="text">Q (quién)                  : la persona            (agente)
-O (qué, lo que se mueve)    : la bicicleta          (paciente)   ← el centro de la escena
-L (dónde, destino)          : el taller, a 3 cuadras
+          <pre><code data-lang="text">Q (quién)                  : el usuario            (agente)
+O (qué, lo que se mueve)    : el coche              (paciente)   ← el centro de la escena
+L (dónde, destino)          : el autolavado, a 2 cuadras
 T (cuándo)                  : ahora
-M (con_finalidad)           : reparar la bicicleta              ← le da sentido a todo</code></pre>
+M (con_finalidad)           : lavar el coche                    ← le da sentido a todo</code></pre>
         </div>
 
-        <p>El verbo núcleo de la situación es <em>llevar</em>. La persona es, sin duda, el agente; pero
-          el <strong>paciente</strong> (la cosa física que sufre el transporte) es la bicicleta. Y la
-          finalidad ineludible de la maniobra es someter esa bicicleta a una reparación. Si quitas la
-          finalidad de la ecuación, la pregunta «¿caminando o en bici?» pierde todo su sentido.</p>
+        <p>El verbo núcleo de la situación es <em>llevar</em>. El usuario es, sin duda, el agente; pero
+          el <strong>paciente</strong> (la cosa física que sufre el transporte) es el coche. Y la
+          finalidad ineludible de la maniobra es someter ese coche a un lavado. Si quitas la finalidad
+          de la ecuación, la pregunta «¿caminando o en carro?» pierde todo su sentido.</p>
 
         <p>¿Qué entendió, en cambio, el modelo basado en pura correlación estadística? Su reparto de
           roles fue, con toda probabilidad, este:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">lectura del modelo (errónea)</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="text">Q (quién)                  : la persona            (agente)
-O (qué, lo que se mueve)    : la persona            (¡la misma!) ← la bicicleta desapareció
-L (dónde, destino)          : el taller, a 3 cuadras
+          <pre><code data-lang="text">Q (quién)                  : el usuario            (agente)
+O (qué, lo que se mueve)    : el usuario            (¡el mismo!) ← el coche desapareció
+L (dónde, destino)          : el autolavado, a 2 cuadras
 T (cuándo)                  : ahora
-M (con_finalidad)           : trasladarse al taller             ← finalidad real, perdida</code></pre>
+M (con_finalidad)           : trasladarse al autolavado         ← finalidad real, perdida</code></pre>
         </div>
 
-        <p>Bajo esa lectura, la bicicleta se cae de su rol legítimo de paciente y queda empujada a un
-          rol de <strong>instrumento opcional</strong> («puedes ir en bici o no»). La finalidad real
-          (repararla) se diluye y la sustituye el mero acto de llegar a unas coordenadas. Como el
+        <p>Bajo esa lectura, el coche se cae de su rol legítimo de paciente y queda empujado a un
+          rol de <strong>instrumento opcional</strong> («puedes ir en carro o no»). La finalidad real
+          (lavarlo) se diluye y la sustituye el mero acto de llegar a unas coordenadas. Como el
           modelo evalúa que la distancia es mínima, sus pesos probabilísticos concluyen que caminar es
           lo más eficiente y saludable. Impecable… salvo que el objeto central de la frase se evaporó.</p>
 
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">El fallo no es de cálculo: es de modelado del mundo</p>
           <p style="margin-bottom:0">El sistema perdió el rastro de una asignación estructural básica:
-            en este contexto, la bicicleta <strong>es</strong> el objeto central del eje
+            en este contexto, el coche <strong>es</strong> el objeto central del eje
             <span class="eje-rotulo"><span class="eje eje--o">O</span></span>, no un accesorio. Apenas
             esa pieza se cae del tablero, toda la cadena de razonamiento posterior se derrumba —y el
             modelo ni siquiera percibe el error.</p>

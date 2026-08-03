@@ -75,7 +75,7 @@
           <p class="caja-tit">Sobre los identificadores de este anexo</p>
           <p style="margin-bottom:0">Los ejemplos usan el repertorio del libro (la venta de Marco,
             el gol de Messi, la película de Serra, la ordenanza de micromovilidad, la sesión de IA,
-            el episodio del paciente Vega) para que reconozcas los casos. Las <em>estructuras</em>
+            el episodio de la paciente Gonzales) para que reconozcas los casos. Las <em>estructuras</em>
             (los campos de un hecho, la forma de un patrón, las firmas de las APIs) son las del
             prototipo real, que vive en <code>prototipo/wq/</code>. Cambia los nombres a tu dominio;
             la maquinaria no cambia.</p>
@@ -338,7 +338,7 @@ class LexiconEntry:
             </thead>
             <tbody>
               <tr><td><code>agente</code></td><td>M(O→Q)</td><td>situación → quien actúa</td><td><code>gol_001 · agente · messi</code></td></tr>
-              <tr><td><code>paciente</code></td><td>M(O→Q)</td><td>situación → quien la recibe</td><td><code>diagnostico_771 · paciente · vega</code></td></tr>
+              <tr><td><code>paciente</code></td><td>M(O→Q)</td><td>situación → quien la recibe</td><td><code>diagnostico_771 · paciente · maria_g</code></td></tr>
               <tr><td><code>beneficiario</code></td><td>M(O→Q)</td><td>situación → a favor de quién</td><td><code>asig_001 · beneficiario · luis</code></td></tr>
               <tr><td><code>tema</code></td><td>M(O→O)</td><td>situación → su objeto</td><td><code>canc_001 · tema · viaje_088</code></td></tr>
               <tr><td><code>instrumento</code></td><td>M(O→O)</td><td>situación → con qué</td><td><code>asig_001 · instrumento · vehiculo_12</code></td></tr>
@@ -649,7 +649,7 @@ u.assert_fact(medicion, "medida_de", presion_arterial)</code></pre>
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="python">pres = ingest_situation(u, lex, "prescribir", roles={
     "agente":                dra_torres,
-    "paciente":              vega,
+    "paciente":              maria_g,
     "medicamento_prescrito": enalapril,
     "frecuencia":            cada_manana,
     "duracion":              indefinida,
@@ -701,25 +701,25 @@ marcador = f"{goles_argentina} - {goles_peru}"</code></pre>
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="python">ingest_situation("consultar", roles={
-    "agente": dra_torres, "paciente": vega,
+    "agente": dra_torres, "paciente": maria_g,
     "momento": fecha_nota, "motivo": cefalea,
 })
 ingest_situation("medir", roles={
-    "agente": dra_torres, "paciente": vega,
+    "agente": dra_torres, "paciente": maria_g,
     "medida_de": presion_arterial,
     "monto": "145/92", "unidad": mmHg,
 })
 ingest_situation("diagnosticar", roles={
-    "agente": dra_torres, "paciente": vega,
+    "agente": dra_torres, "paciente": maria_g,
     "diagnosticado_como": hta_g1,
 })
 ingest_situation("prescribir", roles={
-    "agente": dra_torres, "paciente": vega,
+    "agente": dra_torres, "paciente": maria_g,
     "medicamento_prescrito": enalapril,
     "frecuencia": cada_manana,
 })
 ingest_situation("controlar", roles={
-    "paciente": vega, "agente": dra_torres,
+    "paciente": maria_g, "agente": dra_torres,
     "momento": fecha_nota_mas_30,
     "estatus_factual": previsto,
 })</code></pre>

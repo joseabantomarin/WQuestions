@@ -56,13 +56,13 @@
 
       <div class="contenido">
 
-        <p class="entrada">Son las 09:40 de un martes en un consultorio de cardiología. El paciente
-          (el mismo Vega que meses atrás entró por urgencias con una fibrilación) llega ahora a un
+        <p class="entrada">Son las 09:40 de un martes en un consultorio de cardiología. La paciente
+          (la misma Gonzales que meses atrás entró por urgencias con una fibrilación) llega ahora a un
           control de rutina. No hay drama: se sienta, cuenta que duerme mal y que a veces siente el
           corazón «a destiempo», la doctora le toma la presión, repasa su última analítica, confirma
           que la hipertensión que arrastra desde el episodio agudo sigue ahí pero algo peor, ajusta
-          la dosis de un fármaco, anota una contraindicación que el paciente no conocía y agenda otro
-          control en treinta días. Quince minutos. Cuando Vega sale por la puerta, la cita ya
+          la dosis de un fármaco, anota una contraindicación que la paciente no conocía y agenda otro
+          control en treinta días. Quince minutos. Cuando Gonzales sale por la puerta, la cita ya
           terminó; pero casi nada de lo que importa terminó con ella. El diagnóstico seguirá vigente
           un año, la prescripción habrá que reevaluarla mes a mes, la alergia recién descubierta
           deberá gritar cada vez que alguien intente recetarle ese fármaco. Esos quince minutos
@@ -163,7 +163,7 @@
           <pre><code data-lang="triple">(consulta_8842) ∈ O
   instancia_de : consulta_cardiologia    # K · qué clase de evento es
   agente       : dra_navarro             # Q · quién atiende
-  paciente     : vega                    # Q · a quién se atiende
+  paciente     : maria_g                    # Q · a quién se atiende
   lugar_de     : consultorio_card_2      # L · dónde ocurre
   inicio       : 2026-06-09T09:40-05:00  # T · cuándo
   motivo       : control_hipertension    # K · por qué viene
@@ -212,7 +212,7 @@
                 <rect x="32" y="33" width="22" height="22" rx="6" fill="var(--eje-q)"></rect>
                 <text x="43" y="49" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">Q</text>
                 <text x="62" y="42" font-size="11" font-weight="700" fill="var(--eje-q)">paciente</text>
-                <text x="62" y="57" font-size="10.5" fill="var(--tinta-suave)" font-family="var(--mono)">vega</text>
+                <text x="62" y="57" font-size="10.5" fill="var(--tinta-suave)" font-family="var(--mono)">maria_g</text>
                 <line x1="172" y1="48" x2="282" y2="100" stroke="var(--eje-q)" stroke-width="1.6" stroke-dasharray="3 4" opacity=".7"></line>
               </g>
               <!-- participantes: Q agente -->
@@ -281,7 +281,7 @@
             </svg>
           </div>
           <figcaption><span class="fnum">Figura 18.1.</span> La consulta reificada como evento ancla.
-            Arriba, sus participantes repartidos en los ejes (<code>vega</code> y la doctora en
+            Arriba, sus participantes repartidos en los ejes (<code>maria_g</code> y la doctora en
             <code>Q</code>, el consultorio en <code>L</code>, el momento en <code>T</code>). Abajo,
             las cinco sub-situaciones que nacen dentro de ella y cuelgan con <code>parte_de</code>.
             La consulta no «guarda» el diagnóstico como un campo: lo <em>articula</em> como una
@@ -297,7 +297,7 @@
 
         <p>Pero detente. <strong>«Presión arterial» y «el antihipertensivo» no son objetos físicos con
           identidad propia.</strong> No puedes guardar «la presión arterial universal» en un cajón:
-          es una <em>magnitud</em>, una categoría teórica. La caja de pastillas que Vega compra en la
+          es una <em>magnitud</em>, una categoría teórica. La caja de pastillas que Gonzales compra en la
           farmacia sí es un objeto del eje <code>O</code> (tiene lote, vencimiento, ubicación), pero
           el concepto científico del fármaco es una <em>clase</em>, un habitante del eje
           <code>K</code>. El instinto humano mezcla, sin notarlo, lo físico con lo conceptual.</p>
@@ -398,7 +398,7 @@ u.assert_fact(prescrip_8842, "medicamento_prescrito", antihipertensivo) # O → 
         <h3>3 · El viaje en el tiempo</h3>
 
         <p>Esta es la dimensión que separa el software hospitalario de verdad del software de juguete.
-          Los diagnósticos caducan y mutan. Supongamos que tras el episodio agudo, en marzo, a Vega se
+          Los diagnósticos caducan y mutan. Supongamos que tras el episodio agudo, en marzo, a Gonzales se
           le asignó hipertensión de grado&nbsp;1. En esta consulta de junio la doctora confirma que
           empeoró: ahora es grado&nbsp;2. Si se reescribiera el diagnóstico viejo encima del nuevo, se
           borraría la historia del paciente —un crimen, no solo de negligencia clínica, sino de
@@ -504,7 +504,7 @@ u.assert_fact(diag_hta_8842, "rectifica", diag_marzo)   # M · este corrige a aq
           <pre><code data-lang="python">pres = ingest_situation(u, lex, "prescribir",
     roles={
         "agente":               dra_navarro,
-        "paciente":             vega,
+        "paciente":             maria_g,
         "medicamento_prescrito": antihipertensivo,   # O → K
         "dosis":                "20 mg",
         "frecuencia":           cada_manana,
@@ -563,73 +563,73 @@ u.assert_fact(pres, "verificado_contra", regla_renal_alerta)    # ← qué ley c
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="triple">(control_8842) ∈ O
   instancia_de    : consulta_cardiologia
-  paciente        : vega
+  paciente        : maria_g
   agente          : dra_navarro
   inicio_previsto : 2026-07-09           # T · la fecha agendada
   estatus_factual : previsto             # K · ¡aún no es real!
   motivado_por    : diag_hta_8842        # M · se controla esta hipertensión</code></pre>
         </div>
 
-        <p>Gracias a ese único rótulo, el sistema responde sin tropezar tanto «¿qué citas tiene Vega
+        <p>Gracias a ese único rótulo, el sistema responde sin tropezar tanto «¿qué citas tiene Gonzales
           agendadas?» (donde el control aparece) como «¿cuántos pacientes atendió la doctora en
           junio?» (donde no aparece, porque aún no sucedió). Lo previsto y lo real conviven en el mismo
           grafo sin confundirse.</p>
 
         <h2>La historia clínica como serie temporal</h2>
 
-        <p>Hasta aquí hemos diseccionado <em>una</em> consulta. Pero Vega no es una consulta: es un
-          paciente con años de roce con el sistema sanitario. El mismo Vega que entró por urgencias con
-          una fibrilación, el que en marzo recibió su primer diagnóstico de hipertensión, el que hoy
-          vuelve al control de cardiología, y el que (lo veremos enseguida) pasará unos días ingresado.
-          Su identidad es una sola, cosida con el mismo <code>vega</code> que ya recorre la tienda y la
+        <p>Hasta aquí hemos diseccionado <em>una</em> consulta. Pero Gonzales no es una consulta: es una
+          paciente con años de roce con el sistema sanitario. La misma Gonzales que entró por urgencias con
+          una fibrilación, la que en marzo recibió su primer diagnóstico de hipertensión, la que hoy
+          vuelve al control de cardiología, y la que (lo veremos enseguida) pasará unos días ingresada.
+          Su identidad es una sola, cosida con el mismo <code>maria_g</code> que ya recorre la tienda y la
           clínica; lo que cambia es el rosario de situaciones que cuelgan de ella a lo largo del
           tiempo. Eso es una <strong>historia clínica</strong>: no un documento, sino una serie
           temporal de episodios.</p>
 
         <aside class="nota-margen">
           <span class="etq">Una sola identidad</span>
-          El <code>vega</code> que compra en la tienda y el <code>vega</code> que se atiende en
+          El <code>maria_g</code> que compra en la tienda y el <code>maria_g</code> que se atiende en
           cardiología son la misma entidad en <code>Q</code>. La historia clínica no «posee» al
           paciente: lo <em>referencia</em>. Por eso un mismo identificador puede cruzar módulos (tienda,
           urgencias, consulta, ingreso) sin duplicarse jamás.
         </aside>
 
         <p>En el modelo, la historia no es una tabla con una fila por visita. Es la proyección de todas
-          las situaciones cuyo <code>paciente</code> es <code>vega</code>, ordenadas por su eje
+          las situaciones cuyo <code>paciente</code> es <code>maria_g</code>, ordenadas por su eje
           <code>T</code> y filtradas por la vigencia que cada hecho declara. Cada episodio (una urgencia,
           una analítica, una consulta, un ingreso) es una situación reificada más en <code>O</code> que
-          referencia al mismo paciente y se sitúa en el tiempo. Recuperar «la historia de Vega» es
+          referencia al mismo paciente y se sitúa en el tiempo. Recuperar «la historia de Gonzales» es
           barrer el grafo por ese nodo y leer la cinta cronológica.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="triple"># Cada episodio es una situación que apunta al MISMO paciente, situada en T
-(urgencias_2403, paciente, vega)   # T: 2026-02-14 · la fibrilación
-(analitica_2511, paciente, vega)   # T: 2026-03-05 · sangre y lípidos
-(consulta_3019, paciente, vega)    # T: 2026-03-12 · 1er dx de HTA grado 1
-(consulta_8842, paciente, vega)    # T: 2026-06-09 · el control de hoy
-(ingreso_9120,  paciente, vega)    # T: 2026-06-14 · el ingreso (más abajo)
+(urgencias_2403, paciente, maria_g)   # T: 2026-02-14 · la fibrilación
+(analitica_2511, paciente, maria_g)   # T: 2026-03-05 · sangre y lípidos
+(consulta_3019, paciente, maria_g)    # T: 2026-03-12 · 1er dx de HTA grado 1
+(consulta_8842, paciente, maria_g)    # T: 2026-06-09 · el control de hoy
+(ingreso_9120,  paciente, maria_g)    # T: 2026-06-14 · el ingreso (más abajo)
 
 # La historia = proyección por paciente, ordenada por T, con la vigencia de cada hecho
-historia = u.timeline(vega, valid_at="2026-06-19")</code></pre>
+historia = u.timeline(maria_g, valid_at="2026-06-19")</code></pre>
         </div>
 
         <p>La clave es que esa cinta es <strong>bitemporal</strong>: no solo registra <em>cuándo</em>
           ocurrió cada episodio (el tiempo del eje <code>T</code>), sino <em>desde cuándo y hasta cuándo
           se tuvo por cierta</em> cada afirmación clínica. Es la misma vigencia (D6) que salvó al
           diagnóstico de pisarse a sí mismo, ahora aplicada a la historia entera. Por eso podemos
-          preguntar dos cosas distintas: «¿qué le pasó a Vega en abril?» (un corte por el tiempo del
-          hecho) y «¿qué <em>creía saber</em> el hospital sobre Vega en abril?» (un corte por el tiempo
+          preguntar dos cosas distintas: «¿qué le pasó a Gonzales en abril?» (un corte por el tiempo del
+          hecho) y «¿qué <em>creía saber</em> el hospital sobre Gonzales en abril?» (un corte por el tiempo
           del registro). Un expediente de juguete confunde ambas; el grafo las distingue de fábrica.</p>
 
         <!-- FIGURA SVG 4: línea de tiempo de la historia clínica longitudinal -->
         <figure class="figura figura--ancha revelar">
           <div class="lienzo">
             <svg viewBox="0 0 660 300" class="svg-eje" role="img"
-                 aria-label="Línea de tiempo de la historia clínica de Vega: urgencias en febrero, analítica en marzo, primera consulta con diagnóstico grado 1 en marzo, control de hoy con grado 2 en junio e ingreso hospitalario en junio, todos colgando del mismo paciente">
+                 aria-label="Línea de tiempo de la historia clínica de Gonzales: urgencias en febrero, analítica en marzo, primera consulta con diagnóstico grado 1 en marzo, control de hoy con grado 2 en junio e ingreso hospitalario en junio, todos colgando del mismo paciente">
               <!-- nodo paciente, raíz de la historia -->
               <rect x="22" y="118" width="120" height="44" rx="10" fill="var(--eje-q)" opacity=".14" stroke="var(--eje-q)" stroke-width="1.8"></rect>
-              <text x="82" y="138" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-q)" font-family="var(--sans)">vega</text>
+              <text x="82" y="138" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--eje-q)" font-family="var(--sans)">maria_g</text>
               <text x="82" y="153" text-anchor="middle" font-size="9.5" fill="var(--tinta-suave)" font-family="var(--sans)">una sola identidad · Q</text>
 
               <!-- eje de tiempo -->
@@ -685,8 +685,8 @@ historia = u.timeline(vega, valid_at="2026-06-19")</code></pre>
               <text x="22" y="288" font-size="10.5" fill="var(--tinta-tenue)" font-family="var(--sans)">Todos los episodios cuelgan del mismo nodo Q; el orden lo da T; cada afirmación lleva su propia vigencia D6.</text>
             </svg>
           </div>
-          <figcaption><span class="fnum">Figura 18.3.</span> La historia clínica de Vega como serie
-            temporal de episodios. La identidad del paciente (<code>vega</code>, en <code>Q</code>) es
+          <figcaption><span class="fnum">Figura 18.3.</span> La historia clínica de Gonzales como serie
+            temporal de episodios. La identidad de la paciente (<code>maria_g</code>, en <code>Q</code>) es
             una sola; cada urgencia, analítica, consulta o ingreso es una situación independiente en
             <code>O</code> que la referencia y se ordena por su eje <code>T</code>. La bitemporalidad
             (D6) permite leer la cinta «como ocurrió» o «como se creía» en cualquier fecha pasada.</figcaption>
@@ -694,8 +694,8 @@ historia = u.timeline(vega, valid_at="2026-06-19")</code></pre>
 
         <h2>La hospitalización: una situación-marco que contiene eventos</h2>
 
-        <p>El control de hoy detectó algo que no tranquiliza: la presión no cede y el paciente refiere
-          mareos. La doctora decide ingresarlo unos días para vigilancia. Y aquí aparece una estructura
+        <p>El control de hoy detectó algo que no tranquiliza: la presión no cede y la paciente refiere
+          mareos. La doctora decide ingresarla unos días para vigilancia. Y aquí aparece una estructura
           que la consulta ya insinuó pero que el ingreso lleva al extremo: una <strong>situación-marco
           que contiene a otras</strong>. Si la consulta era una carpeta de cinco piezas, la
           hospitalización es una <em>carpeta de carpetas</em>, una caja con paredes de tiempo dentro de
@@ -713,7 +713,7 @@ historia = u.timeline(vega, valid_at="2026-06-19")</code></pre>
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="triple">(ingreso_9120) ∈ O
   instancia_de : hospitalizacion           # K · qué clase de marco es
-  paciente     : vega                       # Q · a quién se ingresa
+  paciente     : maria_g                       # Q · a quién se ingresa
   agente       : dra_navarro                # Q · quién lo indica
   servicio     : cardiologia                # K · bajo qué servicio
   cama         : cama_4b_307                # O · la cama asignada (objeto físico)
@@ -745,7 +745,7 @@ historia = u.timeline(vega, valid_at="2026-06-19")</code></pre>
         </aside>
 
         <p>El premio de modelar el ingreso como marco es que cada evento interior conserva su contexto
-          sin repetirlo. La dosis administrada el 14 de junio no necesita arrastrar «paciente Vega,
+          sin repetirlo. La dosis administrada el 14 de junio no necesita arrastrar «paciente Gonzales,
           servicio cardiología, cama 307»: todo eso se hereda subiendo por <code>parte_de</code> hasta
           el marco. La trazabilidad es estructural, no copiada.</p>
 
@@ -816,7 +816,7 @@ historia = u.timeline(vega, valid_at="2026-06-19")</code></pre>
 
         <p>Hay un eslabón que el software hospitalario de juguete casi siempre rompe: lo que la doctora
           <em>receta</em> no es lo que el paciente <em>recibe</em>. Entre la prescripción y el cuerpo de
-          Vega hay una cadena de custodia que cruza el módulo clínico con el de farmacia, exactamente
+          Gonzales hay una cadena de custodia que cruza el módulo clínico con el de farmacia, exactamente
           como en un ERP el módulo de ventas conversa con el de inventario. Tres situaciones distintas,
           encadenadas, cada una con su autor y su momento: la <strong>prescripción</strong> (la doctora
           ordena), la <strong>dispensación</strong> (la farmacia entrega un lote concreto) y la
@@ -852,7 +852,7 @@ historia = u.timeline(vega, valid_at="2026-06-19")</code></pre>
   instancia_de : administracion_farmaco   # K
   cumple       : dispensa_9133            # M · qué dispensación consume
   agente       : enf_rojas                # Q · quién la aplica
-  paciente     : vega                     # Q · a quién
+  paciente     : maria_g                     # Q · a quién
   lote_usado   : lote_av2207              # O · trazabilidad del lote hasta el cuerpo
   parte_de     : ingreso_9120             # M · ocurre dentro de la hospitalización
   inicio       : 2026-06-14T20:00-05:00    # T</code></pre>
@@ -868,7 +868,7 @@ historia = u.timeline(vega, valid_at="2026-06-19")</code></pre>
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="python"># Retiro de lote: ¿a qué pacientes llegó algo de lote_av2207?
 afectados = u.subjects_where("lote_usado", lote_av2207, role="paciente")
-# → [vega, ...]   en segundos, cruzando clínica y farmacia sin un solo JOIN</code></pre>
+# → [maria_g, ...]   en segundos, cruzando clínica y farmacia sin un solo JOIN</code></pre>
         </div>
 
         <div class="triple" style="flex-wrap:wrap;justify-content:center">
@@ -945,20 +945,20 @@ afectados = u.subjects_where("lote_usado", lote_av2207, role="paciente")
 
         <h2>Del paciente a la población</h2>
 
-        <p>Todo este capítulo diseccionó a un paciente. Vega tiene nombre, una fibrilación en
+        <p>Todo este capítulo diseccionó a una paciente. Gonzales tiene nombre, una fibrilación en
           febrero, un diagnóstico que cambió de grado en marzo. Pero quien dirige el hospital rara vez
-          pregunta por Vega: pregunta por la población que Vega integra. Cuántos pacientes arrastran hoy
+          pregunta por Gonzales: pregunta por la población que Gonzales integra. Cuántos pacientes arrastran hoy
           una hipertensión grado 2, qué diagnóstico encabezó el trimestre, cuántas camas sigue ocupando
           cardiología esta mañana.</p>
 
         <p>Y ahí está el dividendo que no se ve mientras modelas: ninguna de esas preguntas pide una
-          tabla nueva. El diagnóstico de Vega es una situación más, del mismo tipo que los de los otros
+          tabla nueva. El diagnóstico de Gonzales es una situación más, del mismo tipo que los de los otros
           mil pacientes, y contar los de un tipo es contarlos a todos a la vez. Diseccionar con cuidado
           una sola consulta fue, sin proponérnoslo, dejar armado el tablero epidemiológico.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="python"># Cuántos diagnósticos de hipertensión grado 2 hay vigentes — la cohorte que Vega integra
+          <pre><code data-lang="python"># Cuántos diagnósticos de hipertensión grado 2 hay vigentes — la cohorte que Gonzales integra
 count(u, Pattern(fixed={"diagnostico_asignado": u.ind("hta_grado_2")},
                  type_constraint=u.ind("diagnostico")))</code></pre>
         </div>
@@ -1012,7 +1012,7 @@ lex.register(LexiconEntry(
 
         <h2>El antes y el después: del expediente fragmentado al grafo único</h2>
 
-        <p><b>Antes, en SQL.</b> En un sistema hospitalario típico, el expediente de Vega vive
+        <p><b>Antes, en SQL.</b> En un sistema hospitalario típico, el expediente de Gonzales vive
           repartido en cinco o seis tablas que no se hablan solas: <code>pacientes</code>,
           <code>consultas</code>, <code>diagnosticos</code>, <code>prescripciones</code>,
           <code>contraindicaciones</code> y (si el equipo fue cuidadoso) una tabla
@@ -1053,7 +1053,7 @@ WHERE d.paciente_id = :paciente
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="python"># Después: el diagnóstico vigente a una fecha es una proyección con filtro temporal.
-vigente = u.value_at(vega, "diagnostico_asignado", at="2026-04-15")  # → hta_grado_1</code></pre>
+vigente = u.value_at(maria_g, "diagnostico_asignado", at="2026-04-15")  # → hta_grado_1</code></pre>
         </div>
 
         <p class="cita-destacada revelar">En medicina, un diagnóstico no es un campo de texto: es una
@@ -1064,7 +1064,7 @@ vigente = u.value_at(vega, "diagnostico_asignado", at="2026-04-15")  # → hta_g
         <h2>Cuánto pesó el dominio entero</h2>
 
         <p>Vale la pena medir la huella, porque desmiente el prejuicio de que tanta expresividad debe
-          costar un diluvio de datos. Toda la consulta de Vega (las cinco piezas, los tres porqués de
+          costar un diluvio de datos. Toda la consulta de Gonzales (las cinco piezas, los tres porqués de
           la receta, los dos diagnósticos versionados, la contraindicación y el control previsto) se
           guardó como un puñado modesto de hechos atómicos. Comparado con lo que un esquema relacional
           necesita para sostener la misma riqueza histórica, la diferencia es notable.</p>

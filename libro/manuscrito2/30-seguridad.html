@@ -57,9 +57,9 @@
 
         <p class="entrada">Son las diez y cuarto de la mañana. Un analista de una aseguradora abre su
           consola de evaluación de riesgo. Tiene delante la solicitud de un seguro de vida. La
-          solicitante es Vega, la misma paciente que en el <a href="01-torre-de-babel.html">primer
+          solicitante es Gonzales, la misma paciente que en el <a href="01-torre-de-babel.html">primer
           capítulo</a> llegó de madrugada a urgencias con una historia clínica que nadie logró reunir a
-          tiempo. El analista quiere saber una sola cosa: si Vega tiene antecedentes que encarezcan la
+          tiempo. El analista quiere saber una sola cosa: si Gonzales tiene antecedentes que encarezcan la
           prima. Su sistema es moderno y, como todo en este libro, habla en preguntas. Así que formula
           una consulta perfectamente legible: <em>¿qué situaciones de clase
           <code>diagnostico_medico</code> tienen a esta persona como paciente?</em></p>
@@ -74,7 +74,7 @@
 
         <aside class="nota-margen">
           <span class="etq">Marco</span>
-          La <a href="01-torre-de-babel.html">madrugada de Vega</a> abrió el libro: una historia
+          La <a href="01-torre-de-babel.html">madrugada de Gonzales</a> abrió el libro: una historia
           clínica que existía pero que nadie pudo reunir a tiempo. Aquí esa misma historia vuelve por su
           lado oscuro. Por sí sola, la interoperabilidad no distingue entre el médico que salva una
           vida y el analista que sube una prima.
@@ -200,7 +200,7 @@
         </figure>
 
         <p>Releída así, la escena del médico de guardia cambia de sentido. No fue que el médico
-          «entrara al expediente global de Vega». Fue que cada parte (los dos hospitales, la
+          «entrara al expediente global de Gonzales». Fue que cada parte (los dos hospitales, la
           endocrinóloga, el cardiólogo) <strong>publicó hacia un espacio que la paciente había
           autorizado de antemano</strong> para emergencias. Y como todos esos hechos hablaban el mismo
           idioma, se ensamblaron solos. La interoperabilidad no exige un cerebro central; le bastan un
@@ -220,7 +220,7 @@
         <p>En WQuestions no hay capa aparte, por una razón que a estas alturas del libro debería sonar
           inevitable: <strong>el permiso es, él mismo, un hecho del grafo</strong>. Es una situación
           reificada, es decir, un hecho descrito con las mismas siete preguntas que cualquier otro.
-          «Que el cardiólogo Rosales pueda ver el diagnóstico de arritmia de Vega» no es una fila en
+          «Que el cardiólogo Rosales pueda ver el diagnóstico de arritmia de Gonzales» no es una fila en
           una tabla de permisos: es una afirmación del grafo, con su quién, su qué, su agente y su
           cuándo. El control de acceso habla el mismo idioma que aquello que controla.</p>
 
@@ -246,7 +246,7 @@
 
               <!-- Q titular (arriba izq) -->
               <rect x="40" y="22" width="150" height="40" rx="8" fill="var(--papel)" stroke="var(--eje-q)" stroke-width="1.8"/>
-              <text x="115" y="40" text-anchor="middle" font-size="11" font-weight="700" fill="var(--eje-q)" font-family="var(--mono)">paciente_vega</text>
+              <text x="115" y="40" text-anchor="middle" font-size="11" font-weight="700" fill="var(--eje-q)" font-family="var(--mono)">paciente_maria_g</text>
               <text x="115" y="55" text-anchor="middle" font-size="9.5" fill="var(--eje-q)">Q · titular del dato</text>
               <line x1="190" y1="55" x2="252" y2="108" stroke="var(--eje-m)" stroke-width="1.8"/>
               <text x="206" y="78" font-size="9.5" fill="var(--eje-m)" font-weight="700" font-family="var(--mono)">quien</text>
@@ -293,7 +293,7 @@
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="triple">(consentimiento_4471, instancia_de, consentimiento)        ∈ M(O, K)
-(consentimiento_4471, quien,        paciente_vega)         ∈ M(O, Q)   # titular
+(consentimiento_4471, quien,        paciente_maria_g)         ∈ M(O, Q)   # titular
 (consentimiento_4471, a_quien,      cardiologo_rosales)    ∈ M(O, Q)   # beneficiario
 (consentimiento_4471, permite,      puede_ver)             ∈ M(O, K)   # acción
 (consentimiento_4471, sobre,        arritmia_dx_2026)      ∈ M(O, O)   # alcance
@@ -310,7 +310,7 @@
           <pre><code data-lang="json">{
   "id": "consentimiento_4471",
   "instancia_de": "consentimiento",
-  "quien": "paciente_vega",
+  "quien": "paciente_maria_g",
   "permite": "puede_ver",
   "sobre": "arritmia_dx_2026",
   "a_quien": "cardiologo_rosales",
@@ -332,7 +332,7 @@
           </div>
           <div class="tarjeta">
             <h4><span class="eje eje--o">2</span>&nbsp; Revocar es publicar</h4>
-            <p style="margin:0;font-size:.93rem">Cuando Vega retira el permiso, no se edita ni se borra
+            <p style="margin:0;font-size:.93rem">Cuando Gonzales retira el permiso, no se edita ni se borra
               el hecho anterior: se añade uno nuevo que lo deja sin efecto. El acceso caduca en el acto
               y queda constancia, auditable, de que existió y de cuándo terminó. El sistema no olvida
               que hubo permiso; recuerda, además, que se revocó.</p>

@@ -4,20 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cap. 11 · La identidad a través de los sistemas — WQuestions</title>
-  <meta name="description" content="Tres sistemas, tres identificadores, una sola persona. Cómo el modelo reconoce que el Juan que compró una camiseta es el mismo Juan que se atiende en la clínica: punteros, aliasing y resolución de identidad.">
+  <meta name="description" content="Tres sistemas, tres identificadores, una sola persona. Cómo el modelo reconoce que la María que compró una camiseta es la misma María que se atiende en la clínica: punteros, aliasing y resolución de identidad.">
   <!-- Open Graph / Twitter -->
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="WQuestions">
   <meta property="og:locale" content="es_ES">
   <meta property="og:title" content="Cap. 11 · La identidad a través de los sistemas">
-  <meta property="og:description" content="Tres sistemas, tres identificadores, una sola persona. Cómo el modelo reconoce que el Juan que compró una camiseta es el mismo Juan que se atiende en la clínica: punteros, aliasing y resolución de identidad.">
+  <meta property="og:description" content="Tres sistemas, tres identificadores, una sola persona. Cómo el modelo reconoce que la María que compró una camiseta es la misma María que se atiende en la clínica: punteros, aliasing y resolución de identidad.">
   <meta property="og:url" content="https://joseabantomarin.github.io/WQuestions/11-identidad.html">
   <meta property="og:image" content="https://joseabantomarin.github.io/WQuestions/assets/og-cover.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Cap. 11 · La identidad a través de los sistemas">
-  <meta name="twitter:description" content="Tres sistemas, tres identificadores, una sola persona. Cómo el modelo reconoce que el Juan que compró una camiseta es el mismo Juan que se atiende en la clínica: punteros, aliasing y resolución de identidad.">
+  <meta name="twitter:description" content="Tres sistemas, tres identificadores, una sola persona. Cómo el modelo reconoce que la María que compró una camiseta es la misma María que se atiende en la clínica: punteros, aliasing y resolución de identidad.">
   <meta name="twitter:image" content="https://joseabantomarin.github.io/WQuestions/assets/og-cover.jpg">
   <link rel="stylesheet" href="assets/estilo.css">
   <script>document.documentElement.classList.add('js')</script>
@@ -51,17 +51,17 @@
         <h1>La identidad a través de los sistemas</h1>
         <p class="lede">Tres sistemas le dan tres nombres distintos. Pero es una sola persona. Antes de
           que el grafo pueda cruzar la tienda, la clínica y la municipalidad, tiene que resolver una
-          pregunta que parece trivial y casi nunca lo es: ¿son el mismo?</p>
+          pregunta que parece trivial y casi nunca lo es: ¿son la misma?</p>
       </header>
 
       <div class="contenido">
 
-        <p class="entrada">Un martes de mayo, <strong>Juan Vega</strong> compra una camiseta en la
-          tienda del centro. Para la caja registradora, Juan no es Juan: es
+        <p class="entrada">Un martes de mayo, <strong>María Gonzales</strong> compra una camiseta en la
+          tienda del centro. Para la caja registradora, María no es María: es
           <code>cliente_1042</code>, el comprador de la <code>camiseta_88</code>. Tres semanas después,
-          ese mismo Juan llega a urgencias con una arritmia. Para el sistema de la clínica no existe
-          ningún <code>cliente_1042</code>; existe <code>paciente_vega</code>, con su episodio y su
-          historia. Y cuando, al mes, Juan paga sus arbitrios, la municipalidad lo conoce por un tercer
+          esa misma María llega a urgencias con una arritmia. Para el sistema de la clínica no existe
+          ningún <code>cliente_1042</code>; existe <code>paciente_maria_g</code>, con su episodio y su
+          historia. Y cuando, al mes, María paga sus arbitrios, la municipalidad la conoce por un tercer
           nombre todavía: <code>contribuyente_77‑3389</code>. Tres sistemas, tres identificadores, una
           sola persona de carne y hueso que ninguno de los tres sabe que comparte con los demás.</p>
 
@@ -69,7 +69,7 @@
           preguntas servirían de <em>vocabulario común</em> para que sistemas que hoy no se hablan
           pudieran responder juntos. Pero un vocabulario común no basta. Aunque la tienda y la clínica
           coincidieran en llamar <code>agente</code> al cable que apunta a una persona, seguirían sin
-          saber que <code>cliente_1042</code> y <code>paciente_vega</code> son <em>la misma</em>
+          saber que <code>cliente_1042</code> y <code>paciente_maria_g</code> son <em>la misma</em>
           persona. Responder a esa pregunta —¿quién es quién, de verdad, a través de los sistemas?— es
           lo que llamaremos <strong>resolución de identidad</strong>, y es el último eslabón que hace
           posible la promesa cross-dominio.</p>
@@ -85,7 +85,7 @@
         <h2>Identidad no es lo mismo que identificador</h2>
 
         <p>Conviene separar dos palabras que el lenguaje cotidiano confunde y que la arquitectura
-          obliga a distinguir. La <strong>identidad</strong> es la persona real: Juan Vega, un
+          obliga a distinguir. La <strong>identidad</strong> es la persona real: María Gonzales, un
           individuo único en el mundo, que existía antes de comprar nada y existirá después de que la
           camiseta se decolore. La identidad vive en el eje
           <span class="eje-rotulo"><span class="eje eje--q">Q</span> quién</span>: es una entidad del
@@ -115,7 +115,7 @@
         <figure class="figura figura--ancha revelar">
           <div class="lienzo">
             <svg viewBox="0 0 660 380" class="svg-eje" role="img"
-                 aria-label="Juan Vega al centro como nodo canónico; tres tarjetas-sistema con identificadores distintos; flechas mismo_que convergen hacia el nodo central">
+                 aria-label="María Gonzales al centro como nodo canónico; tres tarjetas-sistema con identificadores distintos; flechas mismo_que convergen hacia el nodo central">
               <defs>
                 <marker id="f-q" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
                   <path d="M0 0 L10 5 L0 10 z" fill="var(--eje-q)"/>
@@ -126,8 +126,8 @@
               <circle cx="330" cy="190" r="46" fill="var(--eje-q)" opacity=".14"/>
               <circle cx="330" cy="190" r="30" fill="var(--eje-q)"/>
               <text x="330" y="186" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">Q</text>
-              <text x="330" y="252" text-anchor="middle" font-size="13" font-weight="700" fill="var(--tinta)">persona_vega</text>
-              <text x="330" y="268" text-anchor="middle" font-size="11" fill="var(--tinta-tenue)">la identidad canónica · Juan Vega</text>
+              <text x="330" y="252" text-anchor="middle" font-size="13" font-weight="700" fill="var(--tinta)">persona_maria_g</text>
+              <text x="330" y="268" text-anchor="middle" font-size="11" fill="var(--tinta-tenue)">la identidad canónica · María Gonzales</text>
 
               <!-- tarjeta tienda (izquierda) -->
               <rect x="24" y="36" width="172" height="62" rx="10" fill="var(--papel)" stroke="var(--eje-o)" stroke-width="1.6"/>
@@ -138,7 +138,7 @@
               <!-- tarjeta clínica (izquierda-abajo) -->
               <rect x="24" y="282" width="172" height="62" rx="10" fill="var(--papel)" stroke="var(--eje-l)" stroke-width="1.6"/>
               <text x="38" y="304" font-size="11" font-weight="700" fill="var(--eje-l)">🏥 CLÍNICA</text>
-              <text x="38" y="324" font-size="12.5" font-family="var(--mono)" fill="var(--tinta)">paciente_vega</text>
+              <text x="38" y="324" font-size="12.5" font-family="var(--mono)" fill="var(--tinta)">paciente_maria_g</text>
               <text x="38" y="338" font-size="9.5" fill="var(--tinta-tenue)">episodio urgencias</text>
 
               <!-- tarjeta municipalidad (derecha) -->
@@ -157,7 +157,7 @@
               <text x="396" y="180" font-size="10.5" font-style="italic" fill="var(--eje-q)" font-family="var(--mono)" text-anchor="middle">mismo_que</text>
             </svg>
           </div>
-          <figcaption><span class="fnum">Figura 11.1.</span> Tres sistemas conocen a Juan Vega con tres
+          <figcaption><span class="fnum">Figura 11.1.</span> Tres sistemas conocen a María Gonzales con tres
             identificadores distintos. Cada rótulo local apunta, mediante el cable
             <code>mismo_que</code>, a una <strong>identidad canónica</strong> en el eje&nbsp;Q. Resolver
             la identidad es, literalmente, dibujar esas tres flechas.</figcaption>
@@ -177,7 +177,7 @@
 
         <ul class="limpia">
           <li style="margin-bottom:.55rem"><b>Cada identificador es un puntero.</b>
-            <code>cliente_1042</code> no contiene a Juan: apunta a él. Es la dirección que usa la
+            <code>cliente_1042</code> no contiene a María: apunta a ella. Es la dirección que usa la
             tienda para llegar a la persona.</li>
           <li style="margin-bottom:.55rem"><b>Reificar es «tomar la dirección».</b> Cuando en el
             <a href="09-situaciones.html">capítulo&nbsp;9</a> convertimos un evento fugaz (una venta, un
@@ -186,7 +186,7 @@
             «algo ocurrió» a «este algo, al que ahora puedo señalar».</li>
           <li style="margin-bottom:.55rem"><b><code>mismo_que</code> es <em>aliasing</em> de
             punteros.</b> Dos direcciones, un mismo objeto. Declarar
-            <code>(cliente_1042, mismo_que, persona_vega)</code> es decirle al sistema: «estos dos
+            <code>(cliente_1042, mismo_que, persona_maria_g)</code> es decirle al sistema: «estos dos
             papelitos llevan al mismo sitio; trátalos como sinónimos».</li>
           <li><b>El grafo entero es una estructura de punteros.</b> Cada tripleta enlaza nodos por
             referencia, no por copia. El conocimiento no es una pila de tablas planas: es un tejido de
@@ -221,7 +221,7 @@
 
                 <rect x="24" y="108" width="150" height="40" rx="7" fill="var(--eje-l-suave)" stroke="var(--eje-l)" stroke-width="1.4"/>
                 <text x="38" y="126" font-size="11" fill="var(--eje-l)">clínica →</text>
-                <text x="38" y="142" font-size="12.5" fill="var(--tinta)">paciente_vega</text>
+                <text x="38" y="142" font-size="12.5" fill="var(--tinta)">paciente_maria_g</text>
 
                 <rect x="24" y="172" width="150" height="40" rx="7" fill="var(--eje-k-suave)" stroke="var(--eje-k)" stroke-width="1.4"/>
                 <text x="38" y="190" font-size="11" fill="var(--eje-k)">muni →</text>
@@ -231,7 +231,7 @@
               <!-- objeto a la derecha -->
               <rect x="448" y="92" width="188" height="78" rx="12" fill="var(--eje-q)" opacity=".12"/>
               <rect x="464" y="104" width="156" height="54" rx="9" fill="var(--papel)" stroke="var(--eje-q)" stroke-width="1.8"/>
-              <text x="542" y="126" text-anchor="middle" font-size="12.5" font-weight="700" font-family="var(--mono)" fill="var(--tinta)">persona_vega</text>
+              <text x="542" y="126" text-anchor="middle" font-size="12.5" font-weight="700" font-family="var(--mono)" fill="var(--tinta)">persona_maria_g</text>
               <text x="542" y="144" text-anchor="middle" font-size="10" fill="var(--tinta-tenue)">el objeto · una sola dirección real</text>
 
               <!-- flechas de referencia -->
@@ -245,8 +245,8 @@
           </div>
           <figcaption><span class="fnum">Figura 11.2.</span> Los tres identificadores son punteros: tres
             direcciones distintas que, vía <code>mismo_que</code>, refieren al mismo objeto
-            <code>persona_vega</code>. Esto es <em>aliasing</em>: nombres distintos para una sola cosa.
-            El grafo no copia a Juan tres veces; lo apunta tres veces.</figcaption>
+            <code>persona_maria_g</code>. Esto es <em>aliasing</em>: nombres distintos para una sola cosa.
+            El grafo no copia a María tres veces; la apunta tres veces.</figcaption>
         </figure>
 
         <h2>Cómo se resuelve la identidad, en la práctica</h2>
@@ -267,7 +267,7 @@
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="triple">(cliente_1042,  documento_dni, "20148833")   ∈ M(Q, K)   // la tienda lo registró
-(paciente_vega, documento_dni, "20148833")   ∈ M(Q, K)   // la clínica también
+(paciente_maria_g, documento_dni, "20148833")   ∈ M(Q, K)   // la clínica también
 // misma clave natural ⇒ misma identidad: la resolución es deductiva, no probable</code></pre>
         </div>
 
@@ -283,7 +283,7 @@
         <div class="triple">
           <span class="nodo nodo--q"><span>cliente_1042</span><small>Q</small></span>
           <span class="enlace">mismo_que<span class="firma">M(Q→Q)</span></span>
-          <span class="nodo nodo--q"><span>persona_vega</span><small>Q</small></span>
+          <span class="nodo nodo--q"><span>persona_maria_g</span><small>Q</small></span>
         </div>
 
         <p>Porque es un hecho como los demás, puede reificarse cuando importa <em>quién</em> lo afirmó y
@@ -308,8 +308,8 @@
         <h3>Vía 3 · <em>Matching</em> probabilístico</h3>
 
         <p>El caso incómodo, y el más frecuente en la vida real: no hay clave común y nadie declaró
-          nada. La tienda guardó «Juan Vega», la clínica «J. Vega Ramos», la municipalidad «Vega, Juan
-          A.». ¿Son el mismo? Probablemente. Pero «probablemente» es una palabra peligrosa en una base
+          nada. La tienda guardó «María Gonzales», la clínica «M. Gonzales Ramos», la municipalidad «Gonzales, María
+          A.». ¿Son la misma? Probablemente. Pero «probablemente» es una palabra peligrosa en una base
           de datos. Aquí la identidad se <em>infiere</em> comparando rasgos (nombre, fecha de
           nacimiento, dirección, teléfono) y calculando una probabilidad de coincidencia. Por encima de
           cierto umbral, el sistema propone que son la misma persona; por debajo, los deja separados.</p>
@@ -327,23 +327,23 @@
         <h2>El modelo: una persona canónica con identidades colgando</h2>
 
         <p>Con las tres vías sobre la mesa, el patrón de modelado es directo. Existe una
-          <strong>identidad canónica</strong> (un único nodo en Q, <code>persona_vega</code>) y, a su
+          <strong>identidad canónica</strong> (un único nodo en Q, <code>persona_maria_g</code>) y, a su
           alrededor, los identificadores locales de cada sistema, unidos a ella por <code>mismo_que</code>.
           Cada sistema sigue usando su rótulo de siempre, sin renunciar a nada; el grafo se encarga de
           que todos esos rótulos converjan en una sola persona.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="triple">(persona_vega,  instancia_de, persona)      ∈ M(Q, K)   // la identidad canónica
-(persona_vega,  documento_dni, "20148833")  ∈ M(Q, K)   // su clave natural
+          <pre><code data-lang="triple">(persona_maria_g,  instancia_de, persona)      ∈ M(Q, K)   // la identidad canónica
+(persona_maria_g,  documento_dni, "20148833")  ∈ M(Q, K)   // su clave natural
 
-(cliente_1042,        mismo_que, persona_vega)  ∈ M(Q, Q)   // alias de la tienda
-(paciente_vega,       mismo_que, persona_vega)  ∈ M(Q, Q)   // alias de la clínica
-(contribuyente_77_3389, mismo_que, persona_vega) ∈ M(Q, Q)  // alias de la municipalidad
+(cliente_1042,        mismo_que, persona_maria_g)  ∈ M(Q, Q)   // alias de la tienda
+(paciente_maria_g,       mismo_que, persona_maria_g)  ∈ M(Q, Q)   // alias de la clínica
+(contribuyente_77_3389, mismo_que, persona_maria_g) ∈ M(Q, Q)  // alias de la municipalidad
 
 // y los hechos de cada sistema cuelgan de su propio puntero, como siempre:
 (venta_001,  comprador, cliente_1042)   ∈ M(O, Q)   // la tienda vendió la camiseta_88
-(urgencias_2026_071, paciente, paciente_vega) ∈ M(O, Q)   // la clínica abrió el episodio</code></pre>
+(urgencias_2026_071, paciente, paciente_maria_g) ∈ M(O, Q)   // la clínica abrió el episodio</code></pre>
         </div>
 
         <p>Observa el reparto de trabajo. Cada sistema escribe sus hechos contra <em>su</em> puntero,
@@ -352,17 +352,17 @@
           un grafo de muchos sistemas no exige reescribir los datos de cada uno: exige tender los hilos
           <code>mismo_que</code> que faltan. El resto del tejido ya estaba.</p>
 
-        <p>Reconciliar que el Juan Vega de la tienda, el de la clínica y el de la municipalidad son uno
-          solo no sirve únicamente para ese Juan. Hecho a escala, es lo que permite el padrón único:
+        <p>Reconciliar que la María Gonzales de la tienda, la de la clínica y la de la municipalidad son una
+          sola no sirve únicamente para esa María. Hecho a escala, es lo que permite el padrón único:
           cruzar los registros de todas las personas repartidas entre sistemas y contarlas una sola vez,
           sin duplicados.</p>
 
         <aside class="nota-margen">
           <span class="etq">Dirección del cable</span>
           Por convención, el alias apunta <em>hacia</em> la identidad canónica
-          (<code>cliente_1042 → persona_vega</code>), no al revés. Así el nodo canónico no necesita
+          (<code>cliente_1042 → persona_maria_g</code>), no al revés. Así el nodo canónico no necesita
           enumerar a sus alias: para encontrarlos basta seguir las flechas hacia atrás, igual que se
-          rastrean las referencias a un objeto.</p>
+          rastrean las referencias a un objeto.
         </aside>
 
         <h2>No es una decisión numerada: es una convención de fondo</h2>
@@ -387,17 +387,17 @@
         <h2>Por qué esto sostiene toda la promesa del libro</h2>
 
         <p>Detente a imaginar la consulta que da sentido a este libro entero: <em>«muéstrame todo lo que
-          el sistema sabe de Juan Vega»</em>. Sus compras en la tienda, su episodio en urgencias, sus
+          el sistema sabe de María Gonzales»</em>. Sus compras en la tienda, su episodio en urgencias, sus
           arbitrios en la municipalidad (tres dominios que nunca fueron diseñados para hablarse) reunidos
           en una sola respuesta coherente. Esa consulta es la prueba viviente de la interoperabilidad
           que la introducción prometió. Y es <em>imposible</em> sin resolución de identidad: sin las
-          flechas <code>mismo_que</code>, la pregunta «¿qué sabemos de Juan?» se rompe en tres
-          preguntas que ningún sistema puede juntar, porque ninguno reconoce al Juan del otro.</p>
+          flechas <code>mismo_que</code>, la pregunta «¿qué sabemos de María?» se rompe en tres
+          preguntas que ningún sistema puede juntar, porque ninguno reconoce a la María del otro.</p>
 
         <div class="columnas">
           <p>De aquí brota un principio que reaparecerá con fuerza cuando lleguemos a la
             <a href="22-municipalidad.html">municipalidad</a>: el principio de <strong>«una sola
-            vez»</strong>. Si la clínica ya verificó la dirección de Juan, la municipalidad no debería
+            vez»</strong>. Si la clínica ya verificó la dirección de María, la municipalidad no debería
             volver a pedírsela; si la tienda ya tiene su correo, ningún tercer sistema tendría por qué
             exigirlo de nuevo. El dato vive una vez, en el individuo canónico, y todos los sistemas que
             lo conocen lo consultan allí.</p>
