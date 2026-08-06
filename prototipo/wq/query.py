@@ -57,20 +57,27 @@ def query(universe: Universe, pattern: Pattern,
     # del patrón. Tomamos el primer rol fijo (o type_constraint) como ancla
     # para reducir el espacio.
 
-    if pattern.type_constraint is not None:
+    if pattern.fixed:
+        # Ancla: de los roles fijos, el que tiene el VALOR más selectivo. Se
+        # indexa por valor, no por rol — preguntar por un cliente concreto
+        # recorre los hechos de ese cliente, no todos los que usan ese rol.
+        # Vale también con type_constraint: el punto 2 filtra por tipo, y un
+        # valor concreto casi siempre discrimina más que un tipo entero.
+        role0, val0 = min(
+            pattern.fixed.items(),
+            key=lambda rv: len(universe._by_value.get(rv[1].id, ())),
+        )
+        candidate_subjects = {
+            f.subject.id
+            for f in universe.facts_with_value(val0, at=at)
+            if f.role == role0
+        }
+    elif pattern.type_constraint is not None:
         # Sujetos cuya instancia_de == type_constraint
         candidate_subjects = {
             f.subject.id
             for f in universe.facts_with_role("instancia_de", at=at)
             if f.value.id == pattern.type_constraint.id
-        }
-    elif pattern.fixed:
-        # Tomamos el primer fixed como ancla.
-        role0, val0 = next(iter(pattern.fixed.items()))
-        candidate_subjects = {
-            f.subject.id
-            for f in universe.facts_with_role(role0, at=at)
-            if f.value.id == val0.id
         }
     else:
         # Si solo hay ask, buscamos sobre todas las situaciones (raro).
