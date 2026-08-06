@@ -1,10 +1,11 @@
-# Los cuatro huecos del MCP: que el servidor responda sin ayuda externa
+# Los cinco huecos del MCP: que el servidor responda sin ayuda externa
 
-> Diseño para cerrar las cuatro carencias del servidor `wquestions-mcp` que
+> Diseño para cerrar las cinco carencias del servidor `wquestions-mcp` que
 > quedaron expuestas al consultar un universo real de 3 M de hechos (la
-> migración de yaku). Hoy el MCP responde con identificadores opacos, no sabe
-> preguntar por un período, no agrega, y no puede escribir un atributo sobre una
-> entidad. Las cuatro se descubrieron usándolo, no leyéndolo.
+> migración de yaku). Hoy el MCP no sabe encontrar una entidad por su nombre,
+> responde con identificadores opacos, no sabe preguntar por un período, no
+> agrega, y no puede escribir un atributo sobre una entidad. Las cinco se
+> descubrieron usándolo, no leyéndolo.
 
 - **Fecha:** 2026-08-05
 - **Alcance:** `mcp-server/wquestions_mcp/session.py` y `server.py`;
@@ -23,20 +24,27 @@ Python:
 
 | pregunta real | qué faltó |
 |---|---|
+| "los consumos de **Jose Abanto**" | no hay forma de llegar a `cli_26696215` desde el nombre |
 | "dame los consumos de este cliente" | devolvió `pro_850`, `n_000032`: ilegible |
 | "solo este año" | `ask` fija valores exactos, no períodos |
 | "qué producto tiene las ventas récord" | habría que traer 243.147 filas |
 | (al migrar) "el nombre de la persona" | no hay forma de escribir `(juan, nombre, …)` |
 
-El cuarto es la causa raíz del primero, y es el más interesante: el catálogo
+El quinto es la causa raíz del segundo, y es el más interesante: el catálogo
 declara `nombre` como `Q→K` —el nombre pertenece a la persona— pero
 `assert_situation` siempre mintea un sujeto en O y `correct()` rechaza sujetos
 que no sean O. El modelo pide algo que su propia interfaz no sabe expresar.
 
+El primero es el más embarazoso: **todas** las consultas de esta sesión
+arrancaron de un id que ya se conocía por tener el SQL delante. Un cliente que
+solo tenga el MCP no puede dar el primer paso. Diseñar que los nombres salgan
+(hueco 2) sin poder entrar por ellos deja la puerta tapiada por dentro.
+
 ## Qué NO entra (YAGNI)
 
 - Pipeline de agregación completo (varias claves, `HAVING`, paginación).
-- Búsqueda por texto sobre etiquetas (`encuentra el cliente llamado "Juan"`).
+- Índice invertido por palabras, ranking por relevancia o corrección de erratas.
+  `find` hace subcadena normalizada y nada más.
 - Snapshot del universo para acelerar el replay. Es un problema real y medido,
   pero es otra pieza.
 - Arreglar el bug de escritura parcial no registrada en el log. Va aparte.
@@ -68,6 +76,39 @@ append-only en ambos casos.
 **Por qué no rompe nada:** el almacén ya es tripletas binarias. Esto no añade una
 forma nueva de dato, solo expone una escritura que el motor siempre soportó
 (`Universe.assert_fact`) y que el MCP tapaba tras la reificación obligatoria.
+
+## 1bis. `find` — encontrar una entidad por su nombre
+
+**Herramienta nueva.** Es la puerta de entrada: sin ella nada de lo demás se
+puede usar sin conocer los identificadores de antemano.
+
+```
+find(texto, eje=None, limite=20)
+  -> {count, results: [{id, axis, label}], truncated: bool}
+```
+
+- Coincidencia por **subcadena normalizada**: sin distinguir mayúsculas ni
+  acentos (`"azañero"` encuentra `ROMERO AZAÑERO, MARCELA`). Es lo mínimo que
+  hace falta en español y no requiere tokenizar.
+- `eje` filtra a un eje de valor (`"Q"` para buscar solo personas).
+- El nombre de cada entidad sale de la **misma resolución que `labels`**: hecho
+  con rol `nombre` primero, `individual.label` después. Una sola definición de
+  "cómo se llama esto" para leer y para buscar.
+- `limite` por defecto 20, con `truncated` para avisar de que hay más. Buscar
+  `"a"` en yaku daría cientos de miles de coincidencias; devolverlas sería
+  peor que no responder.
+
+**Rendimiento — medido sobre las 539.075 entidades de yaku:**
+
+| estrategia | tiempo |
+|---|---|
+| escaneo lineal normalizando en cada consulta | 920–1.180 ms |
+| índice de etiquetas normalizadas | **13,5 ms** |
+
+El escaneo ingenuo no sirve. Se construye un índice `etiqueta_normalizada →
+[ids]` **la primera vez que se llama a `find`**, no al arrancar: cuesta 2,6 s y
+unas decenas de MB, y un universo que nunca busca no debe pagarlos. El índice se
+invalida al escribir (`add_entity`, `assert_fact`, `correct`, `reset`).
 
 ## 2. `labels` — nombres en la respuesta de `ask`
 
@@ -209,13 +250,15 @@ Tres piezas independientes y testeables por separado:
 
 | pieza | dónde | qué hace | depende de |
 |---|---|---|---|
-| resolución de etiquetas | `session.py` | ids → nombres, dict único | `Universe.individuals`, hechos con rol `nombre` |
+| resolución de nombres | `session.py` | id → nombre, una sola definición | `Universe.individuals`, hechos con rol `nombre` |
+| índice de búsqueda | `session.py` | nombre normalizado → ids, perezoso | resolución de nombres |
 | comparación de rangos | `query.py` | filtra candidatas por T/N | payload/label del individuo |
 | agregación | `session.py` | agrupa filas y mide | `Magnitud` para las unidades |
 
-La resolución de etiquetas no sabe de consultas; la agregación no sabe de
-etiquetas (se aplica después, sobre los ids que quedaron). Cada una se puede
-cambiar sin tocar la otra.
+La **resolución de nombres es una sola función** que sirve a `labels` y a `find`:
+si algún día el nombre pasa a salir de otro sitio, cambia en un lugar y los dos
+lo heredan. El índice de búsqueda se apoya en ella y no sabe de consultas; la
+agregación no sabe de nombres (se aplica después, sobre los ids que quedaron).
 
 ## Compatibilidad
 
@@ -228,6 +271,10 @@ se anota por qué.
 
 - `assert_fact`: sujeto de cada eje; sujeto inexistente; violación de signatura;
   que sobreviva al replay; `correct` sobre una entidad Q.
+- `find`: subcadena; insensible a mayúsculas y a acentos; filtro por eje; tope y
+  bandera `truncated`; que el índice se invalide tras escribir (buscar, añadir
+  una entidad, volver a buscar y encontrarla); que un universo que nunca llama a
+  `find` no construya el índice.
 - `labels`: prioridad hecho-`nombre` > label > omitido; magnitud con unidad;
   `labels=false`; que un id repetido en 300 filas aparezca una sola vez.
 - rangos: T con payload y sin payload; N; extremo abierto; eje inválido; que el
@@ -247,3 +294,7 @@ se anota por qué.
   que se degradará primero.
 - **La derivación de `importe` es específica de yaku**, no del estándar. Debe
   quedar en el script de migración, no en el motor.
+- **El índice de `find` se invalida entero al escribir.** Con escrituras
+  frecuentes intercaladas con búsquedas, se reconstruiría una y otra vez a 2,6 s
+  la vez. Aceptable en el uso previsto (cargar y consultar), pero si aparece un
+  patrón escribe-busca-escribe hay que pasar a actualización incremental.
