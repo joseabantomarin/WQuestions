@@ -4,20 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cap. 15 · El modelo bajo presión — WQuestions</title>
-  <meta name="description" content="Tres casos lingüísticos que rompen a un parser ingenuo —nominalizaciones, modales e idiomas— y las convenciones con que WQuestions los absorbe. El límite real del modelo no está en el lenguaje, sino en las reglas.">
+  <meta name="description" content="Entender la frase es hoy trabajo de la IA; decidir qué queda escrito, del modelo. Nominalizaciones, modales y el alcance de la negación: tres decisiones que ninguna comprensión resuelve, y los cables con que WQuestions las absorbe.">
   <!-- Open Graph / Twitter -->
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="WQuestions">
   <meta property="og:locale" content="es_ES">
   <meta property="og:title" content="Cap. 15 · El modelo bajo presión">
-  <meta property="og:description" content="Tres casos lingüísticos que rompen a un parser ingenuo —nominalizaciones, modales e idiomas— y las convenciones con que WQuestions los absorbe. El límite real del modelo no está en el lenguaje, sino en las reglas.">
+  <meta property="og:description" content="Entender la frase es hoy trabajo de la IA; decidir qué queda escrito, del modelo. Nominalizaciones, modales y el alcance de la negación: tres decisiones que ninguna comprensión resuelve, y los cables con que WQuestions las absorbe.">
   <meta property="og:url" content="https://joseabantomarin.github.io/WQuestions/15-bajo-presion.html">
   <meta property="og:image" content="https://joseabantomarin.github.io/WQuestions/assets/og-cover.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Cap. 15 · El modelo bajo presión">
-  <meta name="twitter:description" content="Tres casos lingüísticos que rompen a un parser ingenuo —nominalizaciones, modales e idiomas— y las convenciones con que WQuestions los absorbe. El límite real del modelo no está en el lenguaje, sino en las reglas.">
+  <meta name="twitter:description" content="Entender la frase es hoy trabajo de la IA; decidir qué queda escrito, del modelo. Nominalizaciones, modales y el alcance de la negación: tres decisiones que ninguna comprensión resuelve, y los cables con que WQuestions las absorbe.">
   <meta name="twitter:image" content="https://joseabantomarin.github.io/WQuestions/assets/og-cover.jpg">
   <link rel="stylesheet" href="assets/estilo.css">
   <script>document.documentElement.classList.add('js')</script>
@@ -49,49 +49,105 @@
         <p class="parte">Parte IV · Del lenguaje a los hechos</p>
         <div class="num-cap">15</div>
         <h1>El modelo bajo presión</h1>
-        <p class="lede">El verbo y el lexicon ya tienden el puente entre lo que decimos y lo que el
-          grafo guarda. Ahora toca cruzarlo cargando las tres frases que suelen hundir cualquier
-          puente.</p>
+        <p class="lede">Entender una frase difícil es hoy trabajo de la inteligencia artificial, y lo
+          hace bien. La pregunta que queda, la que decide si el grafo sirve, es otra: dónde aterriza lo
+          entendido sin que el sistema termine guardando algo falso.</p>
       </header>
 
       <div class="contenido">
 
-        <p class="entrada">Lee estas tres oraciones en voz alta y fíjate en lo poco que te cuesta
-          entenderlas: <em>«El estreno del documental obligó a un cambio de cartelera»</em>;
+        <p class="entrada">Lee estas tres oraciones y fíjate en lo poco que te cuesta entenderlas:
+          <em>«El estreno del documental obligó a un cambio de cartelera»</em>;
           <em>«El estudio debía estrenar en marzo, pero no podía pagar la sala todavía»</em>;
-          <em>«La distribuidora le tomó el pelo al cineasta novato con esa fecha»</em>. No has
-          tropezado ni una vez. Y, sin embargo, las tres harían humear a un analizador ingenuo, de
-          esos que buscan «el verbo de acción» y reparten roles alrededor. Este capítulo trata de por
-          qué tropieza la máquina donde tú no, y de las tres convenciones con que WQuestions absorbe
-          el golpe sin inventar un solo eje nuevo.</p>
+          <em>«El comité no cree que el guion esté listo»</em>. No has tropezado ni una vez. Un modelo
+          de lenguaje tampoco tropieza: las tres le resultan transparentes. Y sin embargo cada una,
+          en el momento de guardarse, obliga a tomar una decisión que ninguna comprensión resuelve por
+          ti. Comprender la frase y saber qué anotar son dos trabajos distintos, y este capítulo va
+          del segundo.</p>
 
         <aside class="nota-margen">
           <span class="etq">Dónde estamos</span>
           En el <a href="13-verbo.html">capítulo 13</a> vimos que el verbo es la signatura que reparte
           los roles; en el <a href="14-lexicon.html">capítulo 14</a>, que el lexicon compila el habla
-          humana hacia el catálogo canónico. Aquí lo sometemos a las tres pruebas que más lo aprietan.
+          humana hacia el catálogo canónico. Aquí sometemos ese aparato a las tres frases que más lo
+          aprietan.
         </aside>
 
-        <p>Conviene desmontar la ilusión de inmediato, porque es la raíz de los tres problemas. Un
-          parser ingenuo cree que cada oración esconde <em>un</em> verbo de acción rodeado de
-          participantes, y que su tarea es encontrarlo y colgar a cada quien en su clavija. Esa
-          heurística funciona con <em>«la directora rodó la escena»</em> y se desmorona con casi todo
-          lo demás. La primera frase esconde sus acciones bajo dos sustantivos (<em>estreno</em>,
-          <em>cambio</em>); la segunda apila dos verbos de intención (<em>debía</em>,
-          <em>podía</em>) sobre los hechos reales; la tercera dice <em>tomar el pelo</em> y no habla
-          de cabello en absoluto. Tres trampas distintas, un mismo origen: el lenguaje no marca en la
-          superficie lo que el modelo necesita por debajo.</p>
+        <p>Conviene desmontar una ilusión de entrada, porque es la raíz de los tres problemas: la de
+          que basta con entender. Un parser ingenuo cree que cada oración esconde <em>un</em> verbo de
+          acción rodeado de participantes, y que su tarea es encontrarlo y colgar a cada quien en su
+          clavija. Esa heurística funciona con <em>«la directora rodó la escena»</em> y se desmorona
+          con casi todo lo demás. La primera frase esconde sus acciones bajo dos sustantivos
+          (<em>estreno</em>, <em>cambio</em>); la segunda apila dos verbos de intención
+          (<em>debía</em>, <em>podía</em>) sobre hechos que no ocurrieron; la tercera niega algo, pero
+          no dice qué. Un lector resuelve las tres sin pensar. Un almacén no puede: tiene que elegir
+          un nodo, un cable y un valor, y esa elección es irreversible.</p>
 
-        <p class="cita-destacada revelar">El modelo no entiende español. Lo compila. Y compilar bien
-          empieza por reconocer los tres disfraces que el español usa para esconder un
-          hecho.<cite>La tesis del capítulo</cite></p>
+        <p class="cita-destacada revelar">El modelo no entiende español, y no le hace falta. Su
+          trabajo empieza donde termina la comprensión: en decidir qué queda escrito.<cite>La tesis del
+          capítulo</cite></p>
 
-        <p>Adelanto la conclusión para que leas con red: ninguna de las tres trampas obliga a ampliar
-          la geometría de siete ejes. Las tres se resuelven en la capa de traducción (el lexicon de la
-          <a href="14-lexicon.html">decisión&nbsp;D9</a>, donde el usuario nunca toca una etiqueta
-          canónica) y todas terminan en la misma forma de siempre: tripletas tipadas
+        <p>Adelanto la conclusión para que leas con red: ninguna de las tres presiones obliga a
+          ampliar la geometría de siete ejes. Las tres se absorben con cables que el modelo ya tiene
+          (los del eje <span class="eje-rotulo"><span class="eje eje--m">M</span></span>) y todas
+          terminan en la misma forma de siempre: tripletas tipadas
           <code>(sujeto, cable, objeto)</code>, el átomo de la <a href="07-hecho-atomico.html">decisión&nbsp;D3</a>.
           El límite real del modelo, lo veremos al cerrar, está en otra parte.</p>
+
+        <h2>La trampa que ya no lo es</h2>
+
+        <p>Antes de empezar conviene despejar la trampa que durante décadas encabezó todas las listas
+          como esta, porque hoy ocupa un lugar distinto. <em>Tomar el pelo</em> no habla de cabello;
+          <em>dar luz verde</em> no enciende ningún semáforo; <em>echar leña al fuego</em> rara vez
+          involucra leña. Junto a esos modismos vive un fenómeno más sutil, las
+          <strong>colocaciones</strong>: se dice <em>«rodar una película»</em>, no «conducir una
+          película»; se <em>«dicta»</em> una ordenanza, no se «habla» una ordenanza. El verbo correcto
+          no se deduce por lógica, se sabe de memoria. Un analizador de hace quince años se rompía
+          aquí, y un libro de hace quince años habría dedicado a esto su capítulo entero.</p>
+
+        <p>Ese capítulo ya no hace falta, y conviene decirlo sin rodeos: <strong>los modelos de
+          lenguaje resuelven los modismos solos</strong>. Han leído más español del que ningún equipo
+          lingüístico podría catalogar, y reconocen que <em>tomar el pelo</em> es una broma con la
+          misma facilidad con que resuelven un <em>«ella»</em> tres frases más atrás. Enumerar
+          modismos en un diccionario propio sería duplicar, con años de trabajo manual, algo que ya
+          viene resuelto río arriba.</p>
+
+        <p>Pero fíjate en lo que <em>no</em> queda resuelto, porque es justo el tema de este capítulo.
+          Toma una frase cualquiera del gremio:</p>
+
+        <blockquote>La distribuidora le tomó el pelo al cineasta novato con esa fecha.</blockquote>
+
+        <p>Que el LLM sepa que ahí hubo una broma no le dice al sistema qué escribir. Alguien tiene que
+          decidir que eso se guarda como <code>accion_bromear</code> y no como
+          <code>accion_tomar</code>, y que el <em>pelo</em> no es el objeto de nada:</p>
+
+        <div class="triple">
+          <span class="nodo nodo--o"><span>broma_058</span><small>O</small></span>
+          <span class="enlace">agente<span class="firma">M(O→Q)</span></span>
+          <span class="nodo nodo--q"><span>distribuidora_arce</span><small>Q</small></span>
+        </div>
+        <div class="triple">
+          <span class="nodo nodo--o"><span>broma_058</span><small>O</small></span>
+          <span class="enlace">paciente<span class="firma">M(O→Q)</span></span>
+          <span class="nodo nodo--q"><span>cineasta_volpe</span><small>Q</small></span>
+        </div>
+
+        <p>La comprensión la puso la IA; el <strong>tipo</strong> lo pone el modelo. Y esa exigencia de
+          tipo es lo que impide que el sistema acabe archivando prosa: obligado a nombrar
+          <code>accion_bromear</code>, el hecho queda consultable junto a todas las demás bromas del
+          grafo, cosa que una frase guardada como texto nunca estará. Las tres presiones que siguen son
+          de esta segunda clase (no de comprensión, sino de destino) y por eso ninguna se disuelve
+          cuando la IA mejora.</p>
+
+        <div class="caja caja--precedente revelar">
+          <p class="caja-tit">Precedente</p>
+          <p style="margin:0">La idea de que ciertas combinaciones de palabras forman una <em>unidad
+            de significado</em> indivisible no es nuestra: es el corazón de la <em>Construction
+            Grammar</em> (Fillmore<a class="ref" href="referencias.html#ref-24">(24)</a>, Goldberg) y de los marcos de <em>FrameNet</em><a class="ref" href="referencias.html#ref-14">(14)</a>, donde un patrón
+            como <em>tomar el pelo</em> evoca un marco completo (el del engaño jocoso) con sus roles ya
+            definidos. Los LLM heredaron esa competencia de forma estadística; lo que WQuestions aporta
+            no es la lingüística, sino el destino estructurado: la tripleta tipada.</p>
+        </div>
 
         <h2>Primera presión: la nominalización</h2>
 
@@ -149,31 +205,16 @@
           de un eje extra.
         </aside>
 
-        <p>¿Cómo logra el sistema esto por sí solo? No con magia: con una entrada de lexicon que
-          declara, junto al verbo, sus formas nominales. El compilador del capítulo&nbsp;14 ya hace el
-          resto.</p>
-
-        <div class="bloque-codigo">
-          <div class="barra"><span class="lenguaje">lexicon · JSON</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="json">{
-  "verbo": "estrenar",
-  "tipo_situacion": "accion_estrenar",
-  "formas_nominales": ["estreno", "premier", "lanzamiento"],
-  "roles": {
-    "agente": "M(O,Q)",
-    "tema":   "M(O,O)"
-  },
-  "obligatorios": ["tema"]
-}</code></pre>
-        </div>
-
-        <p>El campo <code>formas_nominales</code> es todo el truco. Con esa línea, al modelo le da
-          exactamente igual que un periodista escriba <em>«el estudio estrenó el documental»</em> o
-          <em>«el estreno del documental»</em>: la maquinaria extrae los mismos átomos y descarta la
-          forma de la frase como descarta el espacio en blanco. Lo mismo aplica en cualquier dominio:
-          da igual <em>«el banco aprobó el crédito»</em> que <em>«la aprobación del crédito»</em>; da
-          igual <em>«el agente consultó el grafo»</em> que <em>«la consulta al grafo»</em>. La poesía
-          del redactor se evapora; el hecho permanece.</p>
+        <p>Que <em>estreno</em> nombra un evento y no una cosa lo sabe cualquier lector, y también
+          cualquier LLM (el lexicon puede declararlo igualmente, listando las formas nominales junto al
+          verbo, para las tuberías que trabajan sin modelo de lenguaje). Lo que ninguna de las dos
+          cosas te dice es <em>cuántos nodos</em> crear. Ahí está la decisión, y el modelo la fija de
+          antemano: dos, no tres. Al periodista le da igual escribir <em>«el estudio estrenó el
+          documental»</em> o <em>«el estreno del documental»</em>; al grafo también, y por eso ambas
+          formas caen en el mismo <code>estreno_204</code>. Lo mismo en cualquier dominio: da igual
+          <em>«el banco aprobó el crédito»</em> que <em>«la aprobación del crédito»</em>; da igual
+          <em>«el agente consultó el grafo»</em> que <em>«la consulta al grafo»</em>. La poesía del
+          redactor se evapora; el hecho permanece, y permanece una sola vez.</p>
 
         <!-- FIGURA 15.1: verbo y nominalización convergen en la misma situación -->
         <figure class="figura figura--ancha revelar">
@@ -332,97 +373,127 @@
             exactamente el oficio del lexicon del capítulo&nbsp;14.</p>
         </div>
 
-        <h2>Tercera presión: idiomas y colocaciones</h2>
+        <h2>Tercera presión: la negación y su alcance</h2>
 
-        <p>Llegamos a la trampa más espinosa, y a la tercera oración. <em>Tomar el pelo</em> no habla
-          de cabello; <em>dar luz verde</em> no enciende ningún semáforo; <em>echar leña al fuego</em>
-          rara vez involucra leña. Estas frases hechas (los <strong>modismos</strong>) no se pueden
-          desarmar palabra por palabra sin convertir la frase en un disparate. Y junto a ellas vive un
-          fenómeno más sutil, las <strong>colocaciones</strong>: combinaciones que el idioma fija por
-          costumbre. Se dice <em>«rodar una película»</em>, no «conducir una película»; se
-          <em>«dicta»</em> una ordenanza, no se «habla» una ordenanza. El verbo correcto no se deduce
-          por lógica; se sabe de memoria.</p>
+        <p>La tercera oración parece la más inocente de las tres, y es la peor. Léela junto a su
+          gemela y verás que dicen cosas distintas:</p>
 
-        <p>La solución arquitectónica ya la dejamos planteada en el capítulo&nbsp;14, y aquí se cobra
-          su renta: <strong>en el lexicon, la unidad de traducción no es la palabra suelta, sino el
-          patrón completo</strong>. Los modismos se registran como entradas léxicas con su patrón fijo,
-          apuntando a su significado verdadero, no al literal.</p>
+        <blockquote>El comité no cree que el guion esté listo.<br>
+          El comité cree que el guion no está listo.</blockquote>
+
+        <p>La diferencia la captas al vuelo, y un modelo de lenguaje también: en la segunda el comité
+          se pronunció sobre el guion, en la primera solo se pronunció sobre su propia falta de
+          convicción. Hasta aquí, ningún problema de comprensión. El problema aparece un milímetro
+          después, cuando hay que escribir. Porque el cable <code>polaridad: negativa</code> es uno
+          solo, hay dos nodos disponibles y <strong>hay que clavarlo en exactamente uno</strong>. El
+          alcance de la negación (a qué se extiende el «no») no aparece marcado en la superficie de la
+          frase: hay que decidirlo.</p>
+
+        <p>La regla que adopta el modelo es directa: <strong>la negación se pega a la situación sobre
+          la que tiene alcance</strong>, y eso obliga a que la creencia exista como nodo propio. Aquí
+          se cobra su renta la reificación del <a href="09-situaciones.html">capítulo&nbsp;9</a>
+          (decisión&nbsp;D4): si <em>creer</em> no fuera una situación de pleno derecho en el eje
+          <span class="eje-rotulo"><span class="eje eje--o">O</span></span>, no habría dos sitios donde
+          elegir y la distinción se perdería sin remedio. Con dos nodos, en cambio, cada lectura tiene
+          su forma:</p>
 
         <div class="bloque-codigo">
-          <div class="barra"><span class="lenguaje">lexicon · patrones</span><button class="copiar">⧉ copiar</button></div>
-          <pre><code data-lang="json">[
-  {
-    "patron": "tomar el pelo a {Q}",
-    "tipo_situacion": "accion_bromear",
-    "obligatorios": ["agente", "paciente"],
-    "ejemplo": "la distribuidora le tomó el pelo al cineasta",
-    "nota": "modismo: ignorar toda relación con el cabello"
-  },
-  {
-    "patron": "dar luz verde a {O}",
-    "tipo_situacion": "accion_autorizar",
-    "obligatorios": ["agente", "tema"],
-    "ejemplo": "el comité dio luz verde al rodaje"
-  }
-]</code></pre>
+          <div class="barra"><span class="lenguaje">tripletas · «el comité cree que el guion NO está listo»</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(creer_412, instancia_de,    accion_creer)     ∈ M(O, K)
+(creer_412, agente,          comite_seleccion) ∈ M(O, Q)
+(creer_412, tema,            listo_907)        ∈ M(O, O)
+
+(listo_907, instancia_de,    estado_listo)     ∈ M(O, K)
+(listo_907, tema,            guion_orillas)    ∈ M(O, O)
+(listo_907, polaridad,       negativa)         ∈ M(O, K)   ← la negación cae adentro</code></pre>
         </div>
 
-        <p>El compilador lee de lo más específico a lo más general, y ese orden es la clave. Si ve
-          <em>tomar el pelo</em>, ejecuta la regla de <code>accion_bromear</code> y no se molesta en
-          buscar cabello. Si ve <em>tomar la decisión</em>, cae en otra entrada,
-          <code>accion_decidir</code>. Y solo si ningún patrón fijo encaja recurre al verbo
-          <em>tomar</em> en su sentido general de «recibir» o «asir». Lo específico siempre gana a lo
-          genérico. Así, la tercera oración se compila sin drama:</p>
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas · «el comité NO cree que el guion esté listo»</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(creer_413, instancia_de,    accion_creer)     ∈ M(O, K)
+(creer_413, agente,          comite_seleccion) ∈ M(O, Q)
+(creer_413, tema,            listo_908)        ∈ M(O, O)
+(creer_413, polaridad,       negativa)         ∈ M(O, K)   ← la negación cae afuera
 
-        <blockquote>La distribuidora le tomó el pelo al cineasta novato con esa fecha.</blockquote>
-
-        <div class="triple">
-          <span class="nodo nodo--o"><span>broma_058</span><small>O</small></span>
-          <span class="enlace">agente<span class="firma">M(O→Q)</span></span>
-          <span class="nodo nodo--q"><span>distribuidora_arce</span><small>Q</small></span>
-        </div>
-        <div class="triple">
-          <span class="nodo nodo--o"><span>broma_058</span><small>O</small></span>
-          <span class="enlace">paciente<span class="firma">M(O→Q)</span></span>
-          <span class="nodo nodo--q"><span>cineasta_volpe</span><small>Q</small></span>
+(listo_908, instancia_de,    estado_listo)     ∈ M(O, K)
+(listo_908, tema,            guion_orillas)    ∈ M(O, O)
+(listo_908, estatus_factual, indeterminado)    ∈ M(O, K)   ← nadie afirmó nada de esto</code></pre>
         </div>
 
-        <p>El sustantivo del modelo es <code>accion_bromear</code>, no <code>accion_tomar</code>; el
-          <em>pelo</em> jamás aparece como objeto. La frase se guardó por lo que <em>significa</em>, no
-          por lo que <em>dice</em>. Un parser ingenuo habría registrado a un cineasta despojado de su
-          cabello; el lexicon registra una broma, que es lo que pasó.</p>
+        <p>Un cable de diferencia, y las dos memorias resultantes no se parecen en nada. Pregúntale al
+          grafo, seis meses después, <em>«¿de qué guiones se dijo que no estaban listos?»</em>. El
+          primero contesta que del de <em>Orillas</em>; el segundo, con razón, no lo menciona: nadie
+          dijo eso del guion. Un sistema que aplasta las dos lecturas en una sola le atribuye al comité
+          un juicio que el comité nunca emitió, y lo hace en silencio, sin error visible, con toda la
+          apariencia de un dato correcto.</p>
 
-        <div class="caja caja--precedente revelar">
-          <p class="caja-tit">Precedente</p>
-          <p style="margin:0">La idea de que ciertas combinaciones de palabras forman una <em>unidad
-            de significado</em> indivisible no es nuestra: es el corazón de la <em>Construction
-            Grammar</em> (Fillmore<a class="ref" href="referencias.html#ref-24">(24)</a>, Goldberg) y de los marcos de <em>FrameNet</em><a class="ref" href="referencias.html#ref-14">(14)</a>, donde un patrón
-            como <em>tomar el pelo</em> evoca un marco completo (el del engaño jocoso) con sus roles ya
-            definidos. WQuestions no reinventa esa lingüística; le da un destino estructurado: la
-            tripleta tipada.</p>
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 320" class="svg-eje" role="img"
+                 aria-label="Las dos lecturas de la negación: en la primera la polaridad negativa se clava en el estado del guion, dentro de la creencia; en la segunda se clava en la creencia misma y el estado queda indeterminado.">
+              <!-- PANEL A -->
+              <text x="30" y="42" font-size="12" font-weight="700" fill="var(--tinta)" font-family="var(--sans)">A · «el comité cree que el guion <tspan font-weight="700" fill="var(--eje-k)">no</tspan> está listo»</text>
+              <rect x="30" y="56" width="356" height="76" rx="11" fill="none" stroke="var(--eje-o)" stroke-width="1.8"/>
+              <text x="44" y="76" font-size="10.5" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">creer_412</text>
+              <rect x="150" y="82" width="222" height="40" rx="9" fill="var(--eje-o)" opacity=".16"/>
+              <rect x="150" y="82" width="222" height="40" rx="9" fill="none" stroke="var(--eje-o)" stroke-width="1.4"/>
+              <text x="261" y="99" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--tinta)" font-family="var(--mono)">listo_907</text>
+              <text x="261" y="114" text-anchor="middle" font-size="9.5" fill="var(--tinta-tenue)" font-family="var(--sans)">«el guion está listo»</text>
+              <line x1="440" y1="102" x2="378" y2="102" stroke="var(--eje-k)" stroke-width="1.6"/>
+              <polygon points="372,102 382,97 382,107" fill="var(--eje-k)"/>
+              <rect x="440" y="88" width="150" height="26" rx="7" fill="var(--eje-k)"/>
+              <text x="515" y="105" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff" font-family="var(--mono)">polaridad: negativa</text>
+              <text x="440" y="132" font-size="10" fill="var(--tinta-suave)" font-family="var(--sans)">el comité sí se pronunció</text>
+
+              <!-- PANEL B -->
+              <text x="30" y="202" font-size="12" font-weight="700" fill="var(--tinta)" font-family="var(--sans)">B · «el comité <tspan font-weight="700" fill="var(--eje-k)">no</tspan> cree que el guion esté listo»</text>
+              <rect x="30" y="216" width="356" height="76" rx="11" fill="var(--eje-o)" opacity=".16"/>
+              <rect x="30" y="216" width="356" height="76" rx="11" fill="none" stroke="var(--eje-o)" stroke-width="2.2"/>
+              <text x="44" y="236" font-size="10.5" font-weight="700" fill="var(--eje-o)" font-family="var(--mono)">creer_413</text>
+              <rect x="150" y="242" width="222" height="40" rx="9" fill="none" stroke="var(--tinta-tenue)" stroke-width="1.4" stroke-dasharray="5 4"/>
+              <text x="261" y="259" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--tinta-tenue)" font-family="var(--mono)">listo_908</text>
+              <text x="261" y="274" text-anchor="middle" font-size="9.5" fill="var(--tinta-tenue)" font-family="var(--sans)">estatus: indeterminado</text>
+              <line x1="440" y1="240" x2="392" y2="240" stroke="var(--eje-k)" stroke-width="1.6"/>
+              <polygon points="386,240 396,235 396,245" fill="var(--eje-k)"/>
+              <rect x="440" y="226" width="150" height="26" rx="7" fill="var(--eje-k)"/>
+              <text x="515" y="243" text-anchor="middle" font-size="10.5" font-weight="700" fill="#fff" font-family="var(--mono)">polaridad: negativa</text>
+              <text x="440" y="270" font-size="10" fill="var(--tinta-suave)" font-family="var(--sans)">del guion no se dijo nada</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 15.3.</span> El alcance de la negación. El mismo cable
+            <code>polaridad: negativa</code> y dos sitios donde clavarlo: dentro de la creencia (A) o
+            sobre la creencia entera (B). Entender la frase no elige por ti; elegir es trabajo del
+            modelo, y de esa elección depende lo que el grafo conteste años después.</figcaption>
+        </figure>
+
+        <div class="caja caja--idea revelar">
+          <p class="caja-tit">Por qué la comprensión no basta</p>
+          <p style="margin:0 0 .5rem">Pregúntale a un LLM cuál de las dos lecturas corresponde y
+            acertará. Lo que no puede hacer es <em>fabricar el sitio donde ponerla</em>. Si el esquema
+            no sabe decir «de esto no se ha afirmado nada», la lectura honesta no tiene dónde
+            aterrizar, y el sistema guardará la cómoda: que el guion no está listo.</p>
+          <p style="margin:0"><code>estatus_factual: indeterminado</code> es una pieza barata (un valor
+            más en <span class="eje-rotulo"><span class="eje eje--k">K</span></span>) y sin ella se
+            pierde una distinción que ninguna inteligencia posterior podrá recuperar, porque el matiz
+            no se guardó nunca.</p>
         </div>
 
-        <p>El reto, sin embargo, no es técnico sino de escala. El español tiene miles de modismos y
-          decenas de miles de colocaciones; poblar un lexicon a mano con todas sería una obra de años.
-          Aquí entra la buena noticia de la era moderna: <strong>los modelos de lenguaje ya conocen
-          estas frases</strong>. El LLM hace el trabajo pesado (reconoce que <em>tomar el pelo</em> es
-          una broma, capta la ironía, resuelve el contexto) y el grafo le ofrece el molde exacto donde
-          verter ese significado. La división de tareas es nítida, y merece su propia sección.</p>
+        <p>Nota que la negación no trajo ningún cable nuevo: <code>polaridad</code> y
+          <code>estatus_factual</code> son los mismos que acaban de servir para los modales. Es el
+          mismo aparato resolviendo un problema distinto, que es la señal de que el aparato está bien
+          cortado.</p>
 
         <h2>El límite real no está donde parece</h2>
 
         <p>El modelo no pretende cubrir el cien por ciento de la lingüística humana, y conviene ser
           preciso sobre dónde está hoy su frontera. No la digiere entera, y un buen ingeniero conoce
-          los bordes de su herramienta. Importa ver bien <em>dónde</em> está el borde: no en los tres casos que acabamos de absorber (esos
-          quedaron resueltos) sino en un terreno más difícil, donde el problema deja de ser de
-          traducción y pasa a ser de <strong>inferencia</strong>. El modelo guarda lo que se dijo; lo
+          los bordes de su herramienta. Importa ver bien <em>dónde</em> está el borde: no en las tres
+          presiones que acabamos de absorber (esas quedaron resueltas) sino en un terreno más difícil,
+          donde el problema deja de ser de <em>representación</em> y pasa a ser de
+          <strong>inferencia</strong>. El modelo guarda lo que se dijo; lo
           que <em>no se dijo</em> pero se sigue lógicamente es harina de otro costal.</p>
 
         <div class="columnas">
-          <p><strong>Negación de alcance.</strong> <em>«El comité no cree que el guion esté
-            listo»</em> no es lo mismo que <em>«el comité cree que el guion no está listo»</em>. ¿A
-            qué situación se le pega la <code>polaridad: negativa</code>? El cable existe; decidir
-            dónde clavarlo exige análisis fino, y los analizadores automáticos a veces fallan.</p>
           <p><strong>Cuantificación abstracta.</strong> <em>«La mayoría de los socios votó a
             favor»</em> no apunta a una persona concreta del eje Q, sino a una clase entera con un
             cuantificador encima. El modelo puede reificar la votación, pero razonar sobre «la
@@ -444,7 +515,7 @@
           <em>no se rompe</em>: guarda una representación parcial y segura, y espera refinamiento.
         </aside>
 
-        <p>Hay un patrón común a estos cuatro bordes: ninguno reclama un eje nuevo. Lo que reclaman es
+        <p>Hay un patrón común a estos tres bordes: ninguno reclama un eje nuevo. Lo que reclaman es
           una capacidad de <em>razonar</em> que vive por encima de la representación. El modelo es,
           por diseño, <strong>literal y conservador</strong>: registra lo que el lenguaje afirma sin
           alucinar lo que solo insinúa. Y esa literalidad, lejos de ser un defecto, es precisamente lo
@@ -453,27 +524,14 @@
 
         <h2>El pacto entre el grafo y la inteligencia artificial</h2>
 
-        <p>Cierro la Parte&nbsp;IV con la reflexión que la vuelve actual. Hoy es tentador decir: <em>«si
-          un LLM lee libros enteros en segundos, ¿para qué quiero este modelo? Le tiro a la IA los
-          cincuenta mil PDF de la empresa y que ella busque»</em>. Funciona, sí. Pero es un mal
-          negocio, por dos razones concretas.</p>
-
-        <div class="rejilla-2 revelar">
-          <div class="tarjeta">
-            <h4 style="color:var(--eje-n)">El costo</h4>
-            <p style="margin:0;font-size:.95rem">Hacer que la IA relea texto crudo en cada consulta
-              quema <em>tokens</em> (cómputo, dinero) una y otra vez por información que pudo guardarse
-              ya destilada. Una historia de cinco páginas en prosa se reduce a unas pocas líneas de
-              átomos estructurados.</p>
-          </div>
-          <div class="tarjeta">
-            <h4 style="color:var(--eje-q)">La ambigüedad</h4>
-            <p style="margin:0;font-size:.95rem">El texto humano está plagado de <em>él</em>,
-              <em>ella</em>, <em>eso</em>, <em>la misma</em>. La IA tiene que adivinar el referente cada
-              vez, y a veces yerra. Un grafo de tripletas no tiene pronombres: cada nodo es quien es,
-              sin lugar para la confusión.</p>
-          </div>
-        </div>
+        <p>Cierro la Parte&nbsp;IV con la reflexión que este capítulo ha ido preparando. Hoy es
+          tentador decir: <em>«si un LLM lee libros enteros en segundos, ¿para qué quiero este modelo?
+          Le tiro a la IA los cincuenta mil PDF de la empresa y que ella busque»</em>. Funciona, sí.
+          Pero las tres presiones que acabamos de cruzar dicen por qué es mal negocio: en las tres, la
+          IA entendía perfectamente y aun así quedaba una decisión pendiente sobre qué anotar. Si esa
+          decisión no se toma y se guarda, hay que volver a tomarla en cada consulta, a partir del
+          texto crudo, y nada garantiza que se tome igual dos veces. El <a href="26-llms.html">capítulo&nbsp;26</a>
+          pone cifras a ese desperdicio; aquí basta con el principio.</p>
 
         <p>La relación correcta entre el grafo y la IA no es de competencia, sino de
           <strong>simbiosis</strong>, y cada uno aporta lo que el otro no tiene.</p>
@@ -492,14 +550,14 @@
           guarda detrás, y obtienes lo mejor de ambos: la elocuencia de uno sobre la disciplina del
           otro. La IA traduce el habla en átomos al entrar y los átomos en habla al salir; el grafo
           custodia la verdad entre una cosa y la otra. Las tres presiones de este capítulo (la
-          nominalización, los modales, los modismos) se absorben justo en esa frontera, en el lexicon,
-          sin tocar la geometría de siete ejes que sostiene todo.</p>
+          nominalización, los modales, la negación) se absorben justo en esa frontera, con los cables
+          que ya existían y sin tocar la geometría de siete ejes que sostiene todo.</p>
 
         <p>Y con esto cerramos la teoría. Hemos visto las siete coordenadas, el átomo que las une, el
-          verbo que reparte los roles, el lexicon que compila el habla y, ahora, las tres frases que
-          más lo aprietan. La <strong>Parte&nbsp;V</strong> deja la pizarra y baja a la sala de
-          máquinas: el modelo, de extremo a extremo, sobre industrias reales. Empezamos por un sistema
-          de ventas.</p>
+          verbo que reparte los roles, el lexicon que compila el habla y, ahora, las tres decisiones
+          que la comprensión no toma por ti. La <strong>Parte&nbsp;V</strong> deja la pizarra y baja a
+          la sala de máquinas: el modelo, de extremo a extremo, sobre industrias reales. Empezamos por
+          un sistema de ventas.</p>
 
       </div>
     </article>

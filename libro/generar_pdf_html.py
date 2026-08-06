@@ -10,8 +10,11 @@ Chrome no intente cargar los .m4a (~92 MB) — no hace falta mover archivos.
 
 Orden: portada → index.html → 00..34 → referencias.html → anexo-reglas.html.
 
+Al terminar encadena generar_pdf_resumen.py: las dos ediciones (completa y
+resumen) salen siempre de la misma corrida, para que no se desincronicen.
+
 Uso: python3 libro/generar_pdf_html.py
-Salida: libro/manuscrito2/WQuestions.pdf
+Salida: libro/manuscrito2/WQuestions.pdf  +  libro/manuscrito2/WQuestions-resumen.pdf
 """
 
 import os
@@ -112,6 +115,17 @@ def main():
         sys.exit("Chrome no generó el PDF.")
     os.remove(TMP_HTML)
     print(f"  ✓ {OUT_PDF}  ({os.path.getsize(OUT_PDF)//1024} KB)")
+
+    generar_resumen()
+
+
+def generar_resumen():
+    """La edición resumen (sin bloques de código ni anexos de código) se
+    regenera junto con la completa; nunca a mano."""
+    print("\n  Edición resumen:")
+    sys.path.insert(0, LIBRO_DIR)
+    import generar_pdf_resumen
+    generar_pdf_resumen.main()
 
 
 if __name__ == "__main__":

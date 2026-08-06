@@ -24,8 +24,10 @@ libro/
 │   ├── referencias.html    — fuentes, numeradas por orden de aparición
 │   ├── assets/             — CSS, JS, tipografías, imágenes
 │   ├── GUIA-DE-ESTILO.md   — canon de voz, componentes y ejemplos (interno)
-│   └── WQuestions.pdf      — salida generada
-├── generar_pdf_html.py     — genera el PDF desde manuscrito2/
+│   ├── WQuestions.pdf      — salida generada (edición completa)
+│   └── WQuestions-resumen.pdf — salida generada (sin código)
+├── generar_pdf_html.py     — genera ambos PDF desde manuscrito2/
+├── generar_pdf_resumen.py  — la poda del resumen; lo encadena el anterior
 ├── esquema_capitulos.md    — outline de trabajo
 ├── propuesta_editorial.md  — para editoras y agentes literarios
 ├── honestidad.md           — notas sobre qué está construido y qué no
@@ -55,7 +57,25 @@ python3 generar_pdf_html.py
 
 Concatena el `<main>` de cada página de `manuscrito2/` en un solo documento y lo
 imprime con Chrome headless. Solo usa la biblioteca estándar; la única
-dependencia externa es Chrome. Sale en `manuscrito2/WQuestions.pdf`.
+dependencia externa es Chrome.
+
+Un solo comando produce las dos ediciones, para que no se desincronicen:
+
+| Salida | Qué contiene |
+|---|---|
+| `manuscrito2/WQuestions.pdf` | el libro completo |
+| `manuscrito2/WQuestions-resumen.pdf` | sin bloques de código, sin figuras ni diagramas de tripleta, y sin los anexos 33 y 34; los casos de dominio (16–24) quedan enteros |
+
+El resumen lo poda [`generar_pdf_resumen.py`](generar_pdf_resumen.py), que también
+corre suelto si hace falta rehacer solo esa edición.
+
+Una nota sobre el tamaño de letra: la edición completa lleva tablas más anchas que
+la página, así que Chrome la encoge entera al imprimir (hoy, al 72%). El resumen ya
+no desborda y saldría a tamaño natural, con un cuerpo de texto visiblemente mayor
+que el del libro completo. Para que las dos ediciones se vean iguales, el builder
+del resumen lee la escala del PDF completo recién generado y la reproduce con
+`zoom`. Si algún día se corrige el desborde de las tablas, el resumen se ajusta
+solo: no hay ningún factor escrito a mano.
 
 ## Antes de escribir
 

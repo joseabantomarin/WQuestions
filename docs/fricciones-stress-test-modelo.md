@@ -191,3 +191,64 @@ la librería núcleo `wq` y validada con tests + demo end-to-end:
 En síntesis: de las tres fronteras de "la segunda mitad", **el catálogo y el texto quedaron
 saldados**; del humano, resuelto el display obsoleto (#5) y disponible el inspector, con las
 vistas-como-dato como el siguiente escalón.
+
+---
+
+## Actualización — 2026-07-09: la carga por MCP y la frontera agente/consumidor
+
+Segunda carga de la prueba reina, por otra vía: el servidor **`wquestions-mcp`**, con un
+**agente LLM** como interfaz de captura y de consulta, modelando en vivo un dominio nuevo
+—una **barbería**— situación a situación (llegadas, cortes, teñidos, pagos, propina,
+apertura y egresos de caja, fin de turno). El resultado nuclear se repitió: verbos y roles
+nuevos (`cortar`, `teñir`, `pagar`, `trabajar`; y roles inventados por política liberal,
+`ingresa_a`, `sale_de`) entraron **sin una línea de código**, y las consultas de proyección
+funcionaron de verdad —`ask(polaridad=negativa)` devuelve a Lucía, "quién no vino";
+`ask(agente=marco)` devuelve sus cuatro servicios—. El modelo absorbió el dominio otra vez.
+
+La fricción nueva no es del modelo: es de **quién lo opera**. Un agente LLM, que "sabe la
+teoría", le presta al servidor una inteligencia que el servidor no reclama.
+
+### 7. El agente borra la línea entre proyectar (lo que el modelo hace) y agregar (lo que hace un consumidor)
+Durante toda la carga, el agente reportó *saldos de caja* ("155", "235", "263"), *orden
+cronológico* y un *"estado"* del negocio, presentándolos como salida del sistema. Ninguno
+lo es. `ask` es proyección pura, y su propia evidencia lo desmiente:
+
+```
+ask(fixed={ingresa_a: caja}, ask=[agente, monto])
+→ [{agente: rosa, monto: monto_80_pen}, {agente: sofia, monto: monto_70_pen}]
+   # devuelve *ids* de magnitud, no 80 y 70; no suma; el orden no es cronológico
+```
+
+El MCP no suma, no resuelve el número de la magnitud, no ordena por tiempo. **El "saldo de
+caja" no existe en el grafo**: hay eventos (una apertura, unos pagos), y el saldo es una
+*derivación* que hace un consumidor. WQuestions modela situaciones; el estado agregado vive
+en una capa encima —que el agente estuvo simulando en la cabeza y vistiendo de "sistema".
+
+El corolario incómodo lo puso el propio modelado: el saldo ni siquiera es recuperable de un
+tiro, porque los movimientos de caja no comparten un rol. La apertura usa `tema`+`monto`;
+los ingresos, `ingresa_a`; los egresos, `sale_de`. Tres roles distintos apuntando al mismo
+objeto `caja`. Es la **fricción #2 vista desde el otro lado**: la política liberal deja
+inventar `ingresa_a`/`sale_de` gratis —y esa es su virtud—, pero nada obliga a que el
+conjunto sea coherente y consultable. *Libertad de rol* y *consultabilidad agregada* están
+en tensión; el agente, al inventar sobre la marcha, cae del lado de la libertad y deja la
+agregación sin sostén.
+
+**Lección.** Además de la capa de re-concreción para humanos (#6), un modelo
+declarativo-de-situaciones necesita una **disciplina de frontera para agentes**: el LLM que
+lo opera debe reportar solo lo que `ask`/`show_model` devuelven, y marcar toda suma, orden o
+"estado" como cómputo propio, **fuera** del modelo. Sin esa disciplina, el asistente le
+atribuye al modelo una aritmética y una cronología que no tiene, y el usuario pierde la
+capacidad de saber dónde termina WQuestions y empieza la improvisación.
+
+**El gemelo de #6.** Si el "saldo de caja" fuera una **proyección con nombre declarada como
+dato** —una vista `saldo_caja` con su regla de agregación como ciudadana del grafo—, la suma
+dejaría de ser improvisación del agente y volvería a ser *dato*. La frontera #6 no es solo
+"mostrar las tripletas detrás de la pantalla": tiene un lado de **derivaciones declaradas**
+(agregaciones, saldos, totales) hoy suplido, mal, por un LLM que las hace de memoria. La
+re-concreción incluye declarar las derivaciones, no solo exhibir los hechos.
+
+*En una frase:* la segunda carga confirmó la tesis por una vía nueva (MCP, cero código) y,
+de paso, expuso una fricción de nueva especie —**no del modelo, sino de su narrador**—: un
+agente potente le regala al grafo declarativo una inteligencia agregadora que el grafo no
+posee, y hasta que las derivaciones sean datos con nombre, la única defensa es la disciplina
+de reportar solo lo proyectado.

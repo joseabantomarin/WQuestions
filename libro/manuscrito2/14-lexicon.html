@@ -4,20 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cap. 14 · El lexicon como compilador — WQuestions</title>
-  <meta name="description" content="El lexicon es el diccionario que traduce el lenguaje del usuario al catálogo canónico de roles. Es la interfaz: por fuera, vocabulario natural; por dentro, tipos exactos.">
+  <meta name="description" content="El lexicon es el diccionario que traduce el lenguaje del usuario al catálogo canónico de roles. Es la interfaz: por fuera, vocabulario natural; por dentro, tipos exactos. Y la frontera del idioma se resuelve ahí: el grafo no habla ninguno.">
   <!-- Open Graph / Twitter -->
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="WQuestions">
   <meta property="og:locale" content="es_ES">
   <meta property="og:title" content="Cap. 14 · El lexicon como compilador">
-  <meta property="og:description" content="El lexicon es el diccionario que traduce el lenguaje del usuario al catálogo canónico de roles. Es la interfaz: por fuera, vocabulario natural; por dentro, tipos exactos.">
+  <meta property="og:description" content="El lexicon es el diccionario que traduce el lenguaje del usuario al catálogo canónico de roles. Es la interfaz: por fuera, vocabulario natural; por dentro, tipos exactos. Y la frontera del idioma se resuelve ahí: el grafo no habla ninguno.">
   <meta property="og:url" content="https://joseabantomarin.github.io/WQuestions/14-lexicon.html">
   <meta property="og:image" content="https://joseabantomarin.github.io/WQuestions/assets/og-cover.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Cap. 14 · El lexicon como compilador">
-  <meta name="twitter:description" content="El lexicon es el diccionario que traduce el lenguaje del usuario al catálogo canónico de roles. Es la interfaz: por fuera, vocabulario natural; por dentro, tipos exactos.">
+  <meta name="twitter:description" content="El lexicon es el diccionario que traduce el lenguaje del usuario al catálogo canónico de roles. Es la interfaz: por fuera, vocabulario natural; por dentro, tipos exactos. Y la frontera del idioma se resuelve ahí: el grafo no habla ninguno.">
   <meta name="twitter:image" content="https://joseabantomarin.github.io/WQuestions/assets/og-cover.jpg">
   <link rel="stylesheet" href="assets/estilo.css">
   <script>document.documentElement.classList.add('js')</script>
@@ -559,6 +559,142 @@ Frase del usuario: "El vendedor le vendió una camiseta al cliente por 49.90 dó
           gremio. El lexicon consulta primero el dialecto cargado y luego la entrada del verbo: lo
           específico del dominio puede afinar lo genérico del catálogo.
         </aside>
+
+        <h2>El tercer nivel: la lengua</h2>
+
+        <p>Vuelve un segundo sobre lo que acaba de pasar con el dialecto de la tienda, porque hay algo
+          ahí que conviene no dejar escapar. Para que el sistema entendiera «despaché una camiseta en la
+          caja dos» no hizo falta tocar el catálogo, ni migrar un dato, ni retraducir nada de lo ya
+          registrado: se cargó un archivo de alias. Y al mecanismo le da exactamente igual de dónde
+          venga la palabra nueva. Si los aliases por rol son locales a un verbo y los de dominio son
+          globales a un gremio, queda un tercer nivel que funciona con la misma maquinaria y es global a
+          una <strong>lengua entera</strong>.</p>
+
+        <p>Que eso sea posible no es mérito del lexicon: es mérito de lo que hay debajo. El grafo no
+          guarda palabras, guarda identificadores tipados, y un identificador no está escrito en ningún
+          idioma. <code>cliente_1042</code> no es la palabra «cliente», es un nodo del eje
+          <span class="eje-rotulo"><span class="eje eje--q">Q</span></span> que sería el mismo si el
+          sistema se hubiera programado en finés. Un diagnóstico no se guarda como el texto «infarto»,
+          sino como <code>cie10_I21</code>, un individuo de
+          <span class="eje-rotulo"><span class="eje eje--k">K</span></span> con su URI internacional
+          colgada, tal como vimos en el <a href="03-clase.html">capítulo&nbsp;3</a>. Y
+          <code>accion_vender</code> no es el verbo «vender», sino un tipo de situación en
+          <span class="eje-rotulo"><span class="eje eje--k">K</span></span> con su contrato de roles, al
+          que cada venta concreta se ata con un <code>instancia_de</code>.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Alias, no traducción</span>
+          El lexicon no traduce frases: resuelve palabras contra roles. La oración alemana no pasa por
+          el español camino al grafo; entra por su propia entrada del diccionario y sale convertida en
+          los mismos cables.
+        </aside>
+
+        <p>El efecto se ve mejor con las tres frases juntas. Un vendedor en Lima, uno en Chicago y uno
+          en Hamburgo registran la misma operación cada uno como sabe:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tres lenguas, una entrada del lexicon</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="text">es → «El vendedor le vendió una camiseta al cliente por 49.90 dólares»
+en → «The seller sold a shirt to the customer for 49.90 dollars»
+de → «Der Verkäufer verkaufte dem Kunden ein T-Shirt für 49,90 Dollar»</code></pre>
+        </div>
+
+        <p>«Vendedor», <em>seller</em> y <em>Verkäufer</em> son tres aliases del mismo rol canónico
+          <code>agente</code>. Las tres frases compilan, en consecuencia, a la misma estrella de
+          tripletas que ya conocemos:</p>
+
+        <div class="bloque-codigo">
+          <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
+          <pre><code data-lang="triple">(venta_001, instancia_de,  accion_vender)   ∈ M(O, K)
+(venta_001, agente,        vendedor_17)     ∈ M(O, Q)
+(venta_001, tema,          camiseta_88)     ∈ M(O, O)
+(venta_001, beneficiario,  cliente_1042)    ∈ M(O, Q)
+(venta_001, por_cuanto,    49.90)           ∈ M(O, N)</code></pre>
+        </div>
+
+        <p>No hay una versión española de esos cables y otra alemana. Hay cables. La consecuencia
+          práctica es la que le importa a una empresa con oficinas en tres países: el reporte de ventas
+          consolidado no requiere homologar nada, porque nunca hubo tres bases de datos que homologar.
+          Hubo una, y tres puertas de entrada.</p>
+
+        <p class="cita-destacada revelar">El grafo no habla ningún idioma: habla matemáticas.
+          Coordenadas sobre siete ejes, no palabras de un diccionario local.<cite>Por qué el idioma
+          nunca llega al fondo</cite></p>
+
+        <figure class="figura figura--ancha revelar">
+          <div class="lienzo">
+            <svg viewBox="0 0 660 300" class="svg-eje" role="img"
+                 aria-label="Tres frases en español, inglés y alemán entran por el lexicon, que las resuelve contra los mismos roles canónicos, y las tres terminan en una única estrella de tripletas.">
+              <!-- COLUMNA A · tres lenguas -->
+              <text x="20" y="28" font-size="11.5" font-weight="700" fill="var(--tinta-suave)" font-family="var(--sans)">TRES LENGUAS</text>
+
+              <rect x="20" y="40" width="230" height="36" rx="9" fill="var(--eje-q)" opacity=".13"/>
+              <text x="34" y="63" font-size="10" font-weight="700" fill="var(--tinta-tenue)" font-family="var(--mono)">es</text>
+              <text x="142" y="63" text-anchor="middle" font-size="12" fill="var(--tinta)" font-style="italic" font-family="var(--display)">«el vendedor vendió…»</text>
+
+              <rect x="20" y="88" width="230" height="36" rx="9" fill="var(--eje-q)" opacity=".13"/>
+              <text x="34" y="111" font-size="10" font-weight="700" fill="var(--tinta-tenue)" font-family="var(--mono)">en</text>
+              <text x="142" y="111" text-anchor="middle" font-size="12" fill="var(--tinta)" font-style="italic" font-family="var(--display)">«the seller sold…»</text>
+
+              <rect x="20" y="136" width="230" height="36" rx="9" fill="var(--eje-q)" opacity=".13"/>
+              <text x="34" y="159" font-size="10" font-weight="700" fill="var(--tinta-tenue)" font-family="var(--mono)">de</text>
+              <text x="142" y="159" text-anchor="middle" font-size="12" fill="var(--tinta)" font-style="italic" font-family="var(--display)">«der Verkäufer verkaufte…»</text>
+
+              <!-- flechas convergentes hacia el lexicon -->
+              <path d="M250 58 C 268 58, 268 92, 282 100" fill="none" stroke="var(--eje-m)" stroke-width="1.8"/>
+              <path d="M250 106 L 282 106" stroke="var(--eje-m)" stroke-width="1.8"/>
+              <path d="M250 154 C 268 154, 268 120, 282 112" fill="none" stroke="var(--eje-m)" stroke-width="1.8"/>
+              <polygon points="288,106 278,101 278,111" fill="var(--eje-m)"/>
+
+              <!-- COLUMNA B · el lexicon -->
+              <rect x="290" y="40" width="132" height="132" rx="12" fill="var(--eje-m)" opacity=".08"/>
+              <rect x="290" y="40" width="132" height="132" rx="12" fill="none" stroke="var(--eje-m)" stroke-width="1.8"/>
+              <text x="356" y="94" text-anchor="middle" font-size="13" font-weight="700" fill="var(--eje-m)" font-family="var(--sans)">LEXICON</text>
+              <text x="356" y="114" text-anchor="middle" font-size="10.5" fill="var(--tinta-suave)" font-family="var(--mono)">alias → canónico</text>
+              <text x="356" y="130" text-anchor="middle" font-size="10.5" fill="var(--tinta-tenue)" font-family="var(--mono)">una entrada por lengua</text>
+
+              <line x1="422" y1="106" x2="454" y2="106" stroke="var(--eje-m)" stroke-width="1.8"/>
+              <polygon points="460,106 450,101 450,111" fill="var(--eje-m)"/>
+
+              <!-- COLUMNA C · roles canónicos -->
+              <text x="462" y="28" font-size="11.5" font-weight="700" fill="var(--tinta-suave)" font-family="var(--sans)">UN SOLO CATÁLOGO</text>
+              <rect x="462" y="44" width="140" height="28" rx="7" fill="var(--eje-q)"/>
+              <text x="532" y="63" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff" font-family="var(--mono)">agente</text>
+              <rect x="462" y="92" width="140" height="28" rx="7" fill="var(--eje-o)"/>
+              <text x="532" y="111" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff" font-family="var(--mono)">tema</text>
+              <rect x="462" y="140" width="140" height="28" rx="7" fill="var(--eje-n)"/>
+              <text x="532" y="159" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff" font-family="var(--mono)">por_cuanto</text>
+
+              <!-- bajada al grafo -->
+              <line x1="532" y1="176" x2="532" y2="204" stroke="var(--tinta-tenue)" stroke-width="1.6"/>
+              <polygon points="532,210 527,200 537,200" fill="var(--tinta-tenue)"/>
+
+              <!-- banda inferior · el grafo -->
+              <rect x="20" y="216" width="620" height="52" rx="12" fill="none" stroke="var(--tinta-tenue)" stroke-width="1.4" stroke-dasharray="6 5"/>
+              <text x="330" y="240" text-anchor="middle" font-size="12" font-weight="700" fill="var(--tinta)" font-family="var(--sans)">Una sola estrella de tripletas</text>
+              <text x="330" y="258" text-anchor="middle" font-size="11" fill="var(--tinta-suave)" font-family="var(--mono)">(venta_001, agente, vendedor_17) · (venta_001, tema, camiseta_88) · …</text>
+
+              <text x="330" y="290" text-anchor="middle" font-size="11" fill="var(--tinta-suave)" font-family="var(--sans)" font-style="italic">El idioma se resuelve en la aduana; al otro lado no queda rastro de él.</text>
+            </svg>
+          </div>
+          <figcaption><span class="fnum">Figura 14.3.</span> La frontera del idioma. Cada lengua entra
+            por su propia capa de alias (una entrada del diccionario, no un modelo nuevo) y las tres se
+            resuelven contra el mismo catálogo de roles. Lo que llega al grafo es idéntico en los tres
+            casos: el idioma es una propiedad de la <em>entrada</em>, no del hecho.</figcaption>
+        </figure>
+
+        <p>Y aquí la sección de <em>function calling</em> de más arriba cobra un alcance que quizá no se
+          notó al pasar. Si el lexicon se serializa como catálogo de herramientas y el modelo de lenguaje
+          es quien lo consume, entonces la puerta de entrada ya es multilingüe por construcción: el
+          modelo recibe la pregunta en japonés, elige la entrada correcta del catálogo y emite la llamada
+          con los roles canónicos. Al responder hace el camino inverso, y redacta las tripletas en la
+          lengua en que le hablaron. La base de datos, mientras tanto, sigue sin enterarse de qué idioma
+          se habla arriba.</p>
+
+        <p>Lo que cambia de una lengua a otra, entonces, es la capa de alias y los patrones de polisemia
+          propios de cada una (el <em>tomar</em> del español tiene su equivalente enredado en cualquier
+          idioma vivo). La espina es común y solo cambia la piel que la traduce. Dicho de otro modo: los
+          idiomas son pieles que el lexicon pone y quita sobre el mismo cuerpo de conocimiento.</p>
 
         <h2>A hombros de gigantes</h2>
 
