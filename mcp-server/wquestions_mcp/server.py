@@ -26,11 +26,24 @@ WHAT IS OPEN — invent freely (this is the point)
   No catalog and no permission required.
 
 WHAT THE STANDARD ALREADY HANDLES — do not build it yourself
-- Corrections & time. To record that a fact changed in the world over time, set
-  valid_from/valid_to and read the past with ask(at=...). To fix a value you
-  recorded wrong, call correct(situation_id, role, new_value): it re-asserts the
-  role. ask returns the current (latest) value and keeps the previous one as
-  history (ask(history=true)). You do not track current-vs-superseded yourself.
+- Corrections & time. THREE different things, three different tools — do not
+  confuse them, the store cannot tell them apart for you:
+    * The world changed (the price rose, the owner sold it). Set valid_from /
+      valid_to on the fact and read any moment with ask(at=...). The old value
+      WAS true.
+    * You recorded it wrong (a typo, the wrong customer). Call
+      correct(situation_id, role, new_value) — on a situation OR on any entity.
+      The old value was NEVER true: by default ask no longer finds the fact
+      under it. ask(history=true) still shows the trail.
+    * Two ids denote the SAME thing (a person on file under a national id and a
+      tax id; two spellings of one product). Neither is wrong, so correcting is
+      the wrong tool — it would erase a truth and break the query by the id the
+      fact actually happened under. Instead assert_fact(a, "mismo_que", b).
+      Every fact stays as recorded; `identidades(id)` gathers the whole set, and
+      ask(fixed={role: [ids...]}) totals the thing across all of them.
+- Querying the present vs the past. By default BOTH halves of ask see only the
+  current value of a role: you cannot find a fact by a value it no longer holds.
+  history=true widens both halves to the full trail. at=... reads world-time.
 - Magnitudes carry a unit. Every N value has a unit that lives in K. Create a
   magnitude with add_entity(id, "N", value=<number>, unit=<K id or spec>). Never
   bake the unit into an id or label, and never assume a currency or unit — if a
@@ -47,7 +60,12 @@ GROUND RULES
   nothing is silently lost. Use show_model to inspect and reset to start a fresh
   domain; do not build recovery rituals.
 - Start with list_axes and list_roles — they describe the vocabulary and its
-  typed signatures.
+  typed signatures. When you know what something is called but not its id, use
+  find; ids are what every other tool consumes.
+- A fact with one participant is not a situation. Use assert_fact for a property
+  of a thing (a person's name, a product's barcode) and assert_situation only
+  when several participants take part. Reifying a property costs a node and two
+  scaffolding triplets that say nothing.
 """
 
 mcp = FastMCP("wquestions", instructions=INSTRUCTIONS)
