@@ -142,10 +142,13 @@ def ask(fixed: Optional[Dict[str, Any]] = None,
         limite: Optional[int] = None) -> Dict[str, Any]:
     """Query by projection or by aggregation.
 
-    PROJECT: fix some roles, ask for others. A value in `fixed` is an id, or a
-    range {"desde":.., "hasta":..} over T or N (both ends inclusive, either may
-    be omitted). Returns the CURRENT value of each asked role; history=true gives
-    the full trail. `type` filters to a category id; `at` (ISO-8601) reads
+    PROJECT: fix some roles, ask for others. A value in `fixed` is an id, a LIST
+    of ids (any of them matches — feed it the output of `identidades`), or a range
+    {"desde":.., "hasta":..} over T or N (both ends inclusive, either may be
+    omitted). By default both halves of the query see only the CURRENT value of a
+    role: a corrected fact is no longer findable under the value it used to have.
+    history=true widens both halves to the whole trail, so you can ask what a role
+    used to hold. `type` filters to a category id; `at` (ISO-8601) reads
     valid-time as of that moment.
 
     AGGREGATE: pass `medir` instead of `ask` — {"veces":"count",
@@ -169,6 +172,18 @@ def find(text: str, axis: Optional[str] = None,
     Returns {id, axis, label}; feed those ids to `ask`. `truncated` says there
     were more matches than `limit`."""
     return _session.find(text, axis, limit)
+
+
+@mcp.tool()
+def identidades(entity_id: str) -> Dict[str, Any]:
+    """List every id that denotes the SAME thing as this one, following
+    `mismo_que` transitively in both directions. A person may be on file under a
+    national id and under a tax id without either being wrong — they are two
+    legitimate identities. Link them with assert_fact(a, "mismo_que", b): every
+    fact stays exactly as it was recorded, so it is still findable by the id it
+    happened under, and this tool gathers them for the person-level question.
+    Feed the returned list straight to ask: fixed={"beneficiario": [...ids]}."""
+    return _session.identidades(entity_id)
 
 
 @mcp.tool()

@@ -546,6 +546,8 @@ class WQSession:
                         raise ValueError(
                             f"Role '{role}' ranges over {sig.range.value}; only "
                             f"T and N are ordered. Pass an exact value instead.")
+                elif isinstance(spec, (list, tuple)):
+                    fixed_ind[role] = [self._resolve_value(v) for v in spec]
                 else:
                     fixed_ind[role] = self._resolve_value(spec)
             at_dt = self._parse_ts(at)
@@ -554,7 +556,10 @@ class WQSession:
                 ask={role: Var(role) for role in (ask or [])},
                 type_constraint=category(type) if type else None,
             )
-            bindings = query(self.universe, pattern, at=at_dt)
+            # `history` gobierna las DOS mitades: filtrar por todo el
+            # rastro y proyectarlo. Por defecto, solo lo vigente.
+            bindings = query(self.universe, pattern, at=at_dt,
+                             vigente_solo=not history)
             if medir is not None:
                 if ask:
                     raise ValueError(
@@ -638,6 +643,38 @@ class WQSession:
         hits.sort(key=lambda h: (len(h["label"]), h["id"]))
         return {"count": len(hits), "results": hits[:limit],
                 "truncated": len(hits) > limit}
+
+    def identidades(self, entity_id: str) -> Dict[str, Any]:
+        """Todos los identificadores que son la MISMA cosa, siguiendo `mismo_que`
+        en los dos sentidos y de forma transitiva.
+
+        Una persona puede estar registrada con su DNI y con su RUC sin que
+        ninguno de los dos sea un error: son dos identidades legítimas. Enlazarlas
+        con `mismo_que` conserva cada hecho como se registró —y por tanto
+        consultable por el identificador con que ocurrió— y deja que la pregunta
+        por la persona los recorra todos.
+        """
+        if entity_id not in self.universe.individuals:
+            return {"ok": False, "error": f"Unknown entity '{entity_id}'."}
+        vistos, pend = set(), [entity_id]
+        while pend:
+            eid = pend.pop()
+            if eid in vistos:
+                continue
+            vistos.add(eid)
+            ind = self.universe.individuals.get(eid)
+            if ind is None:
+                continue
+            for f in self.universe.facts_about(ind):
+                if f.role == "mismo_que":
+                    pend.append(f.value.id)
+            for f in self.universe.facts_with_value(ind):
+                if f.role == "mismo_que":
+                    pend.append(f.subject.id)
+        ids = sorted(vistos)
+        return {"count": len(ids), "ids": ids,
+                "labels": {i: self._display(i) for i in ids
+                           if self._display(i) is not None}}
 
     def show_model(self) -> Dict[str, Any]:
         facts = [

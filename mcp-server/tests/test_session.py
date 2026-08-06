@@ -587,3 +587,70 @@ def test_ask_refuses_project_and_aggregate_at_once():
     s = _universo_de_ventas()
     out = s.ask(type="action_vender", ask=["tema"], medir={"veces": "count"})
     assert out["ok"] is False
+
+
+def test_fixed_no_longer_matches_a_corrected_away_value():
+    s = WQSession()
+    s.add_entity("ana", "Q", "Ana")
+    s.add_entity("beto", "Q", "Beto")
+    s.add_entity("libro", "O", "Libro")
+    r = s.assert_situation("vender", {"beneficiario": "ana", "tema": "libro"})
+    s.correct(r["situation_id"], "beneficiario", "beto")
+    assert s.ask(fixed={"beneficiario": "beto"}, ask=["tema"])["count"] == 1
+    assert s.ask(fixed={"beneficiario": "ana"}, ask=["tema"])["count"] == 0
+
+
+def test_history_true_reopens_the_past_on_both_halves():
+    s = WQSession()
+    s.add_entity("ana", "Q", "Ana")
+    s.add_entity("beto", "Q", "Beto")
+    s.add_entity("libro", "O", "Libro")
+    r = s.assert_situation("vender", {"beneficiario": "ana", "tema": "libro"})
+    s.correct(r["situation_id"], "beneficiario", "beto")
+    out = s.ask(fixed={"beneficiario": "ana"}, ask=["beneficiario"], history=True)
+    assert out["count"] == 1
+    assert out["results"][0]["beneficiario"] == ["ana", "beto"]
+
+
+def test_fixed_accepts_a_list_of_ids():
+    s = WQSession()
+    s.add_entity("libro", "O", "Libro")
+    for q in ("ana", "beto", "caro"):
+        s.add_entity(q, "Q", q.title())
+        s.assert_situation("vender", {"beneficiario": q, "tema": "libro"})
+    out = s.ask(fixed={"beneficiario": ["ana", "caro"]}, medir={"n": "count"})
+    assert out["results"][0]["n"] == 2
+
+
+def test_identidades_follows_mismo_que_both_ways():
+    s = WQSession()
+    for q in ("dni", "ruc", "carnet"):
+        s.add_entity(q, "Q", q.upper())
+    s.assert_fact("ruc", "mismo_que", "dni")
+    s.assert_fact("carnet", "mismo_que", "ruc")
+    out = s.identidades("dni")
+    assert out["ids"] == ["carnet", "dni", "ruc"]
+
+
+def test_identidades_of_an_unlinked_entity_is_just_itself():
+    s = WQSession()
+    s.add_entity("ana", "Q", "Ana")
+    assert s.identidades("ana")["ids"] == ["ana"]
+
+
+def test_identidades_plus_fixed_list_totals_the_person():
+    s = WQSession()
+    s.add_entity("pen", "K", "PEN")
+    s.add_entity("libro", "O", "Libro")
+    for q, precio in (("dni", 10.0), ("ruc", 5.0)):
+        s.add_entity(q, "Q", q.upper())
+        s.assert_situation("vender", {
+            "beneficiario": q, "tema": "libro",
+            "por_cuanto": {"id": f"n_{q}", "axis": "N", "value": precio,
+                           "unit": "pen"}})
+    s.assert_fact("ruc", "mismo_que", "dni")
+    ids = s.identidades("dni")["ids"]
+    out = s.ask(fixed={"beneficiario": ids},
+                medir={"n": "count", "t": {"sum": "por_cuanto"}})
+    assert out["results"][0]["n"] == 2
+    assert out["results"][0]["t"] == {"value": 15.0, "unit": "PEN"}

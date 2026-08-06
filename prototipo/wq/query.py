@@ -88,8 +88,46 @@ class Pattern:
         pass
 
 
+def _valores(universe: Universe, hechos: List[Any], role: str,
+             vigente_solo: bool) -> List[Individual]:
+    """Los valores de un rol: los vigentes, o todo el rastro.
+
+    Con `vigente_solo` se aplica la MISMA regla que usa la proyección: un rol
+    no-funcional del catálogo admite varios valores a la vez y todos valen; los
+    demás se quedan con el último por `tx_time`. Así filtrar y proyectar dicen
+    lo mismo, que hoy no ocurre.
+    """
+    if not hechos:
+        return []
+    if not vigente_solo:
+        return [f.value for f in hechos]
+    sig = universe.catalog.get(role) if universe.catalog is not None else None
+    if sig is not None and not sig.functional:
+        return [f.value for f in hechos]
+    latest = hechos[0]
+    for f in hechos[1:]:
+        if f.tx_time >= latest.tx_time:
+            latest = f
+    return [latest.value]
+
+
+def _casa(valores: List[Individual], esperado: Any) -> bool:
+    """¿Alguno de los valores satisface lo esperado? `esperado` es un rango, un
+    individuo, o una lista de individuos (cualquiera de ellos sirve)."""
+    if isinstance(esperado, Rango):
+        return any(_en_rango(v, esperado) for v in valores)
+    admitidos = ({e.id for e in esperado} if isinstance(esperado, (list, tuple))
+                 else {esperado.id})
+    return any(v.id in admitidos for v in valores)
+
+
+def _anclas(esperado: Any) -> List[Individual]:
+    return list(esperado) if isinstance(esperado, (list, tuple)) else [esperado]
+
+
 def query(universe: Universe, pattern: Pattern,
-          at: Optional[datetime] = None) -> List[Dict[str, Any]]:
+          at: Optional[datetime] = None,
+          vigente_solo: bool = True) -> List[Dict[str, Any]]:
     """Ejecuta el patrón contra el universo. Devuelve una lista de bindings.
 
     Cada binding es un dict con las claves de `pattern.ask` y los valores
@@ -113,11 +151,13 @@ def query(universe: Universe, pattern: Pattern,
         # valor concreto casi siempre discrimina más que un tipo entero.
         role0, val0 = min(
             exactos.items(),
-            key=lambda rv: len(universe._by_value.get(rv[1].id, ())),
+            key=lambda rv: sum(len(universe._by_value.get(v.id, ()))
+                               for v in _anclas(rv[1])),
         )
         candidate_subjects = {
             f.subject.id
-            for f in universe.facts_with_value(val0, at=at)
+            for v in _anclas(val0)
+            for f in universe.facts_with_value(v, at=at)
             if f.role == role0
         }
     elif pattern.type_constraint is not None:
@@ -142,20 +182,22 @@ def query(universe: Universe, pattern: Pattern,
         subject = universe.individuals[sid]
         sit_facts = universe.facts_about(subject, at=at)
 
-        # Map role → list of values for this subject
-        roles_map: Dict[str, List[Individual]] = {}
+        # Map role → hechos de este sujeto (los hechos, no solo los valores:
+        # hace falta tx_time para saber cuál es el vigente)
+        roles_facts: Dict[str, List[Any]] = {}
         for f in sit_facts:
-            roles_map.setdefault(f.role, []).append(f.value)
+            roles_facts.setdefault(f.role, []).append(f)
+
+        def vals_de(role: str) -> List[Individual]:
+            return _valores(universe, roles_facts.get(role, []), role,
+                            vigente_solo)
+
+        roles_map = {r: vals_de(r) for r in roles_facts}
 
         # Chequear roles fijos
         ok = True
         for role, expected_val in pattern.fixed.items():
-            vals = roles_map.get(role, [])
-            if isinstance(expected_val, Rango):
-                if not any(_en_rango(v, expected_val) for v in vals):
-                    ok = False
-                    break
-            elif not any(v.id == expected_val.id for v in vals):
+            if not _casa(roles_map.get(role, []), expected_val):
                 ok = False
                 break
         if not ok:
