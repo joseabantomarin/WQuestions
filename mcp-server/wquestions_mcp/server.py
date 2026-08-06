@@ -135,15 +135,29 @@ def ask(fixed: Optional[Dict[str, Any]] = None,
         type: Optional[str] = None,
         at: Optional[str] = None,
         history: bool = False,
-        labels: bool = True) -> Dict[str, Any]:
-    """Query by projection: fix some roles, ask for others. Returns the CURRENT
-    value of each asked role (the latest correction wins for single-valued roles);
-    pass history=true for the full time-ordered trail. `type` filters to a category
-    id (auto-registered verbs get `action_<verb>`). `at` (ISO-8601) reads the
-    model's valid-time as of that moment. Results carry ids; `labels` maps each
-    id to its readable name once (magnitudes to {value, unit}). Pass labels=false
-    to skip it when you only need to chain ids."""
-    return _session.ask(fixed, ask, type, at, history, labels)
+        labels: bool = True,
+        agrupar_por: Optional[str] = None,
+        medir: Optional[Dict[str, Any]] = None,
+        orden: Optional[str] = None,
+        limite: Optional[int] = None) -> Dict[str, Any]:
+    """Query by projection or by aggregation.
+
+    PROJECT: fix some roles, ask for others. A value in `fixed` is an id, or a
+    range {"desde":.., "hasta":..} over T or N (both ends inclusive, either may
+    be omitted). Returns the CURRENT value of each asked role; history=true gives
+    the full trail. `type` filters to a category id; `at` (ISO-8601) reads
+    valid-time as of that moment.
+
+    AGGREGATE: pass `medir` instead of `ask` — {"veces":"count",
+    "importe":{"sum":"por_cuanto"}} — optionally with `agrupar_por` (a role),
+    `orden` ("-importe" for descending) and `limite`. Sums check units: adding
+    soles to kilos is an error, not a number. Without `agrupar_por` you get one
+    grand-total row.
+
+    Either way `labels` maps every id in the answer to its readable name, once
+    (magnitudes to {value, unit}). Pass labels=false to skip it."""
+    return _session.ask(fixed, ask, type, at, history, labels,
+                        agrupar_por, medir, orden, limite)
 
 
 @mcp.tool()

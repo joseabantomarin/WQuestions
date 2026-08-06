@@ -14,8 +14,9 @@ from typing import Any, Dict, List, Optional
 from wq import Catalog, Individual, Lexicon, Universe
 from wq import LexiconEntry
 from wq import ingest_situation, IngestError
-from wq import Pattern, Var, query, category
+from wq import Pattern, Var, Rango, query, category
 from wq.axes import Axis, is_value_axis
+from wq.magnitud import Magnitud, ErrorDimensional
 
 DEFAULT_LOG_PATH = "~/.wquestions/universe.jsonl"
 
@@ -418,6 +419,96 @@ class WQSession:
                 "note": "Appended, not overwritten. ask returns this (latest) "
                         "value; ask(history=true) shows prior ones."}
 
+    def _sumar(self, valores: List[Individual]) -> Dict[str, Any]:
+        """Suma magnitudes respetando la unidad. Sumar soles con kilos da error,
+        no un número: la regla del eje N aplicada a la consulta."""
+        magnitudes = [v for v in valores if isinstance(v.payload, dict)
+                      and "value" in v.payload]
+        if not magnitudes:
+            raise ValueError("`sum` needs magnitudes with a numeric value.")
+        unidades = {v.payload.get("unit") for v in magnitudes}
+        if len(unidades) == 1:
+            uid = unidades.pop()
+            ind = self.universe.individuals.get(uid)
+            return {"value": sum(float(v.payload["value"]) for v in magnitudes),
+                    "unit": (ind.label or uid) if ind else uid}
+        destino = magnitudes[0].payload["unit"]
+        total = Magnitud.de(self.universe, magnitudes[0])
+        for v in magnitudes[1:]:
+            total = total.mas(Magnitud.de(self.universe, v))
+        conv = total.convertir_a(self.universe, destino)
+        ind = self.universe.individuals.get(destino)
+        return {"value": conv.valor,
+                "unit": (ind.label or destino) if ind else destino}
+
+    def _medida(self, spec: Any, valores: List[Any]) -> Any:
+        if spec == "count":
+            return len(valores)
+        if not isinstance(spec, dict) or len(spec) != 1:
+            raise ValueError(
+                f"Bad measure {spec!r}. Use \"count\" or "
+                f"{{\"sum\"|\"min\"|\"max\"|\"avg\": \"<role>\"}}.")
+        op = next(iter(spec))
+        if not valores:
+            return None
+        if op == "sum":
+            return self._sumar(valores)
+        nums = [float(v.payload["value"]) for v in valores
+                if isinstance(v.payload, dict) and "value" in v.payload]
+        if not nums:
+            raise ValueError(f"'{op}' needs magnitudes with a numeric value.")
+        if op == "min":
+            return min(nums)
+        if op == "max":
+            return max(nums)
+        if op == "avg":
+            return sum(nums) / len(nums)
+        raise ValueError(f"Unknown measure '{op}'.")
+
+    def _agregar(self, bindings, agrupar_por, medir, orden, limite, at):
+        """Agrupa las situaciones candidatas y calcula las medidas pedidas."""
+        grupos: Dict[Any, Dict[str, List[Any]]] = {}
+        for b in bindings:
+            roles: Dict[str, List[Individual]] = {}
+            for f in self.universe.facts_about(b["_subject"], at=at):
+                roles.setdefault(f.role, []).append(f.value)
+            clave = None
+            if agrupar_por is not None:
+                vals = roles.get(agrupar_por, [])
+                if not vals:
+                    continue
+                clave = vals[-1].id
+            bucket = grupos.setdefault(clave, {"_n": []})
+            bucket["_n"].append(b["_subject"])
+            for nombre, spec in medir.items():
+                if isinstance(spec, dict):
+                    rol = next(iter(spec.values()))
+                    bucket.setdefault(nombre, []).extend(roles.get(rol, []))
+
+        filas = []
+        for clave, bucket in grupos.items():
+            fila: Dict[str, Any] = {}
+            if agrupar_por is not None:
+                fila[agrupar_por] = clave
+            for nombre, spec in medir.items():
+                fila[nombre] = self._medida(
+                    spec, bucket["_n"] if spec == "count"
+                    else bucket.get(nombre, []))
+            filas.append(fila)
+
+        if orden:
+            desc = orden.startswith("-")
+            campo = orden[1:] if desc else orden
+
+            def clave_orden(f):
+                v = f.get(campo)
+                return v["value"] if isinstance(v, dict) else (v or 0)
+
+            filas.sort(key=clave_orden, reverse=desc)
+        if limite:
+            filas = filas[:limite]
+        return filas
+
     def _labels_for(self, results: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Nombres de todos los ids que aparecen en las filas, una sola vez.
 
@@ -439,10 +530,24 @@ class WQSession:
             type: Optional[str] = None,
             at: Optional[str] = None,
             history: bool = False,
-            labels: bool = True) -> Dict[str, Any]:
+            labels: bool = True,
+            agrupar_por: Optional[str] = None,
+            medir: Optional[Dict[str, Any]] = None,
+            orden: Optional[str] = None,
+            limite: Optional[int] = None) -> Dict[str, Any]:
         try:
-            fixed_ind = ({r: self._resolve_value(v) for r, v in fixed.items()}
-                         if fixed else {})
+            fixed_ind: Dict[str, Any] = {}
+            for role, spec in (fixed or {}).items():
+                if isinstance(spec, dict) and ("desde" in spec or "hasta" in spec):
+                    fixed_ind[role] = Rango(desde=spec.get("desde"),
+                                            hasta=spec.get("hasta"))
+                    sig = self.catalog.get(role)
+                    if sig is not None and sig.range.value not in ("T", "N"):
+                        raise ValueError(
+                            f"Role '{role}' ranges over {sig.range.value}; only "
+                            f"T and N are ordered. Pass an exact value instead.")
+                else:
+                    fixed_ind[role] = self._resolve_value(spec)
             at_dt = self._parse_ts(at)
             pattern = Pattern(
                 fixed=fixed_ind,
@@ -450,6 +555,18 @@ class WQSession:
                 type_constraint=category(type) if type else None,
             )
             bindings = query(self.universe, pattern, at=at_dt)
+            if medir is not None:
+                if ask:
+                    raise ValueError(
+                        "Use either `ask` (project rows) or `medir` (aggregate "
+                        "groups), not both.")
+                results = self._agregar(bindings, agrupar_por, medir,
+                                        orden, limite, at_dt)
+                out: Dict[str, Any] = {"count": len(results),
+                                       "results": results}
+                if labels:
+                    out["labels"] = self._labels_for(results)
+                return out
             results = []
             for b in bindings:
                 subj = b["_subject"]
@@ -459,9 +576,9 @@ class WQSession:
                     role_facts = [f for f in subj_facts if f.role == role]
                     row[role] = self._project_role(role, role_facts, history)
                 results.append(row)
-        except (ValueError, IngestError) as e:
+        except (ValueError, IngestError, ErrorDimensional) as e:
             return {"ok": False, "error": str(e)}
-        out: Dict[str, Any] = {"count": len(results), "results": results}
+        out = {"count": len(results), "results": results}
         if labels:
             out["labels"] = self._labels_for(results)
         return out

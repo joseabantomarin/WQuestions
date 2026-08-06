@@ -17,6 +17,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional, Any
 
+from .axes import Axis
 from .individual import Individual
 from .universe import Universe
 
@@ -25,6 +26,49 @@ from .universe import Universe
 class Var:
     """Marcador de variable en un patrón de consulta."""
     name: str = "?"
+
+
+@dataclass
+class Rango:
+    """Un extremo abierto o cerrado sobre un eje ordenado (T o N).
+
+    `desde` y `hasta` son inclusivos y cualquiera puede faltar. Sobre T se
+    compara el `datetime` del payload si lo hay y la cadena ISO del label si no;
+    sobre N, el valor numérico del payload.
+    """
+    desde: Any = None
+    hasta: Any = None
+
+
+def _comparable(ind: Individual) -> Any:
+    """El valor ordenable de un individuo, o None si su eje no ordena."""
+    if ind.axis is Axis.N and isinstance(ind.payload, dict):
+        return ind.payload.get("value")
+    if ind.axis is Axis.T:
+        return ind.payload if ind.payload is not None else (ind.label or ind.id)
+    return None
+
+
+def _coerce(extremo: Any, muestra: Any) -> Any:
+    """Lleva el extremo al tipo del valor con que se va a comparar."""
+    if isinstance(muestra, datetime) and isinstance(extremo, str):
+        return datetime.fromisoformat(extremo.replace("Z", "+00:00"))
+    if isinstance(muestra, (int, float)) and isinstance(extremo, str):
+        return float(extremo)
+    if isinstance(muestra, str) and isinstance(extremo, datetime):
+        return extremo.isoformat()
+    return extremo
+
+
+def _en_rango(ind: Individual, rango: "Rango") -> bool:
+    valor = _comparable(ind)
+    if valor is None:
+        return False
+    if rango.desde is not None and valor < _coerce(rango.desde, valor):
+        return False
+    if rango.hasta is not None and valor > _coerce(rango.hasta, valor):
+        return False
+    return True
 
 
 @dataclass
@@ -57,14 +101,18 @@ def query(universe: Universe, pattern: Pattern,
     # del patrón. Tomamos el primer rol fijo (o type_constraint) como ancla
     # para reducir el espacio.
 
-    if pattern.fixed:
-        # Ancla: de los roles fijos, el que tiene el VALOR más selectivo. Se
-        # indexa por valor, no por rol — preguntar por un cliente concreto
-        # recorre los hechos de ese cliente, no todos los que usan ese rol.
-        # Vale también con type_constraint: el punto 2 filtra por tipo, y un
+    exactos = {r: v for r, v in pattern.fixed.items()
+               if not isinstance(v, Rango)}
+    rangos = {r: v for r, v in pattern.fixed.items() if isinstance(v, Rango)}
+
+    if exactos:
+        # Ancla: de los roles fijos de valor exacto, el que tiene el VALOR más
+        # selectivo. Se indexa por valor, no por rol — preguntar por un cliente
+        # concreto recorre los hechos de ese cliente, no todos los que usan ese
+        # rol. Vale también con type_constraint: el punto 2 filtra por tipo, y un
         # valor concreto casi siempre discrimina más que un tipo entero.
         role0, val0 = min(
-            pattern.fixed.items(),
+            exactos.items(),
             key=lambda rv: len(universe._by_value.get(rv[1].id, ())),
         )
         candidate_subjects = {
@@ -79,6 +127,11 @@ def query(universe: Universe, pattern: Pattern,
             for f in universe.facts_with_role("instancia_de", at=at)
             if f.value.id == pattern.type_constraint.id
         }
+    elif rangos:
+        # Sin ningún valor exacto: se recorren los hechos del primer rol acotado.
+        role0 = next(iter(rangos))
+        candidate_subjects = {f.subject.id
+                              for f in universe.facts_with_role(role0, at=at)}
     else:
         # Si solo hay ask, buscamos sobre todas las situaciones (raro).
         candidate_subjects = set(universe.individuals.keys())
@@ -98,7 +151,11 @@ def query(universe: Universe, pattern: Pattern,
         ok = True
         for role, expected_val in pattern.fixed.items():
             vals = roles_map.get(role, [])
-            if not any(v.id == expected_val.id for v in vals):
+            if isinstance(expected_val, Rango):
+                if not any(_en_rango(v, expected_val) for v in vals):
+                    ok = False
+                    break
+            elif not any(v.id == expected_val.id for v in vals):
                 ok = False
                 break
         if not ok:

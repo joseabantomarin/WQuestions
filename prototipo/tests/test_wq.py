@@ -388,3 +388,36 @@ class TestSimulacionDomain(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+def test_rango_sobre_t_filtra_por_periodo():
+    from wq import Universe, Catalog, Individual, Pattern, Var, Rango, query
+    from wq.axes import Axis
+    u = Universe(name="t", catalog=Catalog())
+    ana = u.add_individual(Individual(id="ana", axis=Axis.Q, label="Ana"))
+    for dia in ("2025-06-01", "2026-03-15", "2026-11-02"):
+        t = u.add_individual(Individual(id=f"t_{dia}", axis=Axis.T, label=dia))
+        s = u.add_individual(Individual(id=f"s_{dia}", axis=Axis.O,
+                                        label=f"s_{dia}"))
+        u.assert_fact(s, "agente", ana)
+        u.assert_fact(s, "momento", t)
+    p = Pattern(fixed={"agente": ana,
+                       "momento": Rango(desde="2026-01-01", hasta="2026-12-31")},
+                ask={"momento": Var("momento")})
+    assert len(query(u, p)) == 2
+
+
+def test_rango_sobre_n_filtra_por_valor():
+    from wq import Universe, Catalog, Individual, Pattern, Var, Rango, query
+    from wq.axes import Axis
+    u = Universe(name="t", catalog=Catalog())
+    ana = u.add_individual(Individual(id="ana", axis=Axis.Q, label="Ana"))
+    for i, val in enumerate((10.0, 150.0, 900.0)):
+        n = u.add_individual(Individual(id=f"n{i}", axis=Axis.N, label=str(val),
+                                        payload={"value": val, "unit": "pen"}))
+        s = u.add_individual(Individual(id=f"s{i}", axis=Axis.O, label=f"s{i}"))
+        u.assert_fact(s, "agente", ana)
+        u.assert_fact(s, "por_cuanto", n)
+    p = Pattern(fixed={"agente": ana, "por_cuanto": Rango(desde=100)},
+                ask={"por_cuanto": Var("por_cuanto")})
+    assert len(query(u, p)) == 2

@@ -19,7 +19,7 @@ from .fact import Fact
 from .universe import Universe
 from .catalog import Catalog, RoleSignature, SignatureError
 from .lexicon import Lexicon, LexiconEntry
-from .query import Pattern, Var, query, count
+from .query import Pattern, Var, Rango, query, count
 from .ingest import ingest_situation, IngestError
 from .vistas import tabla_plana, proyeccion, pivote
 from .magnitud import Magnitud, UnidadReducida, reducir_unidad, ErrorDimensional
@@ -38,7 +38,7 @@ __all__ = [
     "Fact", "Universe",
     "Catalog", "RoleSignature", "SignatureError",
     "Lexicon", "LexiconEntry",
-    "Pattern", "Var", "query", "count",
+    "Pattern", "Var", "Rango", "query", "count",
     "ingest_situation", "IngestError",
     "tabla_plana", "proyeccion", "pivote",
 ]

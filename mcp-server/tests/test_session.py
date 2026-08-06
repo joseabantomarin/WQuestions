@@ -490,3 +490,100 @@ def test_find_does_not_build_the_index_until_it_is_called():
     assert s._name_idx is None
     s.find("ana")
     assert s._name_idx is not None
+
+
+def test_ask_accepts_a_range_on_momento():
+    s = WQSession()
+    s.add_entity("ana", "Q", "Ana")
+    for dia in ("2025-06-01", "2026-03-15", "2026-11-02"):
+        s.add_entity(f"t_{dia}", "T", dia)
+        s.assert_situation("vender", {"agente": "ana", "momento": f"t_{dia}"})
+    out = s.ask(fixed={"agente": "ana",
+                       "momento": {"desde": "2026-01-01", "hasta": "2026-12-31"}},
+                ask=["momento"])
+    assert out["count"] == 2
+
+
+def test_ask_range_with_only_one_open_end():
+    s = WQSession()
+    s.add_entity("pen", "K", "PEN")
+    s.add_entity("ana", "Q", "Ana")
+    for i, val in enumerate((10.0, 150.0, 900.0)):
+        s.assert_situation("vender", {
+            "agente": "ana",
+            "por_cuanto": {"id": f"n{i}", "axis": "N", "value": val,
+                           "unit": "pen"}})
+    out = s.ask(fixed={"agente": "ana", "por_cuanto": {"desde": 100}},
+                ask=["por_cuanto"])
+    assert out["count"] == 2
+
+
+def test_ask_range_on_an_axis_without_order_is_an_error():
+    s = WQSession()
+    s.add_entity("ana", "Q", "Ana")
+    s.assert_situation("vender", {"agente": "ana"})
+    out = s.ask(fixed={"agente": {"desde": "a", "hasta": "z"}}, ask=["agente"])
+    assert out["ok"] is False
+    assert "ordered" in out["error"].lower()
+
+
+def _universo_de_ventas():
+    s = WQSession()
+    s.add_entity("pen", "K", "PEN")
+    s.add_entity("ana", "Q", "Ana")
+    s.add_entity("sauna", "O", "SAUNA")
+    s.add_entity("agua", "O", "AGUA")
+    for tema, precio in (("sauna", 25.0), ("sauna", 25.0), ("agua", 2.5)):
+        s.assert_situation("vender", {
+            "agente": "ana", "tema": tema,
+            "por_cuanto": {"id": f"n_{tema}_{precio}", "axis": "N",
+                           "value": precio, "unit": "pen"}})
+    return s
+
+
+def test_ask_groups_and_counts():
+    s = _universo_de_ventas()
+    out = s.ask(type="action_vender", agrupar_por="tema",
+                medir={"veces": "count"})
+    filas = {r["tema"]: r["veces"] for r in out["results"]}
+    assert filas == {"sauna": 2, "agua": 1}
+    assert out["labels"]["sauna"] == "SAUNA"
+
+
+def test_ask_sums_magnitudes_with_their_unit():
+    s = _universo_de_ventas()
+    out = s.ask(type="action_vender", agrupar_por="tema",
+                medir={"importe": {"sum": "por_cuanto"}})
+    filas = {r["tema"]: r["importe"] for r in out["results"]}
+    assert filas["sauna"] == {"value": 50.0, "unit": "PEN"}
+
+
+def test_ask_orders_and_limits_groups():
+    s = _universo_de_ventas()
+    out = s.ask(type="action_vender", agrupar_por="tema",
+                medir={"veces": "count"}, orden="-veces", limite=1)
+    assert [r["tema"] for r in out["results"]] == ["sauna"]
+
+
+def test_ask_refuses_to_sum_incommensurable_units():
+    s = _universo_de_ventas()
+    s.add_entity("kg", "K", "KG")
+    s.assert_situation("vender", {
+        "agente": "ana", "tema": "sauna",
+        "por_cuanto": {"id": "n_kg", "axis": "N", "value": 3.0, "unit": "kg"}})
+    out = s.ask(type="action_vender", agrupar_por="tema",
+                medir={"importe": {"sum": "por_cuanto"}})
+    assert out["ok"] is False
+    assert "conmensurable" in out["error"].lower() or "unit" in out["error"].lower()
+
+
+def test_ask_without_agrupar_por_gives_a_grand_total():
+    s = _universo_de_ventas()
+    out = s.ask(type="action_vender", medir={"veces": "count"})
+    assert out["results"] == [{"veces": 3}]
+
+
+def test_ask_refuses_project_and_aggregate_at_once():
+    s = _universo_de_ventas()
+    out = s.ask(type="action_vender", ask=["tema"], medir={"veces": "count"})
+    assert out["ok"] is False
