@@ -365,6 +365,102 @@
           rastrean las referencias a un objeto.
         </aside>
 
+        <h2>Tres cosas que le pasan a un identificador</h2>
+
+        <p>Con el patrón sobre la mesa, la reacción natural es preguntarse por qué tanto rodeo. Si
+          <code>cliente_1042</code>, <code>paciente_maria_g</code> y
+          <code>contribuyente_77_3389</code> son la misma señora, ¿por qué no corregir los tres a
+          <code>persona_maria_g</code> y terminar el asunto? Porque corregir es una de tres
+          operaciones distintas, y aquí es la equivocada. Conviene separarlas, porque desde fuera se
+          parecen mucho y el sistema no va a avisarte.</p>
+
+        <p><strong>María se mudó.</strong> Su dirección era la avenida Grau 220 y ahora es el jirón
+          Camaná 415. Nada estuvo mal anotado: lo que cambió fue el mundo. El valor viejo fue verdad
+          durante un tiempo y hay que poder seguir consultándolo, porque el envío que llegó a Grau el
+          año pasado llegó a la dirección correcta. Esto es la vigencia: el hecho lleva su rango de
+          inicio y fin, y preguntar por una fecha devuelve lo que valía en esa fecha.</p>
+
+        <aside class="nota-margen">
+          <span class="etq">Referencia</span>
+          La vigencia (reificar con rango de inicio y fin las propiedades que cambian) es la decisión
+          <span class="codigo-d" style="font-family:var(--mono);font-weight:700;background:var(--eje-o);color:#fff;border-radius:4px;padding:.05rem .4rem;font-size:.8rem">D6</span>,
+          enunciada en el <a href="09-situaciones.html">capítulo&nbsp;9</a>. Aquí solo la contrastamos
+          con sus dos vecinas.
+        </aside>
+
+        <p><strong>A María le tecleamos mal el apellido.</strong> En la ficha de la clínica figura
+          «Gonzalez» y siempre fue «Gonzales». Aquí no cambió nada afuera: cambió lo que nosotros
+          habíamos escrito. El valor viejo no fue verdad en ningún momento, ni un solo minuto, y por
+          eso no debe seguir respondiendo consultas. Esto es una corrección, y su diferencia con el
+          caso anterior no es de grado sino de naturaleza. Una vigencia certifica que algo fue cierto
+          durante un periodo; aplicarla a un tecleo deja escrito en el grafo que María se apellidó
+          «Gonzalez» entre marzo y julio, una afirmación falsa que nadie hizo nunca.</p>
+
+        <p><strong><code>contribuyente_77_3389</code> resulta ser María.</strong> Este es el caso del
+          capítulo. No hay nada que corregir, porque nada está mal: la municipalidad la registró bajo
+          ese identificador y bajo ese identificador ocurrieron sus arbitrios. Tampoco cambió el
+          mundo. Lo único que pasó es que ahora sabemos algo que antes no sabíamos, que ese papelito
+          y los otros dos llevan a la misma persona. Y eso se escribe con <code>mismo_que</code>, sin
+          tocar ninguno de los hechos que ya estaban.</p>
+
+        <div class="rejilla-3 revelar">
+          <div class="tarjeta">
+            <h4>El mundo cambió</h4>
+            <p style="margin:0 0 .5rem;font-size:.93rem"><em>María se mudó de Grau a Camaná.</em></p>
+            <p style="margin:0;font-size:.93rem"><strong>¿El valor viejo fue verdad?</strong> Sí,
+              hasta la fecha del cambio.<br>
+              <strong>¿Qué se escribe?</strong> El hecho con su vigencia.<br>
+              <strong>¿Y si preguntas luego por el valor viejo?</strong> Lo encuentras, fechado.</p>
+          </div>
+          <div class="tarjeta">
+            <h4>Lo anotamos mal</h4>
+            <p style="margin:0 0 .5rem;font-size:.93rem"><em>Escribimos «Gonzalez» por
+              «Gonzales».</em></p>
+            <p style="margin:0;font-size:.93rem"><strong>¿El valor viejo fue verdad?</strong> No, en
+              ningún momento.<br>
+              <strong>¿Qué se escribe?</strong> Una corrección.<br>
+              <strong>¿Y si preguntas luego por el valor viejo?</strong> Ya no responde, pero queda
+              el rastro de que se corrigió.</p>
+          </div>
+          <div class="tarjeta">
+            <h4>Son la misma cosa</h4>
+            <p style="margin:0 0 .5rem;font-size:.93rem"><em><code>contribuyente_77_3389</code> es
+              María.</em></p>
+            <p style="margin:0;font-size:.93rem"><strong>¿El valor viejo fue verdad?</strong> Los dos
+              lo son.<br>
+              <strong>¿Qué se escribe?</strong> Una tripleta <code>mismo_que</code>.<br>
+              <strong>¿Y si preguntas luego por el valor viejo?</strong> Lo encuentras por
+              cualquiera de los dos, y suman juntos.</p>
+          </div>
+        </div>
+
+        <p>Vistos así, los tres casos no se distinguen por lo que ocurrió afuera. Se distinguen por
+          <strong>sobre qué se está afirmando algo</strong>. La vigencia afirma sobre el mundo: esto
+          fue así y luego dejó de serlo. La corrección afirma sobre la anotación: lo que escribimos no
+          correspondía. <code>mismo_que</code> afirma sobre el referente: estos dos papelitos llevan
+          al mismo sitio. Tres objetos distintos (el mundo, el registro y la cosa designada) que este
+          capítulo ya había separado cuando distinguió el papelito de lo que encuentras al mirar.</p>
+
+        <div class="caja caja--alerta revelar">
+          <p class="caja-tit">El error que no se anuncia</p>
+          <p style="margin:0 0 .6rem">Elegir mal entre las tres no rompe nada. El grafo acepta las
+            tres operaciones sin protestar, porque las tres son tripletas bien formadas: lo que las
+            distingue no está en los datos, está en la intención de quien anota. El almacén no puede
+            saberlo.</p>
+          <p style="margin:0">Corregir lo que era una identidad compartida borra una verdad. Los
+            arbitrios ocurrieron bajo <code>contribuyente_77_3389</code>, y si ese identificador
+            desaparece, la pregunta hecha con el rótulo que la municipalidad usó de verdad deja de
+            encontrarlos: una suma que debía juntar tres sistemas junta dos. Corregir lo que era un
+            cambio del mundo borra el pasado y deja sin explicación todo lo que se decidió con el
+            valor viejo. Y fechar un tecleo asciende un error a hecho histórico. Ninguno de los tres
+            fallos levanta una excepción; los tres devuelven un número.</p>
+        </div>
+
+        <p>Nada de esto añade maquinaria. La vigencia venía del capítulo&nbsp;9, corregir es asentar
+          un hecho nuevo y <code>mismo_que</code> es el cable que llevamos toda la sección tendiendo.
+          Lo que hay que añadir no es un mecanismo sino una decisión, y hay que tomarla antes de
+          escribir: cuál de las tres cosas ha pasado.</p>
+
         <h2>No es una decisión numerada: es una convención de fondo</h2>
 
         <p>Vale la pena ser explícito sobre el estatus de esto. La resolución de identidad no introduce
