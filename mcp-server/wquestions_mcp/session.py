@@ -7,6 +7,7 @@ No MCP types here: this module is pure Python and fully unit-tested.
 from __future__ import annotations
 import json
 import os
+import unicodedata
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
@@ -77,6 +78,19 @@ _AXIS_GUIDE = {
 }
 
 
+# El rol con que una entidad declara su propio nombre. `labels` y `find` leen de
+# aquí antes que del label, para que el nombre sea un hecho y no un adorno del
+# individuo.
+NAME_ROLE = "nombre"
+
+
+def _norm(text: str) -> str:
+    """Texto comparable: sin acentos y en mayúsculas. Sin esto, `azañero` no
+    encuentra a AZAÑERO y media agenda peruana queda inalcanzable."""
+    plain = unicodedata.normalize("NFD", text or "")
+    return "".join(c for c in plain if unicodedata.category(c) != "Mn").upper()
+
+
 class WQSession:
     def __init__(self, log_path: Optional[str] = None) -> None:
         self._log_path = log_path
@@ -84,6 +98,7 @@ class WQSession:
         self._sit_seq = 1
         self._replayed_events = 0
         self._skipped_lines = 0
+        self._name_idx: Optional[Dict[str, List[str]]] = None
         self._fresh()
         if self._log_path and os.path.exists(self._log_path):
             self._replay()
@@ -93,6 +108,7 @@ class WQSession:
         self.universe = Universe(name="session", catalog=self.catalog)
         self.lexicon = Lexicon()
         self._sit_seq = 1
+        self._name_idx = None
 
     def reset(self) -> Dict[str, Any]:
         self._fresh()
@@ -122,6 +138,7 @@ class WQSession:
             "add_entity": self.add_entity,
             "define_verb": self.define_verb,
             "assert_situation": self.assert_situation,
+            "assert_fact": self.assert_fact,
             "correct": self.correct,
             "load_example": self.load_example,
             "reset": self.reset,
@@ -205,6 +222,37 @@ class WQSession:
             raise ValueError(f"`value`/`unit` only apply to axis N, not {axis}.")
         return Individual(id=entity_id, axis=ax, label=label or entity_id)
 
+    def _invalidate_name_index(self) -> None:
+        self._name_idx = None
+
+    def _display(self, entity_id: str) -> Any:
+        """Cómo se llama esta entidad, para mostrarla o para buscarla.
+
+        Orden: un hecho con rol `nombre` > el label del individuo > nada. Una
+        magnitud se resuelve a {value, unit}. Devuelve None cuando el individuo
+        no aporta nombre propio (label ausente o igual al id), que es el caso de
+        los nodos de situación: no vale la pena gastar tokens en repetir un
+        identificador que ya está en la fila.
+        """
+        ind = self.universe.individuals.get(entity_id)
+        if ind is None:
+            return None
+        if ind.axis is Axis.N and isinstance(ind.payload, dict):
+            unit_id = ind.payload.get("unit")
+            unit = self.universe.individuals.get(unit_id)
+            return {"value": ind.payload.get("value"),
+                    "unit": (unit.label or unit_id) if unit else unit_id}
+        named = [f for f in self.universe.facts_about(ind) if f.role == NAME_ROLE]
+        if named:
+            latest = named[0]
+            for f in named[1:]:
+                if f.tx_time >= latest.tx_time:
+                    latest = f
+            return latest.value.label or latest.value.id
+        if ind.label and ind.label != ind.id:
+            return ind.label
+        return None
+
     def add_entity(self, entity_id: str, axis: str,
                    label: Optional[str] = None,
                    value: Any = None,
@@ -227,6 +275,7 @@ class WQSession:
         self._append_event("add_entity", {"entity_id": entity_id, "axis": axis,
                                            "label": label, "value": value,
                                            "unit": unit})
+        self._invalidate_name_index()
         return {"ok": True,
                 "entity": {"id": ind.id, "axis": ind.axis.value, "label": ind.label}}
 
@@ -244,6 +293,34 @@ class WQSession:
                                             "obligatory": obligatory,
                                             "optional": optional})
         return {"ok": True, "verb": verb}
+
+    def assert_fact(self, subject: str, role: str, value: Any,
+                    valid_from: Optional[str] = None,
+                    valid_to: Optional[str] = None) -> Dict[str, Any]:
+        """Asienta una tripleta binaria sobre una entidad existente, del eje que
+        sea. Es la escritura que el motor siempre soportó y que el MCP tapaba
+        tras la reificación obligatoria: un atributo de una persona no necesita
+        un nodo intermedio, solo su vigencia."""
+        subj = self.universe.individuals.get(subject)
+        if subj is None:
+            return {"ok": False,
+                    "error": f"Unknown entity '{subject}'. Create it with "
+                             f"add_entity first."}
+        try:
+            val = self._resolve_value(value)
+            self.universe.assert_fact(
+                subj, role, val,
+                valid_from=self._parse_ts(valid_from),
+                valid_to=self._parse_ts(valid_to))
+        except (ValueError, IngestError) as e:
+            return {"ok": False, "error": str(e)}
+        self._append_event("assert_fact", {"subject": subject, "role": role,
+                                           "value": value,
+                                           "valid_from": valid_from,
+                                           "valid_to": valid_to})
+        self._invalidate_name_index()
+        return {"ok": True,
+                "fact": {"subject": subj.id, "role": role, "value": val.id}}
 
     def _resolve_value(self, spec: Any) -> Individual:
         """A role value is either an existing entity id (str) or an inline
@@ -302,6 +379,7 @@ class WQSession:
         except (ValueError, IngestError) as e:
             return {"ok": False, "error": str(e)}
         self._bump_sit_seq(situ.id)
+        self._invalidate_name_index()
         self._append_event("assert_situation",
                            {"verb": verb, "roles": roles, "extra": extra,
                             "valid_from": valid_from, "valid_to": valid_to,
@@ -320,12 +398,9 @@ class WQSession:
         situ = self.universe.individuals.get(situation_id)
         if situ is None:
             return {"ok": False,
-                    "error": f"Unknown situation '{situation_id}'. Pass the "
-                             f"situation_id returned by a prior assert_situation."}
-        if situ.axis is not Axis.O:
-            return {"ok": False,
-                    "error": f"'{situation_id}' is in axis {situ.axis.value}, not "
-                             f"a situation (O). Corrections attach to situations."}
+                    "error": f"Unknown entity '{situation_id}'. Pass a "
+                             f"situation_id from assert_situation, or any "
+                             f"existing entity id."}
         try:
             val = self._resolve_value(value)
             self.universe.assert_fact(
@@ -335,6 +410,7 @@ class WQSession:
             )
         except (ValueError, IngestError) as e:
             return {"ok": False, "error": str(e)}
+        self._invalidate_name_index()
         self._append_event("correct", {"situation_id": situation_id, "role": role,
                                         "value": value, "valid_from": valid_from,
                                         "valid_to": valid_to})
@@ -342,11 +418,28 @@ class WQSession:
                 "note": "Appended, not overwritten. ask returns this (latest) "
                         "value; ask(history=true) shows prior ones."}
 
+    def _labels_for(self, results: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Nombres de todos los ids que aparecen en las filas, una sola vez.
+
+        Diccionario aparte y no anotación por fila: un producto que sale en 300
+        filas se nombra una vez, no trescientas.
+        """
+        out: Dict[str, Any] = {}
+        for row in results:
+            for value in row.values():
+                for vid in (value if isinstance(value, list) else [value]):
+                    if isinstance(vid, str) and vid not in out:
+                        name = self._display(vid)
+                        if name is not None:
+                            out[vid] = name
+        return out
+
     def ask(self, fixed: Optional[Dict[str, Any]] = None,
             ask: Optional[List[str]] = None,
             type: Optional[str] = None,
             at: Optional[str] = None,
-            history: bool = False) -> Dict[str, Any]:
+            history: bool = False,
+            labels: bool = True) -> Dict[str, Any]:
         try:
             fixed_ind = ({r: self._resolve_value(v) for r, v in fixed.items()}
                          if fixed else {})
@@ -368,7 +461,10 @@ class WQSession:
                 results.append(row)
         except (ValueError, IngestError) as e:
             return {"ok": False, "error": str(e)}
-        return {"count": len(results), "results": results}
+        out: Dict[str, Any] = {"count": len(results), "results": results}
+        if labels:
+            out["labels"] = self._labels_for(results)
+        return out
 
     def _project_role(self, role: str, role_facts: List[Any],
                       history: bool) -> Any:

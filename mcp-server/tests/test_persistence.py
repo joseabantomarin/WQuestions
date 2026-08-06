@@ -133,3 +133,16 @@ def test_barbershop_capstone_survives_log_round_trip(tmp_path):
     hist = s2.ask(fixed={"cliente": "pablo"}, ask=["tipo_cambio"], history=True)
     assert hist["results"][0]["tipo_cambio"] == ["tc_333", "tc_339"]
     assert s2.show_model()["persistence"]["replayed_events"] > 0
+
+
+def test_assert_fact_survives_a_replay(tmp_path):
+    from wquestions_mcp.session import WQSession
+    log = str(tmp_path / "u.jsonl")
+    s = WQSession(log_path=log)
+    s.add_entity("juan", "Q", "juan")
+    s.assert_fact("juan", "nombre",
+                  {"id": "lit_juan", "axis": "K", "label": "Juan Pérez"})
+    del s
+    s2 = WQSession(log_path=log)
+    assert s2._skipped_lines == 0
+    assert s2._display("juan") == "Juan Pérez"

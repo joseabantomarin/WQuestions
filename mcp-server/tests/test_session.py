@@ -233,12 +233,16 @@ def test_correct_unknown_situation_errors():
     assert "nope" in out["error"]
 
 
-def test_correct_rejects_non_situation_subject():
+def test_correct_on_a_non_situation_still_obeys_the_catalog():
+    # `correct` used to refuse any subject outside O. It no longer does: an
+    # attribute of a person is as correctable as a role of a situation, and
+    # assert_fact made that write expressible. What still rejects this call is
+    # the catalog — `agente` is O->Q, so it cannot hang off a Q entity.
     s = WQSession()
     s.add_entity("ana", "Q", "Ana")
-    out = s.correct("ana", "agente", "ana")  # ana is Q, not a situation (O)
+    out = s.correct("ana", "agente", "ana")
     assert out["ok"] is False
-    assert "situation" in out["error"].lower()
+    assert "eje" in out["error"].lower() or "axis" in out["error"].lower()
 
 
 def test_ask_returns_latest_value_after_correction():
@@ -305,3 +309,119 @@ def test_barbershop_correction_scenario_end_to_end():
 
     # the magnitude kept its unit as structured data, not baked into a label
     assert s.universe.individuals["usd_12"].payload == {"value": 12, "unit": "usd"}
+
+
+def test_display_uses_label_when_no_name_fact():
+    s = WQSession()
+    s.add_entity("ana", "Q", "Ana Torres")
+    assert s._display("ana") == "Ana Torres"
+
+
+def test_display_prefers_a_nombre_fact_over_the_label():
+    s = WQSession()
+    s.add_entity("ana", "Q", "etiqueta vieja")
+    s.add_entity("lit_ana", "K", "Ana Torres")
+    s.universe.assert_fact(s.universe.individuals["ana"], "nombre",
+                           s.universe.individuals["lit_ana"])
+    assert s._display("ana") == "Ana Torres"
+
+
+def test_display_omits_entities_whose_label_is_the_id():
+    s = WQSession()
+    s.add_entity("pro_783", "O")
+    assert s._display("pro_783") is None
+
+
+def test_display_resolves_a_magnitude_to_value_and_unit():
+    s = WQSession()
+    s.add_entity("pen", "K", "PEN")
+    s.add_entity("n1", "N", value=25.0, unit="pen")
+    assert s._display("n1") == {"value": 25.0, "unit": "PEN"}
+
+
+def test_display_returns_none_for_unknown_entity():
+    s = WQSession()
+    assert s._display("no_existe") is None
+
+
+def test_ask_returns_a_labels_dictionary():
+    s = WQSession()
+    s.add_entity("ana", "Q", "Ana Torres")
+    s.add_entity("pen", "K", "PEN")
+    s.assert_situation("vender", {
+        "agente": "ana",
+        "tema": {"id": "libro", "axis": "O", "label": "Libro"},
+        "por_cuanto": {"id": "n1", "axis": "N", "value": 20.0, "unit": "pen"}})
+    out = s.ask(fixed={"agente": "ana"}, ask=["tema", "por_cuanto"])
+    assert out["labels"]["libro"] == "Libro"
+    assert out["labels"]["n1"] == {"value": 20.0, "unit": "PEN"}
+
+
+def test_ask_labels_omit_situation_nodes():
+    s = WQSession()
+    s.add_entity("ana", "Q", "Ana Torres")
+    s.assert_situation("vender", {"agente": "ana",
+                                  "tema": {"id": "libro", "axis": "O",
+                                           "label": "Libro"}})
+    out = s.ask(fixed={"agente": "ana"}, ask=["tema"])
+    sid = out["results"][0]["_subject"]
+    assert sid not in out["labels"]
+
+
+def test_ask_labels_name_each_id_once():
+    s = WQSession()
+    s.add_entity("ana", "Q", "Ana Torres")
+    s.add_entity("libro", "O", "Libro")
+    for _ in range(5):
+        s.assert_situation("vender", {"agente": "ana", "tema": "libro"})
+    out = s.ask(fixed={"agente": "ana"}, ask=["tema"])
+    assert out["count"] == 5
+    assert list(out["labels"]).count("libro") == 1
+
+
+def test_ask_labels_can_be_switched_off():
+    s = WQSession()
+    s.add_entity("ana", "Q", "Ana Torres")
+    s.assert_situation("vender", {"agente": "ana",
+                                  "tema": {"id": "libro", "axis": "O",
+                                           "label": "Libro"}})
+    out = s.ask(fixed={"agente": "ana"}, ask=["tema"], labels=False)
+    assert "labels" not in out
+
+
+def test_assert_fact_writes_an_attribute_on_a_q_entity():
+    s = WQSession()
+    s.add_entity("juan", "Q", "juan")
+    out = s.assert_fact("juan", "nombre",
+                        {"id": "lit_juan", "axis": "K", "label": "Juan Pérez"})
+    assert out["ok"] is True
+    assert out["fact"] == {"subject": "juan", "role": "nombre",
+                           "value": "lit_juan"}
+    assert s._display("juan") == "Juan Pérez"
+
+
+def test_assert_fact_rejects_an_unknown_subject():
+    s = WQSession()
+    out = s.assert_fact("fantasma", "nombre",
+                        {"id": "lit", "axis": "K", "label": "X"})
+    assert out["ok"] is False
+    assert "fantasma" in out["error"]
+
+
+def test_assert_fact_enforces_the_catalog_signature():
+    s = WQSession()
+    s.add_entity("juan", "Q", "Juan")
+    s.add_entity("t1", "T", "2026-01-01")
+    out = s.assert_fact("juan", "momento", "t1")
+    assert out["ok"] is False
+
+
+def test_correct_accepts_a_non_situation_subject():
+    s = WQSession()
+    s.add_entity("juan", "Q", "Juan")
+    s.assert_fact("juan", "nombre",
+                  {"id": "lit_v", "axis": "K", "label": "Juan Viejo"})
+    out = s.correct("juan", "nombre",
+                    {"id": "lit_n", "axis": "K", "label": "Juan Nuevo"})
+    assert out["ok"] is True
+    assert s._display("juan") == "Juan Nuevo"

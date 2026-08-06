@@ -106,6 +106,19 @@ def assert_situation(verb: str, roles: Dict[str, Any],
 
 
 @mcp.tool()
+def assert_fact(subject: str, role: str, value: Any,
+                valid_from: Optional[str] = None,
+                valid_to: Optional[str] = None) -> Dict[str, Any]:
+    """Assert one binary triplet (subject · role · value) directly on an existing
+    entity of ANY axis — no situation is minted. Use it for properties of a thing
+    (a person's name, a product's barcode) where there is nothing to reify. Use
+    assert_situation instead when several participants take part in one fact. The
+    role is checked against the catalog: `nombre` is Q->K, so it attaches to the
+    person, not to a node about the person."""
+    return _session.assert_fact(subject, role, value, valid_from, valid_to)
+
+
+@mcp.tool()
 def correct(situation_id: str, role: str, value: Any,
             valid_from: Optional[str] = None,
             valid_to: Optional[str] = None) -> Dict[str, Any]:
@@ -121,13 +134,16 @@ def ask(fixed: Optional[Dict[str, Any]] = None,
         ask: Optional[List[str]] = None,
         type: Optional[str] = None,
         at: Optional[str] = None,
-        history: bool = False) -> Dict[str, Any]:
+        history: bool = False,
+        labels: bool = True) -> Dict[str, Any]:
     """Query by projection: fix some roles, ask for others. Returns the CURRENT
     value of each asked role (the latest correction wins for single-valued roles);
     pass history=true for the full time-ordered trail. `type` filters to a category
     id (auto-registered verbs get `action_<verb>`). `at` (ISO-8601) reads the
-    model's valid-time as of that moment."""
-    return _session.ask(fixed, ask, type, at, history)
+    model's valid-time as of that moment. Results carry ids; `labels` maps each
+    id to its readable name once (magnitudes to {value, unit}). Pass labels=false
+    to skip it when you only need to chain ids."""
+    return _session.ask(fixed, ask, type, at, history, labels)
 
 
 @mcp.tool()
