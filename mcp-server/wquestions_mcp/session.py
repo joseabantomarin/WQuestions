@@ -484,6 +484,44 @@ class WQSession:
                 latest = f
         return latest.value.id
 
+    def _name_index(self) -> Dict[str, List[str]]:
+        """Índice nombre-normalizado -> ids, construido la primera vez que se
+        busca y no al arrancar: sobre 539 k entidades cuesta ~2,6 s, y un
+        universo que nunca busca no debe pagarlos."""
+        if self._name_idx is None:
+            idx: Dict[str, List[str]] = {}
+            for eid in self.universe.individuals:
+                name = self._display(eid)
+                if isinstance(name, str):
+                    idx.setdefault(_norm(name), []).append(eid)
+            self._name_idx = idx
+        return self._name_idx
+
+    def find(self, text: str, axis: Optional[str] = None,
+             limit: int = 20) -> Dict[str, Any]:
+        """Busca entidades por su nombre: subcadena, sin distinguir mayúsculas
+        ni acentos. Es la puerta de entrada — sin esto hay que conocer los
+        identificadores de antemano."""
+        needle = _norm(text).strip()
+        if not needle:
+            return {"ok": False, "error": "Pass some text to search for."}
+        if axis is not None and axis not in _AXIS_NAMES:
+            return {"ok": False,
+                    "error": f"Unknown axis '{axis}'. Use one of Q,O,L,T,N,K."}
+        hits: List[Dict[str, Any]] = []
+        for key, ids in self._name_index().items():
+            if needle not in key:
+                continue
+            for eid in ids:
+                ind = self.universe.individuals.get(eid)
+                if ind is None or (axis is not None and ind.axis.value != axis):
+                    continue
+                hits.append({"id": eid, "axis": ind.axis.value,
+                             "label": self._display(eid)})
+        hits.sort(key=lambda h: (len(h["label"]), h["id"]))
+        return {"count": len(hits), "results": hits[:limit],
+                "truncated": len(hits) > limit}
+
     def show_model(self) -> Dict[str, Any]:
         facts = [
             {"subject": f.subject.id, "role": f.role, "value": f.value.id}

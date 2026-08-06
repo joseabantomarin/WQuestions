@@ -147,6 +147,17 @@ def ask(fixed: Optional[Dict[str, Any]] = None,
 
 
 @mcp.tool()
+def find(text: str, axis: Optional[str] = None,
+         limit: int = 20) -> Dict[str, Any]:
+    """Find entities by name — the way in when you know what something is called
+    but not its id. Matches a substring, ignoring case and accents ("azanero"
+    finds AZAÑERO). `axis` narrows to one value axis (Q for people, O for things).
+    Returns {id, axis, label}; feed those ids to `ask`. `truncated` says there
+    were more matches than `limit`."""
+    return _session.find(text, axis, limit)
+
+
+@mcp.tool()
 def show_model() -> Dict[str, Any]:
     """Dump the current universe: entity/fact counts and every fact, plus the
     persistence status (log path, replayed/skipped event counts)."""

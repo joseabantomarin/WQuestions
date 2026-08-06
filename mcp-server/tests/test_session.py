@@ -425,3 +425,68 @@ def test_correct_accepts_a_non_situation_subject():
                     {"id": "lit_n", "axis": "K", "label": "Juan Nuevo"})
     assert out["ok"] is True
     assert s._display("juan") == "Juan Nuevo"
+
+
+def test_find_matches_a_substring_ignoring_case_and_accents():
+    s = WQSession()
+    s.add_entity("cli_1", "Q", "ROMERO AZAÑERO, MARCELA")
+    out = s.find("azanero")
+    assert out["count"] == 1
+    assert out["results"][0]["id"] == "cli_1"
+    assert out["results"][0]["axis"] == "Q"
+    assert out["results"][0]["label"] == "ROMERO AZAÑERO, MARCELA"
+
+
+def test_find_can_filter_by_axis():
+    s = WQSession()
+    s.add_entity("cli_1", "Q", "SAUNA PLUS")
+    s.add_entity("pro_1", "O", "SAUNA PLUS")
+    assert s.find("sauna")["count"] == 2
+    out = s.find("sauna", axis="O")
+    assert out["count"] == 1
+    assert out["results"][0]["id"] == "pro_1"
+
+
+def test_find_truncates_and_says_so():
+    s = WQSession()
+    for i in range(30):
+        s.add_entity(f"cli_{i}", "Q", f"CLIENTE {i}")
+    out = s.find("cliente", limit=10)
+    assert len(out["results"]) == 10
+    assert out["truncated"] is True
+    assert out["count"] == 30
+
+
+def test_find_sees_entities_added_after_the_first_search():
+    s = WQSession()
+    s.add_entity("cli_1", "Q", "Ana")
+    assert s.find("beto")["count"] == 0
+    s.add_entity("cli_2", "Q", "Beto")
+    assert s.find("beto")["count"] == 1
+
+
+def test_find_uses_a_nombre_fact_over_the_label():
+    # La entidad `juan` tiene label "juan", que no la haría encontrable. El
+    # hecho `nombre` sí. (El literal K también se llama así y también aparece:
+    # es correcto, se llama de verdad "Juan Pérez". Por eso se filtra por eje.)
+    s = WQSession()
+    s.add_entity("juan", "Q", "juan")
+    s.assert_fact("juan", "nombre",
+                  {"id": "lit_j", "axis": "K", "label": "Juan Pérez"})
+    out = s.find("perez", axis="Q")
+    assert out["count"] == 1
+    assert out["results"][0]["id"] == "juan"
+
+
+def test_find_rejects_an_empty_query():
+    s = WQSession()
+    out = s.find("   ")
+    assert out["ok"] is False
+
+
+def test_find_does_not_build_the_index_until_it_is_called():
+    s = WQSession()
+    s.add_entity("cli_1", "Q", "Ana")
+    assert s._name_idx is None
+    s.find("ana")
+    assert s._name_idx is not None
