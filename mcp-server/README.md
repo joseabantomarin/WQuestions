@@ -66,9 +66,11 @@ Then ask Claude: *"Load the spa example, then show me the model."* See
 | `list_roles` | List canonical roles (who/what/where/... connectors), typed by domain and range |
 | `add_entity` | Create an individual on a value axis (Q, O, L, T, N, K); for the N axis pass `value` + `unit` (a K entity id or inline spec) — a magnitude without a unit is rejected |
 | `define_verb` | Register a situation type and its roles — optional, `assert_situation` auto-registers unknown verbs |
-| `assert_situation` | Assert a fact: reify a situation and attach its roles |
+| `assert_situation` | Assert a fact with several participants: reify a situation and attach its roles |
+| `assert_fact` | Assert one triplet directly on an existing entity of any axis — for properties (a person's name) that need no situation |
 | `correct` | Correct/update a role on an existing situation by re-asserting it (append-only; `ask` returns the latest, `history=true` shows the trail) |
-| `ask` | Query by projection — fix some roles, ask for others, optionally as of a point in time; pass `history=true` for the full time-ordered trail instead of just the current value |
+| `find` | Find entities by name — substring, ignores case and accents. The way in when you know what something is called but not its id |
+| `ask` | Query by **projection** (fix roles, ask for others; `fixed` accepts `{desde,hasta}` ranges over T/N) or by **aggregation** (`agrupar_por` + `medir` with count/sum/min/max/avg, `orden`, `limite`). Always returns a `labels` dictionary naming every id once |
 | `show_model` | Dump the current universe: every entity and fact |
 | `load_example` | Load a prebuilt demo universe (`spa`) to try queries instantly |
 | `reset` | Clear the model and start a fresh universe |
