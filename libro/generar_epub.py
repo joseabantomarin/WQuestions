@@ -92,7 +92,7 @@ def render_dom(path):
     return r.stdout
 
 
-def limpiar(bloque):
+def limpiar(bloque, base, sacados):
     """Quita lo que solo existe para la pantalla: audio, scripts, navegación,
     botones de copiar y la barra de progreso."""
     fuera = [
@@ -114,40 +114,96 @@ def limpiar(bloque):
     bloque = re.sub(r'href="indice\.html[^"]*"', 'href="nav.xhtml"', bloque)
     bloque = re.sub(r'href="(index|referencias|anexo-reglas)\.html',
                     r'href="\1.xhtml', bloque)
-    return partir_lineas_de_codigo(dimensionar_svg(bloque))
+    return partir_lineas_de_codigo(externalizar_svg(bloque, base, sacados))
 
 
-VIEWBOX_RE = re.compile(r'<svg\b([^>]*?)viewBox="\s*[-\d.]+\s+[-\d.]+\s+([\d.]+)\s+([\d.]+)\s*"([^>]*)>',
-                        re.IGNORECASE)
+# Un <svg …> puede llevar «>» dentro de un atributo (los aria-label describen
+# notaciones como «M(O->O)»), así que al buscar el fin de la etiqueta hay que
+# saltarse lo que va entre comillas.
+SVG_RE = re.compile(r"""<svg\b((?:[^>"']|"[^"]*"|'[^']*')*)>(.*?)</svg>""",
+                    re.DOTALL | re.IGNORECASE)
+VAR_RE = re.compile(r"var\(\s*(--[\w-]+)\s*(?:,\s*([^()]*?)\s*)?\)")
 
 
-def dimensionar_svg(bloque):
-    """Prepara cada SVG para vivir dentro de un XHTML.
+def _paleta():
+    """Los valores del bloque :root del sitio, con las variables ya resueltas.
 
-    Dos arreglos, y el primero es el que decide si el dibujo existe:
+    Un SVG suelto no ve la hoja de estilo del libro: hay que dejarle los
+    colores escritos."""
+    with open(os.path.join(ASSETS, "estilo.css"), encoding="utf-8") as f:
+        raiz = re.search(r":root\s*\{(.*?)\n\}", f.read(), re.S).group(1)
+    tabla = {k: v.strip() for k, v in re.findall(r"(--[\w-]+)\s*:\s*([^;]+);", raiz)}
+    for _ in range(4):    # una variable puede citar a otra
+        tabla = {k: resolver_vars(v, tabla) for k, v in tabla.items()}
+    return tabla
 
-    1. El espacio de nombres. En HTML el navegador entra solo en «modo SVG» al
-       ver la etiqueta, y por eso Chrome lo omite al volcar el DOM. En XHTML no
-       hay tal magia: sin xmlns, el lector trata <svg> como una etiqueta
-       desconocida de XHTML y en vez del gráfico escupe sueltos los textos que
-       lleva dentro.
-    2. Las dimensiones. Con solo viewBox, muchos motores no deducen la
-       proporción y con `height:auto` estiran o aplastan el dibujo. Con un
-       width y un height reales más `max-width:100%`, se conserva en todos."""
-    def fija(m):
-        antes, w, h, despues = m.group(1), m.group(2), m.group(3), m.group(4)
-        resto = antes + despues
-        # fuera cualquier width, height o xmlns previo (p. ej. width="100%")
-        resto = re.sub(r'\s(?:width|height|xmlns)="[^"]*"', "", resto)
-        resto = resto.strip()
-        resto = (" " + resto) if resto else ""
-        wn = w[:-2] if w.endswith(".0") else w
-        hn = h[:-2] if h.endswith(".0") else h
-        return (f'<svg xmlns="http://www.w3.org/2000/svg" '
-                f'viewBox="0 0 {w} {h}" width="{wn}" height="{hn}" '
-                f'preserveAspectRatio="xMidYMid meet"{resto}>')
 
-    return VIEWBOX_RE.sub(fija, bloque)
+def resolver_vars(texto, tabla):
+    def una(m):
+        nombre, respaldo = m.group(1), m.group(2)
+        valor = tabla.get(nombre, respaldo if respaldo is not None else "currentColor")
+        # Casi siempre se sustituye dentro de un atributo entrecomillado, y las
+        # familias tipográficas traen comillas dobles («Helvetica Neue») que
+        # partirían el atributo en dos. CSS acepta igual las simples.
+        return valor.replace('"', "'")
+    return VAR_RE.sub(una, texto)
+
+
+PALETA = None
+
+
+def externalizar_svg(bloque, base, sacados):
+    """Saca cada SVG a su propio archivo y lo deja como <img>.
+
+    En línea, el dibujo depende de que el lector implemente SVG dentro del
+    XHTML. Los que se limitan a maquetar texto —los mismos que ignoran el
+    `white-space` de los bloques de código— descartan la etiqueta y sueltan
+    como prosa los textos que lleva dentro: la figura desaparece y en su lugar
+    quedan sus rótulos. Como imagen enlazada no hay nada que implementar; si el
+    lector muestra la portada, muestra la figura.
+
+    Dos cosas hay que llevarse al archivo, porque afuera ya no las alcanza:
+    los `var(--…)` de cada fill y stroke, y la única regla del sitio que toca
+    el interior de un SVG (`.svg-eje text`)."""
+    global PALETA
+    if PALETA is None:
+        PALETA = _paleta()
+
+    def saca(m):
+        attrs, dentro = m.group(1), m.group(2)
+        vb = re.search(r'viewBox="\s*([-\d.]+\s+[-\d.]+\s+[\d.]+\s+[\d.]+)\s*"', attrs)
+        if not vb:
+            return m.group(0)                     # sin viewBox no hay proporción que salvar
+        _, _, w, h = vb.group(1).split()
+        wn, hn = (x[:-2] if x.endswith(".0") else x for x in (w, h))
+
+        etq = re.search(r'aria-label="([^"]*)"', attrs)
+        alt = etq.group(1) if etq else ""
+        # `.svg-eje text { font-family: var(--sans) }` pisaba los font-family
+        # de dentro; se replica igual para no cambiar el dibujo.
+        clase = re.search(r'class="([^"]*)"', attrs)
+        estilo = ""
+        if clase and "svg-eje" in clase.group(1):
+            estilo = f"<style>text{{font-family:{PALETA.get('--sans','sans-serif')}}}</style>"
+
+        nombre = f"fig-{base}-{len(sacados) + 1:02d}.svg"
+        doc = ('<?xml version="1.0" encoding="UTF-8"?>\n'
+               f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{vb.group(1)}" '
+               f'width="{wn}" height="{hn}" preserveAspectRatio="xMidYMid meet">'
+               f'{estilo}{resolver_vars(dentro, PALETA)}</svg>'
+               ).replace("&nbsp;", "&#160;")
+        # Un SVG suelto es un XML: si no parsea, el lector no dibuja nada y no
+        # avisa. Vale más romper aquí la generación.
+        try:
+            ET.fromstring(doc)
+        except ET.ParseError as e:
+            sys.exit(f"SVG mal formado en {nombre}: {e}")
+        sacados.append((nombre, doc.encode("utf-8")))
+
+        return (f'<img src="img/{nombre}" alt="{escapar(alt)}" '
+                f'width="{wn}" height="{hn}" class="figura-svg"/>')
+
+    return SVG_RE.sub(saca, bloque)
 
 
 MAX_COLS = 56          # caracteres por línea de código que caben en una página
@@ -390,8 +446,11 @@ p.capitular::first-letter {
 
 /* --- 2. Contenido ancho: que se encoja, nunca que desborde -------------- */
 img, figure { max-width: 100%; height: auto; }
-/* Los SVG llevan viewBox y ahora también width/height reales, para que el
-   lector pueda deducir la proporción y no los estire. */
+/* Las figuras viajan como imagen enlazada, con width/height reales para que el
+   lector reserve el hueco y respete la proporción aunque aún no la haya
+   descargado. Nunca más anchas que la caja de texto. */
+img.figura-svg { display: block; margin: 0 auto;
+                 max-width: 100%; height: auto; }
 svg { max-width: 100%; height: auto; }
 
 /* El código es el caso grave. En la web, .bloque-codigo recorta (overflow
@@ -536,9 +595,13 @@ def main():
         html = render_dom(os.path.join(M2, name))
         m = MAIN_RE.search(html)
         bloque = m.group(1) if m else html
-        bloque = a_xhtml(limpiar(bloque))
 
         base = os.path.splitext(name)[0]
+        sacados = []                    # los SVG de este capítulo, ya como archivo
+        bloque = a_xhtml(limpiar(bloque, base, sacados))
+        for fn, datos in sacados:
+            recursos.append((f"OEBPS/img/{fn}", datos, "image/svg+xml"))
+
         xhtml_name = base + ".xhtml"
         titulo = titulo_de(bloque, base)
         mp = PARTE_RE.search(bloque)
