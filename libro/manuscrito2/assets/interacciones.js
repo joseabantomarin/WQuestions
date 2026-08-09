@@ -244,12 +244,30 @@
       const maxX = Math.max(...datos.map((d) => d.x)) * 1.1, maxY = Math.max(...datos.map((d) => d.y)) * 1.1;
       const X = (v) => m.l + (iw * v) / maxX, Y = (v) => m.t + ih - (ih * v) / maxY;
       for (let t = 0; t <= 4; t++) { const y = m.t + ih - (ih * t) / 4; svg.appendChild(svgEl("line", { x1: m.l, y1: y, x2: m.l + iw, y2: y, stroke: colLinea })); }
+      // Rótulos dibujados, no sólo en el tooltip: en el EPUB y en el papel no hay
+      // cursor, y una nube de puntos anónimos no dice nada.
+      const txt = (s, a) => { const e = svgEl("text", Object.assign({ fill: colTxt, "font-size": 11 }, a)); e.textContent = s; return e; };
+      (spec.ticksX || []).forEach((v) => svg.appendChild(
+        txt(v, { x: X(v), y: m.t + ih + 18, "text-anchor": "middle" })));
+      if (spec.rotuloX) svg.appendChild(
+        txt(spec.rotuloX, { x: m.l + iw / 2, y: H - 6, "text-anchor": "middle", "font-size": 11.5 }));
+      if (spec.rotuloY) svg.appendChild(
+        txt(spec.rotuloY, { x: 0, y: 0, "text-anchor": "middle", "font-size": 11.5,
+                            transform: `translate(14 ${m.t + ih / 2}) rotate(-90)` }));
       datos.forEach((d) => {
         const col = d.color ? cssVar("--eje-" + d.color) || d.color : ejeColor;
         const c = svgEl("circle", { cx: X(d.x), cy: Y(d.y), r: d.r || 6, fill: col, opacity: .7 });
         c.addEventListener("mousemove", (e) => mostrarTip(`<b>${d.l || ""}</b><br>${d.x}, ${d.y}`, e.clientX, e.clientY));
         c.addEventListener("mouseleave", ocultarTip);
         svg.appendChild(c);
+        // dx/dy los fija el autor de la figura: con cinco puntos, colocar la
+        // etiqueta a mano sale más limpio que cualquier regla automática.
+        if (d.etq) {
+          const dx = d.dx || 0;
+          svg.appendChild(txt(d.etq, { x: X(d.x) + dx, y: Y(d.y) + (d.dy || 0),
+                                       "text-anchor": dx < 0 ? "end" : "start",
+                                       fill: col, "font-weight": 600 }));
+        }
       });
     }
 

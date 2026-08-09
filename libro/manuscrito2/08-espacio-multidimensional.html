@@ -474,19 +474,27 @@ M                                     (los enlaces que conectan cada lectura del
           <div class="lienzo" data-chart>
             <script type="application/json">
             {"tipo":"dispersion","alto":340,
+             "ticksX":[4,5,6],
+             "rotuloX":"coordenadas que llena el hecho",
+             "rotuloY":"magnitud registrada (escala relativa)",
              "datos":[
-               {"x":6,"y":50,"l":"venta_001 · 6 ejes, 49.90 USD","color":"o","r":10},
-               {"x":5,"y":3,"l":"gol_001 · 5 ejes, 1 gol","color":"q","r":9},
-               {"x":4,"y":1,"l":"pelicula_marea · 4 ejes","color":"k","r":8},
-               {"x":5,"y":1,"l":"ordenanza_142 · 5 ejes","color":"l","r":8},
-               {"x":4,"y":52,"l":"sesion_ia_5521 · 4 ejes, magnitud alta","color":"n","r":11}
+               {"x":6,"y":50,"l":"venta_001 · 6 ejes, 49.90 USD","color":"o","r":10,
+                "etq":"venta_001","dx":-16,"dy":4},
+               {"x":5,"y":3,"l":"gol_001 · 5 ejes, 1 gol","color":"q","r":9,
+                "etq":"gol_001","dx":-14,"dy":-4},
+               {"x":4,"y":1,"l":"pelicula_marea · 4 ejes","color":"k","r":8,
+                "etq":"pelicula_marea","dx":-12,"dy":-2},
+               {"x":5,"y":1,"l":"ordenanza_142 · 5 ejes","color":"l","r":8,
+                "etq":"ordenanza_142","dx":14,"dy":0},
+               {"x":4,"y":52,"l":"sesion_ia_5521 · 4 ejes, magnitud alta","color":"n","r":11,
+                "etq":"sesion_ia_5521","dx":16,"dy":-2}
              ]}
             </script>
           </div>
           <figcaption><span class="fnum">Figura 8.3.</span> Cinco situaciones del repertorio como puntos en
             un plano de dispersión: en el eje horizontal, cuántas coordenadas llena cada hecho; en el
-            vertical, la magnitud numérica que registra (en escala relativa). Pasa el cursor sobre cada
-            punto para leer la situación. La venta, densa y muy descrita, ocupa la esquina superior derecha;
+            vertical, la magnitud numérica que registra (en escala relativa).
+            La venta, densa y muy descrita, ocupa la esquina superior derecha;
             el estreno, parcial y sin magnitud, queda abajo a la izquierda.</figcaption>
         </figure>
 
