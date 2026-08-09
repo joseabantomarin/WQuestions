@@ -55,15 +55,20 @@
 
       <div class="contenido">
 
-        <p class="entrada">El vendedor entrega la camiseta sobre el mostrador y, sin pensarlo, recita una cifra:
-          «cuarenta y nueve noventa». Para él la frase está completa. Sabe que son cuarenta y nueve con
-          noventa <em>dólares</em>, porque lleva diez años cobrando en la tienda y la caja solo habla en
-          dólares. Pero si esos cuarenta y nueve noventa viajaran por un cable hacia otro sistema (una app
-          de inventario, un panel de ventas, un agente que recomienda promociones) llegarían como un número
-          desnudo. El sistema receptor podría leerlos como soles, como euros, como unidades vendidas. El
-          dato del vendedor es perfecto en su cabeza y peligroso en cuanto sale de ella. Ese desfase (entre
-          un número que «todos saben qué significa» y un número que de verdad lo dice) es el tema de este
-          capítulo.</p>
+        <p class="entrada">El vendedor entrega la camiseta sobre el mostrador y recita una cifra sin
+          pensarlo: «cuarenta y nueve noventa».</p>
+
+        <p>Para él la frase está completa. Sabe que son dólares, porque lleva diez años cobrando en la
+          tienda y la caja solo habla en dólares.</p>
+
+        <p>Pero si esos cuarenta y nueve noventa viajaran por un cable hacia otro sistema, llegarían
+          como un número desnudo. El que lo reciba podría leerlos como soles, como euros, como unidades
+          vendidas.</p>
+
+        <p>El dato del vendedor es perfecto en su cabeza y peligroso en cuanto sale de ella.</p>
+
+        <p>Ese desfase, entre un número que «todos saben qué significa» y un número que de verdad lo
+          dice, es el tema de este capítulo.</p>
 
         <aside class="nota-margen">
           <span class="etq">Dónde estamos</span>
@@ -75,54 +80,63 @@
           Falta el eje que aloja las magnitudes.
         </aside>
 
-        <p>La venta que registra (llamémosla <code>venta_001</code>) es, por sí misma, un manojo de
-          números: 1&nbsp;camiseta vendida, 49,90&nbsp;dólares de monto, 18&nbsp;% de impuesto,
-          10&nbsp;% de descuento y 180&nbsp;gramos de peso de la prenda. Cinco lecturas,
-          cinco unidades distintas. Ninguna de ellas es una «cosa» con identidad propia, como lo es la
-          camiseta o el propio vendedor. Son respuestas a una misma pregunta repetida cinco veces:
-          <strong>¿cuánto?</strong> Ese es el cuarto eje de valor, el eje <span class="eje-rotulo"><span class="eje eje--n">N</span> cuánto</span>,
-          y este capítulo lo desarma pieza por pieza.</p>
+        <p>La venta que registra, llamémosla <code>venta_001</code>, es un manojo de números:
+          1&nbsp;camiseta, 49,90&nbsp;dólares, 18&nbsp;% de impuesto, 10&nbsp;% de descuento y
+          180&nbsp;gramos de peso.</p>
+
+        <p>Cinco lecturas, cinco unidades distintas. Y ninguna es una «cosa» con identidad propia, como
+          sí lo son la camiseta o el vendedor.</p>
+
+        <p>Son respuestas a la misma pregunta repetida cinco veces: <strong>¿cuánto?</strong></p>
+
+        <p>Ese es el eje <span class="eje-rotulo"><span class="eje eje--n">N</span> cuánto</span>, y
+          este capítulo lo desarma pieza por pieza.</p>
 
         <h2>Por qué los números no caben en el eje de las cosas</h2>
 
-        <p>La objeción es razonable y conviene enfrentarla de inmediato: ¿para qué un eje exclusivo
-          para los números? ¿No bastaría con guardarlos dentro del eje de los objetos, junto a las
-          camisetas, los estantes y las cajas registradoras? La respuesta es que no, y la razón se vuelve
-          evidente apenas intentas forzarlo.</p>
+        <p>La objeción es razonable. ¿Para qué un eje solo para los números? ¿No bastaría con
+          guardarlos junto a las camisetas, los estantes y las cajas registradoras?</p>
 
-        <p>Una camiseta es un individuo físico: tiene identidad, persiste en el tiempo, puede aparecer en
-          varios eventos (se fabrica, se exhibe, se vende, se devuelve) y sigue siendo <em>esa</em>
-          camiseta. El número 9, en cambio, no es una cosa. No existe un «9» guardado en algún cajón del
-          universo al que podamos apuntar. Lo que existe son innumerables hechos del mundo que <em>usan</em>
-          el valor 9 para describir algo: los 9&nbsp;dólares de un descuento, los 9&nbsp;minutos de una
-          espera, los 9&nbsp;intentos de una herramienta. Cada aparición del 9 es del todo independiente
-          de las demás.</p>
+        <p>No basta, y la razón se ve apenas intentas forzarlo.</p>
+
+        <p>Una camiseta es un individuo físico. Tiene identidad, dura en el tiempo, aparece en varios
+          eventos (se fabrica, se exhibe, se vende, se devuelve) y sigue siendo <em>esa</em>
+          camiseta.</p>
+
+        <p>El número 9 no es una cosa. No hay un «9» guardado en algún cajón del universo al que
+          podamos apuntar.</p>
+
+        <p>Lo que hay son innumerables hechos que <em>usan</em> el valor 9: los 9 dólares de un
+          descuento, los 9 minutos de una espera, los 9 intentos de una herramienta. Cada aparición del
+          9 es independiente de las demás.</p>
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Idea clave · entidades contra valores</p>
-          <p style="margin:0">En los ejes <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>
+          <p style="margin:0 0 .7rem">En los ejes
+            <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>
             <span class="eje-rotulo"><span class="eje eje--o">O</span></span>
             <span class="eje-rotulo"><span class="eje eje--l">L</span></span> y
-            <span class="eje-rotulo"><span class="eje eje--k">K</span></span> cada elemento necesita una
-            <strong>identidad propia e inconfundible</strong> (un código interno, un UUID) para no
-            confundirse con ningún otro. El eje <span class="eje-rotulo"><span class="eje eje--n">N</span></span>
-            no necesita eso: para un número, <em>su valor es su identidad</em>. Cuando un servidor anota
-            que un agente respondió en 340&nbsp;milisegundos, nadie le inventa un código secreto al 340;
-            el dato puro basta.</p>
+            <span class="eje-rotulo"><span class="eje eje--k">K</span></span>, cada elemento necesita
+            una <strong>identidad propia</strong> para no confundirse con otro.</p>
+          <p style="margin:0">El eje
+            <span class="eje-rotulo"><span class="eje eje--n">N</span></span> no la necesita: para un
+            número, <em>su valor es su identidad</em>. Cuando un servidor anota que un agente respondió
+            en 340 milisegundos, nadie le inventa un código secreto al 340. El dato basta.</p>
         </div>
 
-        <p>Esta diferencia, que suena filosófica, tiene una consecuencia muy concreta en la arquitectura.
-          El eje <span class="eje-rotulo"><span class="eje eje--t">T</span></span> comparte la misma
-          naturaleza: las fechas y los instantes se comparan por su valor matemático, no por un
-          identificador interno. De ahí la regla que separa el universo en dos familias.</p>
+        <p>La diferencia suena filosófica y tiene una consecuencia muy concreta.</p>
+
+        <p>El eje <span class="eje-rotulo"><span class="eje eje--t">T</span></span> funciona igual: las
+          fechas y los instantes se comparan por su valor, no por un identificador. De ahí la regla que
+          parte el universo en dos familias.</p>
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Idea clave · Ejes de entidad y ejes de valor</p>
-          <p style="margin:0"><strong>Q, O, L y K son ejes de entidades</strong> (físicas o
-            conceptuales) y cada elemento porta una identidad explícita. <strong>N y T son ejes de valor
-            puro</strong>: el dato <em>es</em> la identidad, y dos lecturas idénticas son, a todos los
-            efectos, la misma. Por eso un número o una fecha pueden almacenarse en bruto, pero un agente
-            o una clase nunca.</p>
+          <p style="margin:0 0 .7rem"><strong>Q, O, L y K son ejes de entidades</strong>, físicas o
+            conceptuales. Cada elemento lleva su identidad encima.</p>
+          <p style="margin:0"><strong>N y T son ejes de valor puro</strong>: el dato <em>es</em> la
+            identidad, y dos lecturas iguales son la misma. Por eso un número o una fecha se pueden
+            guardar en bruto, y un agente o una clase nunca.</p>
         </div>
 
         <p>Conviene precisar, además, que <span class="eje-rotulo"><span class="eje eje--n">N</span></span>
@@ -150,19 +164,20 @@
 
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">La confusión de unidades que cuesta carísimo</p>
-          <p>El verano pasado, un equipo desplegó un sistema de monitoreo para una flota de turbinas
-            eólicas. Dos proveedores alimentaban el mismo tablero. El fabricante de los rotores reportaba
-            el <em>par de torsión</em> de cada eje en <strong>libra-pie</strong>; el módulo de control
-            que el equipo había escrito leía esos mismos campos asumiendo <strong>newton-metro</strong>.
-            Ninguno de los dos estaba equivocado por separado: cada cifra era correcta en su propia
-            unidad. Pero entre ambas hay un factor de 1,356, y nadie lo aplicó.</p>
-          <p style="margin-bottom:0">Durante semanas el sistema creyó que las turbinas trabajaban muy por
-            debajo de su límite y subió la consigna de carga. El error se acumuló en silencio hasta que
-            un rodamiento, sometido a un esfuerzo un 36&nbsp;% mayor del que el tablero mostraba, se
-            agrietó. Nadie hizo mal una sola multiplicación. El número, simplemente, había viajado sin su
-            unidad pegada: el mismo pecado que, a escala interplanetaria, desintegró al
-            <em>Mars Climate Orbiter</em> en 1999, cuando un módulo entregaba libra-fuerza y el otro
-            leía newtons.</p>
+          <p>El verano pasado, un equipo instaló un sistema de vigilancia para una flota de turbinas
+            eólicas. Dos proveedores alimentaban el mismo tablero.</p>
+          <p>El fabricante de los rotores reportaba el par de torsión en <strong>libra-pie</strong>. El
+            módulo de control que el equipo había escrito leía esos mismos campos asumiendo
+            <strong>newton-metro</strong>.</p>
+          <p>Por separado, ninguno estaba equivocado: cada cifra era correcta en su unidad. Pero entre
+            las dos hay un factor de 1,356, y nadie lo aplicó.</p>
+          <p>Durante semanas el sistema creyó que las turbinas trabajaban muy por debajo de su límite y
+            subió la carga.</p>
+          <p>El error se acumuló en silencio hasta que un rodamiento, sometido a un esfuerzo un 36 %
+            mayor del que el tablero mostraba, se agrietó.</p>
+          <p style="margin-bottom:0">Nadie hizo mal una sola multiplicación. El número había viajado sin
+            su unidad pegada. Es el mismo pecado que desintegró al <em>Mars Climate Orbiter</em> en
+            1999.</p>
         </div>
 
         <p>La moraleja no es sobre aritmética. Es sobre diseño de datos, y se enuncia en una sola línea.</p>
@@ -170,13 +185,17 @@
         <p class="cita-destacada revelar">Un número sin su unidad no es información: es ruido disfrazado
           de dígitos.<cite>La regla del eje N</cite></p>
 
-        <p>De ahí la consecuencia arquitectónica que no admite excepciones: <strong>un valor en el eje
-          N nunca debe viajar solo</strong>. Tiene que ir siempre acompañado por su unidad. Y aquí los
-          ejes empiezan a trabajar en equipo, porque una unidad (<em>gramo</em>, <em>segundo</em>,
-          <em>bar</em>, <em>token</em>) no es un objeto físico ni un valor numérico: es una
-          <strong>categoría abstracta</strong>. Y las categorías, como vimos en el capítulo anterior,
-          viven en el eje <span class="eje-rotulo"><span class="eje eje--k">K</span></span>. El número
-          habita en N; la unidad que lo interpreta habita en K; un predicado los enlaza.</p>
+        <p>De ahí sale una regla sin excepciones: <strong>un valor del eje N nunca viaja solo</strong>.
+          Siempre va con su unidad.</p>
+
+        <p>Y aquí los ejes empiezan a trabajar en equipo. Una unidad (<em>gramo</em>, <em>segundo</em>,
+          <em>bar</em>, <em>token</em>) no es un objeto físico ni un número. Es una
+          <strong>categoría</strong>.</p>
+
+        <p>Y las categorías, como vimos en el capítulo anterior, viven en
+          <span class="eje-rotulo"><span class="eje eje--k">K</span></span>.</p>
+
+        <p>El número vive en N. La unidad que lo interpreta vive en K. Un cable los une.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -188,17 +207,22 @@
         </div>
 
         <p>A primera vista parece burocracia. ¿No es obvio que el monto de una venta se cobra en
-          dólares? Hoy sí. Pero deja de serlo el día en que una nueva sucursal reporta los montos
-          en <em>soles</em>, y tu sistema (que asumía dólares en silencio) suma 49,90&nbsp;USD con
-          49,90&nbsp;PEN como si fueran la misma escala. La unidad explícita es el seguro contra ese día.</p>
+          dólares?</p>
+
+        <p>Hoy sí. Deja de serlo el día en que una sucursal nueva reporta en <em>soles</em>, y tu
+          sistema, que asumía dólares en silencio, suma 49,90 USD con 49,90 PEN como si fueran lo
+          mismo.</p>
+
+        <p>La unidad escrita es el seguro contra ese día.</p>
 
         <h2>Cuándo conviene reificar una medición</h2>
 
-        <p>Atar cada número a su unidad con un par de tripletas resuelve la mayoría de los casos. Pero
-          cuando una medición va a sufrir conversiones frecuentes, o cuando importa <em>de dónde salió</em>
-          (con qué instrumento, en qué momento, sobre qué evento), la estrategia más limpia es
-          <strong>reificar la medición</strong>: elevar la medida misma al estatus de una entidad formal
-          en el eje <span class="eje-rotulo"><span class="eje eje--o">O</span></span>, con sus propias
+        <p>Atar cada número a su unidad con un par de tripletas resuelve la mayoría de los casos.</p>
+
+        <p>Pero cuando una medición va a sufrir muchas conversiones, o cuando importa <em>de dónde
+          salió</em> (con qué instrumento, en qué momento, sobre qué evento), lo más limpio es
+          <strong>convertir la medición en una entidad</strong>: darle sitio propio en el eje
+          <span class="eje-rotulo"><span class="eje eje--o">O</span></span>, con sus propias
           propiedades.</p>
 
         <aside class="nota-margen">
@@ -208,10 +232,11 @@
           propiedades y relaciones.
         </aside>
 
-        <p>Compara las dos formas de registrar el mismo monto de una venta. La versión <em>simple</em>
-          cuelga el valor y la unidad directamente del evento; la versión <em>reificada</em> crea una
-          entidad <code>medicion_monto_001</code> que reúne cantidad, unidad, instrumento y momento, y la
-          enlaza al evento de la venta. La figura las pone lado a lado.</p>
+        <p>Compara las dos formas de registrar el mismo monto.</p>
+
+        <p>La <em>simple</em> cuelga el valor y la unidad del evento. La <em>reificada</em> crea una
+          entidad <code>medicion_monto_001</code> que reúne cantidad, unidad, instrumento y momento, y
+          la ata a la venta. La figura las pone lado a lado.</p>
 
         <!-- FIGURA SVG: medición simple vs. reificada -->
         <figure class="figura figura--ancha revelar">
@@ -289,10 +314,12 @@
             propios: el dato pasa de número suelto a hecho trazable.</figcaption>
         </figure>
 
-        <p>La versión reificada es lo que separa a un sistema que escupe «49.90» de uno que afirma, con
-          todas las letras: <em>«49,90&nbsp;USD, cobrados por la caja del punto de venta sobre la venta
-          <code>venta_001</code>, a las 16:32»</em>. El primero es un número flotando en el vacío;
-          el segundo es un hecho que puede auditarse, convertirse y agregarse sin riesgo.</p>
+        <p>Esa segunda versión es lo que separa a un sistema que escupe «49.90» de uno que afirma, con
+          todas las letras: <em>«49,90 USD, cobrados por la caja sobre la venta
+          <code>venta_001</code>, a las 16:32»</em>.</p>
+
+        <p>El primero es un número flotando en el vacío. El segundo es un hecho que se puede auditar,
+          convertir y sumar sin riesgo.</p>
 
         <h2>El catálogo oficial: QUDT</h2>
 
@@ -302,19 +329,21 @@
 
         <div class="caja caja--precedente revelar">
           <p class="caja-tit">Precedente · QUDT<a class="ref" href="referencias.html#ref-18">(18)</a></p>
-          <p style="margin:0">La ontología pública <strong>QUDT</strong>
+          <p style="margin:0 0 .7rem">La ontología pública <strong>QUDT</strong>
             (<em>Quantities, Units, Dimensions and Types</em>) <code>[18]</code> cataloga miles de
-            unidades reconocidas: sus dimensiones físicas, sus factores de conversión exactos y sus
-            identificadores oficiales (URIs). Para milisegundos usas <code>qudt:MilliSEC</code>; para un
-            archivo de computadora, <code>qudt:Byte</code>; para el peso de la prenda, <code>qudt:GM</code>;
-            para los dólares de nuestra venta, <code>qudt:USD</code>. Cuando WQuestions adopta una
-            unidad, no la inventa: se enlaza a este catálogo.</p>
+            unidades: sus dimensiones físicas, sus factores de conversión exactos y sus identificadores
+            oficiales.</p>
+          <p style="margin:0">Para milisegundos usas <code>qudt:MilliSEC</code>. Para el peso de la
+            prenda, <code>qudt:GM</code>. Para los dólares de nuestra venta, <code>qudt:USD</code>.
+            Cuando WQuestions adopta una unidad, no la inventa: se engancha a este catálogo.</p>
         </div>
 
-        <p>El enganche es directo: la categoría que vive en el eje <span class="eje-rotulo"><span class="eje eje--k">K</span></span>
-          (digamos <code>K:USD</code>) declara su anclaje canónico mediante una propiedad que apunta al
-          recurso de QUDT. Así, dos sistemas que jamás se han visto pueden coincidir en que ambos hablan
-          de <em>dólares</em> porque ambos apuntan al mismo URI.</p>
+        <p>El enganche es directo. La categoría que vive en
+          <span class="eje-rotulo"><span class="eje eje--k">K</span></span>, digamos
+          <code>K:USD</code>, declara su ancla con una propiedad que apunta al recurso de QUDT.</p>
+
+        <p>Así, dos sistemas que jamás se han visto coinciden en que hablan de <em>dólares</em>, porque
+          los dos apuntan a la misma dirección.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">json</span><button class="copiar">⧉ copiar</button></div>
@@ -330,11 +359,14 @@
 
         <h2>Unidades que la IA tuvo que inventar</h2>
 
-        <p>Hay industrias tan recientes que QUDT todavía no tiene palabras para ellas. El ecosistema de
-          la inteligencia artificial es el ejemplo perfecto. ¿En qué unidad se mide la longitud de un
-          texto que un modelo procesa? ¿Cómo se cuantifica el «tamaño» de un modelo, o lo que cuesta cada
-          consulta? Algunas de estas magnitudes nacieron hace pocos años y aún carecen de nombre oficial
-          en cualquier catálogo formal.</p>
+        <p>Hay industrias tan recientes que QUDT todavía no tiene palabras para ellas. La inteligencia
+          artificial es el ejemplo perfecto.</p>
+
+        <p>¿En qué unidad se mide la longitud de un texto que un modelo procesa? ¿Cómo se mide el
+          «tamaño» de un modelo, o lo que cuesta cada consulta?</p>
+
+        <p>Algunas de estas magnitudes nacieron hace pocos años y aún no tienen nombre oficial en
+          ningún catálogo.</p>
 
         <div class="caja caja--practica revelar">
           <p class="caja-tit">La regla para una unidad sin catálogo</p>
@@ -359,10 +391,12 @@ K:precision_clasificador  — tasa de acierto, escala continua entre 0 y 1.
 K:USD_por_millon_tokens   — unidad compuesta: con ella facturan los proveedores.</code></pre>
         </div>
 
-        <p>La última es la más interesante: una <strong>unidad compuesta</strong> que entrelaza dinero
-          y capacidad de procesamiento. Un sistema maduro permite armar estas unidades híbridas y
-          guardarlas en K sin que la arquitectura tiemble, porque «dólar por millón de tokens» no es más
-          que una razón entre dos magnitudes que el eje ya sabe nombrar por separado.</p>
+        <p>La última es la más interesante: una <strong>unidad compuesta</strong> que mezcla dinero y
+          capacidad de proceso.</p>
+
+        <p>Un sistema maduro deja armar estas unidades híbridas y guardarlas en K sin temblar, porque
+          «dólar por millón de tokens» es una razón entre dos magnitudes que el eje ya sabe nombrar por
+          separado.</p>
 
         <aside class="nota-margen">
           <span class="etq">Nota</span>
@@ -371,9 +405,9 @@ K:USD_por_millon_tokens   — unidad compuesta: con ella facturan los proveedore
           reifica con su fecha de denominación.
         </aside>
 
-        <p>Y como toda magnitud volátil, su evolución se ve mejor en una serie temporal que en una
-          tabla. La caída del costo por millón de tokens en los modelos abiertos del último año cuenta,
-          por sí sola, buena parte de la historia económica de la IA reciente.</p>
+        <p>Y como toda magnitud que cambia rápido, se ve mejor en una curva que en una tabla. La caída
+          del costo por millón de tokens cuenta, ella sola, buena parte de la historia económica de la
+          IA reciente.</p>
 
         <!-- CHART: costo por millón de tokens a lo largo del año -->
         <figure class="figura revelar">
@@ -398,27 +432,28 @@ K:USD_por_millon_tokens   — unidad compuesta: con ella facturan los proveedore
         <p>En cuanto cada número lleva su unidad pegada, operaciones que antes eran trampas mortales se
           vuelven seguras y automáticas. Tres ejemplos lo dejan claro.</p>
 
-        <div class="columnas">
-          <p><strong>Conversión.</strong> Imagina un tablero que recibe la latencia de cuatro agentes:
-            uno reporta en milisegundos, dos en microsegundos y otro en segundos. Si las unidades están
-            mapeadas en <span class="eje-rotulo"><span class="eje eje--k">K</span></span> con su factor
-            a la unidad base, el sistema convierte todo a una escala común antes de operar. La regla de
-            conversión vive centralizada en K, y nadie escribe traductores a mano.</p>
-          <p><strong>Agregación.</strong> Pídele a un sistema mal diseñado el promedio de «340&nbsp;ms,
-            1200&nbsp;µs y 0,7&nbsp;s» y sumará los números desnudos (340&nbsp;+&nbsp;1200&nbsp;+&nbsp;0,7)
-            para devolverte una cifra ridícula y falsa. Con unidades explícitas, el motor sabe que no
-            puede mezclar escalas y homogeneiza antes de calcular. Por increíble que parezca, la suma
-            ciega ocurre a diario en tableros corporativos.</p>
+          <p><strong>Conversión.</strong> Un tablero recibe la latencia de cuatro agentes: uno reporta
+            en milisegundos, dos en microsegundos, otro en segundos.</p>
+          <p>Si las unidades están registradas en
+            <span class="eje-rotulo"><span class="eje eje--k">K</span></span> con su factor a la unidad
+            base, el sistema lo lleva todo a una escala común antes de operar. La regla vive en un solo
+            sitio, y nadie escribe traductores a mano.</p>
+          <p><strong>Suma.</strong> Pídele a un sistema mal diseñado el promedio de «340 ms, 1200 µs y
+            0,7 s» y sumará los números pelados para devolverte una cifra ridícula.</p>
+          <p>Con las unidades escritas, el motor sabe que no puede mezclar escalas y las iguala antes de
+            calcular. Por increíble que parezca, la suma ciega ocurre a diario en tableros de
+            empresa.</p>
           <p><strong>El tiempo dentro del dinero.</strong> Cien dólares de 2020 no son cien dólares de
-            hoy. Si modelas un contrato indexado, registrar «100&nbsp;USD» no alcanza: el número debe
-            arrastrar la unidad <em>y</em> la fecha de denominación. El valor del dinero cambia con el
-            tiempo, y el modelo lo gestiona apoyándose en la bitemporalidad que veremos más adelante.</p>
-        </div>
+            hoy.</p>
+          <p>Si modelas un contrato indexado, «100 USD» no alcanza. El número tiene que arrastrar la
+            unidad <em>y</em> la fecha. El valor del dinero cambia, y el modelo lo maneja apoyándose en
+            la vigencia que veremos más adelante.</p>
 
-        <p>El motor que intente sumar 100&nbsp;USD con 100&nbsp;JPY debe detenerse en seco, igual que se
-          negaría a sumar camisetas con porcentajes de descuento. La cantidad deja de ser un escalar y pasa a ser un
-          <strong>hecho completo y autoexplicativo</strong>: el par valor&nbsp;+&nbsp;unidad, con la
-          unidad anclada en K mediante su URI canónica.</p>
+        <p>Un motor que intente sumar 100 USD con 100 JPY debe detenerse en seco, igual que se negaría
+          a sumar camisetas con porcentajes.</p>
+
+        <p>La cantidad deja de ser un número suelto y pasa a ser un <strong>hecho que se explica
+          solo</strong>: valor más unidad, con la unidad anclada en K.</p>
 
         <h2>El modelo sabe hacer cuentas</h2>
 
@@ -427,9 +462,10 @@ K:USD_por_millon_tokens   — unidad compuesta: con ella facturan los proveedore
           hace, porque la solución vuelve a ser la misma de siempre: más hechos.</p>
 
         <p>La física de cada unidad no vive en el código. Vive en el eje
-          <span class="eje eje--k">K</span>, colgando de la propia categoría, con la forma que ya
-          viste en la ficha de <code>K:USD</code>: su ancla en QUDT, su unidad base y su factor
-          exacto. Una unidad compuesta declara de qué se compone, y con eso basta.</p>
+          <span class="eje eje--k">K</span>, colgando de la propia categoría.</p>
+
+        <p>Con la forma que ya viste en la ficha de <code>K:USD</code>: su ancla en QUDT, su unidad
+          base y su factor exacto. Una unidad compuesta declara de qué se compone, y con eso basta.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -441,29 +477,32 @@ K:USD_por_millon_tokens   — unidad compuesta: con ella facturan los proveedore
 (K:GramoPorTonelada, denominador,   K:ToneladaMetrica)   ∈ M(K, K)</code></pre>
         </div>
 
-        <p>De esas cinco tripletas se deduce, sin que nadie lo programe, que multiplicar toneladas por
-          gramos-por-tonelada da gramos. El motor reduce cada unidad a exponentes sobre unidades base y
-          combina los exponentes al operar: la tonelada y la onza troy son ambas gramo con distinto
-          factor, y el gramo por tonelada es masa entre masa, o sea nada, con una escala de una
-          millonésima. Poner esa aritmética en el grafo tiene una consecuencia práctica: un dominio
-          añade <code>K:token</code> o <code>K:USD_por_millon_tokens</code> sin tocar una línea de
-          código.</p>
+        <p>De esas cinco tripletas sale, sin que nadie lo programe, que multiplicar toneladas por
+          gramos-por-tonelada da gramos.</p>
+
+        <p>El motor reduce cada unidad a potencias de unidades base y las combina al operar. La
+          tonelada y la onza troy son las dos gramo con distinto factor. Y el gramo por tonelada es masa
+          entre masa, o sea nada, con una escala de una millonésima.</p>
+
+        <p>Poner esa aritmética en el grafo tiene una consecuencia práctica: un dominio añade
+          <code>K:token</code> o <code>K:USD_por_millon_tokens</code> sin tocar una línea de código.</p>
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Lo que el motor se niega a hacer</p>
-          <p style="margin:0">Sumar gramos con segundos falla, y falla diciendo por qué: no son
-            conmensurables. Pedir un resultado en segundos cuando salió en gramos falla. Y una
-            magnitud que llega sin unidad se rechaza citando la regla de este capítulo, en lugar de
-            operar con ella y devolver un número plausible. Es lo contrario de lo que hizo el sistema
-            de las turbinas: allí ninguna multiplicación estaba mal, y el desastre vino de que nadie
-            se negó a nada.</p>
+          <p style="margin:0 0 .7rem">Sumar gramos con segundos falla, y falla diciendo por qué: no se
+            pueden comparar. Pedir un resultado en segundos cuando salió en gramos falla. Y una
+            magnitud que llega sin unidad se rechaza citando la regla de este capítulo.</p>
+          <p style="margin:0">Es lo contrario de lo que hizo el sistema de las turbinas. Allí ninguna
+            multiplicación estaba mal, y el desastre vino de que nadie se negó a nada.</p>
         </div>
 
-        <p>La regla del cálculo también es un hecho, no una función escondida. Declara qué operar y
-          en qué unidad quieres el resultado, y lo que el motor escribe sale con su procedencia
-          encima: de qué situación se calculó y qué regla lo autoriza. Así es como el
-          <a href="23-minera.html">capítulo 23</a> obtiene las onzas de oro de una extracción sin que
-          nadie teclee el número.</p>
+        <p>La regla del cálculo también es un hecho, no una función escondida.</p>
+
+        <p>Declaras qué operar y en qué unidad quieres el resultado, y lo que el motor escribe sale con
+          su procedencia encima: de qué situación salió y qué regla lo autoriza.</p>
+
+        <p>Así es como el <a href="23-minera.html">capítulo 23</a> obtiene las onzas de oro de una
+          extracción sin que nadie teclee el número.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -485,11 +524,14 @@ K:USD_por_millon_tokens   — unidad compuesta: con ella facturan los proveedore
 
         <h2>Incertidumbre: cuando «cuánto» no es un único número</h2>
 
-        <p>En el mundo real los números casi nunca son exactos. Un estudio sobre un modelo de lenguaje
-          informa una precisión del <em>78,3&nbsp;%&nbsp;±&nbsp;2,1&nbsp;%</em>; un agente no devuelve una
-          latencia fija sino una campana de valores con su media y sus percentiles. El eje
-          <span class="eje-rotulo"><span class="eje eje--n">N</span></span> está preparado para recibir
-          la respuesta a «¿cuánto?» en tres formatos.</p>
+        <p>En el mundo real los números casi nunca son exactos.</p>
+
+        <p>Un estudio sobre un modelo de lenguaje informa una precisión del
+          <em>78,3 % ± 2,1 %</em>. Un agente no devuelve una latencia fija, sino una campana de valores
+          con su media y sus extremos.</p>
+
+        <p>El eje <span class="eje-rotulo"><span class="eje eje--n">N</span></span> acepta la respuesta
+          a «¿cuánto?» en tres formatos.</p>
 
         <div class="triple">
           <span class="nodo nodo--n"><span>2100</span><small>N</small></span>
@@ -520,12 +562,12 @@ K:USD_por_millon_tokens   — unidad compuesta: con ella facturan los proveedore
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Por qué esto importa con la IA</p>
-          <p style="margin:0">Si le haces dos veces la misma pregunta a un modelo generativo, obtienes
-            dos respuestas distintas: su «calidad» no es un número grabado en piedra, sino una
-            distribución de probabilidades. Cuando un informe anuncia que un modelo logra un 78,3&nbsp;%
-            de eficacia, te está dando el promedio de miles de pruebas. Modelar bien el dato significa que
-            el sistema <em>sepa</em> que ese 78,3&nbsp;% es la punta de un evento estadístico, no una
-            métrica plana.</p>
+          <p style="margin:0 0 .7rem">Si le haces dos veces la misma pregunta a un modelo generativo,
+            obtienes dos respuestas distintas. Su «calidad» no es un número grabado en piedra, sino un
+            abanico de probabilidades.</p>
+          <p style="margin:0">Cuando un informe anuncia que un modelo logra un 78,3 % de eficacia, te
+            está dando el promedio de miles de pruebas. Modelar bien el dato significa que el sistema
+            <em>sepa</em> que ese 78,3 % es la punta de algo estadístico, no una cifra plana.</p>
         </div>
 
         <h2>La venta y el agente, eje a eje</h2>
@@ -538,40 +580,45 @@ K:USD_por_millon_tokens   — unidad compuesta: con ella facturan los proveedore
           <div class="tarjeta">
             <p class="emoji">👕</p>
             <h4>La venta de una camiseta</h4>
-            <p style="margin:0;font-size:.95rem">Monto de 49,90&nbsp;USD, descuento del 10&nbsp;%, impuesto
-              del 18&nbsp;%, peso de 180&nbsp;g y una talla M. Cuatro magnitudes con cuatro unidades, más un
-              conteo solitario (1&nbsp;camiseta) que es pura cardinalidad y no necesita escala. Si llamáramos
-              a la prenda «talla M», ojo: eso no entra en N, porque la talla es una categoría del eje
+            <p style="margin:0;font-size:.95rem">Monto de 49,90 USD, descuento del 10 %, impuesto del
+              18 %, peso de 180 g. Cuatro magnitudes con cuatro unidades, más un conteo suelto
+              (1 camiseta) que no necesita escala. Ojo con la talla M: no entra en N, porque es una
+              categoría del eje
               <span class="eje-rotulo"><span class="eje eje--k">K</span></span>, no un número.</p>
           </div>
           <div class="tarjeta">
             <p class="emoji">🤖</p>
             <h4>Una sesión de agente de IA</h4>
-            <p style="margin:0;font-size:.95rem">Entrada de 4180&nbsp;tokens, salida de 920&nbsp;tokens,
-              latencia de 2100&nbsp;ms, costo de 0,015&nbsp;USD y precisión del 78,3&nbsp;%&nbsp;±&nbsp;2,1&nbsp;%.
-              Seis magnitudes, seis unidades (dos de ellas inventadas por la propia industria) y dos que
-              llegan con su margen de incertidumbre a cuestas. Ninguna de estas unidades existía en un
-              catálogo físico clásico.</p>
+            <p style="margin:0;font-size:.95rem">Entrada de 4180 tokens, salida de 920, latencia de
+              2100 ms, costo de 0,015 USD y precisión del 78,3 % ± 2,1 %. Seis magnitudes, seis
+              unidades, dos de ellas inventadas por la propia industria y dos que llegan con su margen
+              de error a cuestas. Ninguna existía en un catálogo físico clásico.</p>
           </div>
         </div>
 
-        <p>La verdadera prueba llega cuando alguien hace una pregunta que cruza ambos mundos. Por
-          ejemplo: <em>«¿cuántos dólares y cuántos tokens cuesta pedirle al agente que redacte la ficha
-          técnica de un catálogo de cuarenta camisetas?»</em>. Es una pregunta perfectamente razonable para un
-          negocio, y mezcla unidades de páginas, tokens, dólares y tiempo. Responderla exige que el
-          sistema sepa exactamente qué unidad acompaña a cada número y cómo se convierten entre sí. Sin
-          esa capa de inteligencia estructural, cualquier respuesta es una adivinanza disfrazada de
-          cálculo.</p>
+        <p>La prueba de verdad llega cuando alguien hace una pregunta que cruza los dos mundos.</p>
+
+        <p><em>«¿Cuántos dólares y cuántos tokens cuesta pedirle al agente la ficha técnica de un
+          catálogo de cuarenta camisetas?»</em></p>
+
+        <p>Es una pregunta razonable para un negocio, y mezcla páginas, tokens, dólares y tiempo.</p>
+
+        <p>Responderla exige que el sistema sepa qué unidad lleva cada número y cómo se convierten entre
+          sí. Sin eso, cualquier respuesta es una adivinanza disfrazada de cálculo.</p>
 
         <h2>Un número solo dice poco; muchos cuentan el negocio</h2>
 
-        <p>Una magnitud aislada (los 49,90&nbsp;dólares de <code>venta_001</code>, su 10&nbsp;% de
-          descuento) describe un solo hecho y poco más. El eje cuantitativo cobra todo su sentido cuando
-          se acumula: el total facturado del día, el descuento promedio de la campaña, el ticket medio
-          por cliente. Y como cada importe es un valor tipado colgado de una situación, sumarlos o
-          promediarlos sobre miles de ventas no es una capa que se añade por fuera: es la operación más
-          natural del eje. Sumar montos es, sencillamente, recorrer el mismo cable <code>monto</code>
-          sobre todas las situaciones de venta a la vez.</p>
+        <p>Una magnitud aislada, los 49,90 dólares de <code>venta_001</code>, describe un solo hecho y
+          poco más.</p>
+
+        <p>El eje cuantitativo cobra sentido cuando se acumula: el total facturado del día, el descuento
+          promedio de la campaña, el ticket medio por cliente.</p>
+
+        <p>Y como cada importe cuelga de una situación con su tipo puesto, sumarlos sobre miles de
+          ventas no es una capa que se añade por fuera. Es la operación más natural del eje.</p>
+
+        <p>Sumar montos es recorrer el mismo cable <code>monto</code> sobre todas las ventas a la
+          vez.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -581,35 +628,40 @@ suma(u, "monto", Pattern(type_constraint=u.ind("venta")))</code></pre>
 
         <h2>La trampa de programación: el escalar pelado</h2>
 
-        <p>El error clásico (el que asoma en producción y cuesta dinero real) es guardar
-          <code>100</code> en una columna llamada <code>monto</code> y dar por sentado que «ya se sabe»
-          que son dólares. Un día el sistema integra un proveedor que factura en yenes; otro operario
-          carga <code>100</code> pensando en soles; y la suma <code>100 + 100</code> arroja
-          <code>200</code> de una moneda que no existe. Es la misma falla que, a otra escala, agrietó el
-          rodamiento de la turbina y desintegró una sonda en Marte.</p>
+        <p>El error clásico, el que asoma en producción y cuesta dinero real, es guardar
+          <code>100</code> en una columna llamada <code>monto</code> dando por hecho que «ya se sabe»
+          que son dólares.</p>
+
+        <p>Un día el sistema integra un proveedor que factura en yenes. Otro operario carga
+          <code>100</code> pensando en soles. Y la suma <code>100 + 100</code> arroja <code>200</code>
+          de una moneda que no existe.</p>
+
+        <p>Es la misma falla que agrietó el rodamiento de la turbina y desintegró una sonda en
+          Marte.</p>
 
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">La desnudez numérica está prohibida</p>
-          <p style="margin:0">Una magnitud jamás se almacena como un escalar pelado, sino como el par
-            <strong>valor&nbsp;+&nbsp;unidad</strong>, con la unidad anclada en
-            <span class="eje-rotulo"><span class="eje eje--k">K</span></span> por su URI canónica (QUDT).
-            Un motor que intente sumar <code>100&nbsp;USD</code> con <code>100&nbsp;JPY</code> se detiene
-            en seco, igual que se negaría a sumar peras con tornillos. El número, solo,
+          <p style="margin:0 0 .7rem">Una magnitud jamás se guarda como un número pelado. Se guarda como
+            el par <strong>valor&nbsp;+&nbsp;unidad</strong>, con la unidad anclada en
+            <span class="eje-rotulo"><span class="eje eje--k">K</span></span> por su URI.</p>
+          <p style="margin:0">Un motor que intente sumar <code>100 USD</code> con <code>100 JPY</code>
+            se detiene en seco, igual que se negaría a sumar peras con tornillos. El número, solo,
             <em>miente por omisión</em>.</p>
         </div>
 
         <h2>El inventario de cajas está completo</h2>
 
         <p>Con el eje <span class="eje-rotulo"><span class="eje eje--n">N</span></span> instalado, el
-          universo de catalogación queda formalmente cerrado. Tenemos los cuatro pilares del mundo físico
-          (quién, qué, dónde, cuándo), el zócalo intelectual de las categorías
-          (<span class="eje-rotulo"><span class="eje eje--k">K</span></span>) y, ahora, el terreno firme
-          de las magnitudes (<span class="eje-rotulo"><span class="eje eje--n">N</span></span>). Ya están
-          listos los cajones para alojar cualquier valor que exista.</p>
+          catálogo queda cerrado.</p>
+
+        <p>Tenemos los cuatro pilares del mundo físico, el zócalo de las categorías
+          (<span class="eje-rotulo"><span class="eje eje--k">K</span></span>) y el terreno firme de las
+          magnitudes (<span class="eje-rotulo"><span class="eje eje--n">N</span></span>).</p>
+
+        <p>Ya están listos los cajones para cualquier valor que exista.</p>
 
         <p>Recapitulemos lo construido antes de seguir:</p>
 
-        <div class="columnas">
           <p><strong>1. N es un eje de valor puro.</strong> A diferencia de los objetos, un número es su
             propia identidad y no necesita un código interno (UUID) para existir.</p>
           <p><strong>2. La desnudez numérica está prohibida.</strong> Todo número entra con una unidad
@@ -620,15 +672,20 @@ suma(u, "monto", Pattern(type_constraint=u.ind("venta")))</code></pre>
             para los conceptos emergentes (token, parámetros, precisión) creamos unidades propias en K.</p>
           <p><strong>5. Tolerancia estadística.</strong> El eje admite la incertidumbre como rango o como
             distribución reificada, no solo como un promedio plano.</p>
-        </div>
 
-        <p>Lo que falta ya no son más cajones. Lo que falta son los <strong>cables</strong> que conecten
-          todos estos valores entre sí: las etiquetas que le explican a la máquina <em>cómo</em> un agente
-          se relaciona con un objeto, y cómo un objeto sostiene una magnitud. Esos cables viven en el eje
-          <span class="eje-rotulo"><span class="eje eje--m">M</span> cómo</span>, el de los predicados. Y
-          como veremos enseguida, la frontera entre «tener una propiedad» y «estar relacionado con algo»
-          es, a nivel informático, mucho más delgada de lo que dicta el sentido común: es solo cuestión
-          de cardinalidad.</p>
+        <p>Lo que falta ya no son cajones. Son los <strong>cables</strong> que conecten estos valores
+          entre sí.</p>
+
+        <p>Las etiquetas que le explican a la máquina <em>cómo</em> se relaciona un agente con un
+          objeto, y cómo un objeto sostiene una magnitud.</p>
+
+        <p>Esos cables viven en el eje
+          <span class="eje-rotulo"><span class="eje eje--m">M</span> cómo</span>, el de los
+          predicados.</p>
+
+        <p>Y como veremos enseguida, la frontera entre «tener una propiedad» y «estar relacionado con
+          algo» es mucho más delgada de lo que dicta el sentido común. Es solo cuestión de cuántos
+          valores caben.</p>
 
       </div>
     </article>

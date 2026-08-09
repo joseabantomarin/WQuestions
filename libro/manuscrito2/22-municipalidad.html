@@ -57,15 +57,18 @@
       <div class="contenido">
 
         <p class="entrada">Carla Ferreyra entra a la oficina de atención al vecino un lunes a las
-          nueve y diez, con una carpeta bajo el brazo. Quiere abrir una pequeña tienda de bicicletas en
-          la esquina de su barrio. La empleada que la atiende no le pregunta, de entrada, qué vende ni
-          cuánto invierte: le pide su documento, el plano del local y el certificado de zonificación.
-          ¿Por qué esos tres papeles y no otros? Porque una ordenanza (la 142, de micromovilidad) exige
-          que toda licencia de funcionamiento de un comercio de vehículos livianos acredite esos
-          requisitos. Carla no lo sabe, pero acaba de tocar el primer eslabón de una cadena que va de
-          una norma a un trámite, y de ese trámite a cada uno de sus requisitos. Reconstruir esa cadena
-          (y poder responder, años después, <em>bajo qué artículo se le pidió cada cosa</em>) es el
-          examen de este capítulo.</p>
+          nueve y diez, con una carpeta bajo el brazo. Quiere abrir una tienda de bicicletas en la
+          esquina de su barrio.</p>
+
+        <p>La empleada no le pregunta qué vende ni cuánto invierte. Le pide su documento, el plano del
+          local y el certificado de zonificación.</p>
+
+        <p>¿Por qué esos tres papeles y no otros? Porque una ordenanza, la 142 de micromovilidad, exige
+          que toda licencia para un comercio de vehículos livianos acredite esos requisitos.</p>
+
+        <p>Carla no lo sabe, pero acaba de tocar el primer eslabón de una cadena que va de una norma a
+          un trámite, y de ese trámite a cada requisito. Reconstruir esa cadena, y poder responder años
+          después <em>bajo qué artículo se le pidió cada cosa</em>, es el examen de este capítulo.</p>
 
         <aside class="nota-margen">
           <span class="etq">El giro del capítulo</span>
@@ -74,20 +77,24 @@
           el evento sino su <em>fundamento</em>.
         </aside>
 
-        <p>En los dominios anteriores de esta parte, lo predominante era lo que ocurría: una venta, un
-          viaje, una transferencia. El hecho mandaba. Una municipalidad introduce una tensión distinta.
-          Aquí, lo que sucede no se sostiene sin la regla que le da pie. Una licencia de funcionamiento
-          no se emite por voluntad de un funcionario: se emite <strong>porque una ordenanza fija los
-          requisitos y alguien verificó que se cumplían</strong>. Una multa de tránsito no se aplica al
-          capricho del inspector: se aplica <strong>porque un artículo la habilita y el conductor
-          cometió el supuesto que ese artículo describe</strong>. Una resolución no revoca una multa por
-          gusto: la revoca <strong>porque un recurso ciudadano fue declarado fundado conforme al
-          procedimiento</strong>.</p>
+        <p>En los dominios anteriores mandaba lo que ocurría: una venta, un viaje, una transferencia.
+          El hecho mandaba.</p>
 
-        <p>En todos esos casos, el «porque» del Estado tiene dos caras al mismo tiempo: una cara
-          <em>fáctica</em> (qué ocurrió en el mundo) y una cara <em>normativa</em> (qué regla lo
-          autoriza). Un sistema municipal serio tiene que registrar las dos y poder responder por
-          separado a dos preguntas que suenan iguales pero no lo son:</p>
+        <p>Una municipalidad trae otra tensión. Aquí lo que sucede no se sostiene sin la regla que le da
+          pie.</p>
+
+        <p>Una licencia no se emite por voluntad de un funcionario. Se emite <strong>porque una
+          ordenanza fija los requisitos y alguien verificó que se cumplían</strong>.</p>
+
+        <p>Una multa no se aplica al capricho del inspector. Se aplica <strong>porque un artículo la
+          habilita y el conductor hizo lo que ese artículo describe</strong>. Y una resolución no revoca
+          una multa por gusto: la revoca <strong>porque un recurso fue declarado fundado</strong>.</p>
+
+        <p>El «porque» del Estado tiene siempre dos caras a la vez. Una cara <em>fáctica</em>, qué
+          ocurrió en el mundo, y una cara <em>normativa</em>, qué regla lo autoriza.</p>
+
+        <p>Un sistema municipal serio tiene que registrar las dos y responder por separado a dos
+          preguntas que suenan iguales y no lo son:</p>
 
         <div class="rejilla-2 revelar">
           <div class="tarjeta">
@@ -104,12 +111,14 @@
           </div>
         </div>
 
-        <p>WQuestions separa esas dos caras con precisión quirúrgica, y lo hace con un reparto que ya
-          conoces. Como argumentó el capítulo sobre el «por qué», no existe un eje «por qué»: el porqué
-          se divide en cuatro cables distintos. Dos de ellos hacen aquí todo el trabajo:
-          <code>causado_por</code> apunta a la causa fáctica, y <code>justificado_por</code> apunta a la
-          norma. Conviven sin pisarse, y —lo decisivo— permiten reconstruir cualquier acto del Estado
-          hacia atrás hasta su fundamento legal con un par de saltos en el grafo.</p>
+        <p>WQuestions separa esas dos caras con un reparto que ya conoces. Como vimos al hablar del
+          «por qué», no existe un eje «por qué»: el porqué se reparte en cuatro cables.</p>
+
+        <p>Dos hacen aquí todo el trabajo. <code>causado_por</code> apunta a la causa fáctica.
+          <code>justificado_por</code> apunta a la norma.</p>
+
+        <p>Conviven sin pisarse. Y lo decisivo: permiten reconstruir cualquier acto del Estado hacia
+          atrás, hasta su fundamento legal, con un par de saltos.</p>
 
         <aside class="nota-margen">
           <span class="etq">Recordatorio · D7</span>
@@ -121,11 +130,13 @@
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Lo que pone a prueba este capítulo</p>
-          <p style="margin:0">Que el modelo represente <strong>lo normativo</strong> sin extensiones
-            especiales. La apuesta es fuerte: las ordenanzas y sus artículos viven en <code>O</code>
-            como cualquier otra entidad, los trámites son situaciones reificadas, y un único cable
-            (<code>justificado_por</code>) encadena norma, trámite y requisito en una estructura que se
-            puede recorrer, auditar e impugnar. Ni una tabla nueva, ni un eje nuevo.</p>
+          <p style="margin:0 0 .7rem">Que el modelo represente <strong>lo normativo</strong> sin
+            extensiones especiales.</p>
+
+          <p style="margin:0">La apuesta es fuerte. Las ordenanzas y sus artículos viven en
+            <code>O</code> como cualquier otra entidad, los trámites son situaciones, y un solo cable
+            (<code>justificado_por</code>) encadena norma, trámite y requisito en algo que se puede
+            recorrer, auditar e impugnar. Ni una tabla nueva, ni un eje nuevo.</p>
         </div>
 
         <h2>El barrio en siete coordenadas</h2>
@@ -223,21 +234,23 @@
             identidad propia y trazables como cualquier otra entidad.</figcaption>
         </figure>
 
-        <p>Las decisiones de diseño que más se ejercitan aquí ya están todas sobre la mesa, enunciadas
-          en capítulos previos. Vale la pena nombrarlas, porque este dominio las pone a trabajar
-          juntas: <strong>D7</strong>, las dos relaciones del «por qué» operando en paralelo (una
-          fáctica, una normativa); <strong>D4</strong>, cada acto administrativo reificado como una
-          situación con identidad propia; <strong>D6</strong>, los estados de un expediente que cambian
-          en el tiempo y se preservan; y <strong>D8</strong>, la política liberal del lexicon, que
-          admite roles específicos del dominio sin tocar el catálogo canónico.</p>
+        <p>Las decisiones que más se ejercitan aquí ya están todas sobre la mesa. Vale la pena
+          nombrarlas, porque este dominio las pone a trabajar juntas.</p>
+
+        <p><strong>D7</strong>: las dos relaciones del «por qué» funcionando en paralelo, una fáctica y
+          una normativa. <strong>D4</strong>: cada acto administrativo con identidad propia.
+          <strong>D6</strong>: los estados de un expediente cambian en el tiempo y se preservan. Y
+          <strong>D8</strong>: el lexicon admite roles propios del dominio sin tocar el catálogo.</p>
 
         <h2>Las ordenanzas viven en el grafo</h2>
 
-        <p>El punto de partida, y el más sorprendente para quien viene del mundo relacional, es este:
-          <strong>una ordenanza no es un PDF guardado en una carpeta; es una entidad</strong>. Vive en
-          <code>O</code> con sus atributos (número, fecha de publicación, autoridad que la dictó, materia
-          que regula) y sus artículos cuelgan de ella por <code>parte_de</code>, exactamente la misma
-          relación que une una línea con su venta en el spa, o una pieza con su ensamblaje en un ERP.</p>
+        <p>El punto de partida sorprende a quien viene del mundo relacional: <strong>una ordenanza no
+          es un PDF en una carpeta. Es una entidad</strong>.</p>
+
+        <p>Vive en <code>O</code> con sus atributos (número, fecha de publicación, autoridad que la
+          dictó, materia que regula), y sus artículos cuelgan de ella por <code>parte_de</code>. La
+          misma relación que une una línea con su venta en el spa, o una pieza con su ensamblaje en un
+          ERP.</p>
 
         <p>Tomemos la ordenanza 142, sobre micromovilidad (scooters, bicicletas y comercios afines),
           que será nuestro hilo conductor. La municipalidad la dictó, fija una fecha de publicación y,
@@ -256,11 +269,11 @@
   estatus_factual  : vigente                    # K · su estado</code></pre>
         </div>
 
-        <p>Cada artículo es un objeto en <code>O</code> por derecho propio, vinculado a su ordenanza y
-          —esto es lo que vuelve la estructura interesante— capaz de <em>habilitar</em> trámites y
-          <em>exigir</em> requisitos. El artículo 4 habilita la licencia de funcionamiento para
-          comercios de vehículos livianos; el artículo 7 habilita la sanción por estacionar un vehículo
-          de reparto en zona prohibida.</p>
+        <p>Cada artículo es un objeto en <code>O</code> por derecho propio, atado a su ordenanza y,
+          esto es lo interesante, capaz de <em>habilitar</em> trámites y <em>exigir</em> requisitos.</p>
+
+        <p>El artículo 4 habilita la licencia para comercios de vehículos livianos. El artículo 7
+          habilita la sanción por estacionar un vehículo de reparto en zona prohibida.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -282,16 +295,20 @@
           verdad las habilitó: la verdad histórica no se reescribe.
         </aside>
 
-        <p>Fíjate en lo que acabamos de construir sin darnos cuenta. Tenemos un <em>artículo</em> que
+        <p>Fíjate en lo que acabamos de construir sin darnos cuenta. Un <em>artículo</em> que
           <code>habilita</code> un <em>trámite</em> y que <code>exige</code> unos <em>requisitos</em>.
-          Eso es ya, en germen, una cadena normativa. Y las cadenas, en este modelo, no se declaran en
-          una tabla aparte: emergen de encadenar cables del eje <code>M</code>.</p>
+          Eso ya es, en germen, una cadena normativa.</p>
+
+        <p>Y las cadenas, aquí, no se declaran en una tabla aparte. Salen de encadenar cables del eje
+          <code>M</code>.</p>
 
         <h2>La cadena normativa</h2>
 
-        <p>Aquí está el corazón del capítulo. Cuando Carla pide su licencia, la empleada no inventa los
-          requisitos: los lee de la cadena que va de la norma al trámite y del trámite a cada requisito.
-          Esa cadena es un camino en el grafo, y cada arista es un cable de <code>M</code> con su firma
+        <p>Aquí está el corazón del capítulo. Cuando Carla pide su licencia, la empleada no inventa
+          los requisitos. Los lee de la cadena que va de la norma al trámite, y del trámite a cada
+          requisito.</p>
+
+        <p>Esa cadena es un camino en el grafo, y cada flecha es un cable de <code>M</code> con su firma
           y su color de eje.</p>
 
         <!-- FIGURA SVG: la cadena normativa norma → trámite → requisito, enlazada por justificado_por -->
@@ -401,20 +418,24 @@
 
         <div class="caja caja--definicion revelar">
           <p class="caja-tit">Cadena normativa</p>
-          <p style="margin:0">Camino en el grafo que conecta un acto administrativo con la norma que lo
-            fundamenta, eslabón a eslabón: la licencia está <code>justificado_por</code> un artículo,
-            el artículo es <code>parte_de</code> una ordenanza, la ordenanza fue <code>emitida_por</code>
-            la municipalidad. No es una tabla ni un campo: es un <em>recorrido</em>. Su longitud puede
-            crecer (un artículo puede a su vez remitir a una ley superior) sin que el modelo cambie:
-            solo se añaden eslabones del mismo tipo.</p>
+          <p style="margin:0 0 .7rem">Camino en el grafo que conecta un acto administrativo con la
+            norma que lo fundamenta, eslabón a eslabón. La licencia está <code>justificado_por</code> un
+            artículo, el artículo es <code>parte_de</code> una ordenanza, la ordenanza fue
+            <code>emitida_por</code> la municipalidad.</p>
+
+          <p style="margin:0">No es una tabla ni un campo. Es un <em>recorrido</em>. Puede alargarse (un
+            artículo puede remitir a una ley superior) sin que el modelo cambie: se añaden eslabones del
+            mismo tipo.</p>
         </div>
 
         <h2>El territorio, jerarquía de lugares</h2>
 
-        <p>Antes de seguir los trámites de Carla, hace falta ubicarlos. Una municipalidad gestiona
+        <p>Antes de seguir los trámites de Carla hace falta ubicarlos. Una municipalidad gestiona
           territorio, y el territorio se anida: la ciudad contiene distritos, los distritos barrios, los
-          barrios manzanas, las manzanas lotes. Cada uno es un punto en <code>L</code>, y la jerarquía
-          se establece con un rol de dominio, <code>dentro_de</code>:</p>
+          barrios manzanas, las manzanas lotes.</p>
+
+        <p>Cada uno es un punto en <code>L</code>, y la jerarquía se arma con un rol de dominio,
+          <code>dentro_de</code>:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -432,18 +453,19 @@
           queda nítida para humanos y para un LLM. La interfaz es el lexicon, no el catálogo.
         </aside>
 
-        <p>La cadena territorial se recorre recursivamente. La pregunta <em>«¿dónde queda exactamente
-          el lote 19?»</em> se responde siguiendo <code>dentro_de</code> hacia arriba: <code>lote_19 →
-          manzana_19 → barrio_lomas → distrito_norte → ciudad_capital</code>, en un solo recorrido y
-          sin un solo <code>JOIN</code>. Y, como veremos, el mismo lote es a la vez el <em>lugar</em> de
-          la futura tienda y el <em>tema</em> de los trámites que la habilitan: una misma entidad
-          territorial se cruza con la cadena normativa.</p>
+        <p>La cadena territorial se recorre subiendo. <em>«¿Dónde queda exactamente el lote 19?»</em>
+          se responde siguiendo <code>dentro_de</code> hacia arriba: <code>lote_19 → manzana_19 →
+          barrio_lomas → distrito_norte → ciudad_capital</code>. Un solo recorrido, ni un
+          <code>JOIN</code>.</p>
+
+        <p>Y el mismo lote es a la vez el <em>lugar</em> de la futura tienda y el <em>tema</em> de los
+          trámites que la habilitan. Una entidad territorial que se cruza con la cadena normativa.</p>
 
         <h2>El trámite, paso a paso, como situaciones encadenadas</h2>
 
-        <p>Volvamos a Carla. Su licencia no es un instante: es un proceso de tres actos administrativos
-          encadenados, y cada uno (fiel a la idea de reificar lo que merece identidad propia) es una
-          situación en <code>O</code> con su agente, su momento, su lugar y su resultado.</p>
+        <p>Volvamos a Carla. Su licencia no es un instante. Es un proceso de tres actos encadenados, y
+          cada uno es una situación en <code>O</code> con su agente, su momento, su lugar y su
+          resultado.</p>
 
         <ol class="limpia revelar">
           <li style="margin-bottom:.5rem"><b>Solicitud.</b> Carla, en nombre de su comercio, solicita
@@ -454,12 +476,14 @@
             artículo.</li>
         </ol>
 
-        <p>Los tres actos se enlazan con cables del «por qué». La inspección está <code>motivado_por</code>
-          la solicitud; la emisión está <code>motivado_por</code> tanto la solicitud como la inspección
-          (porque <code>motivado_por</code> admite varios valores); y la emisión cierra con el cable
-          decisivo, <code>justificado_por</code>, apuntando a la norma. En el prototipo, armar la
-          emisión no exige redactar las tripletas a mano: una llamada consulta el lexicon, desambigua el
-          verbo, crea la situación y enchufa los cables, validando cada uno.</p>
+        <p>Los tres actos se enlazan con cables del «por qué». La inspección está
+          <code>motivado_por</code> la solicitud. La emisión está <code>motivado_por</code> la solicitud
+          <em>y</em> la inspección, porque ese cable admite varios valores. Y la emisión cierra con el
+          cable decisivo, <code>justificado_por</code>, apuntando a la norma.</p>
+
+        <p>En el prototipo, armar la emisión no exige escribir las tripletas a mano. Una llamada
+          consulta el lexicon, desambigua el verbo, crea la situación y enchufa los cables validando
+          cada uno.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -483,16 +507,20 @@ u.assert_fact(licencia, "motivado_por", inspeccion_carla)</code></pre>
         </div>
 
         <p>Lo notable es la nitidez con que el grafo responde dos preguntas que un sistema clásico
-          mezcla. <em>«¿Bajo qué norma se emitió la licencia de Carla?»</em> se resuelve con un único
-          salto siguiendo <code>justificado_por</code>: el artículo 4. Y <em>«¿qué motivó la
-          emisión?»</em> devuelve dos respuestas (la solicitud y la inspección) porque el cable es
-          multi-valor. Dos preguntas distintas, dos cables distintos, dos respuestas limpias.</p>
+          mezcla.</p>
 
-        <p>Mientras tanto, el estado de la solicitud cambia con el tiempo, y esos cambios se preservan
-          en lugar de sobrescribirse, fieles a la regla de vigencia. La solicitud estuvo
-          <code>en_revision</code> entre el 6 de marzo y el 6 de abril, y quedó <code>aprobada</code>
-          desde entonces. Ambos hechos conviven, y la pregunta <em>«¿en qué estado estaba la solicitud
-          el 20 de marzo?»</em> tiene una respuesta exacta.</p>
+        <p><em>«¿Bajo qué norma se emitió la licencia de Carla?»</em> es un salto por
+          <code>justificado_por</code>: el artículo 4. Y <em>«¿qué motivó la emisión?»</em> devuelve dos
+          respuestas, la solicitud y la inspección, porque ese cable admite varias.</p>
+
+        <p>Dos preguntas distintas, dos cables distintos, dos respuestas limpias.</p>
+
+        <p>Mientras tanto, el estado de la solicitud cambia con el tiempo, y esos cambios se guardan en
+          vez de pisarse.</p>
+
+        <p>La solicitud estuvo <code>en_revision</code> entre el 6 de marzo y el 6 de abril, y quedó
+          <code>aprobada</code> desde entonces. Los dos hechos conviven, y <em>«¿en qué estado estaba el
+          20 de marzo?»</em> tiene una respuesta exacta.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">triple</span><button class="copiar">⧉ copiar</button></div>
@@ -504,10 +532,11 @@ u.assert_fact(licencia, "motivado_por", inspeccion_carla)</code></pre>
         <h2>Una denuncia abre un expediente</h2>
 
         <p>Pasa un mes. Bruno Salazar, vecino de la misma manzana, denuncia que la tienda de Carla
-          recibe repartos a deshora y bloquea la vereda con cajas. La denuncia es, otra vez, una
-          situación: tiene un <code>agente</code> (Bruno), un <code>paciente</code> (el comercio
-          denunciado) y un <code>tema</code> que reifica el hecho específico que se reporta, el bloqueo
-          de la vereda.</p>
+          recibe repartos a deshora y bloquea la vereda con cajas.</p>
+
+        <p>La denuncia es, otra vez, una situación. Tiene un <code>agente</code> (Bruno), un
+          <code>paciente</code> (el comercio denunciado) y un <code>tema</code> que recoge el hecho
+          concreto que se reporta: el bloqueo de la vereda.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -523,11 +552,13 @@ u.assert_fact(licencia, "motivado_por", inspeccion_carla)</code></pre>
 )</code></pre>
         </div>
 
-        <p>La denuncia dispara un <strong>expediente administrativo</strong> (otra entidad en
-          <code>O</code>) que agrupa, por <code>parte_de</code>, todas las diligencias que el municipio
-          realice para procesarla. La inspección de verificación que el inspector hace cuatro días
-          después es <code>parte_de</code> el expediente; y si más tarde se suman citación, descargo y
-          resolución, todas viven dentro del mismo expediente.</p>
+        <p>La denuncia dispara un <strong>expediente administrativo</strong>, otra entidad en
+          <code>O</code>, que agrupa por <code>parte_de</code> todas las diligencias que el municipio
+          haga para procesarla.</p>
+
+        <p>La inspección que el inspector hace cuatro días después es <code>parte_de</code> el
+          expediente. Y si luego se suman citación, descargo y resolución, todas viven dentro del
+          mismo.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">triple</span><button class="copiar">⧉ copiar</button></div>
@@ -539,22 +570,25 @@ u.assert_fact(licencia, "motivado_por", inspeccion_carla)</code></pre>
 (citacion_carla,    parte_de, expediente_2026_214)   # otra diligencia</code></pre>
         </div>
 
-        <p>El expediente como entidad articuladora no es un patrón nuevo: es el mismo que reúne un viaje
-          de taxi con sus etapas, o una transferencia bancaria con sus pasos. Una situación superior que
-          junta todos sus actos secundarios. La pregunta <em>«¿qué diligencias hubo en este
-          expediente?»</em> es una proyección directa por <code>parte_de</code>.</p>
+        <p>El expediente como contenedor no es un patrón nuevo. Es el mismo que reúne un viaje de taxi
+          con sus etapas, o una transferencia con sus pasos. Una situación superior que junta sus actos
+          menores. <em>«¿Qué diligencias hubo en este expediente?»</em> es un salto por
+          <code>parte_de</code>.</p>
 
         <h2>El caso paradigmático: la multa con doble «por qué»</h2>
 
-        <p>Y ahora, la escena que justifica el capítulo entero. Mientras la denuncia sigue su curso,
-          ocurre algo en la avenida. El conductor del furgón de reparto de la tienda, Iván Cardozo,
-          estaciona en zona prohibida sobre la avenida del Parque un martes a las dos y media de la
-          tarde. Tres minutos después, una inspectora de tránsito le aplica una multa de 320 dólares.</p>
+        <p>Y ahora la escena que justifica el capítulo entero.</p>
 
-        <p>El modelo registra la cadena entera. La <strong>infracción</strong> se reifica como una
-          situación con su tema (el furgón), su lugar, su momento y su tipo categórico. Y la
-          <strong>multa</strong> se reifica como otra situación con su agente, su paciente, su monto, y
-          —esto es lo crucial— <strong>dos relaciones del «por qué» a la vez</strong>:</p>
+        <p>Mientras la denuncia sigue su curso, pasa algo en la avenida. Iván Cardozo, conductor del
+          furgón de reparto de la tienda, estaciona en zona prohibida sobre la avenida del Parque un
+          martes a las dos y media. Tres minutos después, una inspectora le aplica una multa de 320
+          dólares.</p>
+
+        <p>El modelo registra la cadena entera. La <strong>infracción</strong> es una situación con su
+          tema (el furgón), su lugar, su momento y su tipo.</p>
+
+        <p>Y la <strong>multa</strong> es otra situación con su agente, su paciente, su monto y, esto es
+          lo crucial, <strong>dos relaciones del «por qué» a la vez</strong>:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -572,11 +606,14 @@ u.assert_fact(licencia, "motivado_por", inspeccion_carla)</code></pre>
 )</code></pre>
         </div>
 
-        <p>Esta es la forma del modelo que solo la cuádruple partición del «por qué» hace posible. La
-          multa <strong>es causada por</strong> la infracción (sin el furgón mal estacionado no habría
-          razón para sancionar) y <strong>es justificada por</strong> el artículo 7 (sin él, la
-          inspectora no tendría base legal para hacerlo). Las dos afirmaciones son verdaderas a la vez y
-          dicen cosas distintas. Visto como tripletas, el doble fundamento se lee de un golpe:</p>
+        <p>Esta forma solo es posible porque el «por qué» está partido en cuatro.</p>
+
+        <p>La multa <strong>es causada por</strong> la infracción: sin el furgón mal estacionado no
+          habría razón para sancionar. Y <strong>es justificada por</strong> el artículo 7: sin él, la
+          inspectora no tendría base legal.</p>
+
+        <p>Las dos afirmaciones son ciertas a la vez y dicen cosas distintas. En tripletas, el doble
+          fundamento se lee de un golpe:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">triple</span><button class="copiar">⧉ copiar</button></div>
@@ -587,12 +624,12 @@ u.assert_fact(licencia, "motivado_por", inspeccion_carla)</code></pre>
 
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">Lo que el campo «motivo» destruye</p>
-          <p style="margin:0">En un sistema tradicional, esto se aplasta en una sola columna
-            <code>motivo</code>: un texto libre tipo «estacionamiento prohibido, art. 7». Esa cadena de
-            caracteres mezcla el hecho con la norma, no se puede consultar limpiamente y —lo más grave—
-            el ciudadano no puede impugnar <em>solo</em> el fundamento legal sin tocar el hecho, ni
-            viceversa. El doble cable de D7 mantiene ambas caras separadas, consultables e impugnables
-            por separado.</p>
+          <p style="margin:0 0 .7rem">En un sistema tradicional esto se aplasta en una columna
+            <code>motivo</code>, con un texto libre tipo «estacionamiento prohibido, art. 7».</p>
+
+          <p style="margin:0">Esa cadena de caracteres mezcla el hecho con la norma, no se consulta
+            bien y, lo más grave, el ciudadano no puede impugnar <em>solo</em> el fundamento legal sin
+            tocar el hecho, ni al revés. El doble cable de D7 mantiene las dos caras separadas.</p>
         </div>
 
         <h2>El recurso, y un acto que no se borra</h2>
@@ -611,11 +648,11 @@ u.assert_fact(licencia, "motivado_por", inspeccion_carla)</code></pre>
   momento      : 2026-06-16T11:00              # T</code></pre>
         </div>
 
-        <p>Tres semanas más tarde, el alcalde resuelve. Declara el recurso <strong>fundado</strong> (la
-          señalización, en efecto, no era visible), lo que deja la multa sin efecto. La resolución es,
-          como todo lo demás, una situación; lleva su propia justificación normativa (el artículo del
-          procedimiento administrativo que faculta a resolver recursos) y dos consecuencias ocurren en
-          paralelo:</p>
+        <p>Tres semanas más tarde el alcalde resuelve. Declara el recurso <strong>fundado</strong>: la
+          señalización, en efecto, no era visible. La multa queda sin efecto.</p>
+
+        <p>La resolución es, como todo lo demás, una situación. Lleva su propia justificación normativa
+          (el artículo que faculta a resolver recursos) y trae dos consecuencias en paralelo:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -634,30 +671,30 @@ u.assert_fact(multa_ivan_88, "estatus_factual", u.ind("revocada"),
               valid_from=at("2026-07-07T17:00"))             # vigencia (D6)</code></pre>
         </div>
 
-        <p>Dos cosas pasan al unísono. La resolución <code>rectifica</code> la multa (trazabilidad
-          explícita: este acto modificó aquel acto), y el estado de la multa cambia a
-          <code>revocada</code> desde el instante exacto de la resolución. Pero —y aquí está la
-          promesa— la multa <strong>no se borra</strong>. Sigue en el grafo, sigue siendo consultable,
-          sigue formando parte del historial de Iván. Lo único que cambió es su validez vigente. Gracias
-          a la regla de vigencia, todavía podemos responder con exactitud: <em>«¿estaba esa multa
-          vigente el 1 de julio?»</em> —sí— y <em>«¿y el 10 de julio?»</em> —no, ya revocada—.</p>
+        <p>Dos cosas pasan a la vez. La resolución <code>rectifica</code> la multa, dejando por escrito
+          que este acto modificó aquel otro. Y el estado de la multa pasa a <code>revocada</code> desde
+          el instante exacto de la resolución.</p>
 
-        <div class="columnas">
-          <p>Esta es la diferencia práctica entre un grafo de hechos y una tabla que se sobrescribe. En
-            la tabla, cuando la multa se revoca, alguien actualiza la fila: <code>estado =
-            'revocada'</code>, y la verdad anterior desaparece. Si meses después un tribunal pregunta
+        <p>Pero la multa <strong>no se borra</strong>. Sigue en el grafo, sigue consultable, sigue en el
+          historial de Iván. Lo único que cambió es su validez de hoy.</p>
+
+        <p>Por eso podemos seguir respondiendo con exactitud. <em>«¿Estaba esa multa vigente el 1 de
+          julio?»</em> Sí. <em>«¿Y el 10 de julio?»</em> No, ya estaba revocada.</p>
+
+          <p>Esta es la diferencia práctica entre un grafo de hechos y una tabla que se sobrescribe.</p>
+
+          <p>En la tabla, cuando la multa se revoca alguien actualiza la fila (<code>estado =
+            'revocada'</code>) y la verdad anterior desaparece. Si meses después un tribunal pregunta
             qué decía esa multa el día en que se aplicó, la respuesta honesta es «ya no se sabe».</p>
-          <p>En WQuestions, en cambio, los dos hechos coexisten con sus rangos de vigencia. El acto
-            original permanece intacto, con su monto, su fundamento legal y su fecha; el acto que lo
-            revoca también permanece, con el suyo. La auditoría no recupera un fósil: lee un registro
-            que nunca se mutiló.</p>
-        </div>
+          <p>En WQuestions los dos hechos conviven con sus rangos de vigencia. El acto original queda
+            intacto, con su monto, su fundamento y su fecha. El acto que lo revoca también. La auditoría
+            no desentierra un fósil: lee un registro que nunca se mutiló.</p>
 
         <h2>Cómo se reconstruye un acto del Estado</h2>
 
-        <p>Reunamos lo construido en una sola pregunta, la que de verdad le importa a un órgano de
-          control: <em>«Dame todo lo que sostiene esta multa.»</em> Con los cables que ya tendimos, la
-          respuesta es un puñado de saltos de grafo, no un proyecto de minería de datos.</p>
+        <p>Reunamos todo en una sola pregunta, la que de verdad importa a un órgano de control:
+          <em>«dame todo lo que sostiene esta multa»</em>. Con los cables que ya tendimos, la respuesta
+          son unos pocos saltos, no un proyecto de minería de datos.</p>
 
         <!-- FIGURA SVG: reconstrucción de una multa hacia atrás (doble por qué + recurso + resolución) -->
         <figure class="figura figura--ancha revelar">
@@ -728,22 +765,26 @@ u.assert_fact(multa_ivan_88, "estatus_factual", u.ind("revocada"),
         <h2>El trámite de punta a punta, como máquina de estados</h2>
 
         <p>Hasta aquí miramos el trámite de Carla por fuera: tres actos enlazados y una licencia al
-          final. Pero quien trabaja en la ventanilla lo vive por dentro, y por dentro un trámite no es
-          un acto: es una <strong>secuencia de situaciones encadenadas</strong> que avanza paso a paso,
-          a veces retrocede, y solo a veces llega. Para verlo de cerca seguiremos a otra vecina, María Gonzales
-          (la misma María cuya identidad resolvimos al hablar del principio de reconocer a una persona
-          una sola vez), que abre su propio trámite de licencia para un taller de bicicletas en el lote
-          contiguo.</p>
+          final. Pero quien atiende la ventanilla lo vive por dentro.</p>
 
-        <p>El trámite de María es una entidad en <code>O</code>, un contenedor con identidad propia que
-          nace el día que él presenta su solicitud. Pero lo interesante no es el contenedor: son sus
-          <em>pasos</em>. Cada paso (solicitud, revisión de requisitos, observación, subsanación,
-          aprobación, emisión) se reifica como una situación con cuatro datos que un sistema clásico
-          suele dejar implícitos o repartidos: su <strong>estado</strong> (en qué punto está), su
-          <strong>responsable</strong> (qué agente lo tiene en la mano), su <strong>plazo</strong>
-          (cuántos días tiene para resolverlo) y su <strong>fecha</strong> (cuándo ocurrió de verdad).
-          Reificar cada paso (fiel a la idea de dar identidad propia a lo que merece ser interrogado
-          después) es lo que vuelve el trámite auditable minuto a minuto.</p>
+        <p>Y por dentro un trámite no es un acto. Es una <strong>secuencia de situaciones
+          encadenadas</strong> que avanza paso a paso, a veces retrocede y solo a veces llega.</p>
+
+        <p>Para verlo de cerca seguimos a otra vecina, María Gonzales, la misma cuya identidad
+          resolvimos al hablar de reconocer a una persona una sola vez. María abre su propio trámite de
+          licencia para un taller de bicicletas en el lote contiguo.</p>
+
+        <p>El trámite de María es una entidad en <code>O</code>, un contenedor que nace el día que ella
+          presenta su solicitud. Pero lo interesante no es el contenedor. Son sus <em>pasos</em>.</p>
+
+        <p>Cada paso (solicitud, revisión de requisitos, observación, subsanación, aprobación, emisión)
+          es una situación con cuatro datos que un sistema clásico deja implícitos o repartidos. Su
+          <strong>estado</strong>, en qué punto está. Su <strong>responsable</strong>, qué agente lo
+          tiene en la mano. Su <strong>plazo</strong>, cuántos días hay para resolverlo. Y su
+          <strong>fecha</strong>, cuándo ocurrió de verdad.</p>
+
+        <p>Darle identidad propia a cada paso es lo que vuelve el trámite auditable minuto a
+          minuto.</p>
 
         <aside class="nota-margen">
           <span class="etq">Por qué reificar cada paso · D4</span>
@@ -754,11 +795,11 @@ u.assert_fact(multa_ivan_88, "estatus_factual", u.ind("revocada"),
         </aside>
 
         <p>Los pasos no flotan sueltos. Dos cables del eje <code>M</code> les dan estructura. Cada paso
-          es <code>parte_de</code> el trámite (la relación de composición que ya une un artículo con su
-          ordenanza) y cada paso <code>precede</code> al siguiente, dibujando el orden temporal sin
-          inventar tabla alguna. El resultado es, literalmente, una máquina de estados grabada en el
-          grafo: una cadena que se puede recorrer hacia adelante para saber qué falta, o hacia atrás
-          para reconstruir todo lo que ocurrió.</p>
+          es <code>parte_de</code> el trámite, la misma relación que une un artículo con su ordenanza. Y
+          cada paso <code>precede</code> al siguiente, dibujando el orden sin inventar ninguna tabla.</p>
+
+        <p>El resultado es una máquina de estados grabada en el grafo. Una cadena que se recorre hacia
+          adelante para saber qué falta, o hacia atrás para reconstruir lo que pasó.</p>
 
         <!-- FIGURA SVG: el trámite como máquina de estados / cadena encadenada por precede y parte_de -->
         <figure class="figura figura--ancha revelar">
@@ -881,21 +922,26 @@ u.assert_fact(multa_ivan_88, "estatus_factual", u.ind("revocada"),
 (paso_subsanacion_04, plazo_dias,  5)                  # N · 5 días para subsanar</code></pre>
         </div>
 
-        <p>Repara en un detalle que cambia todo para la atención al vecino: cuando una observación se
-          emite, el <code>responsable</code> del paso siguiente deja de ser una oficina y pasa a ser
-          María. El grafo sabe, en todo momento, <em>de quién es la pelota</em>. La pregunta
-          <em>«¿qué trámites están esperando algo del ciudadano y cuáles esperan algo de la
-          municipalidad?»</em> deja de ser un reporte artesanal y se vuelve una proyección por el rol
+        <p>Fíjate en un detalle que lo cambia todo para la atención al vecino. Cuando se emite una
+          observación, el <code>responsable</code> del paso siguiente deja de ser una oficina y pasa a
+          ser María. El grafo sabe en todo momento <em>de quién es la pelota</em>.</p>
+
+        <p>Y <em>«¿qué trámites esperan algo del ciudadano y cuáles esperan algo de la
+          municipalidad?»</em> deja de ser un reporte artesanal. Es una proyección por el
           <code>responsable</code> del paso vigente.</p>
 
         <h2>De un trámite a la demora de todos</h2>
 
         <p>Recorrimos el trámite de María paso a paso. Pero al alcalde nadie le pregunta por
-          <code>tramite_maria_lic_04</code>: le preguntan por la demora. Cuántos días, en promedio, tarda
-          una licencia de micromovilidad desde la solicitud hasta la emisión; qué paso es el cuello de
-          botella; si el «una sola vez» de verdad recortó los tiempos este año. Cada trámite ya cargó su
-          <code>momento</code> de inicio y su fecha de cierre, paso por paso; el indicador de gestión es
-          promediar esa diferencia sobre todos los trámites de un mismo tipo.</p>
+          <code>tramite_maria_lic_04</code>. Le preguntan por la demora.</p>
+
+        <p>Cuántos días tarda de media una licencia de micromovilidad desde la solicitud hasta la
+          emisión. Qué paso es el cuello de botella. Si el «una sola vez» de verdad recortó los tiempos
+          este año.</p>
+
+        <p>Cada trámite ya cargó su <code>momento</code> de inicio y su fecha de cierre, paso por paso.
+          El indicador de gestión es promediar esa diferencia sobre todos los trámites del mismo
+          tipo.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -906,18 +952,21 @@ promedio(u, "dias_resolucion", Pattern(fixed={"estatus_factual": u.ind("emitida"
 
         <h2>El expediente, contenedor que todo lo agrupa</h2>
 
-        <p>El trámite encadena los pasos; el <strong>expediente</strong> los guarda. Es el segundo
-          contenedor reificado del capítulo, y conviene no confundirlo con el trámite: el trámite es el
-          procedimiento (la máquina de estados), mientras que el expediente es el <em>legajo</em>, la
-          carpeta única, citable y foliada, que reúne <strong>todo</strong> lo que el procedimiento
-          generó: cada paso, sí, pero también cada documento, cada notificación y cada dictamen. Ya
-          vimos un expediente nacer de una denuncia; aquí lo miramos como pieza central de archivo.</p>
+        <p>El trámite encadena los pasos. El <strong>expediente</strong> los guarda.</p>
 
-        <p>El expediente de María es una entidad en <code>O</code> con un número de foja (su cita
-          oficial), una oficina que lo custodia y una fecha de apertura. Todo lo demás cuelga de él por
-          <code>parte_de</code>, exactamente la misma relación de composición que ya conocemos. La
-          diferencia entre «un paso del trámite» y «un documento del expediente» no exige cables nuevos:
-          basta la clase de cada pieza en <code>K</code>.</p>
+        <p>Conviene no confundirlos. El trámite es el procedimiento, la máquina de estados. El
+          expediente es el <em>legajo</em>: la carpeta única, citable y foliada que reúne
+          <strong>todo</strong> lo que el procedimiento generó. Cada paso, sí, pero también cada
+          documento, cada notificación y cada dictamen.</p>
+
+        <p>Ya vimos un expediente nacer de una denuncia. Aquí lo miramos como pieza de archivo.</p>
+
+        <p>El expediente de María es una entidad en <code>O</code> con su número de foja, la oficina
+          que lo custodia y su fecha de apertura. Todo lo demás cuelga de él por <code>parte_de</code>,
+          la misma relación de siempre.</p>
+
+        <p>La diferencia entre «un paso del trámite» y «un documento del expediente» no pide cables
+          nuevos. Basta la clase de cada pieza en <code>K</code>.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">triple</span><button class="copiar">⧉ copiar</button></div>
@@ -946,10 +995,11 @@ promedio(u, "dias_resolucion", Pattern(fixed={"estatus_factual": u.ind("emitida"
         </aside>
 
         <p>La auditoría que antes era un proyecto se vuelve una pregunta. <em>«Dame el expediente
-          completo, en orden»</em> es la proyección de todo lo que es <code>parte_de</code> el
-          expediente, ordenado por su cable <code>momento</code>. Y como nada se sobrescribe (fiel a la
-          regla de vigencia), el legajo que se lee hoy es el mismo que existió en cada instante del
-          pasado: el expediente no es una foto del estado actual, es la película entera.</p>
+          completo, en orden»</em> trae todo lo que es <code>parte_de</code> el expediente, ordenado por
+          su cable <code>momento</code>.</p>
+
+        <p>Y como nada se sobrescribe, el legajo que se lee hoy es el mismo que existió en cada instante
+          del pasado. El expediente no es una foto del estado actual. Es la película entera.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -961,31 +1011,40 @@ legajo = sorted(piezas, key=lambda p: u.get(p, "momento"))
 
         <h2>Interoperabilidad entre oficinas y el principio «una sola vez»</h2>
 
-        <p>Llegamos al problema que de verdad sufre el ciudadano. El trámite de María no lo procesa una
-          sola oficina: la atención al vecino recibe la solicitud, la oficina de zonificación verifica el
-          uso del suelo, la de rentas comprueba que no haya deudas, y la de licencias decide. En casi
-          todos los municipios reales, cada oficina es una isla con su propia base de datos, y el
-          pegamento que las une es… el ciudadano. Es María quien lleva el certificado de zonificación de
-          una ventanilla a otra, quien vuelve a presentar su documento en cada oficina, quien pide la
-          constancia de no adeudo y la camina por el pasillo. <strong>El ciudadano es el
-          integrador.</strong> Y es un integrador caro, lento y falible.</p>
+        <p>Llegamos al problema que de verdad sufre el ciudadano.</p>
+
+        <p>El trámite de María no lo procesa una sola oficina. Atención al vecino recibe la solicitud,
+          zonificación verifica el uso del suelo, rentas comprueba que no haya deudas, licencias decide.</p>
+
+        <p>En casi todos los municipios reales, cada oficina es una isla con su propia base de datos. Y
+          el pegamento que las une es el ciudadano.</p>
+
+        <p>Es María quien lleva el certificado de zonificación de una ventanilla a otra. Quien vuelve a
+          presentar su documento en cada oficina. Quien pide la constancia de no adeudo y la camina por
+          el pasillo.</p>
+
+        <p><strong>El ciudadano es el integrador.</strong> Y es un integrador caro, lento y falible.</p>
 
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">El ciudadano como middleware</p>
-          <p style="margin:0">Cuando cada oficina guarda su propia copia de «María», pedirle de nuevo un
-            documento que otra oficina ya tiene no es un descuido: es la consecuencia inevitable de no
-            tener una identidad compartida. El vecino se convierte en el bus de datos entre sistemas que
-            no se hablan, fotocopiando y caminando papeles que el Estado ya posee. El principio «una
-            sola vez» (<em>once-only</em>) dice exactamente lo contrario: lo que una oficina del Estado
-            ya tiene, ninguna otra debe volver a pedirlo.</p>
+          <p style="margin:0 0 .7rem">Cuando cada oficina guarda su propia copia de «María», pedirle de
+            nuevo un documento que otra ya tiene no es un descuido. Es la consecuencia de no tener una
+            identidad compartida.</p>
+
+          <p style="margin:0">El vecino se convierte en el cable entre sistemas que no se hablan,
+            fotocopiando y caminando papeles que el Estado ya tiene. El principio «una sola vez»
+            (<em>once-only</em>) dice lo contrario: lo que una oficina del Estado ya tiene, ninguna otra
+            debe volver a pedirlo.</p>
         </div>
 
-        <p>Ese principio no se sostiene con buena voluntad: se sostiene sobre la identidad resuelta. Si
-          las cuatro oficinas reconocen a la <em>misma</em> María (no cuatro registros parecidos, sino una
-          única entidad en <code>Q</code> a la que todas apuntan), entonces el certificado de
-          zonificación que María entregó en una oficina es, sin más trámite, visible para las otras. Es el
-          principio de reconocer a una persona una sola vez, llevado del expediente clínico al
-          mostrador municipal: la misma idea, otro dominio.</p>
+        <p>Ese principio no se sostiene con buena voluntad. Se sostiene sobre la identidad resuelta.</p>
+
+        <p>Si las cuatro oficinas reconocen a la <em>misma</em> María (no cuatro registros parecidos,
+          sino una sola entidad en <code>Q</code> a la que todas apuntan), el certificado de
+          zonificación que ella entregó en una oficina queda visible para las otras sin más trámite.</p>
+
+        <p>Es reconocer a una persona una sola vez, llevado del expediente clínico al mostrador
+          municipal. La misma idea, otro dominio.</p>
 
         <!-- FIGURA SVG: antes/después de la interoperabilidad; la misma María reconocida entre oficinas -->
         <figure class="figura figura--ancha revelar">
@@ -1083,11 +1142,13 @@ legajo = sorted(piezas, key=lambda p: u.get(p, "momento"))
             el principio.</figcaption>
         </figure>
 
-        <p>En tripletas, la diferencia es elocuente. El documento de zonificación es una sola entidad,
-          <code>parte_de</code> el expediente de María, <code>presentado_por</code> María y
-          <code>verificado_por</code> la oficina de zonificación. Cuando la oficina de licencias necesita
-          ese documento, no lo vuelve a pedir: lo encuentra colgando de la misma María y del mismo
-          expediente. La identidad compartida en <code>Q</code> es el eje sobre el que gira todo.</p>
+        <p>En tripletas la diferencia se ve. El documento de zonificación es una sola entidad:
+          <code>parte_de</code> el expediente de María, <code>presentado_por</code> María,
+          <code>verificado_por</code> la oficina de zonificación.</p>
+
+        <p>Cuando licencias necesita ese documento, no lo vuelve a pedir. Lo encuentra colgando de la
+          misma María y del mismo expediente. La identidad compartida en <code>Q</code> es el eje sobre
+          el que gira todo.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">triple</span><button class="copiar">⧉ copiar</button></div>
@@ -1110,27 +1171,33 @@ legajo = sorted(piezas, key=lambda p: u.get(p, "momento"))
           para un LLM. Lo que las cuatro oficinas comparten no es código: es un lexicon y un grafo.
         </aside>
 
-        <p>Falta un actor invisible pero decisivo: <strong>el tiempo</strong>. La interoperabilidad no
-          solo evita pedir dos veces lo mismo; también obliga a respetar plazos. Cada paso tiene su
-          <code>plazo_dias</code>, y la ley administrativa establece que, si el plazo vence sin que la
-          oficina responda, el silencio produce un efecto jurídico por sí mismo: en muchos
-          procedimientos, <em>silencio positivo</em> (la solicitud se da por aprobada) y en otros,
-          <em>silencio negativo</em> (se da por denegada, habilitando el recurso). Es el
-          <strong>silencio administrativo</strong>.</p>
+        <p>Falta un actor invisible y decisivo: <strong>el tiempo</strong>. Coordinarse no solo evita
+          pedir dos veces lo mismo. También obliga a respetar plazos.</p>
 
-        <p>Aquí brilla una idea que ya vimos al hablar de los estados derivados por reglas: un plazo que
-          vence no necesita que nadie pulse un botón. La fecha límite es un dato en <code>T</code>, y una
-          regla de vigencia compara esa fecha con el reloj y, al cruzarla, hace nacer un estado nuevo. El
-          tiempo deja de ser un valor pasivo y se vuelve un agente: dispara hechos.</p>
+        <p>Cada paso tiene su <code>plazo_dias</code>. Y la ley administrativa dice que si el plazo
+          vence sin que la oficina responda, el silencio produce por sí mismo un efecto jurídico. En
+          muchos procedimientos, <em>silencio positivo</em>: la solicitud se da por aprobada. En otros,
+          <em>silencio negativo</em>: se da por denegada y se habilita el recurso.</p>
+
+        <p>Es el <strong>silencio administrativo</strong>.</p>
+
+        <p>Aquí brilla una idea que ya vimos con los estados derivados de reglas: un plazo que vence no
+          necesita que nadie pulse un botón.</p>
+
+        <p>La fecha límite es un dato en <code>T</code>. Una regla la compara con el reloj y, al
+          cruzarla, hace nacer un estado nuevo. El tiempo deja de ser un valor pasivo y se vuelve un
+          agente: dispara hechos.</p>
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Un plazo que vence es un hecho que nace</p>
-          <p style="margin:0">El paso de revisión de María tiene <code>plazo_dias = 10</code> desde el 22
-            de abril: vence el 2 de mayo. Si llega esa fecha sin resolución, una regla deriva el estado
-            <code>vencido_por_silencio</code> y, según el procedimiento, un efecto: aprobación tácita o
-            habilitación del recurso. Nadie lo teclea; lo dispara el cruce de una fecha. Y como nada se
+          <p style="margin:0 0 .7rem">El paso de revisión de María tiene <code>plazo_dias = 10</code>
+            desde el 22 de abril: vence el 2 de mayo. Si llega esa fecha sin resolución, una regla
+            deriva el estado <code>vencido_por_silencio</code> y, según el procedimiento, su efecto:
+            aprobación tácita o habilitación del recurso.</p>
+
+          <p style="margin:0">Nadie lo teclea. Lo dispara el cruce de una fecha. Y como nada se
             sobrescribe, el grafo recuerda a la vez que el plazo existió, que venció y qué consecuencia
-            tuvo (tres hechos, no una celda que se pisa).</p>
+            tuvo. Tres hechos, no una celda que se pisa.</p>
         </div>
 
         <div class="bloque-codigo">
@@ -1143,10 +1210,11 @@ legajo = sorted(piezas, key=lambda p: u.get(p, "momento"))
 # ↑ ningún funcionario lo tecleó: lo disparó el vencimiento del plazo (regla de vigencia)</code></pre>
         </div>
 
-        <p>Cerremos el círculo con una tabla que resume los seis pasos del trámite de María tal como el
-          grafo los guarda: cada uno con su estado, su responsable (de quién es la pelota), su plazo y
-          su fecha. No hace falta más para reconstruir el procedimiento entero, ni para saber, en
-          cualquier instante, qué está esperando y a quién le toca actuar.</p>
+        <p>Cerremos el círculo con una tabla de los seis pasos del trámite de María, tal como el grafo
+          los guarda: cada uno con su estado, su responsable, su plazo y su fecha.</p>
+
+        <p>No hace falta más para reconstruir el procedimiento entero, ni para saber en cualquier
+          instante qué está esperando y a quién le toca actuar.</p>
 
         <div class="tabla-envoltura revelar">
           <table>
@@ -1169,18 +1237,22 @@ legajo = sorted(piezas, key=lambda p: u.get(p, "momento"))
           </table>
         </div>
 
-        <p>Es la misma promesa del capítulo, llevada del acto aislado al procedimiento completo: nada se
-          borra, todo deja rastro, y el ciudadano deja de ser el integrador. María ya no camina papeles
-          entre islas; las oficinas se reconocen entre sí porque reconocen, una sola vez, a la misma María.</p>
+        <p>Es la promesa del capítulo llevada del acto suelto al procedimiento completo. Nada se borra,
+          todo deja rastro, y el ciudadano deja de ser el integrador.</p>
+
+        <p>María ya no camina papeles entre islas. Las oficinas se entienden entre sí porque reconocen,
+          una sola vez, a la misma María.</p>
 
         <h2>El lexicon municipal</h2>
 
         <p>Para que la empleada de la ventanilla no tenga que aprender jerga de bases de datos,
-          configuramos el lexicon con las palabras del gobierno local. El lexicon es el compilador del
-          que habló la Parte IV: traduce el vocabulario humano a los roles canónicos y resuelve la
-          polisemia. Un dialecto municipal mapea las muchas maneras de nombrar a una persona (según el
-          trámite, la misma persona es «vecino», «solicitante», «denunciante» o «infractor») a un único
-          rol canónico.</p>
+          cargamos el lexicon con las palabras del gobierno local.</p>
+
+        <p>El lexicon es el traductor del que habló la Parte IV: pasa el vocabulario humano a los roles
+          del catálogo y decide qué significa cada palabra según su compañía.</p>
+
+        <p>Un dialecto municipal recoge las muchas formas de nombrar a una persona. Según el trámite, la
+          misma es «vecino», «solicitante», «denunciante» o «infractor». Todas apuntan a un solo rol.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -1195,22 +1267,27 @@ legajo = sorted(piezas, key=lambda p: u.get(p, "momento"))
 })</code></pre>
         </div>
 
-        <p>Gracias a esto, un funcionario puede escribirle al sistema <em>«multa al furgón de reparto
-          por estacionar en zona prohibida, según el artículo 7»</em> y el grafo lo traduce a sus
-          identificadores internos (con su <code>causado_por</code> y su <code>justificado_por</code> en
-          su sitio) sin que nadie en la oficina sepa que esas etiquetas existen.</p>
+        <p>Gracias a eso, un funcionario puede escribir <em>«multa al furgón de reparto por estacionar
+          en zona prohibida, según el artículo 7»</em>. El grafo lo traduce a sus identificadores, con su
+          <code>causado_por</code> y su <code>justificado_por</code> en su sitio, sin que nadie en la
+          oficina sepa que esas etiquetas existen.</p>
 
         <h2>El antes y el después</h2>
 
         <p><b>Antes, en SQL.</b> Un esquema municipal típico reparte la información en tablas como
           <code>tramites</code>, <code>pasos_tramite</code>, <code>ordenanzas</code>,
-          <code>multas</code> y <code>ciudadanos</code>. Se ensamblan con <code>JOIN</code>, pero hay
-          una pregunta que el esquema casi nunca modela: <em>¿qué norma autoriza cada paso?</em> El
-          vínculo normativo, si existe, vive en una columna <code>observaciones</code> de texto libre, o
-          en una clave foránea que apunta al encabezado de la ordenanza, sin distinguir qué artículo
-          concreto habilita la acción. Cuando el auditor pregunta bajo qué artículo se declaró fundado
-          un recurso, hay que rastrear código, leer comentarios y cruzar a mano tablas que nunca se
-          diseñaron para responder eso juntas.</p>
+          <code>multas</code> y <code>ciudadanos</code>. Se juntan con <code>JOIN</code>.</p>
+
+        <p>Pero hay una pregunta que el esquema casi nunca modela: <em>¿qué norma autoriza cada
+          paso?</em></p>
+
+        <p>El vínculo normativo, si existe, vive en una columna <code>observaciones</code> de texto
+          libre, o en una clave foránea al encabezado de la ordenanza, sin decir qué artículo concreto
+          habilita la acción.</p>
+
+        <p>Cuando el auditor pregunta bajo qué artículo se declaró fundado un recurso, hay que rastrear
+          código, leer comentarios y cruzar a mano tablas que nunca se diseñaron para responder eso
+          juntas.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">sql</span><button class="copiar">⧉ copiar</button></div>
@@ -1227,26 +1304,29 @@ CREATE TABLE multas (
 -- «¿Qué la causó, separado de su fundamento legal?»  →  ambos viven en 'motivo'.</code></pre>
         </div>
 
-        <p><b>Después, en WQuestions.</b> La misma información es un solo grafo de hechos, tal como lo
-          modeló este capítulo. Cada acto (solicitud, inspección, emisión, multa, resolución) es una
-          situación reificada que lleva sus propios cables del «por qué»: <code>causado_por</code> a la
-          causa fáctica, <code>justificado_por</code> al artículo que lo habilita. La trazabilidad
-          normativa no es código a mano ni un <code>JOIN</code> extra: es un recorrido de un solo salto.
-          Cualquier auditor, tribunal o periodista responde <em>«¿qué norma autorizó este acto?»</em>
+        <p><b>Después, en WQuestions.</b> La misma información es un solo grafo de hechos. Cada acto
+          (solicitud, inspección, emisión, multa, resolución) es una situación que lleva sus propios
+          cables del «por qué»: <code>causado_por</code> a la causa fáctica,
+          <code>justificado_por</code> al artículo que lo habilita.</p>
+
+        <p>La trazabilidad normativa no es código a mano ni un <code>JOIN</code> extra. Es un salto.</p>
+
+        <p>Cualquier auditor, tribunal o periodista responde <em>«¿qué norma autorizó este acto?»</em>
           con la misma consulta que responde <em>«¿quién lo ejecutó?»</em> y <em>«¿cuándo?»</em>.</p>
 
-        <p class="cita-destacada revelar">En un gobierno local, ningún acto se borra: cada uno deja
-          rastro de su causa, su fundamento legal, su resultado y su eventual revocación. Esa promesa
-          no es una funcionalidad añadida; es lo que queda cuando dejas de sobrescribir filas y empiezas
-          a acumular hechos.<cite>La lección de la municipalidad</cite></p>
+        <p class="cita-destacada revelar">En un gobierno local, ningún acto se borra. Cada uno deja
+          rastro de su causa, su fundamento legal, su resultado y su eventual revocación. Eso no es una
+          función añadida: es lo que queda cuando dejas de sobrescribir filas y empiezas a acumular
+          hechos.<cite>La lección de la municipalidad</cite></p>
 
         <h2>El veredicto del dominio público</h2>
 
-        <p>El dominio municipal pone a trabajar <strong>D7 en su forma más exigente</strong>: cada acto
-          del Estado tiene un fundamento factual y uno normativo, y el modelo los preserva como dos
-          relaciones distintas, consultables por separado. La pregunta <em>«¿por qué se aplicó esta
-          multa?»</em> tiene dos respuestas válidas según qué «porque» se pida, y el modelo distingue
-          cuál es cuál. Repasemos lo que quedó probado.</p>
+        <p>El dominio municipal pone a trabajar <strong>D7 en su forma más exigente</strong>. Cada
+          acto del Estado tiene un fundamento factual y uno normativo, y el modelo los guarda como dos
+          relaciones distintas.</p>
+
+        <p><em>«¿Por qué se aplicó esta multa?»</em> tiene dos respuestas válidas según qué «porque» se
+          pida, y el modelo sabe cuál es cuál. Repasemos lo que quedó probado.</p>
 
         <div class="caja caja--practica revelar">
           <p class="caja-tit">Qué demostró el prototipo al absorber un gobierno local</p>
@@ -1267,18 +1347,21 @@ CREATE TABLE multas (
           </ul>
         </div>
 
-        <p>Y la conclusión va más allá de una sola alcaldía. Las jerarquías territoriales en
-          <code>L</code>, los expedientes que articulan múltiples diligencias y los recursos que
-          rectifican actos sin borrarlos son patrones que reaparecen en todo el sector público:
-          sanitario, judicial, tributario, ambiental. Lo que probamos aquí no es solo que el modelo
-          absorbe una municipalidad; es que <strong>una familia entera de aplicaciones de gobierno
-          encaja con el mismo motor</strong>, sin extensiones, sin proyectos de integración entre
-          módulos que nunca se diseñaron para hablarse.</p>
+        <p>Y la conclusión va más allá de una alcaldía. Las jerarquías territoriales en <code>L</code>,
+          los expedientes que juntan varias diligencias y los recursos que rectifican actos sin
+          borrarlos reaparecen en todo el sector público: sanitario, judicial, tributario, ambiental.</p>
+
+        <p>Lo que probamos aquí no es solo que el modelo absorbe una municipalidad. Es que <strong>una
+          familia entera de aplicaciones de gobierno encaja con el mismo motor</strong>, sin
+          extensiones y sin proyectos de integración entre módulos que nunca se diseñaron para
+          hablarse.</p>
 
         <p>El gobierno local nos exigió tomarnos en serio el «por qué». El próximo dominio nos exigirá
-          tomarnos en serio el mundo físico: una operación minera, donde las magnitudes se miden en
-          toneladas y leyes de mineral, los sensores son agentes que reportan sin descanso, y la
-          trazabilidad ya no es un asunto de auditores sino de seguridad y de ley.</p>
+          tomarnos en serio el mundo físico.</p>
+
+        <p>Una operación minera, donde las magnitudes se miden en toneladas y leyes de mineral, los
+          sensores son agentes que reportan sin descanso, y la trazabilidad ya no es cosa de auditores
+          sino de seguridad y de ley.</p>
 
       </div>
     </article>

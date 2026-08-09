@@ -56,14 +56,18 @@
 
       <div class="contenido">
 
-        <p class="entrada">Son las dos de la madrugada y entra en urgencias una mujer de
-          cuarenta y dos años. La llamaremos <strong>María Gonzales</strong>. Está consciente, pero
-          suda frío y le falta el aire; refiere un dolor en el pecho que no cede. El médico
-          de guardia tiene minutos, no horas, para decidir, y para decidir bien necesita
-          responder tres preguntas concretas: qué medicación toma a diario, si tiene alergias
-          documentadas y si ya vivió antes un episodio parecido. Teclea su nombre en el
-          sistema del hospital. La pantalla devuelve tres líneas: una bronquitis tratada hace
-          cuatro años. Nada más.</p>
+        <p class="entrada">Son las dos de la madrugada y entra en urgencias una mujer de cuarenta y
+          dos años. La llamaremos <strong>María Gonzales</strong>.</p>
+
+        <p>Está consciente, pero suda frío y le falta el aire. Dice que tiene un dolor en el pecho que
+          no cede.</p>
+
+        <p>El médico de guardia tiene minutos, no horas. Y para decidir bien necesita tres respuestas:
+          qué medicación toma a diario, si tiene alergias documentadas y si ya vivió antes un episodio
+          parecido.</p>
+
+        <p>Teclea su nombre en el sistema del hospital. La pantalla devuelve tres líneas: una
+          bronquitis tratada hace cuatro años. Nada más.</p>
 
         <aside class="nota-margen">
           <span class="etq">Hilo conductor</span>
@@ -72,33 +76,42 @@
           consulta que aquí es imposible será una sola línea.
         </aside>
 
-        <p>Lo desesperante es que la información existe. Gonzales tiene una endocrinóloga que
-          gestiona su historia desde hace siete años. Hace unos meses la evaluó un cardiólogo
-          en otra ciudad. Y ya pasó por una urgencia muy parecida en un tercer centro, donde
-          le hicieron un electrocardiograma completo. Cada dato está escrito, guardado en
-          algún disco, y ninguno de esos profesionales tiene el menor interés en ocultarlo.
-          El obstáculo no es el secreto ni la pérdida: es estructural. Los datos de Gonzales están
-          repartidos en esquemas que no se hablan entre sí.</p>
+        <p>Lo desesperante es que la información existe.</p>
+
+        <p>Gonzales tiene una endocrinóloga que lleva su historia desde hace siete años. Hace unos
+          meses la evaluó un cardiólogo en otra ciudad. Y ya pasó por una urgencia muy parecida en un
+          tercer centro, donde le hicieron un electrocardiograma completo.</p>
+
+        <p>Cada dato está escrito y guardado en algún disco. Ninguno de esos profesionales tiene el
+          menor interés en ocultarlo.</p>
+
+        <p>El obstáculo no es el secreto ni la pérdida. Es que sus datos están repartidos en esquemas
+          que no se hablan entre sí.</p>
 
         <p>La endocrinóloga usa un software que guarda el diagnóstico en un campo llamado
-          <code>diagnostico_principal</code>. El sistema del cardiólogo, hecho por otra
-          empresa, lo registra como <code>dx_p</code>. Para la medicación, la primera clínica
-          emplea una estructura plana (<code>medicacion_actual</code> con <code>nombre</code>,
-          <code>dosis</code> y <code>frecuencia</code>); la segunda diseñó una base relacional
-          con una tabla de <code>prescripciones</code> que pide un identificador numérico
-          (<code>farmaco_id</code>), los miligramos por toma (<code>mg_por_toma</code>) y el
-          número de tomas diarias (<code>tomas_dia</code>). Dos formas legítimas y razonables
-          de anotar exactamente lo mismo. Y, sin embargo, incompatibles.</p>
+          <code>diagnostico_principal</code>. El sistema del cardiólogo, hecho por otra empresa, lo
+          registra como <code>dx_p</code>.</p>
 
-        <p>Si trabajas en software, ya sabes que conectar esas dos bases no es ciencia
-          ficción. Es posible. Pero es un trabajo artesanal, caro y frágil: hay que programar
-          un puente de código (un <em>middleware</em>), mapear a mano qué columna equivale a
-          qué columna y escribir una excepción por cada formato de fecha o de número. Y ese
-          puente caduca. El día en que una de las clínicas actualice su sistema y renombre un
-          solo campo, el puente se rompe en silencio. Multiplica ese esfuerzo por miles de
-          hospitales, decenas de proveedores y décadas de historias clínicas, y la integración
-          deja de ser un reto de ingeniería para revelarse como un problema de diseño a escala
-          planetaria. La información existe; lo que falta es la capacidad de razonar con ella.</p>
+        <p>Con la medicación pasa lo mismo. La primera clínica la anota plana: nombre, dosis y
+          frecuencia. La segunda montó una tabla de <code>prescripciones</code> que pide un número de
+          fármaco, los miligramos por toma y las tomas al día.</p>
+
+        <p>Dos formas legítimas y razonables de anotar exactamente lo mismo. E incompatibles.</p>
+
+        <p>Si trabajas en software, ya sabes que conectar esas dos bases se puede. No es ciencia
+          ficción.</p>
+
+        <p>Pero es un trabajo artesanal, caro y frágil: programar un puente de código, emparejar a mano
+          qué columna equivale a qué columna, escribir una excepción por cada formato de fecha.</p>
+
+        <p>Y ese puente caduca. El día en que una de las clínicas actualice su sistema y renombre un
+          solo campo, el puente se rompe en silencio.</p>
+
+        <p>Multiplica ese esfuerzo por miles de hospitales, decenas de proveedores y décadas de
+          historias clínicas. Deja de ser un reto de ingeniería y se revela como un problema de diseño
+          del tamaño del planeta.</p>
+
+        <p>La información existe. Lo que falta es poder razonar con ella.</p>
 
         <p class="cita-destacada revelar">La información de Gonzales no está perdida ni oculta.
           Está atrapada en idiomas que nunca acordaron hablar entre
@@ -106,16 +119,19 @@
 
         <h2>El mismo hecho, cuatro idiomas distintos</h2>
 
-        <p>El drama de urgencias es la versión extrema; pero el mecanismo que lo causa late en
-          el sistema más banal. Para verlo en cámara lenta, bajemos a un escenario sin víctimas:
-          una tienda de ropa. A las 16:32, en la tienda del centro, el vendedor 17 le vende una
-          camiseta a un cliente. La llamaremos <code>venta_001</code>. Es <em>un</em> hecho del
-          mundo, uno solo. Y, sin embargo, si nos asomamos a los servidores del negocio,
-          descubriremos que sus distintos sistemas anotan ese mismo instante en cuatro lenguajes
-          radicalmente distintos.</p>
+        <p>El drama de urgencias es la versión extrema. Pero el mecanismo que lo causa late en el
+          sistema más banal.</p>
 
-        <p>Para el <strong>punto de venta</strong> (la caja) lo que importa es la transacción y
-          quiénes la protagonizan. El hecho se guarda como una fila en una base relacional:</p>
+        <p>Para verlo en cámara lenta, bajemos a un escenario sin víctimas: una tienda de ropa.</p>
+
+        <p>A las 16:32, en la tienda del centro, el vendedor 17 le vende una camiseta a un cliente. La
+          llamaremos <code>venta_001</code>.</p>
+
+        <p>Es <em>un</em> hecho del mundo, uno solo. Y si te asomas a los servidores del negocio,
+          descubrirás que sus sistemas lo anotan en cuatro lenguajes que no se parecen en nada.</p>
+
+        <p>Para el <strong>punto de venta</strong>, la caja, lo que importa es la transacción y quiénes
+          la protagonizan. El hecho se guarda como una fila:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">SQL · punto de venta</span><button class="copiar">⧉ copiar</button></div>
@@ -166,13 +182,17 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
 }</code></pre>
         </div>
 
-        <p>Observa la desconexión. Cuatro equipos, cuatro estructuras. Cada esquema es perfecto
-          y coherente para quien lo diseñó. La fractura aparece cuando la dirección pide una
-          visión global. Si le entregas estas cuatro piezas a una computadora, no tiene ninguna
-          forma <em>obvia</em> de saber que las cuatro hablan del mismo suceso. Contabilidad no
-          sabe quién vendió la camiseta; analítica no sabe de qué almacén salió; la caja no sabe
-          separar el impuesto. Cada software capturó solo la <em>sombra</em> del evento que le
-          interesaba y la archivó en su dialecto privado.</p>
+        <p>Mira la desconexión. Cuatro equipos, cuatro estructuras. Cada esquema es perfecto y
+          coherente para quien lo diseñó.</p>
+
+        <p>La fractura aparece cuando la dirección pide una visión global.</p>
+
+        <p>Si le entregas estas cuatro piezas a una computadora, no tiene forma <em>obvia</em> de saber
+          que las cuatro hablan del mismo suceso. Contabilidad no sabe quién vendió la camiseta.
+          Analítica no sabe de qué almacén salió. La caja no sabe separar el impuesto.</p>
+
+        <p>Cada programa capturó la <em>sombra</em> del evento que le interesaba y la archivó en su
+          dialecto privado.</p>
 
         <!-- FIGURA SVG: cuatro sistemas, un hecho, vocabularios incompatibles -->
         <figure class="figura figura--ancha revelar">
@@ -230,47 +250,64 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
             sombra sabe de las otras, aunque debajo todas respondan a las mismas preguntas.</figcaption>
         </figure>
 
-        <p>A esta fragmentación masiva la llamaremos, a lo largo del libro, <strong>la torre de
-          Babel de las ontologías</strong>. Conviene desactivar una alarma: en datos, la
-          palabra <em>ontología</em> no es un concepto filosófico inalcanzable.</p>
+        <p>A esta fragmentación la llamaremos, a lo largo del libro, <strong>la torre de Babel de las
+          ontologías</strong>.</p>
+
+        <p>Y conviene desactivar una alarma: en datos, la palabra <em>ontología</em> no es un concepto
+          filosófico inalcanzable.</p>
 
         <div class="caja caja--definicion revelar">
           <p class="caja-tit">Ontología (en ingeniería de datos)</p>
-          <p style="margin:0">El catálogo oficial de conceptos que un sistema reconoce («cliente»,
-            «factura», «producto», «prescripción») junto con las reglas lógicas que dictan cómo
-            se relacionan entre sí. Nada más esotérico que un diccionario con gramática. El
-            problema no es que existan ontologías: es que cada departamento, empresa y disciplina
-            construye la suya <em>cerrada</em>, aislándose del resto.</p>
+          <p style="margin:0 0 .6rem">El catálogo de conceptos que un sistema reconoce («cliente»,
+            «factura», «producto», «prescripción») y las reglas que dicen cómo se relacionan entre
+            sí. Un diccionario con gramática, nada más esotérico.</p>
+          <p style="margin:0">El problema no es que existan ontologías. Es que cada departamento,
+            empresa y disciplina construye la suya <em>cerrada</em>, de espaldas al resto.</p>
         </div>
 
         <h2>El elefante en la habitación oscura</h2>
 
-        <p>Hay una vieja parábola que describe esta torre de Babel mejor que cualquier diagrama de
-          arquitectura. En una habitación a oscuras encierran a un elefante, y entran a tientas
-          varios hombres que jamás han tocado uno. El primero palpa una pata y, convencido,
-          anuncia: «esto es una columna». El segundo abraza la trompa y lo corrige: «no, es una
-          gruesa manguera». Un tercero acaricia la oreja y jura que es un abanico; otro topa con
-          el colmillo y asegura que es una lanza pulida; el último se aferra a la cola y sentencia
-          que es una cuerda. Ninguno miente. Cada uno informa con honestidad lo que sus manos
-          encontraron. Y, sin embargo, todos se equivocan, porque confunden <em>la parte que
-          tocaron</em> con <em>el animal entero</em>.</p>
+        <p>Hay una vieja parábola que describe esta torre de Babel mejor que cualquier diagrama.</p>
 
-        <p>Esa es, exactamente, la situación de nuestros sistemas. El punto de venta toca la pata
-          y la nombra <code>vendedor_id</code>; contabilidad abraza la trompa y la llama
-          <code>cuentas_por_cobrar</code>; analítica acaricia la oreja y la registra como
-          <code>evento</code>; inventario topa con el colmillo y anota <code>movimiento</code>.
-          Cada ontología de dominio es uno de esos ciegos: palpa una región de la misma realidad,
-          la describe con rigor impecable dentro de su alcance y la bautiza con un nombre que no
-          se parece a ningún otro. La torre de Babel no nace de la mentira ni de la incompetencia;
-          nace de que <strong>cada quien toma su vista parcial por la totalidad</strong>.</p>
+        <p>En una habitación a oscuras encierran a un elefante. Entran a tientas varios hombres que
+          jamás han tocado uno.</p>
 
-        <p>Pero el elefante existe. Hay un animal completo debajo de las cinco descripciones
-          incompatibles, y la pregunta decisiva es qué lo reconstruye. La respuesta es el corazón
-          de este libro: lo que devuelve el animal entero no es una sexta ontología más fina, sino
-          un repertorio de preguntas anterior a todas ellas. «¿Quién?», «¿qué?», «¿dónde?»,
-          «¿cuándo?», «¿cuánto?» y «¿cuál?» no tocan una parte del elefante: son las coordenadas
-          que sitúan cualquier parte dentro del mismo cuerpo. La pata y la trompa dejan de ser
-          objetos rivales y pasan a ser dos respuestas (al «qué» y al «dónde») de un único hecho.</p>
+        <p>El primero palpa una pata y anuncia, convencido: «esto es una columna». El segundo abraza la
+          trompa y lo corrige: «no, es una manguera gruesa». Un tercero acaricia la oreja y jura que es
+          un abanico. Otro topa con el colmillo y asegura que es una lanza. El último se aferra a la
+          cola y sentencia que es una cuerda.</p>
+
+        <p>Ninguno miente. Cada uno cuenta con honestidad lo que sus manos encontraron.</p>
+
+        <p>Y todos se equivocan, porque confunden <em>la parte que tocaron</em> con <em>el animal
+          entero</em>.</p>
+
+        <p>Esa es la situación de nuestros sistemas.</p>
+
+        <p>El punto de venta toca la pata y la nombra <code>vendedor_id</code>. Contabilidad abraza la
+          trompa y la llama <code>cuentas_por_cobrar</code>. Analítica acaricia la oreja y la registra
+          como <code>evento</code>. Inventario topa con el colmillo y anota <code>movimiento</code>.</p>
+
+        <p>Cada ontología de dominio es uno de esos ciegos: palpa una región de la misma realidad, la
+          describe con rigor impecable dentro de su alcance y la bautiza con un nombre que no se parece
+          a ningún otro.</p>
+
+        <p>La torre de Babel no nace de la mentira ni de la incompetencia. Nace de que <strong>cada
+          quien toma su vista parcial por la totalidad</strong>.</p>
+
+        <p>Pero el elefante existe.</p>
+
+        <p>Hay un animal completo debajo de las cinco descripciones incompatibles, y la pregunta
+          decisiva es qué lo reconstruye.</p>
+
+        <p>La respuesta es el corazón de este libro. Lo que devuelve el animal entero no es una sexta
+          ontología más fina, sino un repertorio de preguntas anterior a todas ellas.</p>
+
+        <p>«¿Quién?», «¿qué?», «¿dónde?», «¿cuándo?», «¿cuánto?» y «¿cuál?» no tocan una parte del
+          elefante. Son las coordenadas que sitúan cualquier parte dentro del mismo cuerpo.</p>
+
+        <p>La pata y la trompa dejan de ser objetos rivales y pasan a ser dos respuestas, al «qué» y al
+          «dónde», de un único hecho.</p>
 
         <!-- FIGURA SVG: el elefante en la oscuridad, observadores parciales, capa de preguntas -->
         <figure class="figura figura--ancha revelar">
@@ -378,13 +415,15 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
 
         <h2>La causa de todo el problema</h2>
 
-        <p>La raíz de esta torre de Babel (y el punto de partida de este libro) se enuncia en una
-          frase: hemos permitido que <strong>cada sector invente, desde cero, su propia forma de
-          entender la realidad</strong>. La ingeniería médica no hereda nada de la contabilidad.
-          El comercio no comparte cimientos con el derecho. La educación diseña bases que jamás
-          conversarán con las del urbanismo. Cada industria levanta su pirámide con planos
-          distintos y luego nos sorprende lo carísimo que resulta contratar gente para tender
-          puentes colgantes entre las cimas.</p>
+        <p>La raíz de esta torre de Babel, y el punto de partida de este libro, cabe en una frase:
+          hemos dejado que <strong>cada sector invente desde cero su propia forma de entender la
+          realidad</strong>.</p>
+
+        <p>La ingeniería médica no hereda nada de la contabilidad. El comercio no comparte cimientos
+          con el derecho. La educación diseña bases que jamás hablarán con las del urbanismo.</p>
+
+        <p>Cada industria levanta su pirámide con planos distintos. Y luego nos sorprende lo carísimo
+          que resulta contratar gente para tender puentes colgantes entre las cimas.</p>
 
         <p>Llevemos esa frase a un caso donde el aislamiento no cuesta dinero, sino una nave
           espacial.</p>
@@ -392,22 +431,25 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">El precio de no acordar las unidades</p>
           <p style="margin:0 0 .7rem">En 1999, la <em>Mars Climate Orbiter</em> de la NASA se
-            desintegró al entrar en la atmósfera de Marte. La causa no fue un error de cálculo
-            sino de <em>vocabulario</em>: un equipo de software entregaba el empuje en unidades
-            inglesas (libra-fuerza por segundo) y el otro lo leía como si fueran unidades del
-            sistema internacional (newton por segundo). Cada número, por separado, era correcto.
-            La nave navegó hacia una órbita equivocada y se perdió.</p>
-          <p style="margin:0">Doscientos millones de dólares y años de trabajo evaporados porque
-            dos sistemas no declararon, de forma explícita, <em>qué pregunta respondía cada
-            número</em>. La distancia entre <code>dx_p</code> y <code>diagnostico_principal</code>
-            es la misma distancia, solo que sin el cráter.</p>
+            desintegró al entrar en la atmósfera de Marte.</p>
+          <p style="margin:0 0 .7rem">La causa no fue un error de cálculo, sino de
+            <em>vocabulario</em>. Un equipo entregaba el empuje en libra-fuerza por segundo y el otro
+            lo leía como si fueran newtons por segundo. Cada número, por separado, era correcto.</p>
+          <p style="margin:0 0 .7rem">La nave navegó hacia una órbita equivocada y se perdió.</p>
+          <p style="margin:0">Doscientos millones de dólares y años de trabajo evaporados porque dos
+            sistemas no dijeron en voz alta <em>qué pregunta respondía cada número</em>. La distancia
+            entre <code>dx_p</code> y <code>diagnostico_principal</code> es la misma, solo que sin el
+            cráter.</p>
         </div>
 
-        <p>El patrón es siempre idéntico. Donde cada parte cultiva su jardín semántico amurallado,
-          el coste de conectar no crece poco a poco: crece de forma combinatoria. Si tienes
-          <em>n</em> sistemas y los quieres comunicar de a pares, el número de puentes que debes
-          construir y mantener es <code>n(n−1)/2</code>. Diez sistemas no piden diez traductores:
-          piden cuarenta y cinco. Y cada uno de ellos es un punto que puede romperse.</p>
+        <p>El patrón es siempre el mismo. Donde cada parte cultiva su jardín amurallado, el coste de
+          conectar no crece poco a poco. Se dispara.</p>
+
+        <p>Si tienes <em>n</em> sistemas y los quieres comunicar de a pares, los puentes que hay que
+          construir y mantener son <code>n(n−1)/2</code>.</p>
+
+        <p>Diez sistemas no piden diez traductores. Piden cuarenta y cinco. Y cada uno es un punto que
+          puede romperse.</p>
 
         <figure class="figura revelar">
           <div class="lienzo" data-chart>
@@ -428,18 +470,23 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
             conexión por sistema (verde). Pasa el cursor sobre las barras para ver las cifras.</figcaption>
         </figure>
 
-        <p>Por eso el integrador de datos (ese rol que casi ninguna escuela enseña y que casi
-          toda empresa necesita) existe. Su oficio es escribir y vigilar esos <em>n(n−1)/2</em>
-          puentes: los ETL que vacían una base en otra, los mapeos columna a columna, las
-          excepciones por cada formato de fecha. Es trabajo valioso y, a la vez, trabajo que no
-          debería existir. Es el impuesto que paga la industria por un pecado original de diseño.</p>
+        <p>Por eso existe el integrador de datos, ese rol que casi ninguna escuela enseña y que casi
+          toda empresa necesita.</p>
+
+        <p>Su oficio es escribir y vigilar esos <em>n(n−1)/2</em> puentes: los procesos que vacían una
+          base en otra, los emparejamientos columna a columna, las excepciones por cada formato de
+          fecha.</p>
+
+        <p>Es trabajo valioso, y a la vez trabajo que no debería existir. Es el impuesto que paga la
+          industria por un pecado original de diseño.</p>
 
         <h2>Lo que ya se intentó (y por qué no bastó)</h2>
 
-        <p>Sería injusto sugerir que nadie vio el problema. Llevamos décadas intentando derribar
-          la torre, y los intentos se agrupan en dos familias, opuestas y simétricas en su
-          fracaso. Vale la pena entenderlas, porque marcan exactamente el hueco que este libro
-          quiere ocupar.</p>
+        <p>Sería injusto sugerir que nadie vio el problema. Llevamos décadas intentando derribar la
+          torre.</p>
+
+        <p>Los intentos se agrupan en dos familias, opuestas y simétricas en su fracaso. Vale la pena
+          entenderlas, porque marcan el hueco exacto que este libro quiere ocupar.</p>
 
         <div class="rejilla-2 revelar">
           <div class="tarjeta">
@@ -463,25 +510,29 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
 
         <div class="caja caja--precedente revelar">
           <p class="caja-tit">El callejón de las dos vías<a class="ref" href="referencias.html#ref-4">(4)</a></p>
-          <p style="margin:0">Las ontologías clásicas (de las que CIDOC&nbsp;CRM o las redes de
-            <em>frames</em> son ejemplos refinados) ganan en estructura lo que pierden en
-            alcance. La extracción abierta gana en alcance lo que pierde en estructura. La
-            industria osciló entre ambos extremos sin encontrar el punto medio: un esquema
-            <em>a la vez ancho y estructurado</em>. Ese punto medio es lo que perseguimos, y la
-            pista de dónde buscarlo no está en la informática, sino en algo mucho más antiguo.</p>
+          <p style="margin:0 0 .6rem">Las ontologías clásicas, de las que CIDOC&nbsp;CRM o las redes de
+            <em>frames</em> son ejemplos refinados, ganan en estructura lo que pierden en alcance. La
+            extracción abierta gana en alcance lo que pierde en estructura.</p>
+          <p style="margin:0">La industria osciló entre los dos extremos sin encontrar el punto medio:
+            un esquema <em>ancho y estructurado a la vez</em>. Ese punto medio es lo que perseguimos, y
+            la pista de dónde buscarlo no está en la informática, sino en algo mucho más antiguo.</p>
         </div>
 
-        <p>Y aquí cabe una pregunta incómoda, la que abre la puerta a todo lo demás: ¿y si la
-          solución a este caos fuera <em>anterior</em> (y mucho más simple) que cualquier diseño
-          de base de datos? ¿Y si, mucho antes de que existieran los hospitales, los bancos o el
-          comercio internacional, la humanidad ya hubiera fijado un esquema cognitivo universal
-          que nadie, en ningún idioma, puede evitar usar?</p>
+        <p>Y aquí cabe una pregunta incómoda, la que abre la puerta a todo lo demás.</p>
+
+        <p>¿Y si la solución a este caos fuera <em>anterior</em>, y mucho más simple, que cualquier
+          diseño de base de datos?</p>
+
+        <p>¿Y si mucho antes de que existieran los hospitales, los bancos o el comercio internacional,
+          la humanidad ya hubiera fijado un armazón mental que nadie, en ningún idioma, puede evitar
+          usar?</p>
 
         <h2>La apuesta de este libro</h2>
 
-        <p>Volvamos a la venta una última vez. Si detuviéramos a cualquier persona en la calle
-          (sin nociones de bases de datos ni de código) y le pidiéramos describir lo que pasó en
-          esa tienda, su respuesta natural sería algo muy parecido a esto:</p>
+        <p>Volvamos a la venta una última vez.</p>
+
+        <p>Si paras a cualquier persona en la calle, sin nociones de bases de datos ni de código, y le
+          pides que describa lo que pasó en esa tienda, dirá algo muy parecido a esto:</p>
 
         <blockquote>
           <p>«<em>El vendedor</em> (<strong>quién</strong>) <em>vendió</em> (<strong>qué</strong>)
@@ -490,12 +541,14 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
             cincuenta dólares</em> (<strong>cuánto</strong>).»</p>
         </blockquote>
 
-        <p>Sin el menor esfuerzo, cualquier ser humano produce una descripción
-          <strong>estructurada, completa y combinable</strong>. La mente no percibe el mundo como
-          un bloque de texto ni como una hoja de cálculo: descompone cualquier evento con un
-          repertorio brevísimo de preguntas fundamentales. Y aquí está el giro: esas preguntas
-          son exactamente las coordenadas que las cuatro sombras de la venta estaban capturando
-          por separado, sin saberlo.</p>
+        <p>Sin el menor esfuerzo, cualquier persona produce una descripción <strong>estructurada,
+          completa y combinable</strong>.</p>
+
+        <p>La mente no percibe el mundo como un bloque de texto ni como una hoja de cálculo. Descompone
+          cualquier evento con un repertorio brevísimo de preguntas.</p>
+
+        <p>Y aquí está el giro: esas preguntas son exactamente las coordenadas que las cuatro sombras
+          de la venta estaban capturando por separado, sin saberlo.</p>
 
         <!-- FIGURA SVG: las cuatro sombras convergen en las preguntas -->
         <figure class="figura figura--ancha revelar">
@@ -584,48 +637,50 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">La apuesta</p>
-          <p style="margin:0;font-size:1.05rem">Existe un conjunto reducido y estable de preguntas
-            primarias (<strong>siete</strong>) con poder descriptivo suficiente para modelar
-            cualquier hecho factual, en cualquier dominio industrial y en cualquier idioma:
-            <strong>quién, qué, dónde, cuándo, cuánto, cuál y cómo</strong>. Al diseñar las bases
-            de datos alrededor de estas coordenadas cognitivas (y no de la terminología de turno
-            de cada industria) se neutraliza de raíz la fragmentación semántica. La torre de
-            Babel se desmorona desde los cimientos.</p>
+          <p style="margin:0 0 .7rem;font-size:1.05rem">Hay un puñado corto y estable de preguntas
+            (<strong>siete</strong>) que basta para describir cualquier hecho, en cualquier industria y
+            en cualquier idioma: <strong>quién, qué, dónde, cuándo, cuánto, cuál y cómo</strong>.</p>
+          <p style="margin:0;font-size:1.05rem">Si diseñas las bases de datos alrededor de esas
+            coordenadas, y no del vocabulario de turno de cada sector, la fragmentación se corta de
+            raíz. La torre de Babel se desmorona desde los cimientos.</p>
         </div>
 
-        <p>Y viene un beneficio que en 1999, o en 2010, habría sonado a ciencia ficción y hoy es
-          decisivo: <strong>cualquier inteligencia artificial entrenada con lenguaje humano
-          entiende esta estructura de fábrica</strong>, porque es la misma con la que aprendió a
-          leer. Un modelo de lenguaje no necesita que le expliques qué es un «quién» o un
-          «cuándo». Esas categorías ya viven en él. Si los datos del mundo se expusieran sobre los
-          ejes de las preguntas, un agente tendría que aprender a hablar una sola vez —y no un
-          dialecto nuevo por cada API que toca.</p>
+        <p>Y viene un beneficio que en 1999, o en 2010, habría sonado a ciencia ficción.</p>
 
-        <p>Conviene separar aquí las siete coordenadas en dos grupos, porque así las recorreremos.
-          Seis fijan la <em>posición</em> de un hecho (dónde cae en cada dimensión de la
-          realidad); la séptima, <em>cómo</em>, aporta los enlaces que amarran las otras seis
-          entre sí:</p>
+        <p><strong>Cualquier inteligencia artificial entrenada con lenguaje humano entiende esta
+          estructura de fábrica</strong>, porque es la misma con la que aprendió a leer.</p>
 
-        <div class="columnas">
-          <p><span class="eje-rotulo"><span class="eje eje--q">Q</span> <b>quién</b></span> y
-            <span class="eje-rotulo"><span class="eje eje--o">O</span> <b>qué</b></span> y
-            <span class="eje-rotulo"><span class="eje eje--l">L</span> <b>dónde</b></span> y
-            <span class="eje-rotulo"><span class="eje eje--t">T</span> <b>cuándo</b></span>
-            son las cuatro coordenadas más concretas: el agente, el objeto o evento, el lugar y
-            el tiempo. Son las que un niño domina primero y las que ningún sistema, por raro que
-            sea su dialecto, deja de registrar.</p>
-          <p><span class="eje-rotulo"><span class="eje eje--n">N</span> <b>cuánto</b></span> y
-            <span class="eje-rotulo"><span class="eje eje--k">K</span> <b>cuál</b></span> son
-            las dos que el genérico «qué» suele esconder: la magnitud (con sus unidades, que la
-            <em>Mars Climate Orbiter</em> aprendió a la mala) y la clase a la que algo pertenece.
-            Y <span class="eje-rotulo"><span class="eje eje--m">M</span> <b>cómo</b></span> es la
-            séptima: los predicados que conectan todo lo demás.</p>
-        </div>
+        <p>A un modelo de lenguaje no hay que explicarle qué es un «quién» o un «cuándo». Esas
+          categorías ya viven en él.</p>
 
-        <p>Anticipando un poco la maquinaria que viene, así se ve un fragmento del hecho
-          <code>venta_001</code> expresado ya en el formato del modelo: cada línea es una
-          tripleta que conecta el hecho con uno de sus valores, y la firma final declara a qué
-          par de ejes pertenece:</p>
+        <p>Si los datos del mundo se expusieran sobre los ejes de las preguntas, un agente tendría que
+          aprender a hablar una sola vez, en lugar de un dialecto nuevo por cada servicio que toca.</p>
+
+        <p>Conviene separar las siete coordenadas en dos grupos, porque así las recorreremos.</p>
+
+        <p>Seis fijan la <em>posición</em> de un hecho. La séptima, <em>cómo</em>, pone los enlaces que
+          amarran las otras seis entre sí:</p>
+
+        <p><span class="eje-rotulo"><span class="eje eje--q">Q</span> <b>quién</b></span>,
+          <span class="eje-rotulo"><span class="eje eje--o">O</span> <b>qué</b></span>,
+          <span class="eje-rotulo"><span class="eje eje--l">L</span> <b>dónde</b></span> y
+          <span class="eje-rotulo"><span class="eje eje--t">T</span> <b>cuándo</b></span> son las
+          cuatro más concretas: el agente, el objeto o evento, el lugar y el tiempo.</p>
+
+        <p>Son las que un niño domina primero, y las que ningún sistema deja de registrar por raro que
+          sea su dialecto.</p>
+
+        <p><span class="eje-rotulo"><span class="eje eje--n">N</span> <b>cuánto</b></span> y
+          <span class="eje-rotulo"><span class="eje eje--k">K</span> <b>cuál</b></span> son las dos que
+          el genérico «qué» suele esconder: la magnitud con sus unidades (las que la <em>Mars Climate
+          Orbiter</em> aprendió a la mala) y la clase a la que algo pertenece.</p>
+
+        <p>Y <span class="eje-rotulo"><span class="eje eje--m">M</span> <b>cómo</b></span> es la
+          séptima: los enlaces que conectan todo lo demás.</p>
+
+        <p>Adelantando un poco la maquinaria, así se ve el hecho <code>venta_001</code> ya en el
+          formato del modelo. Cada línea conecta el hecho con uno de sus valores, y la marca final dice
+          a qué par de ejes pertenece:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas · WQuestions</span><button class="copiar">⧉ copiar</button></div>
@@ -636,20 +691,25 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
 (venta_001, clase,    camiseta)      ∈ M(O, K)</code></pre>
         </div>
 
-        <p>No te detengas todavía en la notación; el <a href="07-hecho-atomico.html">capítulo
-          7</a> la desarma pieza por pieza. Lo único que importa ver aquí es que las cuatro
-          sombras de la Figura 1.1 acaban de fundirse en un solo registro, y que ese registro es
-          legible (de izquierda a derecha, como una frase) por cualquiera de los cuatro sistemas
-          y por una máquina por igual.</p>
+        <p>No te detengas todavía en la notación. El <a href="07-hecho-atomico.html">capítulo 7</a> la
+          desarma pieza por pieza.</p>
+
+        <p>Lo único que importa ver aquí es que las cuatro sombras de la Figura 1.1 acaban de fundirse
+          en un solo registro. Y que ese registro se lee de izquierda a derecha, como una frase, tanto
+          para cualquiera de los cuatro sistemas como para una máquina.</p>
 
         <h2>Una promesa que se puede comprobar</h2>
 
-        <p>No te pido que tomes esto como un acto de fe. La fuerza de la apuesta no está en que
-          suene elegante, sino en que estas siete preguntas no son un invento moderno. Filósofos
-          griegos, juristas romanos, escuelas de periodismo del 1900 y los propios niños que
-          aprenden a hablar convergen (sin coordinarse, separados por siglos) en la misma lista.
-          Cuando tantas tradiciones independientes llegan a la misma respuesta, esa respuesta
-          deja de ser una hipótesis y empieza a parecer un descubrimiento.</p>
+        <p>No te pido que tomes esto como un acto de fe.</p>
+
+        <p>La fuerza de la apuesta no está en que suene elegante. Está en que estas siete preguntas no
+          son un invento moderno.</p>
+
+        <p>Filósofos griegos, juristas romanos, escuelas de periodismo de 1900 y los propios niños que
+          aprenden a hablar llegan a la misma lista, sin coordinarse y separados por siglos.</p>
+
+        <p>Cuando tantas tradiciones independientes coinciden, esa coincidencia deja de ser una
+          hipótesis y empieza a parecer un descubrimiento.</p>
 
         <aside class="nota-margen">
           <span class="etq">Más adelante</span>
@@ -658,28 +718,33 @@ VALUES (1, 1042, 88, 49.90, '2026-05-14', 17);</code></pre>
           el <a href="06-raices.html">capítulo 6</a>.
         </aside>
 
-        <p>A esa convergencia (la prueba de por qué estas preguntas y no otras) le dedicamos un
-          capítulo entero. Pero no hace falta esperar a la demostración para empezar a construir.
-          De hecho, conviene construir primero: ver la maquinaria funcionando convence más que
-          cualquier argumento.</p>
+        <p>A esa coincidencia, la prueba de por qué estas preguntas y no otras, le dedicamos un
+          capítulo entero.</p>
+
+        <p>Pero no hace falta esperar a la demostración para empezar a construir. Conviene construir
+          primero: ver la maquinaria funcionando convence más que cualquier argumento.</p>
 
         <div class="caja caja--practica revelar">
           <p class="caja-tit">Cómo nació este modelo</p>
-          <p style="margin:0">Esta arquitectura no se diseñó en abstracto para luego forzar a los
-            datos a encajar. Emergió al revés: dominio tras dominio, chocando con las fricciones
-            reales que cada negocio exigía resolver. El día decisivo fue aquel en que comprendimos
-            que ocho industrias sin relación entre sí (de un spa a un banco, de una clínica a una
-            mina) estaban pidiendo la <em>misma</em> solución estructural, disfrazada con
-            vocabularios distintos. Cuando ocho problemas independientes convergen en la misma
-            respuesta, esa respuesta deja de ser una opinión.</p>
+          <p style="margin:0 0 .6rem">Esta arquitectura no se diseñó en abstracto para luego forzar a
+            los datos a encajar. Salió al revés: dominio tras dominio, chocando con las fricciones que
+            cada negocio exigía resolver.</p>
+          <p style="margin:0">El día decisivo fue aquel en que vimos que ocho industrias sin relación
+            entre sí, de un spa a un banco y de una clínica a una mina, pedían la <em>misma</em>
+            solución disfrazada con vocabularios distintos. Cuando ocho problemas independientes
+            convergen en la misma respuesta, esa respuesta deja de ser una opinión.</p>
         </div>
 
-        <p>Lo que sigue es, sencillamente, la ingeniería. Vamos a diseccionar las siete
-          coordenadas una por una: su carga de significado, sus trampas, los casos límite donde
-          parecen romperse. Empezaremos por las cuatro más concretas (quién, qué, dónde y
-          cuándo), porque son el suelo firme sobre el que se levanta todo lo demás. La paciente
-          Gonzales nos espera al final del camino; cuando volvamos a su sala de urgencias, la consulta
-          imposible de esta noche será una sola línea.</p>
+        <p>Lo que sigue es la ingeniería.</p>
+
+        <p>Vamos a desarmar las siete coordenadas una por una: qué significan, dónde están sus trampas,
+          en qué casos límite parecen romperse.</p>
+
+        <p>Empezaremos por las cuatro más concretas (quién, qué, dónde y cuándo), porque son el suelo
+          firme sobre el que se levanta todo lo demás.</p>
+
+        <p>La paciente Gonzales nos espera al final del camino. Cuando volvamos a su sala de urgencias,
+          la consulta imposible de esta noche será una sola línea.</p>
 
       </div>
     </article>

@@ -1,12 +1,27 @@
 # Guía de estilo — manuscrito2 (HTML)
 
-> Documento **interno**, no forma parte del libro. Define el canon para que los 33 archivos sean coherentes en voz, ejemplos y componentes.
+> Documento **interno**, no forma parte del libro. Define el canon de **estructura** para que los 33 archivos sean coherentes en ejemplos y componentes.
+>
+> El canon de **voz** (cómo se escriben las frases: largo de párrafo, glosa de la jerga, listas, remates) vive en [`GUIA-DE-REGISTRO.md`](GUIA-DE-REGISTRO.md). Léelo antes de reescribir prosa. El capítulo de referencia es `29-prueba-reflexiva.html`.
 
 ## 1. Voz y redacción
 
+- **Obligatorio: invocar la skill `humanizalo` siempre, para todo texto.** Da igual si es un capítulo entero, un párrafo suelto, un pie de figura o el texto de una caja. Se invoca antes de escribir, no después de haber escrito. Detecta los tics de redacción automática (relleno, inflación, muletillas, ritmo metronómico) y obliga a un ciclo de auto-auditoría con puntuación.
+
+  **Precedencia cuando `humanizalo` choca con este libro.** La skill es genérica y viene pensada para inglés. Manda esta guía en estos puntos:
+
+  | Punto | Qué dice `humanizalo` | Qué manda aquí |
+  |---|---|---|
+  | Raya (—) | Eliminarla siempre | Clasificar por función: paréntesis para lo secundario, dos puntos para introducir, raya solo para ritmo o énfasis real |
+  | Negritas | Casi ninguna | Las de los componentes (`caja-tit`, rótulos de eje, remates) se quedan |
+  | Primera persona | Empujar el «yo» | El libro usa la primera del plural («construimos», «lo medimos»), nunca el «yo» |
+  | Tríadas | Evitarlas | El libro las usa a propósito (los tres casos de cambio, las tres promesas cobradas) |
+  | Opinión y humor | Inyectarlos | Registro llano y con voz, sin chascarrillos ni golpes de efecto |
+
+  Todo lo demás de la skill se aplica tal cual, y su ciclo de auditoría es obligatorio.
 - **Español neutro.** Tuteo neutro (`tú tienes`, `puedes`, `quieres`, `imagina`, `piensa`). **Prohibido el voseo argentino** (`vos tenés`, `podés`, `querés`) y los regionalismos.
-- **Estilo:** académico pero claro y explicativo (aspiración Hofstadter / Pinker). Cada capítulo abre con una escena o anécdota concreta, nunca con una definición seca; sube densidad técnica hacia el final.
-- **Estratificado en tres capas:** lector general (primer tercio), profesional técnico (modelado, código), académico (precedentes citados). El texto debe poder leerse "en superficie" o "a profundidad".
+- **Estilo:** claro y llano, explicativo, con voz. Un lector que nunca oyó hablar de grafos debe poder seguir la prosa entera. Párrafos de una idea, frases cortas, la jerga glosada en castellano antes de nombrarla. Cada capítulo abre con una escena o anécdota concreta, nunca con una definición seca. **Las cifras objetivo y el método están en [`GUIA-DE-REGISTRO.md`](GUIA-DE-REGISTRO.md).**
+- **Estratificado en cuatro capas:** la prosa corrida (accesible a cualquiera), los bloques de código, los pies de figura y las notas de precedente académico. Las tres últimas conservan el registro técnico: el neófito puede saltárselas y seguir entendiendo; el técnico las lee y encuentra el rigor.
 - **Redacción desde cero:** no copiar frases del manuscrito original. Reescribir con prosa nueva.
 - **Conceptos y decisiones de diseño (Dn): preservar fielmente.** El contenido sustantivo (la arquitectura, las reglas Dn, las convenciones, los precedentes) NO cambia. **Respeta la numeración `Dn` exactamente como aparece en el `.md` fuente del capítulo; no la inventes ni la "corrijas". NUNCA introduzcas una caja `caja--decision` con un `Dn` que no esté definido en tu `.md` fuente** (las Dn se referencian entre capítulos; inventar una colisiona con otro capítulo). Si un punto es importante pero no es una Dn formal del fuente, usa `caja--idea`/`caja--definicion`/`caja--practica`, sin número.
 

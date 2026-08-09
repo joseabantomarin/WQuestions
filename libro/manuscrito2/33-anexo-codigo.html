@@ -56,29 +56,34 @@
 
       <div class="contenido">
 
-        <p class="entrada">A lo largo del libro el código apareció a cuentagotas: una llamada aquí
-          para ilustrar la reificación de una situación, una consulta allá para mostrar la
-          bitemporalidad. Ese goteo es deliberado en el cuerpo del texto (cada fragmento llega cuando
-          la idea que lo justifica está fresca), pero estorba a quien se sienta a programar. Este
-          anexo invierte la prioridad: consolida en un único sitio las piezas técnicas, ordenadas no
-          por el hilo narrativo sino por su función. Es un manual de referencia, no un capítulo para
-          leer de corrido.</p>
+        <p class="entrada">A lo largo del libro el código apareció a cuentagotas. Una llamada aquí para
+          ilustrar cómo una situación gana identidad propia. Una consulta allá para mostrar los dos
+          tiempos.</p>
+
+        <p>Ese goteo es deliberado en el cuerpo del texto: cada fragmento llega cuando la idea que lo
+          justifica está fresca. Pero estorba a quien se sienta a programar.</p>
+
+        <p>Este anexo invierte la prioridad. Junta en un solo sitio las piezas técnicas, ordenadas por su
+          función y no por el hilo del relato. Es un manual de referencia, no un capítulo para leer de
+          corrido.</p>
 
         <p>La buena noticia, que este anexo deja a la vista mejor que ninguna otra página, es que hay
           poco que memorizar. El núcleo del modelo cabe en un puñado de estructuras de datos y cuatro
-          funciones. Todo lo demás (los ocho dominios industriales, los cuatro escenarios de estrés,
-          la aplicación que se describe a sí misma) se construye combinando esas pocas piezas. Si solo
-          vas a leer una sección, que sea el catálogo de predicados: ahí está el vocabulario con el que
-          se escribe cualquier hecho.</p>
+          funciones.</p>
+
+        <p>Todo lo demás (los ocho dominios industriales, los cuatro escenarios de estrés, la aplicación
+          que se describe a sí misma) se construye combinando esas pocas piezas.</p>
+
+        <p>Si solo vas a leer una sección, que sea el catálogo de predicados. Ahí está el vocabulario con
+          el que se escribe cualquier hecho.</p>
 
         <div class="caja caja--practica">
           <p class="caja-tit">Sobre los identificadores de este anexo</p>
-          <p style="margin-bottom:0">Los ejemplos usan el repertorio del libro (la venta de Marco,
-            el gol de Messi, la película de Serra, la ordenanza de micromovilidad, la sesión de IA,
-            el episodio de la paciente Gonzales) para que reconozcas los casos. Las <em>estructuras</em>
-            (los campos de un hecho, la forma de un patrón, las firmas de las APIs) son las del
-            prototipo real, que vive en <code>prototipo/wq/</code>. Cambia los nombres a tu dominio;
-            la maquinaria no cambia.</p>
+          <p style="margin-bottom:0">Los ejemplos usan el repertorio del libro (la venta de Marco, el
+            gol de Messi, la película de Serra, la ordenanza de micromovilidad, la sesión de IA, el
+            episodio de la paciente Gonzales) para que reconozcas los casos. Las <em>estructuras</em>
+            son las del prototipo real, que vive en <code>prototipo/wq/</code>. Cambia los nombres a tu
+            dominio; la maquinaria no cambia.</p>
         </div>
 
         <h2>Las cuatro APIs del núcleo</h2>
@@ -132,10 +137,12 @@ count(u, Pattern(...), *, at=None)
 
         <h3>El eje (<code>Axis</code>) y el individuo (<code>Individual</code>)</h3>
 
-        <p>Cada nodo del grafo es un <code>Individual</code> anclado a uno de los seis ejes de valor.
-          El eje no es decorativo: determina qué pregunta responde el nodo y, por tanto, qué
-          predicados puede recibir. El séptimo eje, <strong>M</strong> (cómo), no etiqueta nodos: es
-          el de los cables que los unen.</p>
+        <p>Cada nodo del grafo es un <code>Individual</code> anclado a uno de los seis ejes de valor. El
+          eje no es decorativo: dice a qué pregunta responde el nodo y, por tanto, qué predicados puede
+          recibir.</p>
+
+        <p>El séptimo eje, <strong>M</strong> (cómo), no etiqueta nodos. Es el de los cables que los
+          unen.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -165,10 +172,12 @@ class Individual:
 
         <h3>El hecho (<code>Fact</code>)</h3>
 
-        <p>La unidad atómica del modelo es la tripleta tipada <code>(sujeto, rol, valor)</code> (D3).
-          En el prototipo es un <code>Fact</code>. Los campos <code>valid_from</code> y
-          <code>valid_to</code> implementan la vigencia (D6): un hecho no se borra ni se edita: se
-          cierra con un <code>valid_to</code> y se asienta otro que lo reemplaza.</p>
+        <p>La unidad mínima del modelo es la tripleta tipada <code>(sujeto, rol, valor)</code> (D3). En
+          el prototipo es un <code>Fact</code>.</p>
+
+        <p>Los campos <code>valid_from</code> y <code>valid_to</code> implementan la vigencia (D6). Un
+          hecho no se borra ni se edita: se cierra con un <code>valid_to</code> y se asienta otro que lo
+          reemplaza.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -181,9 +190,9 @@ class Fact:
     valid_to:   datetime = None   # fin de vigencia; None = abierto al futuro</code></pre>
         </div>
 
-        <p>Un literal (un número, una cadena) puede ocupar la casilla del valor cuando el destino es
-          una magnitud o un texto; cuando el valor es otra entidad del grafo, es un
-          <code>Individual</code>. Esa es la única bifurcación de tipo en toda la estructura.</p>
+        <p>Un literal (un número, una cadena) puede ocupar la casilla del valor cuando el destino es una
+          magnitud o un texto. Cuando el valor es otra entidad del grafo, es un <code>Individual</code>.
+          Esa es la única bifurcación de tipo en toda la estructura.</p>
 
         <h3>El patrón de consulta (<code>Pattern</code> y <code>Var</code>)</h3>
 
@@ -309,11 +318,13 @@ class LexiconEntry:
         <h2>Catálogo de predicados canónicos</h2>
 
         <p>Los predicados son los cables del eje <strong>M</strong>. Propiedades y relaciones se
-          unifican: ambas son cables; solo difieren en cardinalidad —funcional (un solo valor) o
-          múltiple (D2)—. La firma de cada predicado declara de qué eje sale y a cuál llega; la
-          escribimos <code>M(O→Q)</code>: «desde un nodo O hacia un nodo Q». El motor solo valida este
-          repertorio canónico; cualquier rol que un dominio invente (por la política liberal del
-          catálogo) se acepta sin declararlo.</p>
+          unifican: las dos son cables. Solo se diferencian en si admiten un valor o varios (D2).</p>
+
+        <p>La firma de cada predicado declara de qué eje sale y a cuál llega. La escribimos
+          <code>M(O→Q)</code>: «desde un nodo O hacia un nodo Q».</p>
+
+        <p>El motor solo valida este repertorio canónico. Cualquier rol que un dominio invente se acepta
+          sin declararlo.</p>
 
         <p>Conviene mostrar primero la forma del cable con el componente insignia. El hecho «Messi es
           el autor de <code>gol_001</code>» es una tripleta cuyo cable es <code>agente</code>:</p>
@@ -420,10 +431,10 @@ class LexiconEntry:
         <div class="caja caja--idea">
           <p class="caja-tit">La política liberal del catálogo</p>
           <p style="margin-bottom:0">Este catálogo es <em>canónico</em>, no <em>cerrado</em>. El motor
-            valida estrictamente los predicados de arriba, pero deja pasar cualquier rol de dominio que
-            un negocio necesite: <code>medicamento_prescrito</code>, <code>medida_de</code>,
+            valida con rigor los predicados de arriba y deja pasar cualquier rol de dominio que un
+            negocio necesite: <code>medicamento_prescrito</code>, <code>medida_de</code>,
             <code>diagnosticado_como</code>, <code>equipo</code>, <code>frecuencia</code>,
-            <code>duracion</code>, <code>monto</code>… Ninguno está declarado en el núcleo y todos
+            <code>duracion</code>, <code>monto</code>. Ninguno está declarado en el núcleo y todos
             funcionan. Es la decisión que mantiene el motor pequeño mientras el lexicon crece.</p>
         </div>
 
@@ -693,10 +704,10 @@ marcador = f"{goles_argentina} - {goles_peru}"</code></pre>
 
         <h3>Un LLM ingiere una nota en lenguaje natural</h3>
 
-        <p>Como el lexicon expone las signaturas de los verbos como <em>function schemas</em>, un
-          modelo de lenguaje puede leer una nota clínica y producir una invocación
-          <code>ingest_situation</code> por verbo identificado. La extracción es directa: el modelo no
-          inventa el esquema, lo lee del lexicon.</p>
+        <p>Como el lexicon expone las firmas de los verbos como esquemas de función, un modelo de
+          lenguaje puede leer una nota clínica y producir una llamada a
+          <code>ingest_situation</code> por cada verbo que encuentre. El modelo no inventa el esquema. Lo
+          lee del lexicon.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -862,12 +873,14 @@ uso = query(u, Pattern(
           banco, una historia clínica y un partido con la misma maquinaria.<cite>La economía del
           modelo</cite></p>
 
-        <p>Esas cinco regularidades, juntas, explican por qué el núcleo de modelado cabe en poco más
-          de dos mil líneas a pesar de la diversidad de territorios que cubre. Y anticipan la prueba
-          más exigente, la del <a href="29-prueba-reflexiva.html">capítulo 29</a>: una aplicación con
-          menús, formularios y entidades enteras que se levantó sobre este mismo núcleo casi sin
-          agregarle código, porque también su estructura y su conducta son, al final, datos. El
-          siguiente anexo abre esa caja y muestra el prototipo por dentro.</p>
+        <p>Esas cinco regularidades explican por qué el núcleo cabe en poco más de dos mil líneas, a
+          pesar de todos los territorios que cubre.</p>
+
+        <p>Y anticipan la prueba más exigente, la del <a href="29-prueba-reflexiva.html">capítulo
+          29</a>. Una aplicación con menús, formularios y entidades enteras, levantada sobre este mismo
+          núcleo casi sin añadirle código, porque también su estructura y su conducta son datos.</p>
+
+        <p>El siguiente anexo abre esa caja y muestra el prototipo por dentro.</p>
 
       </div>
     </article>

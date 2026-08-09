@@ -56,21 +56,30 @@
 
       <div class="contenido">
 
-        <p class="entrada">Considera dos frases que parecen decir lo mismo y no lo dicen. La primera:
-          «alguien corre». La segunda: «el correr de alguien, ayer, en el parque». La diferencia es
-          minúscula en el idioma y enorme en la arquitectura. En la primera, <em>correr</em> es un
-          verbo fugaz: pasa y se esfuma, no deja a qué agarrarse. En la segunda, <em>el correr</em> se
-          ha vuelto un sustantivo (una <strong>cosa</strong>) y, de golpe, admite un dueño, un lugar,
-          un ayer; y mañana admitirá un más todavía: que duró cuarenta minutos, que fue su récord, que
-          lo interrumpió la lluvia.</p>
+        <p class="entrada">Considera dos frases que parecen decir lo mismo y no lo dicen.</p>
 
-        <p>Toda lengua humana sabe hacer ese truco. <em>Vender</em> se vuelve <em>la venta</em>;
-          <em>operar</em>, <em>la operación</em>; <em>decidir</em>, <em>la decisión</em>. Al
-          convertir un verbo en sustantivo no añadimos un adorno literario: le otorgamos
-          <strong>identidad</strong>. Lo que era un acto pasajero pasa a ser una entidad de la que
-          podemos hablar, que podemos contar, fechar, cancelar y corregir. Este capítulo trata de
-          cuándo conviene hacer ese truco dentro del modelo, y de las tres decisiones de diseño que lo
-          gobiernan.</p>
+        <p>La primera: «alguien corre». La segunda: «el correr de alguien, ayer, en el parque».</p>
+
+        <p>La diferencia es minúscula en el idioma y enorme en la arquitectura.</p>
+
+        <p>En la primera, <em>correr</em> es un verbo fugaz: pasa y se esfuma, no deja a qué
+          agarrarse.</p>
+
+        <p>En la segunda, <em>el correr</em> se ha vuelto una <strong>cosa</strong>. Y de golpe admite
+          un dueño, un lugar, un ayer. Y mañana admitirá más: que duró cuarenta minutos, que fue su
+          récord, que lo interrumpió la lluvia.</p>
+
+        <p>Toda lengua humana sabe hacer ese truco. <em>Vender</em> se vuelve <em>la venta</em>.
+          <em>Operar</em>, <em>la operación</em>. <em>Decidir</em>, <em>la decisión</em>.</p>
+
+        <p>Convertir un verbo en sustantivo no es un adorno literario. Le da
+          <strong>identidad</strong>.</p>
+
+        <p>Lo que era un acto pasajero pasa a ser algo de lo que podemos hablar, y que podemos contar,
+          fechar, cancelar y corregir.</p>
+
+        <p>Este capítulo trata de cuándo conviene hacer ese truco, y de las tres decisiones de diseño
+          que lo gobiernan.</p>
 
         <aside class="nota-margen">
           <span class="etq">Etimología</span>
@@ -79,28 +88,39 @@
           cosa» un evento. La entidad que nace de ahí es una <strong>situación reificada</strong>.
         </aside>
 
-        <p>El nombre técnico de ese truco es <strong>reificación</strong>, y la entidad que produce es
-          una <strong>situación reificada</strong>. Estas situaciones viven siempre en el eje
-          <span class="eje-rotulo"><span class="eje eje--o">O</span> qué</span>. Son los nudos de la
-          red: los conectores maestros donde decenas de hechos atómicos convergen porque todos hablan
-          de lo mismo. Sin ellos, el modelo solo sabría registrar oraciones simples. Con ellos, puede
-          guardar cualquier escena humana, por intrincada que sea, sin abandonar jamás la forma de la
-          tripleta que fijamos en el <a href="07-hecho-atomico.html">capítulo 7</a>.</p>
+        <p>El nombre técnico del truco es <strong>reificación</strong>, y lo que produce es una
+          <strong>situación</strong>.</p>
+
+        <p>Estas situaciones viven siempre en el eje
+          <span class="eje-rotulo"><span class="eje eje--o">O</span> qué</span>.</p>
+
+        <p>Son los nudos de la red: los puntos donde decenas de hechos convergen porque todos hablan de
+          lo mismo.</p>
+
+        <p>Sin ellos, el modelo solo sabría registrar frases simples. Con ellos, guarda cualquier escena
+          humana, por enredada que sea, sin abandonar la forma de la tripleta del
+          <a href="07-hecho-atomico.html">capítulo 7</a>.</p>
 
         <h2>No todo merece ser un sustantivo</h2>
 
-        <p>La tentación, una vez que descubres la reificación, es aplicarla a todo. ¿Si un cliente
-          es alto, debo crear «la situación de su altura»? La respuesta es un no rotundo. Reificar
-          cuesta: cada situación es un objeto nuevo en la base de datos, con su identificador único,
-          que el sistema tendrá que buscar y mantener. Reificar por costumbre es inflar la base con
-          abstracción vacía y volverla lenta.</p>
+        <p>La tentación, una vez que descubres esto, es aplicarlo a todo. Si un cliente es alto, ¿debo
+          crear «la situación de su altura»?</p>
 
-        <p>La estatura de una persona se queda perfectamente como un hecho atómico plano,
-          <code>(cliente_1042, estatura_cm, 178)</code>: no tiene partes, no participa nadie más, nadie
-          volverá a hablar de ese número, no caduca. Reificarla sería como guardar un termómetro
-          dentro de una caja fuerte. La pregunta correcta, entonces, no es «¿puedo reificar esto?»,
-          sino «¿hay alguna razón de peso para hacerlo?». El modelo reconoce exactamente cuatro
-          razones, y basta con que se cumpla una.</p>
+        <p>No.</p>
+
+        <p>Reificar cuesta. Cada situación es un objeto nuevo, con su identificador, que el sistema
+          tendrá que buscar y mantener. Reificar por costumbre infla la base y la vuelve lenta.</p>
+
+        <p>La estatura de una persona se queda como un hecho plano,
+          <code>(cliente_1042, estatura_cm, 178)</code>. No tiene partes, no participa nadie más, nadie
+          volverá a hablar de ese número, no caduca.</p>
+
+        <p>Reificarla sería guardar un termómetro dentro de una caja fuerte.</p>
+
+        <p>La pregunta correcta no es «¿puedo reificar esto?», sino «¿hay alguna razón de peso para
+          hacerlo?».</p>
+
+        <p>El modelo reconoce cuatro razones, y basta con que se cumpla una.</p>
 
         <div class="rejilla-2 revelar">
           <div class="tarjeta">
@@ -136,11 +156,15 @@
 
         <div class="caja caja--decision revelar">
           <p class="caja-tit"><span class="codigo-d">D4</span> Cuándo reificar una situación</p>
-          <p>Un evento o relación solo se transforma en una «situación reificada» (guardada en el eje
-            O) si cumple al menos uno de cuatro requisitos: (1) tiene atributos propios como lugar o
-            modo, (2) participan más de dos actores, (3) será referenciado por otros eventos en el
-            futuro, o (4) su valor cambiará y necesitamos conservar un registro histórico. Si no
-            cumple ninguna, usamos una tripleta simple.</p>
+          <p>Un evento o relación solo se convierte en una «situación reificada», guardada en el eje O,
+            si cumple al menos uno de estos cuatro requisitos:</p>
+          <ul>
+            <li>tiene atributos propios, como lugar o modo</li>
+            <li>participan más de dos actores</li>
+            <li>otros eventos van a referirse a él en el futuro</li>
+            <li>su valor cambiará y hace falta conservar el historial</li>
+          </ul>
+          <p style="margin-bottom:0">Si no cumple ninguno, usamos una tripleta simple.</p>
         </div>
 
         <p>Léela como una compuerta de eficiencia, no como un permiso. Reificar es poderoso
@@ -149,11 +173,15 @@
 
         <h2>Autopsia de una situación</h2>
 
-        <p>¿Cómo se ve uno de estos nudos por dentro? Abramos uno. Tomemos un evento cotidiano pero
-          con suficiente sustancia: la venta número 1, en la que el vendedor 17 le vendió una camiseta
-          al cliente 1042 a las 16:32 de una tarde de mayo. Cumple D4 de sobra (reúne varios
-          participantes, carga media docena de datos propios y volverá a aparecer cuando el cliente
-          reclame o devuelva). Lo primero es «hacer cosa» el evento, creándolo en el eje O:</p>
+        <p>¿Cómo se ve uno de estos nudos por dentro? Abramos uno.</p>
+
+        <p>Tomemos la venta número 1, en la que el vendedor 17 le vendió una camiseta al cliente 1042 a
+          las 16:32 de una tarde de mayo.</p>
+
+        <p>Cumple D4 de sobra: reúne varios participantes, carga media docena de datos propios y volverá
+          a aparecer cuando el cliente reclame o devuelva.</p>
+
+        <p>Lo primero es hacerla cosa, creándola en el eje O:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -189,11 +217,13 @@
 (devolucion_088, rectifica,       venta_001)   // "talla equivocada", se cambió</code></pre>
         </div>
 
-        <p>La valoración, el pago y la devolución son, cada una, <strong>nuevas situaciones
-          reificadas</strong> que se conectan al nudo original. La red crece de forma orgánica, sin
-          cambiar jamás su formato de tres columnas. Esto es lo que la siguiente figura hace visible:
-          un evento en el centro y sus participantes irradiando hacia los ejes, cada cable con su
-          color.</p>
+        <p>La valoración, el pago y la devolución son, cada una, <strong>situaciones nuevas</strong>
+          que se enganchan al nudo original.</p>
+
+        <p>La red crece sola, sin cambiar nunca su formato de tres columnas.</p>
+
+        <p>Eso es lo que hace visible la figura siguiente: un evento en el centro y sus participantes
+          saliendo hacia los ejes, cada cable con su color.</p>
 
         <!-- FIGURA 9.1: situación reificada con sus roles, irradiando a los ejes -->
         <figure class="figura figura--ancha revelar">
@@ -261,11 +291,15 @@
         <h2>Quién puede ser agente</h2>
 
         <p>Detengámonos en uno de esos cables, porque oficializa algo que los ejemplos ya venían
-          gritando. En la venta, el rol <code>agente</code> lo ocupó una persona de carne y hueso.
-          Pero abre el abanico de dominios y el protagonista de una acción puede ser otra cosa: el
-          algoritmo que asigna un conductor, el servidor bancario que cobra el mantenimiento, el
-          modelo de lenguaje que redacta un borrador, el sensor que dispara una alarma. El modelo
-          <strong>no exige que el agente sea humano</strong>.</p>
+          gritando.</p>
+
+        <p>En la venta, el rol <code>agente</code> lo ocupó una persona de carne y hueso.</p>
+
+        <p>Pero abre el abanico y el protagonista de una acción puede ser otra cosa: el algoritmo que
+          asigna un conductor, el servidor que cobra el mantenimiento, el modelo de lenguaje que redacta
+          un borrador, el sensor que dispara una alarma.</p>
+
+        <p>El modelo <strong>no exige que el agente sea humano</strong>.</p>
 
         <p>Mira una sesión de un asistente de inteligencia artificial. El protagonista de la situación
           (quien ejecuta la respuesta, invoca las herramientas y consume los tokens) no es la usuaria
@@ -281,11 +315,13 @@
 (sesion_ia_5521, latencia_ms,     2100)                    ∈ M(O, N)</code></pre>
         </div>
 
-        <p>El mismo molde sirve para un sensor. «El termopar registró 480 °C» pone a un dispositivo
-          físico en el rol de agente de la situación <em>medir</em>, sin que ningún humano haya tocado
-          nada. Esta universalidad del rol es la que nos deja auditar plantas industriales, plataformas
-          de IA y sistemas automáticos con exactamente el mismo lenguaje que usamos para registrar
-          ventas entre personas. Lo formalizamos así:</p>
+        <p>El mismo molde sirve para un sensor.</p>
+
+        <p>«El termopar registró 480 °C» pone a un aparato en el rol de agente de la situación
+          <em>medir</em>, sin que ningún humano haya tocado nada.</p>
+
+        <p>Gracias a eso podemos auditar plantas industriales, plataformas de IA y sistemas automáticos
+          con el mismo lenguaje con que registramos ventas entre personas. Lo formalizamos así:</p>
 
         <div class="caja caja--decision revelar">
           <p class="caja-tit"><span class="codigo-d">D5</span> Agencia contextual</p>
@@ -296,28 +332,37 @@
 
         <h3>El rol, no la voluntad</h3>
 
-        <p>Conviene fijar el límite, porque la pregunta es legítima: si un horno inteligente o un
-          algoritmo de recomendación pueden «vestirse» de agente, ¿cuándo deja un objeto de ser una
-          <em>herramienta</em> y pasa a ser un <em>actor</em>? La tentación es buscar la frontera en
-          la <strong>voluntad</strong> o la <strong>conciencia</strong>, y por ahí no hay salida
+        <p>Conviene fijar el límite, porque la pregunta es legítima.</p>
+
+        <p>Si un horno inteligente o un algoritmo pueden vestirse de agente, ¿cuándo deja un objeto de
+          ser <em>herramienta</em> y pasa a ser <em>actor</em>?</p>
+
+        <p>La tentación es buscar la frontera en la <strong>voluntad</strong>, y por ahí no hay salida
           limpia: ni un algoritmo ni una empresa «quieren» nada en sentido fuerte.</p>
 
-        <p>El modelo esquiva la trampa filosófica. El criterio no es la voluntad: es el
-          <strong>rol que la entidad ocupa en una situación concreta</strong>. Una misma cosa puede
-          ser las dos cosas en momentos distintos. La cámara con la que se filma una película es un
-          <strong>instrumento</strong> (un objeto en O) de la situación <em>filmar</em>; el agente es
-          la directora. Pero «el dron sobrevoló el set y capturó el plano aéreo» pone al dron en el rol
-          de <strong>agente</strong> de la situación <em>capturar</em>, donde no hay otro candidato a
-          protagonista. El mismo aparato es herramienta o actor según qué verbo lo invoque y qué rol
-          llene, no según una propiedad que lleve puesta.</p>
+        <p>El modelo esquiva la trampa filosófica. El criterio no es la voluntad. Es el <strong>rol que
+          la entidad ocupa en cada situación</strong>.</p>
 
-        <p>La regla operativa, entonces, es simple: una entidad entra a Q como agente cuando
-          <strong>ocupa el rol <code>agente</code> de un verbo que lo exige</strong> (vender, asignar,
-          redactar, capturar); se queda como instrumento en O cuando es solo el medio a través del
-          cual otro actúa. La agencia la determina la <strong>gramática de la situación</strong>, no
-          la metafísica del objeto. Por eso el modelo puede auditar a un algoritmo que niega un crédito
-          con el mismo rigor con que audita a un gerente que lo niega, sin tener que resolver primero
-          si el algoritmo «tiene voluntad».</p>
+        <p>Una misma cosa puede ser las dos en momentos distintos.</p>
+
+        <p>La cámara con la que se filma una película es un <strong>instrumento</strong> de la situación
+          <em>filmar</em>: el agente es la directora.</p>
+
+        <p>Pero «el dron sobrevoló el set y capturó el plano aéreo» pone al dron en el rol de
+          <strong>agente</strong> de la situación <em>capturar</em>, donde no hay otro candidato.</p>
+
+        <p>El mismo aparato es herramienta o actor según qué verbo lo invoque, no según una propiedad
+          que lleve puesta.</p>
+
+        <p>La regla práctica es simple. Una entidad entra en Q como agente cuando <strong>ocupa el rol
+          de agente de un verbo que lo exige</strong>: vender, asignar, redactar, capturar.</p>
+
+        <p>Y se queda como instrumento en O cuando es solo el medio a través del cual otro actúa.</p>
+
+        <p>Lo decide la <strong>gramática de la situación</strong>, no la metafísica del objeto.</p>
+
+        <p>Por eso el modelo puede auditar a un algoritmo que niega un crédito con el mismo rigor con
+          que audita a un gerente, sin tener que resolver antes si el algoritmo «tiene voluntad».</p>
 
         <p class="cita-destacada revelar">La agencia no es una propiedad que un objeto lleva puesta;
           es un papel que el verbo reparte. El robot que sutura es agente; el bisturí, jamás.
@@ -333,21 +378,24 @@
 
         <div class="caja caja--precedente">
           <p class="caja-tit">Dos raíces formales</p>
-          <p style="margin:0">Davidson propuso en 1967 tratar cada evento como un individuo lógico:
-            «alguien corrió» se vuelve «existe un evento <em>e</em> tal que <em>e</em> es un correr,
-            su agente es alguien, su lugar es el parque…». Reificar en el eje O es exactamente eso,
-            llevado a una base de datos. Barwise y Perry, en su semántica de situaciones, añaden la
-            pieza que cierra el capítulo: los participantes ocupan <em>roles</em> dentro de una escena,
-            y es la escena —no la palabra— la que fija el significado.</p>
+          <p style="margin:0 0 .7rem">Davidson propuso en 1967 tratar cada evento como un individuo
+            lógico. «Alguien corrió» se vuelve «existe un evento <em>e</em> tal que <em>e</em> es un
+            correr, su agente es alguien, su lugar es el parque…».</p>
+          <p style="margin:0">Reificar en el eje O es exactamente eso, llevado a una base de datos.
+            Barwise y Perry, en su semántica de situaciones, añaden la pieza que cierra el capítulo: los
+            participantes ocupan <em>roles</em> dentro de una escena, y es la escena, no la palabra, la
+            que fija el significado.</p>
         </div>
 
         <h2>Eventos que todavía no han pasado</h2>
 
-        <p>Una situación no tiene por qué ser un hecho consumado. Los negocios necesitan guardar
-          reuniones planeadas, rodajes que se cancelaron, diagnósticos que son hipótesis, compras que
-          se devolvieron. Antes que inventar etiquetas duplicadas para cada caso (un cable
-          <code>agente_real</code> y otro <code>agente_planeado</code>), la solución más limpia es
-          obligar a toda situación a declarar abiertamente su <strong>estatus factual</strong>:</p>
+        <p>Una situación no tiene por qué ser un hecho consumado.</p>
+
+        <p>Los negocios necesitan guardar reuniones planeadas, rodajes cancelados, diagnósticos que son
+          hipótesis, compras devueltas.</p>
+
+        <p>Antes que inventar etiquetas duplicadas para cada caso, lo más limpio es obligar a toda
+          situación a declarar su <strong>estatus factual</strong>:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">signatura</span><button class="copiar">⧉ copiar</button></div>
@@ -355,11 +403,13 @@
   Opciones permitidas: real | planeado | confirmado | hipotético | cancelado | rectificado</code></pre>
         </div>
 
-        <p>Una escena de cine programada para rodarse la semana próxima se guarda igual que una ya
-          filmada, solo que con <code>estatus_factual: planeado</code>. Cuando se rueda, el sistema no
-          borra el plan: crea una situación <em>nueva</em> con estatus <code>real</code> y la conecta a
-          la antigua diciendo que la <code>cumple</code>. Si se cancela, se crea una situación de
-          cancelación. El plan original nunca se reescribe.</p>
+        <p>Una escena de cine programada para la semana próxima se guarda igual que una ya filmada,
+          solo que con <code>estatus_factual: planeado</code>.</p>
+
+        <p>Cuando se rueda, el sistema no borra el plan. Crea una situación <em>nueva</em> con estatus
+          <code>real</code> y la conecta a la antigua diciendo que la <code>cumple</code>.</p>
+
+        <p>Si se cancela, se crea una situación de cancelación. El plan original nunca se reescribe.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -378,21 +428,24 @@
 
         <div class="caja caja--idea">
           <p class="caja-tit">Convención de hechos inmutables</p>
-          <p style="margin:0">Un hecho nunca se borra ni se edita: se <em>supera</em>. Para corregir
-            el pasado no se modifica la situación vieja, sino que se crea una nueva y se la enlaza a la
-            anterior con un cable de reacción (<code>cumple</code>, <code>cancela</code>,
-            <code>rectifica</code>). La verdad del sistema no es un estado que se pisa, sino una
-            sucesión de hechos que se acumula. Auditar deja de ser un esfuerzo: es leer la pila.</p>
+          <p style="margin:0 0 .7rem">Un hecho nunca se borra ni se edita. Se <em>supera</em>.</p>
+          <p style="margin:0 0 .7rem">Para corregir el pasado no se toca la situación vieja. Se crea una
+            nueva y se la engancha a la anterior con un cable de reacción: <code>cumple</code>,
+            <code>cancela</code>, <code>rectifica</code>.</p>
+          <p style="margin:0">La verdad del sistema no es un estado que se pisa, sino una pila de hechos
+            que se acumula. Auditar deja de ser un esfuerzo: es leer la pila.</p>
         </div>
 
         <h2>Datos que caducan: la vigencia</h2>
 
-        <p>Llegamos a uno de los recursos de diseño más finos del modelo. Hay propiedades que
-          sencillamente no duran para siempre. El precio de una camiseta cambia con cada temporada y
-          cada rebaja. La dirección de un cliente cambia cuando se muda. El
-          modelo de IA que corre en producción se reemplaza por una versión nueva cada pocas semanas.
-          Una base de datos ingenua, al recibir un valor nuevo, pisa el viejo y destruye el historial
-          para siempre.</p>
+        <p>Llegamos a uno de los recursos más finos del modelo.</p>
+
+        <p>Hay propiedades que no duran para siempre. El precio de una camiseta cambia con cada
+          temporada. La dirección de un cliente cambia cuando se muda. El modelo de IA que corre en
+          producción se reemplaza cada pocas semanas.</p>
+
+        <p>Una base ingenua, al recibir un valor nuevo, pisa el viejo y destruye el historial para
+          siempre.</p>
 
         <p>El modelo evita ese desastre usando la reificación para domesticar el tiempo. En lugar de
           la barbaridad de reescribir un dato vivo (</p>
@@ -431,10 +484,14 @@
         </div>
 
         <p>Cuando le preguntas al sistema «¿qué modelo corría en producción?», la máquina te pide una
-          fecha de referencia. Si preguntas por el 20 de febrero de 2026, recorre los rangos y devuelve
-          <code>modelo_lumen_2025</code>; si preguntas por hoy, devuelve <code>modelo_lumen_2026</code>.
-          La siguiente figura muestra esa sucesión como una banda temporal: cada vigencia es un tramo, y
-          una consulta fechada es una línea vertical que cae sobre el tramo correcto.</p>
+          fecha.</p>
+
+        <p>Si preguntas por el 20 de febrero de 2026, recorre los tramos y devuelve
+          <code>modelo_lumen_2025</code>. Si preguntas por hoy, devuelve
+          <code>modelo_lumen_2026</code>.</p>
+
+        <p>La figura siguiente muestra esa sucesión como una banda: cada vigencia es un tramo, y una
+          consulta fechada es una línea vertical que cae sobre el tramo correcto.</p>
 
         <!-- FIGURA 9.2: vigencia como sucesión temporal de situaciones -->
         <figure class="figura figura--ancha revelar">
@@ -491,7 +548,6 @@
           entre ellas. Son pocos, pero cubren todos los escenarios. Conviene verlos en dos columnas,
           porque caen en familias claras.</p>
 
-        <div class="columnas">
           <p><strong>1 · Jerarquía</strong> (<code>parte_de</code> y su inverso <code>contiene</code>).
             Mete eventos pequeños dentro de eventos grandes. Un gol es <code>parte_de</code> un
             partido; una escena es <code>parte_de</code> una película. El todo y la parte coexisten
@@ -508,7 +564,6 @@
             <code>motivado_por</code>, <code>justificado_por</code>). Los cables que explican los
             motivos (humanos o mecánicos) detrás de las situaciones. Son tan particulares que merecen
             su propio capítulo: el <a href="10-por-que.html">siguiente</a>.</p>
-        </div>
 
         <p>Mira cómo se aplican a un partido de fútbol, el ejemplo arquetípico de una situación que
           <em>contiene</em> otras. El partido es el nudo grande; cada jugada es un nudo pequeño que
@@ -531,11 +586,14 @@
 (pase_001, beneficiario, di_maria)   ∈ M(O, Q)</code></pre>
         </div>
 
-        <p>El partido, el pase y el gol son situaciones distintas, todas en
-          O, todas tejidas con cables canónicos. Borra cualquiera y las demás siguen teniendo sentido;
-          añade una jugada nueva y nada se rompe. La estructura n-aria (agente, asistente, minuto y
-          pierna en un solo gol) se conserva entera porque cada situación absorbe la complejidad sin
-          deformar la tripleta.</p>
+        <p>El partido, el pase y el gol son situaciones distintas, todas en O, todas tejidas con los
+          mismos cables.</p>
+
+        <p>Borra cualquiera y las demás siguen teniendo sentido. Añade una jugada nueva y nada se
+          rompe.</p>
+
+        <p>Agente, asistente, minuto y pierna caben en un solo gol porque cada situación absorbe la
+          complejidad sin deformar la tripleta.</p>
 
         <h2>El zoom de la reificación</h2>
 
@@ -576,11 +634,14 @@
           </div>
         </div>
 
-        <p>¿Cuál es el correcto? <strong>Los tres.</strong> Depende del presupuesto y del objetivo. Y
-          lo más hermoso de esta arquitectura es que <strong>saltar del nivel 1 al nivel 3 no rompe la
-          base</strong>: si mañana necesitas más detalle, inyectas situaciones nuevas y las cuelgas de
-          las viejas con <code>parte_de</code>. El sistema nunca se detiene, porque nunca cambia su
-          forma. El nivel de zoom es una decisión de negocio, no una atadura del modelo.</p>
+        <p>¿Cuál es el correcto? <strong>Los tres.</strong> Depende del presupuesto y del objetivo.</p>
+
+        <p>Y lo mejor es que <strong>saltar del nivel 1 al 3 no rompe nada</strong>. Si mañana necesitas
+          más detalle, creas situaciones nuevas y las cuelgas de las viejas con
+          <code>parte_de</code>.</p>
+
+        <p>El sistema nunca se detiene, porque nunca cambia de forma. El nivel de zoom es una decisión
+          de negocio, no una atadura del modelo.</p>
 
         <div class="caja caja--practica">
           <p class="caja-tit">En la práctica</p>
@@ -593,13 +654,17 @@
 
         <h2>Darle identidad a una es nombrar a todas</h2>
 
-        <p>Reificar tiene una recompensa que se cobra más tarde. Al «hacer cosa» a
-          <code>venta_001</code> parece que solo le damos identidad a un evento suelto para colgarle
-          atributos: su monto, su cliente, su momento. Pero al darle un tipo —al decir que es una
-          instancia de <code>venta</code>— la inscribimos, sin proponérnoslo, en un conjunto: el de
-          todas las ventas. Esa es la otra cara del nudo. Un evento con identidad propia no solo
-          recibe detalles; queda contado junto a sus pares, y «¿cuántas ventas hubo?» pasa a tener
-          respuesta sin armar nada nuevo.</p>
+        <p>Reificar tiene una recompensa que se cobra más tarde.</p>
+
+        <p>Al hacer cosa a <code>venta_001</code> parece que solo le damos identidad para colgarle
+          atributos: su monto, su cliente, su momento.</p>
+
+        <p>Pero al darle un tipo, al decir que es una venta, la inscribimos sin querer en un conjunto:
+          el de todas las ventas.</p>
+
+        <p>Esa es la otra cara del nudo. Un evento con identidad propia no solo recibe detalles: queda
+          contado junto a sus pares. Y «¿cuántas ventas hubo?» pasa a tener respuesta sin armar
+          nada.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -607,13 +672,18 @@
 count(u, Pattern(type_constraint=u.ind("venta")))</code></pre>
         </div>
 
-        <p>Las situaciones reificadas son las rotondas por donde circula el tráfico de la base: los
-          puntos donde convergen los hechos y desde donde se ramifican los procesos. Pero para que el
-          mapa esté completo falta pavimentar un tipo de conexión muy especial entre esas rotondas.
-          Saber que ocurrió una venta o un fallo es útil; saber <em>qué lo causó</em>, <em>qué
-          finalidad perseguía</em> o <em>qué norma lo justificó</em> es lo que eleva una base de datos
-          a inteligencia de negocio. Esos cables del «por qué» son tan singulares que el próximo
-          capítulo defiende una tesis incómoda: que <strong>el porqué no es un eje</strong>.</p>
+        <p>Las situaciones son las rotondas por donde circula el tráfico de la base: donde convergen
+          los hechos y desde donde se ramifican los procesos.</p>
+
+        <p>Pero para que el mapa esté completo falta pavimentar un tipo de conexión muy especial entre
+          esas rotondas.</p>
+
+        <p>Saber que ocurrió una venta o un fallo es útil. Saber <em>qué lo causó</em>, <em>para qué se
+          hizo</em> o <em>qué norma lo justificó</em> es lo que convierte una base de datos en
+          inteligencia de negocio.</p>
+
+        <p>Esos cables del «por qué» son tan singulares que el próximo capítulo defiende una tesis
+          incómoda: <strong>el porqué no es un eje</strong>.</p>
 
       </div>
     </article>

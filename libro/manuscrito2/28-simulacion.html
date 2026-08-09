@@ -56,22 +56,28 @@
       <div class="contenido">
 
         <p class="entrada">La planificadora de mina tiene sobre la mesa una decisión de las que no
-          admiten empate. El camión 007 necesita mantenimiento mayor. Puede pararlo en junio, y perder
-          una semana de producción cuando el precio está alto, o estirarlo hasta agosto y aceptar que
-          llegue más gastado a los meses buenos. Ninguna de las dos opciones es obviamente correcta.
-          Lo único claro es que se decide esta semana.</p>
+          admiten empate. El camión 007 necesita mantenimiento mayor.</p>
 
-        <p>Es la clase de pregunta que en cualquier operación seria termina en una hoja de cálculo
-          construida a mano, que alguien guarda en su carpeta, que nadie más entiende y que dentro de
-          seis meses no se podrá auditar. Cuando el trimestre cierre mal, la pregunta será por qué se
-          decidió lo que se decidió, y la respuesta vivirá en la memoria de dos personas.</p>
+        <p>Puede pararlo en junio y perder una semana de producción con el precio alto. O estirarlo
+          hasta agosto y aceptar que llegue más gastado a los meses buenos.</p>
+
+        <p>Ninguna opción es obviamente correcta. Lo único claro es que se decide esta semana.</p>
+
+        <p>Es la clase de pregunta que en cualquier operación seria termina en una hoja de cálculo hecha
+          a mano. Alguien la guarda en su carpeta, nadie más la entiende y dentro de seis meses no se
+          podrá auditar.</p>
+
+        <p>Cuando el trimestre cierre mal, la pregunta será por qué se decidió lo que se decidió. Y la
+          respuesta vivirá en la memoria de dos personas.</p>
 
         <p>Este capítulo sostiene que el grafo puede alojar esa decisión entera, con su cálculo, sus
-          supuestos y su rastro, sin que haya que construir un simulador aparte. Un simulador necesita
-          tres cosas: un estado de partida, una regla que lo transforme y un estado proyectado. Las
-          tres caben en lo que ya has leído. No hace falta un mecanismo nuevo, y esa afirmación es
-          comprobable: al final del capítulo aparece la cuenta exacta de cuánto vocabulario nuevo hizo
-          falta.</p>
+          supuestos y su rastro, sin construir un simulador aparte.</p>
+
+        <p>Un simulador necesita tres cosas: un estado de partida, una regla que lo transforme y un
+          estado proyectado. Las tres caben en lo que ya has leído.</p>
+
+        <p>No hace falta ningún mecanismo nuevo, y eso se puede comprobar. Al final del capítulo aparece
+          la cuenta exacta de cuánto vocabulario nuevo hizo falta.</p>
 
         <aside class="nota-margen">
           <span class="etq">De dónde sale este capítulo</span>
@@ -82,11 +88,14 @@
 
         <h2>La cadena que ya sabes recorrer</h2>
 
-        <p>Vuelve un momento al peor instante de aquel capítulo. Son las 23:40, una roca se desprende
-          de la pared del Banco 04 y golpea al operador Quispe. La auditoría pregunta qué causó el
-          accidente y el grafo responde recorriendo <code>causado_por</code> hacia atrás: el accidente
-          vino del desprendimiento, y el desprendimiento de un debilitamiento estructural que la
-          inspección geomecánica debió haber detectado. Tres nodos, dos cables, ningún culpable.</p>
+        <p>Vuelve un momento al peor instante de aquel capítulo. Son las 23:40, una roca se desprende de
+          la pared del Banco 04 y golpea al operador Quispe.</p>
+
+        <p>La auditoría pregunta qué causó el accidente y el grafo responde recorriendo
+          <code>causado_por</code> hacia atrás. El accidente vino del desprendimiento, y el
+          desprendimiento de un debilitamiento que la inspección geomecánica debió detectar.</p>
+
+        <p>Tres nodos, dos cables, ningún culpable.</p>
 
         <p>Ahora fíjate en lo que hace la planificadora. Parte de una intervención que todavía no ha
           ocurrido, el mantenimiento de junio, y quiere saber qué se seguiría de ella. Es el mismo
@@ -95,16 +104,20 @@
         <p class="cita-destacada revelar">El auditor recorre las causas hacia atrás. El planificador
           recorre las mismas hacia adelante.<cite>La tesis del capítulo</cite></p>
 
-        <p>Conviene detenerse aquí, porque es lo que hace innecesario el simulador aparte. Un motor de
-          simulación convencional construye su propio universo de objetos, corre el escenario en
-          memoria y devuelve números. Lo que ocurrió por dentro se pierde, o sobrevive en un registro
-          que nadie diseñó para ser consultado. Si preguntas seis meses después por qué el modelo
-          proyectó esa caída de producción, tienes el número y no tienes el porqué.</p>
+        <p>Conviene detenerse aquí, porque es lo que hace innecesario el simulador aparte.</p>
 
-        <p>Aquí el porqué se escribe en el mismo acto de proyectar, porque proyectar consiste en
-          escribir hechos, y un hecho proyectado cuelga de su causa por el mismo cable que cualquier
-          otro. La trazabilidad no es una funcionalidad del simulador. Es un efecto secundario de no
-          haber construido uno.</p>
+        <p>Un motor de simulación convencional construye su propio universo de objetos, corre el
+          escenario en memoria y devuelve números. Lo que ocurrió por dentro se pierde, o sobrevive en un
+          registro que nadie diseñó para consultarse.</p>
+
+        <p>Si preguntas seis meses después por qué el modelo proyectó esa caída de producción, tienes el
+          número y no tienes el porqué.</p>
+
+        <p>Aquí el porqué se escribe en el mismo acto de proyectar. Proyectar consiste en escribir
+          hechos, y un hecho proyectado cuelga de su causa por el mismo cable que cualquier otro.</p>
+
+        <p>La trazabilidad no es una función del simulador. Es un efecto secundario de no haber
+          construido uno.</p>
 
         <figure class="figura figura--ancha revelar">
           <div class="lienzo">
@@ -175,21 +188,26 @@
 
         <h2>El escenario es una entidad</h2>
 
-        <p>La primera pregunta práctica es dónde se guardan dos futuros incompatibles sin que se
-          mezclen entre sí ni ensucien lo que de verdad pasó. Una respuesta tentadora es apoyarse en
-          el tiempo: si el modelo lleva dos relojes, uno para lo que era cierto y otro para lo que el
-          sistema sabía, quizá el segundo baste para separar los mundos.</p>
+        <p>La primera pregunta práctica es dónde se guardan dos futuros incompatibles sin que se mezclen
+          ni ensucien lo que de verdad pasó.</p>
 
-        <p>No basta, y conviene decir por qué con claridad. Dos relojes dan dos lecturas de
-          <em>una</em> historia. No la ramifican. Puedes preguntarle a un sistema bitemporal qué creía
-          en marzo y qué era cierto en marzo, pero no puedes pedirle que sostenga cuatro marzos
-          alternativos a la vez, porque los relojes no se bifurcan.</p>
+        <p>Una respuesta tentadora es apoyarse en el tiempo. Si el modelo lleva dos relojes, uno para lo
+          que era cierto y otro para lo que el sistema sabía, quizá el segundo baste para separar los
+          mundos.</p>
+
+        <p>No basta, y conviene decir por qué. Dos relojes dan dos lecturas de <em>una</em> historia. No
+          la ramifican.</p>
+
+        <p>Puedes preguntarle a ese sistema qué creía en marzo y qué era cierto en marzo. No puedes
+          pedirle que sostenga cuatro marzos alternativos a la vez. Los relojes no se bifurcan.</p>
 
         <p>Lo que sí se bifurca es el grafo. El escenario se convierte en una entidad con identidad
           propia en <span class="eje eje--o">O</span>, y cada hecho proyectado cuelga de ella por
-          <code>parte_de</code>. Es la decisión <span class="codigo-d" style="font-size:.72rem">D4</span> aplicada a la
-          simulación misma: algo se reifica cuando necesita identidad, y un escenario la necesita
-          porque hay que poder nombrarlo, compararlo y descartarlo.</p>
+          <code>parte_de</code>.</p>
+
+        <p>Es la decisión <span class="codigo-d" style="font-size:.72rem">D4</span> aplicada a la
+          simulación misma. Algo recibe identidad cuando la necesita, y un escenario la necesita porque
+          hay que poder nombrarlo, compararlo y descartarlo.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -202,11 +220,12 @@
 (sim_prod_jul_junio, parte_de, escenario_junio)             ∈ M(O, O)</code></pre>
         </div>
 
-        <p>Fíjate en lo que esto compra. El aislamiento entre ramas deja de ser una cuestión de
-          fechas y pasa a ser una cuestión de topología: los hechos de junio cuelgan de un nodo y los
-          de agosto de otro, y por eso no pueden contaminarse aunque hablen del mismo camión, del
-          mismo mes y de la misma tonelada. Caben dos escenarios, y caben cuarenta, sin que el modelo
-          note la diferencia.</p>
+        <p>Fíjate en lo que esto compra. Separar las ramas deja de ser cuestión de fechas y pasa a ser
+          cuestión de forma.</p>
+
+        <p>Los hechos de junio cuelgan de un nodo y los de agosto de otro, así que no pueden
+          contaminarse aunque hablen del mismo camión, del mismo mes y de la misma tonelada. Caben dos
+          escenarios y caben cuarenta, sin que el modelo note la diferencia.</p>
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Lo que gana el escenario al ser una entidad</p>
@@ -223,11 +242,12 @@
 
         <h2>Proyectar es fechar hacia adelante</h2>
 
-        <p>Resuelto dónde vive un futuro, queda cómo se escribe. Y aquí la respuesta decepciona por lo
-          simple: un hecho proyectado es un hecho normal con la vigencia puesta más adelante. La
-          decisión <span class="codigo-d" style="font-size:.72rem">D6</span> nunca dijo que el rango
-          <code>[inicio, fin)</code> tuviera que caer en el pasado. Si lo pones en julio, el hecho
-          existe en el grafo desde que lo escribes y solo entra en vigencia en julio.</p>
+        <p>Resuelto dónde vive un futuro, queda cómo se escribe. Y la respuesta decepciona de tan
+          simple: un hecho proyectado es un hecho normal con la vigencia puesta más adelante.</p>
+
+        <p>La decisión <span class="codigo-d" style="font-size:.72rem">D6</span> nunca dijo que el rango
+          <code>[inicio, fin)</code> tuviera que caer en el pasado. Si lo pones en julio, el hecho existe
+          en el grafo desde que lo escribes y solo entra en vigencia en julio.</p>
 
         <p>La consecuencia es que la consulta «en el momento T», la que el capítulo 27 usaba para
           reconstruir lo que sabía un directorio en noviembre, sirve igual para leer un futuro. Es
@@ -250,11 +270,14 @@ u.facts_about(prod, at=JULIO)
 #    'lugar_de', 'momento', 'monto', 'parte_de']</code></pre>
         </div>
 
-        <p>Lo que no aparece en esa salida importa tanto como lo que aparece. Los roles estructurales
-          del hecho proyectado (de qué escenario es parte, con qué instrumento, en qué lugar, por qué
-          causa) están vigentes desde el primer día, porque describen el escenario y no el futuro.
-          Solo las magnitudes esperan su turno. Puedes inspeccionar la arquitectura de una proyección
-          sin que sus números contaminen ninguna consulta del presente.</p>
+        <p>Lo que no aparece en esa salida importa tanto como lo que aparece.</p>
+
+        <p>Los roles estructurales del hecho proyectado (de qué escenario es parte, con qué instrumento,
+          en qué lugar, por qué causa) están vigentes desde el primer día, porque describen el escenario
+          y no el futuro. Solo las magnitudes esperan su turno.</p>
+
+        <p>Puedes inspeccionar el armazón de una proyección sin que sus números ensucien ninguna consulta
+          del presente.</p>
 
         <aside class="nota-margen">
           <span class="etq">Comprobado, no supuesto</span>
@@ -265,10 +288,11 @@ u.facts_about(prod, at=JULIO)
 
         <h2>La regla también es un hecho</h2>
 
-        <p>Falta la pieza del medio. Un estado de partida y un estado proyectado no hacen una
-          simulación: hace falta la lógica que lleva de uno a otro, y esa lógica suele ser lo primero
-          que se pierde. Vive en una fórmula de hoja de cálculo, en una constante dentro de un script,
-          en el criterio de un ingeniero que se jubiló.</p>
+        <p>Falta la pieza del medio. Un estado de partida y otro proyectado no hacen una simulación:
+          falta la lógica que lleva de uno a otro.</p>
+
+        <p>Y esa lógica suele ser lo primero que se pierde. Vive en una fórmula de hoja de cálculo, en
+          una constante dentro de un script, en el criterio de un ingeniero que se jubiló.</p>
 
         <p>En este dominio la lógica cabe en una frase: cada mes que se difiere el mantenimiento
           cuesta un punto y medio de disponibilidad. Escríbela como entidad y deja de ser un supuesto
@@ -283,46 +307,54 @@ u.facts_about(prod, at=JULIO)
 (camion_007, capacidad_mensual, 44000 toneladas)         ∈ M(O, N)</code></pre>
         </div>
 
-        <p>Con la regla en el grafo, la aritmética del escenario se vuelve auditable sin salir de él.
-          El camión mueve 44.000 toneladas al mes a plena disponibilidad. Parándolo en junio llega a
-          julio al 94,0 %, y 44.000 por 0,94 da 41.360 toneladas. Difiriéndolo hasta agosto acumula
-          dos meses de castigo, tres puntos, y julio cae a 91,0 %: 40.040 toneladas.</p>
+        <p>Con la regla en el grafo, la aritmética del escenario se puede auditar sin salir de él.</p>
+
+        <p>El camión mueve 44.000 toneladas al mes a plena disponibilidad. Parándolo en junio llega a
+          julio al 94,0 %, y 44.000 por 0,94 da 41.360 toneladas. Difiriéndolo hasta agosto acumula dos
+          meses de castigo, tres puntos, y julio cae a 91,0 %: 40.040 toneladas.</p>
 
         <p>La diferencia entre los dos futuros es de 1.320 toneladas. Con la ley de 8,6 gramos por
-          tonelada del capítulo 23, eso son unas 365 onzas de oro fino. Ahora la conversación de la
-          planificadora con su gerencia trata sobre un número que cualquiera puede rehacer, y sobre
-          una tasa de desgaste que cualquiera puede discutir, que es exactamente donde debería estar
-          la discusión.</p>
+          tonelada del capítulo 23, unas 365 onzas de oro fino.</p>
+
+        <p>Ahora la planificadora y su gerencia discuten sobre un número que cualquiera puede rehacer y
+          sobre una tasa de desgaste que cualquiera puede cuestionar. Que es exactamente donde debería
+          estar la discusión.</p>
 
         <div class="caja caja--practica revelar">
           <p class="caja-tit">Quién multiplica</p>
-          <p style="margin:0">Esta multiplicación la hace el grafo. El motor de derivación lee la
-            regla, opera respetando las unidades y escribe el resultado con su
-            <code>calculado_de</code> puesto, que es como se calcula el oro fino del
-            <a href="23-minera.html">capítulo 23</a>. Le falta la mitad condicional: derivar una
-            magnitud de otras sí, disparar una regla cuando se cumplen ciertas condiciones todavía no.
-            Esa mitad es el Frente 1 del <a href="31-que-falta.html">capítulo 31</a>.</p>
+          <p style="margin:0 0 .7rem">Esta multiplicación la hace el grafo. El motor de derivación lee
+            la regla, opera respetando las unidades y escribe el resultado con su
+            <code>calculado_de</code> puesto. Es como se calcula el oro fino del
+            <a href="23-minera.html">capítulo 23</a>.</p>
+
+          <p style="margin:0">Le falta la mitad condicional. Derivar una magnitud de otras, sí. Disparar
+            una regla cuando se cumplen ciertas condiciones, todavía no. Esa mitad es el Frente 1 del
+            <a href="31-que-falta.html">capítulo 31</a>.</p>
         </div>
 
         <h2>Un hecho proyectado no tiene autor</h2>
 
         <p>Al escribir el ejemplo de este capítulo apareció una fricción que vale más que cualquier
-          párrafo teórico. El primer intento registraba la producción proyectada poniendo al camión
-          como agente, y el catálogo lo rechazó: la signatura de <code>agente</code> exige un
-          individuo en <span class="eje eje--q">Q</span>, y el camión vive en
-          <span class="eje eje--o">O</span>.</p>
+          párrafo teórico.</p>
 
-        <p>El rechazo tenía razón, y por un motivo más interesante que el error de eje. En el
-          capítulo 23 el camión nunca fue agente: era el <code>instrumento</code> con el que un
-          operador extraía mineral. Pero al proyectar julio, ¿quién es el operador? Ninguno. Nadie ha
-          conducido todavía ese camión en julio. La extracción proyectada no tiene autor porque no ha
-          tenido lugar.</p>
+        <p>El primer intento registraba la producción proyectada poniendo al camión como agente. El
+          catálogo lo rechazó: la firma de <code>agente</code> exige un individuo en
+          <span class="eje eje--q">Q</span>, y el camión vive en <span class="eje eje--o">O</span>.</p>
 
-        <p>Y esa figura ya existía en el libro. Es la del desprendimiento de roca: un evento que
-          ocurre sin que nadie lo ejecute, que la decisión <span class="codigo-d" style="font-size:.72rem">D5</span> admite
-          porque la agencia la fija el verbo y no una casilla obligatoria. Lo que se diseñó para
-          registrar que una roca cae sin culpable sirve, sin tocar nada, para registrar que una
-          tonelada se extraerá sin que nadie la haya extraído aún.</p>
+        <p>El rechazo tenía razón, y por un motivo más interesante que el error de eje. En el capítulo
+          23 el camión nunca fue agente: era el <code>instrumento</code> con el que un operador extraía
+          mineral.</p>
+
+        <p>Pero al proyectar julio, ¿quién es el operador? Ninguno. Nadie ha conducido todavía ese camión
+          en julio. La extracción proyectada no tiene autor porque no ha ocurrido.</p>
+
+        <p>Y esa figura ya existía en el libro. Es la del desprendimiento de roca: un evento que ocurre
+          sin que nadie lo ejecute, y que la decisión
+          <span class="codigo-d" style="font-size:.72rem">D5</span> admite porque la agencia la fija el
+          verbo y no una casilla obligatoria.</p>
+
+        <p>Lo que se diseñó para registrar que una roca cae sin culpable sirve, sin tocar nada, para
+          registrar que una tonelada se extraerá sin que nadie la haya extraído aún.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -336,17 +368,19 @@ u.facts_about(prod, at=JULIO)
 # la agencia está aquí: alguien mandó calcular este futuro</code></pre>
         </div>
 
-        <p>La agencia no desaparece, se muda. El hecho proyectado no tiene autor, pero el escenario
-          sí: alguien encargó ese cálculo y esa responsabilidad queda escrita un nivel más arriba. Es
-          la distinción que un comité de inversiones necesita y que una hoja de cálculo nunca hace.
+        <p>La agencia no desaparece. Se muda. El hecho proyectado no tiene autor, pero el escenario sí:
+          alguien encargó ese cálculo, y esa responsabilidad queda escrita un nivel más arriba.</p>
+
+        <p>Es la distinción que un comité de inversiones necesita y que una hoja de cálculo nunca hace.
           Nadie produjo esas toneladas. Alguien, con nombre, afirmó que se producirían.</p>
 
         <h2>Comparar dos futuros es una consulta</h2>
 
-        <p>Con los dos escenarios escritos, compararlos no requiere ninguna maquinaria. Recorres los
-          hechos que cuelgan de cada nodo, lees el rol que te interesa en la fecha que te interesa y
-          restas. La comparación de escenarios, que en un simulador convencional es una función del
-          motor, aquí es una consulta más.</p>
+        <p>Con los dos escenarios escritos, compararlos no exige maquinaria. Recorres los hechos que
+          cuelgan de cada nodo, lees el rol que te interesa en la fecha que te interesa y restas.</p>
+
+        <p>Comparar escenarios, que en un simulador convencional es una función del motor, aquí es una
+          consulta más.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">text</span><button class="copiar">⧉ copiar</button></div>
@@ -361,8 +395,9 @@ u.facts_about(prod, at=JULIO)
         </div>
 
         <p>La última línea es la que da tranquilidad para usar esto en producción. Simular añadió
-          cuarenta hechos y no tocó ninguno de los ciento setenta y dos que ya estaban. El presente
-          del camión, consultado el 20 de mayo, devuelve exactamente los mismos cinco roles antes y
+          cuarenta hechos y no tocó ninguno de los ciento setenta y dos que ya estaban.</p>
+
+        <p>El presente del camión, consultado el 20 de mayo, devuelve los mismos cinco roles antes y
           después de haber proyectado dos futuros sobre él.</p>
 
         <figure class="figura figura--ancha revelar">
@@ -429,16 +464,19 @@ u.facts_about(prod, at=JULIO)
 
         <h2>Un escenario también puede ser un disparate</h2>
 
-        <p>Nada de lo anterior impide proyectar una tontería. Si el modelo de desgaste se teclea mal
-          y la disponibilidad de julio sale al 140&nbsp;%, el escenario se guarda con la misma
-          docilidad que uno sensato. El almacén es de mundo abierto, y eso no va a cambiar: es lo
-          que permite modelar un yacimiento sin pedirle permiso a nadie.</p>
+        <p>Nada de lo anterior impide proyectar una tontería. Si el modelo de desgaste se teclea mal y
+          la disponibilidad de julio sale al 140&nbsp;%, el escenario se guarda con la misma docilidad
+          que uno sensato.</p>
 
-        <p>Lo que sí se puede es declarar qué no debería pasar. La forma que acota la disponibilidad
-          es la del <a href="05-predicados.html">capítulo 5</a>, y aquí gana un matiz que en otros
-          dominios no tiene: <strong>un escenario se valida en la fecha en la que regiría</strong>,
-          no hoy. Preguntar hoy por un hecho de julio no tiene sentido, porque hoy ese hecho todavía
-          no rige.</p>
+        <p>El almacén es de mundo abierto, y eso no va a cambiar. Es lo que permite modelar un yacimiento
+          sin pedirle permiso a nadie.</p>
+
+        <p>Lo que sí se puede es declarar qué no debería pasar. La forma que acota la disponibilidad es
+          la del <a href="05-predicados.html">capítulo 5</a>, y aquí gana un matiz propio:
+          <strong>un escenario se valida en la fecha en la que regiría</strong>, no hoy.</p>
+
+        <p>Preguntar hoy por un hecho de julio no tiene sentido, porque hoy ese hecho todavía no
+          rige.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -449,10 +487,10 @@ u.validate(momento=D(7, 15))   # en julio, cuando el escenario manda
 #   [sim_prod_jul: 140 K:Porcentaje por encima del máximo 100 K:Porcentaje]</code></pre>
         </div>
 
-        <p>La vigencia deja de ser solo un mecanismo de archivo y se vuelve el eje de la
-          comprobación. Es la misma <span class="codigo-d" style="font-size:.72rem">D6</span> que
-          hacía invisible el hecho proyectado en la sección anterior, trabajando ahora del otro lado:
-          si un hecho no rige, tampoco se le exige nada.</p>
+        <p>La vigencia deja de ser solo un mecanismo de archivo y se vuelve el eje de la comprobación.
+          Es la misma <span class="codigo-d" style="font-size:.72rem">D6</span> que hacía invisible el
+          hecho proyectado, trabajando ahora del otro lado. Si un hecho no rige, tampoco se le exige
+          nada.</p>
 
         <p>Y el escenario disparatado sigue ahí. No se rechazó, no se borró: quedó marcado. Un
           planificador puede listar los escenarios con violaciones abiertas antes de llevarlos al
@@ -473,31 +511,38 @@ u.validate(momento=D(7, 15))   # en julio, cuando el escenario manda
                               'objeto_de', 'tasa']</code></pre>
         </div>
 
-        <p>Nueve de los catorce son roles canónicos del catálogo, los mismos que sostienen una venta,
-          un viaje en taxi o una consulta clínica. Los otros cinco son roles de dominio que la
-          política liberal admite sin declararlos, y ninguno es un mecanismo: <code>estado</code> y
-          <code>objeto_de</code> ya se usaban en el capítulo 23, y los tres restantes nombran
-          magnitudes de camión minero, no piezas de infraestructura de simulación.</p>
+        <p>Nueve de los catorce son roles del catálogo, los mismos que sostienen una venta, un viaje en
+          taxi o una consulta clínica.</p>
+
+        <p>Los otros cinco son roles de dominio que el modelo admite sin declararlos, y ninguno es un
+          mecanismo. <code>estado</code> y <code>objeto_de</code> ya se usaban en el capítulo 23, y los
+          tres restantes nombran magnitudes de camión minero, no piezas de simulación.</p>
 
         <p class="cita-destacada revelar">No hubo que enseñarle al modelo a simular. Hubo que fecharle
           los hechos más adelante.<cite>El resultado del experimento</cite></p>
 
         <h2>Lo que queda escrito</h2>
 
-        <p>Vuelve a la planificadora del principio. Decida junio o agosto, dentro de seis meses el
-          grafo podrá responder tres preguntas que hoy suelen quedar sin respuesta: qué se proyectó,
-          con qué regla y quién lo encargó. Los dos escenarios seguirán ahí, el elegido y el
-          descartado, con sus números y su lógica intactos.</p>
+        <p>Vuelve a la planificadora del principio. Decida junio o agosto, dentro de seis meses el grafo
+          responderá tres preguntas que hoy suelen quedar en el aire: qué se proyectó, con qué regla y
+          quién lo encargó.</p>
 
-        <p>Eso es más de lo que suena. Un sistema que solo guarda decisiones tomadas pierde la mitad
-          de la historia, porque la mitad interesante de una decisión son las opciones que se
-          consideraron y se dejaron pasar. Un grafo que aloja escenarios guarda las dos mitades con la
-          misma estructura y sin ningún esfuerzo adicional.</p>
+        <p>Los dos escenarios seguirán ahí, el elegido y el descartado, con sus números y su lógica
+          intactos.</p>
 
-        <p>El capítulo 27 mostró lo que se vuelve posible cuando el pasado está bien escrito. Este
-          añade que el futuro se escribe con los mismos cables, y que su explicación viene incluida
-          porque nunca se separó del dato. El siguiente capítulo aprieta más la tuerca: en lugar de
-          proyectar un yacimiento, el modelo se describirá a sí mismo.</p>
+        <p>Eso es más de lo que suena. Un sistema que solo guarda decisiones tomadas pierde la mitad de
+          la historia, porque la mitad interesante son las opciones que se consideraron y se dejaron
+          pasar.</p>
+
+        <p>Un grafo que aloja escenarios guarda las dos mitades con la misma estructura y sin esfuerzo
+          extra.</p>
+
+        <p>El capítulo 27 mostró lo que se vuelve posible cuando el pasado está bien escrito. Este añade
+          que el futuro se escribe con los mismos cables, y que su explicación viene incluida porque
+          nunca se separó del dato.</p>
+
+        <p>El siguiente aprieta más la tuerca. En lugar de proyectar un yacimiento, el modelo se
+          describirá a sí mismo.</p>
 
       </div>
     </article>

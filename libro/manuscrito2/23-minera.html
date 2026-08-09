@@ -59,15 +59,20 @@
 
         <p class="entrada">Son las 03:14 de un martes en el Yacimiento San Marcos, a 4.250 metros sobre
           el nivel del mar. No hay nadie en el Frente C del Banco 04: el turno de noche extrae en el
-          tajo contiguo y la zona está vacía hasta el amanecer. Y, sin embargo, algo ocurre. En la
-          Estación 7, junto a la quebrada que baja del tajo, un sensor de calidad de agua toma su
-          lectura de rutina (una cada quince minutos, sin descanso, desde que se instaló) y registra
-          <strong>0,34 miligramos de arsénico por litro</strong>. El umbral que la norma ambiental
-          tolera es 0,10. El número rojo no espera a que llegue un humano: dispara un evento, el
-          evento engancha con una norma, la norma obliga a un reporte, y el reporte queda listo para
-          viajar al organismo regulador antes de que el supervisor termine su turno. Nadie tomó esa
-          decisión. La tomó el grafo, porque los hechos estaban tendidos de antemano para que la
-          tomara.</p>
+          tajo contiguo y la zona está vacía hasta el amanecer.</p>
+
+        <p>Y aun así, algo ocurre.</p>
+
+        <p>En la Estación 7, junto a la quebrada que baja del tajo, un sensor de calidad de agua toma su
+          lectura de rutina, una cada quince minutos desde que lo instalaron, y registra <strong>0,34
+          miligramos de arsénico por litro</strong>. El umbral que la norma tolera es 0,10.</p>
+
+        <p>El número rojo no espera a que llegue un humano. Dispara un evento, el evento engancha con
+          una norma, la norma obliga a un reporte, y el reporte queda listo para viajar al regulador
+          antes de que el supervisor termine su turno.</p>
+
+        <p>Nadie tomó esa decisión. La tomó el grafo, porque los hechos estaban tendidos de antemano
+          para que la tomara.</p>
 
         <aside class="nota-margen">
           <span class="etq">El giro del capítulo</span>
@@ -76,17 +81,20 @@
           agentes que <em>no</em> son personas. Es la prueba más dura para la noción de agencia.
         </aside>
 
-        <p>Esa escena resume lo que distingue a este dominio de los siete que lo preceden. Hasta ahora,
-          cada evento que modelamos tenía detrás una voluntad: alguien vendía, alguien pagaba, una
-          médica diagnosticaba, un funcionario emitía una ordenanza. Aun cuando el actor no era humano
-          (la app del taxi asignando un conductor, el motor antifraude del banco marcando una
-          operación) había una <em>intención</em> programada empujando la acción. Una operación minera
-          de gran escala desmonta esa comodidad. En la mina pasan continuamente cosas que ningún agente
-          «hace»: la roca se desprende de la pared, el suelo cede, una junta geomecánica se debilita con
-          el tiempo, una vena de agua subterránea altera la química del río. Son eventos físicos puros,
-          que ocurren porque las condiciones materiales se cumplen, y son tan consecuentes como
-          cualquier acto deliberado: porque cuando esos eventos lesionan a un trabajador o contaminan
-          un cauce, la cadena causal entera tiene que quedar trazada para la auditoría, para la
+        <p>Esa escena resume lo que separa a este dominio de los siete anteriores.</p>
+
+        <p>Hasta ahora, cada evento tenía detrás una voluntad. Alguien vendía, alguien pagaba, una
+          médica diagnosticaba, un funcionario emitía una ordenanza. Y cuando el actor no era humano (la
+          app del taxi asignando conductor, el motor antifraude marcando una operación) había una
+          <em>intención</em> programada empujando la acción.</p>
+
+        <p>Una mina de gran escala desmonta esa comodidad. Ahí pasan cosas todo el tiempo que ningún
+          agente «hace». La roca se desprende de la pared. El suelo cede. Una junta geomecánica se
+          debilita con los años. Una vena de agua subterránea altera la química del río.</p>
+
+        <p>Son eventos físicos puros. Ocurren porque las condiciones materiales se cumplen. Y pesan
+          tanto como cualquier acto deliberado, porque cuando lesionan a un trabajador o contaminan un
+          cauce, la cadena causal entera tiene que quedar trazada. Para la auditoría, para la
           responsabilidad legal y para que no vuelva a ocurrir.</p>
 
         <div class="caja caja--idea revelar">
@@ -137,11 +145,14 @@
           </div>
         </div>
 
-        <p>Repara en la asimetría. En el spa, los hechos llegaban cuando una clienta se acercaba al
-          mostrador; en el banco, cuando alguien ordenaba una transferencia. Aquí los hechos llegan
-          <em>aunque no haya nadie</em>: el sensor mide a las tres de la mañana, la pared se debilita
-          mientras todos duermen, el camión registra horas de motor en un turno desierto. El grafo de
-          una mina respira solo. Esa es la novedad que el modelo tiene que absorber sin doblarse.</p>
+        <p>Fíjate en la asimetría. En el spa, los hechos llegaban cuando una clienta se acercaba al
+          mostrador. En el banco, cuando alguien ordenaba una transferencia.</p>
+
+        <p>Aquí llegan <em>aunque no haya nadie</em>. El sensor mide a las tres de la mañana. La pared
+          se debilita mientras todos duermen. El camión registra horas de motor en un turno desierto.</p>
+
+        <p>El grafo de una mina respira solo. Esa es la novedad que el modelo tiene que absorber sin
+          doblarse.</p>
 
         <h2>El yacimiento sobre los siete ejes</h2>
 
@@ -248,22 +259,26 @@
           ese rol, y otros donde lo ocupa una máquina que mide.
         </aside>
 
-        <p>Las decisiones de diseño que más se ejercitan aquí ya las conoces de capítulos previos;
-          este dominio no estrena ninguna, solo las combina con una intensidad nueva. La agencia
-          contextual (<strong>D5</strong>) se estira hasta admitir eventos sin agente y sensores como
-          agente. La descomposición del porqué (<strong>D7</strong>) reconstruye cadenas causales con
-          <code>causado_por</code> sin intención, y justifica reportes con <code>justificado_por</code>
-          apuntando a normas. La vigencia bitemporal (<strong>D6</strong>) sigue los quince años de
-          estados de un equipo. Y el patrón de la <em>situación articuladora</em> (el mismo que organizó
-          el viaje del taxi y la transferencia del banco) aquí organiza el turno.</p>
+        <p>Las decisiones que más se ejercitan aquí ya las conoces. Este dominio no estrena ninguna;
+          solo las combina con una intensidad nueva.</p>
+
+        <p>La agencia contextual (<strong>D5</strong>) se estira hasta admitir eventos sin agente, y
+          también sensores como agente. El reparto del porqué (<strong>D7</strong>) reconstruye cadenas
+          con <code>causado_por</code>, sin intención de nadie.</p>
+
+        <p>La vigencia (<strong>D6</strong>) sigue quince años de estados de un equipo. Y la
+          <em>situación articuladora</em>, la misma que organizó el viaje del taxi, aquí organiza el
+          turno.</p>
 
         <h2>Caso 1 · La estructura espacial profunda</h2>
 
-        <p>Empecemos por el espacio, porque todo lo demás ocurre <em>en algún sitio</em>. El nivel más
-          alto es el yacimiento entero. Dentro hay uno o más tajos a cielo abierto. Cada tajo tiene
-          niveles definidos por altitud. Cada nivel se subdivide en bancos (los escalones físicos de la
-          pared del tajo). Y cada banco tiene varios frentes de trabajo activos a la vez. Cinco
-          escalones anidados.</p>
+        <p>Empecemos por el espacio, porque todo lo demás ocurre <em>en algún sitio</em>.</p>
+
+        <p>El nivel más alto es el yacimiento entero. Dentro hay uno o más tajos a cielo abierto. Cada
+          tajo tiene niveles definidos por altitud. Cada nivel se divide en bancos, los escalones
+          físicos de la pared. Y cada banco tiene varios frentes de trabajo activos a la vez.</p>
+
+        <p>Cinco escalones anidados.</p>
 
         <p>No hace falta inventar nada: es exactamente la subdivisión territorial que ya modelamos en
           la <a href="22-municipalidad.html">municipalidad</a>, con un rol de dominio
@@ -286,22 +301,23 @@ u.assert_fact(banco_04,    "dentro_de", nivel_4250)
 u.assert_fact(frente_c,    "dentro_de", banco_04)</code></pre>
         </div>
 
-        <p>La consulta <em>«¿dónde ocurrió exactamente este accidente?»</em> devuelve la cadena entera
-          con un solo recorrido ascendente sobre el grafo:
-          <code>Frente&nbsp;C → Banco&nbsp;04 → Nivel&nbsp;4250 → Tajo&nbsp;Norte → Yacimiento San
-          Marcos</code>. Toda la geografía jerárquica disponible para cualquier reporte de seguridad,
-          cualquier auditoría regulatoria, cualquier análisis de productividad por zona —sin una sola
-          columna <code>id_tajo</code>, <code>id_nivel</code>, <code>id_banco</code> repetida en cada
-          tabla que mencione un lugar.</p>
+        <p><em>«¿Dónde ocurrió exactamente este accidente?»</em> devuelve la cadena entera con un solo
+          recorrido hacia arriba: <code>Frente&nbsp;C → Banco&nbsp;04 → Nivel&nbsp;4250 →
+          Tajo&nbsp;Norte → Yacimiento San Marcos</code>.</p>
+
+        <p>Toda la geografía queda disponible para cualquier reporte de seguridad, cualquier auditoría o
+          cualquier análisis de productividad por zona. Sin una sola columna <code>id_tajo</code>,
+          <code>id_nivel</code> o <code>id_banco</code> repetida en cada tabla que mencione un lugar.</p>
 
         <h2>Caso 2 · El camión que vive quince años</h2>
 
-        <p>Un camión de acarreo CAT&nbsp;793F entra en servicio en abril de 2018. Su vida útil planeada
-          es de quince años. Durante ese tramo atraviesa muchos estados: opera, entra a mantenimiento
-          programado, sale, vuelve a operar, sufre una falla, se repara, sigue operando. El modelo
-          registra todo ese ciclo con vigencia temporal (<strong>D6</strong>, la misma maquinaria
-          bitemporal que en el banco siguió la vida de un préstamo y en la universidad la historia de un
-          salario). Cada estado es una tripleta con su rango de validez.</p>
+        <p>Un camión de acarreo CAT&nbsp;793F entra en servicio en abril de 2018, con quince años de
+          vida útil por delante. En ese tramo pasa por muchos estados: opera, entra a mantenimiento
+          programado, sale, vuelve a operar, sufre una falla, se repara, sigue operando.</p>
+
+        <p>El modelo registra todo ese ciclo con vigencia (<strong>D6</strong>), la misma maquinaria que
+          en el banco siguió la vida de un préstamo y en la universidad la de un salario. Cada estado es
+          una tripleta con su rango de validez.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -317,35 +333,45 @@ u.assert_fact(camion_007, "estado", operativo,
               valid_from=t_reparado)   # sigue vigente</code></pre>
         </div>
 
-        <p>Cinco tripletas. El historial completo del camión a lo largo de ocho años de operación. La
-          consulta <em>«¿el camión 007 estaba operativo el 15 de marzo de 2024?»</em> devuelve
-          <code>mantenimiento_programado</code>; <em>«¿y el 1 de junio de 2026?»</em> devuelve
-          <code>operativo</code>. La trazabilidad para auditoría es nativa, no un módulo añadido: el
-          rango <code>valid_from</code>/<code>valid_to</code> es parte del propio hecho, no una columna
-          que alguien tuvo que recordar mantener.</p>
+        <p>Cinco tripletas. El historial completo del camión a lo largo de ocho años.</p>
+
+        <p><em>«¿El camión 007 estaba operativo el 15 de marzo de 2024?»</em> devuelve
+          <code>mantenimiento_programado</code>. <em>«¿Y el 1 de junio de 2026?»</em>,
+          <code>operativo</code>.</p>
+
+        <p>La trazabilidad viene de serie, no como módulo añadido. El rango
+          <code>valid_from</code>/<code>valid_to</code> es parte del hecho, no una columna que alguien
+          tuvo que acordarse de mantener.</p>
 
         <div class="caja caja--practica revelar">
           <p class="caja-tit">Por qué esto importa en un activo de tres millones de dólares</p>
-          <p style="margin:0">Cuando un regulador o una aseguradora pregunta <em>«¿en qué estado estaba
-            este equipo el día del incidente?»</em>, la respuesta no puede ser «depende de qué tabla
-            mires». El estado vigente a una fecha es una proyección directa del grafo: se filtran las
-            tripletas <code>estado</code> de <code>camion_007</code> por la fecha consultada y se
-            devuelve la única cuyo rango la contiene. Sin lógica de aplicación, sin riesgo de que dos
-            sistemas satélite discrepen sobre el pasado.</p>
+          <p style="margin:0 0 .7rem">Cuando un regulador o una aseguradora pregunta <em>«¿en qué
+            estado estaba este equipo el día del incidente?»</em>, la respuesta no puede ser «depende de
+            qué tabla mires».</p>
+
+          <p style="margin:0">El estado vigente a una fecha sale directo del grafo: se filtran las
+            tripletas <code>estado</code> de <code>camion_007</code> por la fecha y se devuelve la única
+            cuyo rango la contiene. Sin lógica de aplicación y sin riesgo de que dos sistemas satélite
+            discrepen sobre el pasado.</p>
         </div>
 
         <h2>Caso 3 · La producción en cascada de unidades</h2>
 
-        <p>La minería de oro registra producción en una cascada de unidades convertibles. Una extracción
-          se mide en <strong>toneladas métricas</strong> de mineral. Ese mineral tiene una <em>ley</em>
-          expresada en gramos de oro por tonelada. Multiplicando ambos se obtiene el oro contenido; tras
-          el proceso metalúrgico quedan las <strong>onzas troy</strong> de oro fino vendible. Tres
-          unidades distintas, cada una con su semántica, ninguna intercambiable con la otra.</p>
+        <p>La minería de oro mide su producción en una cascada de unidades que se convierten unas en
+          otras.</p>
 
-        <p>El turno de noche del 19 de mayo extrae 2.480 toneladas de mineral con una ley de 8,6&nbsp;g/t
-          en el Frente A. La extracción se reifica como una situación en <code>O</code> (lo merece:
-          agrupa varios roles, tiene momento y participa en otras relaciones) y se describe con sus
-          magnitudes tipadas, cada una con su unidad.</p>
+        <p>Una extracción se mide en <strong>toneladas métricas</strong> de mineral. Ese mineral tiene
+          una <em>ley</em>, en gramos de oro por tonelada. Multiplicando ambos sale el oro contenido, y
+          tras el proceso metalúrgico quedan las <strong>onzas troy</strong> de oro fino vendible.</p>
+
+        <p>Tres unidades distintas, cada una con su significado. Ninguna intercambiable con otra.</p>
+
+        <p>El turno de noche del 19 de mayo extrae 2.480 toneladas con una ley de 8,6&nbsp;g/t en el
+          Frente A.</p>
+
+        <p>La extracción se vuelve una situación en <code>O</code>. Lo merece: agrupa varios roles,
+          tiene momento y participa en otras relaciones. Y se describe con sus magnitudes, cada una con
+          su unidad.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -360,9 +386,10 @@ u.assert_fact(camion_007, "estado", operativo,
 })</code></pre>
         </div>
 
-        <p>La producción de oro fino no es un campo más de la extracción: es una entidad propia,
-          modelada como <strong>sub-situación</strong> <code>parte_de</code> la extracción y calculada
-          de ella. El cálculo (2.480&nbsp;t × 8,6&nbsp;g/t = 21.328&nbsp;g, y a 31,1034768&nbsp;g/oz troy,
+        <p>La producción de oro fino no es un campo más de la extracción. Es una entidad propia, una
+          <strong>sub-situación</strong> <code>parte_de</code> la extracción y calculada de ella.</p>
+
+        <p>El cálculo (2.480&nbsp;t × 8,6&nbsp;g/t = 21.328&nbsp;g, y a 31,1034768&nbsp;g/oz troy,
           685,7&nbsp;oz) se asienta como hecho, y un cable <code>calculado_de</code> apunta hacia atrás,
           a la extracción de la que salió.</p>
 
@@ -393,23 +420,26 @@ u.assert_fact(produccion_oro, "unidad",   onza_troy)
           <span class="nodo nodo--n"><span>685,7 oz troy</span><small>N</small></span>
         </div>
 
-        <p>Esto es lo que en un dominio físico se llama <em>trazabilidad de lote</em>: el grafo nunca
-          pierde de vista de qué roca salió cada onza. Si mañana alguien pregunta <em>«¿de qué
-          extracción específica vinieron estas 685,7 onzas?»</em>, la respuesta es directa, un solo
-          salto por <code>calculado_de</code>. Y si se descubre que la ley estaba mal medida y hay que
-          recalcular, la producción corregida se modela como un hecho nuevo que <code>rectifica</code> al
-          anterior (el mismo patrón de auditoría que vimos en el rediagnóstico de la clínica y la
-          rectificación de multa de la municipalidad). El dato viejo no se borra: queda en el grafo con
-          su historia, porque en minería, igual que en banca, sobrescribir el pasado es perder la
-          auditoría.</p>
+        <p>Esto es lo que en un dominio físico se llama <em>trazabilidad de lote</em>. El grafo nunca
+          pierde de vista de qué roca salió cada onza.</p>
+
+        <p>Si mañana alguien pregunta <em>«¿de qué extracción vinieron estas 685,7 onzas?»</em>, la
+          respuesta es un salto por <code>calculado_de</code>.</p>
+
+        <p>Y si se descubre que la ley estaba mal medida, la producción corregida entra como un hecho
+          nuevo que <code>rectifica</code> al anterior. Es el patrón que ya vimos en el rediagnóstico de
+          la clínica y en la multa revocada de la municipalidad.</p>
+
+        <p>El dato viejo no se borra. Queda en el grafo con su historia, porque en minería, igual que en
+          banca, sobrescribir el pasado es perder la auditoría.</p>
 
         <h2>Caso 4 · El turno como entidad articuladora</h2>
 
-        <p>Una operación minera trabaja 24 horas divididas en turnos de doce. Cada turno reúne un puñado
-          de operadores, varios equipos y toda la producción y los incidentes que ocurran en ese lapso.
-          Modelar el turno como entidad articuladora (exactamente como el <code>viaje_001</code> del taxi
-          o la <code>transferencia_001</code> del banco) hace que todo lo que pasa quede colgado del
-          mismo nodo.</p>
+        <p>Una operación minera trabaja 24 horas en turnos de doce. Cada turno reúne unos operadores,
+          varios equipos y toda la producción y los incidentes de ese lapso.</p>
+
+        <p>Modelar el turno como entidad articuladora, igual que el <code>viaje_001</code> del taxi o la
+          <code>transferencia_001</code> del banco, hace que todo lo que pasa cuelgue del mismo nodo.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -433,26 +463,32 @@ u.assert_fact(accidente,  "parte_de", turno)
 u.assert_fact(medicion_alta, "parte_de", turno)</code></pre>
         </div>
 
-        <p>La consulta <em>«¿qué pasó en el turno de noche del 19 de mayo?»</em> devuelve la cadena
-          completa en una sola proyección por <code>parte_de</code>: tres operadores asignados, una
-          extracción de 2.480 toneladas, un accidente en el Frente A, una medición ambiental sobre el
-          umbral. Sin tablas, sin <em>joins</em>, sin un esquema <code>turno_operadores</code> con
-          claves foráneas. Solo el grafo, recorrido hacia abajo desde un nodo.</p>
+        <p><em>«¿Qué pasó en el turno de noche del 19 de mayo?»</em> devuelve la cadena completa con un
+          salto por <code>parte_de</code>: tres operadores asignados, una extracción de 2.480 toneladas,
+          un accidente en el Frente A, una medición ambiental sobre el umbral.</p>
+
+        <p>Sin tablas, sin <em>joins</em>, sin un esquema <code>turno_operadores</code> con claves
+          foráneas. Solo el grafo, recorrido hacia abajo desde un nodo.</p>
 
         <h2>Caso 5 · La cadena causal sin agente</h2>
 
-        <p>Aquí llega el caso emblemático del dominio, el que justifica todo el capítulo. A las 23:40 de
-          ese mismo turno, mientras el operador Quispe trabaja en el Frente A del Banco 04, una roca se
-          desprende de la pared y lo golpea. Sufre una contusión en el brazo derecho. La pregunta que
-          la auditoría hará primero es brutal en su simpleza:</p>
+        <p>Aquí llega el caso que justifica el capítulo entero.</p>
+
+        <p>A las 23:40 de ese mismo turno, mientras el operador Quispe trabaja en el Frente A del Banco
+          04, una roca se desprende de la pared y lo golpea. Contusión en el brazo derecho.</p>
+
+        <p>La pregunta que la auditoría hará primero es brutal de tan simple:</p>
 
         <p class="cita-destacada revelar">¿Quién causó el accidente?<cite>La pregunta forense</cite></p>
 
-        <p>La respuesta (y la que el grafo registra fielmente) es:
-          <strong>nadie</strong>. La roca se desprendió. Nadie la tiró. Pero tampoco se desprendió «de
-          la nada»: hubo una condición previa, un debilitamiento estructural de la pared del Banco 04
-          que la inspección geomecánica anterior debió haber detectado. Dos hechos físicos encadenados,
-          ninguno con autor, y entre ellos el cable que lo explica todo: <code>causado_por</code>.</p>
+        <p>La respuesta, y la que el grafo registra, es <strong>nadie</strong>. La roca se desprendió.
+          Nadie la tiró.</p>
+
+        <p>Pero tampoco se desprendió de la nada. Hubo una condición previa: un debilitamiento de la
+          pared del Banco 04 que la inspección geomecánica anterior debió detectar.</p>
+
+        <p>Dos hechos físicos encadenados, ninguno con autor, y entre ellos el cable que lo explica
+          todo: <code>causado_por</code>.</p>
 
         <aside class="nota-margen">
           <span class="etq">Recordatorio · D7</span>
@@ -487,11 +523,12 @@ u.assert_fact(accidente, "causado_por", desprendimiento)
 u.assert_fact(accidente, "parte_de",    turno)</code></pre>
         </div>
 
-        <p>La agencia contextual (<strong>D5</strong>) absorbe esto sin gimnasia: el rol
-          <code>agente</code> simplemente <em>no aparece</em> en las situaciones físicas, porque la
-          signatura del verbo no lo exige. Y la descomposición del porqué (<strong>D7</strong>) deja
-          que <code>causado_por</code> reconstruya la cadena hacia atrás hasta su origen (la condición
-          que el sistema geomecánico no detectó). Veámoslo dibujado.</p>
+        <p>La agencia contextual (<strong>D5</strong>) absorbe esto sin gimnasia. El rol
+          <code>agente</code> sencillamente <em>no aparece</em> en las situaciones físicas, porque la
+          firma del verbo no lo exige.</p>
+
+        <p>Y el reparto del porqué (<strong>D7</strong>) deja que <code>causado_por</code> reconstruya
+          la cadena hacia atrás hasta su origen: la condición que el sistema geomecánico no detectó.</p>
 
         <!-- FIGURA SVG: cadena causal sin agente -->
         <figure class="figura figura--ancha revelar">
@@ -557,50 +594,60 @@ u.assert_fact(accidente, "parte_de",    turno)</code></pre>
             y que la inspección debió interpretar.</figcaption>
         </figure>
 
-        <p>Cualquier auditor de seguridad recorre esta cadena hacia atrás con un solo barrido sobre el
-          grafo. <em>«¿Qué causó el accidente?»</em> → el desprendimiento. <em>«¿Y qué causó el
-          desprendimiento?»</em> → el debilitamiento estructural. <em>«¿Y por qué no se detectó ese
-          debilitamiento?»</em> → ahí empieza el siguiente capítulo de la investigación, que cruzará la
-          lectura del inclinómetro con el informe geomecánico. La pregunta forense (<em>¿quién es
-          responsable?</em>) se vuelve precisa justamente porque el grafo entrega la cadena exacta, no
-          una explicación diluida en un párrafo de texto libre dentro de un campo
+        <p>Cualquier auditor de seguridad recorre esta cadena hacia atrás de un barrido.</p>
+
+        <p><em>«¿Qué causó el accidente?»</em> El desprendimiento. <em>«¿Y qué causó el
+          desprendimiento?»</em> El debilitamiento de la pared. <em>«¿Y por qué no se detectó?»</em> Ahí
+          empieza el siguiente tramo de la investigación, que cruzará la lectura del inclinómetro con el
+          informe geomecánico.</p>
+
+        <p>La pregunta forense (<em>¿quién es responsable?</em>) se vuelve precisa porque el grafo
+          entrega la cadena exacta, no una explicación diluida en un campo
           <code>observaciones</code>.</p>
 
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">La trampa que el modelo evita</p>
-          <p style="margin:0">En un esquema relacional, la tentación es resolver «un evento sin autor»
-            poniendo <code>NULL</code> en la columna <code>id_responsable</code> (o, peor, inventando un
-            registro ficticio «la naturaleza» para que la clave foránea no se queje). Ambas salidas
-            mienten: la primera confunde «no hubo agente» con «no sabemos quién»; la segunda contamina el
-            catálogo de personas con una entrada que no es una persona. WQuestions no necesita ninguna:
-            el rol <code>agente</code> simplemente no se asienta, y la ausencia del cable <em>es</em> el
-            dato. No es lo mismo un agente desconocido que un evento que nadie causó, y el modelo sabe
-            distinguirlos.</p>
+          <p style="margin:0 0 .7rem">En un esquema relacional, la tentación es resolver «un evento sin
+            autor» poniendo <code>NULL</code> en <code>id_responsable</code>. O peor: inventar un
+            registro ficticio «la naturaleza» para que la clave foránea no se queje.</p>
+
+          <p style="margin:0 0 .7rem">Las dos salidas mienten. La primera confunde «no hubo agente» con
+            «no sabemos quién». La segunda ensucia el catálogo de personas con una entrada que no es una
+            persona.</p>
+
+          <p style="margin:0">WQuestions no necesita ninguna. El rol <code>agente</code> no se asienta, y
+            la ausencia del cable <em>es</em> el dato. Un agente desconocido y un evento que nadie causó
+            no son lo mismo, y el modelo los distingue.</p>
         </div>
 
         <h2>Caso 6 · El sensor como agente y el reporte por umbral</h2>
 
-        <p>Volvamos a la alarma con la que abrió el capítulo. Las operaciones mineras grandes están bajo
-          regulación ambiental estricta. Sensores automáticos vigilan la calidad del aire y del agua en
-          estaciones repartidas por el yacimiento, midiendo concentraciones de contaminantes cada cierto
-          intervalo. Aquí el agente de la medición no es una persona: <strong>es el sensor</strong>. Y
-          eso, lejos de ser una excepción incómoda, es precisamente lo que la agencia contextual
-          (<strong>D5</strong>) anticipó.</p>
+        <p>Volvamos a la alarma con la que abrió el capítulo.</p>
+
+        <p>Las operaciones mineras grandes viven bajo regulación ambiental estricta. Sensores
+          automáticos vigilan la calidad del aire y del agua en estaciones repartidas por el yacimiento,
+          midiendo contaminantes cada cierto intervalo.</p>
+
+        <p>Aquí el agente de la medición no es una persona. <strong>Es el sensor</strong>. Y eso, lejos
+          de ser una excepción incómoda, es justo lo que la agencia contextual (<strong>D5</strong>)
+          anticipó.</p>
 
         <div class="caja caja--definicion revelar">
           <p class="caja-tit">Agencia no humana</p>
-          <p style="margin:0">Un <em>sensor</em> es, para el modelo, un habitante de pleno derecho de
-            <code>Q</code>: ocupa el rol <code>agente</code> en el verbo «medir» igual que el vendedor lo
-            ocupa en «vender» una camiseta o la cajera en «cobrar». No es una metáfora ni un comodín. La pregunta
-            «¿quién tomó esta lectura?» tiene una respuesta legítima que no es una persona, y el grafo la
-            guarda como tal (con su identificador, su estación, su intervalo de muestreo) para que más
-            tarde se pueda auditar el propio instrumento.</p>
+          <p style="margin:0 0 .7rem">Un <em>sensor</em> es, para el modelo, un habitante de pleno
+            derecho de <code>Q</code>. Ocupa el rol <code>agente</code> en el verbo «medir» igual que el
+            vendedor lo ocupa en «vender» o la cajera en «cobrar». No es una metáfora ni un comodín.</p>
+
+          <p style="margin:0">«¿Quién tomó esta lectura?» tiene una respuesta legítima que no es una
+            persona, y el grafo la guarda como tal, con su identificador, su estación y su intervalo de
+            muestreo, para que más tarde se pueda auditar el propio instrumento.</p>
         </div>
 
         <p>A las 14:00 del 15 de mayo, el sensor de la Estación 7 mide 0,34&nbsp;mg/L de arsénico en la
-          quebrada que baja del tajo (por encima del umbral normativo de 0,10&nbsp;mg/L que fija la
-          norma de calidad ambiental). La medición se reifica como cualquier otra situación, con el
-          sensor en el rol de agente.</p>
+          quebrada que baja del tajo. Por encima del umbral de 0,10&nbsp;mg/L que fija la norma
+          ambiental.</p>
+
+        <p>La medición se registra como cualquier otra situación, con el sensor en el rol de agente.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -633,10 +680,11 @@ u.assert_fact(accidente, "parte_de",    turno)</code></pre>
 u.assert_fact(norma_ambiental, "umbral_arsenico", n(0.10, "mg/L"))</code></pre>
         </div>
 
-        <p>Cuando el motor de reglas (que el prototipo aún no trae, y que el <a href="31-que-falta.html">capítulo
-          30</a> declara como trabajo pendiente) detecta que el valor medido supera el umbral, dispara
-          automáticamente el reporte regulatorio. Y ese reporte ejercita las dos caras del porqué que
-          <strong>D7</strong> separa.</p>
+        <p>Cuando el motor de reglas detecta que el valor supera el umbral, dispara el reporte
+          regulatorio. Ese motor aún no está en el prototipo, y el
+          <a href="31-que-falta.html">capítulo 30</a> lo declara como trabajo pendiente.</p>
+
+        <p>El reporte ejercita las dos caras del porqué que <strong>D7</strong> separa.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -650,22 +698,28 @@ u.assert_fact(norma_ambiental, "umbral_arsenico", n(0.10, "mg/L"))</code></pre>
 })</code></pre>
         </div>
 
-        <p>El reporte está <code>motivado_por</code> la medición específica que cruzó el umbral, y
-          <code>justificado_por</code> la norma que obliga a reportar. El grafo registra ambas
-          vinculaciones por separado, sin confundirlas. Si dentro de cinco años un auditor pregunta
-          <em>«¿por qué se emitió este reporte ambiental?»</em>, hay dos respuestas precisas y distintas:
-          por la medición de 0,34&nbsp;mg/L del 15 de mayo, y porque el estándar de calidad ambiental lo
-          exigía. La causa concreta y la justificación normativa son cosas diferentes, y el modelo las
-          mantiene diferenciadas: exactamente el patrón que la municipalidad usó para sus ordenanzas,
-          ahora con normas ambientales en lugar de decretos.</p>
+        <p>El reporte está <code>motivado_por</code> la medición que cruzó el umbral, y
+          <code>justificado_por</code> la norma que obliga a reportar. El grafo guarda las dos por
+          separado, sin confundirlas.</p>
+
+        <p>Si dentro de cinco años un auditor pregunta <em>«¿por qué se emitió este reporte
+          ambiental?»</em>, hay dos respuestas distintas y precisas: por la medición de 0,34&nbsp;mg/L
+          del 15 de mayo, y porque el estándar ambiental lo exigía.</p>
+
+        <p>La causa concreta y la justificación normativa son cosas distintas, y el modelo las mantiene
+          separadas. Es el patrón que la municipalidad usó para sus ordenanzas, ahora con normas
+          ambientales en lugar de decretos.</p>
 
         <h2>El pulso del yacimiento</h2>
 
-        <p>Un dominio intensivo en sensores no produce hechos de a uno: produce <em>series</em>. El
-          sensor de la Estación 7 no tomó una sola lectura el 15 de mayo; tomó una cada quince minutos
-          durante todo el día, y la mayoría fueron perfectamente normales. La alarma es el pico que
-          rompe la rutina. Verlo en el tiempo aclara por qué el umbral importa y por qué el disparo
-          tiene que ser automático: a las 14:00, ningún humano estaba mirando ese número.</p>
+        <p>Un dominio lleno de sensores no produce hechos de a uno. Produce <em>series</em>.</p>
+
+        <p>El sensor de la Estación 7 no tomó una sola lectura el 15 de mayo. Tomó una cada quince
+          minutos durante todo el día, y casi todas fueron normales. La alarma es el pico que rompe la
+          rutina.</p>
+
+        <p>Verlo en el tiempo aclara por qué el umbral importa y por qué el disparo tiene que ser
+          automático. A las 14:00, ningún humano estaba mirando ese número.</p>
 
         <figure class="figura figura--ancha revelar">
           <div class="lienzo" data-chart>
@@ -685,23 +739,27 @@ u.assert_fact(norma_ambiental, "umbral_arsenico", n(0.10, "mg/L"))</code></pre>
             cifras.</figcaption>
         </figure>
 
-        <p>Cada uno de esos puntos es, en el grafo, una situación <code>medir_calidad</code> con su
-          agente, su monto, su unidad, su momento y su lugar. La serie no es una tabla aparte con un
-          esquema propio de telemetría: es el mismo tipo de hecho atómico que todo lo demás, repetido en
-          el tiempo. Y porque comparte forma con el resto del grafo, la pregunta <em>«dame todas las
-          mediciones de arsénico de la Estación 7 que superaron el umbral este mes»</em> es una
-          proyección sobre los mismos cables que ya usamos para todo, no una consulta a un subsistema
-          especializado.</p>
+        <p>Cada uno de esos puntos es una situación <code>medir_calidad</code> con su agente, su monto,
+          su unidad, su momento y su lugar.</p>
+
+        <p>La serie no es una tabla aparte con esquema de telemetría propio. Es el mismo tipo de hecho
+          que todo lo demás, repetido en el tiempo.</p>
+
+        <p>Y porque comparte forma con el resto, <em>«dame todas las mediciones de arsénico de la
+          Estación 7 que superaron el umbral este mes»</em> se resuelve sobre los mismos cables de
+          siempre, no contra un subsistema especializado.</p>
 
         <h2>Comisionamiento: poner en marcha como secuencia de pruebas</h2>
 
         <p>Hasta aquí miramos el yacimiento <em>en operación</em>. Pero antes de que el camión 007
-          mueva su primera tonelada o de que el sensor de la Estación 7 tome su primera lectura, hubo
-          un proyecto de ingeniería (diseño, procura, construcción, lo que en la industria se abrevia
-          <abbr title="engineering, procurement, construction">EPC</abbr>) y, al final de ese proyecto, un momento crítico: el
-          <strong>comisionamiento</strong>. Comisionar es entregar un equipo o una planta a operaciones,
-          pero no de golpe: es una secuencia ordenada de pruebas y protocolos de aceptación que prueban,
-          uno a uno, que lo construido hace lo que el diseño prometía.</p>
+          mueva su primera tonelada, hubo un proyecto de ingeniería (diseño, procura, construcción, lo
+          que la industria abrevia <abbr title="engineering, procurement, construction">EPC</abbr>).</p>
+
+        <p>Y al final de ese proyecto, un momento crítico: el <strong>comisionamiento</strong>.</p>
+
+        <p>Comisionar es entregar un equipo o una planta a operaciones, pero no de golpe. Es una
+          secuencia ordenada de pruebas y protocolos que van demostrando, uno a uno, que lo construido
+          hace lo que el diseño prometía.</p>
 
         <aside class="nota-margen">
           <span class="etq">Nota · qué es EPC</span>
@@ -711,12 +769,13 @@ u.assert_fact(norma_ambiental, "umbral_arsenico", n(0.10, "mg/L"))</code></pre>
           comisionamiento es la frontera donde esa entrega se vuelve verificable hecho por hecho.
         </aside>
 
-        <p>La tentación, en un sistema convencional, es tratar el comisionamiento como un campo de
-          estado del equipo: <code>comisionado = true</code>. Pero eso tira a la basura justo lo que la
-          auditoría necesita: <em>cómo</em> se llegó a ese sí, qué pruebas se corrieron, quién las firmó
-          y cuándo. Cada etapa del comisionamiento es, en realidad, una <strong>situación reificada</strong>
-          (<strong>D4</strong>): merece nodo propio porque tiene estado, responsable y fecha, y participa
-          en otras relaciones. La planta de procesamiento del Yacimiento San Marcos recorre cuatro fases.</p>
+        <p>En un sistema convencional tienta tratar el comisionamiento como un campo del equipo:
+          <code>comisionado = true</code>. Pero eso tira justo lo que la auditoría necesita:
+          <em>cómo</em> se llegó a ese sí, qué pruebas se corrieron, quién las firmó y cuándo.</p>
+
+        <p>Cada etapa del comisionamiento merece nodo propio (<strong>D4</strong>), porque tiene estado,
+          responsable y fecha, y participa en otras relaciones. La planta de procesamiento del Yacimiento
+          San Marcos recorre cuatro fases.</p>
 
         <!-- FIGURA SVG: secuencia de comisionamiento -->
         <figure class="figura figura--ancha revelar">
@@ -774,10 +833,9 @@ u.assert_fact(norma_ambiental, "umbral_arsenico", n(0.10, "mg/L"))</code></pre>
             exige poder mostrar.</figcaption>
         </figure>
 
-        <p>Cada fase se asienta con la misma maquinaria de cualquier situación: un identificador fresco,
-          un estado, un responsable que puede ser una persona o el cliente, y una fecha. El cable
-          <code>precede_a</code> ordena la secuencia, de modo que ninguna fase abre antes de que cierre
-          la anterior.</p>
+        <p>Cada fase se asienta con la maquinaria de cualquier situación: identificador propio, estado,
+          responsable (que puede ser una persona o el cliente) y fecha. El cable <code>precede_a</code>
+          ordena la secuencia, de modo que ninguna fase abre antes de que cierre la anterior.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -815,21 +873,25 @@ prueba_aceptacion = ingest_situation("aceptar_entrega", roles={
           <span class="nodo nodo--q"><span>ito_vargas</span><small>Q</small></span>
         </div>
 
-        <p>La pregunta de cualquier gerente de proyecto (<em>«¿en qué fase está el comisionamiento de
-          la planta y quién la tiene a su cargo?»</em>) se contesta con una proyección sobre las
-          situaciones que tienen a <code>planta_procesamiento</code> como <code>objeto_de</code>,
-          ordenadas por <code>precede_a</code>. Y cuando la fase de aceptación cierre, la planta podrá
-          recibir su primer estado <code>operativo</code> —exactamente el mismo cable
-          <code>estado</code> con vigencia (<strong>D6</strong>) que ya usamos para el camión 007—. El
-          comisionamiento no es un mundo aparte: es la antesala bitemporal de la vida operativa.</p>
+        <p>La pregunta de cualquier gerente de proyecto (<em>«¿en qué fase está el comisionamiento y
+          quién lo tiene a su cargo?»</em>) se contesta proyectando las situaciones que tienen a
+          <code>planta_procesamiento</code> como <code>objeto_de</code>, ordenadas por
+          <code>precede_a</code>.</p>
+
+        <p>Y cuando cierre la fase de aceptación, la planta recibirá su primer estado
+          <code>operativo</code>, con el mismo cable y la misma vigencia (<strong>D6</strong>) que
+          usamos para el camión 007.</p>
+
+        <p>El comisionamiento no es un mundo aparte. Es la antesala de la vida operativa.</p>
 
         <h2>Punchlist: las deudas pendientes antes de la entrega</h2>
 
         <p>Ninguna obra se entrega perfecta. Entre las pruebas de carga y la firma de aceptación, el
-          inspector levanta un <strong>punchlist</strong>: la lista de pendientes, los defectos y
-          remates que faltan resolver antes de que el cliente reciba la planta. Una baranda sin pintar,
-          una bomba que vibra de más, un manómetro descalibrado. Cada ítem del punchlist bloquea —o no—
-          la aceptación según su gravedad, y eso obliga a clasificarlos.</p>
+          inspector levanta un <strong>punchlist</strong>: la lista de pendientes y remates que faltan
+          antes de que el cliente reciba la planta.</p>
+
+        <p>Una baranda sin pintar. Una bomba que vibra de más. Un manómetro descalibrado. Cada ítem
+          bloquea o no la aceptación según su gravedad, y eso obliga a clasificarlos.</p>
 
         <div class="caja caja--definicion revelar">
           <p class="caja-tit">Las tres categorías de un ítem de punchlist</p>
@@ -843,10 +905,11 @@ prueba_aceptacion = ingest_situation("aceptar_entrega", roles={
           </ul>
         </div>
 
-        <p>Cada ítem es una <strong>situación reificada</strong>: un defecto concreto, con su categoría,
-          su responsable de cierre, su estado abierto o cerrado y (cuando se cierra) su fecha de cierre.
-          No es una fila muerta en una hoja de cálculo: es un nodo del mismo grafo, ligado a la fase de
-          comisionamiento que lo destapó y al equipo o lugar donde vive el defecto.</p>
+        <p>Cada ítem es una situación con identidad propia: un defecto concreto, con su categoría, su
+          responsable de cierre, su estado y, cuando se cierra, su fecha.</p>
+
+        <p>No es una fila muerta en una hoja de cálculo. Es un nodo del mismo grafo, atado a la fase que
+          lo destapó y al equipo o lugar donde vive el defecto.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -882,12 +945,14 @@ item_punch_c = ingest_situation("registrar_pendiente", roles={
           <span class="nodo nodo--o"><span>prueba_carga</span><small>O</small></span>
         </div>
 
-        <p>La gracia es que el punchlist no es una tabla con un esquema propio: es una consulta. «Dame
-          los ítems abiertos de categoría A de la planta» se proyecta sobre las situaciones
+        <p>La gracia es que el punchlist no es una tabla con esquema propio. Es una consulta.</p>
+
+        <p>«Dame los ítems abiertos de categoría A de la planta» se proyecta sobre las situaciones
           <code>registrar_pendiente</code> con <code>objeto_de = planta_procesamiento</code>,
-          <code>categoria = categoria_a</code> y <code>estado = abierto</code>. Y la regla de negocio
-          (<em>no se firma la aceptación mientras quede un ítem A abierto</em>) es una pregunta al grafo,
-          no un disparador escondido en código de aplicación. Veámoslo como tabla de control.</p>
+          <code>categoria = categoria_a</code> y <code>estado = abierto</code>.</p>
+
+        <p>Y la regla de negocio (<em>no se firma la aceptación mientras quede un ítem A abierto</em>)
+          es una pregunta al grafo, no un disparador escondido en código.</p>
 
         <figure class="figura figura--ancha revelar">
           <table>
@@ -940,22 +1005,25 @@ item_punch_c = ingest_situation("registrar_pendiente", roles={
 
         <div class="caja caja--practica revelar">
           <p class="caja-tit">Por qué el punchlist vive mejor en el grafo</p>
-          <p style="margin:0">En el flujo habitual, el punchlist nace como un Excel que viaja por correo
-            y muere desconectado de todo lo demás: nadie puede cruzar «¿qué pendientes destapó la prueba
-            de carga?» con «¿en qué equipo?» sin copiar y pegar. Aquí cada ítem ya está enlazado a la
-            prueba que lo detectó (<code>detectado_en</code>), al equipo afectado
-            (<code>objeto_de</code>) y al lugar (<code>lugar_de</code>). El historial de cierres queda en
-            el mismo tejido que el comisionamiento y, más tarde, que el mantenimiento.</p>
+          <p style="margin:0 0 .7rem">En el flujo habitual, el punchlist nace como un Excel que viaja
+            por correo y muere desconectado de todo. Nadie puede cruzar «¿qué pendientes destapó la
+            prueba de carga?» con «¿en qué equipo?» sin copiar y pegar.</p>
+
+          <p style="margin:0">Aquí cada ítem ya está enlazado a la prueba que lo detectó
+            (<code>detectado_en</code>), al equipo afectado (<code>objeto_de</code>) y al lugar
+            (<code>lugar_de</code>). El historial de cierres queda en el mismo tejido que el
+            comisionamiento y, más tarde, que el mantenimiento.</p>
         </div>
 
         <h2>Mantenimiento: órdenes de trabajo sobre el historial del activo</h2>
 
-        <p>Comisionada la planta y entregada a operaciones, empieza la vida larga del activo (y con ella
-          el mantenimiento). La industria distingue tres modos, y los tres caben en el modelo como
-          <strong>órdenes de trabajo</strong> ligadas al historial bitemporal (<strong>D6</strong>) del
-          equipo, exactamente el mismo historial que en el Caso 2 siguió los quince años del camión 007.</p>
+        <p>Comisionada la planta y entregada a operaciones, empieza la vida larga del activo, y con
+          ella el mantenimiento.</p>
 
-        <div class="columnas">
+        <p>La industria distingue tres modos, y los tres caben como <strong>órdenes de trabajo</strong>
+          ligadas al historial del equipo (<strong>D6</strong>), el mismo que en el Caso 2 siguió los
+          quince años del camión 007.</p>
+
           <p><strong>Preventivo.</strong> Programado por calendario o por horas de uso: cambiar el aceite
             cada 500 horas, sin que nada haya fallado. La orden nace de un plan, no de un síntoma.</p>
           <p><strong>Correctivo.</strong> Reacciona a una falla ya ocurrida: la bomba se rompió, hay que
@@ -963,10 +1031,11 @@ item_punch_c = ingest_situation("registrar_pendiente", roles={
           <p><strong>Predictivo.</strong> Se adelanta a la falla leyendo señales: el inclinómetro o el
             sensor de vibración avisa que algo se degrada antes de romperse. La orden nace de una
             medición que cruza un umbral: el mismo patrón del sensor del Caso 6.</p>
-        </div>
 
-        <p>Una orden de trabajo es una situación más, con su tipo, su activo, su disparador y su estado.
-          La predictiva es la más interesante porque enlaza con la telemetría que ya modelamos: una
+        <p>Una orden de trabajo es una situación más, con su tipo, su activo, su disparador y su
+          estado.</p>
+
+        <p>La predictiva es la más interesante porque engancha con la telemetría que ya modelamos: una
           lectura de vibración alta <code>motiva</code> la orden, igual que la medición de arsénico
           motivaba el reporte ambiental.</p>
 
@@ -996,16 +1065,17 @@ u.assert_fact(orden_trabajo_88, "resultado", "rodamiento sustituido")</code></pr
           <span class="nodo nodo--o"><span>lectura_vibracion_alta</span><small>O</small></span>
         </div>
 
-        <p>La orden no flota suelta: cada ejecución abre un tramo en el historial bitemporal del activo,
-          el mismo <code>estado</code> con <code>valid_from</code>/<code>valid_to</code> del Caso 2. Así,
-          la pregunta de la aseguradora (<em>«¿cuántas horas estuvo el camión 007 en mantenimiento este
-          año, y por qué entró cada vez?»</em>) se contesta cruzando los tramos
-          <code>mantenimiento_*</code> del historial con las órdenes que los abrieron, sin un sistema de
-          gestión de mantenimiento aparte.</p>
+        <p>La orden no flota suelta. Cada ejecución abre un tramo en el historial del activo, el mismo
+          <code>estado</code> con <code>valid_from</code>/<code>valid_to</code> del Caso 2.</p>
+
+        <p>Así, la pregunta de la aseguradora (<em>«¿cuántas horas estuvo el camión 007 en
+          mantenimiento este año, y por qué entró cada vez?»</em>) se contesta cruzando los tramos
+          <code>mantenimiento_*</code> con las órdenes que los abrieron. Sin un sistema de gestión de
+          mantenimiento aparte.</p>
 
         <p>Y ese historial cubre toda la existencia del activo, no solo su operación. El equipo no
-          aparece de la nada ni desaparece sin rastro: <strong>se comisiona, opera, se mantiene y, al
-          final, se da de baja</strong>. Cuatro etapas que son cuatro tramos de un mismo eje temporal.</p>
+          aparece de la nada ni desaparece sin rastro. <strong>Se comisiona, opera, se mantiene y al
+          final se da de baja</strong>. Cuatro etapas, cuatro tramos de un mismo eje temporal.</p>
 
         <!-- FIGURA SVG: ciclo de vida del activo -->
         <figure class="figura figura--ancha revelar">
@@ -1055,22 +1125,27 @@ u.assert_fact(orden_trabajo_88, "resultado", "rodamiento sustituido")</code></pr
             Caso 2.</figcaption>
         </figure>
 
-        <p>Dar de baja no borra al equipo: cierra su último tramo de estado y abre uno nuevo
-          (<code>fuera_de_servicio</code>) con su fecha. El camión 007 seguirá respondiendo, dentro de
-          diez años, a la pregunta <em>«¿qué estado tenías el día del incidente?»</em>, aunque para
-          entonces ya no exista físicamente. El ciclo de vida completo queda en el grafo, del primer
-          protocolo de comisionamiento a la última orden de trabajo, sin que ninguna pieza nueva del
-          modelo haya tenido que inventarse para sostenerlo.</p>
+        <p>Dar de baja no borra al equipo. Cierra su último tramo de estado y abre uno nuevo,
+          <code>fuera_de_servicio</code>, con su fecha.</p>
+
+        <p>El camión 007 seguirá respondiendo dentro de diez años a <em>«¿qué estado tenías el día del
+          incidente?»</em>, aunque para entonces ya no exista.</p>
+
+        <p>El ciclo de vida completo queda en el grafo, del primer protocolo de comisionamiento a la
+          última orden de trabajo, sin que haya hecho falta inventar ninguna pieza nueva.</p>
 
         <h2>Del camión 007 al parque entero</h2>
 
         <p>Reconstruimos la vida de un activo: el camión 007, sus quince años de estados, sus órdenes
-          de trabajo. Pero quien planifica el mantenimiento no decide sobre un camión, decide sobre el parque. Y la
-          pregunta que ordena el presupuesto no es «¿en qué estado está este equipo?», sino «¿qué activo
-          acumula más intervenciones correctivas?» o «¿qué causa raíz reaparece trimestre tras
-          trimestre?». Esas no son consultas de otro sistema: cada falla quedó registrada con su activo y
-          su disparador, y el reporte de confiabilidad es contar esas órdenes correctivas, activo por
-          activo.</p>
+          de trabajo. Pero quien planifica el mantenimiento no decide sobre un camión. Decide sobre el
+          parque entero.</p>
+
+        <p>La pregunta que ordena el presupuesto no es «¿en qué estado está este equipo?». Es «¿qué
+          activo acumula más intervenciones correctivas?» o «¿qué causa raíz reaparece trimestre tras
+          trimestre?».</p>
+
+        <p>Y no son consultas de otro sistema. Cada falla quedó registrada con su activo y su
+          disparador. El reporte de confiabilidad es contar esas órdenes, activo por activo.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -1081,12 +1156,13 @@ count(u, Pattern(fixed={"activo": u.ind("camion_007"), "tipo": u.ind("correctivo
 
         <h2>Una operación entera, vista como hechos</h2>
 
-        <p>Conviene detenerse y mirar el conjunto. Lo que en una arquitectura tradicional serían cinco o
-          seis subsistemas con sus propios esquemas (flota, producción, seguridad, ambiental,
-          mantenimiento) aquí es un único grafo de hechos donde todo se cruza por los mismos cables. El
-          turno de noche del 19 de mayo, leído de punta a punta, es una sola constelación.</p>
+        <p>Conviene detenerse y mirar el conjunto.</p>
 
-        <div class="columnas">
+        <p>Lo que en una arquitectura tradicional serían cinco o seis subsistemas con sus propios
+          esquemas (flota, producción, seguridad, ambiental, mantenimiento) aquí es un solo grafo donde
+          todo se cruza por los mismos cables. El turno del 19 de mayo, leído de punta a punta, es una
+          sola constelación.</p>
+
           <p>El <strong>turno</strong> articula: reúne a Quispe, Calle y Rojas como operadores
             asignados, ocurre en el Tajo Norte entre las 18:00 y las 06:00, y lo supervisa Mamani. De
             él cuelga, por <code>parte_de</code>, todo lo que sucede.</p>
@@ -1099,51 +1175,66 @@ count(u, Pattern(fixed={"activo": u.ind("camion_007"), "tipo": u.ind("correctivo
           <p>Y lo <strong>ambiental</strong> aporta el pulso automático: el sensor de la Estación 7
             midiendo arsénico sin descanso, el pico que cruza el umbral y el reporte que se dispara solo,
             justificado por la norma y motivado por la lectura.</p>
-        </div>
 
-        <p>Cuatro mundos que un sistema convencional mantendría en bases separadas, hablándose a duras
-          penas por exportaciones nocturnas, conviven aquí en una sola estructura porque todos responden
-          a las mismas siete preguntas. Quién, qué, dónde, cuándo, cuánto, cuál y cómo no cambian de
-          significado al pasar de la flota a la seguridad o de la producción al medio ambiente. Esa
-          invariancia es justamente lo que permite que la pregunta del supervisor (<em>«¿qué pasó
-          anoche?»</em>) se conteste de una vez, sin saber de antemano en qué subsistema vivía la
-          respuesta.</p>
+        <p>Cuatro mundos que un sistema convencional tendría en bases separadas, hablándose a duras
+          penas por exportaciones nocturnas, conviven aquí en una sola estructura. Porque todos
+          responden a las mismas siete preguntas.</p>
+
+        <p>Quién, qué, dónde, cuándo, cuánto, cuál y cómo no cambian de significado al pasar de la flota
+          a la seguridad, ni de la producción al medio ambiente.</p>
+
+        <p>Esa invariancia es lo que permite contestar de una vez la pregunta del supervisor (<em>«¿qué
+          pasó anoche?»</em>) sin saber de antemano en qué subsistema vivía la respuesta.</p>
 
         <h2>El antes y el después: del esquema fragmentado al grafo único</h2>
 
         <p><strong>Antes (relacional).</strong> Una operación minera tradicional reparte su información
-          entre tablas separadas (<code>equipos</code>, <code>estados_equipo</code>,
-          <code>eventos</code>, <code>inspecciones_geomecanicas</code>, <code>mediciones_sensor</code>)
-          y la primera grieta aparece enseguida: reconstruir la cadena causal de un accidente que no
-          tuvo autor obliga a cruzar al menos cuatro tablas con <em>joins</em> parciales, y aun así el
-          esquema no tiene dónde guardar la relación entre el debilitamiento previo y el desprendimiento
-          posterior sin inventar columnas <em>ad hoc</em>. El historial de estados de un camión a lo
-          largo de quince años tampoco cabe limpio: la tabla <code>estados_equipo</code> acumula filas
-          sin semántica de vigencia, y cualquier consulta (<em>¿cuál era el estado exacto del camión el
-          15 de marzo de 2024?</em>) exige lógica extra que el esquema no provee. Y la medición del
-          sensor, ¿de quién es? La columna <code>id_operador</code> no admite que el autor sea una
-          máquina sin estirarse o mentir.</p>
+          entre tablas separadas: <code>equipos</code>, <code>estados_equipo</code>,
+          <code>eventos</code>, <code>inspecciones_geomecanicas</code>,
+          <code>mediciones_sensor</code>.</p>
 
-        <p><strong>Después (WQuestions).</strong> La misma información vive en un único grafo de hechos.
-          Cada evento físico (el debilitamiento, el desprendimiento, el accidente) es un nodo conectado
-          al siguiente por <code>causado_por</code>, y la cadena se recorre hacia atrás de un tirón, sin
-          agente humano en ningún punto. Los quince años de estados del camión son vigencia nativa
-          (<strong>D6</strong>): cada tripleta <code>(camion_007, estado, operativo)</code> lleva su
-          propio <code>valid_from</code> y <code>valid_to</code>, y la consulta por fecha devuelve el
-          estado correcto sin lógica añadida. El sensor es un agente legítimo en <code>Q</code>
-          (<strong>D5</strong>): la pregunta «quién midió» se responde con un instrumento, no con un
-          rodeo. El modelo no necesita tablas especiales para la causalidad sin culpable, ni historiales
-          improvisados para equipos de larga vida, ni un esquema de telemetría aparte para los sensores
-          —los absorbe a todos con la maquinaria estándar.</p>
+        <p>La primera grieta aparece enseguida. Reconstruir la cadena causal de un accidente sin autor
+          obliga a cruzar cuatro tablas con <em>joins</em> parciales. Y aun así, el esquema no tiene
+          dónde guardar la relación entre el debilitamiento previo y el desprendimiento posterior sin
+          inventar columnas <em>ad hoc</em>.</p>
+
+        <p>El historial de quince años del camión tampoco cabe limpio. La tabla
+          <code>estados_equipo</code> acumula filas sin noción de vigencia, y cualquier consulta
+          (<em>¿cuál era el estado exacto el 15 de marzo de 2024?</em>) exige lógica extra que el
+          esquema no da.</p>
+
+        <p>Y la medición del sensor, ¿de quién es? La columna <code>id_operador</code> no admite que el
+          autor sea una máquina sin estirarse o mentir.</p>
+
+        <p><strong>Después (WQuestions).</strong> La misma información vive en un solo grafo.</p>
+
+        <p>Cada evento físico (el debilitamiento, el desprendimiento, el accidente) es un nodo conectado
+          al siguiente por <code>causado_por</code>. La cadena se recorre hacia atrás de un tirón, sin
+          agente humano en ningún punto.</p>
+
+        <p>Los quince años de estados del camión son vigencia de serie (<strong>D6</strong>). Cada
+          tripleta <code>(camion_007, estado, operativo)</code> lleva su <code>valid_from</code> y su
+          <code>valid_to</code>, y la consulta por fecha devuelve el estado correcto sin lógica
+          añadida.</p>
+
+        <p>El sensor es un agente legítimo en <code>Q</code> (<strong>D5</strong>). La pregunta «quién
+          midió» se responde con un instrumento, no con un rodeo.</p>
+
+        <p>El modelo no necesita tablas especiales para la causalidad sin culpable, ni historiales
+          improvisados para equipos de larga vida, ni un esquema de telemetría aparte. Los absorbe a
+          todos con la maquinaria de siempre.</p>
 
         <h2>Qué quedó probado</h2>
 
-        <p>La minería pone a trabajar a <strong>D5 en su forma más radical</strong>: hay eventos físicos
-          puros (el desprendimiento de roca, el debilitamiento de la pared) que ningún agente humano hizo,
-          y son tan consecuentes como cualquier acto deliberado. El modelo los acepta sin esfuerzo porque
-          la signatura del verbo físico no exige agente; basta <code>causado_por</code> para reconstruir
-          la cadena entera hasta su origen. Y el mismo D5, por el otro lado, admite que el autor de una
-          medición sea un sensor: agencia no humana de pleno derecho.</p>
+        <p>La minería pone a trabajar <strong>D5 en su forma más radical</strong>. Hay eventos físicos
+          puros (el desprendimiento, el debilitamiento de la pared) que ningún humano hizo, y pesan
+          tanto como cualquier acto deliberado.</p>
+
+        <p>El modelo los acepta sin esfuerzo porque la firma del verbo físico no exige agente. Basta
+          <code>causado_por</code> para reconstruir la cadena entera hasta su origen.</p>
+
+        <p>Y el mismo D5, por el otro lado, admite que el autor de una medición sea un sensor. Agencia
+          no humana de pleno derecho.</p>
 
         <div class="rejilla-2 revelar">
           <div class="tarjeta">
@@ -1172,33 +1263,42 @@ count(u, Pattern(fixed={"activo": u.ind("camion_007"), "tipo": u.ind("correctivo
           </div>
         </div>
 
-        <p>En suma: <strong>el dominio minero no exigió ninguna pieza nueva del modelo</strong>. Lo
-          absorbió combinando piezas que ya conocíamos. El motor sigue siendo el mismo que el del spa
-          más simple. Lo único que crece es el lexicon (cinco verbos nuevos:
-          <code>extraer</code>, <code>operar_equipo</code>, <code>dar_mantenimiento</code>,
-          <code>medir_calidad</code>, <code>reportar</code>) y la lista de roles de dominio que la
-          política liberal acepta sin chistar: <code>dentro_de</code>, <code>ley_mineral</code>,
-          <code>operador_asignado</code>, <code>calculado_de</code>, <code>umbral_arsenico</code>,
-          <code>medido_de</code>, entre otros. La arquitectura conceptual no movió una línea entre el
-          comercio más inofensivo y el yacimiento más exigente.</p>
+        <p>En suma: <strong>el dominio minero no exigió ninguna pieza nueva</strong>. Lo absorbió
+          combinando piezas que ya conocíamos. El motor sigue siendo el mismo que el del spa.</p>
+
+        <p>Lo único que crece es el lexicon, con cinco verbos (<code>extraer</code>,
+          <code>operar_equipo</code>, <code>dar_mantenimiento</code>, <code>medir_calidad</code>,
+          <code>reportar</code>) y unos roles de dominio: <code>dentro_de</code>,
+          <code>ley_mineral</code>, <code>operador_asignado</code>, <code>calculado_de</code>,
+          <code>umbral_arsenico</code>, <code>medido_de</code>.</p>
+
+        <p>La arquitectura no movió una línea entre el comercio más inofensivo y el yacimiento más
+          exigente.</p>
 
         <h2>Cierre de la serie de dominios profundos</h2>
 
-        <p>Con la minera cerramos la <strong>serie completa de ocho dominios industriales</strong>
-          modelados en profundidad: spa, taxi, clínica, banco, ERP, universidad, municipalidad y minera.
-          Cada uno empujó al modelo en una dimensión distinta (el impuesto del comercio, la concurrencia
-          del taxi, la bitemporalidad del banco, la causalidad sin agente de la mina) y cada uno fue
-          absorbido sin extensiones especiales. La arquitectura no cambió ni una línea entre el primero y
-          el último; lo único que cambió fue el lexicon y los roles de dominio. Cuando ocho problemas
-          independientes convergen en la misma respuesta estructural, esa respuesta deja de ser una
-          hipótesis.</p>
+        <p>Con la minera cerramos la <strong>serie de ocho dominios industriales</strong>: spa, taxi,
+          clínica, banco, ERP, universidad, municipalidad y minera.</p>
 
-        <p>Pero el modelo tiene que medirse también con los casos incómodos. Conviene ahora cambiar el ritmo y
-          someter al modelo a cuatro dominios cualitativamente distintos (música, química, fútbol y
-          contratos) buscando explícitamente dónde se resiste: algunos se resuelven con elegancia; otros
-          exigen extensiones al catálogo o dejan pendientes que documentaremos sin disimular. Antes de
-          eso, sin embargo, vale la pena un desvío revelador: tomar un sistema real, viejo y vivo (no un
-          ejemplo diseñado para lucirse) y excavar su esquema para ver qué de todo esto ya estaba ahí,
+        <p>Cada uno empujó al modelo en una dirección distinta. El impuesto del comercio. La
+          concurrencia del taxi. Los dos tiempos del banco. La causalidad sin agente de la mina. Y cada
+          uno fue absorbido sin extensiones.</p>
+
+        <p>La arquitectura no cambió entre el primero y el último. Lo único que cambió fue el lexicon y
+          los roles de dominio.</p>
+
+        <p>Cuando ocho problemas independientes convergen en la misma respuesta estructural, esa
+          respuesta deja de ser una hipótesis.</p>
+
+        <p>Pero el modelo tiene que medirse también con los casos incómodos. Toca cambiar el ritmo y
+          someterlo a cuatro dominios de otra naturaleza (música, química, fútbol y contratos) buscando
+          a propósito dónde se resiste.</p>
+
+        <p>Algunos se resolverán con elegancia. Otros exigirán extensiones al catálogo o dejarán
+          pendientes, y los documentaremos sin disimular.</p>
+
+        <p>Antes de eso, un desvío revelador. Tomar un sistema real, viejo y vivo (no un ejemplo
+          diseñado para lucirse) y excavar su esquema para ver cuánto de todo esto ya estaba ahí,
           enterrado bajo nombres de columna. Es la arqueología del próximo capítulo.</p>
 
       </div>

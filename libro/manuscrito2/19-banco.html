@@ -56,29 +56,35 @@
 
       <div class="contenido">
 
-        <p class="entrada">Son las 02:13 de un martes. En un servidor de un banco regional, un proceso
-          de cierre acaba de detenerse: dos cifras que llevaban diez años coincidiendo dejaron de
-          coincidir por catorce centavos. No es un error de cálculo; es un error de <em>historia</em>.
-          Alguien, en algún sistema satélite, sobrescribió un dato que un auditor necesitaba leer tal
-          como estaba la semana pasada, y ahora ese pasado ya no existe. Multiplica esos catorce
-          centavos por millones de operaciones y por la firma de un regulador que exige reconstruir
-          cualquier instante, y tendrás el motivo por el cual el dominio bancario es la prueba de fuego
-          de cualquier modelo de datos. No perdona la elegancia que no resiste una citación judicial.</p>
+        <p class="entrada">Son las 02:13 de un martes. En el servidor de un banco regional, un proceso
+          de cierre acaba de detenerse. Dos cifras que llevaban diez años coincidiendo dejaron de
+          coincidir por catorce centavos.</p>
 
-        <p>Conviene fijar la escala. Una empresa mediana cualquiera guarda su operación en unas
-          ciento cincuenta tablas, un par de sistemas heredados y un programa de contabilidad. Un
-          banco regional de tamaño medio juega en otra liga: alrededor de mil quinientas tablas solo
-          para el núcleo, otro millar para tarjetas de crédito, otro tanto para seguros, y una nube
-          de aplicaciones satélite para microcréditos, prevención de fraude y la aplicación móvil.
-          Cada sistema tiene su propio dueño, sus propias reglas y, lo más corrosivo, su propio
-          idioma.</p>
+        <p>No es un error de cálculo. Es un error de <em>historia</em>. Alguien, en algún sistema
+          satélite, escribió encima de un dato que un auditor necesitaba leer tal como estaba la
+          semana pasada. Ese pasado ya no existe.</p>
 
-        <p>En el capítulo del spa demostramos que el modelo era ágil; en el del taxi, que aguantaba
-          la velocidad; en la historia clínica, que sabía repartir la verdad entre varios custodios.
-          El banco reúne las tres exigencias y añade una cuarta que las domina a todas: <strong>el
-          regulador</strong>. Aquí las decisiones de diseño que en otros capítulos eran preferencias
-          (no borrar nunca el pasado, tratar al software como un agente con responsabilidad) dejan de
-          ser lujos teóricos y se vuelven condiciones de supervivencia dictadas por la ley.</p>
+        <p>Multiplica los catorce centavos por millones de operaciones. Súmale un regulador que exige
+          reconstruir cualquier instante. Ahí tienes el motivo por el que la banca es la prueba de
+          fuego de cualquier modelo de datos: no perdona la elegancia que no resiste una citación
+          judicial.</p>
+
+        <p>Conviene fijar la escala. Una empresa mediana guarda su operación en unas ciento cincuenta
+          tablas, un par de sistemas viejos y un programa de contabilidad.</p>
+
+        <p>Un banco regional juega en otra liga. Unas mil quinientas tablas solo para el núcleo. Otro
+          millar para tarjetas de crédito. Otro tanto para seguros. Y una nube de aplicaciones satélite
+          para microcréditos, fraude y la app del móvil.</p>
+
+        <p>Cada sistema tiene su dueño, sus reglas y, lo más corrosivo, su propio idioma.</p>
+
+        <p>El spa mostró que el modelo era ágil. El taxi, que aguantaba la velocidad. La clínica, que
+          sabía repartir la verdad entre varios custodios.</p>
+
+        <p>El banco reúne las tres exigencias y añade una cuarta que manda sobre todas: <strong>el
+          regulador</strong>. Aquí, decisiones que en otros capítulos eran preferencias (no borrar
+          nunca el pasado, tratar al software como un agente responsable) dejan de ser lujos teóricos.
+          Las dicta la ley.</p>
 
         <aside class="nota-margen">
           <span class="etq">Alcance</span>
@@ -87,10 +93,11 @@
           conoces.
         </aside>
 
-        <p>Este capítulo no aspira a ser un manual de <em>core banking</em>. Aspira a algo más
-          modesto y más contundente: tomar cuatro escenas (una transferencia, la vida entera de un
-          préstamo, una investigación de fraude y el catálogo de productos) y demostrar que el modelo
-          absorbe la complejidad industrial sin trucos. Si aguanta el dinero, aguanta cualquier cosa.</p>
+        <p>Este capítulo no es un manual de <em>core banking</em>. Toma cuatro escenas (una
+          transferencia, la vida entera de un préstamo, una investigación de fraude y el catálogo de
+          productos) y muestra que el modelo absorbe la complejidad industrial sin trucos.</p>
+
+        <p>Si aguanta el dinero, aguanta cualquier cosa.</p>
 
         <h2>La realidad honesta: cinco islas que no se hablan</h2>
 
@@ -185,19 +192,23 @@
             todo en un <em>data lake</em>. A veces los números no cuadran y el proyecto naufraga.</li>
         </ul>
 
-        <p>¿Por qué ocurre? Porque cuando un banco intenta modernizarse, comete el mismo error:
-          obligar a todas las islas a hablar un único idioma robótico. Y reprogramar un sistema de
-          quince años para que hable «moderno» sale tan caro que los bancos prefieren dejarlo morir
-          en paz. El resultado es un empate técnico permanente: nadie migra, nadie se entiende.</p>
+        <p>¿Por qué ocurre? Porque al modernizarse, el banco comete siempre el mismo error: obligar a
+          todas las islas a hablar un único idioma.</p>
+
+        <p>Y reprogramar un sistema de quince años para que hable «moderno» sale tan caro que casi
+          siempre lo dejan morir en paz. El resultado es un empate permanente. Nadie migra, nadie se
+          entiende.</p>
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">El giro de WQuestions</p>
           <p style="margin:0">El modelo no le exige a la sucursal ni a contabilidad que cambien su
             software. Solo les pide que <strong>traduzcan</strong> lo que ya hacen y lo publiquen al
-            mapa central (el grafo) usando su propia jerga. Contabilidad habla de «partidas»; la
-            agencia habla de «simulaciones». El <a href="14-lexicon.html">lexicon</a> traduce ambos
-            dialectos al catálogo universal una sola vez, y a partir de allí cada isla sigue operando
-            como siempre mientras la gerencia consulta el mapa en milisegundos.</p>
+            mapa central usando su propia jerga.</p>
+
+          <p style="margin:0">Contabilidad habla de «partidas»; la agencia habla de «simulaciones». El
+            <a href="14-lexicon.html">lexicon</a> traduce ambos dialectos una sola vez. Desde ahí cada
+            isla sigue operando como siempre mientras la gerencia consulta el mapa en
+            milisegundos.</p>
         </div>
 
         <h2>El banco sobre las siete coordenadas</h2>
@@ -253,8 +264,8 @@
         <h2>Caso 1 · Una transferencia y sus cinco agentes ocultos</h2>
 
         <p>Para un humano, una transferencia es una frase de seis palabras: «Mariana le envía 480
-          dólares a Bruno». Para el sistema de un banco, ese gesto moviliza a cinco agentes y deja
-          dos registros espejo en contabilidad. Veamos cómo lo despliega el modelo.</p>
+          dólares a Bruno». Para el banco, ese gesto moviliza a cinco agentes y deja dos registros
+          espejo en contabilidad.</p>
 
         <!-- FIGURA SVG: la transferencia con cinco agentes y dos asientos -->
         <figure class="figura figura--ancha revelar">
@@ -345,10 +356,12 @@
   ts_proceso:       2026-05-19T21:07:46  # reloj del servidor</code></pre>
         </div>
 
-        <p>Pero la transferencia no termina ahí. Tras bambalinas, contabilidad (el quinto agente)
-          debe cuadrar sus libros. La partida doble es una ley de la profesión: a todo débito le
-          corresponde un crédito. En el modelo creamos dos <strong>subeventos</strong> y los colgamos
-          de la transferencia con el cable <code>parte_de</code>:</p>
+        <p>Pero la transferencia no termina ahí. Detrás, contabilidad (el quinto agente) tiene que
+          cuadrar sus libros. La partida doble es ley de la profesión: a todo débito le corresponde un
+          crédito.</p>
+
+        <p>En el modelo creamos dos <strong>subeventos</strong> y los colgamos de la transferencia con
+          el cable <code>parte_de</code>:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -378,23 +391,27 @@
 
         <div class="caja caja--practica revelar">
           <p class="caja-tit"><span class="codigo-d">D5</span> El software es un agente</p>
-          <p style="margin:0">El motor antifraude no es un campo ni una bandera <code>bool</code>:
-            es un agente del eje <code>Q</code> con responsabilidad sobre el hecho. Cuando
+          <p style="margin:0">El motor antifraude no es un campo ni una bandera <code>bool</code>. Es
+            un agente del eje <code>Q</code>, con responsabilidad sobre el hecho. Cuando
             <code>antifraude_sys</code> deja pasar una operación, esa decisión queda firmada con su
-            nombre, igual que la firma de un cajero humano. Si mañana hay que rendir cuentas de por
-            qué pasó, el responsable está en el grafo, no perdido en un log que nadie guardó.</p>
+            nombre, igual que la de un cajero humano.</p>
+
+          <p style="margin:0">Si mañana hay que rendir cuentas, el responsable está en el grafo y no
+            perdido en un log que nadie guardó.</p>
         </div>
 
         <p>Y si esta operación resultara mal hecha, <strong>jamás la borramos</strong>. Creamos una
-          transferencia rectificativa que apunta a la vieja y la anula. La ley obliga a los bancos a
-          conservar el historial completo de los errores, no solo el resultado pulido; el modelo lo
-          hace por defecto, sin tablas de auditoría aparte. Volveremos sobre esto en el Caso 3.</p>
+          transferencia rectificativa que apunta a la vieja y la anula.</p>
 
-        <p>Queda una última arruga de la transferencia, y no se deshace con agentes ni con asientos,
-          sino con el reloj. La de Mariana a Bruno se liquidó en dos segundos porque era interna: el
-          mismo banco movía dinero entre dos de sus cuentas. Invierte ahora los papeles. A Mariana le
-          envían un giro desde <strong>otro banco</strong> y, peor aún, desde <strong>el
-          extranjero</strong>, un viernes por la tarde.</p>
+        <p>La ley obliga a conservar el historial completo de los errores, no solo el resultado
+          pulido. El modelo lo hace por defecto, sin tablas de auditoría aparte.</p>
+
+        <p>Queda una arruga que no se deshace con agentes ni con asientos, sino con el reloj. La
+          transferencia de Mariana a Bruno se liquidó en dos segundos porque era interna: el mismo
+          banco movía dinero entre dos cuentas suyas.</p>
+
+        <p>Invierte ahora los papeles. A Mariana le envían un giro desde <strong>otro banco</strong> y,
+          peor aún, desde <strong>el extranjero</strong>, un viernes por la tarde.</p>
 
         <aside class="nota-margen">
           <span class="etq">Fecha valor</span>
@@ -405,18 +422,21 @@
           tener razón.
         </aside>
 
-        <p>El dinero ya salió de la cuenta del remitente, pero a la de Mariana todavía no entra: queda
-          suspendido en una cámara de compensación, esperando a que los sistemas abran. Y como el
-          viernes la ventana ya cerró, tendrá que esperar hasta el <strong>lunes</strong> para disponer
-          de su propio dinero. En pleno siglo&nbsp;XXI, un par de días de limbo para un giro que la
-          pantalla ya da por enviado, y el dinero podía ser urgente.</p>
+        <p>El dinero ya salió de la cuenta del remitente, pero a la de Mariana todavía no entra. Queda
+          suspendido en una cámara de compensación, esperando a que los sistemas abran.</p>
 
-        <p>Que esa espera exista no es culpa de ningún modelo de datos: responde a ventanas de
-          compensación, husos horarios, fines de semana y reglas regulatorias que ningún grafo borra.
-          Pero sí es culpa del modelo plano que Mariana no pueda saber <em>dónde</em> está su dinero
-          mientras tanto; un sistema clásico le muestra un opaco «pendiente» y poco más. WQuestions no
-          trata la transferencia como un instante, sino como un evento con estados fechados (la misma
-          vigencia temporal que el siguiente caso convertirá en regla):</p>
+        <p>Y como el viernes la ventana ya cerró, tendrá que esperar hasta el <strong>lunes</strong>
+          para disponer de su propio dinero. Dos días de limbo para un giro que la pantalla ya da por
+          enviado. Y el dinero podía ser urgente.</p>
+
+        <p>Que esa espera exista no es culpa de ningún modelo de datos. Responde a ventanas de
+          compensación, husos horarios, fines de semana y reglas que ningún grafo borra.</p>
+
+        <p>Pero sí es culpa del modelo plano que Mariana no pueda saber <em>dónde</em> está su dinero
+          mientras tanto. Un sistema clásico le muestra un «pendiente» opaco y poco más.</p>
+
+        <p>WQuestions no trata la transferencia como un instante, sino como un evento con estados
+          fechados:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -428,18 +448,20 @@
         </div>
 
         <p>Modelada así, la pregunta angustiada del cliente («¿dónde está mi dinero y cuándo lo
-          tendré?») deja de ser un secreto que solo el banco conoce: es una consulta que el grafo
-          contesta al instante, con el estado vigente y la fecha en que el dinero se libera. El modelo
-          no acelera el giro; los dos días de espera siguen ahí. Lo que hace es convertir ese limbo
-          opaco en un hecho explícito, fechado y consultable, que es justo lo que el cliente (y el
-          regulador) tienen derecho a ver.</p>
+          tendré?») deja de ser un secreto del banco. Es una consulta que el grafo contesta al
+          instante, con el estado vigente y la fecha en que el dinero se libera.</p>
+
+        <p>El modelo no acelera el giro. Los dos días de espera siguen ahí. Lo que hace es convertir
+          ese limbo opaco en un hecho fechado y consultable, que es justo lo que el cliente y el
+          regulador tienen derecho a ver.</p>
 
         <h2>Caso 2 · La novela de un préstamo y la regla del tiempo</h2>
 
-        <p>Un préstamo no es un suceso de un segundo: es una novela que dura años. Se aprueba, se
-          pagan cuotas, el cliente se atrasa (entra en mora), a veces la deuda se reestructura y, con
-          suerte, todo termina cancelado. En un sistema heredado, la celda «estado» del préstamo se
-          va borrando y reescribiendo, y con cada reescritura desaparece un capítulo de la historia.</p>
+        <p>Un préstamo no dura un segundo. Es una novela de años. Se aprueba, se pagan cuotas, el
+          cliente se atrasa, a veces la deuda se reestructura y, con suerte, todo termina cancelado.</p>
+
+        <p>En un sistema viejo, la celda «estado» del préstamo se va borrando y reescribiendo. Con cada
+          reescritura desaparece un capítulo de la historia.</p>
 
         <p>Aquí aplicamos la regla de <strong>vigencia temporal</strong>. Cada vez que el préstamo
           de Mariana cambia de estado, no borramos nada: inyectamos una línea nueva con su fecha de
@@ -447,11 +469,12 @@
 
         <div class="caja caja--practica revelar">
           <p class="caja-tit"><span class="codigo-d">D6</span> Vigencia temporal: el pasado no se sobrescribe</p>
-          <p style="margin:0">Ningún hecho que pueda cambiar se guarda como un valor desnudo; se
+          <p style="margin:0">Ningún hecho que pueda cambiar se guarda como un valor desnudo. Se
             guarda con un intervalo <code>[inicio, fin)</code>. Cambiar de estado no es modificar una
-            celda: es <em>cerrar</em> el intervalo vigente y <em>abrir</em> uno nuevo. La consecuencia
-            es que el grafo conserva, gratis, toda la trayectoria de cualquier atributo a lo largo del
-            tiempo.</p>
+            celda: es <em>cerrar</em> el intervalo vigente y <em>abrir</em> uno nuevo.</p>
+
+          <p style="margin:0">Así el grafo conserva gratis toda la trayectoria de cualquier dato a lo
+            largo del tiempo.</p>
         </div>
 
         <div class="bloque-codigo">
@@ -462,11 +485,12 @@
 (prestamo_5503, estado, reestructurado,  inicio=2026-10-22, fin=hoy)</code></pre>
         </div>
 
-        <p>Cinco años después, en plena audiencia, el juez pregunta: «¿En qué estado exacto se
-          encontraba este préstamo el 1 de septiembre de 2026?». La base filtra por fecha y responde
-          sin titubear: «Mora de treinta días». Sin la regla D6, los bancos tienen que construir
-          costosas tablas paralelas solo para almacenar estos fantasmas del pasado —y rezar para que
-          alguien las haya mantenido al día.</p>
+        <p>Cinco años después, en plena audiencia, el juez pregunta: «¿En qué estado exacto estaba
+          este préstamo el 1 de septiembre de 2026?». La base filtra por fecha y responde sin titubear:
+          «Mora de treinta días».</p>
+
+        <p>Sin la regla D6, un banco tiene que construir tablas paralelas carísimas solo para guardar
+          esos fantasmas del pasado, y rezar para que alguien las haya mantenido al día.</p>
 
         <!-- FIGURA SVG: máquina de estados del préstamo -->
         <figure class="figura figura--ancha revelar">
@@ -524,24 +548,29 @@
             ocurrió: el pasado sigue ahí, fechado.</figcaption>
         </figure>
 
-        <p>Hay un detalle fino que la figura insinúa. Una transición no es solo un cambio de
-          etiqueta: es un hecho que merece su propia causa. Por eso cada cambio de estado lleva un
-          enlace <code>motivado_por</code> que apunta al evento que lo provocó (un pago vencido, un
-          acuerdo firmado) y, cuando hace falta, un <code>justificado_por</code> que apunta al
-          documento legal. El «por qué» no es un eje, como vimos en su momento; es una relación entre
-          hechos, y aquí esa relación es la que un auditor leerá primero.</p>
+        <p>Hay un detalle fino que la figura insinúa. Un cambio de estado no es solo un cambio de
+          etiqueta. Es un hecho que merece su propia causa.</p>
+
+        <p>Por eso cada cambio lleva un enlace <code>motivado_por</code> hacia el evento que lo provocó
+          (un pago vencido, un acuerdo firmado) y, cuando hace falta, un <code>justificado_por</code>
+          hacia el documento legal.</p>
+
+        <p>El «por qué» no es un eje, como vimos en su momento. Es una relación entre hechos. Y aquí
+          es lo primero que leerá un auditor.</p>
 
         <h2>Caso 3 · Investigación de fraude: reconstruir la noche del cargo</h2>
 
-        <p>Mariana llama indignada: alguien usó su tarjeta para pagar 1.840 dólares en una tienda de
-          electrónica al otro lado del país, de madrugada, mientras ella dormía. El banco debe abrir
-          una investigación. Y es justo aquí donde la arquitectura se separa de la competencia por una
-          distancia que no se cierra con más servidores.</p>
+        <p>Mariana llama indignada. Alguien usó su tarjeta para pagar 1.840 dólares en una tienda de
+          electrónica al otro lado del país, de madrugada, mientras ella dormía.</p>
 
-        <p>El investigador no necesita el saldo de Mariana de <em>hoy</em>. Necesita viajar a la
-          noche del cargo y preguntar dos cosas que un modelo plano no sabe responder: ¿dónde creía el
-          banco que estaba Mariana esa noche?, y ¿qué decía su perfil de riesgo a esa hora exacta? La
-          respuesta correcta no es el valor actual del perfil; es el valor que el perfil <em>tenía
+        <p>El banco tiene que abrir una investigación. Y aquí la arquitectura saca una ventaja que no
+          se cierra con más servidores.</p>
+
+        <p>El investigador no necesita el saldo de Mariana de <em>hoy</em>. Necesita viajar a la noche
+          del cargo y preguntar dos cosas que un modelo plano no sabe responder. ¿Dónde creía el banco
+          que estaba Mariana esa noche? ¿Qué decía su perfil de riesgo a esa hora exacta?</p>
+
+        <p>La respuesta buena no es el valor actual del perfil. Es el valor que el perfil <em>tenía
           entonces</em>.</p>
 
         <aside class="nota-margen">
@@ -563,11 +592,12 @@
 (perfil_riesgo_mariana_v4, geo_habitual, ciudad_costa)</code></pre>
         </div>
 
-        <p>Con eso a la vista, el investigador entiende por qué la tarjeta pasó esa noche: el
-          <code>score_riesgo</code> era bajo y el comercio no levantó alertas suficientes. Al
-          confirmar el robo, <strong>no borra</strong> el pago de la tienda (el cargo fue real y
-          movió dinero de verdad). En su lugar crea un evento de reverso que apunta al original y deja
-          escrita la causa:</p>
+        <p>Con eso a la vista, el investigador entiende por qué pasó la tarjeta esa noche: el
+          <code>score_riesgo</code> era bajo y el comercio no levantó alertas suficientes.</p>
+
+        <p>Al confirmar el robo, <strong>no borra</strong> el pago de la tienda. El cargo fue real y
+          movió dinero de verdad. En su lugar crea un reverso que apunta al original y deja escrita la
+          causa:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -577,37 +607,39 @@
 (reverso_cargo_3120, ts_proceso,       2026-05-21T09:40:11)</code></pre>
         </div>
 
-        <p>El historial queda intacto: el cargo fraudulento sigue allí, fechado, y a su lado el
-          reverso que lo neutraliza. El dinero vuelve y el banco conserva una prueba impecable para
-          presentar al seguro. Esto es lo que un sistema plano no puede ofrecer sin reconstrucciones
-          heroicas: la capacidad de mostrar no solo el resultado, sino la secuencia exacta de lo que
-          se supo y cuándo.</p>
+        <p>El historial queda intacto. El cargo fraudulento sigue allí, fechado, y a su lado el
+          reverso que lo neutraliza. El dinero vuelve y el banco conserva una prueba impecable para el
+          seguro.</p>
+
+        <p>Eso es lo que un sistema plano no ofrece sin reconstrucciones heroicas: mostrar no solo el
+          resultado, sino la secuencia exacta de lo que se supo y cuándo.</p>
 
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">La trampa del <code>UPDATE</code></p>
           <p style="margin:0">En el modelo plano, corregir un fraude tienta a ejecutar un
             <code>UPDATE perfiles_riesgo SET nivel='alto'</code> y un <code>DELETE</code> del cargo
-            falso. Es la decisión que destruye el caso: al actualizar el perfil, se borra justamente
-            la prueba de que esa noche el sistema lo creía bajo; al borrar el cargo, se borra la
-            evidencia del robo. El reflejo más natural del programador es, aquí, el peor enemigo del
-            banco. El modelo lo previene haciendo que el <code>UPDATE</code> destructivo no sea
-            siquiera una operación disponible.</p>
+            falso. Esa decisión destruye el caso. Actualizar el perfil borra la prueba de que esa
+            noche el sistema lo creía bajo; borrar el cargo borra la evidencia del robo.</p>
+
+          <p style="margin:0">El reflejo más natural del programador es aquí el peor enemigo del banco.
+            El modelo lo previene dejando el <code>UPDATE</code> destructivo fuera del repertorio.</p>
         </div>
 
         <h2>Caso 4 · Una tarjeta «Platino» no es una idea: es un objeto</h2>
 
-        <p>Resolvamos, por último, un error de modelado tan común como costoso. Cuando el banco le
-          entrega a Mariana una «Tarjeta Platino», muchos programadores asumen que «Platino» es una
-          categoría abstracta y la guardan en la caja <code>K</code>. Es falso, y la falsedad tiene
-          consecuencias millonarias.</p>
+        <p>Queda un error de modelado tan común como caro. Cuando el banco le entrega a Mariana una
+          «Tarjeta Platino», muchos programadores dan por hecho que «Platino» es una categoría y la
+          guardan en la caja <code>K</code>. Es falso, y el error cuesta millones.</p>
 
         <div class="caja caja--definicion revelar">
           <p class="caja-tit">Producto como oferta reificada</p>
-          <p style="margin:0">La «Oferta Platino del primer trimestre de 2026» no es una etiqueta: es
-            un <strong>objeto real y reificado</strong> de la caja <code>O</code>, con un contrato
-            anexo, unas tasas, una cuota de manejo y una fecha de caducidad. El tipo <em>tarjeta
-            platino</em> sí vive en <code>K</code>; la <em>oferta concreta</em> que un cliente firmó,
-            no. Confundir la clase con la instancia es confundir la receta con el plato servido.</p>
+          <p style="margin:0">La «Oferta Platino del primer trimestre de 2026» no es una etiqueta. Es
+            un <strong>objeto real</strong> de la caja <code>O</code>, con su contrato anexo, sus
+            tasas, su cuota de manejo y su fecha de caducidad.</p>
+
+          <p style="margin:0">El tipo <em>tarjeta platino</em> sí vive en <code>K</code>; la
+            <em>oferta concreta</em> que un cliente firmó, no. Confundir la clase con el ejemplar es
+            confundir la receta con el plato servido.</p>
         </div>
 
         <p>Cuando el banco entrega el plástico, conecta la tarjeta de Mariana a la oferta específica
@@ -627,12 +659,14 @@
   cubierto_por:         oferta_platino_2026_t1</code></pre>
         </div>
 
-        <p>¿Por qué es vital separar la oferta de la clase? Porque si en julio el banco lanza una
-          versión nueva de la tarjeta con cuota de manejo de doce dólares, la tarjeta de Mariana no
-          puede encarecerse por arte de magia: ella firmó el contrato de la oferta de enero, y ese
-          contrato sigue siendo un objeto congelado en el tiempo, con su propia vigencia. Al tratar
-          los productos financieros como objetos independientes y fechados, el banco se blinda contra
-          demandas multimillonarias por cambiar las reglas sin avisar.</p>
+        <p>¿Por qué importa tanto separar la oferta de la clase? Porque si en julio el banco lanza una
+          versión nueva con cuota de doce dólares, la tarjeta de Mariana no puede encarecerse sola.</p>
+
+        <p>Ella firmó el contrato de enero, y ese contrato sigue congelado en el tiempo, con su propia
+          vigencia.</p>
+
+        <p>Tratando los productos financieros como objetos con fecha, el banco se blinda contra
+          demandas millonarias por cambiar las reglas sin avisar.</p>
 
         <div class="triple" style="flex-wrap:wrap;justify-content:center">
           <span class="nodo nodo--o"><span>tarjeta_mariana_2255</span><small>O</small></span>
@@ -647,16 +681,20 @@
 
         <h2>Caso 5 · La operación que no debía ocurrir, y ocurrió</h2>
 
-        <p>Son las 03:11 de un domingo. Desde la cuenta de Ana sale una transferencia de
-          25.000&nbsp;USD hacia una cuenta en el exterior. El límite por operación del banco son
-          10.000, y el motor antifraude no la tocó. Dos normas incumplidas en un solo movimiento.</p>
+        <p>Son las 03:11 de un domingo. De la cuenta de Ana sale una transferencia de
+          25.000&nbsp;USD hacia el exterior. El límite por operación son 10.000, y el motor antifraude
+          no la tocó. Dos normas rotas en un solo movimiento.</p>
 
-        <p>La pregunta de diseño es qué debe hacer el sistema, y la respuesta obvia es la
-          equivocada. Un sistema convencional rechaza la escritura: la transacción no se asienta y
-          el cajero recibe un error. Suena prudente hasta que llega el auditor y pregunta qué se
-          intentó esa madrugada. Entonces resulta que <strong>lo que se rechazó no se registró, y lo
-          que no se registró no existe</strong>. El intento vive, si acaso, en una traza de
-          aplicación que nadie diseñó para ser consultada y que se rota cada treinta días.</p>
+        <p>La pregunta de diseño es qué debe hacer el sistema, y la respuesta obvia es la equivocada.
+          Un sistema convencional rechaza la escritura: la transacción no se asienta y el cajero recibe
+          un error.</p>
+
+        <p>Suena prudente hasta que llega el auditor y pregunta qué se intentó esa madrugada. Entonces
+          resulta que <strong>lo que se rechazó no se registró, y lo que no se registró no
+          existe</strong>.</p>
+
+        <p>El intento vive, si acaso, en una traza que nadie diseñó para consultarse y que se borra
+          cada treinta días.</p>
 
         <p class="cita-destacada revelar">Una operación sospechosa que se rechaza al escribir es una
           operación que después nadie puede auditar.<cite>La lección del dominio regulado</cite></p>
@@ -678,10 +716,11 @@ informe = u.validate()
 #   {'abiertas': ['violacion_0001', 'violacion_0002'], 'cerradas': [], 'vigentes': 2}</code></pre>
         </div>
 
-        <p>La transferencia queda asentada con sus 25.000&nbsp;USD, y a su lado quedan dos hechos
-          nuevos que no estaban antes: las dos violaciones, cada una apuntando a la forma que la
-          delata. El oficial de cumplimiento no recibe una alerta que se pierde en una bandeja de
-          entrada. Recibe hechos, y los hechos se consultan.</p>
+        <p>La transferencia queda asentada con sus 25.000&nbsp;USD, y a su lado aparecen dos hechos
+          nuevos: las dos violaciones, cada una apuntando a la norma que la delata.</p>
+
+        <p>El oficial de cumplimiento no recibe una alerta que se pierde en una bandeja de entrada.
+          Recibe hechos. Y los hechos se consultan.</p>
 
         <div class="triple">
           <span class="nodo nodo--o"><span>violacion_0001</span><small>O</small></span>
@@ -691,26 +730,32 @@ informe = u.validate()
           <span class="nodo nodo--o"><span>forma_limite_operacion</span><small>O</small></span>
         </div>
 
-        <p>Repara en lo que esto permite preguntar, y que un sistema de alertas no permite.
-          «¿Cuántas operaciones excedieron el límite en junio?» es un conteo. «¿Cuáles seguían sin
+        <p>Fíjate en lo que se puede preguntar ahora y con un sistema de alertas no.</p>
+
+        <p>«¿Cuántas operaciones excedieron el límite en junio?» es un conteo. «¿Cuáles seguían sin
           resolver el 30 de junio?» es la misma consulta con una fecha, porque la violación lleva su
-          estado con vigencia. Y «¿por qué esta operación se marcó?» devuelve la forma exacta, con su
-          cota, en un salto.</p>
+          estado con vigencia. Y «¿por qué se marcó esta operación?» devuelve la norma exacta, con su
+          límite, en un salto.</p>
 
         <div class="caja caja--practica revelar">
           <p class="caja-tit">La violación se apaga sola</p>
-          <p style="margin:0">Cuando la operación se regulariza (se anula, se reclasifica, se
-            autoriza por excepción documentada), el evaluador no borra la violación: le añade un
-            estado <code>resuelta</code> con su fecha. La marca queda en el grafo con su historia
-            completa, que es lo que un supervisor pedirá dos años después. Es el mismo patrón de
-            estados con el que la <a href="23-minera.html">minera</a> cierra sus punchitems.</p>
+          <p style="margin:0">Cuando la operación se regulariza (se anula, se reclasifica, se autoriza
+            por excepción documentada), el evaluador no borra la violación. Le añade un estado
+            <code>resuelta</code> con su fecha.</p>
+
+          <p style="margin:0">La marca queda en el grafo con su historia completa, que es lo que un
+            supervisor pedirá dos años después. Es el mismo patrón de estados con el que la
+            <a href="23-minera.html">minera</a> cierra sus punchitems.</p>
         </div>
 
-        <p>Y conviene decir qué <em>no</em> hace este mecanismo, porque el banco es donde más
-          tentador resulta pedirle de más. No impide la operación. Si el negocio necesita un bloqueo
-          duro (y a veces lo necesita: una cuenta embargada, un cliente sancionado), ese bloqueo vive
-          en la aplicación que decide, no en el almacén que registra. El grafo no es el guardia de la
-          puerta. Es el testigo que lo vio todo y no olvida.</p>
+        <p>Conviene decir qué <em>no</em> hace este mecanismo, porque el banco es donde más tienta
+          pedirle de más. No impide la operación.</p>
+
+        <p>Si el negocio necesita un bloqueo duro (y a veces lo necesita: una cuenta embargada, un
+          cliente sancionado), ese bloqueo vive en la aplicación que decide, no en el almacén que
+          registra.</p>
+
+        <p>El grafo no es el guardia de la puerta. Es el testigo que lo vio todo y no olvida.</p>
 
         <h2>El antes y el después: del esquema fragmentado al grafo único</h2>
 
@@ -720,12 +765,14 @@ informe = u.validate()
 
         <p><strong>Antes, en el modelo relacional.</strong> La información se reparte entre tablas
           como <code>clientes</code>, <code>cuentas</code>, <code>transferencias</code>,
-          <code>asientos</code> y <code>perfiles_riesgo</code>. La primera mitad de la pregunta se
-          resuelve con un <em>join</em> de cuatro tablas (incómodo, pero posible). La segunda mitad
-          fracasa, porque <code>perfiles_riesgo</code> solo guarda el registro <em>actual</em>. Para
-          saber qué decía el perfil la noche del cargo hay que rebuscar en tablas de auditoría
-          separadas, si es que alguien las creó; de lo contrario, la respuesta sencillamente no existe
-          en los datos.</p>
+          <code>asientos</code> y <code>perfiles_riesgo</code>.</p>
+
+        <p>La primera mitad de la pregunta sale con un <em>join</em> de cuatro tablas: incómodo, pero
+          posible. La segunda mitad fracasa, porque <code>perfiles_riesgo</code> solo guarda el
+          registro <em>actual</em>.</p>
+
+        <p>Para saber qué decía el perfil la noche del cargo hay que rebuscar en tablas de auditoría
+          aparte, si alguien las creó. Si no, la respuesta no existe en los datos.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">SQL</span><button class="copiar">⧉ copiar</button></div>
@@ -742,35 +789,37 @@ SELECT tipo, monto FROM asientos WHERE transferencia_id = 7791;
 SELECT nivel FROM perfiles_riesgo WHERE cliente_id = 4410;</code></pre>
         </div>
 
-        <p>Eso no es un defecto de un banco en particular: es el defecto estructural del modelo plano
-          frente a la bitemporalidad. <em>Qué ocurrió</em> y <em>qué sabía el sistema cuando
-          ocurrió</em> son dos ejes de tiempo distintos, y el esquema clásico los aplasta en una sola
-          columna.</p>
+        <p>No es el defecto de un banco concreto. Es el defecto del modelo plano frente a los dos
+          tiempos. <em>Qué ocurrió</em> y <em>qué sabía el sistema cuando ocurrió</em> son dos relojes
+          distintos, y el esquema clásico los aplasta en una sola columna.</p>
 
-        <div class="columnas">
           <p><strong>Después, en WQuestions.</strong> La misma información vive como un grafo de
             hechos. La transferencia <code>transferencia_7791</code> se liga por <code>parte_de</code>
-            a sus dos asientos; el perfil <code>perfil_riesgo_mariana_v4</code> lleva su propio rango
-            de vigencia <code>inicio=2026-04-30, fin=2026-06-02</code>. La pregunta entera se vuelve un
-            patrón de proyección: recoge los hechos cuyos extremos cuelgan de la transferencia y suma
-            el perfil cuyo intervalo temporal solapa con la marca de tiempo del cargo.</p>
-          <p>No hay <em>join</em> de cuatro tablas, no hay tabla de auditoría paralela (el tiempo es
-            un atributo de primer orden en cada hecho) y, sobre todo, no hay que migrar ningún esquema
-            para que funcione. El banco no abandona sus mil quinientas tablas: las deja publicar al
-            grafo. La consulta que antes era un proyecto de semanas pasa a ser una sola pregunta bien
-            formada, y la respuesta que antes «no existía en los datos» pasa a estar siempre
-            disponible, fechada al segundo.</p>
-        </div>
+            a sus dos asientos. El perfil <code>perfil_riesgo_mariana_v4</code> lleva su propio rango
+            de vigencia <code>inicio=2026-04-30, fin=2026-06-02</code>.</p>
+
+          <p>La pregunta entera se vuelve una consulta: recoge los hechos que cuelgan de la
+            transferencia y suma el perfil cuyo intervalo cubre la hora del cargo.</p>
+          <p>No hay <em>join</em> de cuatro tablas. No hay tabla de auditoría paralela, porque el
+            tiempo viaja dentro de cada hecho. Y no hay que migrar ningún esquema: el banco no abandona
+            sus mil quinientas tablas, las deja publicar al grafo.</p>
+
+          <p>La consulta que antes era un proyecto de semanas pasa a ser una pregunta bien formada. Y
+            la respuesta que antes «no existía en los datos» pasa a estar siempre ahí, fechada al
+            segundo.</p>
 
         <h2>Del préstamo de Mariana a la cartera entera</h2>
 
-        <p>Una transferencia de Mariana a Bruno, la novela de un préstamo, un cargo fraudulento: casos
-          que se entienden de a uno. El regulador, en cambio, nunca pregunta por Mariana. Pregunta por
-          la cartera entera: cuánto saldo sigue vivo en cada estado de mora, qué proporción de los
-          préstamos lleva más de sesenta días vencido, cómo se movió ese número de un mes al otro. Y
-          esas respuestas no piden tablas nuevas. El préstamo <code>prestamo_5503</code> ya guarda su
-          estado fechado con la vigencia D6; el reporte regulatorio es leer ese mismo estado sobre
-          todos los préstamos a la vez y sumar sus montos.</p>
+        <p>Una transferencia, la novela de un préstamo, un cargo fraudulento. Casos que se entienden
+          de a uno.</p>
+
+        <p>El regulador, en cambio, nunca pregunta por Mariana. Pregunta por la cartera entera. Cuánto
+          saldo sigue vivo en cada estado de mora. Qué proporción de los préstamos lleva más de sesenta
+          días vencido. Cómo se movió ese número de un mes al otro.</p>
+
+        <p>Y esas respuestas no piden tablas nuevas. El préstamo <code>prestamo_5503</code> ya guarda
+          su estado fechado con la vigencia D6. El reporte regulatorio es leer ese mismo estado sobre
+          todos los préstamos a la vez y sumar los montos.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -824,11 +873,14 @@ suma(u, "monto", Pattern(fixed={"estado": u.ind("mora_60_dias")},
           </ul>
         </div>
 
-        <p>El banco no logró tumbar al modelo. Y lo decisivo no es que «aguantara», sino <em>cómo</em>
-          lo hizo: las mismas reglas que en el spa parecían refinamientos elegantes resultaron ser, en
-          banca, las únicas que sobreviven al regulador. Cuando una decisión de diseño que nació por
-          gusto reaparece como exigencia legal en el dominio más duro, deja de ser una hipótesis. En
-          el próximo capítulo subiremos un peldaño en complejidad organizativa: un ERP donde una sola
+        <p>El banco no logró tumbar al modelo. Y lo decisivo no es que aguantara, sino <em>cómo</em>
+          lo hizo. Las reglas que en el spa parecían refinamientos elegantes resultaron ser, en banca,
+          las únicas que sobreviven al regulador.</p>
+
+        <p>Cuando una decisión de diseño que nació por gusto reaparece como exigencia legal en el
+          dominio más duro, deja de ser una hipótesis.</p>
+
+        <p>En el próximo capítulo subimos un peldaño de complejidad organizativa: un ERP donde una sola
           venta atraviesa inventario, finanzas y logística a la vez.</p>
 
       </div>

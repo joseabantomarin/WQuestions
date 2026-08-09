@@ -56,24 +56,32 @@
 
       <div class="contenido">
 
-        <p class="entrada">En el mostrador acaba de cerrarse una venta, <code>venta_001</code>, y
-          junto a ella una pantalla donde un agente de inteligencia artificial acaba de cerrar una
-          consulta, <code>sesion_ia_5521</code>. Tienes delante todos los datos: sabes que la operación
-          la atendió el vendedor <code>vendedor_17</code>, que el comprador fue <code>cliente_1042</code>,
-          que lo vendido fue una camiseta <code>camiseta_88</code> y que el monto fue 49,90 dólares;
-          sabes que la sesión de IA corrió sobre el modelo <code>modelo_lumen_2026</code>, que
-          consumió 4180 <em>tokens</em> de entrada y que invocó dos herramientas. Cada dato, por
-          separado, ya tiene su casillero en alguno de los seis ejes que construimos en los capítulos
-          anteriores. Y, sin embargo, si te detienes a mirarlos, son un montón de fichas sueltas sobre
-          el mostrador. Nada dice todavía que la venta sea <em>del</em> vendedor 17, ni que los 49,90
-          dólares pertenezcan a <em>esa</em> venta y no a la de la caja de al lado.</p>
+        <p class="entrada">En el mostrador acaba de cerrarse una venta, <code>venta_001</code>. Junto a
+          ella, en una pantalla, un agente de inteligencia artificial acaba de cerrar una consulta,
+          <code>sesion_ia_5521</code>.</p>
 
-        <p>Ese es el agujero que cierra este capítulo. Hemos llenado el universo de valores (personas,
-          objetos, lugares, instantes, números, clases), pero los valores, por sí solos, no se
-          conocen entre ellos. Faltan los <strong>enlaces</strong>: los «cables» lógicos que le dicen
-          a la máquina qué tiene que ver cada cosa con cada cosa. En lógica y en programación esos
-          enlaces se llaman <strong>predicados</strong>, y en nuestro modelo viven en el séptimo eje,
-          el que responde a la pregunta <em>¿cómo?</em>: cómo se conecta cada cosa con cada otra.</p>
+        <p>Tienes delante todos los datos. De la venta sabes quién la atendió, quién compró, qué se
+          vendió y por cuánto. De la sesión de IA sabes sobre qué modelo corrió, cuántos
+          <em>tokens</em> consumió y cuántas herramientas invocó.</p>
+
+        <p>Cada dato, por separado, ya tiene su casillero en alguno de los seis ejes que construimos en
+          los capítulos anteriores.</p>
+
+        <p>Y aun así, míralos: son un montón de fichas sueltas sobre el mostrador.</p>
+
+        <p>Nada dice todavía que la venta sea <em>del</em> vendedor 17, ni que los 49,90 dólares sean de
+          <em>esa</em> venta y no de la caja de al lado.</p>
+
+        <p>Ese es el agujero que cierra este capítulo.</p>
+
+        <p>Hemos llenado el universo de valores (personas, objetos, lugares, instantes, números,
+          clases), y los valores por sí solos no se conocen entre ellos.</p>
+
+        <p>Faltan los <strong>cables</strong>: los enlaces que le dicen a la máquina qué tiene que ver
+          cada cosa con cada cosa.</p>
+
+        <p>En lógica y en programación se llaman <strong>predicados</strong>. En nuestro modelo viven
+          en el séptimo eje, el que responde a <em>¿cómo?</em></p>
 
         <aside class="nota-margen">
           <span class="etq">Dónde estamos</span>
@@ -82,11 +90,15 @@
           Es estructural, no de valor.
         </aside>
 
-        <p>Pero antes de declararlo cerrado, el capítulo nos obliga a una pregunta técnica que parece
-          ingenua y resulta profunda: en el fondo de una base de datos, <em>¿qué diferencia real hay
-          entre una propiedad y una relación?</em> La respuesta (que ambas son el mismo tipo de cable
-          y que lo único que las separa es su cardinalidad) se volverá nuestra decisión de diseño
-          <strong>D2</strong>, y nos ahorrará miles de horas de programación innecesaria.</p>
+        <p>Pero antes de darlo por cerrado, hay una pregunta que parece ingenua y resulta honda: en el
+          fondo de una base de datos, <em>¿qué diferencia real hay entre una propiedad y una
+          relación?</em></p>
+
+        <p>La respuesta es que son el mismo cable, y que lo único que las separa es cuántos valores
+          admiten.</p>
+
+        <p>Esa será nuestra decisión <strong>D2</strong>, y ahorra miles de horas de programación
+          inútil.</p>
 
         <h2>Una distinción que parece de sentido común</h2>
 
@@ -102,13 +114,17 @@
 5.  sesion_ia_5521  usó la herramienta   busqueda_web, consulta_grafo</code></pre>
         </div>
 
-        <p>Pídele a un programador que empieza que divida estos cinco enlaces en dos montones:
-          <strong>propiedades</strong> (atributos propios de la cosa) y <strong>relaciones</strong>
-          (vínculos con otra cosa externa). Lo hará sin titubear. El <em>monto</em> y los
-          <em>tokens</em> de entrada son, dirá, claramente propiedades: cifras que describen el objeto
-          por dentro. En cambio <em>la atendió</em> y <em>usó la herramienta</em> son relaciones,
-          porque atan el sujeto a otra entidad separada (un vendedor, una herramienta de software).
-          La intuición es limpia: <em>propiedad = atributo interno; relación = puente hacia afuera</em>.</p>
+        <p>Pídele a un programador novato que reparta estos cinco enlaces en dos montones:
+          <strong>propiedades</strong> (lo que la cosa tiene) y <strong>relaciones</strong> (con qué
+          otra cosa se ata).</p>
+
+        <p>Lo hará sin titubear. El <em>monto</em> y los <em>tokens</em> son propiedades, dirá: cifras
+          que describen el objeto por dentro.</p>
+
+        <p><em>La atendió</em> y <em>usó la herramienta</em> son relaciones, porque enganchan el sujeto
+          con otra entidad.</p>
+
+        <p>La intuición es limpia: propiedad hacia dentro, relación hacia fuera.</p>
 
         <p>Suena impecable. Pero basta someterla a un poco de presión arquitectónica para verla
           desmoronarse:</p>
@@ -128,12 +144,15 @@
             realidad, se relaciona con un punto del tiempo.</li>
         </ul>
 
-        <p>Si miramos estos cinco enlaces con frialdad informática, aflora una verdad incómoda:
-          <strong>la diferencia entre propiedad y relación no existe en la realidad material</strong>.
-          Es una diferencia <em>gramatical</em>, sobre cómo los humanos redactamos las oraciones. A
-          veces usamos verbos posesivos («tiene un monto de 49,90») y a veces verbos relacionales («la
-          atendió el vendedor 17»). Para el disco que guarda el dato, la estructura técnica es idéntica: hay un
-          sujeto de partida, un cable conector y un objeto de destino.</p>
+        <p>Mira esos cinco enlaces con frialdad y aflora una verdad incómoda: <strong>la diferencia
+          entre propiedad y relación no existe en el mundo material</strong>.</p>
+
+        <p>Es una diferencia <em>gramatical</em>, sobre cómo redactamos las frases los humanos. A veces
+          usamos verbos de tener («tiene un monto de 49,90») y a veces verbos de relación («la atendió
+          el vendedor 17»).</p>
+
+        <p>Para el disco que guarda el dato, la estructura es idéntica: un sujeto, un cable y un
+          destino.</p>
 
         <p class="cita-destacada revelar">La frontera entre tener un atributo y estar relacionado con
           algo no la dibuja la realidad: la dibuja la gramática. La base de datos nunca la vio.
@@ -152,11 +171,13 @@
           <p style="margin:0;font-size:1.05rem;font-family:var(--mono)">hecho = (sujeto, predicado, objeto)</p>
         </div>
 
-        <p>Hasta aquí, nada que no tenga cualquier grafo. El truco (y la diferencia de seguridad
-          frente a un grafo libre) está en que el predicado no es un texto ciego. Viene de fábrica con
-          una <strong>signatura tipada</strong>: una etiqueta, como la de un enchufe, que le dice a la
-          máquina <em>de qué eje</em> tiene que venir obligatoriamente el sujeto y <em>a qué eje</em>
-          debe ir a parar el objeto. La forma de esa etiqueta es:</p>
+        <p>Hasta aquí, nada que no tenga cualquier grafo.</p>
+
+        <p>El truco está en que el predicado no es un texto ciego. Viene de fábrica con una etiqueta,
+          como la de un enchufe, que le dice a la máquina <em>de qué eje</em> tiene que venir el sujeto
+          y <em>a qué eje</em> tiene que ir el objeto.</p>
+
+        <p>Esa etiqueta se llama <strong>signatura</strong>, y tiene esta forma:</p>
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Forma de una signatura</p>
@@ -243,15 +264,17 @@
             es legal y cuál no.</figcaption>
         </figure>
 
-        <p>La signatura es la magia que convierte un montón de datos desordenados en una estructura
-          <strong>predecible y validable</strong>. Si un programador comete un error y trata de
-          guardar <code>(venta_001, monto, "color rojo")</code>, el sistema lo bloquea solo: la
-          signatura de <code>monto</code> exige que el destino esté en el eje
-          <span class="eje-rotulo"><span class="eje eje--n">N</span></span> (los números), y «color
-          rojo» es un texto. Esa capacidad de rechazar el absurdo desde el instante en que entra el
-          dato es lo que separa la arquitectura sólida de WQuestions del caos de los grafos libres,
-          donde cualquiera puede conectar una venta con un color usando el verbo «monto» sin que
-          nada chille.</p>
+        <p>La signatura es lo que convierte un montón de datos sueltos en una estructura
+          <strong>predecible y comprobable</strong>.</p>
+
+        <p>Si alguien se equivoca e intenta guardar <code>(venta_001, monto, "color rojo")</code>, el
+          sistema lo bloquea solo. La signatura de <code>monto</code> exige que el destino esté en el
+          eje <span class="eje-rotulo"><span class="eje eje--n">N</span></span>, el de los números, y
+          «color rojo» es un texto.</p>
+
+        <p>Esa capacidad de rechazar el absurdo en el momento en que entra el dato separa a WQuestions
+          del caos de los grafos libres, donde cualquiera puede conectar una venta con un color usando
+          el verbo «monto» sin que nada chille.</p>
 
         <h2>La diferencia verdadera: ¿funcional o múltiple?</h2>
 
@@ -259,16 +282,16 @@
           técnica para distinguir entre «propiedades» y «relaciones»? Sí, una sola, y es estrictamente
           matemática: la <strong>cardinalidad</strong>.</p>
 
-        <p>Vuelve a mirar las signaturas de la figura. Cuatro de ellas se comportan como lo que en
-          matemáticas llamamos <strong>funciones</strong>: dado un sujeto concreto, el cable solo
-          puede conducir a <em>un único</em> destino en ese instante. Una venta tiene <em>un</em>
-          monto; se cerró en <em>un</em> instante; la atendió <em>un</em> vendedor; una
-          sesión de IA consumió <em>un</em> número exacto de <em>tokens</em> de entrada.</p>
+        <p>Vuelve a mirar las signaturas de la figura. Cuatro de ellas admiten <em>un solo</em> destino
+          por sujeto.</p>
 
-        <p>El quinto cable (<code>uso_herramienta</code>) rompe la regla. Un mismo agente de IA pudo
-          invocar la búsqueda web <em>y</em> la consulta al grafo <em>y</em> una calculadora, todo en
-          la misma sesión. Un solo sujeto dispara varios cables hacia múltiples objetos a la vez, y
-          todos son correctos.</p>
+        <p>Una venta tiene <em>un</em> monto. Se cerró en <em>un</em> instante. La atendió <em>un</em>
+          vendedor. Una sesión de IA consumió <em>un</em> número exacto de tokens.</p>
+
+        <p>El quinto cable, <code>uso_herramienta</code>, rompe la regla.</p>
+
+        <p>Un mismo agente pudo invocar la búsqueda web <em>y</em> la consulta al grafo <em>y</em> una
+          calculadora, todo en la misma sesión. Un sujeto, varios destinos, y todos correctos.</p>
 
         <p>Esa es la única diferencia estructural, en la base de datos, entre lo que solemos llamar
           «propiedades» y «relaciones»:</p>
@@ -297,12 +320,16 @@
           letra solo nombra la cardinalidad declarada en la signatura.
         </aside>
 
-        <p>Pero ambos son el mismo tipo de cable y viven en el mismo eje. La cardinalidad no es un eje
-          aparte: es un <strong>atributo de cada cable</strong>, escrito en su signatura. Y lo único
-          que ese atributo le dice a la base de datos es <strong>cómo comportarse cuando el dato se
-          actualice</strong>. Aquí está la razón de fondo por la que conviene conservar las dos marcas
-          (P y M) aunque algebraicamente sean la misma familia de funciones tipadas: cada una
-          gobierna una <em>lógica de actualización</em> distinta.</p>
+        <p>Pero los dos son el mismo tipo de cable y viven en el mismo eje.</p>
+
+        <p>Cuántos valores admite un cable no es un eje aparte. Es un <strong>dato del propio
+          cable</strong>, escrito en su signatura.</p>
+
+        <p>Y lo único que ese dato le dice a la base es <strong>qué hacer cuando llegue un valor
+          nuevo</strong>: pisar el anterior, o sumarse a él.</p>
+
+        <p>Por eso conviene conservar las dos marcas, P y M, aunque en el fondo sean la misma familia.
+          Cada una gobierna una forma distinta de actualizar.</p>
 
         <div class="caja caja--practica revelar">
           <p class="caja-tit">La lógica de actualización</p>
@@ -315,11 +342,12 @@
             anteriores.</p>
         </div>
 
-        <p>Y aquí viene el alivio para quien programa: <strong>el motor de consulta no hace la
-          diferencia</strong>. Da igual que preguntes «¿qué monto tiene <code>venta_001</code>?» o
-          «¿con qué herramientas trabajó <code>sesion_ia_5521</code>?»: la máquina ejecuta exactamente
-          el mismo código de búsqueda. Solo que en el primer caso te devuelve una respuesta y en el
-          segundo, una lista.</p>
+        <p>Y aquí viene el alivio para quien programa: <strong>al motor de consulta le da
+          igual</strong>.</p>
+
+        <p>Preguntes «¿qué monto tiene <code>venta_001</code>?» o «¿con qué herramientas trabajó
+          <code>sesion_ia_5521</code>?», la máquina ejecuta el mismo código. Solo que en un caso
+          devuelve un valor y en el otro, una lista.</p>
 
         <!-- FIGURA 5.2: P vs M por cardinalidad — la figura insignia, color del eje M -->
         <figure class="figura figura--ancha revelar">
@@ -400,10 +428,12 @@
             consulta; cambia solo qué hace el motor al actualizar.</figcaption>
         </figure>
 
-        <p>Un cable conecta dos cosas, sí; pero el mismo cable, repetido sobre miles de sujetos,
-          es una relación recorrible de punta a punta. «¿Qué sesiones usaron la búsqueda web?» no se
-          responde mirando a <code>sesion_ia_5521</code>: se responde recorriendo el cable
-          <code>uso_herramienta</code> hacia atrás, desde todas las sesiones que lo tienen.</p>
+        <p>Un cable conecta dos cosas. Pero ese mismo cable, repetido sobre miles de sujetos, se
+          recorre de punta a punta.</p>
+
+        <p>«¿Qué sesiones usaron la búsqueda web?» no se responde mirando a
+          <code>sesion_ia_5521</code>. Se responde recorriendo el cable <code>uso_herramienta</code>
+          hacia atrás, desde todas las sesiones que lo tienen.</p>
 
         <h2>La regla de diseño D2: la unificación algebraica</h2>
 
@@ -412,38 +442,50 @@
 
         <div class="caja caja--decision revelar">
           <p class="caja-tit"><span class="codigo-d">D2</span> Predicados unificados</p>
-          <p>Las <strong>propiedades</strong> y las <strong>relaciones</strong> se unifican bajo el
-            mismo concepto: son simplemente cables (predicados) del eje <em>cómo</em> (M) con etiquetas
-            de seguridad (signaturas tipadas). La única diferencia entre ellas es la
-            <strong>cardinalidad</strong> (si aceptan uno o varios destinos simultáneos), y esa
-            cardinalidad es un atributo de la signatura de cada cable, no un eje aparte. Le indica a la
-            base de datos cuándo debe «borrar y reemplazar» (cable funcional) y cuándo debe «acumular»
-            (cable múltiple) nueva información.</p>
+          <p>Las <strong>propiedades</strong> y las <strong>relaciones</strong> son la misma cosa:
+            cables del eje <em>cómo</em> (M) con su etiqueta de seguridad puesta.</p>
+          <p>Lo único que las separa es la <strong>cardinalidad</strong>, es decir, si aceptan un
+            destino o varios a la vez. Y esa cardinalidad va escrita en la signatura de cada cable, no
+            en un eje aparte.</p>
+          <p>Le dice a la base cuándo tiene que <em>borrar y reemplazar</em> y cuándo tiene que
+            <em>acumular</em>.</p>
         </div>
 
-        <p>Conviene precisar la relación entre D2 y la doble marca P / M, porque a primera vista
-          parecen tirar en sentidos opuestos. <strong>Algebraicamente, todo es un mismo objeto</strong>:
-          un predicado tipado con la forma <code>predicado : eje_sujeto → eje_objeto</code>. No hay dos
-          familias de cables ni dos lenguajes. <strong>Operativamente, conviene seguir distinguiendo
-          dos modos</strong> (P para los funcionales, M para los múltiples) porque la cardinalidad no
-          es un adorno: gobierna la lógica de actualización, y un sistema que la ignore no sabría si
-          un dato nuevo pisa al viejo o se le suma. P y M no son, pues, dos ejes: son la misma
-          coordenada vista bajo su único atributo que de verdad cambia el comportamiento del motor.</p>
+        <p>Conviene aclarar cómo se llevan D2 y la doble marca P / M, porque a primera vista parecen
+          tirar en sentidos opuestos.</p>
 
-        <p>Entender D2 significa comprender que el abismo técnico que se enseña en la universidad
-          (donde nos obligan a tratar los atributos internos como «columnas en una tabla» y los
-          vínculos externos como «tablas conectadas o <em>joins</em>») es, en realidad, una
-          <strong>ilusión pedagógica</strong>. Una complicación heredada de la programación
-          tradicional. A nivel matemático, todo es un sujeto, un cable tipado y un destino. Y esa
-          simplicidad es la gasolina que hace volar al modelo.</p>
+        <p><strong>En el fondo, todo es lo mismo</strong>: un predicado con la forma
+          <code>predicado : eje_sujeto → eje_objeto</code>. No hay dos familias de cables ni dos
+          lenguajes.</p>
+
+        <p><strong>En la práctica, conviene seguir distinguiendo dos modos</strong>, P para los de un
+          solo valor y M para los de varios.</p>
+
+        <p>Porque la cardinalidad no es un adorno: manda sobre la actualización, y un sistema que la
+          ignore no sabría si un dato nuevo pisa al viejo o se le suma.</p>
+
+        <p>P y M no son dos ejes. Son la misma coordenada vista por su único rasgo que de verdad cambia
+          el comportamiento del motor.</p>
+
+        <p>Entender D2 es entender que el abismo que se enseña en la universidad, donde los atributos
+          son «columnas de una tabla» y los vínculos son «tablas conectadas», es una <strong>ilusión de
+          pizarra</strong>.</p>
+
+        <p>Una complicación heredada de la programación tradicional.</p>
+
+        <p>Por debajo, todo es un sujeto, un cable con su tipo y un destino. Y esa simplicidad es la
+          gasolina que hace volar al modelo.</p>
 
         <h2>La forma: qué voltaje es aceptable</h2>
 
-        <p>La signatura tiene un límite que conviene ver ahora, mientras la metáfora del enchufe está
-          fresca. Comprueba que el cable enchufe donde debe: que el sujeto venga del eje correcto y
-          el valor vaya al eje correcto. No dice nada sobre el valor mismo. Una disponibilidad del
-          140&nbsp;% encaja en la signatura <code>M(O→N)</code> exactamente igual que una del
-          94&nbsp;%, porque las dos son números y el número es lo único que la signatura mira.</p>
+        <p>La signatura tiene un límite que conviene ver ahora, mientras la imagen del enchufe está
+          fresca.</p>
+
+        <p>Comprueba que el cable enchufe donde debe: que el sujeto venga del eje correcto y el valor
+          vaya al eje correcto. No dice nada sobre el valor mismo.</p>
+
+        <p>Una disponibilidad del 140 % encaja en <code>M(O→N)</code> igual de bien que una del 94 %,
+          porque las dos son números, y el número es lo único que la signatura mira.</p>
 
         <p class="cita-destacada revelar">La signatura dice qué enchufe encaja. La forma dice qué
           voltaje es aceptable.<cite>Las dos comprobaciones</cite></p>
@@ -491,16 +533,20 @@
           evaluador no rechaza nada</strong>. Encuentra la violación, la anota y deja que el hecho
           entre. Suena a permisividad y es lo contrario.</p>
 
-        <p>Un almacén que rechaza la escritura obliga a decidir de antemano qué es imposible, y esa
-          decisión envejece mal: la excepción que nadie previó llega igual, y el sistema que la
-          rechaza la empuja a un correo, a una hoja aparte, a la memoria de alguien. Peor todavía en
-          un dominio regulado, donde una operación sospechosa que se rechaza al escribir es una
-          operación que después nadie puede auditar.</p>
+        <p>Un almacén que rechaza la escritura te obliga a decidir de antemano qué es imposible, y esa
+          decisión envejece mal.</p>
 
-        <p>La violación, entonces, se registra como un hecho más. Tiene sujeto, tiene la forma que la
-          delata, tiene su momento y tiene un estado con vigencia. Se cuenta con una consulta
-          corriente, se ordena por antigüedad, y se cierra sola cuando el hecho que la causaba se
-          corrige, sin que nadie borre nada.</p>
+        <p>La excepción que nadie previó llega igual. Y el sistema que la rechaza la empuja a un correo,
+          a una hoja aparte, a la memoria de alguien.</p>
+
+        <p>Peor todavía en un sector regulado: una operación sospechosa que se rechaza al escribir es
+          una operación que después nadie puede auditar.</p>
+
+        <p>Así que la violación se registra como un hecho más. Tiene sujeto, tiene la forma que la
+          delata, tiene su momento y tiene un estado con fecha.</p>
+
+        <p>Se cuenta con una consulta corriente, se ordena por antigüedad, y se cierra sola cuando el
+          hecho que la causaba se corrige. Sin que nadie borre nada.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -514,18 +560,20 @@
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Una violación es un hecho sobre un hecho</p>
-          <p style="margin:0">Fíjate en que no hace falta ninguna maquinaria nueva para alojarla. Es
-            una situación reificada, con sus roles, su vigencia y su estado, igual que una venta o un
-            diagnóstico. Y como es un hecho, hereda todo lo que el modelo ya sabe hacer con los
-            hechos: consultarla, fecharla, contarla por periodo y preguntar cuáles seguían abiertas
-            el 30 de junio.</p>
+          <p style="margin:0 0 .7rem">Fíjate en que no hace falta maquinaria nueva para alojarla. Es una
+            situación con sus roles, su vigencia y su estado, igual que una venta o un diagnóstico.</p>
+          <p style="margin:0">Y como es un hecho, hereda todo lo que el modelo ya sabe hacer con los
+            hechos: consultarla, fecharla, contarla por periodo y preguntar cuáles seguían abiertas el
+            30 de junio.</p>
         </div>
 
-        <p>La cardinalidad que acabas de ver hace aquí un trabajo silencioso. Cuando el rol es
-          funcional, el sujeto tiene un solo valor y el evaluador juzga el vigente, así que corregir
-          un dato apaga la violación en lugar de acumular una segunda. Cuando es múltiple, los mira
-          todos. La misma distinción que servía para saber si un cable borra y reemplaza decide
-          también qué se comprueba.</p>
+        <p>La cardinalidad que acabas de ver hace aquí un trabajo silencioso.</p>
+
+        <p>Cuando el cable admite un solo valor, el motor juzga el vigente, así que corregir un dato
+          apaga la violación en vez de acumular una segunda. Cuando admite varios, los mira todos.</p>
+
+        <p>La misma distinción que servía para saber si un cable borra y reemplaza decide también qué
+          se comprueba.</p>
 
         <h2>Cuatro cosas que gana una empresa al unificar</h2>
 
@@ -561,18 +609,22 @@
           </div>
         </div>
 
-        <p>Esa última consecuencia merece subrayarse, porque es el puente hacia toda la Parte&nbsp;IV.
-          Cuando le decimos al sistema <em>«Messi anotó el gol tras la asistencia de
-          Di María»</em>, la máquina registra al goleador, el evento y el asistente usando la misma
-          estructura uniforme. Al no distinguir entre propiedades y relaciones, lee frases humanas casi
-          como si leyera código de máquina.</p>
+        <p>Esa última consecuencia merece subrayarse, porque es el puente hacia toda la
+          Parte&nbsp;IV.</p>
+
+        <p>Cuando le decimos al sistema <em>«Messi anotó el gol tras la asistencia de Di María»</em>,
+          la máquina guarda al goleador, el evento y el asistente con la misma estructura.</p>
+
+        <p>Al no distinguir entre propiedades y relaciones, lee una frase humana casi como si leyera
+          código.</p>
 
         <h2>Tres dominios bajo el microscopio</h2>
 
-        <p>Para asentar el concepto, veamos cómo se reparten los cables funcionales y los múltiples al
-          diseñar tres mundos sin relación entre sí. Fíjate en el patrón: lo que el sentido común
-          considera «atributos estáticos» tiende a ser funcional; lo que son «piezas que se suman»
-          tiende a ser múltiple.</p>
+        <p>Para asentarlo, mira cómo se reparten los cables de un valor y los de varios en tres mundos
+          sin relación entre sí.</p>
+
+        <p>Fíjate en el patrón: lo que el sentido común llama «atributos» tiende a admitir un valor; lo
+          que son «piezas que se suman» tiende a admitir varios.</p>
 
         <h3>La venta del mostrador</h3>
 
@@ -624,40 +676,50 @@ tarjeta      : O → O    M   # decenas de tarjetas</code></pre>
 
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">La trampa de <code>juega</code></p>
-          <p style="margin-bottom:0">El cable <code>juega</code> engaña. Podrías creer que es
-            <strong>funcional</strong> porque el número de equipos en un partido <em>siempre</em> es
-            exactamente dos: un número fijo. Pero es <strong>múltiple</strong>. La regla no trata sobre
-            si el número es fijo o infinito, sino sobre si hay <strong>una única respuesta posible</strong>.
-            Como hay dos respuestas legítimas para el mismo partido (Argentina <em>y</em>
-            Perú), matemáticamente el cable es múltiple. «Fijo en dos» no es lo mismo que «único».</p>
+          <p>El cable <code>juega</code> engaña. Podrías creer que admite un solo valor porque el
+            número de equipos en un partido siempre es exactamente dos.</p>
+          <p>Pero admite varios. La regla no trata de si el número es fijo o infinito, sino de si hay
+            <strong>una única respuesta posible</strong>.</p>
+          <p style="margin-bottom:0">Como hay dos respuestas legítimas para el mismo partido
+            (Argentina <em>y</em> Perú), el cable es múltiple. «Fijo en dos» no es lo mismo que
+            «único».</p>
         </div>
 
         <h2>Trampa de programación: la relación disfrazada de columna</h2>
 
-        <p>Hay un error que parece inocente y se paga carísimo al escalar: modelar una relación como
-          una <strong>columna</strong> de la tabla. La directora <code>serra</code> tiene un teléfono,
-          así que el sistema crea una columna <code>telefono</code>. Funciona —hasta el día en que
-          alguien tiene dos números—. Entonces empieza el parche: <code>telefono2</code>,
-          <code>telefono_alt</code>, un campo de texto con comas, una tablita improvisada a las apuradas.
-          La columna había asumido, sin decirlo, una <strong>cardinalidad</strong> (un solo valor) que
-          el mundo no respeta.</p>
+        <p>Hay un error que parece inocente y se paga carísimo al crecer: modelar una relación como una
+          <strong>columna</strong> de la tabla.</p>
+
+        <p>La directora <code>serra</code> tiene un teléfono, así que el sistema crea una columna
+          <code>telefono</code>. Funciona hasta el día en que alguien tiene dos números.</p>
+
+        <p>Entonces empieza el parche: <code>telefono2</code>, <code>telefono_alt</code>, un campo de
+          texto con comas, una tablita improvisada a las apuradas.</p>
+
+        <p>La columna había dado por hecho, sin decirlo, que el valor era único. Y el mundo no lo
+          respeta.</p>
 
         <p>El eje M evita el problema de raíz: pone la cardinalidad <strong>en la signatura del
-          predicado</strong>, no en la forma de la tabla. <code>telefono</code> se declara de antemano
-          como funcional (un valor) o múltiple (varios), y el modelo lo respeta sin rediseños. Pasar de
-          «un teléfono» a «muchos» deja de ser una migración de tabla y se vuelve cambiar una marca en
-          M (de P a M). Distinguir «tener un atributo» de «estar relacionado con algo» deja de ser una
-          decisión rígida de esquema y pasa a ser un dato más: un cable con su cardinalidad escrita en
-          la firma.</p>
+          cable</strong>, no en la forma de la tabla.</p>
+
+        <p><code>telefono</code> se declara de antemano como de un valor o de varios, y el modelo lo
+          respeta sin rediseños. Pasar de «un teléfono» a «muchos» deja de ser una migración y se vuelve
+          cambiar una marca.</p>
+
+        <p>Distinguir «tener un atributo» de «estar relacionado con algo» deja de ser una decisión
+          rígida de esquema y pasa a ser un dato más.</p>
 
         <h2>Un cable especial: <code>parte_de</code> y la puerta a las situaciones</h2>
 
-        <p>Antes de cerrar la Parte&nbsp;II hace falta presentar un predicado que merece trato aparte,
-          porque será una bisagra del resto del libro. Hasta aquí hemos tratado cada hecho como un
-          punto suelto. Pero el mundo no viene en puntos sueltos: viene en escenas. El gol de Messi
-          no flota en el vacío —ocurre <em>dentro</em> de un partido—. La escena 42 no es una isla
-          —es una pieza <em>de</em> la película <code>pelicula_marea</code>—. El acto de cobrar la
-          venta pertenece <em>a</em> la jornada de caja de toda la mañana.</p>
+        <p>Antes de cerrar la Parte&nbsp;II hay que presentar un cable que merece trato aparte, porque
+          será bisagra del resto del libro.</p>
+
+        <p>Hasta aquí hemos tratado cada hecho como un punto suelto. Pero el mundo no viene en puntos
+          sueltos. Viene en escenas.</p>
+
+        <p>El gol de Messi no flota en el vacío: ocurre <em>dentro</em> de un partido. La escena 42 no
+          es una isla: es una pieza <em>de</em> la película. El acto de cobrar la venta pertenece
+          <em>a</em> la jornada de caja de toda la mañana.</p>
 
         <p>Ese vínculo de pertenencia tiene su propio cable. Es un predicado múltiple, de objeto a
           objeto, y lo llamamos <code>parte_de</code>:</p>
@@ -681,25 +743,28 @@ tarjeta      : O → O    M   # decenas de tarjetas</code></pre>
         </aside>
 
         <p>Lo notable de <code>parte_de</code> no es su forma (es un cable múltiple corriente), sino lo
-          que <strong>habilita</strong>. Cuando muchos hechos pequeños cuelgan, por este predicado, de
-          un mismo hecho contenedor, ese contenedor deja de ser un objeto cualquiera y se convierte en
-          una <strong>situación</strong>: un marco amplio dentro del cual ocurren eventos
-          interconectados. El partido entero, el rodaje completo, la jornada de caja. Es la
-          entidad <em>compuesta</em> que vimos asomar al hablar del eje <em>qué</em>, y que ahora tiene
+          que <strong>permite</strong>.</p>
+
+        <p>Cuando muchos hechos pequeños cuelgan de un mismo hecho contenedor, ese contenedor deja de
+          ser un objeto cualquiera y se convierte en una <strong>situación</strong>: un marco amplio
+          dentro del cual ocurren eventos conectados.</p>
+
+        <p>El partido entero. El rodaje completo. La jornada de caja.</p>
+
+        <p>Es la entidad <em>compuesta</em> que asomó al hablar del eje <em>qué</em>, y que ahora tiene
           el cable que la ensambla.</p>
 
-        <p>Por eso <code>parte_de</code> es un <strong>subobjeto contingente</strong>: la pieza existe
-          en función del todo. Y por eso este predicado es el puente entre lo que hemos hecho hasta
-          ahora (hechos atómicos, sueltos) y lo que viene en la <a href="09-situaciones.html">Parte
-          III</a>: las situaciones, los contextos y la agencia. Dejamos puesto el cable; en la sala de
-          máquinas lo veremos sostener escenas enteras.</p>
+        <p>Por eso <code>parte_de</code> crea piezas que existen en función del todo. Y por eso es el
+          puente entre lo que hemos hecho (hechos sueltos) y lo que viene en la
+          <a href="09-situaciones.html">Parte III</a>: las situaciones, los contextos y la agencia.</p>
+
+        <p>Dejamos puesto el cable. En la sala de máquinas lo veremos sostener escenas enteras.</p>
 
         <h2>Cierre de la Parte II: el tablero está listo</h2>
 
         <p>Con la formalización del eje <em>cómo</em>, terminamos de armar el andamiaje del modelo. El
           inventario de las siete coordenadas queda oficialmente cerrado:</p>
 
-        <div class="columnas">
           <p><span class="eje-rotulo"><span class="eje eje--q">Q</span> quién</span>: las personas y
             agentes que actúan.<br>
             <span class="eje-rotulo"><span class="eje eje--o">O</span> qué</span>: los objetos físicos,
@@ -713,13 +778,14 @@ tarjeta      : O → O    M   # decenas de tarjetas</code></pre>
             categorías: tipos, unidades, estados, vocabularios.<br>
             <span class="eje-rotulo"><span class="eje eje--m">M</span> cómo</span>: los cables o
             predicados que conectan los ejes de valor, funcionales (P) o múltiples (M).</p>
-        </div>
 
-        <p>Seis cajas gigantes para guardar «cosas», entrelazadas por una red de cables estructurales
-          (el eje <em>cómo</em>). Cualquier fenómeno, suceso, registro bancario o reporte médico que
-          ocurra en el mundo cabe, sin distorsiones, dentro de esta matriz de siete ejes. Cumplimos la
-          promesa con la que abrió el libro: el universo de los datos puede mapearse usando únicamente
-          las preguntas fundamentales del cerebro humano.</p>
+        <p>Seis cajas gigantes para guardar cosas, entrelazadas por una red de cables.</p>
+
+        <p>Cualquier suceso, registro bancario o informe médico del mundo cabe, sin deformarse, dentro
+          de esta rejilla de siete ejes.</p>
+
+        <p>Es la promesa con la que abrió el libro: el universo de los datos se puede mapear usando solo
+          las preguntas de siempre.</p>
 
         <aside class="nota-margen">
           <span class="etq">El universo V</span>
@@ -728,27 +794,32 @@ tarjeta      : O → O    M   # decenas de tarjetas</code></pre>
           frente a M, que son los cables y no los valores.
         </aside>
 
-        <p>Conviene dejar nombrada una abreviatura que hará falta más adelante. Al conjunto de esas
-          seis cajas de valor (Q, O, L, T, N, K tomadas juntas) lo llamamos <strong>V</strong>, el
-          <em>universo de valores</em>. Lo nombramos desde ya porque cuando un predicado no se ate a un
-          eje concreto, sino que admita <em>cualquiera</em> de los seis, diremos que su dominio o su
-          rango es V. Lo veremos al definir las signaturas con todo rigor, en el
-          <a href="13-verbo.html">Capítulo 13</a>.</p>
+        <p>Conviene dejar puesto un nombre que hará falta más adelante.</p>
+
+        <p>Al conjunto de esas seis cajas (Q, O, L, T, N, K juntas) lo llamamos <strong>V</strong>, el
+          universo de valores.</p>
+
+        <p>Lo nombramos desde ya porque, cuando un cable no se ate a un eje concreto y admita
+          <em>cualquiera</em> de los seis, diremos que su origen o su destino es V. Lo veremos con rigor
+          en el <a href="13-verbo.html">capítulo 13</a>.</p>
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Idea clave</p>
-          <p style="margin:0;font-size:1.05rem">Con los seis ejes de valor llenamos el universo de
-            cosas; con el séptimo (los predicados) lo conectamos. Y al examinar de cerca esos enlaces
-            descubrimos que «propiedad» y «relación» nunca fueron dos especies distintas, sino el mismo
-            cable tipado bajo dos cardinalidades.</p>
+          <p style="margin:0 0 .7rem;font-size:1.05rem">Con los seis ejes de valor llenamos el universo
+            de cosas. Con el séptimo lo conectamos.</p>
+          <p style="margin:0;font-size:1.05rem">Y al mirar de cerca esos enlaces descubrimos que
+            «propiedad» y «relación» nunca fueron dos especies distintas. Son el mismo cable, con
+            distinto número de destinos.</p>
         </div>
 
-        <p>Pero tener el plano del motor en la mano no es lo mismo que encenderlo. Hasta aquí vimos los
-          ejes por separado, como piezas sueltas de un reloj. Antes de armarlo y verlo girar, conviene
-          cerrar una pregunta que dejamos abierta en el primer capítulo: <em>¿por qué estas preguntas,
-          y no otras?</em> Es una pausa breve (el próximo capítulo) y enseguida entramos en la etapa
-          operativa: el modelo en movimiento, observando cómo interactúan todos los ejes juntos para
-          estructurar escenarios reales de altísima complejidad.</p>
+        <p>Pero tener el plano del motor no es lo mismo que encenderlo.</p>
+
+        <p>Hasta aquí vimos los ejes por separado, como piezas sueltas de un reloj. Antes de armarlo,
+          conviene cerrar una pregunta que dejamos abierta en el primer capítulo: <em>¿por qué estas
+          preguntas y no otras?</em></p>
+
+        <p>Es una pausa breve, el próximo capítulo. Después entramos en la parte operativa: el modelo en
+          movimiento, con todos los ejes trabajando juntos sobre casos reales.</p>
 
       </div>
     </article>

@@ -56,18 +56,25 @@
 
       <div class="contenido">
 
-        <p class="entrada">Son las 09:40 de un martes en un consultorio de cardiología. La paciente
-          (la misma Gonzales que meses atrás entró por urgencias con una fibrilación) llega ahora a un
-          control de rutina. No hay drama: se sienta, cuenta que duerme mal y que a veces siente el
-          corazón «a destiempo», la doctora le toma la presión, repasa su última analítica, confirma
-          que la hipertensión que arrastra desde el episodio agudo sigue ahí pero algo peor, ajusta
-          la dosis de un fármaco, anota una contraindicación que la paciente no conocía y agenda otro
-          control en treinta días. Quince minutos. Cuando Gonzales sale por la puerta, la cita ya
-          terminó; pero casi nada de lo que importa terminó con ella. El diagnóstico seguirá vigente
-          un año, la prescripción habrá que reevaluarla mes a mes, la alergia recién descubierta
-          deberá gritar cada vez que alguien intente recetarle ese fármaco. Esos quince minutos
-          dejaron un sedimento que un médico distinto, en un hospital distinto, dentro de cinco años,
-          tendrá que poder leer sin ambigüedad. Ese sedimento es el examen de este capítulo.</p>
+        <p class="entrada">Son las 09:40 de un martes en cardiología. Llega Gonzales, la misma que
+          meses atrás entró por urgencias con una fibrilación. Hoy viene a un control de rutina.</p>
+
+        <p>No hay drama. Se sienta y cuenta que duerme mal, que a veces siente el corazón «a
+          destiempo».</p>
+
+        <p>La doctora le toma la presión y repasa su última analítica. La hipertensión sigue ahí, algo
+          peor. Ajusta la dosis de un fármaco. Anota una alergia que la paciente no conocía. Agenda
+          otro control en treinta días.</p>
+
+        <p>Quince minutos. Gonzales sale por la puerta y la cita termina.</p>
+
+        <p>Pero casi nada de lo que importa termina con ella. El diagnóstico seguirá vigente un año.
+          La receta habrá que revisarla cada mes. La alergia recién descubierta tendrá que gritar
+          cada vez que alguien intente recetarle ese fármaco.</p>
+
+        <p>Esos quince minutos dejaron un sedimento. Un médico distinto, en un hospital distinto,
+          dentro de cinco años, tendrá que poder leerlo sin dudas. Ese sedimento es el examen de este
+          capítulo.</p>
 
         <aside class="nota-margen">
           <span class="etq">El cambio de marcha</span>
@@ -76,37 +83,36 @@
           intelectual de cada decisión, y ese peso no caduca cuando termina la cita.
         </aside>
 
-        <p>Hasta aquí, la Parte V ha modelado negocios cuyo corazón es la transacción. Una sesión de
-          spa empieza, termina, se cobra y el mundo sigue girando; un viaje en taxi ocurre, se paga y
-          se archiva. Modelarlos fue, en buena medida, aprender a usar bien las herramientas y luego
-          repetir la fórmula cambiando las palabras del lexicon. La medicina no concede esa comodidad.
-          Una consulta es un evento, sí, pero a nadie le interesa cuánto duró: lo que interesa es el
-          <strong>contenido</strong> que se produjo dentro (un diagnóstico, una receta, una alerta de
-          alergia, un control programado), y ese contenido tiene que vivir mucho más que la cita que
-          lo engendró.</p>
+        <p>Los negocios de esta parte del libro giraban alrededor de la transacción. Una sesión de
+          spa empieza, termina, se cobra. Un viaje en taxi ocurre, se paga, se archiva. Modelarlos fue
+          repetir una fórmula cambiando las palabras.</p>
 
-        <p>Por eso este capítulo cambia de foco. No vamos a presumir de soluciones ya hechas: vamos a
-          mostrar <em>cómo se modela un dominio nuevo desde cero</em>. La medicina es el banco de
-          pruebas perfecto para esa metodología porque es un campo en el que nadie llega con el
-          esquema resuelto: hay que elicitarlo, decisión a decisión, viendo dónde la intuición
-          humana acierta y dónde la rigidez del modelo nos corrige a tiempo.</p>
+        <p>La medicina no concede esa comodidad. Una consulta también es un evento, pero a nadie le
+          importa cuánto duró. Importa lo que se produjo dentro: un diagnóstico, una receta, una
+          alerta de alergia, un control programado.</p>
+
+        <p>Y ese contenido tiene que vivir mucho más que la cita que lo produjo.</p>
+
+        <p>Por eso este capítulo cambia de foco. Aquí no exhibo una solución terminada, sino
+          <em>cómo se modela un dominio nuevo desde cero</em>.</p>
+
+        <p>La medicina sirve para eso porque nadie llega con el esquema resuelto. Hay que sacarlo a la
+          luz decisión por decisión, viendo dónde acierta la intuición y dónde el modelo nos corrige a
+          tiempo.</p>
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">La pregunta que gobierna el capítulo</p>
           <p style="margin:0">¿Aguanta el modelo un dominio para el que <em>no</em> fue diseñado, sin
-            inventar maquinaria nueva? La apuesta: una consulta médica completa (síntoma, medición,
-            diagnóstico, prescripción y control futuro, con su incertidumbre clínica, su evidencia y
-            su vigencia en el tiempo) cae sobre los mismos siete ejes, las mismas situaciones
-            reificadas y el mismo lexicon que ya conoces. La fricción será mínima. Donde la haya, la
-            mostraré tal cual.</p>
+            inventar maquinaria nueva? La apuesta es que sí. Una consulta médica completa cae sobre
+            los mismos siete ejes y el mismo lexicon que ya conoces, con toda su incertidumbre y su
+            vigencia en el tiempo. Donde haya fricción, la mostraré tal cual.</p>
         </div>
 
         <h2>Cómo se elicita un dominio que no conoces</h2>
 
-        <p>Modelar un dominio nuevo no empieza escribiendo tripletas. Empieza con tres preguntas que
-          uno le hace al negocio, en este orden, antes de tocar el teclado. Son la columna vertebral
-          de la metodología, y conviene enunciarlas porque sirven igual para una clínica que para una
-          aseguradora o una fábrica.</p>
+        <p>Modelar un dominio nuevo no empieza escribiendo tripletas. Empieza con tres preguntas al
+          negocio, en este orden, antes de tocar el teclado. Sirven igual para una clínica que para
+          una aseguradora o una fábrica.</p>
 
         <div class="rejilla-3 revelar">
           <div class="tarjeta">
@@ -130,9 +136,8 @@
           </div>
         </div>
 
-        <p>La tercera pregunta es la más sutil y la dejaremos para el final del capítulo, porque es la
-          que de verdad separa a quien modela bien de quien acumula campos. Por ahora basta con la
-          primera: el evento ancla. En medicina, ese evento es la consulta.</p>
+        <p>La tercera es la más sutil y queda para el final del capítulo. Por ahora basta la primera:
+          el evento ancla. En medicina, ese evento es la consulta.</p>
 
         <h2>La consulta como carpeta maestra</h2>
 
@@ -140,7 +145,6 @@
           médica actúa como una gran carpeta articuladora. Una revisión típica produce cinco piezas
           internas, y conviene nombrarlas como las nombraría el propio médico:</p>
 
-        <div class="columnas">
           <p><b>1 · El síntoma.</b> Lo que dice el paciente, en sus palabras: «duermo mal y siento el
             corazón a destiempo». Subjetivo, fechado, con una intensidad que mañana querremos
             comparar.<br>
@@ -152,7 +156,6 @@
             una vez al día. Tiene un porqué, una finalidad y un control de seguridad.<br>
             <b>5 · El control.</b> El plan a futuro: nueva cita en treinta días. No es algo que pasó,
             sino algo <em>previsto</em>, y el sistema debe saber distinguirlo de lo real.</p>
-        </div>
 
         <p>En el modelo, estas cinco piezas <strong>no son campos de texto</strong> de la consulta.
           Son cinco situaciones reificadas independientes que cuelgan del evento ancla con el viejo y
@@ -175,12 +178,14 @@
 (control_8842    ∈ O,  parte_de,  consulta_8842)</code></pre>
         </div>
 
-        <p>La arquitectura no se inmuta: una entidad grande que contiene un racimo de sub-situaciones,
-          exactamente como la venta del spa contenía sus líneas. Que la consulta merezca reificarse no
-          es un capricho (cumple de sobra las condiciones para volverse situación en <code>O</code>:
-          agrupa varias partes, está fechada, tiene participantes con roles y, sobre todo, otras cosas
-          le harán referencia). Lo que vuelve fascinante a la medicina no es el contenedor, sino el
-          interior de cada pieza.</p>
+        <p>La arquitectura no se inmuta: una entidad grande que contiene un racimo de piezas menores,
+          igual que la venta del spa contenía sus líneas.</p>
+
+        <p>La consulta cumple de sobra las condiciones para volverse situación en <code>O</code>.
+          Agrupa varias partes, está fechada, tiene participantes con roles y, sobre todo, otras cosas
+          le harán referencia.</p>
+
+        <p>Lo interesante de la medicina no es el contenedor. Es el interior de cada pieza.</p>
 
         <aside class="nota-margen">
           <span class="etq">Recordatorio · D4</span>
@@ -290,37 +295,39 @@
 
         <h2>El bache: cuando el eje O se queda corto</h2>
 
-        <p>Aquí apareció la primera fricción real al programar el prototipo de este dominio, y vale la
-          pena contarla porque enseña más que cualquier acierto. La intuición humana, al modelar la
-          medición de presión, dice: «el <em>tema</em> de esta medición es la presión arterial». Y al
-          modelar la receta: «el <em>tema</em> de esta prescripción es el fármaco». Parece obvio.</p>
+        <p>Aquí apareció la primera fricción real al programar este dominio. Vale la pena contarla,
+          porque enseña más que cualquier acierto.</p>
 
-        <p>Pero detente. <strong>«Presión arterial» y «el antihipertensivo» no son objetos físicos con
-          identidad propia.</strong> No puedes guardar «la presión arterial universal» en un cajón:
-          es una <em>magnitud</em>, una categoría teórica. La caja de pastillas que Gonzales compra en la
-          farmacia sí es un objeto del eje <code>O</code> (tiene lote, vencimiento, ubicación), pero
-          el concepto científico del fármaco es una <em>clase</em>, un habitante del eje
-          <code>K</code>. El instinto humano mezcla, sin notarlo, lo físico con lo conceptual.</p>
+        <p>La intuición dice: «el <em>tema</em> de esta medición es la presión arterial». Y con la
+          receta: «el <em>tema</em> de esta prescripción es el fármaco». Parece obvio.</p>
 
-        <p>El catálogo estricto del modelo no se deja engañar. El cable <code>tema</code> tiene una
-          firma que solo admite conectar <code>O</code> con <code>O</code>. Si intento usarlo para
-          apuntar de una medición (en <code>O</code>) hacia la magnitud presión (en <code>K</code>),
-          el sistema aborta con un error de firma y me regaña por mezclar peras con manzanas.</p>
+        <p>Pero detente. <strong>«Presión arterial» y «el antihipertensivo» no son cosas físicas con
+          identidad propia.</strong> No puedes guardar «la presión arterial universal» en un cajón. Es
+          una magnitud, una categoría teórica.</p>
+
+        <p>La caja de pastillas que Gonzales compra en la farmacia sí es un objeto del eje
+          <code>O</code>: tiene lote, vencimiento, ubicación. El concepto científico del fármaco, en
+          cambio, es una clase, un habitante del eje <code>K</code>.</p>
+
+        <p>El instinto mezcla lo físico con lo conceptual sin darse cuenta.</p>
+
+        <p>El catálogo del modelo no se deja engañar. El cable <code>tema</code> solo admite conectar
+          <code>O</code> con <code>O</code>. Si intento apuntar de una medición (en <code>O</code>)
+          hacia la magnitud presión (en <code>K</code>), el sistema aborta y me regaña por mezclar
+          peras con manzanas.</p>
 
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">El modelo se niega a aceptar el disparate</p>
           <p style="margin:0">Conectar una situación de <code>O</code> con una clase de <code>K</code>
-            usando un cable cuya firma exige <code>O→O</code> lanza un <code>SignatureError</code>.
-            No es un estorbo: es la frontera que impide que un dato mal tipado entre al grafo. El
-            error no estaba en el modelo; estaba en mi cabeza, que confunde el objeto concreto con la
-            idea abstracta todo el tiempo. La rigidez de las matemáticas me salvó de un desastre
-            semántico que más tarde habría confundido a cualquier máquina que leyera el expediente.</p>
+            usando un cable que exige <code>O→O</code> lanza un <code>SignatureError</code>. No es un
+            estorbo: es la frontera que impide que un dato mal puesto entre al grafo. El error no
+            estaba en el modelo, sino en mi cabeza, que confunde el objeto concreto con la idea
+            abstracta.</p>
         </div>
 
-        <p>¿La salida? No forzar el cable genérico, sino declarar <em>cables de dominio</em>: roles
-          propios de la medicina, diseñados de fábrica para apuntar hacia el eje <code>K</code>. Son
-          parte de la elicitación: cada industria muy técnica reclama un puñado de cables exclusivos
-          para sus conceptos abstractos.</p>
+        <p>La salida no es forzar el cable genérico. Es declarar <em>cables de dominio</em>: roles
+          propios de la medicina, hechos para apuntar hacia el eje <code>K</code>. Cada industria muy
+          técnica reclama un puñado de cables exclusivos para sus conceptos abstractos.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -359,12 +366,14 @@ u.assert_fact(prescrip_8842, "medicamento_prescrito", antihipertensivo) # O → 
 
         <h3>1 · El nivel de duda</h3>
 
-        <p>Un diagnóstico casi nunca es una verdad tallada en piedra: es lo que la doctora
-          <em>cree</em> en ese instante, con la evidencia que tiene. Para no perder esa incertidumbre
-          clínica, decoramos la situación con su modalidad epistémica y un estado factual que puede
-          ser <em>sospechado</em>, <em>confirmado</em> o <em>descartado</em>. La diferencia entre
-          «sospecho una arritmia» y «confirmo una arritmia» no es un matiz de prosa: cambia qué se
-          puede recetar y qué hay que vigilar.</p>
+        <p>Un diagnóstico casi nunca es una verdad tallada en piedra. Es lo que la doctora
+          <em>cree</em> en ese instante, con la evidencia que tiene.</p>
+
+        <p>Para no perder esa duda clínica, marcamos la situación con su grado de certeza: puede ser
+          <em>sospechado</em>, <em>confirmado</em> o <em>descartado</em>.</p>
+
+        <p>La diferencia entre «sospecho una arritmia» y «confirmo una arritmia» no es un matiz de
+          prosa. Cambia qué se puede recetar y qué hay que vigilar.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -372,37 +381,40 @@ u.assert_fact(prescrip_8842, "medicamento_prescrito", antihipertensivo) # O → 
 (diag_hta_8842, estatus_factual, confirmado)    # K · sospechado | confirmado | descartado</code></pre>
         </div>
 
-        <p>Esta es la misma distinción que en el spa separaba la venta real de la mera intención de
-          compra, o que en banca separa una solicitud de un préstamo desembolsado. Que un dato pueda
-          ser «todavía no seguro» sin por eso ser falso es una necesidad que aparece en cada dominio
-          serio.</p>
+        <p>Es la misma distinción que en el spa separaba la venta real de la simple intención de
+          compra. Que un dato pueda ser «todavía no seguro» sin ser falso hace falta en cualquier
+          dominio serio.</p>
 
         <h3>2 · La evidencia</h3>
 
-        <p>Un diagnóstico no nace de la nada: nace de los números. Si la doctora escribe
-          «hipertensión», es porque vio la medición de presión. Esa conexión de causa y efecto no se
-          pierde en un comentario: se ata con un cable causal. Tal como argumentó el capítulo del
-          «por qué», no hay un eje «por qué»; el porqué se reparte en cables distintos, y aquí el que
-          corresponde es el que apunta a la <em>razón</em> que motivó la conclusión.</p>
+        <p>Un diagnóstico no nace de la nada. Nace de los números. Si la doctora escribe
+          «hipertensión», es porque vio la medición de presión.</p>
+
+        <p>Esa conexión no se guarda en un comentario. Se ata con un cable. Como vimos al hablar del
+          «por qué», no hay un eje para eso: el porqué se reparte en cables distintos, y aquí toca el
+          que apunta a la <em>razón</em> de la conclusión.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
           <pre><code data-lang="triple">(diag_hta_8842, motivado_por, medicion_8842)   # M · la medición es la evidencia</code></pre>
         </div>
 
-        <p>Con ese único cable, la medición deja de ser un número flotando y se vuelve la
-          <strong>evidencia</strong> del diagnóstico. Si un auditor médico o una máquina revisan el
-          expediente y preguntan «¿en qué se basó este diagnóstico?», la respuesta no exige
-          interpretar prosa: se lee siguiendo el cable. La justificación viaja con el dato.</p>
+        <p>Con ese cable, la medición deja de ser un número suelto y pasa a ser la
+          <strong>evidencia</strong> del diagnóstico.</p>
+
+        <p>Si un auditor médico revisa el expediente y pregunta «¿en qué se basó esto?», nadie tiene
+          que interpretar prosa. Se lee siguiendo el cable. La justificación viaja con el dato.</p>
 
         <h3>3 · El viaje en el tiempo</h3>
 
-        <p>Esta es la dimensión que separa el software hospitalario de verdad del software de juguete.
-          Los diagnósticos caducan y mutan. Supongamos que tras el episodio agudo, en marzo, a Gonzales se
-          le asignó hipertensión de grado&nbsp;1. En esta consulta de junio la doctora confirma que
-          empeoró: ahora es grado&nbsp;2. Si se reescribiera el diagnóstico viejo encima del nuevo, se
-          borraría la historia del paciente —un crimen, no solo de negligencia clínica, sino de
-          imposibilidad forense—.</p>
+        <p>Aquí se separa el software hospitalario de verdad del de juguete. Los diagnósticos caducan
+          y cambian.</p>
+
+        <p>Tras el episodio agudo, en marzo, a Gonzales le asignaron hipertensión de grado&nbsp;1. En
+          esta consulta de junio la doctora confirma que empeoró: ahora es grado&nbsp;2.</p>
+
+        <p>Si el sistema escribiera el diagnóstico nuevo encima del viejo, borraría la historia de la
+          paciente. Eso no es solo mala medicina. Deja el caso sin manera de reconstruirse.</p>
 
         <p>La regla de vigencia entra a salvarnos. No se sobrescribe nada: se guardan <strong>ambos</strong>
           diagnósticos, cada uno con su rango de validez, y se los conecta para que la cronología sea
@@ -430,11 +442,11 @@ u.assert_fact(diag_hta_8842, "diagnostico_asignado", hta_grado_2,
 u.assert_fact(diag_hta_8842, "rectifica", diag_marzo)   # M · este corrige a aquel</code></pre>
         </div>
 
-        <p>El premio de modelarlo así es una capacidad forense que viene de fábrica. Si mañana hay una
-          demanda y el juez pregunta <em>«¿qué sabía el hospital sobre este paciente en abril?»</em>,
-          la base de datos no devuelve el estado de hoy: devuelve exactamente la verdad clínica que
-          regía en abril (grado&nbsp;1), ignorando todo lo que se supo después. Una consulta con un
-          filtro temporal basta.</p>
+        <p>El premio viene de fábrica. Si mañana hay una demanda y el juez pregunta <em>«¿qué sabía el
+          hospital sobre este paciente en abril?»</em>, la base no devuelve el estado de hoy.</p>
+
+        <p>Devuelve la verdad clínica que regía en abril, grado&nbsp;1, ignorando todo lo que se supo
+          después. Basta una consulta con un filtro de fecha.</p>
 
         <!-- FIGURA SVG 2: la vigencia del diagnóstico en el tiempo (D6) -->
         <figure class="figura figura--ancha revelar">
@@ -494,10 +506,9 @@ u.assert_fact(diag_hta_8842, "rectifica", diag_marzo)   # M · este corrige a aq
 
         <h2>La prescripción y la tormenta de los porqués</h2>
 
-        <p>Cuando la doctora ajusta el fármaco, se activan a la vez varias de las fuerzas causales que
-          el modelo distingue. Una receta no es un dato suelto: es una decisión con un motivo, una
-          finalidad y un control de seguridad, y el modelo guarda cada uno en su propio cable en lugar
-          de fundirlos en un comentario.</p>
+        <p>Cuando la doctora ajusta el fármaco se activan varias fuerzas causales a la vez. Una receta
+          no es un dato suelto. Es una decisión con un motivo, un objetivo y un control de seguridad, y
+          el modelo guarda cada uno en su propio cable.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -517,19 +528,19 @@ u.assert_fact(pres, "con_finalidad",     meta_presion_objetivo) # ← para qué 
 u.assert_fact(pres, "verificado_contra", regla_renal_alerta)    # ← qué ley clínica la valida</code></pre>
         </div>
 
-        <p>Tres respuestas profundas a tres preguntas distintas. La doctora no receta por gusto: lo
-          hace <em>motivada</em> por el diagnóstico, <em>con la finalidad</em> de llevar la presión a
-          una meta, y <em>verificando</em> contra un manual de farmacología que el ajuste no dañe los
-          riñones de un paciente que ya viene comprometido. Tres cables, tres porqués, ningún campo
-          de texto ambiguo.</p>
+        <p>Tres respuestas a tres preguntas distintas. La doctora no receta por gusto: lo hace
+          <em>motivada</em> por el diagnóstico, <em>con la finalidad</em> de bajar la presión a una
+          meta, y <em>verificando</em> que el ajuste no dañe unos riñones que ya vienen tocados.</p>
+
+        <p>Tres cables, tres porqués, ningún campo de texto ambiguo.</p>
 
         <div class="caja caja--definicion revelar">
           <p class="caja-tit">Contraindicación como objeto, no como código</p>
           <p style="margin:0">La regla de seguridad (<em>«no combinar este fármaco con tal condición
-            renal»</em>) no es una línea escondida en el código de la aplicación. Es un evento
-            reificado más en el eje <code>O</code>, con su clase, su fármaco implicado, su condición
-            disparadora y su orden. Como cualquier norma, tiene autor y fecha de vigencia. Vive en el
-            grafo, a la vista, y por eso es auditable.</p>
+            renal»</em>) no está escondida en el código de la aplicación. Es una situación más en el
+            eje <code>O</code>, con su clase, su fármaco implicado, su condición disparadora y su
+            orden. Como cualquier norma, tiene autor y fecha de vigencia, y vive en el grafo a la
+            vista de todos.</p>
         </div>
 
         <div class="bloque-codigo">
@@ -543,21 +554,24 @@ u.assert_fact(pres, "verificado_contra", regla_renal_alerta)    # ← qué ley c
   emitida_por         : guia_cardiologia_nacional    # Q · qué autoridad la dicta</code></pre>
         </div>
 
-        <p>Con la regla viviendo en el grafo, la base de datos se vuelve inteligente sin volverse
-          rígida. Cuando la doctora presiona «recetar», un motor externo (o una IA) escanea el grafo,
-          encuentra esta norma, comprueba la función renal del paciente y, si hace falta, levanta una
-          alerta antes de que el daño ocurra. El grafo guarda la verdad; la lógica que la aplica vive
-          afuera. Esa separación es deliberada, igual que en el spa: el modelo no <em>ejecuta</em> la
-          regla de negocio, la deja <em>legible</em> para que quien la ejecute no se equivoque.</p>
+        <p>Con la regla dentro del grafo, la base se vuelve lista sin volverse rígida.</p>
+
+        <p>Cuando la doctora pulsa «recetar», un motor externo (o una IA) recorre el grafo, encuentra
+          la norma, comprueba la función renal del paciente y levanta una alerta antes de que ocurra el
+          daño.</p>
+
+        <p>El grafo guarda la verdad. La lógica que la aplica vive afuera. Esa separación es
+          deliberada, igual que en el spa: el modelo no <em>ejecuta</em> la regla de negocio, la deja
+          <em>legible</em> para que quien la ejecute no se equivoque.</p>
 
         <h2>El control futuro: cuando el dato aún no es real</h2>
 
-        <p>La quinta pieza, el control a treinta días, parece trivial y esconde una sutileza
-          importante. Todavía no ocurrió: es un plan. Si el sistema lo guardara como un hecho
-          consumado, contaminaría cualquier informe (contaríamos como «atendida» una cita que no
-          existe). El modelo lo marca como <em>previsto</em>, no como <em>real</em>, exactamente con la
-          misma maquinaria de modalidad que usamos para el diagnóstico sospechado o para la intención
-          de compra del spa.</p>
+        <p>La quinta pieza, el control a treinta días, parece trivial y esconde algo importante.
+          Todavía no ocurrió: es un plan. Si el sistema lo guardara como hecho consumado, ensuciaría
+          cualquier informe. Contaríamos como «atendida» una cita que no existe.</p>
+
+        <p>El modelo lo marca como <em>previsto</em>, no como <em>real</em>, con la misma maquinaria
+          que usamos para el diagnóstico sospechado.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -570,21 +584,24 @@ u.assert_fact(pres, "verificado_contra", regla_renal_alerta)    # ← qué ley c
   motivado_por    : diag_hta_8842        # M · se controla esta hipertensión</code></pre>
         </div>
 
-        <p>Gracias a ese único rótulo, el sistema responde sin tropezar tanto «¿qué citas tiene Gonzales
-          agendadas?» (donde el control aparece) como «¿cuántos pacientes atendió la doctora en
-          junio?» (donde no aparece, porque aún no sucedió). Lo previsto y lo real conviven en el mismo
-          grafo sin confundirse.</p>
+        <p>Gracias a ese rótulo, el sistema responde sin tropezar a «¿qué citas tiene Gonzales
+          agendadas?», donde el control aparece, y a «¿cuántos pacientes atendió la doctora en junio?»,
+          donde no aparece porque aún no sucedió. Lo previsto y lo real conviven sin confundirse.</p>
 
         <h2>La historia clínica como serie temporal</h2>
 
-        <p>Hasta aquí hemos diseccionado <em>una</em> consulta. Pero Gonzales no es una consulta: es una
-          paciente con años de roce con el sistema sanitario. La misma Gonzales que entró por urgencias con
-          una fibrilación, la que en marzo recibió su primer diagnóstico de hipertensión, la que hoy
-          vuelve al control de cardiología, y la que (lo veremos enseguida) pasará unos días ingresada.
-          Su identidad es una sola, cosida con el mismo <code>maria_g</code> que ya recorre la tienda y la
-          clínica; lo que cambia es el rosario de situaciones que cuelgan de ella a lo largo del
-          tiempo. Eso es una <strong>historia clínica</strong>: no un documento, sino una serie
-          temporal de episodios.</p>
+        <p>Hasta aquí hemos diseccionado <em>una</em> consulta. Pero Gonzales no es una consulta. Es
+          una paciente con años de roce con el sistema sanitario.</p>
+
+        <p>La misma que entró por urgencias con una fibrilación. La que en marzo recibió su primer
+          diagnóstico de hipertensión. La que hoy vuelve al control de cardiología. La que dentro de
+          unas páginas pasará unos días ingresada.</p>
+
+        <p>Su identidad es una sola, cosida con el mismo <code>maria_g</code> que ya recorre la tienda
+          y la clínica. Lo que cambia es el rosario de situaciones que cuelgan de ella con los años.</p>
+
+        <p>Eso es una <strong>historia clínica</strong>: no un documento, sino una fila de episodios en
+          el tiempo.</p>
 
         <aside class="nota-margen">
           <span class="etq">Una sola identidad</span>
@@ -594,12 +611,13 @@ u.assert_fact(pres, "verificado_contra", regla_renal_alerta)    # ← qué ley c
           urgencias, consulta, ingreso) sin duplicarse jamás.
         </aside>
 
-        <p>En el modelo, la historia no es una tabla con una fila por visita. Es la proyección de todas
-          las situaciones cuyo <code>paciente</code> es <code>maria_g</code>, ordenadas por su eje
-          <code>T</code> y filtradas por la vigencia que cada hecho declara. Cada episodio (una urgencia,
-          una analítica, una consulta, un ingreso) es una situación reificada más en <code>O</code> que
-          referencia al mismo paciente y se sitúa en el tiempo. Recuperar «la historia de Gonzales» es
-          barrer el grafo por ese nodo y leer la cinta cronológica.</p>
+        <p>En el modelo, la historia no es una tabla con una fila por visita. Es el conjunto de todas
+          las situaciones cuyo <code>paciente</code> es <code>maria_g</code>, puestas en orden por el
+          eje <code>T</code> y filtradas por la vigencia que cada hecho declara.</p>
+
+        <p>Cada episodio (una urgencia, una analítica, una consulta, un ingreso) es una situación más
+          en <code>O</code> que apunta al mismo paciente. Recuperar «la historia de Gonzales» es barrer
+          el grafo por ese nodo y leer la cinta.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -614,13 +632,18 @@ u.assert_fact(pres, "verificado_contra", regla_renal_alerta)    # ← qué ley c
 historia = u.timeline(maria_g, valid_at="2026-06-19")</code></pre>
         </div>
 
-        <p>La clave es que esa cinta es <strong>bitemporal</strong>: no solo registra <em>cuándo</em>
-          ocurrió cada episodio (el tiempo del eje <code>T</code>), sino <em>desde cuándo y hasta cuándo
-          se tuvo por cierta</em> cada afirmación clínica. Es la misma vigencia (D6) que salvó al
-          diagnóstico de pisarse a sí mismo, ahora aplicada a la historia entera. Por eso podemos
-          preguntar dos cosas distintas: «¿qué le pasó a Gonzales en abril?» (un corte por el tiempo del
-          hecho) y «¿qué <em>creía saber</em> el hospital sobre Gonzales en abril?» (un corte por el tiempo
-          del registro). Un expediente de juguete confunde ambas; el grafo las distingue de fábrica.</p>
+        <p>Esa cinta lleva dos tiempos a la vez. Registra <em>cuándo</em> ocurrió cada episodio, en el
+          eje <code>T</code>, y también <em>desde cuándo y hasta cuándo se tuvo por cierta</em> cada
+          afirmación clínica.</p>
+
+        <p>Es la misma vigencia (D6) que salvó al diagnóstico de pisarse a sí mismo, ahora aplicada a
+          la historia entera.</p>
+
+        <p>Por eso caben dos preguntas distintas. «¿Qué le pasó a Gonzales en abril?» corta por el
+          tiempo del hecho. «¿Qué <em>creía saber</em> el hospital sobre Gonzales en abril?» corta por
+          el tiempo del registro.</p>
+
+        <p>Un expediente de juguete confunde las dos. El grafo las separa de fábrica.</p>
 
         <!-- FIGURA SVG 4: línea de tiempo de la historia clínica longitudinal -->
         <figure class="figura figura--ancha revelar">
@@ -694,20 +717,24 @@ historia = u.timeline(maria_g, valid_at="2026-06-19")</code></pre>
 
         <h2>La hospitalización: una situación-marco que contiene eventos</h2>
 
-        <p>El control de hoy detectó algo que no tranquiliza: la presión no cede y la paciente refiere
-          mareos. La doctora decide ingresarla unos días para vigilancia. Y aquí aparece una estructura
-          que la consulta ya insinuó pero que el ingreso lleva al extremo: una <strong>situación-marco
-          que contiene a otras</strong>. Si la consulta era una carpeta de cinco piezas, la
-          hospitalización es una <em>carpeta de carpetas</em>, una caja con paredes de tiempo dentro de
-          la cual ocurren decenas de eventos menudos (admisión, asignación de cama, signos vitales cada
-          turno, rondas médicas, cada dosis administrada, la evolución diaria) hasta que se cierra con
-          el alta.</p>
+        <p>El control de hoy detectó algo que no tranquiliza: la presión no cede y la paciente tiene
+          mareos. La doctora decide ingresarla unos días para vigilancia.</p>
 
-        <p>El instinto erróneo sería crear una tabla <code>hospitalizaciones</code> con columnas para
-          «cama», «fecha de alta» y un campo de texto «notas». El modelo no necesita nada de eso. El
-          ingreso es una situación más en <code>O</code>, con su propio identificador fresco, y todo lo
-          que ocurre dentro le cuelga con el mismo cable de siempre: <code>parte_de</code>. La
-          hospitalización no es un registro: es un <em>contenedor</em>.</p>
+        <p>Aparece entonces una estructura que la consulta ya insinuaba y que el ingreso lleva al
+          extremo: una <strong>situación-marco que contiene a otras</strong>.</p>
+
+        <p>Si la consulta era una carpeta de cinco piezas, la hospitalización es una carpeta de
+          carpetas. Una caja con paredes de tiempo, dentro de la cual ocurren decenas de eventos
+          menudos: admisión, asignación de cama, signos vitales cada turno, rondas médicas, cada dosis,
+          la evolución diaria. Hasta que se cierra con el alta.</p>
+
+        <p>El instinto equivocado sería crear una tabla <code>hospitalizaciones</code> con columnas
+          para «cama», «fecha de alta» y un campo de texto «notas». El modelo no necesita nada de
+          eso.</p>
+
+        <p>El ingreso es una situación más en <code>O</code>, con su propio identificador, y todo lo
+          que ocurre dentro le cuelga con el cable de siempre: <code>parte_de</code>. La
+          hospitalización no es un registro. Es un <em>contenedor</em>.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -729,12 +756,15 @@ historia = u.timeline(maria_g, valid_at="2026-06-19")</code></pre>
 (alta_9120,        ∈ O,  parte_de,  ingreso_9120)   # T: 17 jun, cierre del marco</code></pre>
         </div>
 
-        <p>Fíjate en la cama: <code>cama_4b_307</code> es un objeto físico en <code>O</code> (tiene
-          ubicación, ocupación, mantenimiento), no una etiqueta. Que el ingreso la referencie por
-          <code>L</code>/<code>O</code> y no la copie como texto es lo que permite responder «¿qué camas
-          están libres en cardiología ahora mismo?» sin inventar otra tabla. El servicio
-          (<code>cardiologia</code>), en cambio, es una clase en <code>K</code>: no se interroga su
-          identidad, se usa como categoría.</p>
+        <p>Fíjate en la cama. <code>cama_4b_307</code> es un objeto físico en <code>O</code>, no una
+          etiqueta: tiene ubicación, ocupación, mantenimiento.</p>
+
+        <p>Que el ingreso la señale por <code>L</code>/<code>O</code> en vez de copiarla como texto es
+          lo que permite responder «¿qué camas están libres en cardiología ahora mismo?» sin inventar
+          otra tabla.</p>
+
+        <p>El servicio (<code>cardiologia</code>) es otra cosa: una clase en <code>K</code>. Nadie
+          pregunta por su identidad; se usa como categoría.</p>
 
         <aside class="nota-margen">
           <span class="etq">El marco también caduca · D6</span>
@@ -745,9 +775,11 @@ historia = u.timeline(maria_g, valid_at="2026-06-19")</code></pre>
         </aside>
 
         <p>El premio de modelar el ingreso como marco es que cada evento interior conserva su contexto
-          sin repetirlo. La dosis administrada el 14 de junio no necesita arrastrar «paciente Gonzales,
-          servicio cardiología, cama 307»: todo eso se hereda subiendo por <code>parte_de</code> hasta
-          el marco. La trazabilidad es estructural, no copiada.</p>
+          sin repetirlo. La dosis del 14 de junio no arrastra «paciente Gonzales, servicio cardiología,
+          cama 307».</p>
+
+        <p>Todo eso se hereda subiendo por <code>parte_de</code> hasta el marco. La trazabilidad es
+          estructural, no copiada.</p>
 
         <!-- FIGURA SVG 5: la hospitalización como contenedor de eventos en el tiempo -->
         <figure class="figura figura--ancha revelar">
@@ -814,21 +846,27 @@ historia = u.timeline(maria_g, valid_at="2026-06-19")</code></pre>
 
         <h2>El enlace con la farmacia interna: prescripción, dispensación, administración</h2>
 
-        <p>Hay un eslabón que el software hospitalario de juguete casi siempre rompe: lo que la doctora
-          <em>receta</em> no es lo que el paciente <em>recibe</em>. Entre la prescripción y el cuerpo de
-          Gonzales hay una cadena de custodia que cruza el módulo clínico con el de farmacia, exactamente
-          como en un ERP el módulo de ventas conversa con el de inventario. Tres situaciones distintas,
-          encadenadas, cada una con su autor y su momento: la <strong>prescripción</strong> (la doctora
-          ordena), la <strong>dispensación</strong> (la farmacia entrega un lote concreto) y la
-          <strong>administración</strong> (la enfermería lo aplica al paciente).</p>
+        <p>Hay un eslabón que el software hospitalario de juguete casi siempre rompe: lo que la
+          doctora <em>receta</em> no es lo que el paciente <em>recibe</em>.</p>
+
+        <p>Entre la receta y el cuerpo de Gonzales hay una cadena de custodia que cruza el módulo
+          clínico con el de farmacia, igual que en un ERP el de ventas conversa con el de
+          inventario.</p>
+
+        <p>Son tres situaciones encadenadas, cada una con su autor y su momento: la
+          <strong>prescripción</strong>, donde la doctora ordena; la <strong>dispensación</strong>,
+          donde la farmacia entrega un lote concreto; y la <strong>administración</strong>, donde la
+          enfermería se lo aplica al paciente.</p>
 
         <p>El detalle que lo cambia todo es el <em>lote</em>. La farmacia no entrega «el
-          antihipertensivo» (un concepto en <code>K</code>); entrega una caja física de un lote
-          concreto, con su vencimiento y su trazabilidad, igual que en minería un saco de mineral
-          arrastra su lote de origen. Si mañana ese lote se retira por un defecto de fabricación, el
-          grafo debe poder responder en segundos: «¿a qué pacientes se les administró algo de este
-          lote?». Esa pregunta solo tiene respuesta si el lote es un objeto en <code>O</code>, no un
-          texto en un comentario.</p>
+          antihipertensivo», que es un concepto en <code>K</code>. Entrega una caja física con su
+          vencimiento y su rastro, igual que en minería un saco de mineral arrastra su origen.</p>
+
+        <p>Si mañana retiran ese lote por un defecto de fabricación, el grafo tiene que responder en
+          segundos: «¿a qué pacientes se les administró algo de este lote?».</p>
+
+        <p>Esa pregunta solo tiene respuesta si el lote es un objeto en <code>O</code> y no un texto en
+          un comentario.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -859,10 +897,11 @@ historia = u.timeline(maria_g, valid_at="2026-06-19")</code></pre>
         </div>
 
         <p>La cadena se lee de un tirón siguiendo los cables <code>cumple</code>: la administración
-          consume una dispensación, que satisface una prescripción. No hay tablas que cruzar ni claves
-          foráneas que adivinar; la trazabilidad es el propio tejido del grafo. Y como cada eslabón
-          referencia el mismo <code>lote_av2207</code>, la pregunta forense del retiro de lote se
-          contesta con una sola proyección.</p>
+          consume una dispensación, que a su vez satisface una prescripción. No hay tablas que cruzar
+          ni claves que adivinar.</p>
+
+        <p>Y como los tres eslabones apuntan al mismo <code>lote_av2207</code>, la pregunta del retiro
+          se contesta de una sola pasada.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -882,10 +921,10 @@ afectados = u.subjects_where("lote_usado", lote_av2207, role="paciente")
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Cross-módulo sin pegamento</p>
           <p style="margin:0">Clínica y farmacia son «módulos» distintos solo en la cabeza del
-            organigrama. En el grafo son el mismo tejido: la prescripción vive en el módulo clínico, el
-            lote en el de farmacia, y el cable <code>cumple</code> los une sin que nadie escriba código
-            de integración. Es la misma lección que dará el capítulo del ERP, anticipada aquí: la
-            trazabilidad del lote es a la farmacia lo que la del mineral será a la minera.</p>
+            organigrama. En el grafo son el mismo tejido: la receta vive en el módulo clínico, el lote
+            en el de farmacia, y el cable <code>cumple</code> los une sin que nadie escriba código de
+            integración. La trazabilidad del lote es a la farmacia lo que la del mineral será a la
+            minera.</p>
         </div>
 
         <!-- FIGURA SVG 6: la cadena prescripción → dispensación → administración con el lote -->
@@ -946,15 +985,18 @@ afectados = u.subjects_where("lote_usado", lote_av2207, role="paciente")
         <h2>Del paciente a la población</h2>
 
         <p>Todo este capítulo diseccionó a una paciente. Gonzales tiene nombre, una fibrilación en
-          febrero, un diagnóstico que cambió de grado en marzo. Pero quien dirige el hospital rara vez
-          pregunta por Gonzales: pregunta por la población que Gonzales integra. Cuántos pacientes arrastran hoy
-          una hipertensión grado 2, qué diagnóstico encabezó el trimestre, cuántas camas sigue ocupando
-          cardiología esta mañana.</p>
+          febrero, un diagnóstico que empeoró en marzo.</p>
 
-        <p>Y ahí está el dividendo que no se ve mientras modelas: ninguna de esas preguntas pide una
-          tabla nueva. El diagnóstico de Gonzales es una situación más, del mismo tipo que los de los otros
-          mil pacientes, y contar los de un tipo es contarlos a todos a la vez. Diseccionar con cuidado
-          una sola consulta fue, sin proponérnoslo, dejar armado el tablero epidemiológico.</p>
+        <p>Pero quien dirige el hospital rara vez pregunta por Gonzales. Pregunta por la población que
+          ella integra. Cuántos pacientes arrastran hoy una hipertensión grado 2. Qué diagnóstico
+          encabezó el trimestre. Cuántas camas sigue ocupando cardiología esta mañana.</p>
+
+        <p>Y ahí está el premio que no se ve mientras modelas: ninguna de esas preguntas pide una
+          tabla nueva. El diagnóstico de Gonzales es una situación más, del mismo tipo que los de los
+          otros mil pacientes, y contar los de un tipo es contarlos todos a la vez.</p>
+
+        <p>Diseccionar con cuidado una sola consulta dejó armado, sin buscarlo, el tablero
+          epidemiológico.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -965,11 +1007,12 @@ count(u, Pattern(fixed={"diagnostico_asignado": u.ind("hta_grado_2")},
 
         <h2>El lexicon de la clínica</h2>
 
-        <p>Para que la doctora (o el sistema que ella usa) no tenga que aprender jerga de bases de
-          datos, configuramos el lexicon con las palabras exactas de la medicina. El lexicon es el
-          compilador del que habló la Parte&nbsp;IV: traduce el vocabulario humano a los roles
-          canónicos y resuelve la polisemia. El verbo <em>«controlar»</em>, por ejemplo, significa
-          cosas distintas según lo que lo acompañe.</p>
+        <p>Para que la doctora no tenga que aprender jerga de bases de datos, cargamos el lexicon con
+          las palabras exactas de la medicina.</p>
+
+        <p>El lexicon es el traductor del que habló la Parte&nbsp;IV: pasa el vocabulario humano a los
+          roles del catálogo y decide qué significa cada palabra según su compañía. El verbo
+          <em>«controlar»</em>, por ejemplo, quiere decir cosas distintas según lo que lo acompañe.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -988,10 +1031,11 @@ lex.register(LexiconEntry(
 ))</code></pre>
         </div>
 
-        <p>Y le instalamos el dialecto del dominio: un mapa entre las palabras que el personal clínico
-          usa de verdad y las etiquetas canónicas del catálogo. El usuario final nunca toca esas
-          etiquetas internas (el sistema traduce por debajo, exactamente como el spa traducía «IGV» a
-          su clase de impuesto).</p>
+        <p>Y le instalamos el dialecto de la casa: un mapa entre las palabras que el personal clínico
+          usa de verdad y las etiquetas del catálogo.</p>
+
+        <p>El usuario final nunca toca esas etiquetas. El sistema traduce por debajo, igual que el spa
+          traducía «IGV» a su clase de impuesto.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -1005,24 +1049,25 @@ lex.register(LexiconEntry(
 })</code></pre>
         </div>
 
-        <p>Gracias a esto, la doctora puede dictarle al sistema <em>«controlé al paciente, la presión
-          salió alta, le subí la pastilla y lo cito en un mes»</em> y el grafo lo traduce a sus
-          identificadores internos sin que ella sepa que existen. La interfaz es su idioma, no el
-          catálogo (tal como dejó establecido la Parte&nbsp;IV).</p>
+        <p>Gracias a eso, la doctora puede dictar <em>«controlé al paciente, la presión salió alta, le
+          subí la pastilla y lo cito en un mes»</em>, y el grafo lo traduce a sus identificadores sin
+          que ella sepa que existen. La interfaz es su idioma.</p>
 
         <h2>El antes y el después: del expediente fragmentado al grafo único</h2>
 
         <p><b>Antes, en SQL.</b> En un sistema hospitalario típico, el expediente de Gonzales vive
           repartido en cinco o seis tablas que no se hablan solas: <code>pacientes</code>,
           <code>consultas</code>, <code>diagnosticos</code>, <code>prescripciones</code>,
-          <code>contraindicaciones</code> y (si el equipo fue cuidadoso) una tabla
-          <code>diagnostico_historial</code> para versionar los cambios. Cuando la doctora quiere
-          saber si el ajuste que acaba de recetar choca con una contraindicación <em>vigente</em>, el
-          sistema debe cruzar <code>prescripciones</code> con <code>contraindicaciones</code>; y para
-          saber si la hipertensión sigue activa, otro <code>JOIN</code> contra
-          <code>diagnostico_historial</code> filtrando por fechas. La respuesta no está en ninguna
-          tabla sola: vive en el pegamento que el programador escribe y reescribe cada vez que la
-          lógica clínica cambia.</p>
+          <code>contraindicaciones</code> y, si el equipo fue cuidadoso, una
+          <code>diagnostico_historial</code> para guardar los cambios.</p>
+
+        <p>¿La doctora quiere saber si el ajuste que acaba de recetar choca con una contraindicación
+          <em>vigente</em>? Hay que cruzar <code>prescripciones</code> con
+          <code>contraindicaciones</code>. ¿Y si la hipertensión sigue activa? Otro <code>JOIN</code>
+          contra <code>diagnostico_historial</code>, filtrando por fechas.</p>
+
+        <p>La respuesta no está en ninguna tabla. Vive en el pegamento que el programador escribe y
+          reescribe cada vez que cambia la lógica clínica.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">sql</span><button class="copiar">⧉ copiar</button></div>
@@ -1041,14 +1086,16 @@ WHERE d.paciente_id = :paciente
   AND (h.valido_hasta IS NULL OR h.valido_hasta > :fecha);  -- a mano, cada vez</code></pre>
         </div>
 
-        <p><b>Después, en WQuestions.</b> La misma información es un grafo único de hechos atómicos:
-          <code>diag_hta_8842</code> cuelga de <code>consulta_8842</code> con <code>parte_de</code>,
-          lleva sus propias fechas de validez internas, y <code>prescrip_8842</code> apunta a
-          <code>regla_renal_alerta</code> con <code>verificado_contra</code>. La pregunta (¿esta
-          prescripción choca con una contraindicación vigente?) es una proyección sobre el grafo con
-          un filtro temporal: el motor entrega solo los hechos cuya ventana de validez cubre la fecha
-          consultada. No hay <code>JOIN</code> entre tablas ni código de pegamento; la vigencia y las
-          relaciones causales ya estaban tejidas en el mismo tejido de datos desde el primer hecho.</p>
+        <p><b>Después, en WQuestions.</b> La misma información es un solo grafo de hechos mínimos.
+          <code>diag_hta_8842</code> cuelga de <code>consulta_8842</code> con <code>parte_de</code> y
+          lleva sus propias fechas de validez. <code>prescrip_8842</code> apunta a
+          <code>regla_renal_alerta</code> con <code>verificado_contra</code>.</p>
+
+        <p>La pregunta se contesta mirando el grafo con un filtro de fecha: el motor devuelve solo los
+          hechos cuya ventana de validez cubre el día consultado.</p>
+
+        <p>No hay <code>JOIN</code> ni código de pegamento. La vigencia y las causas ya venían tejidas
+          desde el primer hecho.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -1063,11 +1110,12 @@ vigente = u.value_at(maria_g, "diagnostico_asignado", at="2026-04-15")  # → ht
 
         <h2>Cuánto pesó el dominio entero</h2>
 
-        <p>Vale la pena medir la huella, porque desmiente el prejuicio de que tanta expresividad debe
-          costar un diluvio de datos. Toda la consulta de Gonzales (las cinco piezas, los tres porqués de
-          la receta, los dos diagnósticos versionados, la contraindicación y el control previsto) se
-          guardó como un puñado modesto de hechos atómicos. Comparado con lo que un esquema relacional
-          necesita para sostener la misma riqueza histórica, la diferencia es notable.</p>
+        <p>Vale la pena medir la huella, porque desmiente el prejuicio de que tanta expresividad
+          cuesta un diluvio de datos.</p>
+
+        <p>Toda la consulta de Gonzales cabe en un puñado modesto de hechos: las cinco piezas, los tres
+          porqués de la receta, los dos diagnósticos con su historia, la contraindicación y el control
+          previsto. Un esquema relacional necesita bastante más para sostener la misma memoria.</p>
 
         <figure class="figura revelar">
           <div class="lienzo" data-chart>
@@ -1091,11 +1139,11 @@ vigente = u.value_at(maria_g, "diagnostico_asignado", at="2026-04-15")  # → ht
 
         <h2>La pepita metodológica: el arte de saber qué reificar</h2>
 
-        <p>Llegamos a la tercera pregunta de la elicitación, la que dejamos pendiente al abrir el
-          capítulo, porque es la que de verdad separa a quien modela bien. A la hora de diseñar un
-          dominio nuevo, ¿cómo decides qué dato merece convertirse en una entidad con identidad propia
-          en <code>O</code> y qué dato debe quedarse como un número callado en <code>N</code> o una
-          etiqueta inerte en <code>K</code>?</p>
+        <p>Llegamos a la tercera pregunta, la que dejamos pendiente al abrir el capítulo.</p>
+
+        <p>Al diseñar un dominio nuevo, ¿cómo decides qué dato merece volverse una entidad con
+          identidad propia en <code>O</code>, y cuál se queda como un número callado en <code>N</code>
+          o una etiqueta quieta en <code>K</code>?</p>
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">La regla, en una línea</p>
@@ -1107,7 +1155,6 @@ vigente = u.value_at(maria_g, "diagnostico_asignado", at="2026-04-15")  # → ht
         <p>Es una regla simple y brutal, y se aplica caso por caso. Mira cómo decide cada pieza de
           esta consulta su propio destino:</p>
 
-        <div class="columnas">
           <p><b>¿Reificamos el síntoma?</b> Sí. Mañana el médico querrá saber cuándo empezó, qué tan
             intenso era y si mejoró. Se vuelve entidad en <code>O</code>.<br>
             <b>¿Reificamos la medición de presión?</b> Sí. Mañana la conectaremos como evidencia de un
@@ -1120,12 +1167,13 @@ vigente = u.value_at(maria_g, "diagnostico_asignado", at="2026-04-15")  # → ht
             ahí muere.<br>
             <b>¿Reificamos «148/95»?</b> El número, no; pero la <em>medición</em> que lo contiene, sí
             (porque la medición sí será interrogada).</p>
-        </div>
 
-        <p>El costo de reificar es de unos pocos bytes en el servidor. El costo de <em>no</em> hacerlo
-          (y descubrir, años después, que un regulador exige el historial completo de un dato que
-          guardaste como texto plano) se mide en una refactorización carísima y, en medicina, en algo
-          peor que dinero. Por eso, ante la duda, esta regla se inclina siempre hacia reificar.</p>
+        <p>Convertir algo en entidad cuesta unos pocos bytes. No hacerlo cuesta mucho más: años
+          después un regulador pide el historial completo de un dato que guardaste como texto plano, y
+          toca rehacer medio sistema.</p>
+
+        <p>En medicina, además, se paga en algo peor que dinero. Por eso, ante la duda, la regla se
+          inclina siempre a favor de la entidad.</p>
 
         <h2>Balance: un dominio nuevo, casi sin fricción</h2>
 
@@ -1152,12 +1200,15 @@ vigente = u.value_at(maria_g, "diagnostico_asignado", at="2026-04-15")  # → ht
           </ul>
         </div>
 
-        <p>La clínica parecía exigir una arquitectura especializada y resultó caber en la misma que ya
-          conocíamos, con un par de cables propios y ni una sola excepción estructural. Pero hubo una
-          exigencia que aquí solo asomó (la de que varios custodios distintos, en hospitales distintos,
-          puedan leer y escribir sobre el mismo paciente sin pisarse) y que en el próximo capítulo se
-          vuelve la ley. Subimos al dominio más implacable de todos: un banco, donde no borrar el
-          pasado deja de ser buen gusto y pasa a ser una condición que dicta el regulador.</p>
+        <p>La clínica parecía pedir una arquitectura propia y cupo en la misma de siempre, con un par
+          de cables nuevos y ninguna excepción estructural.</p>
+
+        <p>Pero aquí asomó una exigencia que el próximo capítulo convierte en ley: que varios
+          custodios, en hospitales distintos, puedan leer y escribir sobre el mismo paciente sin
+          pisarse.</p>
+
+        <p>Subimos al dominio más implacable de todos. Un banco, donde no borrar el pasado deja de ser
+          buen gusto y pasa a ser una orden del regulador.</p>
 
       </div>
     </article>

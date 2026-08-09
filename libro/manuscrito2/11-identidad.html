@@ -57,22 +57,34 @@
       <div class="contenido">
 
         <p class="entrada">Un martes de mayo, <strong>María Gonzales</strong> compra una camiseta en la
-          tienda del centro. Para la caja registradora, María no es María: es
-          <code>cliente_1042</code>, el comprador de la <code>camiseta_88</code>. Tres semanas después,
-          esa misma María llega a urgencias con una arritmia. Para el sistema de la clínica no existe
-          ningún <code>cliente_1042</code>; existe <code>paciente_maria_g</code>, con su episodio y su
-          historia. Y cuando, al mes, María paga sus arbitrios, la municipalidad la conoce por un tercer
-          nombre todavía: <code>contribuyente_77‑3389</code>. Tres sistemas, tres identificadores, una
-          sola persona de carne y hueso que ninguno de los tres sabe que comparte con los demás.</p>
+          tienda del centro.</p>
 
-        <p>Esa es la grieta que este capítulo cierra. El libro prometió, desde la introducción, que las
-          preguntas servirían de <em>vocabulario común</em> para que sistemas que hoy no se hablan
-          pudieran responder juntos. Pero un vocabulario común no basta. Aunque la tienda y la clínica
-          coincidieran en llamar <code>agente</code> al cable que apunta a una persona, seguirían sin
-          saber que <code>cliente_1042</code> y <code>paciente_maria_g</code> son <em>la misma</em>
-          persona. Responder a esa pregunta —¿quién es quién, de verdad, a través de los sistemas?— es
-          lo que llamaremos <strong>resolución de identidad</strong>, y es el último eslabón que hace
-          posible la promesa cross-dominio.</p>
+        <p>Para la caja registradora, María no es María. Es <code>cliente_1042</code>, quien compró la
+          <code>camiseta_88</code>.</p>
+
+        <p>Tres semanas después, esa misma María llega a urgencias con una arritmia. Para el sistema de
+          la clínica no existe ningún <code>cliente_1042</code>: existe
+          <code>paciente_maria_g</code>.</p>
+
+        <p>Y cuando al mes paga sus arbitrios, la municipalidad la conoce por un tercer nombre:
+          <code>contribuyente_77‑3389</code>.</p>
+
+        <p>Tres sistemas, tres identificadores, una sola persona. Y ninguno de los tres sabe que la
+          comparte con los otros.</p>
+
+        <p>Esa es la grieta que este capítulo cierra.</p>
+
+        <p>El libro prometió, desde la introducción, que las preguntas servirían de <em>vocabulario
+          común</em> para que sistemas que hoy no se hablan pudieran responder juntos.</p>
+
+        <p>Pero un vocabulario común no basta.</p>
+
+        <p>Aunque la tienda y la clínica coincidieran en llamar <code>agente</code> al cable que apunta
+          a una persona, seguirían sin saber que <code>cliente_1042</code> y
+          <code>paciente_maria_g</code> son <em>la misma</em>.</p>
+
+        <p>Responder a eso, quién es quién de verdad a través de los sistemas, es lo que llamamos
+          <strong>resolución de identidad</strong>. Es el último eslabón.</p>
 
         <aside class="nota-margen">
           <span class="etq">Dónde encaja</span>
@@ -84,23 +96,29 @@
 
         <h2>Identidad no es lo mismo que identificador</h2>
 
-        <p>Conviene separar dos palabras que el lenguaje cotidiano confunde y que la arquitectura
-          obliga a distinguir. La <strong>identidad</strong> es la persona real: María Gonzales, un
-          individuo único en el mundo, que existía antes de comprar nada y existirá después de que la
-          camiseta se decolore. La identidad vive en el eje
-          <span class="eje-rotulo"><span class="eje eje--q">Q</span> quién</span>: es una entidad del
-          modelo, no una cadena de texto. El <strong>identificador</strong>, en cambio, es el rótulo
-          que un sistema concreto le pega encima para poder referirse a él:
-          <code>cliente_1042</code> es el identificador que <em>la tienda</em> eligió, y solo tiene
+        <p>Conviene separar dos palabras que el habla corriente confunde.</p>
+
+        <p>La <strong>identidad</strong> es la persona real: María Gonzales, única en el mundo, que
+          existía antes de comprar nada y existirá cuando la camiseta se decolore.</p>
+
+        <p>Vive en el eje <span class="eje-rotulo"><span class="eje eje--q">Q</span> quién</span>, y es
+          una entidad del modelo, no una cadena de texto.</p>
+
+        <p>El <strong>identificador</strong> es el rótulo que un sistema concreto le pega encima para
+          referirse a ella. <code>cliente_1042</code> es el que eligió <em>la tienda</em>, y solo tiene
           sentido dentro de la tienda.</p>
 
-        <p>La distinción importa porque los identificadores son <em>locales y arbitrarios</em>. Cada
-          sistema acuña los suyos sin consultar a nadie: la tienda numera a sus clientes en orden de
-          llegada, la clínica usa el apellido, la municipalidad concatena un código tributario. Ninguno
-          es «más correcto» que otro; simplemente son tres nombres privados para una misma persona
-          pública. El error clásico (y la causa de media torre de Babel) es confundir el rótulo con lo
-          rotulado: tratar <code>cliente_1042</code> como si <em>fuera</em> la persona, en vez de como
-          una flecha que apunta a ella.</p>
+        <p>La distinción importa porque los identificadores son <em>locales y arbitrarios</em>.</p>
+
+        <p>Cada sistema acuña los suyos sin consultar a nadie. La tienda numera a sus clientes en orden
+          de llegada, la clínica usa el apellido, la municipalidad concatena un código tributario.</p>
+
+        <p>Ninguno es más correcto que otro. Son tres nombres privados para una misma persona
+          pública.</p>
+
+        <p>El error clásico, y la causa de media torre de Babel, es confundir el rótulo con lo rotulado:
+          tratar <code>cliente_1042</code> como si <em>fuera</em> la persona, en vez de como una flecha
+          que apunta a ella.</p>
 
         <div class="caja caja--definicion revelar">
           <p class="caja-tit">Identidad vs. identificador</p>
@@ -165,12 +183,16 @@
 
         <h2>La analogía que lo aclara todo: punteros</h2>
 
-        <p>Quien haya programado en un lenguaje de bajo nivel reconocerá esta situación de inmediato,
-          porque es exactamente la de los <strong>punteros</strong>. Un puntero no es un objeto: es una
-          <em>dirección</em>, un papelito que dice «el objeto que buscas está allá». Varios papelitos
-          pueden señalar el mismo rincón de la memoria. El objeto es uno; las direcciones que lo
-          apuntan, muchas. Esa asimetría —un referente, varios referentes— es la columna vertebral de
-          este capítulo.</p>
+        <p>Quien haya programado a bajo nivel reconocerá la situación, porque es la de los
+          <strong>punteros</strong>.</p>
+
+        <p>Un puntero no es un objeto. Es una <em>dirección</em>, un papelito que dice «lo que buscas
+          está allá».</p>
+
+        <p>Varios papelitos pueden señalar el mismo rincón de la memoria. El objeto es uno; las
+          direcciones que lo apuntan, muchas.</p>
+
+        <p>Esa asimetría es la columna vertebral de este capítulo.</p>
 
         <p>Traduzcamos el modelo entero a ese vocabulario, porque la correspondencia es asombrosamente
           limpia:</p>
@@ -257,12 +279,17 @@
 
         <h3>Vía 1 · Claves naturales con autoridad externa</h3>
 
-        <p>La situación ideal: existe un identificador que <em>no</em> es local, sino que lo emite una
-          autoridad reconocida por todos. El DNI de una persona, el RUC de una empresa, un correo
-          verificado, el ISBN de un libro, el IBAN de una cuenta. Cuando dos sistemas registran el
-          mismo DNI, la identidad se resuelve sola: no hay nada que adivinar, porque ambos están
-          citando la misma fuente de verdad externa. La clave natural es, en términos de la analogía,
-          una dirección <em>canónica</em> que todo el mundo acordó usar.</p>
+        <p>La situación ideal: existe un identificador que <em>no</em> es local, porque lo emite una
+          autoridad que todos reconocen.</p>
+
+        <p>El DNI de una persona, el RUC de una empresa, un correo verificado, el ISBN de un libro, el
+          IBAN de una cuenta.</p>
+
+        <p>Cuando dos sistemas registran el mismo DNI, la identidad se resuelve sola. No hay nada que
+          adivinar, porque los dos citan la misma fuente.</p>
+
+        <p>Es, siguiendo la imagen del puntero, una dirección <em>canónica</em> que todo el mundo acordó
+          usar.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -273,12 +300,14 @@
 
         <h3>Vía 2 · <code>mismo_que</code> declarado como un hecho más</h3>
 
-        <p>A veces no hay clave común, pero alguien (un humano, un proceso de conciliación, una
-          migración) <em>sabe</em> que dos identificadores coinciden y quiere dejarlo escrito. El
-          modelo no necesita maquinaria nueva para eso: la identidad compartida se guarda como
-          cualquier otro hecho, una tripleta con el cable <code>mismo_que</code>. Es la elegancia del
-          enfoque: una afirmación de identidad es un dato de primera clase, fechable, atribuible y
-          revisable como cualquier otro.</p>
+        <p>A veces no hay clave común, pero alguien <em>sabe</em> que dos identificadores coinciden y
+          quiere dejarlo escrito.</p>
+
+        <p>El modelo no necesita maquinaria nueva. La identidad compartida se guarda como cualquier otro
+          hecho, con el cable <code>mismo_que</code>.</p>
+
+        <p>Ahí está la elegancia: una afirmación de identidad es un dato de primera, que se puede fechar,
+          atribuir y revisar como cualquier otro.</p>
 
         <div class="triple">
           <span class="nodo nodo--q"><span>cliente_1042</span><small>Q</small></span>
@@ -294,11 +323,13 @@
 
         <div class="caja caja--precedente revelar">
           <p class="caja-tit"><code>owl:sameAs</code> y la resolución de entidades<a class="ref" href="referencias.html#ref-22">(22)</a></p>
-          <p style="margin:0 0 .6rem">Esta idea no es nueva ni exclusiva del modelo. La Web Semántica
-            la formalizó hace dos décadas con <code>owl:sameAs</code>, el predicado del estándar OWL que
-            declara que dos URIs denotan el mismo individuo; es el motor que permite a un dato de
-            DBpedia<a class="ref" href="referencias.html#ref-33">(33)</a> enlazarse con su gemelo en Wikidata<a class="ref" href="referencias.html#ref-32">(32)</a>. Nuestro <code>mismo_que</code> es,
-            deliberadamente, ese mismo gesto traducido al vocabulario de las preguntas.</p>
+          <p style="margin:0 0 .6rem">Esta idea no es nueva ni exclusiva del modelo. La Web Semántica la
+            formalizó hace dos décadas con <code>owl:sameAs</code>, el predicado que declara que dos
+            direcciones señalan al mismo individuo.</p>
+          <p style="margin:0 0 .6rem">Es lo que permite a un dato de
+            DBpedia<a class="ref" href="referencias.html#ref-33">(33)</a> enlazarse con su gemelo en
+            Wikidata<a class="ref" href="referencias.html#ref-32">(32)</a>. Nuestro
+            <code>mismo_que</code> es ese mismo gesto, traducido al vocabulario de las preguntas.</p>
           <p style="margin:0">El problema más amplio (decidir cuándo dos registros son la misma cosa)
             tiene nombre propio en la literatura: <em>entity resolution</em> (también <em>record
             linkage</em> o <em>deduplication</em>), estudiado desde el trabajo seminal de Fellegi y
@@ -308,29 +339,41 @@
         <h3>Vía 3 · <em>Matching</em> probabilístico</h3>
 
         <p>El caso incómodo, y el más frecuente en la vida real: no hay clave común y nadie declaró
-          nada. La tienda guardó «María Gonzales», la clínica «M. Gonzales Ramos», la municipalidad «Gonzales, María
-          A.». ¿Son la misma? Probablemente. Pero «probablemente» es una palabra peligrosa en una base
-          de datos. Aquí la identidad se <em>infiere</em> comparando rasgos (nombre, fecha de
-          nacimiento, dirección, teléfono) y calculando una probabilidad de coincidencia. Por encima de
-          cierto umbral, el sistema propone que son la misma persona; por debajo, los deja separados.</p>
+          nada.</p>
+
+        <p>La tienda guardó «María Gonzales», la clínica «M. Gonzales Ramos», la municipalidad
+          «Gonzales, María A.».</p>
+
+        <p>¿Son la misma? Probablemente. Y «probablemente» es una palabra peligrosa en una base de
+          datos.</p>
+
+        <p>Aquí la identidad se <em>deduce</em> comparando rasgos (nombre, fecha de nacimiento,
+          dirección, teléfono) y calculando cuánto se parecen.</p>
+
+        <p>Por encima de cierto umbral, el sistema propone que son la misma persona. Por debajo, los
+          deja separados.</p>
 
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">El <em>matching</em> probabilístico es un reto de tooling, no de modelo</p>
-          <p style="margin:0">El modelo te da <em>dónde</em> escribir la conclusión (una tripleta
-            <code>mismo_que</code>, idealmente reificada con su grado de confianza) pero no resuelve por
-            ti el cálculo. Emparejar a ciegas funde a dos personas distintas; ser demasiado cauto deja
-            la historia partida en pedazos. Es un problema abierto de herramientas e infraestructura, y
-            por eso lo retomamos sin rodeos en el <a href="31-que-falta.html">capítulo&nbsp;31, «Qué
-            falta»</a>, entre las piezas que aún hacen falta para que esto sea de uso diario.</p>
+          <p style="margin:0 0 .7rem">El modelo te da <em>dónde</em> escribir la conclusión: una
+            tripleta <code>mismo_que</code>, con su grado de confianza si hace falta. Pero no hace el
+            cálculo por ti.</p>
+          <p style="margin:0 0 .7rem">Emparejar a ciegas funde a dos personas distintas. Ser demasiado
+            cauto deja la historia partida en pedazos.</p>
+          <p style="margin:0">Es un problema abierto de herramientas, y por eso lo retomamos sin rodeos
+            en el <a href="31-que-falta.html">capítulo&nbsp;31</a>, entre las piezas que aún faltan para
+            que esto sea de uso diario.</p>
         </div>
 
         <h2>El modelo: una persona canónica con identidades colgando</h2>
 
-        <p>Con las tres vías sobre la mesa, el patrón de modelado es directo. Existe una
-          <strong>identidad canónica</strong> (un único nodo en Q, <code>persona_maria_g</code>) y, a su
-          alrededor, los identificadores locales de cada sistema, unidos a ella por <code>mismo_que</code>.
-          Cada sistema sigue usando su rótulo de siempre, sin renunciar a nada; el grafo se encarga de
-          que todos esos rótulos converjan en una sola persona.</p>
+        <p>Con las tres vías sobre la mesa, el patrón es directo.</p>
+
+        <p>Existe una <strong>identidad canónica</strong>, un único nodo en Q. Y a su alrededor, los
+          identificadores locales de cada sistema, unidos a ella por <code>mismo_que</code>.</p>
+
+        <p>Cada sistema sigue usando su rótulo de siempre, sin renunciar a nada. El grafo se encarga de
+          que todos esos rótulos lleven a la misma persona.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -346,11 +389,15 @@
 (urgencias_2026_071, paciente, paciente_maria_g) ∈ M(O, Q)   // la clínica abrió el episodio</code></pre>
         </div>
 
-        <p>Observa el reparto de trabajo. Cada sistema escribe sus hechos contra <em>su</em> puntero,
-          como lo ha hecho siempre, sin coordinarse con nadie: la tienda no necesita saber que la
-          clínica existe. La única tripleta que cruza fronteras es la afirmación de identidad. Resolver
-          un grafo de muchos sistemas no exige reescribir los datos de cada uno: exige tender los hilos
-          <code>mismo_que</code> que faltan. El resto del tejido ya estaba.</p>
+        <p>Mira el reparto de trabajo.</p>
+
+        <p>Cada sistema escribe sus hechos contra <em>su</em> puntero, como siempre, sin coordinarse con
+          nadie. La tienda no necesita saber que la clínica existe.</p>
+
+        <p>La única tripleta que cruza fronteras es la afirmación de identidad.</p>
+
+        <p>Resolver un grafo de muchos sistemas no exige reescribir los datos de cada uno. Exige tender
+          los hilos <code>mismo_que</code> que faltan. El resto del tejido ya estaba.</p>
 
         <p>Reconciliar que la María Gonzales de la tienda, la de la clínica y la de la municipalidad son una
           sola no sirve únicamente para esa María. Hecho a escala, es lo que permite el padrón único:
@@ -367,18 +414,26 @@
 
         <h2>Tres cosas que le pasan a un identificador</h2>
 
-        <p>Con el patrón sobre la mesa, la reacción natural es preguntarse por qué tanto rodeo. Si
-          <code>cliente_1042</code>, <code>paciente_maria_g</code> y
-          <code>contribuyente_77_3389</code> son la misma señora, ¿por qué no corregir los tres a
-          <code>persona_maria_g</code> y terminar el asunto? Porque corregir es una de tres
-          operaciones distintas, y aquí es la equivocada. Conviene separarlas, porque desde fuera se
-          parecen mucho y el sistema no va a avisarte.</p>
+        <p>La reacción natural es preguntarse por qué tanto rodeo.</p>
+
+        <p>Si <code>cliente_1042</code>, <code>paciente_maria_g</code> y
+          <code>contribuyente_77_3389</code> son la misma señora, ¿por qué no corregir los tres y
+          terminar?</p>
+
+        <p>Porque corregir es una de tres operaciones distintas, y aquí es la equivocada.</p>
+
+        <p>Conviene separarlas, porque desde fuera se parecen mucho y el sistema no va a avisarte.</p>
 
         <p><strong>María se mudó.</strong> Su dirección era la avenida Grau 220 y ahora es el jirón
-          Camaná 415. Nada estuvo mal anotado: lo que cambió fue el mundo. El valor viejo fue verdad
-          durante un tiempo y hay que poder seguir consultándolo, porque el envío que llegó a Grau el
-          año pasado llegó a la dirección correcta. Esto es la vigencia: el hecho lleva su rango de
-          inicio y fin, y preguntar por una fecha devuelve lo que valía en esa fecha.</p>
+          Camaná 415.</p>
+
+        <p>Nada estuvo mal anotado. Lo que cambió fue el mundo.</p>
+
+        <p>El valor viejo fue verdad durante un tiempo y hay que poder seguir consultándolo, porque el
+          envío que llegó a Grau el año pasado llegó a la dirección correcta.</p>
+
+        <p>Esto es la vigencia: el hecho lleva su rango de inicio y fin, y preguntar por una fecha
+          devuelve lo que valía en esa fecha.</p>
 
         <aside class="nota-margen">
           <span class="etq">Referencia</span>
@@ -389,19 +444,33 @@
         </aside>
 
         <p><strong>A María le tecleamos mal el apellido.</strong> En la ficha de la clínica figura
-          «Gonzalez» y siempre fue «Gonzales». Aquí no cambió nada afuera: cambió lo que nosotros
-          habíamos escrito. El valor viejo no fue verdad en ningún momento, ni un solo minuto, y por
-          eso no debe seguir respondiendo consultas. Esto es una corrección, y su diferencia con el
-          caso anterior no es de grado sino de naturaleza. Una vigencia certifica que algo fue cierto
-          durante un periodo; aplicarla a un tecleo deja escrito en el grafo que María se apellidó
-          «Gonzalez» entre marzo y julio, una afirmación falsa que nadie hizo nunca.</p>
+          «Gonzalez» y siempre fue «Gonzales».</p>
+
+        <p>Aquí no cambió nada afuera. Cambió lo que nosotros habíamos escrito.</p>
+
+        <p>El valor viejo no fue verdad ni un solo minuto, y por eso no debe seguir respondiendo
+          consultas.</p>
+
+        <p>Esto es una corrección, y su diferencia con el caso anterior no es de grado. Es de
+          naturaleza.</p>
+
+        <p>Una vigencia certifica que algo fue cierto durante un periodo. Aplicarla a un tecleo deja
+          escrito en el grafo que María se apellidó «Gonzalez» entre marzo y julio: una afirmación falsa
+          que nadie hizo nunca.</p>
 
         <p><strong><code>contribuyente_77_3389</code> resulta ser María.</strong> Este es el caso del
-          capítulo. No hay nada que corregir, porque nada está mal: la municipalidad la registró bajo
-          ese identificador y bajo ese identificador ocurrieron sus arbitrios. Tampoco cambió el
-          mundo. Lo único que pasó es que ahora sabemos algo que antes no sabíamos, que ese papelito
-          y los otros dos llevan a la misma persona. Y eso se escribe con <code>mismo_que</code>, sin
-          tocar ninguno de los hechos que ya estaban.</p>
+          capítulo.</p>
+
+        <p>No hay nada que corregir, porque nada está mal. La municipalidad la registró bajo ese
+          identificador, y bajo ese identificador ocurrieron sus arbitrios.</p>
+
+        <p>Tampoco cambió el mundo.</p>
+
+        <p>Lo único que pasó es que ahora sabemos algo que antes no sabíamos: que ese papelito y los
+          otros dos llevan a la misma persona.</p>
+
+        <p>Y eso se escribe con <code>mismo_que</code>, sin tocar ninguno de los hechos que ya
+          estaban.</p>
 
         <div class="rejilla-3 revelar">
           <div class="tarjeta">
@@ -435,11 +504,17 @@
         </div>
 
         <p>Vistos así, los tres casos no se distinguen por lo que ocurrió afuera. Se distinguen por
-          <strong>sobre qué se está afirmando algo</strong>. La vigencia afirma sobre el mundo: esto
-          fue así y luego dejó de serlo. La corrección afirma sobre la anotación: lo que escribimos no
-          correspondía. <code>mismo_que</code> afirma sobre el referente: estos dos papelitos llevan
-          al mismo sitio. Tres objetos distintos (el mundo, el registro y la cosa designada) que este
-          capítulo ya había separado cuando distinguió el papelito de lo que encuentras al mirar.</p>
+          <strong>sobre qué están afirmando algo</strong>.</p>
+
+        <p>La vigencia afirma sobre el mundo: esto fue así y luego dejó de serlo.</p>
+
+        <p>La corrección afirma sobre la anotación: lo que escribimos no correspondía.</p>
+
+        <p><code>mismo_que</code> afirma sobre el referente: estos dos papelitos llevan al mismo
+          sitio.</p>
+
+        <p>Tres cosas distintas (el mundo, el registro y la cosa señalada) que este capítulo ya había
+          separado al distinguir el papelito de lo que encuentras al final.</p>
 
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">El error que no se anuncia</p>
@@ -447,13 +522,15 @@
             tres operaciones sin protestar, porque las tres son tripletas bien formadas: lo que las
             distingue no está en los datos, está en la intención de quien anota. El almacén no puede
             saberlo.</p>
-          <p style="margin:0">Corregir lo que era una identidad compartida borra una verdad. Los
+          <p style="margin:0 0 .7rem">Corregir lo que era una identidad compartida borra una verdad. Los
             arbitrios ocurrieron bajo <code>contribuyente_77_3389</code>, y si ese identificador
             desaparece, la pregunta hecha con el rótulo que la municipalidad usó de verdad deja de
-            encontrarlos: una suma que debía juntar tres sistemas junta dos. Corregir lo que era un
-            cambio del mundo borra el pasado y deja sin explicación todo lo que se decidió con el
-            valor viejo. Y fechar un tecleo asciende un error a hecho histórico. Ninguno de los tres
-            fallos levanta una excepción; los tres devuelven un número.</p>
+            encontrarlos. Una suma que debía juntar tres sistemas junta dos.</p>
+          <p style="margin:0 0 .7rem">Corregir lo que era un cambio del mundo borra el pasado y deja sin
+            explicación todo lo que se decidió con el valor viejo. Y fechar un tecleo asciende un error a
+            hecho histórico.</p>
+          <p style="margin:0">Ninguno de los tres fallos levanta una excepción. Los tres devuelven un
+            número.</p>
         </div>
 
         <p>Nada de esto añade maquinaria. La vigencia venía del capítulo&nbsp;9, corregir es asentar
@@ -463,46 +540,52 @@
 
         <h2>No es una decisión numerada: es una convención de fondo</h2>
 
-        <p>Vale la pena ser explícito sobre el estatus de esto. La resolución de identidad no introduce
-          una regla de diseño nueva al modo de las que hemos ido numerando (no hay aquí ninguna
-          maquinaria que no existiera ya). Es, más bien, una <strong>convención fuerte</strong> que se
-          desprende de piezas que el lector ya conoce: la entidad del eje&nbsp;Q como referente, el
-          cable como referencia, la reificación como dirección estable. La identidad emerge de juntarlas
-          bien, no de añadir nada.</p>
+        <p>Conviene ser claro sobre el estatus de esto.</p>
+
+        <p>La resolución de identidad no introduce una regla de diseño nueva. Aquí no hay maquinaria que
+          no existiera ya.</p>
+
+        <p>Es una <strong>convención fuerte</strong> que sale de piezas que ya conoces: la entidad del
+          eje&nbsp;Q como referente, el cable como referencia, la reificación como dirección estable.</p>
+
+        <p>La identidad sale de juntarlas bien, no de añadir nada.</p>
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Principio de identidad canónica</p>
-          <p style="margin:0">Cada individuo del mundo se modela como <strong>una sola identidad
-            canónica</strong> en el eje&nbsp;Q. Los identificadores que cada sistema le asigna son
-            punteros locales que apuntan a ella mediante <code>mismo_que</code>. Un sistema escribe sus
-            hechos contra su propio puntero; el grafo los reconcilia siguiendo los alias hasta la
-            identidad canónica. Resolver la identidad <em>no</em> es fundir datos: es declarar
-            referencias.</p>
+          <p style="margin:0 0 .7rem">Cada individuo del mundo se modela como <strong>una sola identidad
+            canónica</strong> en el eje&nbsp;Q. Los identificadores que le asigna cada sistema son
+            punteros locales que apuntan a ella con <code>mismo_que</code>.</p>
+          <p style="margin:0">Un sistema escribe sus hechos contra su propio puntero. El grafo los
+            reconcilia siguiendo los apodos hasta la identidad canónica. Resolver la identidad <em>no</em>
+            es fundir datos: es declarar referencias.</p>
         </div>
 
         <h2>Por qué esto sostiene toda la promesa del libro</h2>
 
-        <p>Detente a imaginar la consulta que da sentido a este libro entero: <em>«muéstrame todo lo que
-          el sistema sabe de María Gonzales»</em>. Sus compras en la tienda, su episodio en urgencias, sus
-          arbitrios en la municipalidad (tres dominios que nunca fueron diseñados para hablarse) reunidos
-          en una sola respuesta coherente. Esa consulta es la prueba viviente de la interoperabilidad
-          que la introducción prometió. Y es <em>imposible</em> sin resolución de identidad: sin las
-          flechas <code>mismo_que</code>, la pregunta «¿qué sabemos de María?» se rompe en tres
-          preguntas que ningún sistema puede juntar, porque ninguno reconoce a la María del otro.</p>
+        <p>Detente a imaginar la consulta que da sentido a este libro entero: <em>«muéstrame todo lo
+          que el sistema sabe de María Gonzales»</em>.</p>
 
-        <div class="columnas">
-          <p>De aquí brota un principio que reaparecerá con fuerza cuando lleguemos a la
-            <a href="22-municipalidad.html">municipalidad</a>: el principio de <strong>«una sola
-            vez»</strong>. Si la clínica ya verificó la dirección de María, la municipalidad no debería
-            volver a pedírsela; si la tienda ya tiene su correo, ningún tercer sistema tendría por qué
-            exigirlo de nuevo. El dato vive una vez, en el individuo canónico, y todos los sistemas que
-            lo conocen lo consultan allí.</p>
-          <p>Ese principio («no vuelvas a pedir lo que otro sistema ya sabe») es la cara amable de la
-            resolución de identidad para el ciudadano, el paciente, el cliente. Lo que para el ingeniero
-            es un puntero compartido, para la persona es no tener que llenar el mismo formulario tres
-            veces. La identidad bien resuelta no es una sutileza técnica: es lo que convierte un montón
-            de sistemas aislados en algo que, por fin, se comporta como si supiera quién eres.</p>
-        </div>
+        <p>Sus compras en la tienda, su episodio en urgencias, sus arbitrios en la municipalidad. Tres
+          dominios que nunca se diseñaron para hablarse, reunidos en una sola respuesta.</p>
+
+        <p>Esa consulta es la prueba viva de lo que prometió la introducción.</p>
+
+        <p>Y es <em>imposible</em> sin resolución de identidad. Sin las flechas <code>mismo_que</code>,
+          «¿qué sabemos de María?» se rompe en tres preguntas que ningún sistema puede juntar, porque
+          ninguno reconoce a la María del otro.</p>
+
+          <p>De aquí sale un principio que reaparece con fuerza en la
+            <a href="22-municipalidad.html">municipalidad</a>: el de <strong>«una sola vez»</strong>.</p>
+          <p>Si la clínica ya verificó la dirección de María, la municipalidad no debería volver a
+            pedírsela. Si la tienda ya tiene su correo, ningún tercer sistema tendría por qué exigirlo de
+            nuevo.</p>
+          <p>El dato vive una vez, en el individuo canónico, y todos lo consultan allí.</p>
+          <p>«No vuelvas a pedir lo que otro sistema ya sabe» es la cara amable de todo esto para el
+            ciudadano, el paciente, el cliente.</p>
+          <p>Lo que para el ingeniero es un puntero compartido, para la persona es no tener que llenar el
+            mismo formulario tres veces.</p>
+          <p>La identidad bien resuelta no es una sutileza técnica. Es lo que convierte un montón de
+            sistemas aislados en algo que, por fin, se comporta como si supiera quién eres.</p>
 
         <p class="cita-destacada revelar">Un identificador es un papelito que dice dónde mirar; la
           identidad es lo que encuentras al mirar. El error de toda torre de Babel es confundir el
@@ -520,11 +603,14 @@
             identidades que no puedes auditar es una fusión que no puedes deshacer.</p>
         </div>
 
-        <p>Con esto, la Parte III queda completa: tenemos el hecho atómico, el espacio donde vive, las
-          situaciones que lo enriquecen, la causalidad que lo enlaza y, ahora, la identidad que permite
-          que todo eso cruce de un sistema a otro sin perderse. Lo que sigue es tender la mano a los
-          mundos vecinos (los objetos de la programación, los bits, los grafos, las cadenas de
-          bloques) y mostrar que el modelo no es una isla, sino un puente.</p>
+        <p>Con esto, la Parte III queda completa.</p>
+
+        <p>Tenemos el hecho atómico, el espacio donde vive, las situaciones que lo enriquecen, la
+          causalidad que lo enlaza y, ahora, la identidad que permite que todo eso cruce de un sistema a
+          otro sin perderse.</p>
+
+        <p>Lo que sigue es tender la mano a los mundos vecinos (los objetos de la programación, los bits,
+          los grafos, las cadenas de bloques) y mostrar que el modelo no es una isla, sino un puente.</p>
 
       </div>
     </article>

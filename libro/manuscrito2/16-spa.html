@@ -56,15 +56,22 @@
 
       <div class="contenido">
 
-        <p class="entrada">Son las 18:05 de un jueves en <em>Serena Termas</em>, un spa de barrio. Una
-          clienta (Lucía) acaba de salir de la cámara de vapor, se acerca al mostrador y pide pagar:
-          un circuito termal y un masaje descontracturante. La recepcionista teclea, el sistema
-          calcula el subtotal, le suma el impuesto al consumo, descuenta un cupón de fidelidad, cobra
-          la mitad en efectivo y la mitad con una tarjeta extranjera en otra moneda, e imprime una
-          boleta numerada que esa misma noche viajará al organismo tributario. Toda esa coreografía
-          (servicio, precio, impuesto, comprobante, divisa, fidelidad) ocurre en menos de un minuto y
-          deja un rastro que un contador, un auditor y el dueño tendrán que poder leer meses después.
-          Ese minuto es el examen de este capítulo.</p>
+        <p class="entrada">Son las 18:05 de un jueves en <em>Serena Termas</em>, un spa de barrio.</p>
+
+        <p>Lucía acaba de salir de la cámara de vapor, se acerca al mostrador y pide pagar: un circuito
+          termal y un masaje descontracturante.</p>
+
+        <p>La recepcionista teclea. El sistema calcula el subtotal, le suma el impuesto al consumo,
+          descuenta un cupón de fidelidad, cobra la mitad en efectivo y la mitad con una tarjeta
+          extranjera en otra moneda, e imprime una boleta numerada.</p>
+
+        <p>Esa boleta viajará esa misma noche al organismo tributario.</p>
+
+        <p>Toda la coreografía (servicio, precio, impuesto, comprobante, divisa, fidelidad) ocurre en
+          menos de un minuto. Y deja un rastro que un contador, un auditor y el dueño tendrán que poder
+          leer meses después.</p>
+
+        <p>Ese minuto es el examen de este capítulo.</p>
 
         <aside class="nota-margen">
           <span class="etq">El giro de la Parte V</span>
@@ -73,14 +80,19 @@
           código que puedes correr.
         </aside>
 
-        <p>Hasta este punto, el libro te explicó cada decisión de diseño con escenas pequeñas y
-          autocontenidas: una venta de camiseta que se registra, una jugada de fútbol con dos agentes, una
-          ordenanza que entra en vigor a los treinta días. Eran lo bastante chicas para caber en una
-          página. Pero ninguna arquitectura merece llamarse <em>universal</em> si no sostiene un
-          negocio completo, con sus impuestos, sus comprobantes legales y sus monedas. Un spa parece
-          el dominio más inofensivo del mundo (toallas, vapor, música suave) y es justo por eso que
-          conviene empezar aquí: bajo esa superficie relajada se esconde un sistema de ventas con
-          casi todas las exigencias de un comercio formal.</p>
+        <p>Hasta aquí, el libro te explicó cada decisión con escenas pequeñas: una venta de camiseta,
+          una jugada de fútbol con dos agentes, una ordenanza que entra en vigor a los treinta días.</p>
+
+        <p>Eran lo bastante chicas para caber en una página.</p>
+
+        <p>Pero ninguna arquitectura merece llamarse universal si no sostiene un negocio entero, con sus
+          impuestos, sus comprobantes legales y sus monedas.</p>
+
+        <p>Un spa parece el dominio más inofensivo del mundo: toallas, vapor, música suave. Y por eso
+          mismo conviene empezar aquí.</p>
+
+        <p>Bajo esa superficie relajada se esconde un sistema de ventas con casi todas las exigencias de
+          un comercio formal.</p>
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Lo que pone a prueba este capítulo</p>
@@ -242,20 +254,25 @@
           capítulo de la clase.
         </aside>
 
-        <p>Repara en la barra de jugos. Un servicio y un jugo parecen lo mismo en la caja
-          registradora, pero el fisco los trata distinto: el servicio es <em>prestación</em>, el jugo
-          es <em>bien</em>, y de eso depende qué impuesto aplica. Modelarlos como clases distintas en
-          <code>K</code> (<code>servicio_spa</code> frente a <code>bien_consumible</code>) no es
-          pedantería: es lo que permite, más tarde, declarar el impuesto correcto sin un solo
-          <em>if</em> incrustado en el código de la caja.</p>
+        <p>Fíjate en la barra de jugos.</p>
+
+        <p>Un servicio y un jugo parecen lo mismo en la caja registradora, y el fisco los trata distinto.
+          El servicio es una prestación; el jugo, un bien. Y de eso depende qué impuesto aplica.</p>
+
+        <p>Modelarlos como clases distintas en <code>K</code> no es pedantería. Es lo que permite, más
+          tarde, declarar el impuesto correcto sin una sola condición escrita en el código de la
+          caja.</p>
 
         <h2>El nudo central · la venta</h2>
 
-        <p>Si tuviéramos que elegir el evento alrededor del cual orbita todo el negocio, sería
-          <strong>la venta</strong>. Quién la hizo, qué incluyó, dónde, cuándo, cuánto sumó, qué
-          impuesto gravó, qué comprobante la respalda y cómo se pagó: la venta es el punto donde los
-          siete ejes se cruzan. Tal como vimos al tratar el hecho atómico (D3), no la guardamos como
-          una fila gorda, sino como una constelación de tripletas tipadas que se apilan.</p>
+        <p>Si hubiera que elegir el evento alrededor del cual gira todo el negocio, sería <strong>la
+          venta</strong>.</p>
+
+        <p>Quién la hizo, qué incluyó, dónde, cuándo, cuánto sumó, qué impuesto gravó, qué comprobante la
+          respalda y cómo se pagó. La venta es el punto donde se cruzan los siete ejes.</p>
+
+        <p>Como vimos con el hecho atómico, no la guardamos como una fila gorda, sino como una
+          constelación de tripletas apiladas.</p>
 
         <p>La venta de las 18:05 a Lucía (un circuito más un masaje) se reifica como una situación en
           <code>O</code> (D4: lo merece, porque agrupa varias partes, tiene fecha y participa en otras
@@ -333,20 +350,23 @@
 
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">El sistema se niega a aceptar disparates</p>
-          <p style="margin:0">Si un programador distraído intentara poner a <code>lucia</code> en el rol
-            <code>lugar_de</code>, o un texto donde va una cantidad, <code>ingest_situation</code>
-            aborta de inmediato con un error de firma (<code>SignatureError</code>). El rol
-            <code>lugar_de</code> exige un habitante del eje <code>L</code>; una persona no lo es. La
-            validación no es opcional: es la frontera que impide que la basura entre al grafo.</p>
+          <p style="margin:0 0 .7rem">Si un programador distraído intentara poner a <code>lucia</code> en
+            el rol <code>lugar_de</code>, o un texto donde va una cantidad, el sistema se detiene con un
+            error de firma.</p>
+          <p style="margin:0">El rol <code>lugar_de</code> exige un habitante del eje <code>L</code>, y
+            una persona no lo es. La validación no es opcional: es la frontera que impide que entre
+            basura al grafo.</p>
         </div>
 
         <h2>El impuesto al consumo · dinero que solo está de paso</h2>
 
-        <p>Aquí es donde un sistema de ventas se separa de un cuaderno de apuntes. Ese 18&nbsp;% que
-          aparece en la boleta no es ingreso del spa: es dinero que el negocio cobra <em>por cuenta
-          del fisco</em> y que tendrá que entregarle. Confundir ambas cosas (tratar el impuesto como
-          ganancia) es uno de los errores contables más caros que existen. El modelo lo mantiene
-          separado por construcción.</p>
+        <p>Aquí es donde un sistema de ventas se separa de un cuaderno de apuntes.</p>
+
+        <p>Ese 18 % de la boleta no es ingreso del spa. Es dinero que el negocio cobra <em>por cuenta del
+          fisco</em> y que tendrá que entregarle.</p>
+
+        <p>Confundir las dos cosas, tratar el impuesto como ganancia, es uno de los errores contables más
+          caros que existen. El modelo los mantiene separados por construcción.</p>
 
         <p>El impuesto no se guarda como un número suelto pegado a la venta, sino como un objeto con
           identidad: sabe cuánto es, sobre qué base se calculó, qué tasa aplicó y a quién se le
@@ -364,12 +384,16 @@
   estatus_factual: por_remitir           # K · cobrado, aún no entregado</code></pre>
         </div>
 
-        <p>Modelarlo así tiene una consecuencia inmediata y deliciosa: la pregunta del contador
-          <em>«¿cuánto impuesto debo entregar este mes?»</em> deja de ser un cálculo que alguien
-          reprograma cada vez que cambia la ley, y pasa a ser una simple suma sobre los objetos cuyo
-          <code>acreedor</code> es el fisco y cuyo estado sigue en <code>por_remitir</code>. Y cuando
-          la tasa cambie del 18&nbsp;% al 16&nbsp;%, las ventas viejas conservan su tasa congelada: se
-          calcularon con la alícuota que regía ese día, y esa verdad histórica no se reescribe.</p>
+        <p>Eso tiene una consecuencia deliciosa.</p>
+
+        <p>La pregunta del contador, <em>«¿cuánto impuesto debo entregar este mes?»</em>, deja de ser un
+          cálculo que alguien reprograma cada vez que cambia la ley.</p>
+
+        <p>Pasa a ser una suma sobre los objetos cuyo acreedor es el fisco y que siguen pendientes de
+          entregar.</p>
+
+        <p>Y cuando la tasa baje del 18 % al 16 %, las ventas viejas conservan la suya. Se calcularon con
+          la tasa que regía ese día, y esa verdad no se reescribe.</p>
 
         <aside class="nota-margen">
           <span class="etq">Vigencia · D6</span>
@@ -381,12 +405,14 @@
 
         <h2>El comprobante · cuando la ley pide un número correlativo</h2>
 
-        <p>Un comercio formal no puede limitarse a saber que vendió: debe emitir un documento numerado,
-          de una serie correlativa que la autoridad tributaria audita. Si la boleta 4470 existe y la
-          4472 existe, la 4471 <em>tiene</em> que existir; un hueco en la numeración es, para un
-          auditor, una venta sospechosamente desaparecida. El comprobante, por tanto, no es un adorno
-          de la venta: es un objeto de pleno derecho, con su propia clase, su propio número y su
-          propio destino regulatorio.</p>
+        <p>Un comercio formal no puede limitarse a saber que vendió. Tiene que emitir un documento
+          numerado, de una serie correlativa que la autoridad audita.</p>
+
+        <p>Si la boleta 4470 existe y la 4472 existe, la 4471 <em>tiene</em> que existir. Un hueco en la
+          numeración es, para un auditor, una venta sospechosamente desaparecida.</p>
+
+        <p>El comprobante no es un adorno de la venta. Es un objeto de pleno derecho, con su clase, su
+          número y su destino legal.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -401,12 +427,13 @@
   estatus_factual: emitida                 # K · emitida, anulada, etc.</code></pre>
         </div>
 
-        <p>La distinción entre <em>boleta</em> y <em>factura</em> (una para el consumidor final, otra
-          a nombre de una empresa que descontará el impuesto) es, en el modelo, nada más que dos clases
-          distintas en <code>K</code>: <code>tipo_boleta_venta</code> y <code>tipo_factura_venta</code>.
-          Cuando Noa pidió factura a nombre de su empresa, el sistema no necesitó otra tabla ni otro
-          flujo: la misma maquinaria emitió un objeto de otra clase, con un campo extra para el
-          identificador tributario del receptor.</p>
+        <p>La diferencia entre <em>boleta</em> y <em>factura</em>, una para el consumidor final y otra a
+          nombre de una empresa que descontará el impuesto, es en el modelo nada más que dos clases
+          distintas en <code>K</code>.</p>
+
+        <p>Cuando Noa pidió factura a nombre de su empresa, el sistema no necesitó otra tabla ni otro
+          flujo. La misma maquinaria emitió un objeto de otra clase, con un campo extra para el
+          identificador tributario.</p>
 
         <div class="caja caja--definicion revelar">
           <p class="caja-tit">Comprobante de venta</p>
@@ -419,12 +446,16 @@
 
         <h2>Multi-divisa · dos monedas, una contabilidad</h2>
 
-        <p>Martín, el turista, pagó su circuito en dos partes: la mitad en efectivo, en moneda local,
-          y la mitad con una tarjeta en dólares. La trampa clásica es guardar «pagó 22.50» sin decir
-          de qué moneda hablamos (el pecado capital de los sistemas que asumen una sola divisa). En
-          WQuestions, un monto nunca viaja solo: siempre arrastra su unidad, que es un habitante de
-          <code>K</code>. Y un pago en otra moneda guarda, además, la tasa de cambio con la que se
-          convirtió, fechada en el día de la operación.</p>
+        <p>Martín, el turista, pagó su circuito en dos partes: la mitad en efectivo, en moneda local, y
+          la mitad con una tarjeta en dólares.</p>
+
+        <p>La trampa clásica es guardar «pagó 22.50» sin decir de qué moneda hablamos. Es el pecado
+          capital de los sistemas que asumen una sola divisa.</p>
+
+        <p>Aquí un monto nunca viaja solo. Siempre arrastra su unidad, que vive en <code>K</code>.</p>
+
+        <p>Y un pago en otra moneda guarda además la tasa de cambio con la que se convirtió, fechada en
+          el día de la operación.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -445,19 +476,26 @@
   medio         : tarjeta_credito</code></pre>
         </div>
 
-        <p>Como cada cantidad declara su unidad, el sistema nunca suma peras con manzanas. Para
-          totalizar la caja del día convierte cada cobro a la moneda base usando la tasa que ya quedó
-          guardada con él —no la de hoy, sino la del momento del cobro—, y la contabilidad cierra al
-          centavo aunque hayan entrado cuatro monedas distintas. La unidad como ciudadano de primera
-          clase, que el capítulo del eje cuantitativo defendió en abstracto, aquí se cobra su sueldo.</p>
+        <p>Como cada cantidad declara su unidad, el sistema nunca suma peras con manzanas.</p>
+
+        <p>Para cerrar la caja del día convierte cada cobro a la moneda base usando la tasa que quedó
+          guardada con él. No la de hoy: la del momento del cobro.</p>
+
+        <p>Y la contabilidad cuadra al centavo aunque hayan entrado cuatro monedas distintas.</p>
+
+        <p>La unidad como ciudadano de primera, que el capítulo del eje cuantitativo defendió en
+          abstracto, aquí se cobra su sueldo.</p>
 
         <h2>El lexicon del spa · enseñarle a la máquina el idioma del negocio</h2>
 
         <p>Para que la recepcionista no tenga que aprender jerga de bases de datos, configuramos el
-          lexicon con las palabras exactas del spa. El lexicon es el compilador del que habló la
-          Parte&nbsp;IV: traduce el vocabulario humano a los roles canónicos del modelo, y de paso
-          resuelve la polisemia. El verbo <em>«tomar»</em>, por ejemplo, significa cosas distintas
-          según lo que lo acompañe:</p>
+          lexicon con las palabras exactas del spa.</p>
+
+        <p>El lexicon es el traductor del que habló la Parte IV: pasa el vocabulario de la casa a los
+          roles del modelo, y de paso deshace las ambigüedades.</p>
+
+        <p>El verbo <em>«tomar»</em>, por ejemplo, significa cosas distintas según lo que lo
+          acompañe:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -622,10 +660,13 @@ le_toca_gratis = n >= 10        # la regla de fidelidad, en una línea</code></p
             proyección, no la maquinaria.</figcaption>
         </figure>
 
-        <p>Detente un segundo aquí, porque esa suma es la primera aparición de algo que
-          volverá en cada dominio del libro. No preguntamos por una venta del spa: preguntamos
-          por todo el impuesto del mes a la vez. Modelar con cuidado la venta de un circuito de
-          aguas termales fue, sin proponérnoslo, dejar listo el reporte fiscal del negocio entero.</p>
+        <p>Detente un segundo aquí, porque esa suma es la primera aparición de algo que volverá en cada
+          dominio del libro.</p>
+
+        <p>No preguntamos por una venta del spa. Preguntamos por todo el impuesto del mes a la vez.</p>
+
+        <p>Modelar con cuidado la venta de un circuito termal dejó listo, sin proponérnoslo, el informe
+          fiscal del negocio entero.</p>
 
         <h2>El «por qué» de una venta · los cuatro cables</h2>
 
@@ -634,20 +675,21 @@ le_toca_gratis = n >= 10        # la regla de fidelidad, en una línea</code></p
           porqué se reparte en cuatro cables distintos, y un sistema de ventas los necesita a casi
           todos. Dos ejemplos del spa lo dejan claro.</p>
 
-        <div class="columnas">
-          <p><b>El descuento que tiene una causa normativa.</b> A Lucía se le aplicó su circuito gratis
-            de la décima visita. Ese descuento no es un capricho de la recepcionista: está
-            <em>justificado</em> por el contrato de fidelidad, una regla del negocio. El cable
-            <code>justificado_por</code> ata el descuento a la norma que lo autoriza, de modo que
-            cualquier auditor pueda rastrear por qué esa venta cobró menos —y comprobar que fue
-            legítimo, no un robo.</p>
-          <p><b>El cliente que casi compra.</b> Noa quiso contratar el plan mensual, pero no cerró ese
-            día. En una caja registradora común, ese dato se pierde. En WQuestions se guarda como una
-            <em>intención</em>: una situación con <code>modalidad</code> volitiva y estado
-            <code>intencionado</code>, no <code>real</code>. Cuando marketing pregunte «¿a quién
-            llamamos para ofrecer el plan?», Noa salta a la lista; cuando contabilidad pregunte «¿qué
-            planes están activos?», Noa no aparece y nadie le cobra por error.</p>
-        </div>
+          <p><b>El descuento que tiene una norma detrás.</b> A Lucía se le aplicó su circuito gratis de
+            la décima visita.</p>
+          <p>Ese descuento no es un capricho de la recepcionista. Lo <em>justifica</em> el contrato de
+            fidelidad, una regla del negocio.</p>
+          <p>El cable <code>justificado_por</code> ata el descuento a la norma que lo autoriza, para que
+            cualquier auditor pueda rastrear por qué esa venta cobró menos y comprobar que fue
+            legítimo.</p>
+          <p><b>El cliente que casi compra.</b> Noa quiso contratar el plan mensual y no cerró ese
+            día.</p>
+          <p>En una caja registradora común, ese dato se pierde. Aquí se guarda como una
+            <em>intención</em>: una situación con estado <code>intencionado</code>, no
+            <code>real</code>.</p>
+          <p>Cuando marketing pregunte «¿a quién llamamos para ofrecer el plan?», Noa salta a la lista.
+            Cuando contabilidad pregunte «¿qué planes están activos?», Noa no aparece y nadie le cobra
+            por error.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -667,13 +709,15 @@ le_toca_gratis = n >= 10        # la regla de fidelidad, en una línea</code></p
 
         <h2>El antes y el después · del esquema fragmentado al grafo único</h2>
 
-        <p><b>Antes, en SQL.</b> En un esquema relacional clásico, <em>Serena Termas</em> vive
-          repartido en media docena de tablas que no se hablan solas: <code>clientes</code>,
-          <code>ventas</code>, <code>lineas_venta</code>, <code>pagos</code>, <code>comprobantes</code>,
-          <code>impuestos</code>. Responder «¿cuánto IGV debo este mes, descontando las ventas anuladas
-          y convertido todo a moneda local?» obliga a encadenar cinco <code>JOIN</code> frágiles,
-          filtrar por estado, cruzar tasas de cambio y dejar la mitad de la lógica enterrada en código
-          de aplicación que nadie documenta y que se rompe cada vez que cambia una regla.</p>
+        <p><b>Antes, en SQL.</b> En un esquema de tablas clásico, <em>Serena Termas</em> vive repartido
+          en media docena de tablas que no se hablan solas.</p>
+
+        <p>Responder «¿cuánto impuesto debo este mes, descontando las ventas anuladas y convertido todo a
+          moneda local?» obliga a encadenar cinco cruces frágiles, filtrar por estado y cruzar tasas de
+          cambio.</p>
+
+        <p>Y deja la mitad de la lógica enterrada en código que nadie documenta y que se rompe cada vez
+          que cambia una regla.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">sql</span><button class="copiar">⧉ copiar</button></div>
@@ -692,12 +736,14 @@ WHERE v.estado = 'pagada'              -- ojo: ¿y las anuladas?
   AND c.numero IS NOT NULL;           -- la lógica de moneda… vive en otra parte</code></pre>
         </div>
 
-        <p><b>Después, en WQuestions.</b> La misma información es un grafo único de hechos atómicos:
-          cada impuesto es un objeto con su cable <code>acreedor → fisco</code> y su
-          <code>estatus_factual</code>. La pregunta se vuelve una suma sobre un patrón (sin migrar
-          esquema, sin <code>JOIN</code>, sin lógica escondida en procedimientos almacenados). Y
-          cuando la tasa cambie, se edita un solo hecho en el catálogo; las ventas pasadas conservan la
-          suya y el resto del sistema ni se entera.</p>
+        <p><b>Después, en WQuestions.</b> La misma información es un grafo único de hechos. Cada
+          impuesto es un objeto con su acreedor y su estado.</p>
+
+        <p>La pregunta se vuelve una suma sobre un patrón. Sin migrar esquema, sin cruces, sin lógica
+          escondida.</p>
+
+        <p>Y cuando la tasa cambie, se edita un solo hecho en el catálogo. Las ventas pasadas conservan
+          la suya y el resto del sistema ni se entera.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -762,11 +808,16 @@ igv_por_pagar = suma(u, "monto", Pattern(
         </div>
 
         <p>El spa parecía el dominio más inofensivo del libro y resultó ser un sistema de ventas
-          completo, con su autoridad tributaria mirando por encima del hombro. El modelo lo absorbió
-          sin doblarse. Pero un comercio de barrio opera a su propio ritmo: las ventas no llegan por
-          miles ni cambian de estado cada segundo. En el próximo capítulo subimos la apuesta hacia la
-          velocidad y la concurrencia: un servicio on-demand, donde un viaje en taxi cambia de estado
-          una docena de veces en quince minutos y miles ocurren a la vez.</p>
+          completo, con la autoridad tributaria mirando por encima del hombro.</p>
+
+        <p>El modelo lo absorbió sin doblarse.</p>
+
+        <p>Pero un comercio de barrio va a su ritmo. Las ventas no llegan por miles ni cambian de estado
+          cada segundo.</p>
+
+        <p>En el próximo capítulo subimos la apuesta hacia la velocidad: un servicio a demanda, donde un
+          viaje en taxi cambia de estado una docena de veces en quince minutos y miles ocurren a la
+          vez.</p>
 
       </div>
     </article>

@@ -57,24 +57,34 @@
 
         <p class="entrada">Imagina que cierras este libro y decides que la idea merece existir de
           verdad. Clonas el repositorio, levantas el prototipo, cargas un dominio propio (tu spa, tu
-          clínica, el sistema de tu empresa) y empiezas a registrar hechos. Funciona: los hechos
-          entran como tripletas tipadas, el lexicon traduce tu vocabulario, las consultas responden. Y
-          entonces, casi de inmediato, chocas con una pared. Quieres que el sistema dispare solo la
-          regla <em>«a la séptima sesión, la octava es gratis»</em>; el prototipo guarda la regla como
-          dato, pero no la <em>ejecuta</em>. Quieres preguntarle no qué era cierto, sino qué sabía el
-          sistema en abril; te contesta bien mientras el proceso siga vivo, y pierde el hilo en cuanto
-          lo reinicias.
-          Ninguna de esas paredes es teórica. Son, exactamente, lo que falta.</p>
+          clínica, el sistema de tu empresa) y empiezas a registrar hechos.</p>
 
-        <p>Este capítulo cambia de registro a propósito. No es una recapitulación ni una mirada
-          inspiradora al horizonte; es un <strong>mapa de implementación</strong>. Hasta aquí el libro
-          presentó la propuesta entera y la sometió a prueba: un prototipo en Python con sus pruebas en
-          verde, ocho dominios industriales modelados que confirman que el catálogo se sostiene en
-          territorios disímiles y (en el <a href="29-prueba-reflexiva.html">capítulo&nbsp;29</a>) el
-          experimento reflexivo, donde el modelo bastó para describir su propia herramienta y se
-          corrigió a sí mismo bajo carga. Lo que sigue es el inventario de la distancia que
-          separa eso de una pieza de infraestructura que cualquiera pueda adoptar un martes por la
-          tarde.</p>
+        <p>Funciona. Los hechos entran como tripletas tipadas, el lexicon traduce tu vocabulario, las
+          consultas responden.</p>
+
+        <p>Y entonces, casi de inmediato, chocas con una pared.</p>
+
+        <p>Quieres que el sistema dispare solo la regla <em>«a la séptima sesión, la octava es
+          gratis»</em>. El prototipo guarda la regla como dato, pero no la <em>ejecuta</em>.</p>
+
+        <p>Quieres preguntarle no qué era cierto, sino qué sabía el sistema en abril. Te contesta bien
+          mientras el proceso siga vivo, y pierde el hilo en cuanto lo reinicias.</p>
+
+        <p>Ninguna de esas paredes es teórica. Son, exactamente, lo que falta.</p>
+
+        <p>Este capítulo cambia de registro a propósito. No es un resumen ni una mirada inspiradora al
+          horizonte. Es un <strong>mapa de implementación</strong>.</p>
+
+        <p>Hasta aquí el libro presentó la propuesta entera y la sometió a prueba. Un prototipo en
+          Python con sus pruebas en verde. Ocho dominios industriales que confirman que el catálogo se
+          sostiene en terrenos muy distintos.</p>
+
+        <p>Y, en el <a href="29-prueba-reflexiva.html">capítulo&nbsp;29</a>, el experimento reflexivo,
+          donde el modelo bastó para describir su propia herramienta y se corrigió a sí mismo bajo
+          carga.</p>
+
+        <p>Lo que sigue es el inventario de la distancia entre eso y una pieza de infraestructura que
+          cualquiera pueda adoptar un martes por la tarde.</p>
 
         <aside class="nota-margen">
           <span class="etq">Para quién</span>
@@ -85,10 +95,11 @@
         </aside>
 
         <p>Lo organizo en cinco frentes. De cada uno digo tres cosas: <strong>qué falta</strong>,
-          <strong>qué tan urgente es</strong> y <strong>qué requiere para resolverlo</strong>. Donde el
-          experimento reflexivo ya adelantó terreno lo señalo, porque eso mueve el punto de partida.
-          Y cierro con la pieza que pesa más que todas las demás juntas, y que el autor no controla
-          solo.</p>
+          <strong>qué tan urgente es</strong> y <strong>qué requiere para resolverlo</strong>.</p>
+
+        <p>Donde el experimento reflexivo ya adelantó terreno lo señalo, porque eso mueve el punto de
+          partida. Y cierro con la pieza que pesa más que todas las demás juntas, y que el autor no
+          controla solo.</p>
 
         <!-- FIGURA 30.1 · roadmap resuelto vs pendiente -->
         <figure class="figura figura--ancha revelar">
@@ -148,21 +159,25 @@
         <h2>Frente 1 — El motor de inferencia</h2>
 
         <p>Apareció una y otra vez a lo largo del libro: el evaluador externo que recorre el grafo y
-          dispara reglas. La regla <em>«siete sesiones cumplidas, la octava gratis»</em> del spa. La
-          verificación <em>«prescripción contra contraindicación»</em> de la clínica. El cálculo del
-          marcador a partir de cada gol del partido. La cláusula de rescisión que se activa en un
-          contrato. Todas comparten la misma forma estructural: una condición declarativa sobre los
-          hechos del grafo y un consecuente que se efectúa cuando la condición se cumple.</p>
+          dispara reglas.</p>
+
+        <p>La regla <em>«siete sesiones cumplidas, la octava gratis»</em> del spa. La verificación
+          <em>«prescripción contra contraindicación»</em> de la clínica. El cálculo del marcador a
+          partir de cada gol. La cláusula de rescisión que se activa en un contrato.</p>
+
+        <p>Todas tienen la misma forma: una condición sobre los hechos del grafo y algo que ocurre
+          cuando esa condición se cumple.</p>
 
         <p>El experimento reflexivo dio el <strong>primer medio paso</strong>: demostró que la conducta
           puede vivir como dato y ejecutarse desde afuera (un evaluador genérico que despacha verbos
           leyéndolos del grafo).</p>
 
-        <p>El segundo medio paso ya está dado, y es la <strong>derivación</strong>. El prototipo
-          calcula una magnitud a partir de otras respetando las unidades, y escribe el resultado con
-          su <code>calculado_de</code> y su <code>justificado_por</code> puestos. La regla vive en el
-          grafo, no en el código: una expresión sobre roles y una unidad de destino. Así se calcula
-          hoy el oro fino de la minera, y de ahí sale que 2.480&nbsp;t por 8,6&nbsp;g/t den
+        <p>El segundo medio paso ya está dado, y es la <strong>derivación</strong>. El prototipo calcula
+          una magnitud a partir de otras respetando las unidades, y escribe el resultado con su
+          <code>calculado_de</code> y su <code>justificado_por</code> puestos.</p>
+
+        <p>La regla vive en el grafo, no en el código: una expresión sobre roles y una unidad de destino.
+          Así se calcula hoy el oro fino de la minera. De ahí sale que 2.480&nbsp;t por 8,6&nbsp;g/t den
           685,7&nbsp;onzas troy sin que nadie escriba el número.</p>
 
         <aside class="nota-margen">
@@ -175,21 +190,25 @@
           que nadie lo programe.
         </aside>
 
-        <p>El tercer medio paso cierra la <strong>validación</strong>. Las formas (del
-          <a href="05-predicados.html">capítulo 5</a>) viven en el grafo como entidades y el
-          evaluador las comprueba: rangos, cardinalidades, roles requeridos y unicidad. No rechaza
-          nada, porque el mundo abierto se mantiene; anota la violación como un hecho y la cierra
-          cuando el dato que la causaba se corrige. La demostración está en el
-          <a href="19-banco.html">capítulo 19</a>, con una transferencia que excede el límite, se
-          asienta igual y queda marcada.</p>
+        <p>El tercer medio paso cierra la <strong>validación</strong>. Las formas del
+          <a href="05-predicados.html">capítulo 5</a> viven en el grafo como entidades y el evaluador
+          las comprueba: rangos, cardinalidades, roles requeridos y unicidad.</p>
+
+        <p>No rechaza nada, porque el mundo abierto se mantiene. Anota la violación como un hecho y la
+          cierra cuando el dato que la causaba se corrige.</p>
+
+        <p>La demostración está en el <a href="19-banco.html">capítulo 19</a>: una transferencia que
+          excede el límite, se asienta igual y queda marcada.</p>
 
         <div class="caja caja--practica revelar">
           <p class="caja-tit">Lo que costó, medido</p>
-          <p style="margin:0 0 .5rem">La sospecha razonable era que comprobar en cada escritura
-            saldría caro y habría que empujarlo todo a un barrido nocturno. Medido sobre el
-            prototipo, no: con las formas indexadas por rol, cada escritura consulta cero o una, y el
-            sobrecoste se pierde en el ruido (+8,8&nbsp;% a mil hechos, −1,8&nbsp;% a cien mil, que
-            es la manera que tiene un banco de pruebas de decir que no hay diferencia).</p>
+          <p style="margin:0 0 .5rem">La sospecha razonable era que comprobar en cada escritura saldría
+            caro, y que habría que empujarlo todo a un barrido nocturno. Medido sobre el prototipo,
+            no.</p>
+
+          <p style="margin:0 0 .5rem">Con las formas indexadas por rol, cada escritura consulta cero o
+            una, y el sobrecoste se pierde en el ruido: +8,8&nbsp;% a mil hechos y −1,8&nbsp;% a cien
+            mil. Es la manera que tiene un banco de pruebas de decir que no hay diferencia.</p>
           <p style="margin:0">Un barrido completo sobre 100.000 hechos son 13&nbsp;ms. Un turno de
             modelo de lenguaje ronda los 2.000. La comprobación es el 0,66&nbsp;% de lo que el
             usuario ya está esperando, así que el rendimiento no decide este diseño: lo decide la
@@ -197,13 +216,15 @@
         </div>
 
         <p>Lo que ese motor <strong>todavía no es</strong> es un evaluador de <strong>reglas
-          declarativas</strong>. Sabe ejecutar verbos, sabe calcular y sabe comprobar; no sabe
-          resolver «si se cumplen estas condiciones sobre los hechos, deriva este hecho nuevo». La
-          regla del spa se almacena y no se dispara: falta el <strong>disparo condicional con
-          agregados</strong>, contar las siete sesiones y escribir la octava. Y falta una clase de
-          forma que la primera versión dejó fuera a propósito, la que recorre caminos («que no haya
-          ciclos en <code>causado_por</code>»), porque deja de ser una pasada lineal y cambia de
-          clase de coste.</p>
+          declarativas</strong>. Sabe ejecutar verbos, sabe calcular y sabe comprobar. No sabe resolver
+          «si se cumplen estas condiciones sobre los hechos, deriva este hecho nuevo».</p>
+
+        <p>La regla del spa se almacena y no se dispara. Falta el <strong>disparo condicional con
+          agregados</strong>: contar las siete sesiones y escribir la octava.</p>
+
+        <p>Y falta una clase de forma que la primera versión dejó fuera a propósito, la que recorre
+          caminos («que no haya ciclos en <code>causado_por</code>»). Deja de ser una pasada lineal y
+          cambia de clase de coste.</p>
 
         <p>Hay al menos cuatro tecnologías candidatas para esa capa, cada una con su fortaleza y su
           flanco débil:</p>
@@ -243,21 +264,26 @@
             todavía no <em>infiere</em>: almacena la regla del spa, no la dispara. Para la mayoría de
             las aplicaciones útiles, eso es un bloqueador.</p>
           <p style="margin:0"><b>Qué requiere:</b> una <em>API de motor de inferencia</em> que el
-            universo exponga —<code>u.evaluate(regla)</code>, <code>u.evaluate_all()</code>— cuyos
-            resultados sean, otra vez, hechos atómicos firmados por el evaluador. El primer paso es
-            elegir un motor de referencia (SHACL para validación, Datalog para inferencia) y montarlo
-            sobre el evaluador genérico que ya existe. Estimación: tres a seis meses para una primera
-            versión usable.</p>
+            universo exponga (<code>u.evaluate(regla)</code>, <code>u.evaluate_all()</code>), cuyos
+            resultados sean otra vez hechos atómicos firmados por el evaluador.</p>
+
+          <p style="margin:0">El primer paso es elegir un motor de referencia (SHACL para validación,
+            Datalog para inferencia) y montarlo sobre el evaluador que ya existe. Estimación: de tres a
+            seis meses para una primera versión usable.</p>
         </div>
 
         <h3>El lugar de la IA en este frente</h3>
 
-        <p>La cuarta opción de la lista (usar un modelo de lenguaje) merece una aclaración, porque la
-          tentación es grande. ¿No podría una IA, incluso de pesos abiertos y autoalojada, hacer de
-          motor de inferencia, con un buen <em>prompt</em> y un modelo bien definido? Hay que separar
-          dos clases de regla. Para las <strong>borrosas</strong> (¿este reclamo es urgente?, ¿este
-          texto implica consentimiento?) la respuesta es sí, y ahí el LLM es la herramienta correcta.
-          Para las <strong>estrictas</strong> (las del spa, las del banco, las del contrato) la
+        <p>La cuarta opción de la lista, usar un modelo de lenguaje, merece una aclaración, porque la
+          tentación es grande. ¿No podría una IA hacer de motor de inferencia, con un buen
+          <em>prompt</em> y un modelo bien definido?</p>
+
+        <p>Hay que separar dos clases de regla.</p>
+
+        <p>Para las <strong>borrosas</strong> (¿este reclamo es urgente?, ¿este texto implica
+          consentimiento?) la respuesta es sí, y ahí el LLM es la herramienta correcta.</p>
+
+        <p>Para las <strong>estrictas</strong> (las del spa, las del banco, las del contrato) la
           respuesta es no, por cuatro razones que ningún <em>prompt</em> arregla.</p>
 
         <div class="caja caja--alerta revelar">
@@ -275,16 +301,21 @@
           </ol>
         </div>
 
-        <p>La forma productiva de sumar IA, entonces, no es ponerla de <em>runtime</em> sino de
-          <strong>autor</strong>. Que un LLM <strong>compile</strong> una regla escrita en lenguaje
-          natural (<em>«a las siete sesiones, la octava es gratis»</em>) a una regla declarativa en
-          Datalog o SHACL sobre los hechos del grafo, y que el <strong>motor determinista la
-          ejecute</strong>. El modelo bien definido vuelve esa compilación casi directa, porque los
-          roles ya están tipados y la regla mapea a patrones sobre hechos canónicos. Así se obtiene lo
-          mejor de los dos mundos: la flexibilidad del lenguaje natural para <em>escribir</em> reglas y
-          el rigor del motor para <em>ejecutarlas</em>. La IA entra dos veces —para convertir lenguaje
-          en hechos (lo vimos en el <a href="26-llms.html">capítulo&nbsp;26</a>) y para compilar
-          reglas—, pero el corazón de la inferencia estricta queda determinista y demostrable.</p>
+        <p>La forma productiva de sumar IA no es ponerla a ejecutar, sino a <strong>escribir</strong>.</p>
+
+        <p>Que un LLM <strong>traduzca</strong> una regla en lenguaje natural (<em>«a las siete sesiones,
+          la octava es gratis»</em>) a una regla declarativa en Datalog o SHACL sobre los hechos del
+          grafo. Y que el <strong>motor determinista la ejecute</strong>.</p>
+
+        <p>Un modelo bien definido vuelve esa traducción casi directa, porque los roles ya están tipados
+          y la regla se corresponde con patrones sobre hechos canónicos.</p>
+
+        <p>Así se obtiene lo mejor de los dos mundos: la soltura del lenguaje natural para
+          <em>escribir</em> reglas y el rigor del motor para <em>ejecutarlas</em>.</p>
+
+        <p>La IA entra dos veces: para convertir lenguaje en hechos, como vimos en el
+          <a href="26-llms.html">capítulo&nbsp;26</a>, y para traducir reglas. Pero el corazón de la
+          inferencia estricta queda determinista y demostrable.</p>
 
         <aside class="nota-margen">
           <span class="etq">A favor de lo abierto</span>
@@ -312,10 +343,11 @@ Regla: "A las siete sesiones finalizadas de un cliente, la octava es gratis."</c
 octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
         </div>
 
-        <p>El modelo de lenguaje <em>escribió</em> la regla; el motor determinista la <em>ejecuta</em> y
-          firma cada hecho derivado. La IA nunca toca el dato en caliente. Y el hecho derivado entra al
-          grafo con la misma forma que cualquier otro: una tripleta tipada, con su autor y su
-          vigencia.</p>
+        <p>El modelo de lenguaje <em>escribió</em> la regla. El motor determinista la <em>ejecuta</em> y
+          firma cada hecho derivado. La IA nunca toca el dato en caliente.</p>
+
+        <p>Y el hecho derivado entra al grafo con la misma forma que cualquier otro: una tripleta tipada,
+          con su autor y su vigencia.</p>
 
         <div class="triple">
           <span class="nodo nodo--q"><span>cliente_paredes</span><small>Q</small></span>
@@ -325,29 +357,36 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
 
         <h2>Frente 2 — Bitemporalidad completa</h2>
 
-        <p>Hoy el modelo soporta <strong>tiempo de validez</strong> (<em>valid time</em>): cada hecho
-          lleva su rango <code>[inicio, fin)</code>, y una consulta «en el momento T» recupera lo que
-          era cierto del mundo entonces. Esta es la mecánica de vigencia que el libro reifica con rangos
-          (la decisión <span class="codigo-d">D6</span>, enunciada en el
-          <a href="09-situaciones.html">capítulo&nbsp;9</a>).</p>
+        <p>Hoy el modelo soporta el <strong>tiempo de validez</strong>. Cada hecho lleva su rango
+          <code>[inicio, fin)</code>, y una consulta «en el momento T» recupera lo que era cierto del
+          mundo entonces.</p>
 
-        <p>El <strong>tiempo de transacción</strong> (<em>transaction time</em>), que registra cuándo
-          el sistema afirmó cada hecho, tampoco está ausente: todo hecho entra con su marca, sin que
-          nadie la pida, y de ella depende algo que ya se usa a diario. Cuando un rol tiene varios
-          valores, el vigente es el de marca más reciente, y el orden del historial sale de ahí. Sin
-          esa marca, <code>corregir</code> no sabría cuál de las dos versiones es la buena.</p>
+        <p>Es la mecánica de vigencia que el libro reifica con rangos: la decisión
+          <span class="codigo-d">D6</span> del <a href="09-situaciones.html">capítulo&nbsp;9</a>.</p>
 
-        <p>Lo que <strong>falta</strong>, entonces, es más estrecho y más incómodo de lo que suele
-          decirse: esa marca <strong>no sobrevive al reinicio</strong>. Al recargar desde disco los
-          hechos vuelven con una marca nueva, la del momento de la recarga, y las originales se
-          pierden. El sistema recuerda qué creía, pero olvida desde cuándo lo creía.</p>
+        <p>El <strong>tiempo de registro</strong>, que anota cuándo el sistema afirmó cada hecho,
+          tampoco falta del todo. Todo hecho entra con su marca sin que nadie la pida.</p>
 
-        <p>La diferencia importa cuando alguien pregunta no «¿qué era cierto?» sino «¿qué sabíamos?».
-          Toma un caso del banco. En mayo registramos que el plan mensual de un cliente venció el 31 de
-          marzo; en abril el cliente aparece, demuestra que había renovado y retrocedemos el plan. La
-          pregunta del auditor («¿qué estaba en el sistema entre el 1 de abril y la fecha de la
-          corrección?») solo se responde si el sistema preservó esa versión transitoria, la que era
-          falsa pero estuvo vigente como creencia del sistema durante semanas.</p>
+        <p>Y de ella depende algo que ya se usa a diario. Cuando un rol tiene varios valores, el vigente
+          es el de marca más reciente, y el orden del historial sale de ahí. Sin esa marca,
+          <code>corregir</code> no sabría cuál de las dos versiones es la buena.</p>
+
+        <p>Lo que <strong>falta</strong> es más estrecho y más incómodo de lo que suele decirse: esa
+          marca <strong>no sobrevive al reinicio</strong>.</p>
+
+        <p>Al recargar desde disco, los hechos vuelven con una marca nueva, la del momento de la
+          recarga, y las originales se pierden. El sistema recuerda qué creía, pero olvida desde cuándo
+          lo creía.</p>
+
+        <p>La diferencia importa cuando alguien pregunta no «¿qué era cierto?» sino «¿qué
+          sabíamos?».</p>
+
+        <p>Toma un caso del banco. En mayo registramos que el plan mensual de un cliente venció el 31 de
+          marzo. En abril el cliente aparece, demuestra que había renovado y retrocedemos el plan.</p>
+
+        <p>La pregunta del auditor («¿qué estaba en el sistema entre el 1 de abril y la fecha de la
+          corrección?») solo se responde si el sistema conservó esa versión pasajera. La que era falsa
+          pero estuvo vigente como creencia del sistema durante semanas.</p>
 
         <aside class="nota-margen">
           <span class="etq">Dos relojes</span>
@@ -358,35 +397,42 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Qué falta · urgencia · qué requiere</p>
-          <p style="margin:0 0 .5rem"><b>Qué falta:</b> cerrar el tiempo de transacción de punta a
-            punta. El hecho ya lo lleva y el respaldo SQLite ya lo escribe; es la <em>lectura</em> la
-            que lo descarta al reconstruir el universo, junto con la vigencia. De ahí que el viaje de
-            ida y vuelta a disco pierda las dos líneas de tiempo. Falta además la consulta que las
-            cruce.</p>
+          <p style="margin:0 0 .5rem"><b>Qué falta:</b> cerrar el tiempo de registro de punta a punta.
+            El hecho ya lo lleva y el respaldo SQLite ya lo escribe.</p>
+
+          <p style="margin:0 0 .5rem">Es la <em>lectura</em> la que lo descarta al reconstruir el
+            universo, junto con la vigencia. De ahí que el viaje de ida y vuelta a disco pierda los dos
+            relojes. Falta además la consulta que los cruce.</p>
           <p style="margin:0 0 .5rem"><b>Urgencia: alta</b> para dominios regulados (finanzas, salud,
             derecho); baja para el resto. Cuando un dominio lo necesita, no es opcional. El destino es
             un par de intervalos por hecho y consultas <em>as-of</em> duales:
             <code>query(valido_en=T1, registrado_en=T2)</code>.</p>
-          <p style="margin:0"><b>Qué requiere:</b> una refactorización compatible del módulo del hecho
-            para llevar dos intervalos en lugar de uno, y de la capa de persistencia para preservarlos.
-            Snodgrass<a class="ref" href="referencias.html#ref-17">(17)</a> formalizó esto en los años noventa; las bases bitemporales modernas (Datomic,
-            XTDB) lo implementan en producción. Estimación: un mes de implementación, más pruebas sobre
-            un dominio regulado real.</p>
+          <p style="margin:0"><b>Qué requiere:</b> reformar el módulo del hecho para que lleve dos
+            intervalos en lugar de uno, y la capa de persistencia para que los conserve.</p>
+
+          <p style="margin:0">Snodgrass<a class="ref" href="referencias.html#ref-17">(17)</a> formalizó
+            esto en los noventa, y bases como Datomic o XTDB lo implementan en producción. Estimación:
+            un mes de trabajo, más pruebas sobre un dominio regulado real.</p>
         </div>
 
         <h2>Frente 3 — Persistencia industrial</h2>
 
-        <p>El experimento reflexivo cambió el punto de partida de este frente: el prototipo
-          <strong>ya no vive solo en memoria</strong>. Su capa de persistencia guarda individuos y
-          hechos en <strong>SQLite</strong> y los recarga al arrancar. Bastan dos tablas: una de
-          individuos <code>(id, eje, payload_json)</code> y una de hechos
-          <code>(sujeto, rol, valor, inicio, fin, …)</code>. Es la prueba de que el modelo persiste sin
-          esfuerzo: la geometría de las tripletas se aplana a tabla casi sin pérdida.</p>
+        <p>El experimento reflexivo cambió el punto de partida de este frente: el prototipo <strong>ya
+          no vive solo en memoria</strong>. Su capa de persistencia guarda individuos y hechos en
+          <strong>SQLite</strong> y los recarga al arrancar.</p>
 
-        <p>Hay además un segundo respaldo, de otra naturaleza: el servidor MCP escribe un
-          <strong>registro de eventos, solo de anexión</strong>, y reconstruye el universo
-          reproduciéndolo al arrancar. Guarda las llamadas, no el estado, lo cual tiene una virtud
-          que la tabla no tiene: la vigencia viaja dentro de los argumentos y vuelve intacta.</p>
+        <p>Bastan dos tablas: una de individuos <code>(id, eje, payload_json)</code> y una de hechos
+          <code>(sujeto, rol, valor, inicio, fin, …)</code>.</p>
+
+        <p>Es la prueba de que el modelo persiste sin esfuerzo. La geometría de las tripletas se aplana a
+          tabla casi sin pérdida.</p>
+
+        <p>Hay además un segundo respaldo de otra naturaleza. El servidor MCP escribe un
+          <strong>registro de eventos que solo crece</strong>, y reconstruye el universo reproduciéndolo
+          al arrancar.</p>
+
+        <p>Guarda las llamadas, no el estado. Y eso tiene una virtud que la tabla no tiene: la vigencia
+          viaja dentro de los argumentos y vuelve intacta.</p>
 
         <aside class="nota-margen">
           <span class="etq">Dónde está el «casi»</span>
@@ -449,56 +495,62 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
         <h2>Frente 4 — Tooling</h2>
 
         <p>Una propuesta como WQuestions vive o muere por sus herramientas. Los conceptos pueden ser
-          impecables; si la fricción operativa es alta, nadie la adopta. La regla es vieja y cruel: la
-          mejor idea con mal tooling pierde frente a la idea mediocre con buen tooling. Aquí está la
-          lista, ordenada por prioridad.</p>
+          impecables. Si la fricción diaria es alta, nadie la adopta.</p>
 
-        <div class="columnas">
+        <p>La regla es vieja y cruel: la mejor idea con malas herramientas pierde frente a la idea
+          mediocre con buenas herramientas. Aquí está la lista, ordenada por prioridad.</p>
+
           <p><strong>4.1 — Ingestor de lexicon.</strong> Hoy las entradas del lexicon se escriben a
-            mano. Hace falta una herramienta que ingiera entradas desde recursos masivos ya
-            construidos —FrameNet<a class="ref" href="referencias.html#ref-14">(14)</a>, VerbNet<a class="ref" href="referencias.html#ref-15">(15)</a>, PropBank— y produzca entradas válidas del lexicon
-            WQuestions. Esto da, de un golpe, un piso de cobertura de miles de verbos sin trabajo
-            manual.</p>
-          <p><strong>4.2 — Parser de lenguaje natural a hechos.</strong> Hoy el análisis se hace vía
-            LLM con <i>function calling</i>. Hace falta también un parser <strong>local y
-            determinista</strong> para textos donde la latencia del modelo importa (sistemas de tiempo
-            real) o donde la privacidad lo exige (datos médicos que no deben salir de la sala).
-            Combinar análisis sintáctico con el lexicon es trabajo concreto, no investigación abierta.</p>
-          <p><strong>4.3 — IDE / inspector.</strong> El experimento reflexivo entregó una
-            <strong>primera versión</strong>: un inspector que, junto a cada vista, muestra las
-            tripletas que la sostienen («lo que ves es el dato»). Falta el resto: explorar individuos y
-            vecinos a voluntad, consultar con patrones, seguir la cadena <code>causado_por</code> o
-            <code>justificado_por</code> de cualquier nodo, y (la pieza que el propio experimento
-            señaló como necesaria) <strong>vistas con nombre</strong> definidas como dato, para
-            re-concretar el grafo sin ahogar al modelador en la abstracción. La base existe; el salto
-            es de semanas, no de meses.</p>
-          <p><strong>4.4 — Validador de migración.</strong> Cuando un sistema heredado quiere migrar a
-            WQuestions, hay que verificar que su dialecto de dominio mapea bien al canónico. Una
-            herramienta de validación detecta los cuellos: roles sin signatura, ejes ambiguos,
-            vigencias inconsistentes. El paso «el dato registra su propia signatura», que la prueba
-            reflexiva ya introdujo, facilita esta herramienta.</p>
-          <p><strong>4.5 — Generador de servidor MCP.</strong> Dado un lexicon, generar
-            automáticamente el servidor MCP correspondiente. Esto convierte cada dominio en un
-            asistente conversacional sin escribir <em>glue code</em>. Trabajo de pocas semanas; impacto
-            desproporcionado en la adopción, porque baja a casi cero el costo de probar la propuesta
-            con datos propios.</p>
-        </div>
+            mano. Hace falta una herramienta que las importe desde recursos ya construidos:
+            FrameNet<a class="ref" href="referencias.html#ref-14">(14)</a>,
+            VerbNet<a class="ref" href="referencias.html#ref-15">(15)</a>, PropBank.</p>
+
+          <p>Eso da, de un golpe, un piso de miles de verbos sin trabajo manual.</p>
+          <p><strong>4.2 — Analizador de lenguaje natural a hechos.</strong> Hoy ese trabajo lo hace un
+            LLM invocando funciones. Hace falta también uno <strong>local y determinista</strong>.</p>
+
+          <p>Para textos donde la latencia del modelo importa, como los sistemas en tiempo real. O donde
+            la privacidad lo exige, como los datos médicos que no deben salir de la sala. Combinar
+            análisis sintáctico con el lexicon es trabajo concreto, no investigación abierta.</p>
+          <p><strong>4.3 — Inspector y entorno de trabajo.</strong> El experimento reflexivo entregó una
+            <strong>primera versión</strong>: un inspector que, junto a cada vista, muestra las tripletas
+            que la sostienen. Lo que ves es el dato.</p>
+
+          <p>Falta el resto. Explorar individuos y vecinos a voluntad. Consultar con patrones. Seguir la
+            cadena <code>causado_por</code> o <code>justificado_por</code> de cualquier nodo.</p>
+
+          <p>Y falta la pieza que el propio experimento señaló: <strong>vistas con nombre</strong>
+            definidas como dato, para volver a concretar el grafo sin ahogar al modelador en la
+            abstracción. La base existe. El salto es de semanas, no de meses.</p>
+          <p><strong>4.4 — Validador de migración.</strong> Cuando un sistema heredado quiere migrar,
+            hay que comprobar que su dialecto encaja con el catálogo.</p>
+
+          <p>Una herramienta de validación detecta los cuellos: roles sin firma, ejes ambiguos, vigencias
+            que se contradicen. El paso «el dato registra su propia firma», que la prueba reflexiva ya
+            introdujo, la vuelve más fácil.</p>
+          <p><strong>4.5 — Generador de servidor MCP.</strong> Dado un lexicon, generar solo el servidor
+            MCP correspondiente. Eso convierte cada dominio en un asistente conversacional sin escribir
+            código de pegamento.</p>
+
+          <p>Trabajo de pocas semanas, con un impacto enorme en la adopción: baja a casi cero el costo de
+            probar la propuesta con datos propios.</p>
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Urgencia del tooling</p>
-          <p style="margin:0"><b>Media en agregado, alta</b> en el caso del <strong>ingestor de
-            lexicon</strong> (4.1) y el <strong>generador MCP</strong> (4.5): son los dos que más
-            reducen el costo de que alguien pruebe la propuesta. Y la barrera de entrada es,
-            casi siempre, lo que decide si una idea se difunde o se queda en el libro que la enunció.</p>
+          <p style="margin:0"><b>Media en conjunto, alta</b> para el <strong>ingestor de
+            lexicon</strong> (4.1) y el <strong>generador MCP</strong> (4.5). Son los dos que más
+            reducen el costo de probar la propuesta. Y la barrera de entrada es casi siempre lo que
+            decide si una idea se difunde o se queda en el libro que la enunció.</p>
         </div>
 
         <h2>Frente 5 — Comunidad y gobernanza</h2>
 
-        <p>Aquí entramos en la pieza que el autor no controla. WQuestions, para volverse útil más allá
-          de un libro, necesita <strong>comunidad</strong>: gente modelando dominios, contribuyendo
-          lexicon, reportando fricciones, escribiendo herramientas, adoptándolo en proyectos reales.
-          Una arquitectura sin comunidad es una idea bonita en un PDF; una arquitectura con comunidad es
-          infraestructura. La diferencia no la firma el autor, la firman los demás.</p>
+        <p>Aquí entramos en la pieza que el autor no controla. Para volverse útil más allá de un libro,
+          WQuestions necesita <strong>comunidad</strong>. Gente modelando dominios, aportando lexicon,
+          reportando fricciones, escribiendo herramientas, adoptándolo en proyectos reales.</p>
+
+        <p>Una arquitectura sin comunidad es una idea bonita en un PDF. Con comunidad, es
+          infraestructura. Esa diferencia no la firma el autor. La firman los demás.</p>
 
         <p>Qué falta, en concreto:</p>
 
@@ -536,11 +588,12 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
 
         <h2>La pila completa</h2>
 
-        <p>Conviene ver los cinco frentes juntos, como capas de una misma pila. Cada capa puede
-          evolucionar por su cuenta (cambiar el respaldo de persistencia no obliga a tocar el lexicon, y
-          mejorar el motor de reglas no altera la aplicación que ve el usuario). Esa independencia es,
-          en sí misma, una propiedad de diseño: el modelo del medio es el contrato estable que sostiene
-          todo lo demás.</p>
+        <p>Conviene ver los cinco frentes juntos, como capas de una misma pila. Cada capa puede avanzar
+          por su cuenta: cambiar el respaldo de persistencia no obliga a tocar el lexicon, y mejorar el
+          motor de reglas no altera lo que ve el usuario.</p>
+
+        <p>Esa independencia es en sí misma una propiedad de diseño. El modelo del medio es el contrato
+          estable que sostiene todo lo demás.</p>
 
         <!-- FIGURA 30.2 · la pila completa por capas -->
         <figure class="figura figura--ancha revelar">
@@ -601,10 +654,11 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
             cada hecho.</figcaption>
         </figure>
 
-        <p>Y si los cinco frentes se miden por su grado de madurez, el panorama es claro y no
-          desalentador. Tres de ellos tienen un piso operable (persistencia, una primera versión de
-          inspector, el medio paso del motor); dos están casi por construir (la comunidad y el tooling
-          completo). Nada está en cero; nada está cerca de cien.</p>
+        <p>Y si se miden por madurez, el panorama es claro y no desalentador. Tres tienen un piso
+          operable: persistencia, una primera versión del inspector y el medio paso del motor. Dos están
+          casi por construir: la comunidad y las herramientas completas.</p>
+
+        <p>Nada está en cero. Nada está cerca de cien.</p>
 
         <figure class="figura revelar">
           <div class="lienzo" data-chart>
@@ -629,12 +683,15 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
 
         <h2>Las fricciones documentadas que siguen abiertas</h2>
 
-        <p>Además de los cinco frentes mayores, el prototipo expuso un puñado de fricciones puntuales del
-          catálogo al chocar con los dominios de estrés. El experimento reflexivo
-          (<a href="29-prueba-reflexiva.html">capítulo&nbsp;29</a>) <strong>cerró varias</strong> (el
-          texto libre, el tipado de los campos definidos por datos, el display derivado de hechos) y
-          entregó el comodín <code>V</code> (<em>cualquier eje de valor</em>), que resuelve de raíz toda
-          la familia «esta signatura es demasiado estrecha». Lo que queda abierto es esto:</p>
+        <p>Además de los cinco frentes mayores, el prototipo dejó al descubierto algunas fricciones
+          puntuales del catálogo al chocar con los dominios de estrés.</p>
+
+        <p>El experimento reflexivo (<a href="29-prueba-reflexiva.html">capítulo&nbsp;29</a>)
+          <strong>cerró varias</strong>: el texto libre, el tipado de los campos definidos por datos, la
+          presentación derivada de hechos.</p>
+
+        <p>Y entregó el comodín <code>V</code>, <em>cualquier eje de valor</em>, que resuelve de raíz
+          toda la familia «esta firma es demasiado estrecha». Lo que queda abierto es esto:</p>
 
         <div class="tabla-envoltura revelar">
           <table>
@@ -671,37 +728,46 @@ octava_gratis(C) :- count{ S : sesion_ok(C, S) } &gt;= 7.</code></pre>
           </table>
         </div>
 
-        <p>Ninguna de estas fricciones bloquea el funcionamiento del modelo, y se repite un patrón: las
-          relajaciones del tipo «signatura demasiado estrecha» se resuelven con el comodín <code>V</code>
-          que el experimento ya introdujo, y varias otras quedan cubiertas por roles de dominio bajo la
-          política liberal del catálogo. Es <strong>la lista de mejoras concretas</strong>: se acumula a
-          medida que el modelo se prueba en territorios nuevos y se acorta a medida que se lo somete a
-          cargas exigentes. Una lista que crece y mengua a la vez es exactamente lo que cabe esperar de
-          una arquitectura viva.</p>
+        <p>Ninguna de estas fricciones bloquea el modelo, y se repite un patrón. Las del tipo «firma
+          demasiado estrecha» se resuelven con el comodín <code>V</code> que el experimento ya introdujo.
+          Varias otras quedan cubiertas por roles de dominio.</p>
+
+        <p>Es <strong>la lista de mejoras concretas</strong>. Se alarga a medida que el modelo se prueba
+          en territorios nuevos, y se acorta a medida que se lo somete a cargas exigentes.</p>
+
+        <p>Una lista que crece y mengua a la vez es exactamente lo que cabe esperar de una arquitectura
+          viva.</p>
 
         <h2>El libro como semilla</h2>
 
-        <p>Cerremos con la idea menos técnica del capítulo. Un libro no es una propuesta terminada: es
-          <strong>una invitación a que alguien la termine</strong>. Las arquitecturas que duraron
-          (Unix, TCP/IP, HTTP, SQL, RDF) empezaron como artículos, manifiestos, RFCs, libros: textos
-          que articulaban una idea con la claridad suficiente para que otros pudieran apropiársela y
-          empujarla adelante. Ninguna nació completa; todas nacieron <em>legibles</em>.</p>
+        <p>Cerremos con la idea menos técnica del capítulo. Un libro no es una propuesta terminada. Es
+          <strong>una invitación a que alguien la termine</strong>.</p>
+
+        <p>Las arquitecturas que duraron (Unix, TCP/IP, HTTP, SQL, RDF) empezaron como artículos,
+          manifiestos, RFCs, libros. Textos que exponían una idea con la claridad suficiente para que
+          otros se la apropiaran y la empujaran adelante.</p>
+
+        <p>Ninguna nació completa. Todas nacieron <em>legibles</em>.</p>
 
         <div class="caja caja--definicion revelar">
           <p class="caja-tit">Lo que tienes en la mano al cerrar el libro</p>
-          <p style="margin:0">No es un producto. Es una <strong>base operable</strong>: suficiente para
-            entender la propuesta, ejecutarla, criticarla y extenderla. El catálogo está bien diseñado
-            pero incompleto; el lexicon está bosquejado; las herramientas son embrionarias; la
-            comunidad está por construirse. Y aun así, la propuesta no solo funciona en ocho dominios
-            distintos: <strong>funciona aplicada a sí misma</strong>.</p>
+          <p style="margin:0 0 .7rem">No es un producto. Es una <strong>base operable</strong>:
+            suficiente para entender la propuesta, ejecutarla, criticarla y extenderla.</p>
+
+          <p style="margin:0">El catálogo está bien diseñado pero incompleto. El lexicon, bosquejado. Las
+            herramientas, en pañales. La comunidad, por construirse. Y aun así, la propuesta no solo
+            funciona en ocho dominios distintos: <strong>funciona aplicada a sí misma</strong>.</p>
         </div>
 
-        <p>Eso es lo que hace la diferencia entre una especulación y una semilla. El modelo bastó para
-          describir su propio menú, sus formularios, sus esquemas y su conducta, y para corregirse
-          cuando la carga reveló una signatura demasiado estrecha. La propuesta aguanta el peso que
-          prometió aguantar. Desde aquí, la tarea no es demostrarla (ya está demostrada en lo
-          esencial), sino perfeccionarla: poblar el lexicon, montar el motor, escribir las herramientas,
-          formar la comunidad. Trabajo, no misterio.</p>
+        <p>Ahí está la diferencia entre una especulación y una semilla.</p>
+
+        <p>El modelo bastó para describir su propio menú, sus formularios, sus esquemas y su conducta. Y
+          para corregirse cuando la carga reveló una firma demasiado estrecha. La propuesta aguanta el
+          peso que prometió aguantar.</p>
+
+        <p>Desde aquí, la tarea no es demostrarla, porque ya está demostrada en lo esencial. Es
+          perfeccionarla: poblar el lexicon, montar el motor, escribir las herramientas, formar la
+          comunidad. Trabajo, no misterio.</p>
 
         <p class="cita-destacada revelar">El catálogo está incompleto, el lexicon bosquejado, las
           herramientas embrionarias. Pero la propuesta funciona aplicada a sí misma. Lo que falta es

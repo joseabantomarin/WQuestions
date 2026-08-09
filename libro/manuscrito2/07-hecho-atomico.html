@@ -56,19 +56,26 @@
 
       <div class="contenido">
 
-        <p class="entrada">Son las 16:32 de la tarde y el vendedor Marco cierra la
-          venta de una camiseta. Ese gesto, que dura tres segundos, esconde más datos de los que parece: hubo
-          alguien que la vendió, un cliente que la pagó, un artículo entregado, un monto en
-          dólares y una hora exacta. En los seis capítulos anteriores aprendimos a clasificar cada uno de esos
-          fragmentos en su eje: Marco es un <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>,
-          la camiseta un <span class="eje-rotulo"><span class="eje eje--o">O</span></span>, los 49.90 dólares un
-          <span class="eje-rotulo"><span class="eje eje--n">N</span></span>. Pero clasificar no es
-          describir. Tenemos las piezas separadas sobre la mesa; nos falta el gesto que las une.</p>
+        <p class="entrada">Son las 16:32 y el vendedor Marco cierra la venta de una camiseta.</p>
 
-        <p>Ese gesto es el tema de este capítulo. Para que las siete coordenadas dejen de ser cajones
-          de un archivador y empiecen a contar la historia de la venta de Marco, necesitamos una
-          unidad mínima de afirmación: la pieza más pequeña con la que se puede decir <em>algo</em>
-          sobre el mundo. La llamaremos el <strong>hecho atómico</strong>, y su forma es desconcertantemente
+        <p>Ese gesto dura tres segundos y esconde más datos de los que parece: alguien que vende, un
+          cliente que paga, un artículo que se entrega, un monto en dólares y una hora exacta.</p>
+
+        <p>En los seis capítulos anteriores aprendimos a colocar cada uno de esos trozos en su eje.
+          Marco es un <span class="eje-rotulo"><span class="eje eje--q">Q</span></span>, la camiseta un
+          <span class="eje-rotulo"><span class="eje eje--o">O</span></span>, los 49,90 dólares un
+          <span class="eje-rotulo"><span class="eje eje--n">N</span></span>.</p>
+
+        <p>Pero clasificar no es describir. Tenemos las piezas sobre la mesa y nos falta el gesto que
+          las une.</p>
+
+        <p>Ese gesto es el tema de este capítulo.</p>
+
+        <p>Para que las siete coordenadas dejen de ser cajones de un archivador y empiecen a contar la
+          historia de la venta de Marco, hace falta la pieza más pequeña con la que se puede decir
+          <em>algo</em> sobre el mundo.</p>
+
+        <p>La llamaremos el <strong>hecho atómico</strong>, y su forma es desconcertantemente
           simple.</p>
 
         <h2>La forma de un hecho</h2>
@@ -82,21 +89,27 @@
           <span class="nodo nodo--q"><span>vendedor_17</span><small>Q</small></span>
         </div>
 
-        <p>Se lee de izquierda a derecha como una oración del castellano: «la venta 001 tiene como
-          agente al vendedor 17». El <strong>sujeto</strong> y el <strong>objeto</strong> son
-          individuos que sacamos de alguna de las cajas de valor (un evento del eje O, una persona del
-          eje Q, un número del eje N). El <strong>predicado</strong> es el cable conector que vimos en
-          el capítulo anterior: un habitante del eje M, el <em>cómo</em>, que une los dos extremos.
-          Y eso es todo. No hay un cuarto campo escondido, ni una nota al pie, ni una excepción para
+        <p>Se lee de izquierda a derecha, como una frase corriente: «la venta 001 tiene como agente al
+          vendedor 17».</p>
+
+        <p>El <strong>sujeto</strong> y el <strong>objeto</strong> salen de alguna de las cajas de
+          valor: un evento del eje O, una persona del eje Q, un número del eje N.</p>
+
+        <p>El <strong>cable</strong> del medio es el que vimos en el capítulo anterior: un habitante
+          del eje M, el <em>cómo</em>, que une los dos extremos.</p>
+
+        <p>Y eso es todo. No hay un cuarto campo escondido, ni una nota al pie, ni una excepción para
           los casos difíciles.</p>
 
-        <p>La afirmación que sostiene este capítulo (y que al principio cuesta creer) es esta:
-          <strong>absolutamente toda la información que el sistema sabe del mundo se construye con esta
-          misma forma exacta</strong>, repetida una y otra vez. Las ventas, las jugadas de
-          fútbol, las películas, las ordenanzas de un municipio, las llamadas a un agente de
-          inteligencia artificial. Todo. El resto del capítulo se dedica a demostrarlo y, sobre todo,
-          a explicar por qué esa terquedad por una sola forma es justamente lo que hace que el sistema
-          no se rompa nunca.</p>
+        <p>La afirmación que sostiene este capítulo cuesta creerla al principio: <strong>toda la
+          información que el sistema sabe del mundo se construye con esta misma forma</strong>, repetida
+          una y otra vez.</p>
+
+        <p>Las ventas, las jugadas de fútbol, las películas, las ordenanzas de un municipio, las
+          llamadas a un agente de inteligencia artificial. Todo.</p>
+
+        <p>El resto del capítulo lo demuestra, y explica por qué esa terquedad por una sola forma es lo
+          que hace que el sistema no se rompa nunca.</p>
 
         <aside class="nota-margen">
           <span class="etq">Confesión</span>
@@ -119,11 +132,11 @@
 (sesion_ia_5521, tokens_entrada, 4180)                 ∈ M(O, N)   🤖</code></pre>
         </div>
 
-        <p>Cinco cables distintos (<code>vendedor</code>, <code>agente</code>, <code>directora</code>,
-          <code>fecha_publicacion</code>, <code>tokens_entrada</code>) y cinco pares de cajas distintos.
-          Pero las cinco líneas son, estructuralmente, la misma línea. Esa uniformidad no es un capricho
-          estético para que el código se vea ordenado: es la propiedad arquitectónica de la que cuelga
-          todo lo demás. Vale la pena, entonces, escribirla en piedra.</p>
+        <p>Cinco cables distintos y cinco pares de cajas distintos. Y las cinco líneas son,
+          estructuralmente, la misma línea.</p>
+
+        <p>Esa uniformidad no es un capricho para que el código se vea ordenado. Es la propiedad de la
+          que cuelga todo lo demás. Vale la pena escribirla en piedra.</p>
 
         <h2>La decisión D3</h2>
 
@@ -133,18 +146,23 @@
 
         <div class="caja caja--decision revelar">
           <p class="caja-tit"><span class="codigo-d">D3</span> El átomo de la información</p>
-          <p>Cualquier hecho de la realidad se representa siempre como una <strong>tripleta atómica</strong>
-            de la forma <code>(sujeto, cable, objeto)</code>. El cable debe estar <strong>tipado</strong>
-            (saber qué cajas conecta) para que el sistema pueda validar si el dato es lógico o absurdo.
-            Las descripciones de cosas complejas <strong>jamás</strong> se construyen inventando
-            estructuras nuevas ni tablas más anchas: se construyen <strong>apilando</strong> decenas de
-            estas tripletas simples sobre un mismo sujeto.</p>
+          <p>Cualquier hecho de la realidad se representa siempre como una <strong>tripleta</strong> con
+            la forma <code>(sujeto, cable, objeto)</code>.</p>
+          <p>El cable tiene que saber qué cajas conecta, para que el sistema pueda decidir si el dato
+            es lógico o absurdo.</p>
+          <p>Las descripciones complejas <strong>jamás</strong> se construyen inventando estructuras
+            nuevas ni tablas más anchas. Se construyen <strong>apilando</strong> tripletas simples sobre
+            un mismo sujeto.</p>
         </div>
 
-        <p>Léela despacio, porque tiene dos prohibiciones tan importantes como sus permisos. La primera:
-          un cable sin tipo no es un cable válido. La segunda: ante un dato más rico, la respuesta nunca
-          es «cambiemos la estructura», sino «agreguemos más tripletas». Todo lo que sigue es la
-          consecuencia directa de habernos atrevido a tomar esta decisión.</p>
+        <p>Léela despacio, porque tiene dos prohibiciones tan importantes como sus permisos.</p>
+
+        <p>La primera: un cable sin tipo no es un cable válido.</p>
+
+        <p>La segunda: ante un dato más rico, la respuesta nunca es «cambiemos la estructura». Es
+          «agreguemos más tripletas».</p>
+
+        <p>Todo lo que sigue sale de haber tomado esa decisión.</p>
 
         <h2>Tres exigencias que el átomo debe cumplir</h2>
 
@@ -154,10 +172,11 @@
 
         <h3>Exigencia 1 — Tipada: protección contra el caos</h3>
 
-        <p>Cada cable lleva pegada su propia regla de seguridad, su <strong>signatura</strong>: la
-          declaración de qué caja admite a la izquierda y qué caja admite a la derecha. El cable
-          <code>monto_usd</code> sabe de fábrica que conecta un objeto del eje O con un número del
-          eje N. Esa es exactamente la parte <code>∈ M(O, N)</code> que aparece al final de cada línea.</p>
+        <p>Cada cable lleva pegada su regla de seguridad, su <strong>signatura</strong>: qué caja
+          admite a la izquierda y qué caja admite a la derecha.</p>
+
+        <p>El cable <code>monto_usd</code> sabe de fábrica que conecta un objeto del eje O con un número
+          del eje N. Eso es lo que dice la parte <code>∈ M(O, N)</code> al final de cada línea.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -165,18 +184,19 @@
 (venta_001, monto_usd, "caro")     ✗ rechazada  // "caro" no es un número</code></pre>
         </div>
 
-        <p>Si un programador cansado, a las dos de la tarde, intenta registrar
-          <code>(venta_001, monto_usd, "caro")</code>, el sistema lo rechaza al instante: la
-          palabra «caro» no habita la caja de los números. Esta protección, que ocurre en tiempo
-          real, es lo que convierte la tripleta en un bloque de información <em>seguro</em> y
-          <em>validable</em>. Un dato absurdo no llega siquiera a guardarse.</p>
+        <p>Si un programador cansado intenta registrar <code>(venta_001, monto_usd, "caro")</code>, el
+          sistema lo rechaza al instante. La palabra «caro» no vive en la caja de los números.</p>
+
+        <p>Esa protección, que ocurre en el momento, es lo que convierte la tripleta en un bloque
+          <em>seguro</em>. Un dato absurdo ni siquiera llega a guardarse.</p>
 
         <h3>Exigencia 2 — Independiente: cada hecho se sostiene solo</h3>
 
-        <p>Cada hecho atómico debe tener sentido por sí mismo, sin depender de ningún otro. La tripleta
-          <code>(gol_001, agente, messi)</code> significa exactamente lo mismo aunque nadie haya
-          anotado todavía en qué minuto del partido ocurrió, o con qué resultado quedó el marcador.
-          Quitar contexto no la corrompe; solo la deja menos detallada.</p>
+        <p>Cada hecho tiene que tener sentido por sí mismo, sin depender de ningún otro.</p>
+
+        <p>La tripleta <code>(gol_001, agente, messi)</code> significa lo mismo aunque nadie haya
+          anotado todavía en qué minuto ocurrió ni cómo quedó el marcador. Quitarle contexto no la
+          corrompe: solo la deja menos detallada.</p>
 
         <p>Esa independencia es un superpoder silencioso: permite guardar el hecho en un archivo de
           texto, en una base de datos relacional o enviarlo por internet a otro continente sin que
@@ -204,18 +224,23 @@
 (venta_001, momento,       2026-05-14T16:32:00-05:00)  ∈ M(O, T)</code></pre>
         </div>
 
-        <p>Diez pequeñas piezas de Lego que, juntas, dibujan la operación entera: qué se vendió,
-          quién la atendió, a qué cliente, en qué talla y color, cuántas unidades, por cuánto, con qué
-          medio de pago y a qué hora. Cada pieza se entiende por separado; sumadas, forman el retrato
-          completo de la venta.</p>
+        <p>Diez piezas de Lego que juntas dibujan la operación entera: qué se vendió, quién la
+          atendió, a qué cliente, en qué talla y color, cuántas unidades, por cuánto, con qué medio de
+          pago y a qué hora.</p>
 
-        <p>Lo verdaderamente revelador llega cuando el negocio quiere ser más preciso. Supongamos que
-          la tienda decide auditar el lote de inventario del que salió cada artículo, con su fecha de
-          ingreso. En una base de datos tradicional esto obligaría a alterar la tabla de ventas, añadirle
-          columnas y migrar miles de filas (tocar la estructura, con todo el riesgo que eso implica).
-          En nuestra arquitectura, <strong>la estructura no cambia jamás</strong>. Simplemente se
-          eleva la entrega del artículo a la categoría de evento (algo que ya aprendimos a llamar
-          <em>reificación</em>) y se le cuelgan sus propias tripletas:</p>
+        <p>Cada pieza se entiende por separado. Sumadas, forman el retrato completo de la venta.</p>
+
+        <p>Lo revelador llega cuando el negocio quiere hilar más fino.</p>
+
+        <p>Supongamos que la tienda decide auditar de qué lote de inventario salió cada artículo, con su
+          fecha de ingreso.</p>
+
+        <p>En una base tradicional habría que alterar la tabla de ventas, añadirle columnas y migrar
+          miles de filas. Tocar la estructura, con todo el riesgo que eso lleva.</p>
+
+        <p>Aquí <strong>la estructura no cambia nunca</strong>. Se eleva la entrega del artículo a la
+          categoría de evento, lo que ya aprendimos a llamar <em>reificar</em>, y se le cuelgan sus
+          propias tripletas:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -236,24 +261,30 @@
 
         <h2>El universo de datos es una pizarra de tripletas</h2>
 
-        <p>Cuando una empresa empieza a guardar miles (y luego millones) de estos hechos atómicos, va
-          tejiéndose una red inmensa de nodos conectados por cables. A esa red se le llama un
-          <strong>grafo</strong>. Y conviene precisar qué es, técnicamente,
-          una base de datos WQuestions: no es más que <strong>un conjunto gigantesco de oraciones de
-          tres partes escritas en una pizarra común</strong>. Ni más, ni menos.</p>
+        <p>Cuando una empresa empieza a guardar miles, y luego millones, de estos hechos, se va
+          tejiendo una red inmensa de nodos conectados por cables. A esa red se le llama
+          <strong>grafo</strong>.</p>
+
+        <p>Y conviene decir con claridad qué es una base de datos WQuestions: <strong>un montón enorme
+          de frases de tres partes escritas en una pizarra común</strong>. Ni más, ni menos.</p>
 
         <p class="cita-destacada revelar">El estado entero de la realidad, para el sistema, se reduce
           a contar cables sobre una pizarra. No hay archivos ocultos ni arquitecturas secretas que
           solo entiendan los creadores del software.<cite>El principio de la pizarra</cite></p>
 
-        <p>Esa transparencia es liberadora. Si le preguntas a la máquina «¿quién dirigió la película
-          <em>Marea</em>?», no hay misterio que resolver: solo busca cables que arranquen en
-          <code>pelicula_marea</code> y lleven la etiqueta <code>directora</code>. Y si pides algo más
-          ambicioso («dame todas las directoras de largometrajes estrenados después de 2020»), el
-          sistema hace un trabajo tonto pero velocísimo: localiza los cables <code>año_estreno</code>
-          cuyo número final supere 2020, mira a qué películas están pegados, y rastrea quién figura
-          como su <code>directora</code> en cada una. Cada paso es, simplemente, saltar de una tripleta
-          a la siguiente. Fin del enigma.</p>
+        <p>Esa transparencia es liberadora.</p>
+
+        <p>Si le preguntas a la máquina «¿quién dirigió la película <em>Marea</em>?», no hay misterio.
+          Busca cables que arranquen en <code>pelicula_marea</code> y lleven la etiqueta
+          <code>directora</code>.</p>
+
+        <p>Y si pides algo más ambicioso, «dame todas las directoras de largometrajes estrenados
+          después de 2020», el sistema hace un trabajo tonto y velocísimo.</p>
+
+        <p>Localiza los cables <code>año_estreno</code> cuyo número supere 2020, mira a qué películas
+          están pegados y busca quién figura como <code>directora</code> en cada una.</p>
+
+        <p>Cada paso es saltar de una tripleta a la siguiente. Fin del enigma.</p>
 
         <h2>Cuando tres palabras no alcanzan: la reificación</h2>
 
@@ -263,11 +294,13 @@
         <p style="font-family:var(--display);font-style:italic;font-size:1.2rem;color:var(--tinta);margin:1.4rem 0;padding-left:1.2rem;border-left:3px solid var(--eje-o)">
           «Messi le pasó el balón a Di María en el minuto 87 con un toque de pierna izquierda.»</p>
 
-        <p>Esa frase es una veta de oro: tiene un autor (Messi), un beneficiario (Di María), un objeto
-          (el balón), un momento (minuto 87) y un instrumento (la pierna izquierda). Si quisiéramos
-          meterla a la fuerza en una tripleta simple
-          (<code>(messi, paso_el_balon_a, di_maria)</code>) estaríamos tirando a la basura casi toda la
-          información. ¿Cómo lo resolvemos sin violar la D3?</p>
+        <p>Esa frase es una veta de oro. Tiene un autor (Messi), un beneficiario (Di María), un objeto
+          (el balón), un momento (minuto 87) y un instrumento (la pierna izquierda).</p>
+
+        <p>Meterla a la fuerza en una tripleta simple, <code>(messi, paso_el_balon_a, di_maria)</code>,
+          sería tirar a la basura casi toda la información.</p>
+
+        <p>¿Cómo lo resolvemos sin romper la D3?</p>
 
         <p>Con la <strong>reificación</strong>, que ya asomó en capítulos anteriores. La maniobra es
           elegante: elevamos ese pase al estatus de <em>evento con nombre propio</em> dentro del eje
@@ -284,11 +317,11 @@
 (pase_001, instrumento,   pierna_izquierda)           ∈ M(O, K)</code></pre>
         </div>
 
-        <p>Lo que era un nudo lingüístico imposible de meter en una fila de tabla se desarmó en seis
-          hechos atómicos independientes, cada uno tipado, cada uno sostenido por sí solo. La estructura
-          n-aria (un evento con muchos participantes) se preservó entera sin abandonar la forma de la
-          tripleta. La figura siguiente muestra cómo se ve esa estrella de hechos alrededor del evento
-          central.</p>
+        <p>Lo que era un nudo imposible de meter en una fila de tabla se desarmó en seis hechos
+          independientes, cada uno con su tipo, cada uno sostenido por sí solo.</p>
+
+        <p>Un evento con muchos participantes se conservó entero sin abandonar la forma de la tripleta.
+          La figura siguiente muestra esa estrella de hechos alrededor del evento central.</p>
 
         <!-- FIGURA 7.1 · evento reificado n-ario -->
         <figure class="figura figura--ancha revelar">
@@ -347,20 +380,26 @@
             entera sin abandonar la forma de la tripleta.</figcaption>
         </figure>
 
-        <p>Conviene una regla práctica, de las que un ingeniero de datos hace bien en tatuarse:
-          <strong>reifica solo cuando te falte espacio</strong>. Si la relación es entre dos individuos
-          y nada más (<code>(pelicula_marea, directora, serra)</code>), basta una tripleta directa. Si
-          el hecho involucra a más participantes o arrastra detalles propios (tiempo, lugar,
-          instrumento), entonces sí: elévalo a evento con nombre propio y cuélgale sus tripletas. Ni
-          más reificación de la necesaria, ni menos de la que el detalle exige.</p>
+        <p>Aquí va una regla práctica que conviene tatuarse: <strong>reifica solo cuando te falte
+          sitio</strong>.</p>
+
+        <p>Si la relación es entre dos individuos y nada más, como
+          <code>(pelicula_marea, directora, serra)</code>, basta una tripleta directa.</p>
+
+        <p>Si el hecho mete a más participantes o arrastra detalles propios (tiempo, lugar,
+          instrumento), entonces sí: dale nombre propio de evento y cuélgale sus tripletas.</p>
+
+        <p>Ni más de la necesaria, ni menos de la que el detalle exige.</p>
 
         <h2>El modelo y el lenguaje humano son gemelos</h2>
 
-        <p>Aquí ocurre algo que, la primera vez que lo notas, parece magia, y conviene resaltarlo de
-          inmediato. Toma un artículo de prensa cualquiera y pásaselo a un modelo de lenguaje moderno
-          (Claude, por ejemplo) con esta instrucción: «Resume paso a paso quién hizo qué en esta
-          noticia». La respuesta casi siempre vuelve como una lista de líneas limpias, sin que nadie
-          se lo haya pedido en ese formato:</p>
+        <p>Aquí ocurre algo que la primera vez parece magia.</p>
+
+        <p>Toma un artículo de prensa cualquiera y pásaselo a un modelo de lenguaje moderno con esta
+          instrucción: «resume paso a paso quién hizo qué en esta noticia».</p>
+
+        <p>La respuesta casi siempre vuelve como una lista de líneas limpias, sin que nadie haya pedido
+          ese formato:</p>
 
         <div class="caja caja--definicion" style="background:var(--eje-k-suave)">
           <p class="caja-tit" style="color:var(--eje-k)">Lo que la IA devuelve, sola</p>
@@ -372,28 +411,36 @@
           </ul>
         </div>
 
-        <p>Cuatro líneas, cuatro hechos. Y cada línea tiene su sujeto, su verbo y su objeto. La IA no
-          responde así porque haya leído este libro: responde así porque <strong>así funciona el
-          lenguaje humano cuando intenta describir la realidad</strong>. Las oraciones simples que nos
-          enseñaron en la escuela (sujeto, verbo, predicado) son idénticas, molécula a molécula, a
-          nuestros hechos atómicos tipados.</p>
+        <p>Cuatro líneas, cuatro hechos. Cada una con su sujeto, su verbo y su objeto.</p>
 
-        <p>El impacto de esta coincidencia es enorme. Si tu base de datos guarda la información como
-          tripletas, y la inteligencia artificial <em>piensa</em> en tripletas, entonces la
-          comunicación entre la IA y tu empresa se vuelve casi automática. No hace falta programar
-          costosos algoritmos de comprensión del lenguaje natural ni levantar capas de traducción
-          frágiles: existe un enchufe directo entre lo que la IA dice y lo que tu sistema guarda. Esa
-          es la llave maestra del agente que el mercado persigue (uno capaz de conversar, auditar y
-          registrar información en cualquier empresa) sin obligarlo a memorizar la estructura interna
-          de la base de datos de cada cliente. Es el tema que el <a href="26-llms.html">capítulo
-          26</a> lleva hasta el fondo.</p>
+        <p>La IA no responde así porque haya leído este libro. Responde así porque <strong>así funciona
+          el lenguaje humano cuando describe la realidad</strong>.</p>
+
+        <p>Las frases simples que nos enseñaron en la escuela (sujeto, verbo, predicado) son idénticas
+          a nuestros hechos atómicos.</p>
+
+        <p>El impacto de esa coincidencia es enorme.</p>
+
+        <p>Si tu base guarda la información como tripletas, y la IA <em>piensa</em> en tripletas, la
+          comunicación entre las dos se vuelve casi automática.</p>
+
+        <p>No hace falta programar algoritmos caros de comprensión del lenguaje ni levantar capas de
+          traducción frágiles. Hay un enchufe directo entre lo que la IA dice y lo que tu sistema
+          guarda.</p>
+
+        <p>Esa es la llave del agente que el mercado persigue: uno capaz de conversar, auditar y
+          registrar en cualquier empresa, sin memorizar la estructura de la base de cada cliente.</p>
+
+        <p>Es lo que el <a href="26-llms.html">capítulo 26</a> lleva hasta el fondo.</p>
 
         <h2>Consultar es tapar un hueco</h2>
 
-        <p>Si toda la información se guarda como tripletas, buscar en ella se vuelve un juego de niños.
-          Hacer una consulta es, literalmente, escribir una tripleta pero <strong>tapando uno de sus
-          tres campos con un signo de interrogación</strong> (dejando un hueco que el sistema debe
-          rellenar). Mira tres patrones de búsqueda sobre nuestros ejemplos:</p>
+        <p>Si toda la información se guarda como tripletas, buscar en ella es un juego de niños.</p>
+
+        <p>Hacer una consulta es escribir una tripleta <strong>tapando uno de sus tres campos</strong>,
+          y dejar que el sistema rellene el hueco.</p>
+
+        <p>Mira tres formas de buscar sobre nuestros ejemplos:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">patrones</span><button class="copiar">⧉ copiar</button></div>
@@ -423,24 +470,32 @@
 
         <h2>Un cable repetido es una columna</h2>
 
-        <p>Apilar tripletas produce un efecto lateral que se ve mejor desde ya. Cuando mil ventas distintas
-          llevan todas el mismo cable <code>monto_usd</code>, ese cable deja de ser un dato suelto de
-          <code>venta_001</code> y se vuelve, de hecho, una columna que se puede recorrer entera. Lo
-          mismo pasa con <code>agente</code>: escribirlo sobre cada gol es, sin proponérselo, dejar
-          armada la lista de todas las jugadas que comparten ese cable. Por eso el patrón
-          <code>(?, agente, messi)</code> de hace un momento no era un truco aislado, sino la forma
-          natural de leer esa columna de punta a punta. Cada hecho que registras sobre un sujeto es, a
-          la vez, una fila en el reporte de todos los sujetos que comparten ese cable: lo que parece
-          guardar un dato individual está construyendo, sin avisar, la semilla de la consulta
-          colectiva.</p>
+        <p>Apilar tripletas tiene un efecto lateral que conviene ver desde ya.</p>
+
+        <p>Cuando mil ventas distintas llevan el mismo cable <code>monto_usd</code>, ese cable deja de
+          ser un dato suelto de <code>venta_001</code> y se convierte en una columna que se puede
+          recorrer entera.</p>
+
+        <p>Con <code>agente</code> pasa igual. Escribirlo sobre cada gol es, sin querer, dejar armada
+          la lista de todas las jugadas que lo comparten.</p>
+
+        <p>Por eso el patrón <code>(?, agente, messi)</code> de hace un momento no era un truco. Era la
+          forma natural de leer esa columna de punta a punta.</p>
+
+        <p>Cada hecho que registras sobre un sujeto es también una fila en el informe de todos los que
+          comparten ese cable. Lo que parece guardar un dato suelto está sembrando, sin avisar, la
+          consulta colectiva.</p>
 
         <h2>El contraste con SQL</h2>
 
-        <p>Para medir la diferencia, traduzcamos esa última pregunta (<em>goles de Messi en
-          2026</em>) al mundo relacional clásico. Allí los hechos no viven en una pizarra común, sino
-          repartidos en tablas que muchas veces ni siquiera se diseñaron para conversar. Recuperar el
-          dato obliga a coserlas con <code>JOIN</code>s, una operación que el grafo no necesita porque
-          nunca separó la información en primer lugar.</p>
+        <p>Para medir la diferencia, traduzcamos esa última pregunta (los goles de Messi en 2026) al
+          mundo de las tablas de siempre.</p>
+
+        <p>Allí los hechos no viven en una pizarra común. Viven repartidos en tablas que muchas veces
+          ni se diseñaron para hablar entre sí.</p>
+
+        <p>Recuperar el dato obliga a coserlas, una operación que el grafo no necesita porque nunca
+          separó la información.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">SQL</span><button class="copiar">⧉ copiar</button></div>
@@ -452,10 +507,13 @@ WHERE j.nombre = 'Messi'
   AND p.fecha BETWEEN '2026-01-01' AND '2026-12-31';</code></pre>
         </div>
 
-        <p>No es que el SQL esté mal escrito; es que carga con un trabajo que el modelo de tripletas
-          ni siquiera tiene. Cada <code>JOIN</code> es la cicatriz de una decisión previa de partir el
-          mundo en tablas; y si mañana el negocio quiere registrar el asistente de cada gol, habrá
-          que alterar el esquema. En la pizarra de tripletas, recordemos, eso era una línea más.</p>
+        <p>No es que el SQL esté mal escrito. Es que carga con un trabajo que el modelo de tripletas ni
+          siquiera tiene.</p>
+
+        <p>Cada <code>JOIN</code> es la cicatriz de haber partido el mundo en tablas. Y si mañana el
+          negocio quiere registrar quién asistió cada gol, hay que alterar el esquema.</p>
+
+        <p>En la pizarra de tripletas, eso era una línea más.</p>
 
         <h2>El mismo átomo, viajando por el cable</h2>
 
@@ -529,7 +587,6 @@ WHERE j.nombre = 'Messi'
           veámoslos descompuestos en hechos atómicos. La lección, repetida cinco veces, es siempre la
           misma: basta apilar tripletas sobre un sujeto, y reificar solo cuando un evento lo pide.</p>
 
-        <div class="columnas">
           <p><b>👕 La venta.</b> Ya la desmenuzamos: diez tripletas bastan para el retrato general
             de la operación, y si la tienda exige trazar el lote de inventario, se reifica la entrega
             del artículo sumando cinco tripletas más (sin tocar el diseño base).</p>
@@ -538,7 +595,6 @@ WHERE j.nombre = 'Messi'
             hechos atómicos conservan al autor, al asistente, el partido, el minuto y la pierna.
             Suficiente detalle para una casa de apuestas o un analista de rendimiento, sin reducir la
             jugada a una fila gris de hoja de cálculo:</p>
-        </div>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -550,11 +606,9 @@ WHERE j.nombre = 'Messi'
 (gol_001, pierna,       zurda)                 ∈ M(O, K)</code></pre>
         </div>
 
-        <div class="columnas">
           <p><b>🎬 La película.</b> Una obra cinematográfica se describe apilando autoría (que tiene
             roles distintos: dirigir no es escribir) y composición recursiva, porque una escena es
             «parte de» la película:</p>
-        </div>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -616,26 +670,30 @@ WHERE j.nombre = 'Messi'
 
         <div class="caja caja--practica revelar">
           <p class="caja-tit">En la práctica</p>
-          <p style="margin:0">Fíjate en el patrón que se repite en los cinco dominios: la primera
-            tripleta casi siempre es <code>instancia_de</code> (ancla el sujeto en su clase del eje K),
-            y a partir de ahí cuelgan los atributos. Cuando empieces a modelar un dominio propio, abre
-            por ahí: nombra el sujeto, declara su clase y deja que las coordenadas vayan cayendo, una
-            tripleta cada vez.</p>
+          <p style="margin:0 0 .7rem">Fíjate en el patrón que se repite en los cinco dominios. La
+            primera tripleta casi siempre es <code>instancia_de</code>, que ancla el sujeto a su clase
+            del eje K. De ahí para abajo cuelgan los atributos.</p>
+          <p style="margin:0">Cuando empieces a modelar un dominio propio, abre por ahí: nombra el
+            sujeto, declara su clase y deja que las coordenadas vayan cayendo, una tripleta cada
+            vez.</p>
         </div>
 
         <h2>Lo que llevamos, y lo que viene</h2>
 
-        <p>El hecho atómico es la piedra fundacional de toda la arquitectura. Tiene siempre la misma
-          forma rígida de tres partes (<code>(sujeto, cable, objeto)</code>); lleva protección interna
-          que impide mezclar cosas absurdas; y se compone consigo mismo para describir realidades tan
-          complejas como queramos, sin pedir jamás un cambio de programación. En este modelo, la base
-          de datos es, sin metáfora, un océano de estos hechos.</p>
+        <p>El hecho atómico es la piedra sobre la que se levanta todo.</p>
 
-        <p>Lo hermoso del hallazgo no es haber inventado un código nuevo, sino haber descubierto que
-          esta forma matemática coincide al milímetro con la manera en que los seres humanos (y la
-          inteligencia artificial) hablan cuando describen el mundo. El modelo no obliga a nadie a
-          aprender un idioma robótico: toma la estructura natural del lenguaje y la convierte en
-          tecnología consultable.</p>
+        <p>Tiene siempre la misma forma de tres partes. Lleva dentro la protección que impide mezclar
+          cosas absurdas. Y se apila consigo mismo para describir realidades tan complejas como haga
+          falta, sin pedir nunca un cambio de programación.</p>
+
+        <p>En este modelo, la base de datos es un océano de estos hechos. Sin metáfora.</p>
+
+        <p>Lo bonito del hallazgo no es haber inventado un código nuevo. Es haber descubierto que esta
+          forma coincide al milímetro con cómo hablan las personas (y la IA) cuando describen el
+          mundo.</p>
+
+        <p>El modelo no obliga a nadie a aprender un idioma robótico. Toma la estructura del lenguaje y
+          la convierte en algo que se puede consultar.</p>
 
         <p>Hasta aquí hemos tratado cada hecho como una pieza solitaria. Pero cuando se amontonan por
           millones, emerge algo nuevo: un <strong>espacio geométrico</strong>. No una metáfora, sino

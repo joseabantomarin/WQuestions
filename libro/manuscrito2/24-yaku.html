@@ -56,17 +56,22 @@
 
       <div class="contenido">
 
-        <p class="entrada">Son las 19:40 de un viernes. En la recepción de un pequeño complejo que reúne
-          un sauna, un hostal, un gimnasio y un cafetín, una empleada teclea en una pantalla que lleva
-          años igual: fondo gris, botones cuadrados, una rejilla de productos con códigos cortos. El
-          sistema se llama <strong>yaku</strong> y corre sobre MySQL desde hace una década. En la última
-          media hora ha registrado una socia que entró a entrenar sin pagar nada, un huésped que cargó
-          una cerveza a su habitación, un cliente de paso que pagó veinticinco soles por una sauna, y una
-          cortesía: una sauna regalada a una clienta que cumple años. Cuatro hechos del mismo turno, cada
-          uno tecleado en segundos, cada uno guardado en filas que nadie volverá a mirar individualmente.
-          yaku no sabe que está modelando agencia, vigencia ni cobertura. Solo registra ventas. Y, sin
-          embargo (esa es la tesis del capítulo), debajo de sus nombres de columna ya están enterradas
-          casi todas las coordenadas que este libro lleva veintiún capítulos construyendo.</p>
+        <p class="entrada">Son las 19:40 de un viernes. En la recepción de un complejo que reúne sauna,
+          hostal, gimnasio y cafetín, una empleada teclea en una pantalla que lleva años igual: fondo
+          gris, botones cuadrados, una rejilla de productos con códigos cortos.</p>
+
+        <p>El sistema se llama <strong>yaku</strong> y corre sobre MySQL desde hace una década.</p>
+
+        <p>En la última media hora registró una socia que entró a entrenar sin pagar nada. Un huésped
+          que cargó una cerveza a su habitación. Un cliente de paso que pagó veinticinco soles por una
+          sauna. Y una cortesía: una sauna regalada a una clienta que cumple años.</p>
+
+        <p>Cuatro hechos del mismo turno, tecleados en segundos, guardados en filas que nadie volverá a
+          mirar de una en una.</p>
+
+        <p>yaku no sabe que está modelando agencia, vigencia ni cobertura. Solo registra ventas. Y esa
+          es la tesis del capítulo: debajo de sus nombres de columna ya están enterradas casi todas las
+          coordenadas que este libro lleva veintiún capítulos construyendo.</p>
 
         <aside class="nota-margen">
           <span class="etq">El giro del capítulo</span>
@@ -76,14 +81,19 @@
         </aside>
 
         <p>El <a href="16-spa.html">capítulo 16</a> modeló el spa Serena Termas de punta a punta:
-          servicios, comprobantes, impuestos, todo limpio sobre una hoja en blanco. Es un ejercicio
-          valioso para entender qué se <em>puede</em> hacer. Pero el libro no puede quedarse
-          ahí, porque la pregunta operativa de la mayoría de sus lectores no es «¿cómo modelaría esto
-          desde cero?», sino otra, mucho más incómoda: <strong>«¿cómo aplico WQuestions sin romper lo que
-          ya funciona?»</strong>. El lector típico no tiene una pizarra: tiene un ERP de diez años, un
-          CRM heredado, una base relacional con tres mil tablas o un sistema artesanal en PHP que mueve la
-          empresa desde antes de que él llegara. yaku es exactamente ese escenario, con la ventaja de que
-          es real, está vivo y podemos mirarle las entrañas.</p>
+          servicios, comprobantes, impuestos, todo limpio sobre una hoja en blanco. Sirve para entender
+          qué se <em>puede</em> hacer.</p>
+
+        <p>Pero el libro no puede quedarse ahí. La pregunta que de verdad se hace la mayoría de sus
+          lectores no es «¿cómo modelaría esto desde cero?». Es otra, mucho más incómoda: <strong>«¿cómo
+          aplico WQuestions sin romper lo que ya funciona?»</strong>.</p>
+
+        <p>El lector típico no tiene una pizarra. Tiene un ERP de diez años, un CRM heredado, una base
+          con tres mil tablas o un sistema artesanal en PHP que mueve la empresa desde antes de que él
+          llegara.</p>
+
+        <p>yaku es exactamente ese escenario, con la ventaja de que es real, está vivo y podemos mirarle
+          las entrañas.</p>
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Lo que demuestra este capítulo</p>
@@ -106,41 +116,46 @@
           recepción: el sauna, el hostal, el gimnasio y el cafetín. Sus tablas centrales son las que
           cualquier negocio de servicios termina teniendo, llámense como se llamen:</p>
 
-        <div class="columnas">
           <p><code>cliente</code>: quiénes consumen. <code>persona</code>: los empleados: recepción,
             masajistas, instructores. Entre ambas tablas vive todo lo que el modelo llamaría el eje
             <span class="eje eje--q">Q</span>, repartido en dos según un criterio puramente operativo
             (quién cobra y quién paga), no semántico.</p>
-          <p><code>producto</code>: todo lo vendible bajo un mismo techo: habitaciones, sesiones de sauna,
-            jugos, gaseosas, planes mensuales. <code>venta</code> más <code>ventadet</code>: las comandas
-            y sus líneas. <code>asistencia</code>: el registro de entrada y salida del gimnasio, con
-            banderas anexas para sauna y ducha. <code>socio</code> más <code>plan</code>: las membresías
-            mensuales vigentes.</p>
-        </div>
+          <p><code>producto</code>: todo lo vendible bajo un mismo techo, de habitaciones y sesiones de
+            sauna a jugos, gaseosas y planes mensuales. <code>venta</code> más <code>ventadet</code>: las
+            comandas y sus líneas. <code>asistencia</code>: entrada y salida del gimnasio, con banderas
+            para sauna y ducha. <code>socio</code> más <code>plan</code>: las membresías vigentes.</p>
 
-        <p>Y aquí aparece el primer detalle revelador, el que justifica la palabra «arqueología». El campo
-          <code>producto.MARCA</code> no guarda lo que su nombre promete (la marca comercial del
-          producto). Guarda su <strong>familia de negocio</strong>: <code>HOSTAL</code>, <code>SAUNA</code>,
-          <code>GYM</code>, <code>RESTAURANT</code>, <code>STOCK</code>. Es decir, yaku <em>ya</em>
-          clasifica sus productos en categorías (ya tiene un eje <span class="eje eje--k">K</span> en
-          funcionamiento) solo que escondido tras un nombre de columna que disimula su función real.
-          Excavar yaku es, literalmente, esto: levantar la capa de nombres engañosos y reconocer debajo
-          las coordenadas que el modelo predice.</p>
+        <p>Y aquí aparece el primer detalle revelador, el que justifica la palabra «arqueología».</p>
+
+        <p>El campo <code>producto.MARCA</code> no guarda lo que promete su nombre. No guarda la marca
+          comercial. Guarda la <strong>familia de negocio</strong>: <code>HOSTAL</code>,
+          <code>SAUNA</code>, <code>GYM</code>, <code>RESTAURANT</code>, <code>STOCK</code>.</p>
+
+        <p>Es decir, yaku <em>ya</em> clasifica sus productos en categorías. Ya tiene un eje
+          <span class="eje eje--k">K</span> funcionando, escondido tras un nombre de columna que disimula
+          su función real.</p>
+
+        <p>Excavar yaku es exactamente esto: levantar la capa de nombres engañosos y reconocer debajo las
+          coordenadas que el modelo predice.</p>
 
         <div class="caja caja--definicion revelar">
           <p class="caja-tit">Arqueología semántica</p>
-          <p style="margin:0">Llamamos <em>arqueología semántica</em> al ejercicio de recorrer un esquema
+          <p style="margin:0 0 .7rem">Llamamos <em>arqueología semántica</em> a recorrer un esquema
             heredado preguntándose, tabla por tabla y columna por columna, <strong>a qué eje del modelo
-            responde su contenido</strong>, sin alterar una sola fila. No es ingeniería inversa para
-            reescribir: es un diagnóstico para descubrir cuánto del modelo de preguntas ya estaba
-            implementado de forma tácita, qué partes están incompletas y qué partes faltan por entero.</p>
+            responde su contenido</strong>. Sin alterar una sola fila.</p>
+
+          <p style="margin:0">No es ingeniería inversa para reescribir. Es un diagnóstico: cuánto del
+            modelo ya estaba implementado sin saberlo, qué partes están incompletas y qué falta por
+            entero.</p>
         </div>
 
         <h2>Qué de WQuestions ya estaba enterrado en yaku</h2>
 
-        <p>El mapeo arranca con una pregunta inocente que se le hace a cada tabla: <em>¿en qué eje vive su
-          contenido?</em> La respuesta, puesta sobre los siete ejes, produce el mapa de la figura 24.1.
-          Conviene leerlo despacio, porque tres de sus observaciones sostienen el capítulo entero.</p>
+        <p>El mapeo arranca con una pregunta inocente a cada tabla: <em>¿en qué eje vive su
+          contenido?</em></p>
+
+        <p>La respuesta, puesta sobre los siete ejes, produce el mapa de la figura 24.1. Conviene leerlo
+          despacio: tres de sus observaciones sostienen el capítulo entero.</p>
 
         <!-- FIGURA SVG: arqueología — tablas de yaku proyectadas a los siete ejes -->
         <figure class="figura figura--ancha revelar">
@@ -241,15 +256,18 @@
 
         <h3>Primera observación · yaku ya implementa D6 sin saberlo</h3>
 
-        <p>Los campos <code>socio.desde</code> y <code>socio.hasta</code> son, exactamente, el patrón que
-          el <a href="09-situaciones.html">capítulo de situaciones</a> prescribe para los hechos que
-          cambian con el tiempo: la membresía no se guarda como un atributo del cliente, sino como un
-          <em>evento con inicio y fin</em>. Cuando un socio renueva, yaku no sobrescribe el registro
-          anterior: crea uno nuevo. Esa decisión (tomada hace años por alguien que probablemente solo
-          quería un historial de pagos) es la vigencia bitemporal que el modelo formaliza como
-          <strong>D6</strong>. Y tiene la consecuencia exacta que D6 promete: la pregunta <em>«¿qué socios
-          estaban activos el 15 de marzo del año pasado?»</em> se responde con precisión, sin
-          reconstrucciones aproximadas ni «depende de qué tabla mires».</p>
+        <p>Los campos <code>socio.desde</code> y <code>socio.hasta</code> son justo el patrón que el
+          <a href="09-situaciones.html">capítulo de situaciones</a> prescribe para lo que cambia con el
+          tiempo. La membresía no se guarda como atributo del cliente, sino como un <em>evento con
+          inicio y fin</em>.</p>
+
+        <p>Cuando un socio renueva, yaku no sobrescribe el registro anterior. Crea uno nuevo.</p>
+
+        <p>Esa decisión, tomada hace años por alguien que seguramente solo quería un historial de pagos,
+          es la vigencia que el modelo formaliza como <strong>D6</strong>.</p>
+
+        <p>Y tiene la consecuencia exacta que D6 promete. <em>«¿Qué socios estaban activos el 15 de marzo
+          del año pasado?»</em> se responde con precisión, sin reconstrucciones aproximadas.</p>
 
         <aside class="nota-margen">
           <span class="etq">Recordatorio · D6</span>
@@ -273,51 +291,61 @@
         <h3>Segunda observación · yaku ya tiene un embrión de <code>estatus_factual</code></h3>
 
         <p>Las banderas <code>venta.ANULA</code> y <code>venta.CANCELADO</code> son la versión cruda de
-          algo que el spa del capítulo 16 modeló con cuidado: el <code>estatus_factual</code>, ese campo
-          en <span class="eje eje--k">K</span> que distingue <code>{real, intencionado, planeado,
-          hipotético, cancelado}</code>. yaku cubre, sin problemas, el extremo negativo («esto no
-          pasó») con sus dos flags. Lo que le falta es el extremo opuesto: el <code>intencionado</code>.
-          El cliente que estuvo a punto de comprar el plan trimestral y se fue sin firmar deja, en yaku,
-          una huella pobrísima: una nota en prosa libre dentro de <code>cliente.NOTAS</code>, no
-          consultable, no agregable, invisible para cualquier reporte. La intención de compra fallida
-          (oro puro para marketing) se evapora.</p>
+          algo que el spa modeló con cuidado: el <code>estatus_factual</code>, ese campo en
+          <span class="eje eje--k">K</span> que distingue <code>{real, intencionado, planeado,
+          hipotético, cancelado}</code>.</p>
+
+        <p>yaku cubre sin problemas el extremo negativo, «esto no pasó», con sus dos banderas. Lo que le
+          falta es el otro extremo: el <code>intencionado</code>.</p>
+
+        <p>El cliente que estuvo a punto de comprar el plan trimestral y se fue sin firmar deja una
+          huella pobrísima: una nota en prosa dentro de <code>cliente.NOTAS</code>. No consultable, no
+          sumable, invisible para cualquier reporte.</p>
+
+        <p>La intención de compra fallida, que es oro puro para marketing, se evapora.</p>
 
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">La grieta del campo de texto libre</p>
-          <p style="margin:0">Casi todo sistema heredado tiene su <code>cliente.NOTAS</code>: un campo de
-            texto donde el negocio vuelca lo que el esquema no supo prever (intenciones, motivos,
-            excepciones, promesas). Es el cementerio de los hechos que el modelo de datos no anticipó.
-            La arqueología semántica consiste, en buena parte, en <strong>rescatar de ese campo lo que
-            debería ser estructura</strong> y darle un eje. El <code>intencionado</code> que hoy vive
-            como prosa en <code>NOTAS</code> es, en WQuestions, una tripleta consultable como cualquier
+          <p style="margin:0 0 .7rem">Casi todo sistema heredado tiene su <code>cliente.NOTAS</code>: un
+            campo de texto donde el negocio vuelca lo que el esquema no supo prever (intenciones,
+            motivos, excepciones, promesas). Es el cementerio de los hechos que nadie anticipó.</p>
+
+          <p style="margin:0">La arqueología consiste, en buena parte, en <strong>rescatar de ese campo
+            lo que debería ser estructura</strong> y darle un eje. El <code>intencionado</code> que hoy
+            vive como prosa en <code>NOTAS</code> es, en WQuestions, una tripleta como cualquier
             otra.</p>
         </div>
 
         <h3>Tercera observación · el eje L está externalizado, pero es recuperable</h3>
 
-        <p>yaku no tiene tabla de lugares físicos. Las habitaciones del hostal viven como filas de
-          <code>producto</code> (códigos <code>H103</code>, <code>H201</code>, etcétera). A primera vista
-          parece una carencia; en realidad es <strong>una decisión de modelado</strong> que el capítulo
-          16 ya preveía: una misma entidad puede vivir en <span class="eje eje--o">O</span> <em>y</em> en
-          <span class="eje eje--l">L</span> a la vez. La cámara de vapor del spa era, simultáneamente,
-          una máquina (objeto) y un lugar. yaku eligió priorizar la cara <code>O</code> de la habitación
-          (para que entrara sin fricción en el flujo de ventas) y dejó implícita la cara <code>L</code>.
-          La buena noticia: WQuestions puede recuperar esa cara <em>sin cambiar yaku</em>. Basta declarar,
-          en el lexicon, que cada código de habitación es además un individuo del eje <code>L</code>. El
-          dato ya está; solo le faltaba el segundo sombrero.</p>
+        <p>yaku no tiene tabla de lugares. Las habitaciones del hostal viven como filas de
+          <code>producto</code>, con códigos <code>H103</code>, <code>H201</code> y demás.</p>
+
+        <p>A primera vista parece una carencia. En realidad es <strong>una decisión de modelado</strong>
+          que el capítulo 16 ya preveía: una misma entidad puede vivir en
+          <span class="eje eje--o">O</span> <em>y</em> en <span class="eje eje--l">L</span> a la vez. La
+          cámara de vapor del spa era a la vez una máquina y un lugar.</p>
+
+        <p>yaku priorizó la cara <code>O</code> de la habitación, para que entrara sin fricción en el
+          flujo de ventas, y dejó implícita la cara <code>L</code>.</p>
+
+        <p>La buena noticia es que WQuestions puede recuperar esa cara <em>sin cambiar yaku</em>. Basta
+          declarar en el lexicon que cada código de habitación es también un individuo del eje
+          <code>L</code>. El dato ya está. Solo le faltaba el segundo sombrero.</p>
 
         <p class="cita-destacada revelar">Los sistemas heredados se aproximan a WQuestions a pedazos, sin
           nombrarlo. La arqueología no migra: diagnostica.<cite>El método del capítulo</cite></p>
 
         <h2>Un concepto nuevo que el ejercicio regala: las modalidades de cobertura</h2>
 
-        <p>El spa introdujo el <code>estatus_factual</code> para responder a una pregunta única: <em>¿esto
-          pasó o no?</em>. Es una distinción importante, pero unidimensional. yaku, por ser un negocio
-          real con cuatro líneas conviviendo, hace aflorar otra dimensión <strong>ortogonal</strong> que
-          el libro no había formalizado hasta aquí: <em>¿cómo se cobró (o se cubrió) este servicio?</em>.
-          No es lo mismo que «si pasó»; un servicio puede haber ocurrido con total certeza y, aun así,
-          haberse cobrado de cuatro maneras distintas. En la operación diaria de yaku conviven, el mismo
-          viernes, las cuatro:</p>
+        <p>El spa introdujo el <code>estatus_factual</code> para responder a una sola pregunta:
+          <em>¿esto pasó o no?</em>. Importante, pero de una sola dimensión.</p>
+
+        <p>yaku, por ser un negocio real con cuatro líneas conviviendo, saca a la luz otra dimensión que
+          el libro no había formalizado: <em>¿cómo se cobró este servicio?</em>.</p>
+
+        <p>No es lo mismo que «si pasó». Un servicio puede haber ocurrido con total certeza y, aun así,
+          haberse cobrado de cuatro maneras distintas. En yaku conviven las cuatro el mismo viernes:</p>
 
         <div class="rejilla-2 revelar">
           <div class="tarjeta">
@@ -345,13 +373,16 @@
           </div>
         </div>
 
-        <p>Las cuatro modalidades comparten el mismo hecho factual («se usó el sauna») pero responden de
-          forma distinta a la pregunta del cobro. En yaku, distinguirlas obliga a cruzar tres señales
-          frágiles: el valor de <code>asistencia.IMPORTE</code>, la presencia de un <code>socio</code>
-          activo y la existencia de una <code>venta</code> asociada. Tres consultas que se rompen en
-          cuanto alguien renombra un producto o cambia una regla de caja. WQuestions las colapsa en un
-          único cable explícito del eje <span class="eje eje--m">M</span>, que llamaremos
-          <code>cubierto_por</code>:</p>
+        <p>Las cuatro comparten el mismo hecho («se usó el sauna») y responden distinto a la pregunta
+          del cobro.</p>
+
+        <p>En yaku, distinguirlas obliga a cruzar tres señales frágiles: el valor de
+          <code>asistencia.IMPORTE</code>, la presencia de un <code>socio</code> activo y la existencia
+          de una <code>venta</code> asociada. Tres consultas que se rompen en cuanto alguien renombra un
+          producto o cambia una regla de caja.</p>
+
+        <p>WQuestions las colapsa en un solo cable del eje <span class="eje eje--m">M</span>, que
+          llamaremos <code>cubierto_por</code>:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">tripletas</span><button class="copiar">⧉ copiar</button></div>
@@ -364,23 +395,27 @@
 (uso_sauna_004, cubierto_por, promo_cumpleanos_ana)        # caso 4: apunta a la promoción</code></pre>
         </div>
 
-        <p>Cada <code>uso_sauna</code> es, en su esencia, un hecho idéntico: alguien usó el sauna. La
-          modalidad de cobertura, por separado, explica <em>por qué no se cobró como pago directo</em>.
-          Lo elegante del diseño es que <code>cubierto_por</code> apunta a entidades de naturaleza
-          distinta (un contrato, una estancia, una promoción) sin que el cable tenga que saber de
-          antemano cuál; el destino lleva su propia clase. Y es generalizable mucho más allá de un
-          complejo de sauna: cualquier club deportivo, hotel o clínica con cobertura de seguros vive la
-          misma heterogeneidad de orígenes de cobro.</p>
+        <p>Cada <code>uso_sauna</code> es, en el fondo, el mismo hecho: alguien usó el sauna. La
+          modalidad de cobertura, aparte, explica <em>por qué no se cobró como pago directo</em>.</p>
+
+        <p>Lo elegante es que <code>cubierto_por</code> apunta a entidades de naturaleza distinta (un
+          contrato, una estancia, una promoción) sin que el cable tenga que saber de antemano cuál. El
+          destino lleva su propia clase.</p>
+
+        <p>Y sirve mucho más allá de un complejo de sauna. Cualquier club deportivo, hotel o clínica con
+          seguros vive la misma mezcla de orígenes de cobro.</p>
 
         <div class="caja caja--idea revelar">
           <p class="caja-tit">Dos preguntas ortogonales, dos cables</p>
-          <p style="margin:0">El <code>estatus_factual</code> del spa y el <code>cubierto_por</code> de
-            yaku no compiten: son <strong>perpendiculares</strong>. Uno responde <em>«¿el hecho es
-            real?»</em>; el otro, <em>«¿cómo se financió ese hecho real?»</em>. Una sauna puede ser real
-            y cortesía a la vez. <code>cubierto_por</code> pertenece a la familia del porqué que
-            <strong>D7</strong> descompone (apunta al origen que justifica la ausencia de cobro), y se
-            suma al repertorio de cables de ese eje sin tocar la maquinaria del modelo. Es un concepto que
-            la pizarra limpia nunca habría hecho aflorar: lo regaló un sistema real.</p>
+          <p style="margin:0 0 .7rem">El <code>estatus_factual</code> del spa y el
+            <code>cubierto_por</code> de yaku no compiten. Son <strong>perpendiculares</strong>. Uno
+            responde <em>«¿el hecho es real?»</em>; el otro, <em>«¿cómo se financió?»</em>. Una sauna
+            puede ser real y cortesía a la vez.</p>
+
+          <p style="margin:0"><code>cubierto_por</code> pertenece a la familia del porqué que
+            <strong>D7</strong> reparte: apunta al origen que justifica la ausencia de cobro. Se suma al
+            repertorio sin tocar la maquinaria. Es un concepto que la pizarra limpia nunca habría hecho
+            aflorar. Lo regaló un sistema real.</p>
         </div>
 
         <aside class="nota-margen">
@@ -393,10 +428,11 @@
 
         <h2>¿Dónde viven los datos? Las tres arquitecturas de convivencia</h2>
 
-        <p>Decir «vamos a aplicar WQuestions» deja sin responder una pregunta crítica que en la pizarra
-          limpia ni siquiera existía: <strong>¿dónde viven los datos?</strong>. Cuando ya hay un MySQL en
-          producción con años de ventas, no hay una sola respuesta —hay tres—, y elegir bien evita mucho
-          retrabajo. La figura 24.2 las ordena de menor a mayor compromiso.</p>
+        <p>Decir «vamos a aplicar WQuestions» deja sin responder una pregunta que en la pizarra limpia
+          ni existía: <strong>¿dónde viven los datos?</strong></p>
+
+        <p>Cuando ya hay un MySQL en producción con años de ventas, no hay una sola respuesta. Hay tres,
+          y elegir bien evita mucho retrabajo. La figura 24.2 las ordena de menor a mayor compromiso.</p>
 
         <!-- FIGURA SVG: tres arquitecturas de convivencia -->
         <figure class="figura figura--ancha revelar">
@@ -497,10 +533,11 @@
 
         <h3>Arquitectura A · la vista virtual</h3>
 
-        <p>El motor WQuestions no almacena datos propios. Cuando recibe una consulta, su <em>mapper</em> la
-          traduce a SQL contra las tablas heredadas; yaku sigue siendo la única fuente de verdad. No hay
-          sincronización, no hay copia, no hay latencia. Una pregunta del estilo «¿cuántas saunas tomó
-          Juan este mes?» se convierte, internamente, en algo que el MySQL ya sabe responder:</p>
+        <p>El motor no almacena datos propios. Cuando recibe una consulta, su <em>mapper</em> la traduce
+          a SQL contra las tablas heredadas. yaku sigue siendo la única fuente de verdad.</p>
+
+        <p>No hay sincronización, no hay copia, no hay retraso. «¿Cuántas saunas tomó Juan este mes?» se
+          convierte por dentro en algo que el MySQL ya sabe responder:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">sql</span><button class="copiar">⧉ copiar</button></div>
@@ -516,20 +553,23 @@ WHERE  v.id_cliente = 'juan'
   AND  v.ANULA = 0;</code></pre>
         </div>
 
-        <p>Funciona de maravilla para las preguntas que el sistema heredado ya sabe contestar con sus
-          tablas actuales («¿qué huéspedes están alojados ahora?», «¿cuánto facturó el cafetín ayer?»).
-          Y fracasa, por construcción, para todo lo que el <em>legacy</em> no modela: la vigencia
-          histórica de la dirección de un cliente, las intenciones de compra fallidas, la justificación
-          de una cortesía. Si el dato no está en una columna, ningún SQL lo inventa.</p>
+        <p>Funciona de maravilla para lo que el sistema heredado ya sabe contestar: «¿qué huéspedes
+          están alojados ahora?», «¿cuánto facturó el cafetín ayer?».</p>
+
+        <p>Y fracasa, por construcción, para todo lo que no modela: la vigencia histórica de la dirección
+          de un cliente, las intenciones de compra fallidas, la justificación de una cortesía.</p>
+
+        <p>Si el dato no está en una columna, ningún SQL lo inventa.</p>
 
         <h3>Arquitectura B · el grafo paralelo</h3>
 
-        <p>Una tabla separada —<code>fact(subject, predicate, object, t_from, t_to)</code>, en MySQL,
-          Postgres, SQLite o donde sea— recibe, vía un proceso ETL o de captura de cambios, una
-          proyección de las filas de yaku convertidas en hechos atómicos. El motor consulta
-          exclusivamente esta tabla <code>fact</code>. Su virtud es la libertad: todo lo que el
-          <em>legacy</em> no modela (las intenciones, el porqué, la vigencia bitemporal completa, las
-          modalidades de cobertura) cabe limpio, porque la tabla está diseñada justo para alojarlo.</p>
+        <p>Una tabla aparte, <code>fact(subject, predicate, object, t_from, t_to)</code>, en MySQL,
+          Postgres o donde sea, recibe por un proceso ETL las filas de yaku convertidas en hechos
+          atómicos. El motor consulta solo esa tabla.</p>
+
+        <p>Su virtud es la libertad. Todo lo que el sistema heredado no modela (las intenciones, el
+          porqué, la vigencia completa, las modalidades de cobertura) cabe limpio, porque la tabla está
+          diseñada justo para eso.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">sql</span><button class="copiar">⧉ copiar</button></div>
@@ -551,10 +591,11 @@ INSERT INTO fact VALUES
   ('intencion_noa_01', 'estatus_factual', 'intencionado',     NULL, NULL);</code></pre>
         </div>
 
-        <p>El proceso ETL que alimenta esa tabla es, en esencia, la arqueología hecha código: lee una fila
-          relacional de yaku y la <em>descompone</em> en las tripletas que el modelo predice. Una fila de
-          <code>socio</code> (que para yaku es un renglón con columnas) se convierte en cuatro hechos
-          atómicos, uno por cada coordenada que esa fila escondía:</p>
+        <p>Ese proceso ETL es la arqueología hecha código. Lee una fila de yaku y la
+          <em>descompone</em> en las tripletas que el modelo predice.</p>
+
+        <p>Una fila de <code>socio</code>, que para yaku es un renglón con columnas, se convierte en
+          cuatro hechos, uno por cada coordenada que escondía:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -569,45 +610,54 @@ INSERT INTO fact VALUES
     return contrato</code></pre>
         </div>
 
-        <p>Repara en lo que ocurre: el <em>nombre de la columna</em> se vuelve el cable, el <em>valor</em>
-          se vuelve el objeto, y el eje queda determinado por el lexicon. La fila plana de yaku, leída así,
-          revela las coordenadas que siempre tuvo. Eso es, en una función, todo el capítulo.</p>
+        <p>Fíjate en lo que ocurre. El <em>nombre de la columna</em> se vuelve el cable. El
+          <em>valor</em> se vuelve el objeto. Y el eje lo decide el lexicon.</p>
 
-        <p>Su límite es la latencia. Entre que una venta entra a yaku y aparece en el grafo hay un
-          retraso. Para muchas aplicaciones eso es irrelevante (consultas analíticas, campañas de
-          marketing, tableros que se miran una vez al día); para otras es un bloqueador insalvable (una
-          decisión que se toma en la caja, frente al cliente, ahora mismo).</p>
+        <p>La fila plana de yaku, leída así, revela las coordenadas que siempre tuvo. Eso es, en una
+          función, todo el capítulo.</p>
+
+        <p>Su límite es el retraso. Entre que una venta entra a yaku y aparece en el grafo pasa un
+          rato.</p>
+
+        <p>Para muchos usos da igual: consultas analíticas, campañas de marketing, tableros que se miran
+          una vez al día. Para otros es un bloqueo total, como una decisión que se toma en la caja,
+          frente al cliente, ahora mismo.</p>
 
         <h3>Arquitectura C · el híbrido pragmático</h3>
 
-        <p>Los datos transaccionales (clientes, productos, ventas, asistencias) se consultan en vivo
-          contra el <em>legacy</em>, vía A. Los datos puramente semánticos que WQuestions agrega
-          (intenciones, modalidades de cobertura, justificaciones, vigencias históricas) viven en la
-          tabla <code>fact</code> paralela, vía B. El motor decide a qué <em>backend</em> ir según el
-          predicado de la consulta. Es la que recomendaría para casi cualquier adoptante real: aprovecha
-          el sistema operativo existente para lo que ya hace bien y le añade encima, sin tocarlo, la capa
-          semántica que el modelo aporta. Cero riesgo sobre la operación diaria, ganancia incremental en
-          cada consulta nueva.</p>
+        <p>Los datos del día a día (clientes, productos, ventas, asistencias) se consultan en vivo
+          contra el sistema heredado, por la vía A. Lo que WQuestions añade (intenciones, modalidades de
+          cobertura, justificaciones, vigencias históricas) vive en la tabla <code>fact</code> paralela,
+          por la vía B. El motor decide adónde ir según el predicado.</p>
+
+        <p>Es la que recomendaría para casi cualquier adoptante real. Aprovecha el sistema existente
+          para lo que ya hace bien y le añade encima, sin tocarlo, la capa semántica.</p>
+
+        <p>Cero riesgo sobre la operación diaria. Ganancia en cada consulta nueva.</p>
 
         <div class="caja caja--practica revelar">
           <p class="caja-tit">Lo que el capítulo 31 no dice sobre la persistencia</p>
-          <p style="margin:0">El <a href="31-que-falta.html">capítulo 31</a> lista la persistencia
-            industrial como uno de los frentes pendientes, y la plantea como una disyuntiva de tecnología:
-            ¿Postgres o RDF? Este capítulo añade una dimensión que aquella no menciona: persistencia
-            industrial es <strong>también</strong> decidir si la capa WQuestions vive <em>con</em> el
-            <em>legacy</em> o <em>aparte</em> de él. Y la respuesta práctica casi nunca es una sola: es
-            «ambas, en proporciones distintas según el dato». La elección de tecnología viene después de
-            la elección de topología.</p>
+          <p style="margin:0 0 .7rem">El <a href="31-que-falta.html">capítulo 31</a> lista la
+            persistencia industrial como frente pendiente y la plantea como una disyuntiva de
+            tecnología: ¿Postgres o RDF?</p>
+
+          <p style="margin:0">Este capítulo añade otra dimensión: persistencia industrial es
+            <strong>también</strong> decidir si la capa WQuestions vive <em>con</em> el sistema heredado
+            o <em>aparte</em> de él. Y la respuesta práctica casi nunca es una sola. La elección de
+            tecnología viene después de la elección de topología.</p>
         </div>
 
         <h2>El costo real de construir un lexicon</h2>
 
-        <p>El <a href="14-lexicon.html">capítulo 14</a> presentó el lexicon como una pieza ya construida.
-          El capítulo 31 reconoce que falta poblarlo <em>a nivel idioma</em> —miles de verbos del
-          español, los recursos de FrameNet<a class="ref" href="referencias.html#ref-14">(14)</a>, AnCora—. Pero entre el verbo genérico de un idioma y la
-          entrada usable en producción hay un trabajo intermedio que el libro no había puesto sobre la
-          mesa: <strong>construir el lexicon de un negocio concreto</strong>. Para yaku, ese trabajo se
-          desglosa en cinco tareas, y ninguna de ellas es programación.</p>
+        <p>El <a href="14-lexicon.html">capítulo 14</a> presentó el lexicon como pieza ya construida, y
+          el 31 reconoce que falta poblarlo <em>a nivel idioma</em>: miles de verbos del español, los
+          recursos de FrameNet<a class="ref" href="referencias.html#ref-14">(14)</a>, AnCora.</p>
+
+        <p>Pero entre el verbo genérico de un idioma y la entrada usable en producción hay un trabajo
+          intermedio que el libro no había puesto sobre la mesa: <strong>construir el lexicon de un
+          negocio concreto</strong>.</p>
+
+        <p>Para yaku, ese trabajo se reparte en cinco tareas. Ninguna es programación.</p>
 
         <div class="caja caja--practica revelar">
           <p class="caja-tit">Las cinco tareas del lexicon de un negocio</p>
@@ -642,11 +692,12 @@ INSERT INTO fact VALUES
           </ol>
         </div>
 
-        <p>La inversión total para yaku es del orden de <strong>dos a cinco días</strong> de trabajo
-          etnográfico, clasificación y escritura del lexicon. Es labor arqueológico-lingüística, no
-          ingeniería. Y se hace una sola vez: desde ese punto, toda consulta futura sobre el negocio
-          <em>reúsa</em> el mismo lexicon. Esa amortización es el retorno que justifica el esfuerzo
-          inicial: un costo fijo y pequeño contra un beneficio que se cobra en cada pregunta de los años
+        <p>La inversión total para yaku es de <strong>dos a cinco días</strong> de trabajo de campo,
+          clasificación y escritura del lexicon. Es labor de arqueólogo y de lingüista, no de
+          ingeniero.</p>
+
+        <p>Y se hace una sola vez. Desde ahí, toda consulta futura sobre el negocio reúsa el mismo
+          lexicon. Un costo fijo y pequeño contra un beneficio que se cobra en cada pregunta de los años
           siguientes.</p>
 
         <h2>El gap del gimnasio · el modelo no inventa información</h2>
@@ -655,35 +706,42 @@ INSERT INTO fact VALUES
           pizarra limpia tiende a callar: <strong>el modelo no es alquimia</strong>. Si un dato no se
           captura en ningún lado, no aparece en el grafo por arte de magia.</p>
 
-        <p>En yaku, el uso del gimnasio <em>solo</em> se registra cuando el cliente es socio en plan
-          (entra al sistema por la tabla <code>asistencia</code>). Los días sueltos comprados como
-          producto <code>MARCA=GYM</code> se cobran en <code>venta</code>, pero no generan registro de
-          entrada y salida: no existe una tabla <code>asistencia_walkin_gym</code>. Por tanto, la
-          pregunta «¿cuántas horas usó alguien el gimnasio este mes?» hoy <em>no se puede</em> responder
-          para los clientes de paso (ni con yaku puro, ni con WQuestions encima).</p>
+        <p>En yaku, el uso del gimnasio <em>solo</em> se registra cuando el cliente es socio en plan.
+          Entra al sistema por la tabla <code>asistencia</code>.</p>
+
+        <p>Los días sueltos comprados como producto <code>MARCA=GYM</code> se cobran en
+          <code>venta</code>, pero no dejan registro de entrada y salida. No existe una tabla
+          <code>asistencia_walkin_gym</code>.</p>
+
+        <p>Así que «¿cuántas horas usó alguien el gimnasio este mes?» hoy <em>no se puede</em> responder
+          para los clientes de paso. Ni con yaku puro, ni con WQuestions encima.</p>
 
         <div class="caja caja--alerta revelar">
           <p class="caja-tit">Lo que no se registra, no existe</p>
-          <p style="margin:0">El modelo se vende a veces como una solución mágica para preguntas que las
-            bases heredadas no respondían. No lo es. WQuestions <em>explicita</em> estructura, conexiones,
-            vigencia y porqué (pero solo de lo que el negocio decidió capturar). Cualquier capacidad nueva
-            exige captura nueva: un lector de huella en la puerta del gimnasio, un QR escaneado, una
-            anotación en recepción. Confundir «el modelo es expresivo» con «el sistema lo sabe todo» es un
-            error costoso. El lector que aplique la arqueología sobre su propio <em>legacy</em>
-            descubrirá, igual que con yaku, gaps que el modelo no rellena por sí solo. Eso es
-            parte del contrato.</p>
+          <p style="margin:0 0 .7rem">A veces se presenta el modelo como una solución mágica para
+            preguntas que las bases heredadas no respondían. No lo es. WQuestions saca a la luz
+            estructura, conexiones, vigencia y porqué, pero solo de lo que el negocio decidió
+            capturar.</p>
+
+          <p style="margin:0">Cualquier capacidad nueva exige captura nueva: un lector de huella en la
+            puerta del gimnasio, un QR escaneado, una anotación en recepción. Confundir «el modelo es
+            expresivo» con «el sistema lo sabe todo» sale caro. Quien aplique la arqueología sobre su
+            propio sistema descubrirá huecos que el modelo no rellena solo. Eso es parte del trato.</p>
         </div>
 
         <h2>Una consulta real, de punta a punta, sobre yaku</h2>
 
-        <p>Cerremos con un ejercicio concreto que ata todo lo anterior. La recepcionista pregunta: <em>«¿qué
-          huéspedes han usado sauna durante su estancia este mes, y cuánto extra han generado?»</em>. Esa
-          consulta no tiene una vista preparada en yaku. Hoy obliga a cruzar <code>asistencia</code> con
-          <code>venta</code> (filtrada por <code>MARCA=HOSTAL</code>) y con <code>ventadet</code>
-          (filtrada por <code>MARCA=SAUNA</code> o por la bandera <code>asistencia.Sauna</code>), y aún
-          hay que desambiguar las saunas anexas del gimnasio de las saunas de paso. Es factible, pero
-          frágil: un cambio en los nombres de productos rompe el reporte. Así de enredado se ve en SQL
-          crudo:</p>
+        <p>Cerremos con un ejercicio concreto que ata todo lo anterior. La recepcionista pregunta:
+          <em>«¿qué huéspedes han usado sauna durante su estancia este mes, y cuánto extra han
+          generado?»</em>.</p>
+
+        <p>Esa consulta no tiene vista preparada en yaku. Hoy obliga a cruzar <code>asistencia</code>
+          con <code>venta</code> (filtrada por <code>MARCA=HOSTAL</code>) y con <code>ventadet</code>
+          (filtrada por <code>MARCA=SAUNA</code> o por la bandera <code>asistencia.Sauna</code>). Y aún
+          hay que separar las saunas anexas del gimnasio de las saunas de paso.</p>
+
+        <p>Es posible, pero frágil: un cambio en los nombres de productos rompe el reporte. Así de
+          enredado se ve en SQL crudo:</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">sql</span><button class="copiar">⧉ copiar</button></div>
@@ -715,15 +773,20 @@ GROUP BY durante.huesped
 PROJECT  SUM(importe)</code></pre>
         </div>
 
-        <p>El motor traduce el patrón al SQL apropiado; el modelo de lenguaje, si lo hay, traduce la frase
-          en español a este patrón. Pero el patrón mismo es la pieza estable: tres roles canónicos
-          (<code>instancia_de</code>, <code>durante</code>, <code>cubierto_por</code>) que cualquier
-          negocio de servicios va a reutilizar tal cual. Y aquí está la prueba de fuego. La pregunta de
-          seguimiento (<em>«¿alguno de esos huéspedes era además socio del gimnasio?»</em>) se contesta
-          agregando un solo filtro: <code>huesped IN socios_activos_gym(inicio_mes, fin_mes)</code>. Sin
-          código nuevo. Sin reporte nuevo. El lexicon ya enseñó qué es un socio del gimnasio; el grafo ya
-          conecta los huéspedes con sus contratos; la consulta compuesta sale de combinar piezas que ya
-          existen.</p>
+        <p>El motor traduce el patrón al SQL que toque. El modelo de lenguaje, si lo hay, traduce la
+          frase en español a este patrón.</p>
+
+        <p>Pero el patrón es la pieza estable: tres roles canónicos (<code>instancia_de</code>,
+          <code>durante</code>, <code>cubierto_por</code>) que cualquier negocio de servicios va a
+          reutilizar tal cual.</p>
+
+        <p>Y aquí está la prueba de fuego. La pregunta siguiente (<em>«¿alguno de esos huéspedes era
+          además socio del gimnasio?»</em>) se contesta añadiendo un filtro:
+          <code>huesped IN socios_activos_gym(inicio_mes, fin_mes)</code>.</p>
+
+        <p>Sin código nuevo. Sin reporte nuevo. El lexicon ya enseñó qué es un socio del gimnasio, el
+          grafo ya conecta los huéspedes con sus contratos, y la consulta compuesta sale de combinar
+          piezas que ya existen.</p>
 
         <p class="cita-destacada revelar">La promesa sobre un sistema en producción: convertir cada
           consulta nueva en una composición de piezas pre-construidas, en vez de un reporte
@@ -733,27 +796,37 @@ PROJECT  SUM(importe)</code></pre>
 
         <p><strong>Antes (yaku puro).</strong> Cada pregunta que el negocio no había anticipado se
           convierte en un reporte nuevo, escrito a mano, que cruza tablas por convenciones de nombres
-          (<code>MARCA='SAUNA'</code>, banderas booleanas, fechas comparadas a ojo) y que se rompe en
-          silencio el día en que alguien renombra un producto o cambia una regla de caja. El conocimiento
-          del negocio vive en la cabeza de quien escribió cada consulta, y se pierde cuando esa persona se
-          va. La intención fallida, la cortesía, la vigencia histórica, sencillamente no caben.</p>
+          (<code>MARCA='SAUNA'</code>, banderas booleanas, fechas comparadas a ojo).</p>
 
-        <p><strong>Después (WQuestions, híbrido C).</strong> Las mismas preguntas se contestan componiendo
-          conceptos. El lexicon (construido una sola vez, en dos a cinco días) enseña el dialecto del
-          negocio; el grafo conecta los hechos por sus cables canónicos; cada consulta nueva es una
-          combinación de roles que ya existen. Lo que yaku no modelaba (el <code>intencionado</code>, el
-          <code>cubierto_por</code>, la vigencia bitemporal completa) vive en la tabla <code>fact</code>
-          paralela sin tocar una sola fila del sistema operativo. Y nada de esto requirió migrar yaku: el
-          MySQL sigue corriendo exactamente igual que el viernes con el que abrimos.</p>
+        <p>Y que se rompe en silencio el día en que alguien renombra un producto o cambia una regla de
+          caja.</p>
+
+        <p>El conocimiento del negocio vive en la cabeza de quien escribió cada consulta, y se va con esa
+          persona. La intención fallida, la cortesía y la vigencia histórica, sencillamente, no caben.</p>
+
+        <p><strong>Después (WQuestions, híbrido C).</strong> Las mismas preguntas se contestan
+          combinando conceptos. El lexicon, construido una sola vez en dos a cinco días, enseña el
+          dialecto del negocio. El grafo conecta los hechos por sus cables. Cada consulta nueva es una
+          combinación de roles que ya existen.</p>
+
+        <p>Lo que yaku no modelaba (el <code>intencionado</code>, el <code>cubierto_por</code>, la
+          vigencia completa) vive en la tabla <code>fact</code> paralela, sin tocar una sola fila del
+          sistema.</p>
+
+        <p>Y nada de esto exigió migrar yaku. El MySQL sigue corriendo igual que el viernes con el que
+          abrimos.</p>
 
         <h2>Del viernes en recepción al consolidado del negocio</h2>
 
-        <p>Mapear yaku no fue el objetivo final: fue la condición para poder preguntar. Y lo que el dueño
-          quiere preguntar no es por la sauna de paso de las 19:40, sino por el negocio entero: cuánto
-          factura cada línea —sauna, hostal, gimnasio, cafetín—, cuál crece y cuál se estanca, qué día de
-          la semana llena el local. Antes esas respuestas vivían repartidas entre <code>venta</code>,
-          <code>ventadet</code> y los valores de <code>producto.MARCA</code>, cruzados a mano cada vez;
-          ahora son cortes de un mismo grafo de ventas, uno por familia de servicio.</p>
+        <p>Mapear yaku no era el objetivo. Era la condición para poder preguntar.</p>
+
+        <p>Y lo que el dueño quiere preguntar no es por la sauna de las 19:40. Es por el negocio entero.
+          Cuánto factura cada línea (sauna, hostal, gimnasio, cafetín), cuál crece y cuál se estanca, qué
+          día de la semana llena el local.</p>
+
+        <p>Antes esas respuestas vivían repartidas entre <code>venta</code>, <code>ventadet</code> y los
+          valores de <code>producto.MARCA</code>, cruzados a mano cada vez. Ahora son cortes de un mismo
+          grafo, uno por familia de servicio.</p>
 
         <div class="bloque-codigo">
           <div class="barra"><span class="lenguaje">python</span><button class="copiar">⧉ copiar</button></div>
@@ -789,14 +862,17 @@ suma(u, "importe", Pattern(fixed={"familia": u.ind("sauna")},
           </div>
         </div>
 
-        <p>Y queda un cuarto saldo, distinto de los tres anteriores porque es una <em>ganancia</em> y no
-          una lección: el ejercicio regaló un concepto nuevo, las <strong>modalidades de cobertura</strong>
-          (<code>cubierto_por</code>), ortogonal al <code>estatus_factual</code> y reutilizable en
-          cualquier negocio donde un servicio admita orígenes de cobro heterogéneos. Un sistema real, por
-          el solo hecho de ser real, empujó al modelo a un lugar donde la pizarra limpia nunca lo habría
-          llevado. En suma: <strong>la arquitectura conceptual no movió una línea</strong> entre los ocho
-          dominios diseñados desde cero y este sistema heredado. Lo único que cambió fue el lexicon, la
-          topología de persistencia y un cable nuevo en la familia del porqué.</p>
+        <p>Y queda un cuarto saldo, distinto de los otros tres porque es una <em>ganancia</em> y no una
+          lección. El ejercicio regaló un concepto nuevo: las <strong>modalidades de
+          cobertura</strong> (<code>cubierto_por</code>), perpendiculares al <code>estatus_factual</code>
+          y útiles en cualquier negocio donde un servicio admita orígenes de cobro distintos.</p>
+
+        <p>Un sistema real, por el solo hecho de ser real, empujó al modelo a un lugar donde la pizarra
+          limpia nunca lo habría llevado.</p>
+
+        <p>En suma: <strong>la arquitectura no movió una línea</strong> entre los ocho dominios diseñados
+          desde cero y este sistema heredado. Lo único que cambió fue el lexicon, la topología de
+          persistencia y un cable nuevo en la familia del porqué.</p>
 
         <h2>Tres caminos de salida y la conexión con lo que sigue</h2>
 
@@ -804,27 +880,30 @@ suma(u, "importe", Pattern(fixed={"familia": u.ind("sauna")},
           demostró que el modelo <em>se aplica</em> sobre un negocio ya digitalizado, sin migrar nada. El
           lector que llega hasta aquí puede tomar uno de tres caminos, según cuánto quiera arriesgar:</p>
 
-        <div class="columnas">
           <p><strong>Solo ver si vale la pena.</strong> Aplicar la arqueología semántica a sus propias
             tablas: tabla por tabla, ¿a qué eje responde? Es trabajo de un fin de semana y devuelve un
             diagnóstico claro de cuánto del modelo ya está implementado y cuánto falta.</p>
           <p><strong>Probar el modelo de verdad.</strong> Montar la arquitectura híbrida C y un único
             <em>POC</em> de una consulta crítica, de punta a punta. Si esa consulta sobrevive, el resto es
             repetir el patrón sobre todas las demás.</p>
-          <p><strong>Ir más lejos.</strong> El <a href="26-llms.html">capítulo 26</a> toma el paso lógico
-            siguiente: el lexicon que se construyó aquí se vuelve, directamente, el esquema de funciones
-            que un modelo de lenguaje consume —y entonces el personal de yaku puede preguntar en español
-            llano, sin saber que debajo hay un grafo.</p>
-        </div>
+          <p><strong>Ir más lejos.</strong> El <a href="26-llms.html">capítulo 26</a> da el paso
+            siguiente. El lexicon que construimos aquí se vuelve el esquema de funciones que un modelo de
+            lenguaje consume. Y entonces el personal de yaku puede preguntar en español llano, sin saber
+            que debajo hay un grafo.</p>
 
-        <p>El sistema yaku que dio origen a este capítulo sigue funcionando como siempre. Ninguna fila se
-          movió de lugar. Lo que cambió es que ahora, con dos a cinco días de inversión en el lexicon,
-          cualquier consulta del negocio se puede responder componiendo conceptos en vez de programando
-          reportes. Esa diferencia, multiplicada por años de operación, es lo que justifica el esfuerzo
-          —y es la prueba más terrenal de que WQuestions no exige empezar de nuevo: exige, apenas,
-          aprender a leer lo que ya estaba escrito. Con eso cerramos los dominios reales; el próximo
-          capítulo cambia de registro y somete al modelo a cuatro mundos cualitativamente distintos
-          (música, química, fútbol y contratos) buscando, esta vez a propósito, dónde se resiste.</p>
+        <p>El yaku que dio origen a este capítulo sigue funcionando como siempre. Ninguna fila se movió
+          de lugar.</p>
+
+        <p>Lo que cambió es que ahora, con dos a cinco días de inversión en el lexicon, cualquier
+          consulta del negocio se responde combinando conceptos en vez de programando reportes.</p>
+
+        <p>Esa diferencia, multiplicada por años de operación, es lo que justifica el esfuerzo. Y es la
+          prueba más terrenal de que WQuestions no exige empezar de nuevo: exige, apenas, aprender a leer
+          lo que ya estaba escrito.</p>
+
+        <p>Con eso cerramos los dominios reales. El próximo capítulo cambia de registro y somete al
+          modelo a cuatro mundos de otra naturaleza (música, química, fútbol y contratos) buscando, esta
+          vez a propósito, dónde se resiste.</p>
 
       </div>
     </article>
